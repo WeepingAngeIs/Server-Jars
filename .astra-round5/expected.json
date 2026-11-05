@@ -1,0 +1,4690 @@
+[
+ {
+  "kind": "quest_art",
+  "id": "0b5706115b7efa01.png",
+  "title": "Keystone",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 1,
+  "item": "mega_showdown:keystone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "770320237aa1c2b3.png",
+  "title": "Mega Bracelet",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 2,
+  "item": "mega_showdown:mega_bracelet"
+ },
+ {
+  "kind": "quest_art",
+  "id": "76fab2f14dee0b48.png",
+  "title": "Raw Mega Power",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 3,
+  "item": "mega_showdown:mega_stone_crystal"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6911fafdaf7dcf82.png",
+  "title": "Mega Stone",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 4,
+  "item": "mega_showdown:mega_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "080f3afce5562a92.png",
+  "title": "Mega Accessory Styles",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 5,
+  "item": "mega_showdown:mega_ring"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2756e905ee2fb66c.png",
+  "title": "Trainer Mega Accessories",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 6,
+  "item": "mega_showdown:korrina_glove"
+ },
+ {
+  "kind": "quest_art",
+  "id": "094086209a925680.png",
+  "title": "Mega Geology",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 7,
+  "item": "mega_showdown:keystone_ore"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7c741b1fddad0137.png",
+  "title": "Meteoroid Masonry",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 8,
+  "item": "mega_showdown:mega_meteorid_block"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7e88fa5fccf59100.png",
+  "title": "Kanto Mega Stones",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 9,
+  "item": "mega_showdown:aerodactylite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "088e7a40cd462e29.png",
+  "title": "Johto Mega Stones",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 10,
+  "item": "mega_showdown:ampharosite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "08dd03721b905401.png",
+  "title": "Hoenn Mega Stones",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 11,
+  "item": "mega_showdown:absolite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "15f368d4bad00a31.png",
+  "title": "Sinnoh and Unova Mega Stones",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 12,
+  "item": "mega_showdown:abomasite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2f696b9791e096db.png",
+  "title": "Kalos Mega Stones",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 13,
+  "item": "mega_showdown:barbaracite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1fe8544b23b4d004.png",
+  "title": "Modern Mega Stones",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 14,
+  "item": "mega_showdown:baxcalibrite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7adbb4c75c020f62.png",
+  "title": "ZA Mega Expansion",
+  "chapter": "MEGA EVOLUTION",
+  "ordinal": 15,
+  "item": "zamega:ange"
+ },
+ {
+  "kind": "quest_art",
+  "id": "62510432b978745b.png",
+  "title": "Sparkling Stone",
+  "chapter": "Z-MOVES",
+  "ordinal": 16,
+  "item": "mega_showdown:sparkling_stone_light"
+ },
+ {
+  "kind": "quest_art",
+  "id": "44d19ff8528a1430.png",
+  "title": "Blank-Z",
+  "chapter": "Z-MOVES",
+  "ordinal": 17,
+  "item": "mega_showdown:blank_z"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4e2ffe1bd160b524.png",
+  "title": "Z-Ring",
+  "chapter": "Z-MOVES",
+  "ordinal": 18,
+  "item": "mega_showdown:z_ring"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2ee738ca1fc821ab.png",
+  "title": "A Z-Crystal",
+  "chapter": "Z-MOVES",
+  "ordinal": 19,
+  "item": "mega_showdown:normalium_z"
+ },
+ {
+  "kind": "quest_art",
+  "id": "129b4413e9edd432.png",
+  "title": "Z-Power Foundations",
+  "chapter": "Z-MOVES",
+  "ordinal": 20,
+  "item": "mega_showdown:blank_z"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4a6cd6e673195717.png",
+  "title": "Z-Ring Styles",
+  "chapter": "Z-MOVES",
+  "ordinal": 21,
+  "item": "mega_showdown:z_ring_blue"
+ },
+ {
+  "kind": "quest_art",
+  "id": "68a31992fdde9c44.png",
+  "title": "Trainer Z-Power Rings",
+  "chapter": "Z-MOVES",
+  "ordinal": 22,
+  "item": "mega_showdown:gladion_z_power_ring"
+ },
+ {
+  "kind": "quest_art",
+  "id": "00b0294f99e1022f.png",
+  "title": "Type Z-Crystals I",
+  "chapter": "Z-MOVES",
+  "ordinal": 23,
+  "item": "mega_showdown:buginium_z"
+ },
+ {
+  "kind": "quest_art",
+  "id": "09d2d4d56eefc3b5.png",
+  "title": "Type Z-Crystals II",
+  "chapter": "Z-MOVES",
+  "ordinal": 24,
+  "item": "mega_showdown:grassium_z"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1f41238044280ee6.png",
+  "title": "Signature Z-Crystals I",
+  "chapter": "Z-MOVES",
+  "ordinal": 25,
+  "item": "mega_showdown:aloraichium_z"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5fcfb653aec59e55.png",
+  "title": "Signature Z-Crystals II",
+  "chapter": "Z-MOVES",
+  "ordinal": 26,
+  "item": "mega_showdown:mimikium_z"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2e1310613d3b46ee.png",
+  "title": "Wishing Star",
+  "chapter": "DYNAMAX AND GIGANTAMAX",
+  "ordinal": 27,
+  "item": "mega_showdown:wishing_star"
+ },
+ {
+  "kind": "quest_art",
+  "id": "489fd318a06192e0.png",
+  "title": "Dynamax Band",
+  "chapter": "DYNAMAX AND GIGANTAMAX",
+  "ordinal": 28,
+  "item": "mega_showdown:dynamax_band"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0a96725cef7660ab.png",
+  "title": "Power Spot",
+  "chapter": "DYNAMAX AND GIGANTAMAX",
+  "ordinal": 29,
+  "item": "mega_showdown:power_spot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "74dc2ff2c0533023.png",
+  "title": "Dynamax Candy",
+  "chapter": "DYNAMAX AND GIGANTAMAX",
+  "ordinal": 30,
+  "item": "mega_showdown:dynamax_candy"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0445eac212ec2baa.png",
+  "title": "Maxed Dynamax Level",
+  "chapter": "DYNAMAX AND GIGANTAMAX",
+  "ordinal": 31,
+  "item": "mega_showdown:dynamax_candy"
+ },
+ {
+  "kind": "quest_art",
+  "id": "397c4acb3ba3d384.png",
+  "title": "Max Mushrooms",
+  "chapter": "DYNAMAX AND GIGANTAMAX",
+  "ordinal": 32,
+  "item": "mega_showdown:max_mushroom"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3b878cbdbe369e99.png",
+  "title": "Max Soup",
+  "chapter": "DYNAMAX AND GIGANTAMAX",
+  "ordinal": 33,
+  "item": "mega_showdown:max_soup"
+ },
+ {
+  "kind": "quest_art",
+  "id": "50bf22c6846cdc63.png",
+  "title": "Max Cuisine Variants",
+  "chapter": "DYNAMAX AND GIGANTAMAX",
+  "ordinal": 34,
+  "item": "mega_showdown:max_honey"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27ffe0e0f21d66ad.png",
+  "title": "FREE ORIGIN CHANGE [beta only]",
+  "chapter": "WELCOME AND PACK TOOLS",
+  "ordinal": 35,
+  "item": "neoorigins:orb_of_origin"
+ },
+ {
+  "kind": "quest_art",
+  "id": "72d7b491d10cd227.png",
+  "title": "Choose your origin",
+  "chapter": "WELCOME AND PACK TOOLS",
+  "ordinal": 36,
+  "item": "neoorigins:orb_of_origin"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5df44ec527b70000.png",
+  "title": "Read all information quests.",
+  "chapter": "WELCOME AND PACK TOOLS",
+  "ordinal": 37,
+  "item": "checkmark"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1625ff5cbf3fbec0.png",
+  "title": "Reward references",
+  "chapter": "WELCOME AND PACK TOOLS",
+  "ordinal": 38,
+  "item": "kill"
+ },
+ {
+  "kind": "quest_art",
+  "id": "46520224c935fd77.png",
+  "title": "Tera Orb",
+  "chapter": "TERASTALLIZATION",
+  "ordinal": 39,
+  "item": "mega_showdown:tera_orb"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2252f9c43bf99927.png",
+  "title": "Change the Tera Type",
+  "chapter": "TERASTALLIZATION",
+  "ordinal": 40,
+  "item": "mega_showdown:normal_tera_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "21f9e6f229b85ae1.png",
+  "title": "Stellar Tera Shard",
+  "chapter": "TERASTALLIZATION",
+  "ordinal": 41,
+  "item": "mega_showdown:stellar_tera_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0e941d56199e5726.png",
+  "title": "Tera Shards I",
+  "chapter": "TERASTALLIZATION",
+  "ordinal": 42,
+  "item": "mega_showdown:bug_tera_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "266e094fed1a6d9e.png",
+  "title": "Tera Shards II",
+  "chapter": "TERASTALLIZATION",
+  "ordinal": 43,
+  "item": "mega_showdown:grass_tera_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4e68bf8f64cd644c.png",
+  "title": "Tera Pouch Palette",
+  "chapter": "TERASTALLIZATION",
+  "ordinal": 44,
+  "item": "mega_showdown:tera_pouch_cyan"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5c545d7f81e9eb5c.png",
+  "title": "Flying Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 45,
+  "item": "cobblemon:flying_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1aad7f31b7d111d6.png",
+  "title": "Normal Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 46,
+  "item": "cobblemon:normal_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7d7632d13dfbdb16.png",
+  "title": "Rock Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 47,
+  "item": "cobblemon:rock_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6f9703face4649bd.png",
+  "title": "Water Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 48,
+  "item": "cobblemon:water_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "34f1e67edf4cd09e.png",
+  "title": "Fire Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 49,
+  "item": "cobblemon:fire_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7f40f3523e7db7c3.png",
+  "title": "Bug Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 50,
+  "item": "cobblemon:bug_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "721b628a2c2d854f.png",
+  "title": "Ice Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 51,
+  "item": "cobblemon:ice_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1801dcf4d12712b5.png",
+  "title": "Electric Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 52,
+  "item": "cobblemon:electric_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "55dc01f1bf2df384.png",
+  "title": "Grass Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 53,
+  "item": "cobblemon:grass_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "789267c7aeac3508.png",
+  "title": "Steel Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 54,
+  "item": "cobblemon:steel_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5d98dc1370e79c0b.png",
+  "title": "Fairy Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 55,
+  "item": "cobblemon:fairy_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4844eed3532cb9fa.png",
+  "title": "Ground Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 56,
+  "item": "cobblemon:ground_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "599cbd8d3dbbe0ef.png",
+  "title": "Poison Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 57,
+  "item": "cobblemon:poison_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0862088b6d24901f.png",
+  "title": "Dark Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 58,
+  "item": "cobblemon:dark_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "556d0617cd7fcf13.png",
+  "title": "Fighting Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 59,
+  "item": "cobblemon:fighting_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "123237d6f35400b2.png",
+  "title": "Dragon Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 60,
+  "item": "cobblemon:dragon_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2991553802b50642.png",
+  "title": "Psychic Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 61,
+  "item": "cobblemon:psychic_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "518ec2c8ad93112b.png",
+  "title": "Ghost Mastery",
+  "chapter": "TYPE MASTERY TRIALS",
+  "ordinal": 62,
+  "item": "cobblemon:ghost_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "507518777c14eb2b.png",
+  "title": "Devon Radar: The PokéNav",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 63,
+  "item": "cobblenav:pokenav_item_base"
+ },
+ {
+  "kind": "quest_art",
+  "id": "751f2f2cff0f8ef2.png",
+  "title": "Targeted Acquisition: PokéFinder",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 64,
+  "item": "cobblenav:pokefinder_item_black"
+ },
+ {
+  "kind": "quest_art",
+  "id": "622867d85c28f95c.png",
+  "title": "Angler's Sonar: FishingNav",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 65,
+  "item": "cobblenav:fishingnav_item"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e1e90e95c3c00a1.png",
+  "title": "Prehistoric Glazes: Ancient Pottery Sherds",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 66,
+  "item": "cobblemon:bygone_sherd"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5b760f0c10dfe721.png",
+  "title": "Fossil Analyzer",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 67,
+  "item": "cobblemon:fossil_analyzer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "560461a3f608a747.png",
+  "title": "Kanto Pioneers: The Sea and Sky",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 68,
+  "item": "cobblemon:helix_fossil"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6c51bee295979c3b.png",
+  "title": "Hoenn Primevals: The Cradle of the Deep",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 69,
+  "item": "cobblemon:root_fossil"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e106d44040f5f68.png",
+  "title": "Sinnoh Titans: The Ram and Shield",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 70,
+  "item": "cobblemon:skull_fossil"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2ce8de01fa1bc458.png",
+  "title": "Unova Relics: Sea Shell and Feather",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 71,
+  "item": "cobblemon:cover_fossil"
+ },
+ {
+  "kind": "quest_art",
+  "id": "05a1345c164645d7.png",
+  "title": "Kalos Prehistorics: Tyrant and Aurora",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 72,
+  "item": "cobblemon:jaw_fossil"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4b2cb1500216ae27.png",
+  "title": "Galar Mismatches: The Four Chimera Halves",
+  "chapter": "POKÉDEX ADVENTURES",
+  "ordinal": 73,
+  "item": "cobblemon:fossilized_bird"
+ },
+ {
+  "kind": "quest_art",
+  "id": "76ea63e69ec611f5.png",
+  "title": "Articuno",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 74,
+  "item": "cobblemon:ice_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2689d6ef3930b24b.png",
+  "title": "Zapdos",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 75,
+  "item": "cobblemon:electric_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7e3132d31165b9ec.png",
+  "title": "Moltres",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 76,
+  "item": "cobblemon:fire_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4f5e0e16cb39278e.png",
+  "title": "Mewtwo",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 77,
+  "item": "cobblemon:choice_specs"
+ },
+ {
+  "kind": "quest_art",
+  "id": "75b7247eeb2618e8.png",
+  "title": "Mew",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 78,
+  "item": "cobblemon:psychic_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "20f15cc12dfdca97.png",
+  "title": "Raikou",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 79,
+  "item": "cobblemon:electric_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "58478b8510fabe83.png",
+  "title": "Entei",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 80,
+  "item": "cobblemon:fire_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4cba26db7c9215c6.png",
+  "title": "Suicune",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 81,
+  "item": "cobblemon:water_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0ff6564d2dd6ed73.png",
+  "title": "Lugia",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 82,
+  "item": "cobblemon:deep_sea_scale"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4025ee4781ed7965.png",
+  "title": "Ho-Oh",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 83,
+  "item": "cobblemon:charcoal_stick"
+ },
+ {
+  "kind": "quest_art",
+  "id": "57ac1e33fae63428.png",
+  "title": "Celebi",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 84,
+  "item": "cobblemon:psychic_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "45a8d358b0904818.png",
+  "title": "Kyogre",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 85,
+  "item": "cobblemon:mystic_water"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5fbf3e26caf1fff2.png",
+  "title": "Groudon",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 86,
+  "item": "cobblemon:red_card"
+ },
+ {
+  "kind": "quest_art",
+  "id": "214ffcc0ddf22fce.png",
+  "title": "Rayquaza",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 87,
+  "item": "cobblemon:float_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0406591847628e21.png",
+  "title": "Regirock",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 88,
+  "item": "cobblemon:hard_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7573d293fe474615.png",
+  "title": "Regice",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 89,
+  "item": "cobblemon:icy_rock"
+ },
+ {
+  "kind": "quest_art",
+  "id": "19f77da6a834bb94.png",
+  "title": "Registeel",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 90,
+  "item": "cobblemon:metal_coat"
+ },
+ {
+  "kind": "quest_art",
+  "id": "602664eb0a217c86.png",
+  "title": "Latias",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 91,
+  "item": "cobblemon:luminous_moss"
+ },
+ {
+  "kind": "quest_art",
+  "id": "374b8a3511dba63a.png",
+  "title": "Latios",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 92,
+  "item": "cobblemon:luminous_moss"
+ },
+ {
+  "kind": "quest_art",
+  "id": "54863af1072e5e59.png",
+  "title": "Jirachi",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 93,
+  "item": "cobblemon:steel_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0d469558db184f25.png",
+  "title": "Deoxys",
+  "chapter": "LEGENDARY EXPEDITIONS: KANTO-HOENN",
+  "ordinal": 94,
+  "item": "cobblemon:psychic_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4420b323b9ef1d40.png",
+  "title": "Uxie",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 95,
+  "item": "cobblemon:wide_lens"
+ },
+ {
+  "kind": "quest_art",
+  "id": "760918156f99e5e8.png",
+  "title": "Mesprit",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 96,
+  "item": "cobblemon:clever_feather"
+ },
+ {
+  "kind": "quest_art",
+  "id": "42dc2c9e77be225e.png",
+  "title": "Azelf",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 97,
+  "item": "cobblemon:psychic_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "40ffed4044ce7c93.png",
+  "title": "Dialga",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 98,
+  "item": "cobblemon:adamant_mint"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0dd320459d623036.png",
+  "title": "Palkia",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 99,
+  "item": "cobblemon:light_clay"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1a5f65b1942f6efc.png",
+  "title": "Giratina",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 100,
+  "item": "cobblemon:spell_tag"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5d41e75f17258903.png",
+  "title": "Arceus",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 101,
+  "item": "cobblemon:normal_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4805af5b5a60f9ad.png",
+  "title": "Heatran",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 102,
+  "item": "cobblemon:magmarizer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "764d449e0c711fa6.png",
+  "title": "Cresselia",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 103,
+  "item": "cobblemon:moon_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4ddb96fd3421ee53.png",
+  "title": "Regigigas",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 104,
+  "item": "cobblemon:normal_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "53ea61e8b8eb6e1b.png",
+  "title": "Phione",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 105,
+  "item": "cobblemon:water_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4ecddf34f0750317.png",
+  "title": "Manaphy",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 106,
+  "item": "cobblemon:water_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "63427c724fd4c4ad.png",
+  "title": "Darkrai",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 107,
+  "item": "cobblemon:dark_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "134833b34e0d8fab.png",
+  "title": "Shaymin",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 108,
+  "item": "cobblemon:grass_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4b06d351390ed20e.png",
+  "title": "Tornadus",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 109,
+  "item": "cobblemon:air_balloon"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4361dcd028612e8e.png",
+  "title": "Thundurus",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 110,
+  "item": "cobblemon:electric_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "31c98e76fbd5954a.png",
+  "title": "Landorus",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 111,
+  "item": "cobblemon:soft_sand"
+ },
+ {
+  "kind": "quest_art",
+  "id": "48b9fde4dba038f9.png",
+  "title": "Reshiram",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 112,
+  "item": "cobblemon:magmarizer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "56bde069e49cedf1.png",
+  "title": "Zekrom",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 113,
+  "item": "cobblemon:electirizer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "53b1fca83f6cae89.png",
+  "title": "Kyurem",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 114,
+  "item": "cobblemon:ice_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "25ae07a032c6311e.png",
+  "title": "Cobalion",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 115,
+  "item": "cobblemon:metal_coat"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0e8844d9420aa2a7.png",
+  "title": "Terrakion",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 116,
+  "item": "cobblemon:rocky_helmet"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3aed514a08c392d2.png",
+  "title": "Virizion",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 117,
+  "item": "cobblemon:muscle_band"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7a338894ccaeda2c.png",
+  "title": "Keldeo",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 118,
+  "item": "cobblemon:water_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "297d850a6eee879a.png",
+  "title": "Victini",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 119,
+  "item": "cobblemon:psychic_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "31301d847dbfb626.png",
+  "title": "Meloetta",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 120,
+  "item": "cobblemon:normal_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0ab96cf3fa9ee843.png",
+  "title": "Genesect",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 121,
+  "item": "cobblemon:bug_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6673dc63be7a04bc.png",
+  "title": "Xerneas",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 122,
+  "item": "cobblemon:fairy_feather"
+ },
+ {
+  "kind": "quest_art",
+  "id": "420a71c77a6115e7.png",
+  "title": "Yveltal",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 123,
+  "item": "cobblemon:dark_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0c881e3e588a7098.png",
+  "title": "Zygarde",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 124,
+  "item": "cobblemon:dragon_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0c28f6772e276f16.png",
+  "title": "Diancie",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 125,
+  "item": "cobblemon:rock_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5713296c1fbbd649.png",
+  "title": "Hoopa",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 126,
+  "item": "cobblemon:psychic_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "615c8ff12e1b08aa.png",
+  "title": "Volcanion",
+  "chapter": "LEGENDARY EXPEDITIONS: SINNOH-KALOS",
+  "ordinal": 127,
+  "item": "cobblemon:fire_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3a918bfe0cbc8ac7.png",
+  "title": "Tapu Koko",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 128,
+  "item": "cobblemon:cell_battery"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2add9d191b1517be.png",
+  "title": "Tapu Lele",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 129,
+  "item": "cobblemon:choice_specs"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7b169eca503bb4df.png",
+  "title": "Tapu Bulu",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 130,
+  "item": "cobblemon:grassy_seed"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4b4a1854eca6852b.png",
+  "title": "Tapu Fini",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 131,
+  "item": "cobblemon:mystic_water"
+ },
+ {
+  "kind": "quest_art",
+  "id": "406fc814c58c5aee.png",
+  "title": "Cosmog",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 132,
+  "item": "cobblemon:exp_candy_xs"
+ },
+ {
+  "kind": "quest_art",
+  "id": "471b1035a6eb6b26.png",
+  "title": "Cosmoem",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 133,
+  "item": "cobblemon:psychic_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "613cd422c6ba3a47.png",
+  "title": "Solgaleo",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 134,
+  "item": "cobblemon:sun_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2f1ff5cf7bb39c0d.png",
+  "title": "Lunala",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 135,
+  "item": "cobblemon:moon_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2cdeed93ebd3fbe9.png",
+  "title": "Necrozma",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 136,
+  "item": "cobblemon:prism_scale"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3b78e292884efc50.png",
+  "title": "Type: Null",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 137,
+  "item": "cobblemon:eviolite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "266cc0c0f634de27.png",
+  "title": "Silvally",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 138,
+  "item": "cobblemon:normal_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "696614d67c9f5032.png",
+  "title": "Nihilego",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 139,
+  "item": "cobblemon:rock_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6932ca6cfd95ef03.png",
+  "title": "Buzzwole",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 140,
+  "item": "cobblemon:bug_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "04c8284ed0930be5.png",
+  "title": "Pheromosa",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 141,
+  "item": "cobblemon:bug_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "09228f22135492fc.png",
+  "title": "Xurkitree",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 142,
+  "item": "cobblemon:electric_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3442a5dbf9ec3366.png",
+  "title": "Celesteela",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 143,
+  "item": "cobblemon:steel_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0eac67ba382d4eb4.png",
+  "title": "Kartana",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 144,
+  "item": "cobblemon:grass_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1e26d18b43db83ce.png",
+  "title": "Guzzlord",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 145,
+  "item": "cobblemon:dark_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "00cbe38fb3360e49.png",
+  "title": "Poipole",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 146,
+  "item": "cobblemon:poison_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "77d5a60cd2ab4d60.png",
+  "title": "Naganadel",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 147,
+  "item": "cobblemon:poison_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4c0f5e1a20322500.png",
+  "title": "Stakataka",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 148,
+  "item": "cobblemon:rock_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "77ebcbdd9fa1cd0a.png",
+  "title": "Blacephalon",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 149,
+  "item": "cobblemon:fire_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4dd68f43b2e1204d.png",
+  "title": "Magearna",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 150,
+  "item": "cobblemon:steel_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "30c33937ab1a1857.png",
+  "title": "Marshadow",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 151,
+  "item": "cobblemon:fighting_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7e91d08725b18463.png",
+  "title": "Zeraora",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 152,
+  "item": "cobblemon:electric_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "64dd39543d9a50f9.png",
+  "title": "Meltan",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 153,
+  "item": "cobblemon:steel_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2f637d0d87cde090.png",
+  "title": "Melmetal: Availability Note",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 154,
+  "item": "cobblemon:steel_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "315d99c9d47629ca.png",
+  "title": "Zacian",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 155,
+  "item": "cobblemon:choice_band"
+ },
+ {
+  "kind": "quest_art",
+  "id": "728b87c11cb577af.png",
+  "title": "Zamazenta",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 156,
+  "item": "cobblemon:clear_amulet"
+ },
+ {
+  "kind": "quest_art",
+  "id": "12e10b9d5aee3eb5.png",
+  "title": "Eternatus",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 157,
+  "item": "cobblemon:toxic_orb"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1cd381801239ce49.png",
+  "title": "Kubfu",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 158,
+  "item": "cobblemon:focus_band"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6e103f8c95a830ca.png",
+  "title": "Urshifu",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 159,
+  "item": "cobblemon:fighting_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "466fd9a99b9395d9.png",
+  "title": "Regieleki",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 160,
+  "item": "cobblemon:electric_seed"
+ },
+ {
+  "kind": "quest_art",
+  "id": "186ab527793c5ff1.png",
+  "title": "Regidrago",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 161,
+  "item": "cobblemon:dragon_fang"
+ },
+ {
+  "kind": "quest_art",
+  "id": "29089a6900844d62.png",
+  "title": "Calyrex",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 162,
+  "item": "cobblemon:kings_rock"
+ },
+ {
+  "kind": "quest_art",
+  "id": "77c9cd32c9d99348.png",
+  "title": "Glastrier",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 163,
+  "item": "cobblemon:icy_rock"
+ },
+ {
+  "kind": "quest_art",
+  "id": "19413bc39592104b.png",
+  "title": "Spectrier",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 164,
+  "item": "cobblemon:black_sludge"
+ },
+ {
+  "kind": "quest_art",
+  "id": "208e181680a25ba0.png",
+  "title": "Zarude",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 165,
+  "item": "cobblemon:dark_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5cd5014136db2924.png",
+  "title": "Enamorus",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 166,
+  "item": "cobblemon:love_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0d7b1e99cf2ab524.png",
+  "title": "Koraidon",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 167,
+  "item": "cobblemon:fossilized_drake"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4d3eee04200a1d51.png",
+  "title": "Miraidon",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 168,
+  "item": "cobblemon:electric_seed"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4d8199e99a79850f.png",
+  "title": "Terapagos",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 169,
+  "item": "cobblemon:prism_scale"
+ },
+ {
+  "kind": "quest_art",
+  "id": "24ee6a6bd23e4346.png",
+  "title": "Ogerpon",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 170,
+  "item": "cobblemon:focus_sash"
+ },
+ {
+  "kind": "quest_art",
+  "id": "772b23af2d802329.png",
+  "title": "Wo-Chien",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 171,
+  "item": "cobblemon:coarse_mulch"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7c46fccc2348d0e3.png",
+  "title": "Chien-Pao",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 172,
+  "item": "cobblemon:choice_scarf"
+ },
+ {
+  "kind": "quest_art",
+  "id": "705f1aaf9e37a6ac.png",
+  "title": "Ting-Lu",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 173,
+  "item": "cobblemon:heavy_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5ddb9f07a1d27052.png",
+  "title": "Chi-Yu",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 174,
+  "item": "cobblemon:red_card"
+ },
+ {
+  "kind": "quest_art",
+  "id": "46eef3fd7ca12039.png",
+  "title": "Okidogi",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 175,
+  "item": "cobblemon:poison_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1173c5880a6eb8c5.png",
+  "title": "Munkidori",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 176,
+  "item": "cobblemon:poison_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6e3249140d1a4afa.png",
+  "title": "Fezandipiti",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 177,
+  "item": "cobblemon:poison_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "308c7634defae10a.png",
+  "title": "Pecharunt",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 178,
+  "item": "cobblemon:poison_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "04ab2e12457e52bd.png",
+  "title": "Walking Wake",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 179,
+  "item": "cobblemon:water_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7bd6c3327976fc6d.png",
+  "title": "Gouging Fire",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 180,
+  "item": "cobblemon:fire_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2cee71321d3d77c5.png",
+  "title": "Raging Bolt",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 181,
+  "item": "cobblemon:electric_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "227de54a4ff6497c.png",
+  "title": "Iron Leaves",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 182,
+  "item": "cobblemon:grass_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "31146fca3c52fda6.png",
+  "title": "Iron Boulder",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 183,
+  "item": "cobblemon:rock_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "70e9897aa5d89ddf.png",
+  "title": "Iron Crown",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 184,
+  "item": "cobblemon:steel_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2669d82702a5bcb0.png",
+  "title": "Legendary Field Record: 20",
+  "chapter": "LEGENDARY EXPEDITIONS: ALOLA-PALDEA",
+  "ordinal": 185,
+  "item": "cobblemon:master_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0893281244b7cfa7.png",
+  "title": "The Woodshop",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 186,
+  "item": "chipped:carpenters_table"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6fd6079c84025112.png",
+  "title": "Masonry Masterclass",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 187,
+  "item": "chipped:mason_table"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1f66912b1c7bd4a1.png",
+  "title": "Vitreous Art",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 188,
+  "item": "chipped:glassblower"
+ },
+ {
+  "kind": "quest_art",
+  "id": "23e831d64f47162a.png",
+  "title": "Naturalist's Detail",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 189,
+  "item": "chipped:botanist_workbench"
+ },
+ {
+  "kind": "quest_art",
+  "id": "65ecc5e000658fb3.png",
+  "title": "The Weaver's Loom",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 190,
+  "item": "chipped:loom_table"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0c11edec44d240c1.png",
+  "title": "The Engineer's Tools",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 191,
+  "item": "mcwroofs:roofing_hammer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1a1088b822793120.png",
+  "title": "Raising the Roof",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 192,
+  "item": "mcwroofs:base_roof"
+ },
+ {
+  "kind": "quest_art",
+  "id": "07171b589e7df3d1.png",
+  "title": "Crossing the Gap",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 193,
+  "item": "mcwbridges:oak_log_bridge_middle"
+ },
+ {
+  "kind": "quest_art",
+  "id": "66b96cf20790222f.png",
+  "title": "Sight and Shade",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 194,
+  "item": "mcwwindows:oak_window"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7bd8e2df0925b7ca.png",
+  "title": "Atmospheric Interiors",
+  "chapter": "BUILDING AND DECORATION",
+  "ordinal": 195,
+  "item": "mcwfurnitures:oak_desk"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5f178e66fd3c2873.png",
+  "title": "The Mage's Notebook",
+  "chapter": "ARS NOUVEAU: PRACTICAL MAGIC",
+  "ordinal": 196,
+  "item": "ars_nouveau:worn_notebook"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7fcf65e05946a7b2.png",
+  "title": "Build Your Spellbook",
+  "chapter": "ARS NOUVEAU: PRACTICAL MAGIC",
+  "ordinal": 197,
+  "item": "ars_nouveau:novice_spell_book"
+ },
+ {
+  "kind": "quest_art",
+  "id": "770f318f03d29d64.png",
+  "title": "A Larger Spellbook",
+  "chapter": "ARS NOUVEAU: PRACTICAL MAGIC",
+  "ordinal": 198,
+  "item": "ars_nouveau:apprentice_spell_book"
+ },
+ {
+  "kind": "quest_art",
+  "id": "36826ca9d17f379e.png",
+  "title": "Make Source Gems",
+  "chapter": "ARS NOUVEAU: PRACTICAL MAGIC",
+  "ordinal": 199,
+  "item": "ars_nouveau:imbuement_chamber"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0c0124a5249e9d39.png",
+  "title": "Source from Your Garden",
+  "chapter": "ARS NOUVEAU: PRACTICAL MAGIC",
+  "ordinal": 200,
+  "item": "ars_nouveau:agronomic_sourcelink"
+ },
+ {
+  "kind": "quest_art",
+  "id": "79f48133c937f5a3.png",
+  "title": "The Enchanting Apparatus",
+  "chapter": "ARS NOUVEAU: PRACTICAL MAGIC",
+  "ordinal": 201,
+  "item": "ars_nouveau:enchanting_apparatus"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7529a7734dc5015e.png",
+  "title": "A Starbuncle Helper",
+  "chapter": "ARS NOUVEAU: PRACTICAL MAGIC",
+  "ordinal": 202,
+  "item": "ars_nouveau:starbuncle_charm"
+ },
+ {
+  "kind": "quest_art",
+  "id": "19b1fc8ddf14322b.png",
+  "title": "Choose an Element",
+  "chapter": "ARS NOUVEAU: PRACTICAL MAGIC",
+  "ordinal": 203,
+  "item": "ars_elemental:lesser_air_focus"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2670e31f1b8fd5df.png",
+  "title": "Find a Structure",
+  "chapter": "ARS NOUVEAU: PRACTICAL MAGIC",
+  "ordinal": 204,
+  "item": "ars_additions:wayfinder"
+ },
+ {
+  "kind": "quest_art",
+  "id": "44e68f0292b94881.png",
+  "title": "Four Dangerous Discoveries",
+  "chapter": "BOSSES OF MASS DESTRUCTION",
+  "ordinal": 205,
+  "item": "bosses_of_mass_destruction:soul_star"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7e373fde11c902fa.png",
+  "title": "The Night Lich",
+  "chapter": "BOSSES OF MASS DESTRUCTION",
+  "ordinal": 206,
+  "item": "bosses_of_mass_destruction:soul_star"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7e81cad2b48e7125.png",
+  "title": "The Void Blossom",
+  "chapter": "BOSSES OF MASS DESTRUCTION",
+  "ordinal": 207,
+  "item": "bosses_of_mass_destruction:void_thorn"
+ },
+ {
+  "kind": "quest_art",
+  "id": "435b22d803e6a51a.png",
+  "title": "Before the Hunt",
+  "chapter": "CATACLYSM: BOSS HUNTS",
+  "ordinal": 208,
+  "item": "cataclysm:void_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "19ac5f807c33115b.png",
+  "title": "The Harbinger",
+  "chapter": "CATACLYSM: BOSS HUNTS",
+  "ordinal": 209,
+  "item": "cataclysm:mech_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "24077c47b78c4543.png",
+  "title": "Ancient Remnant",
+  "chapter": "CATACLYSM: BOSS HUNTS",
+  "ordinal": 210,
+  "item": "cataclysm:desert_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "788741f04c5b7dcb.png",
+  "title": "The Leviathan",
+  "chapter": "CATACLYSM: BOSS HUNTS",
+  "ordinal": 211,
+  "item": "cataclysm:abyss_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7a863144c8cdcd8e.png",
+  "title": "Scylla",
+  "chapter": "CATACLYSM: BOSS HUNTS",
+  "ordinal": 212,
+  "item": "cataclysm:storm_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "30f083e4a9527b88.png",
+  "title": "Maledictus",
+  "chapter": "CATACLYSM: BOSS HUNTS",
+  "ordinal": 213,
+  "item": "cataclysm:cursed_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3cf05b98e615cac8.png",
+  "title": "Master of the Hunts",
+  "chapter": "CATACLYSM: BOSS HUNTS",
+  "ordinal": 214,
+  "item": "minecraft:netherite_ingot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e8a0000000bd325.png",
+  "title": "Specialized Poké Balls",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 215,
+  "item": "cobblemon:quick_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e8a0000001c702b.png",
+  "title": "TMs",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 216,
+  "item": "cobblemon:tm_machine"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e8a00000014c51a.png",
+  "title": "Natures",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 217,
+  "item": "cobblemon:adamant_mint"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e8a00000015ba45.png",
+  "title": "EVs",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 218,
+  "item": "cobblemon:power_bracer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e8a00000017f80d.png",
+  "title": "Abilities",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 219,
+  "item": "cobblemon:ability_capsule"
+ },
+ {
+  "kind": "quest_art",
+  "id": "05aaeb7b168bfd49.png",
+  "title": "Poke balls",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 220,
+  "item": "cobblemon:poke_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "49a4aa72407d550f.png",
+  "title": "Exp candy",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 221,
+  "item": "cobblemon:exp_candy_xs"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6bea397dfcda7261.png",
+  "title": "IV Candy",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 222,
+  "item": "cobblemon:health_candy"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6be5e68f55edde2d.png",
+  "title": "Unique Poke balls",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 223,
+  "item": "cobblemon:safari_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "29b6f62de601495a.png",
+  "title": "Ancient Poke balls",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 224,
+  "item": "cobblemon:ancient_poke_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "654a0d01fa03457e.png",
+  "title": "Vitamins",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 225,
+  "item": "cobblemon:hp_up"
+ },
+ {
+  "kind": "quest_art",
+  "id": "51a9bf99aa2d0f19.png",
+  "title": "Aprijuice Flavors",
+  "chapter": "CATCHING AND TEAM TRAINING",
+  "ordinal": 226,
+  "item": "ftbfiltersystem:smart_filter"
+ },
+ {
+  "kind": "quest_art",
+  "id": "56f7204419cbfbf9.png",
+  "title": "Why Cook? The Food Book",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 227,
+  "item": "checkmark"
+ },
+ {
+  "kind": "quest_art",
+  "id": "54fb498f46a95407.png",
+  "title": "Kitchen Prep: Cutting Board and Knife",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 228,
+  "item": "farmersdelight:cutting_board"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27e4b384f973d966.png",
+  "title": "Agricultural Foundations",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 229,
+  "item": "farmersdelight:cabbage"
+ },
+ {
+  "kind": "quest_art",
+  "id": "048d4f2d0874f3fd.png",
+  "title": "Enriching the Soil",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 230,
+  "item": "farmersdelight:organic_compost"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6400597a2a59a10b.png",
+  "title": "Kitchen Apothecary: Recovery Tonics",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 231,
+  "item": "farmersdelight:hot_cocoa"
+ },
+ {
+  "kind": "quest_art",
+  "id": "57cf370c61903495.png",
+  "title": "The Hearth: Stove and Cooking Pot",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 232,
+  "item": "farmersdelight:stove"
+ },
+ {
+  "kind": "quest_art",
+  "id": "43bce73f938d8e47.png",
+  "title": "Field Cooking: The Skillet",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 233,
+  "item": "farmersdelight:skillet"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7b6b1aef318c51b5.png",
+  "title": "Sustained Stamina: Nourishment",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 234,
+  "item": "farmersdelight:steak_and_potatoes"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27fb03a3c59190f0.png",
+  "title": "A Grand Feast: Roast Chicken",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 235,
+  "item": "farmersdelight:roast_chicken_block"
+ },
+ {
+  "kind": "quest_art",
+  "id": "494cdad1a129e44c.png",
+  "title": "Nether Agriculture: Resurgent Soil",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 236,
+  "item": "mynethersdelight:bullet_pepper"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0b2e15bfbeb6eb67.png",
+  "title": "Volcanic Stews: Strider Stew",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 237,
+  "item": "mynethersdelight:strider_stew"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27771b7fb818da9f.png",
+  "title": "Void Confections: Chorus Flower Tea",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 238,
+  "item": "ends_delight:chorus_flower_tea"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6c3843153950edee.png",
+  "title": "Draconic Effervescence: Dragon Breath Soda",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 239,
+  "item": "ends_delight:dragon_breath_soda"
+ },
+ {
+  "kind": "quest_art",
+  "id": "08789ccc97f22dec.png",
+  "title": "Catch of the Deep: Stuffed Squid",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 240,
+  "item": "oceansdelight:cooked_stuffed_squid"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7a910220e2d6eac1.png",
+  "title": "Guardian Feast: The Apex Chowder",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 241,
+  "item": "oceansdelight:bowl_of_guardian_soup"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4620bb58a4fe738c.png",
+  "title": "Twilight Metallurgy: Fiery Cookware",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 242,
+  "item": "twilightdelight:fiery_cooking_pot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2504bd72cc89f438.png",
+  "title": "Aura Infusions: Choose Your Element",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 243,
+  "item": "twilightdelight:glacier_ice_tea"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2a35b3a7a6febc05.png",
+  "title": "Starlight Sustenance and Numbness",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 244,
+  "item": "eternal_starlight_delight:starmina_noodle_soup"
+ },
+ {
+  "kind": "quest_art",
+  "id": "47f50e803e8c8d08.png",
+  "title": "Culinary Straps and Modifications",
+  "chapter": "CULINARY DELIGHTS",
+  "ordinal": 245,
+  "item": "eternal_starlight_delight:starfire_flower_strap"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5f35be8ac580fd01.png",
+  "title": "Relics of the Fallen City",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 246,
+  "item": "deeperdarker:ancient_vase"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3cabc511b07f9290.png",
+  "title": "Warden Carapace",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 247,
+  "item": "deeperdarker:warden_carapace"
+ },
+ {
+  "kind": "quest_art",
+  "id": "04f33f021a6f94ea.png",
+  "title": "Heart of the Deep",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 248,
+  "item": "deeperdarker:heart_of_the_deep"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1dc9d08d28793332.png",
+  "title": "The Gateway Beneath Bedrock",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 249,
+  "item": "dimension"
+ },
+ {
+  "kind": "quest_art",
+  "id": "44985097c9fb67a6.png",
+  "title": "Foundation of Shadows",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 250,
+  "item": "deeperdarker:sculk_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "782e268bab152cf9.png",
+  "title": "Veins of the Abyss",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 251,
+  "item": "deeperdarker:sculk_stone_diamond_ore"
+ },
+ {
+  "kind": "quest_art",
+  "id": "08e85d1f88caa384.png",
+  "title": "Viscous Sediment",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 252,
+  "item": "deeperdarker:sculk_grime"
+ },
+ {
+  "kind": "quest_art",
+  "id": "022125ecea5e6b4d.png",
+  "title": "Preserved in Time",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 253,
+  "item": "deeperdarker:crystallized_amber"
+ },
+ {
+  "kind": "quest_art",
+  "id": "78ee23b6191d77a3.png",
+  "title": "Echoing Forest",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 254,
+  "item": "deeperdarker:echo_log"
+ },
+ {
+  "kind": "quest_art",
+  "id": "53133daecd6eaa13.png",
+  "title": "Bioluminescent Dew",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 255,
+  "item": "deeperdarker:porous_sculk_gleam"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6a94efc875131f5b.png",
+  "title": "Blooming Caverns",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 256,
+  "item": "deeperdarker:blooming_stem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "62bffefe1a43de6f.png",
+  "title": "Nourishment of the Abyss",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 257,
+  "item": "deeperdarker:bloom_berries"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2710d5d8491842f4.png",
+  "title": "Ice Lilies",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 258,
+  "item": "deeperdarker:ice_lily"
+ },
+ {
+  "kind": "quest_art",
+  "id": "77d75aa2bad12c9c.png",
+  "title": "Shattered Souls",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 259,
+  "item": "deeperdarker:soul_dust"
+ },
+ {
+  "kind": "quest_art",
+  "id": "205461898477fd1a.png",
+  "title": "Sculk Pests",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 260,
+  "item": "deeperdarker:soul_dust"
+ },
+ {
+  "kind": "quest_art",
+  "id": "673ce8e2e6d92d04.png",
+  "title": "Subsurface Mandibles",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 261,
+  "item": "deeperdarker:sculk_jaw"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2b872422e4238bce.png",
+  "title": "Lurkers of the Stygian Lakes",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 262,
+  "item": "deeperdarker:angler_fish"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6ffbf5ccaa934e36.png",
+  "title": "The Hound of the Deeplands",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 263,
+  "item": "deeperdarker:sculk_bone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "573c23c1959b21d2.png",
+  "title": "Gloomsherds",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 264,
+  "item": "deeperdarker:gloomsherd"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7f2e4c4ae9b33b1b.png",
+  "title": "Abyssal Archaeology",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 265,
+  "item": "deeperdarker:gloomslate_pot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3bd896016246c264.png",
+  "title": "Resonarium",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 266,
+  "item": "deeperdarker:resonarium"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1f1304d936bf3ae7.png",
+  "title": "Resonarium Plates",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 267,
+  "item": "deeperdarker:resonarium_plate"
+ },
+ {
+  "kind": "quest_art",
+  "id": "58856ce004662212.png",
+  "title": "Resonarium Upgrade",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 268,
+  "item": "deeperdarker:resonarium_upgrade_smithing_template"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3fa86a17c313e0f1.png",
+  "title": "Resonarium Armor",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 269,
+  "item": "deeperdarker:resonarium_helmet"
+ },
+ {
+  "kind": "quest_art",
+  "id": "28edd8412606bd47.png",
+  "title": "Acoustic Implements",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 270,
+  "item": "deeperdarker:resonarium_sword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2c4af38f53bc8210.png",
+  "title": "Wireless Sub-Space Storage",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 271,
+  "item": "deeperdarker:sculk_transmitter"
+ },
+ {
+  "kind": "quest_art",
+  "id": "736567d36566fad6.png",
+  "title": "Acoustic Dampening",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 272,
+  "item": "deeperdarker:soundproof_glass"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0a424aae253fab67.png",
+  "title": "Lite Blocks",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 273,
+  "item": "deeperdarker:lite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6095b667ec4559ea.png",
+  "title": "Ancient Compass",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 274,
+  "item": "deeperdarker:ancient_compass"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6c2f2d5e8533a654.png",
+  "title": "Soul Crystal",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 275,
+  "item": "deeperdarker:soul_crystal"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0d3b74540dc83417.png",
+  "title": "The Monarch's Blueprint",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 276,
+  "item": "deeperdarker:warden_upgrade_smithing_template"
+ },
+ {
+  "kind": "quest_art",
+  "id": "11e4e583b04304d1.png",
+  "title": "Reinforced Echo Shards",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 277,
+  "item": "deeperdarker:reinforced_echo_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7ab83cc58fde7220.png",
+  "title": "The Armor of the Deep Monarch",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 278,
+  "item": "deeperdarker:warden_helmet"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4282843ffc05f885.png",
+  "title": "The Monarch's Arsenal",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 279,
+  "item": "deeperdarker:warden_sword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "589c4375cddf235d.png",
+  "title": "Sonorous Staff",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 280,
+  "item": "deeperdarker:sonorous_staff"
+ },
+ {
+  "kind": "quest_art",
+  "id": "46165db0c6a28661.png",
+  "title": "Soul Elytra",
+  "chapter": "DEEPER AND DARKER",
+  "ordinal": 281,
+  "item": "deeperdarker:soul_elytra"
+ },
+ {
+  "kind": "quest_art",
+  "id": "04f759d9cfe44b45.png",
+  "title": "The Guardian of Ruins",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 282,
+  "item": "eternal_starlight:orb_of_prophecy"
+ },
+ {
+  "kind": "quest_art",
+  "id": "46911d0a86cd73e9.png",
+  "title": "Igniting the Gateway",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 283,
+  "item": "eternal_starlight:chiseled_voidstone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "374846cf30213b4e.png",
+  "title": "Twilight Sanctuary",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 284,
+  "item": "eternal_starlight:torreya_campfire"
+ },
+ {
+  "kind": "quest_art",
+  "id": "44249da3f558da42.png",
+  "title": "Chart the Constellations",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 285,
+  "item": "eternal_starlight:seeking_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6835fb48e5531b94.png",
+  "title": "Silver of the Dark Swamp",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 286,
+  "item": "eternal_starlight:raw_deepsilver"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0fded4decacee987.png",
+  "title": "Malarite Strata",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 287,
+  "item": "eternal_starlight:malarite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6df490e7a23e3ec0.png",
+  "title": "Celestial Radiance: Starcore",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 288,
+  "item": "eternal_starlight:starcore"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6cd61f0338ae3bdc.png",
+  "title": "Gems of the Firmament",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 289,
+  "item": "eternal_starlight:starlit_diamond"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6ac8fe33ab9eec94.png",
+  "title": "Resin of the Torreya",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 290,
+  "item": "eternal_starlight:raw_amaramber"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5c07b83843cad277.png",
+  "title": "Scalding Mineral Springs",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 291,
+  "item": "eternal_starlight:thermal_springstone_ingot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "793d6281d6605669.png",
+  "title": "Subzero Glacite",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 292,
+  "item": "eternal_starlight:glacite_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "59fb229e4f60d0a5.png",
+  "title": "Rivers of Pure Ether",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 293,
+  "item": "eternal_starlight:ether_bucket"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7f6ebd213cad0348.png",
+  "title": "Harvest of the Night Sky",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 294,
+  "item": "eternal_starlight:crinoa"
+ },
+ {
+  "kind": "quest_art",
+  "id": "573c350df46d835f.png",
+  "title": "The Starfire Bird",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 295,
+  "item": "eternal_starlight:starfire_bird_egg"
+ },
+ {
+  "kind": "quest_art",
+  "id": "283f41940e408544.png",
+  "title": "The Golem Forge",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 296,
+  "item": "eternal_starlight:golem_steel_ingot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "24d3e35d8a388d56.png",
+  "title": "The Master Foundry",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 297,
+  "item": "eternal_starlight:alloy_furnace"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5dc3513a2bf77500.png",
+  "title": "Machined Metallurgy",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 298,
+  "item": "eternal_starlight:golem_steel_greatsword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "277a8291ba8504b6.png",
+  "title": "The Cursed Garden",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 299,
+  "item": "eternal_starlight:tenacious_petal"
+ },
+ {
+  "kind": "quest_art",
+  "id": "159df9475ef5bb55.png",
+  "title": "Arsenal of the Eclipse",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 300,
+  "item": "eternal_starlight:moonring_greatsword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "59e63cfab048a6a9.png",
+  "title": "The Chilled Deep",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 301,
+  "item": "eternal_starlight:frozen_tube"
+ },
+ {
+  "kind": "quest_art",
+  "id": "09bc70328f30bd0f.png",
+  "title": "Shower of Falling Stars",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 302,
+  "item": "eternal_starlight:raw_aethersent"
+ },
+ {
+  "kind": "quest_art",
+  "id": "19c9fb8b8f89a5eb.png",
+  "title": "The Astral Ward",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 303,
+  "item": "eternal_starlight:aethersent_cape"
+ },
+ {
+  "kind": "quest_art",
+  "id": "44445ce4dfb6ce7f.png",
+  "title": "Terrors of the Deep Void",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 304,
+  "item": "eternal_starlight:seeker_tentacle"
+ },
+ {
+  "kind": "quest_art",
+  "id": "04ea46e634fe7a4d.png",
+  "title": "The Abyssal Lash",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 305,
+  "item": "eternal_starlight:tentacle_spike"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e1b95b309a4644a.png",
+  "title": "Trapped Souls: Soul Dew",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 306,
+  "item": "eternal_starlight:soul_dew"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4ba4f6184e332e92.png",
+  "title": "The Fourfold Fusion: Unrealium",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 307,
+  "item": "eternal_starlight:unrealium_ingot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "17579892204f63cd.png",
+  "title": "Master of the Stars",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 308,
+  "item": "eternal_starlight:unrealium_sword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3fd54c6d176262fa.png",
+  "title": "Relics of Translocation",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 309,
+  "item": "eternal_starlight:etheric_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "39fe9d1261e5fd0d.png",
+  "title": "Catalysts and Transmutations",
+  "chapter": "ETERNAL STARLIGHT",
+  "ordinal": 310,
+  "item": "eternal_starlight:crystalborn_catalyst"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0385ef57acab8be9.png",
+  "title": "Wild Etiquette: Baits and Snacks",
+  "chapter": "EXPLORATION, FOSSILS AND UTILITIES",
+  "ordinal": 311,
+  "item": "cobblemon:poke_bait"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7b2df4d19e2b5ae4.png",
+  "title": "Pocket Storage: Box Link",
+  "chapter": "EXPLORATION, FOSSILS AND UTILITIES",
+  "ordinal": 312,
+  "item": "cobblemonboxlink:box_link"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6d49581e29acfa55.png",
+  "title": "Base Infrastructure: PC and Healing Unit",
+  "chapter": "EXPLORATION, FOSSILS AND UTILITIES",
+  "ordinal": 313,
+  "item": "cobblemon:pc"
+ },
+ {
+  "kind": "quest_art",
+  "id": "19d2b4e63f3b4c58.png",
+  "title": "Pasture blocks",
+  "chapter": "EXPLORATION, FOSSILS AND UTILITIES",
+  "ordinal": 314,
+  "item": "cobblemon:pasture"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5d14e53b1cd670f6.png",
+  "title": "Trainer's Showcase: Display Cases",
+  "chapter": "EXPLORATION, FOSSILS AND UTILITIES",
+  "ordinal": 315,
+  "item": "cobblemon:display_case"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4b19dbfffa7f1fe2.png",
+  "title": "Wild Dominance: Cobblemon Alphas",
+  "chapter": "EXPLORATION, FOSSILS AND UTILITIES",
+  "ordinal": 316,
+  "item": "cobblemon_tasks:cobblemon_task"
+ },
+ {
+  "kind": "quest_art",
+  "id": "55c0e66be9a3dc83.png",
+  "title": "Choose Your First Partner",
+  "chapter": "COBBLEMON: FIRST STEPS",
+  "ordinal": 317,
+  "item": "cobblemon:poke_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2d026a79b5f2a6ba.png",
+  "title": "Win Your First Battle",
+  "chapter": "COBBLEMON: FIRST STEPS",
+  "ordinal": 318,
+  "item": "cobblemon:poke_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1ecea271020f4c13.png",
+  "title": "Make Your First Catch",
+  "chapter": "COBBLEMON: FIRST STEPS",
+  "ordinal": 319,
+  "item": "cobblemon:great_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "08eb8d026a5eb5f1.png",
+  "title": "Build a Healing Machine",
+  "chapter": "COBBLEMON: FIRST STEPS",
+  "ordinal": 320,
+  "item": "cobblemon:healing_machine"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27419a96a0a9c168.png",
+  "title": "Build a PC",
+  "chapter": "COBBLEMON: FIRST STEPS",
+  "ordinal": 321,
+  "item": "cobblemon:pc"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1cb98bf97e078968.png",
+  "title": "Optional: Train to Level 20",
+  "chapter": "COBBLEMON: FIRST STEPS",
+  "ordinal": 322,
+  "item": "cobblemon:rare_candy"
+ },
+ {
+  "kind": "quest_art",
+  "id": "501f2b5e9bc9a6e3.png",
+  "title": "The Scholar's Bestiary",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 323,
+  "item": "iceandfire:bestiary"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7d229d2a2365e3c0.png",
+  "title": "Sacred Metallurgy: Silver",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 324,
+  "item": "iceandfire:silver_ingot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "338870a212e52f6b.png",
+  "title": "Faerie Glades and Pixie Jars",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 325,
+  "item": "iceandfire:pixie_jar_empty"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6e473ccf2a6d1fa8.png",
+  "title": "Pride of the Skies: Hippogryph",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 326,
+  "item": "iceandfire:hippogryph_talon"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6ed374465b47b8f9.png",
+  "title": "Canopy Gliders: Amphithere",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 327,
+  "item": "iceandfire:amphithere_feather"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7aef0f135b3097fe.png",
+  "title": "The Withering Stare: Cockatrice",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 328,
+  "item": "iceandfire:cockatrice_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "21d5e7976145db0e.png",
+  "title": "Bronze Wings: Stymphalian Birds",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 329,
+  "item": "iceandfire:stymphalian_bird_feather"
+ },
+ {
+  "kind": "quest_art",
+  "id": "727139b409e0f110.png",
+  "title": "Restless Wraiths and Graveyard Soil",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 330,
+  "item": "iceandfire:ectoplasm"
+ },
+ {
+  "kind": "quest_art",
+  "id": "60533be364dfe409.png",
+  "title": "The Lure of the Deep: Sirens",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 331,
+  "item": "iceandfire:earplugs"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5842c8d77908c670.png",
+  "title": "The One-Eyed Colossus",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 332,
+  "item": "iceandfire:cyclops_eye"
+ },
+ {
+  "kind": "quest_art",
+  "id": "77faab8c21c0f560.png",
+  "title": "Stone Stare: The Gorgon",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 333,
+  "item": "iceandfire:blindfold"
+ },
+ {
+  "kind": "quest_art",
+  "id": "468f55c3e20b880c.png",
+  "title": "Dunes of Terror: Death Worm",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 334,
+  "item": "iceandfire:deathworm_chitin_yellow"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3037620426aa71eb.png",
+  "title": "Sunlight Petrification: Trolls",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 335,
+  "item": "iceandfire:troll_leather_forest"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6d74185981d07294.png",
+  "title": "Terror of the Oceans: Sea Serpent",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 336,
+  "item": "iceandfire:sea_serpent_scales_blue"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2d8b33b918ac19dc.png",
+  "title": "Weapon of the Abyssal Depths",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 337,
+  "item": "iceandfire:tide_trident"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4703b6683f4cb946.png",
+  "title": "The Multi-Headed Nightmare",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 338,
+  "item": "iceandfire:hydra_fang"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e7e8674fd12ee06.png",
+  "title": "Felling the Sky Beast",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 339,
+  "item": "iceandfire:dragonbone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "082a67fe075f15cd.png",
+  "title": "Extracting Dragon Blood",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 340,
+  "item": "iceandfire:fire_dragon_blood"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6c36154378a693fe.png",
+  "title": "Dragonbone Armory",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 341,
+  "item": "iceandfire:dragonbone_sword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7e298ac1ac821dc7.png",
+  "title": "Blood-Forged Edges",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 342,
+  "item": "iceandfire:dragonbone_sword_fire"
+ },
+ {
+  "kind": "quest_art",
+  "id": "084f8ba7b3ff879d.png",
+  "title": "Impenetrable Dragonscales",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 343,
+  "item": "iceandfire:armor_red_chestplate"
+ },
+ {
+  "kind": "quest_art",
+  "id": "272aefa5c4fbda29.png",
+  "title": "The Dragon Seeker",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 344,
+  "item": "iceandfire:dragon_seeker"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7554521798381fd6.png",
+  "title": "Stealing the Mother's Egg",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 345,
+  "item": "iceandfire:dragonegg_red"
+ },
+ {
+  "kind": "quest_art",
+  "id": "084fbe217e663557.png",
+  "title": "The Primordial Incubation",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 346,
+  "item": "iceandfire:dragon_stick"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6faa334538037984.png",
+  "title": "Nutrition and Growth Control",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 347,
+  "item": "iceandfire:dragon_meal"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6f4c67bc00f35604.png",
+  "title": "Commands of the Sky: The Flute",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 348,
+  "item": "iceandfire:dragon_flute"
+ },
+ {
+  "kind": "quest_art",
+  "id": "722d0befa389964f.png",
+  "title": "The Pocket Dragon: Dragon Horn",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 349,
+  "item": "iceandfire:dragon_horn"
+ },
+ {
+  "kind": "quest_art",
+  "id": "418f05270c45f9b5.png",
+  "title": "Armor for an Emperor",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 350,
+  "item": "iceandfire:dragonarmor_diamond_head"
+ },
+ {
+  "kind": "quest_art",
+  "id": "402291ac55774bac.png",
+  "title": "Bound Across Realities: Summoning Crystal",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 351,
+  "item": "iceandfire:summoning_crystal_fire"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7b3e4e8ead07c026.png",
+  "title": "The Ancient Art: The Dragon Forge",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 352,
+  "item": "iceandfire:dragonforge_fire_core_disabled"
+ },
+ {
+  "kind": "quest_art",
+  "id": "715a543f5a8d6404.png",
+  "title": "Dragonsteel: The Supreme Alloy",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 353,
+  "item": "iceandfire:dragonsteel_fire_ingot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "36f77c65b1037604.png",
+  "title": "The Cataclysm Blade",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 354,
+  "item": "iceandfire:dragonsteel_fire_sword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4b5619e058ac940f.png",
+  "title": "The Sovereign Aegis",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 355,
+  "item": "iceandfire:dragonsteel_fire_chestplate"
+ },
+ {
+  "kind": "quest_art",
+  "id": "34285cb18af2317e.png",
+  "title": "The Frozen Tomb: Dread Mausoleum",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 356,
+  "item": "iceandfire:dread_key"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7eb37b551f782988.png",
+  "title": "Staff of the Dread Lich",
+  "chapter": "ICE AND FIRE: DRAGONS",
+  "ordinal": 357,
+  "item": "iceandfire:lich_staff"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7975811b5cc73e69.png",
+  "title": "Your First Botany Pot",
+  "chapter": "POT FARMING AND BERRY GARDENS",
+  "ordinal": 358,
+  "item": "botanypots:terracotta_botany_pot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5b77e152004b28a8.png",
+  "title": "Collect the Harvest",
+  "chapter": "POT FARMING AND BERRY GARDENS",
+  "ordinal": 359,
+  "item": "botanypots:terracotta_hopper_botany_pot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0ad22a138885ad39.png",
+  "title": "Berries and Apricorns",
+  "chapter": "POT FARMING AND BERRY GARDENS",
+  "ordinal": 360,
+  "item": "cobblemon:leppa_berry"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1a3d1fa7bc8960a9.png",
+  "title": "Greater Relic of Rejuvenation",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 361,
+  "item": "relics_rpgs:greater_healing_taken"
+ },
+ {
+  "kind": "quest_art",
+  "id": "65c02d7f8f1b8c20.png",
+  "title": "Greater Perk: Fortress Stance",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 362,
+  "item": "relics_rpgs:greater_perk_defense_block"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3b8faa1837f8a88b.png",
+  "title": "Greater Perk: Riposte",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 363,
+  "item": "relics_rpgs:greater_perk_evasion_attack"
+ },
+ {
+  "kind": "quest_art",
+  "id": "14b4668efe1908c6.png",
+  "title": "Greater Perk: Purifying Wave",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 364,
+  "item": "relics_rpgs:greater_perk_heal_cleanse"
+ },
+ {
+  "kind": "quest_art",
+  "id": "72ff5d2a386ecbe0.png",
+  "title": "Greater Perk: Lifebuoy",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 365,
+  "item": "relics_rpgs:greater_perk_heal_danger"
+ },
+ {
+  "kind": "quest_art",
+  "id": "54b3aacd5b649891.png",
+  "title": "Greater Perk: Skull Crusher",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 366,
+  "item": "relics_rpgs:greater_perk_melee_stun"
+ },
+ {
+  "kind": "quest_art",
+  "id": "47229389571aa876.png",
+  "title": "Greater Perk: Anti-Gravity Shot",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 367,
+  "item": "relics_rpgs:greater_perk_ranged_levitate"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1a2a73ed562b0f79.png",
+  "title": "Greater Perk: Shadow Strike",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 368,
+  "item": "relics_rpgs:greater_perk_roll_damage"
+ },
+ {
+  "kind": "quest_art",
+  "id": "580d7b71d8f56413.png",
+  "title": "Greater Perk: Shield Rebound",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 369,
+  "item": "relics_rpgs:greater_perk_shield_reset"
+ },
+ {
+  "kind": "quest_art",
+  "id": "759cde66bacfb3d0.png",
+  "title": "Greater Perk: Mind Shatter",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 370,
+  "item": "relics_rpgs:greater_perk_spell_stun"
+ },
+ {
+  "kind": "quest_art",
+  "id": "142c3fe860e7a113.png",
+  "title": "Greater Bulwark of Desperation",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 371,
+  "item": "relics_rpgs:greater_proc_defense_danger"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4ce4aa2259d20e14.png",
+  "title": "Greater Bloodlust Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 372,
+  "item": "relics_rpgs:greater_proc_physical_trance"
+ },
+ {
+  "kind": "quest_art",
+  "id": "11ce5dd2b45ed1f0.png",
+  "title": "Greater Arcane Trance Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 373,
+  "item": "relics_rpgs:greater_proc_spell_trance"
+ },
+ {
+  "kind": "quest_art",
+  "id": "482a4a00f13cac13.png",
+  "title": "Citrine Jewel Figurine",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 374,
+  "item": "relics_rpgs:jewel_figurine_citrine"
+ },
+ {
+  "kind": "quest_art",
+  "id": "614ff3d719db3ad0.png",
+  "title": "Jade Jewel Figurine",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 375,
+  "item": "relics_rpgs:jewel_figurine_jade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "29a3b2e95d65a441.png",
+  "title": "Ruby Jewel Figurine",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 376,
+  "item": "relics_rpgs:jewel_figurine_ruby"
+ },
+ {
+  "kind": "quest_art",
+  "id": "718239c89f99b9d7.png",
+  "title": "Sapphire Jewel Figurine",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 377,
+  "item": "relics_rpgs:jewel_figurine_sapphire"
+ },
+ {
+  "kind": "quest_art",
+  "id": "449b22795c6012b2.png",
+  "title": "Tanzanite Jewel Figurine",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 378,
+  "item": "relics_rpgs:jewel_figurine_tanzanite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7656af7229d4beef.png",
+  "title": "Topaz Jewel Figurine",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 379,
+  "item": "relics_rpgs:jewel_figurine_topaz"
+ },
+ {
+  "kind": "quest_art",
+  "id": "53f548179ea1c601.png",
+  "title": "Lesser Evasion",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 380,
+  "item": "relics_rpgs:lesser_evasion"
+ },
+ {
+  "kind": "quest_art",
+  "id": "207b6045d661eca7.png",
+  "title": "Lesser Melee Critical Chance",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 381,
+  "item": "relics_rpgs:lesser_melee_crit_chance"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0bb8f013d772059e.png",
+  "title": "Lesser Melee Critical Damage",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 382,
+  "item": "relics_rpgs:lesser_melee_crit_damage"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e8f7ff7b7e21f67.png",
+  "title": "Lesser Spellweaver's Catalyst",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 383,
+  "item": "relics_rpgs:lesser_proc_arcane_fire"
+ },
+ {
+  "kind": "quest_art",
+  "id": "366eb16f508ebad7.png",
+  "title": "Lesser Executioner's Sigil",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 384,
+  "item": "relics_rpgs:lesser_proc_crit_damage"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4e3e618c61afa181.png",
+  "title": "Lesser Frostguard Amulet",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 385,
+  "item": "relics_rpgs:lesser_proc_frost_healing"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1657f87087476bb8.png",
+  "title": "Lesser Spellcrit Sigil",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 386,
+  "item": "relics_rpgs:lesser_proc_spell_crit"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6dadd6c795a76d79.png",
+  "title": "Lesser Combat Roll",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 387,
+  "item": "relics_rpgs:lesser_roll"
+ },
+ {
+  "kind": "quest_art",
+  "id": "38469ee5648a2bfa.png",
+  "title": "Lesser Relic of Force",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 388,
+  "item": "relics_rpgs:lesser_use_damage"
+ },
+ {
+  "kind": "quest_art",
+  "id": "587f302c1a04e533.png",
+  "title": "Lesser Relic of Dexterity",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 389,
+  "item": "relics_rpgs:lesser_use_dex"
+ },
+ {
+  "kind": "quest_art",
+  "id": "28f49481a0a04dc4.png",
+  "title": "Lesser Relic of Vitality",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 390,
+  "item": "relics_rpgs:lesser_use_health"
+ },
+ {
+  "kind": "quest_art",
+  "id": "62801c4510435a10.png",
+  "title": "Lesser Relic of the Marksman",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 391,
+  "item": "relics_rpgs:lesser_use_ranged"
+ },
+ {
+  "kind": "quest_art",
+  "id": "405cacec877409a9.png",
+  "title": "Lesser Relic of Quickening",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 392,
+  "item": "relics_rpgs:lesser_use_spell_haste"
+ },
+ {
+  "kind": "quest_art",
+  "id": "76609945e3c80ee8.png",
+  "title": "Lesser Relic of Sorcery",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 393,
+  "item": "relics_rpgs:lesser_use_spell_power"
+ },
+ {
+  "kind": "quest_art",
+  "id": "392c34c6d335d789.png",
+  "title": "Medium Arcane Surge Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 394,
+  "item": "relics_rpgs:medium_proc_arcane_power"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4b22d3081c8eaee9.png",
+  "title": "Medium Heavy Strike Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 395,
+  "item": "relics_rpgs:medium_proc_attack_damage"
+ },
+ {
+  "kind": "quest_art",
+  "id": "76ae35fff64a6b48.png",
+  "title": "Medium Flurry Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 396,
+  "item": "relics_rpgs:medium_proc_attack_speed"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3ee1115397604e19.png",
+  "title": "Medium Aegis Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 397,
+  "item": "relics_rpgs:medium_proc_defense"
+ },
+ {
+  "kind": "quest_art",
+  "id": "64c378d35cf0991c.png",
+  "title": "Medium Phantom Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 398,
+  "item": "relics_rpgs:medium_proc_evasion"
+ },
+ {
+  "kind": "quest_art",
+  "id": "32ebd6899be578c7.png",
+  "title": "Medium Pyromancer's Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 399,
+  "item": "relics_rpgs:medium_proc_fire_power"
+ },
+ {
+  "kind": "quest_art",
+  "id": "49ad4bfb420660f1.png",
+  "title": "Medium Glacial Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 400,
+  "item": "relics_rpgs:medium_proc_frost_power"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0822c7df09d3ef31.png",
+  "title": "Medium Mender's Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 401,
+  "item": "relics_rpgs:medium_proc_healing_power"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5cec4eb5edd96831.png",
+  "title": "Medium Sniper's Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 402,
+  "item": "relics_rpgs:medium_proc_ranged_damage"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3d4cbf374eb93eff.png",
+  "title": "Medium Channeller's Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 403,
+  "item": "relics_rpgs:medium_proc_spell_haste"
+ },
+ {
+  "kind": "quest_art",
+  "id": "14296c07f26b4776.png",
+  "title": "Medium Archmage's Relic",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 404,
+  "item": "relics_rpgs:medium_proc_spell_power"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6764065f71ecca6b.png",
+  "title": "Superior War Banner",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 405,
+  "item": "relics_rpgs:superior_use_area_attack_damage"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0aed153e105f2773.png",
+  "title": "Superior Bastion Standard",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 406,
+  "item": "relics_rpgs:superior_use_area_defense_health"
+ },
+ {
+  "kind": "quest_art",
+  "id": "269fb4c22095b0ea.png",
+  "title": "Superior Consecrated Zone",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 407,
+  "item": "relics_rpgs:superior_use_zone_healing_taken"
+ },
+ {
+  "kind": "quest_art",
+  "id": "731ea26134adb44c.png",
+  "title": "Superior Leyline Nexus",
+  "chapter": "RELICS: RPGS",
+  "ordinal": 408,
+  "item": "relics_rpgs:superior_use_zone_spell_power"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7e259c18de7a6829.png",
+  "title": "Beyond Simply Swords",
+  "chapter": "SIMPLY MORE: WEAPON CHOICES",
+  "ordinal": 409,
+  "item": "simplymore:diamond_great_katana"
+ },
+ {
+  "kind": "quest_art",
+  "id": "698e17f49802cac4.png",
+  "title": "Forge an Additional Style",
+  "chapter": "SIMPLY MORE: WEAPON CHOICES",
+  "ordinal": 410,
+  "item": "simplymore:diamond_great_katana"
+ },
+ {
+  "kind": "quest_art",
+  "id": "522127129b06ac31.png",
+  "title": "A Runic Addon Weapon",
+  "chapter": "SIMPLY MORE: WEAPON CHOICES",
+  "ordinal": 411,
+  "item": "simplymore:runic_great_katana"
+ },
+ {
+  "kind": "quest_art",
+  "id": "65c990b4219d8be8.png",
+  "title": "A Rare Find",
+  "chapter": "SIMPLY MORE: WEAPON CHOICES",
+  "ordinal": 412,
+  "item": "simplymore:black_pearl"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3a26d28c67bc754e.png",
+  "title": "Iron Tempering",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 413,
+  "item": "simplyswords:iron_longsword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "70c6be6030f55b6f.png",
+  "title": "Gilded Edge",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 414,
+  "item": "simplyswords:gold_longsword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0b5db05680190520.png",
+  "title": "Diamond Standard",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 415,
+  "item": "simplyswords:diamond_longsword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6c0f1acffb125c26.png",
+  "title": "Netherite Reinforcement",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 416,
+  "item": "simplyswords:netherite_longsword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0493eb4a4ef38fce.png",
+  "title": "Runic Imbuing",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 417,
+  "item": "simplyswords:runic_longsword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1665ddc0097da4b7.png",
+  "title": "Empowered Remnants",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 418,
+  "item": "simplyswords:empowered_remnant"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3f4d20241b0ff398.png",
+  "title": "Runefused Gem",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 419,
+  "item": "simplyswords:runefused_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "35df9fe05b86f77b.png",
+  "title": "Netherfused Gem",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 420,
+  "item": "simplyswords:netherfused_gem"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5fffefd9f5ca6764.png",
+  "title": "Diamond Claymore",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 421,
+  "item": "simplyswords:diamond_claymore"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2cdde2bf366cefdf.png",
+  "title": "Diamond Greathammer",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 422,
+  "item": "simplyswords:diamond_greathammer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27685af09c590e38.png",
+  "title": "Diamond Greataxe",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 423,
+  "item": "simplyswords:diamond_greataxe"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0f27f2296dc2c9d0.png",
+  "title": "Diamond Spear",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 424,
+  "item": "simplyswords:diamond_spear"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e98ddc80562d539.png",
+  "title": "Diamond Halberd",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 425,
+  "item": "simplyswords:diamond_halberd"
+ },
+ {
+  "kind": "quest_art",
+  "id": "79a5ee72dc48c079.png",
+  "title": "Diamond Glaive",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 426,
+  "item": "simplyswords:diamond_glaive"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1ee861a7c5b0ae75.png",
+  "title": "Diamond Rapier",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 427,
+  "item": "simplyswords:diamond_rapier"
+ },
+ {
+  "kind": "quest_art",
+  "id": "277d3a6286dbf26d.png",
+  "title": "Diamond Katana",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 428,
+  "item": "simplyswords:diamond_katana"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3b8731113575b5df.png",
+  "title": "Diamond Cutlass",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 429,
+  "item": "simplyswords:diamond_cutlass"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1fd581e6df447814.png",
+  "title": "Diamond Sai",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 430,
+  "item": "simplyswords:diamond_sai"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2a36b046603f2d40.png",
+  "title": "Diamond Twinblade",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 431,
+  "item": "simplyswords:diamond_twinblade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6be60037307cd9ae.png",
+  "title": "Diamond Warglaive",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 432,
+  "item": "simplyswords:diamond_warglaive"
+ },
+ {
+  "kind": "quest_art",
+  "id": "456b738eb8220023.png",
+  "title": "Diamond Scythe",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 433,
+  "item": "simplyswords:diamond_scythe"
+ },
+ {
+  "kind": "quest_art",
+  "id": "667ac17afbfdb828.png",
+  "title": "Diamond Chakram",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 434,
+  "item": "simplyswords:diamond_chakram"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1ec8e1c9251842ac.png",
+  "title": "Runic Claymore",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 435,
+  "item": "simplyswords:runic_claymore"
+ },
+ {
+  "kind": "quest_art",
+  "id": "375001c6dbbe8a37.png",
+  "title": "Runic Greathammer",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 436,
+  "item": "simplyswords:runic_greathammer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "542385150d328c60.png",
+  "title": "Runic Greataxe",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 437,
+  "item": "simplyswords:runic_greataxe"
+ },
+ {
+  "kind": "quest_art",
+  "id": "37d2deee14f75458.png",
+  "title": "Runic Spear",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 438,
+  "item": "simplyswords:runic_spear"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6f5868b52e849731.png",
+  "title": "Runic Glaive",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 439,
+  "item": "simplyswords:runic_glaive"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4fe5776c54a78ca1.png",
+  "title": "Runic Halberd",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 440,
+  "item": "simplyswords:runic_halberd"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5b2de40728bfdde5.png",
+  "title": "Runic Katana",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 441,
+  "item": "simplyswords:runic_katana"
+ },
+ {
+  "kind": "quest_art",
+  "id": "35914107de7a9a3d.png",
+  "title": "Runic Rapier",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 442,
+  "item": "simplyswords:runic_rapier"
+ },
+ {
+  "kind": "quest_art",
+  "id": "57b652e2dee7d7a8.png",
+  "title": "Runic Twinblade",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 443,
+  "item": "simplyswords:runic_twinblade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5a0acfaab594af44.png",
+  "title": "Runic Warglaive",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 444,
+  "item": "simplyswords:runic_warglaive"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5f00e880b660706b.png",
+  "title": "Runic Scythe",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 445,
+  "item": "simplyswords:runic_scythe"
+ },
+ {
+  "kind": "quest_art",
+  "id": "75390709424b49ee.png",
+  "title": "Runic Chakram",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 446,
+  "item": "simplyswords:runic_chakram"
+ },
+ {
+  "kind": "quest_art",
+  "id": "16c1dcb8ca968f17.png",
+  "title": "Contained Remnant",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 447,
+  "item": "simplyswords:contained_remnant"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6be6393962638848.png",
+  "title": "Tampered Remnant",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 448,
+  "item": "simplyswords:tampered_remnant"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4ccae3e7fb8e1492.png",
+  "title": "Slumbering Lichblade",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 449,
+  "item": "simplyswords:slumbering_lichblade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6df401211de6b87b.png",
+  "title": "Waking Lichblade",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 450,
+  "item": "simplyswords:waking_lichblade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6148a146fbe43d0b.png",
+  "title": "Dormant Relic",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 451,
+  "item": "simplyswords:dormant_relic"
+ },
+ {
+  "kind": "quest_art",
+  "id": "444407b640a0f672.png",
+  "title": "Righteous Relic",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 452,
+  "item": "simplyswords:righteous_relic"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4fe54c91901c1eb1.png",
+  "title": "Tainted Relic",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 453,
+  "item": "simplyswords:tainted_relic"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6a31a6f59416d7d2.png",
+  "title": "Decaying Relic",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 454,
+  "item": "simplyswords:decaying_relic"
+ },
+ {
+  "kind": "quest_art",
+  "id": "41ef28b842f50ce8.png",
+  "title": "Magiblade",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 455,
+  "item": "simplyswords:magiblade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2726c637c64ca9d1.png",
+  "title": "Magispear",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 456,
+  "item": "simplyswords:magispear"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4ba6b9119c560b4a.png",
+  "title": "Magiscythe",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 457,
+  "item": "simplyswords:magiscythe"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6b7ec1a8f446cdbf.png",
+  "title": "The Watcher",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 458,
+  "item": "simplyswords:watcher_claymore"
+ },
+ {
+  "kind": "quest_art",
+  "id": "29da5c9f6b369b48.png",
+  "title": "Stormscale",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 459,
+  "item": "simplyswords:stormscale"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2ed60875704e4d71.png",
+  "title": "Brimstone Claymore",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 460,
+  "item": "simplyswords:brimstone_claymore"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2ed6286b91bc2fe8.png",
+  "title": "Emberblade",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 461,
+  "item": "simplyswords:emberblade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5b2a0a47b07ff3b3.png",
+  "title": "Emberlash",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 462,
+  "item": "simplyswords:emberlash"
+ },
+ {
+  "kind": "quest_art",
+  "id": "13f9f1eaf3806d6c.png",
+  "title": "Molten Edge",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 463,
+  "item": "simplyswords:molten_edge"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0630586914122a00.png",
+  "title": "Forge and Firestorm",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 464,
+  "item": "simplyswords:flamewind"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7580143aa2a2cc71.png",
+  "title": "Mjolnir",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 465,
+  "item": "simplyswords:mjolnir"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1a0b43e16d923ff8.png",
+  "title": "Storm's Edge",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 466,
+  "item": "simplyswords:storms_edge"
+ },
+ {
+  "kind": "quest_art",
+  "id": "785c85dcfb4d9bb2.png",
+  "title": "Stormbringer",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 467,
+  "item": "simplyswords:stormbringer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3913ea646ab911f5.png",
+  "title": "The Living Storm",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 468,
+  "item": "simplyswords:tempest"
+ },
+ {
+  "kind": "quest_art",
+  "id": "35cee133ebacdc43.png",
+  "title": "Frostfall",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 469,
+  "item": "simplyswords:frostfall"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3b996485d29af54f.png",
+  "title": "Icewhisper",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 470,
+  "item": "simplyswords:icewhisper"
+ },
+ {
+  "kind": "quest_art",
+  "id": "293316b17a3362e9.png",
+  "title": "Livyatan",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 471,
+  "item": "simplyswords:livyatan"
+ },
+ {
+  "kind": "quest_art",
+  "id": "00ac201d587d1dfb.png",
+  "title": "Soulrender",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 472,
+  "item": "simplyswords:soulrender"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3b9b9e87d4f40ae2.png",
+  "title": "Soulstalker",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 473,
+  "item": "simplyswords:soulstalker"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6dbc1f8fbac55654.png",
+  "title": "Soul Wardens",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 474,
+  "item": "simplyswords:soulkeeper"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27f4531a178a7876.png",
+  "title": "Soulstealer",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 475,
+  "item": "simplyswords:soulstealer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "694060873b430fb9.png",
+  "title": "Caelestis",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 476,
+  "item": "simplyswords:caelestis"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5593e15be3be6cbe.png",
+  "title": "Star's Edge",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 477,
+  "item": "simplyswords:stars_edge"
+ },
+ {
+  "kind": "quest_art",
+  "id": "30d4914b9727add5.png",
+  "title": "Shadowsting",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 478,
+  "item": "simplyswords:shadowsting"
+ },
+ {
+  "kind": "quest_art",
+  "id": "24ab05c1536fa9a7.png",
+  "title": "Shadow and Gloam",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 479,
+  "item": "simplyswords:gloampiercer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5148ef72a80f9fcf.png",
+  "title": "Dreadwhisper",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 480,
+  "item": "simplyswords:dreadwhisper"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0d173e474e34977a.png",
+  "title": "Bramblethorn",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 481,
+  "item": "simplyswords:bramblethorn"
+ },
+ {
+  "kind": "quest_art",
+  "id": "09f7ee3d3c9f6256.png",
+  "title": "Toxic Longsword",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 482,
+  "item": "simplyswords:toxic_longsword"
+ },
+ {
+  "kind": "quest_art",
+  "id": "393494dc7eef2ca2.png",
+  "title": "Bloodwake",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 483,
+  "item": "simplyswords:bloodwake"
+ },
+ {
+  "kind": "quest_art",
+  "id": "255b1f2ee573d24a.png",
+  "title": "The Living Swarm",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 484,
+  "item": "simplyswords:hiveheart"
+ },
+ {
+  "kind": "quest_art",
+  "id": "42b4dc9dc48227d3.png",
+  "title": "Ribboncleaver",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 485,
+  "item": "simplyswords:ribboncleaver"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4d89b73a9422af3a.png",
+  "title": "Rift and Zephyr",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 486,
+  "item": "simplyswords:riftmane"
+ },
+ {
+  "kind": "quest_art",
+  "id": "79fa27f5d05a4972.png",
+  "title": "Solar Artillery",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 487,
+  "item": "simplyswords:dawnquiver"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4f395f4c9fcb4315.png",
+  "title": "Wraith Armaments",
+  "chapter": "SIMPLY SWORDS",
+  "ordinal": 488,
+  "item": "simplyswords:wraithfang"
+ },
+ {
+  "kind": "quest_art",
+  "id": "47bc0b64716ccdb0.png",
+  "title": "The Wanderer's Rucksack",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 489,
+  "item": "sophisticatedbackpacks:backpack"
+ },
+ {
+  "kind": "quest_art",
+  "id": "105c7f4792f28aae.png",
+  "title": "Expanding Horizons",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 490,
+  "item": "sophisticatedbackpacks:iron_backpack"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27a9b9481dfd9e37.png",
+  "title": "The Netherite Strongbox",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 491,
+  "item": "sophisticatedbackpacks:netherite_backpack"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0b56a2b3d55a2d2b.png",
+  "title": "Bound Beyond Death",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 492,
+  "item": "sophisticatedbackpacks:everlasting_upgrade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6140505a1259a418.png",
+  "title": "Deep Pockets",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 493,
+  "item": "sophisticatedbackpacks:stack_upgrade_starter_tier"
+ },
+ {
+  "kind": "quest_art",
+  "id": "28bb50e4b22870f5.png",
+  "title": "Modular Customization",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 494,
+  "item": "sophisticatedbackpacks:upgrade_base"
+ },
+ {
+  "kind": "quest_art",
+  "id": "74594bfc7afff662.png",
+  "title": "Magnetic Attraction",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 495,
+  "item": "sophisticatedbackpacks:pickup_upgrade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "66a8b4836a7f0ae5.png",
+  "title": "Field Workshop",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 496,
+  "item": "sophisticatedbackpacks:crafting_upgrade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2ed0a8bebae2a346.png",
+  "title": "Expedition Caretaker",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 497,
+  "item": "sophisticatedbackpacks:feeding_upgrade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2b8ed2e16f71a6ce.png",
+  "title": "Instant Offload",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 498,
+  "item": "sophisticatedbackpacks:deposit_upgrade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7178f61f961a7648.png",
+  "title": "Portable Reservoirs",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 499,
+  "item": "sophisticatedbackpacks:tank_upgrade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "761d42022c71f228.png",
+  "title": "Wisdom on Tap",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 500,
+  "item": "sophisticatedbackpacks:xp_pump_upgrade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4675b6328328b627.png",
+  "title": "Next-Generation Crates",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 501,
+  "item": "sophisticatedstorage:barrel"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2203edea4b6d8709.png",
+  "title": "Bulk Drawers: Limited Barrels",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 502,
+  "item": "sophisticatedstorage:limited_barrel_1"
+ },
+ {
+  "kind": "quest_art",
+  "id": "77f1db6723226760.png",
+  "title": "Multiplying the Stacks",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 503,
+  "item": "sophisticatedstorage:stack_upgrade_tier_1"
+ },
+ {
+  "kind": "quest_art",
+  "id": "50c4d11d4fae97fa.png",
+  "title": "The Warehouse Foreman",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 504,
+  "item": "sophisticatedstorage:packing_tape"
+ },
+ {
+  "kind": "quest_art",
+  "id": "084ef4bffb9cdaf1.png",
+  "title": "Live Refitting",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 505,
+  "item": "sophisticatedstorage:basic_to_iron_tier_upgrade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "5eaa67de6fb00e75.png",
+  "title": "Impervious Vaults",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 506,
+  "item": "sophisticatedstorage:diamond_chest"
+ },
+ {
+  "kind": "quest_art",
+  "id": "63df8e1a46f47f22.png",
+  "title": "Compression Matrix",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 507,
+  "item": "sophisticatedstorage:compacting_upgrade"
+ },
+ {
+  "kind": "quest_art",
+  "id": "40d6f3a05b2c75e3.png",
+  "title": "The Storage Controller",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 508,
+  "item": "sophisticatedstorage:controller"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27c5a9f9b51ceeb1.png",
+  "title": "Wireless Ties and I/O Ports",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 509,
+  "item": "sophisticatedstorage:storage_link"
+ },
+ {
+  "kind": "quest_art",
+  "id": "61b4f4002952ff50.png",
+  "title": "Unified Logistics",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 510,
+  "item": "toms_storage:inventory_connector"
+ },
+ {
+  "kind": "quest_art",
+  "id": "19120bbb35270624.png",
+  "title": "Conduits and Architecture",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 511,
+  "item": "toms_storage:inventory_cable"
+ },
+ {
+  "kind": "quest_art",
+  "id": "71609210f4edc82e.png",
+  "title": "The Master Index",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 512,
+  "item": "toms_storage:storage_terminal"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27be43ae2374eed9.png",
+  "title": "Integrated Workshop",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 513,
+  "item": "toms_storage:crafting_terminal"
+ },
+ {
+  "kind": "quest_art",
+  "id": "627ba4a9684ec842.png",
+  "title": "Automated Gateways",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 514,
+  "item": "toms_storage:inventory_proxy"
+ },
+ {
+  "kind": "quest_art",
+  "id": "19de2ce7db41868d.png",
+  "title": "Stock Sentry",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 515,
+  "item": "toms_storage:level_emitter"
+ },
+ {
+  "kind": "quest_art",
+  "id": "499596b20fb04724.png",
+  "title": "Airborne Signals",
+  "chapter": "STORAGE SOLUTIONS",
+  "ordinal": 516,
+  "item": "toms_storage:wireless_terminal"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1380412c3f2a31fb.png",
+  "title": "Codex of the Skies",
+  "chapter": "THE AETHER",
+  "ordinal": 517,
+  "item": "aether:book_of_lore"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27e436ba7c55e0da.png",
+  "title": "The Skyroot Harvest",
+  "chapter": "THE AETHER",
+  "ordinal": 518,
+  "item": "aether:skyroot_log"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2aebd6e7da23c8dc.png",
+  "title": "Tools of the Canopy",
+  "chapter": "THE AETHER",
+  "ordinal": 519,
+  "item": "aether:skyroot_pickaxe"
+ },
+ {
+  "kind": "quest_art",
+  "id": "30e77cd587673030.png",
+  "title": "Liquid of the Heavens",
+  "chapter": "THE AETHER",
+  "ordinal": 520,
+  "item": "aether:skyroot_bucket"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7d0b9efc6b7a130f.png",
+  "title": "Solid Foundations",
+  "chapter": "THE AETHER",
+  "ordinal": 521,
+  "item": "aether:holystone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2c5be7b3c35c158f.png",
+  "title": "Heavenly Glow",
+  "chapter": "THE AETHER",
+  "ordinal": 522,
+  "item": "aether:ambrosium_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0eacea20e8ce63c1.png",
+  "title": "Divine Infusion",
+  "chapter": "THE AETHER",
+  "ordinal": 523,
+  "item": "aether:altar"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6d4df8934c75bf90.png",
+  "title": "Purple Luster",
+  "chapter": "THE AETHER",
+  "ordinal": 524,
+  "item": "aether:zanite_gemstone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2e9a445ce98356da.png",
+  "title": "Brittle Brilliance",
+  "chapter": "THE AETHER",
+  "ordinal": 525,
+  "item": "aether:zanite_pickaxe"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0e0be7b65178ff48.png",
+  "title": "Glacial Preservation",
+  "chapter": "THE AETHER",
+  "ordinal": 526,
+  "item": "aether:freezer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "118dff2016357228.png",
+  "title": "Frostwalker Relics",
+  "chapter": "THE AETHER",
+  "ordinal": 527,
+  "item": "aether:ice_ring"
+ },
+ {
+  "kind": "quest_art",
+  "id": "468f6c87c11855bf.png",
+  "title": "Defying Gravity",
+  "chapter": "THE AETHER",
+  "ordinal": 528,
+  "item": "aether:gravitite_ore"
+ },
+ {
+  "kind": "quest_art",
+  "id": "62a409513e20e848.png",
+  "title": "Levitating Metallurgy",
+  "chapter": "THE AETHER",
+  "ordinal": 529,
+  "item": "aether:enchanted_gravitite"
+ },
+ {
+  "kind": "quest_art",
+  "id": "467ffb8b41d8866e.png",
+  "title": "Gravitational Mastery",
+  "chapter": "THE AETHER",
+  "ordinal": 530,
+  "item": "aether:gravitite_pickaxe"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6d8ca5857b7893c2.png",
+  "title": "Walking on Air",
+  "chapter": "THE AETHER",
+  "ordinal": 531,
+  "item": "aether:cold_aercloud"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e1dbf46d0804473.png",
+  "title": "Descent Insurance",
+  "chapter": "THE AETHER",
+  "ordinal": 532,
+  "item": "aether:cold_parachute"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3c7bcacc111acead.png",
+  "title": "Sap of the Golden Tree",
+  "chapter": "THE AETHER",
+  "ordinal": 533,
+  "item": "aether:golden_oak_log"
+ },
+ {
+  "kind": "quest_art",
+  "id": "45993bd3633e4f2c.png",
+  "title": "Bounties of the Bush",
+  "chapter": "THE AETHER",
+  "ordinal": 534,
+  "item": "aether:blue_berry"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7d927cdaa723c4e9.png",
+  "title": "Gelatinous Swets",
+  "chapter": "THE AETHER",
+  "ordinal": 535,
+  "item": "aether:swet_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "447c1c4cd5594bf5.png",
+  "title": "Aether Sniping",
+  "chapter": "THE AETHER",
+  "ordinal": 536,
+  "item": "aether:golden_dart_shooter"
+ },
+ {
+  "kind": "quest_art",
+  "id": "30ac266e5cffa130.png",
+  "title": "Toxic Bloom",
+  "chapter": "THE AETHER",
+  "ordinal": 537,
+  "item": "aether:aechor_petal"
+ },
+ {
+  "kind": "quest_art",
+  "id": "084f575ae6e61118.png",
+  "title": "Warming the Clutch",
+  "chapter": "THE AETHER",
+  "ordinal": 538,
+  "item": "aether:incubator"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2725be8a50ee98ab.png",
+  "title": "Wings of Companionship",
+  "chapter": "THE AETHER",
+  "ordinal": 539,
+  "item": "aether:blue_moa_egg"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e1a639b0ed6fd45.png",
+  "title": "Heavenly Gloves",
+  "chapter": "THE AETHER",
+  "ordinal": 540,
+  "item": "aether:iron_gloves"
+ },
+ {
+  "kind": "quest_art",
+  "id": "327d28bf5c813e8d.png",
+  "title": "Adornments of the Sky",
+  "chapter": "THE AETHER",
+  "ordinal": 541,
+  "item": "aether:zanite_ring"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6cd044a180e7006f.png",
+  "title": "Capes and Aerial Feathers",
+  "chapter": "THE AETHER",
+  "ordinal": 542,
+  "item": "aether:agility_cape"
+ },
+ {
+  "kind": "quest_art",
+  "id": "084ac8c3494d9fce.png",
+  "title": "Labyrinth of the Depths",
+  "chapter": "THE AETHER",
+  "ordinal": 543,
+  "item": "aether:carved_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "4038af3b605a0c69.png",
+  "title": "Heavyweight Collision",
+  "chapter": "THE AETHER",
+  "ordinal": 544,
+  "item": "aether:bronze_dungeon_key"
+ },
+ {
+  "kind": "quest_art",
+  "id": "18d137d7a321a47c.png",
+  "title": "Labyrinth Vault",
+  "chapter": "THE AETHER",
+  "ordinal": 545,
+  "item": "aether:cloud_staff"
+ },
+ {
+  "kind": "quest_art",
+  "id": "16c19717d5591af1.png",
+  "title": "Palace of the Valkyries",
+  "chapter": "THE AETHER",
+  "ordinal": 546,
+  "item": "aether:angelic_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "354df0b8808a5668.png",
+  "title": "Ten Medals of Valor",
+  "chapter": "THE AETHER",
+  "ordinal": 547,
+  "item": "aether:victory_medal"
+ },
+ {
+  "kind": "quest_art",
+  "id": "24d59fd5fceb2fd0.png",
+  "title": "Judgment from Above",
+  "chapter": "THE AETHER",
+  "ordinal": 548,
+  "item": "aether:silver_dungeon_key"
+ },
+ {
+  "kind": "quest_art",
+  "id": "491b761e621df5d5.png",
+  "title": "Gifts of the Silver Vault",
+  "chapter": "THE AETHER",
+  "ordinal": 549,
+  "item": "aether:regeneration_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "009dcacdeaa9d39e.png",
+  "title": "The Blazing Sun Sphere",
+  "chapter": "THE AETHER",
+  "ordinal": 550,
+  "item": "aether:hellfire_stone"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6835f53106d94d27.png",
+  "title": "Confronting the Sun",
+  "chapter": "THE AETHER",
+  "ordinal": 551,
+  "item": "aether:gold_dungeon_key"
+ },
+ {
+  "kind": "quest_art",
+  "id": "30457f72b086edb3.png",
+  "title": "Spoils of the Solar Core",
+  "chapter": "THE AETHER",
+  "ordinal": 552,
+  "item": "aether:phoenix_chestplate"
+ },
+ {
+  "kind": "quest_art",
+  "id": "3e2619df9c7df396.png",
+  "title": "Harnessing the Dawn",
+  "chapter": "THE AETHER",
+  "ordinal": 553,
+  "item": "aether:sun_altar"
+ },
+ {
+  "kind": "quest_art",
+  "id": "487fbce49be1c48c.png",
+  "title": "Heart of the Heavens",
+  "chapter": "THE AETHER",
+  "ordinal": 554,
+  "item": "aether:life_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "44a8c4d8ea3022c1.png",
+  "title": "Enter a Raid",
+  "chapter": "TRAINER ACTIVITIES",
+  "ordinal": 555,
+  "item": "cobblemonraiddens:raid_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7186b9a47f3d7c20.png",
+  "title": "Your First Raid Victory",
+  "chapter": "TRAINER ACTIVITIES",
+  "ordinal": 556,
+  "item": "cobblemonraiddens:catching_charm"
+ },
+ {
+  "kind": "quest_art",
+  "id": "398404a249874e2e.png",
+  "title": "A Stronger Raid Team",
+  "chapter": "TRAINER ACTIVITIES",
+  "ordinal": 557,
+  "item": "cobblemon:ultra_ball"
+ },
+ {
+  "kind": "quest_art",
+  "id": "45dfc05d13751989.png",
+  "title": "The Battle Tower",
+  "chapter": "TRAINER ACTIVITIES",
+  "ordinal": 558,
+  "item": "cobblemon_battle_tower:holo_battle_tower"
+ },
+ {
+  "kind": "quest_art",
+  "id": "382c7217c7fdf203.png",
+  "title": "Send an Expedition",
+  "chapter": "TRAINER ACTIVITIES",
+  "ordinal": 559,
+  "item": "cobblemon_expeditions:copper_expedition_board"
+ },
+ {
+  "kind": "quest_art",
+  "id": "70a195d4f71cf95d.png",
+  "title": "Challenge a Trainer",
+  "chapter": "TRAINER ACTIVITIES",
+  "ordinal": 560,
+  "item": "rctmod:trainer_card"
+ },
+ {
+  "kind": "quest_art",
+  "id": "09a8815c101df5ac.png",
+  "title": "The Twilight Realm",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 561,
+  "item": "minecraft:diamond"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2768ac8df62c1265.png",
+  "title": "Shared Spoils: Twilight Lootr",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 562,
+  "item": "checkmark"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0fada38cb4f7aaa0.png",
+  "title": "Cartography of the Canopy",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 563,
+  "item": "twilightforest:magic_map_focus"
+ },
+ {
+  "kind": "quest_art",
+  "id": "62ee43ae5b4e8496.png",
+  "title": "Treasures of the Roots: Ironwood",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 564,
+  "item": "twilightforest:ironwood_ingot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27cf316b316a34f5.png",
+  "title": "The Serpent of the Courtyard: Naga",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 565,
+  "item": "twilightforest:naga_scale"
+ },
+ {
+  "kind": "quest_art",
+  "id": "18e7f01ac09590e8.png",
+  "title": "Serpent's Carapace",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 566,
+  "item": "twilightforest:naga_chestplate"
+ },
+ {
+  "kind": "quest_art",
+  "id": "207b5ee734c7a5ca.png",
+  "title": "The Wizard of the Spire: Twilight Lich",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 567,
+  "item": "twilightforest:lich_trophy"
+ },
+ {
+  "kind": "quest_art",
+  "id": "14868fe456381e19.png",
+  "title": "Sorcerous Staves of the Spire",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 568,
+  "item": "twilightforest:twilight_scepter"
+ },
+ {
+  "kind": "quest_art",
+  "id": "13b51a50e7129a4f.png",
+  "title": "Subterranean Mazes of the Swamp",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 569,
+  "item": "twilightforest:maze_wafer"
+ },
+ {
+  "kind": "quest_art",
+  "id": "574b2f7e474f34a8.png",
+  "title": "The Bull of the Depths: Minoshroom",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 570,
+  "item": "twilightforest:meef_stroganoff"
+ },
+ {
+  "kind": "quest_art",
+  "id": "71cb159544981999.png",
+  "title": "The Multi-Headed Calamity: Hydra",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 571,
+  "item": "twilightforest:fiery_blood"
+ },
+ {
+  "kind": "quest_art",
+  "id": "1ae59537e999e743.png",
+  "title": "Molten Armaments: Fiery Gear",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 572,
+  "item": "twilightforest:fiery_ingot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27f9a184af253d40.png",
+  "title": "The Goblin Knight Stronghold",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 573,
+  "item": "twilightforest:armor_shard"
+ },
+ {
+  "kind": "quest_art",
+  "id": "42e042fe6ace3db3.png",
+  "title": "Phantoms of the Round: Knight Phantom",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 574,
+  "item": "twilightforest:knightmetal_ingot"
+ },
+ {
+  "kind": "quest_art",
+  "id": "2b1d57c1197a1991.png",
+  "title": "Ascent of the Dark Tower",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 575,
+  "item": "twilightforest:tower_key"
+ },
+ {
+  "kind": "quest_art",
+  "id": "51f2ca87028fd9f1.png",
+  "title": "The Weeping Sky-Titan: Ur-Ghast",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 576,
+  "item": "twilightforest:fiery_tears"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27de26c5fdf6be9e.png",
+  "title": "The Frozen Depths: Yeti Cave",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 577,
+  "item": "twilightforest:arctic_fur"
+ },
+ {
+  "kind": "quest_art",
+  "id": "00a98426fe461d72.png",
+  "title": "The Abominable Chieftain: Alpha Yeti",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 578,
+  "item": "twilightforest:alpha_yeti_fur"
+ },
+ {
+  "kind": "quest_art",
+  "id": "089bc7bdd97a8d7b.png",
+  "title": "Palace of the Aurora",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 579,
+  "item": "twilightforest:aurora_block"
+ },
+ {
+  "kind": "quest_art",
+  "id": "35dfcef6e4c41d8b.png",
+  "title": "Sovereign of the Sleet: Snow Queen",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 580,
+  "item": "twilightforest:snow_queen_trophy"
+ },
+ {
+  "kind": "quest_art",
+  "id": "0d95a59fd3783777.png",
+  "title": "The Highlands: Path to the Summit",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 581,
+  "item": "checkmark"
+ },
+ {
+  "kind": "quest_art",
+  "id": "7a77e00c372d7aba.png",
+  "title": "Troll Caves and The Magic Beans",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 582,
+  "item": "twilightforest:magic_beans"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27c5ef8b72295ebc.png",
+  "title": "Cloud Cottage of the Giants",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 583,
+  "item": "twilightforest:giant_pickaxe"
+ },
+ {
+  "kind": "quest_art",
+  "id": "036d7606e6ee538b.png",
+  "title": "The Vault of Cinders",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 584,
+  "item": "twilightforest:lamp_of_cinders"
+ },
+ {
+  "kind": "quest_art",
+  "id": "27be6fdf4a31c2d9.png",
+  "title": "Burning the Brambles: The Thornlands",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 585,
+  "item": "biome"
+ },
+ {
+  "kind": "quest_art",
+  "id": "6e50bd6b131ec425.png",
+  "title": "★ The Final Castle: Sovereign of Twilight",
+  "chapter": "THE TWILIGHT FOREST",
+  "ordinal": 586,
+  "item": "advancement"
+ }
+]

@@ -1,0 +1,33 @@
+name: Export Astra round five
+on:
+  push:
+    branches: [astra/round5-art-build]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  art:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .astra-round5
+            astra-art/Astra-Art-List-5.txt
+            astra-art/UwU-Quest-Art-Pack/pack.mcmeta
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install Pillow==11.3.0
+      - name: Export sprites and verify quest list coverage
+        run: python .astra-round5/export.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Astra-Round-5
+          path: .astra-output/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 90

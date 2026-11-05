@@ -1,0 +1,334 @@
+{
+  "sheets": [
+    {
+      "file": "power-01.png",
+      "rows": [
+        {
+          "id": "0b5706115b7efa01.png",
+          "title": "Keystone",
+          "row": 0,
+          "subject": "a marble with dark navy rim and bright teal-pink double helix set in silver; helix pulses"
+        },
+        {
+          "id": "770320237aa1c2b3.png",
+          "title": "Mega Bracelet",
+          "row": 1,
+          "subject": "a silver cuff bracelet with broad teal band and gold-set rainbow stone; glint slides over cuff"
+        },
+        {
+          "id": "76fab2f14dee0b48.png",
+          "title": "Raw Mega Power",
+          "row": 2,
+          "subject": "rough violet-blue mega crystal sprouting from charcoal rubble; facet lights up"
+        },
+        {
+          "id": "6911fafdaf7dcf82.png",
+          "title": "Mega Stone",
+          "row": 3,
+          "subject": "one polished lime-and-magenta marbled Mega Stone with bold swirling core; core glints"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: a marble with dark navy rim and bright teal-pink double helix set in silver; helix pulses.\nRow 2: a silver cuff bracelet with broad teal band and gold-set rainbow stone; glint slides over cuff.\nRow 3: rough violet-blue mega crystal sprouting from charcoal rubble; facet lights up.\nRow 4: one polished lime-and-magenta marbled Mega Stone with bold swirling core; core glints."
+    },
+    {
+      "file": "power-02.png",
+      "rows": [
+        {
+          "id": "080f3afce5562a92.png",
+          "title": "Mega Accessory Styles",
+          "row": 0,
+          "subject": "stack of three stylish slim trainer rings in plum, white and amber; gold edge flashes"
+        },
+        {
+          "id": "2756e905ee2fb66c.png",
+          "title": "Trainer Mega Accessories",
+          "row": 1,
+          "subject": "red-and-black fingerless trainer glove with round keystone mounted on its back; key glows"
+        },
+        {
+          "id": "094086209a925680.png",
+          "title": "Mega Geology",
+          "row": 2,
+          "subject": "broken slate ore cube exposing a bright rainbow keystone vein; vein pulses"
+        },
+        {
+          "id": "7c741b1fddad0137.png",
+          "title": "Meteoroid Masonry",
+          "row": 3,
+          "subject": "pair of beveled purple meteorite bricks with speckled gold surface; a star twinkles"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: stack of three stylish slim trainer rings in plum, white and amber; gold edge flashes.\nRow 2: red-and-black fingerless trainer glove with round keystone mounted on its back; key glows.\nRow 3: broken slate ore cube exposing a bright rainbow keystone vein; vein pulses.\nRow 4: pair of beveled purple meteorite bricks with speckled gold surface; a star twinkles."
+    },
+    {
+      "file": "power-03.png",
+      "rows": [
+        {
+          "id": "7e88fa5fccf59100.png",
+          "title": "Kanto Mega Stones",
+          "row": 0,
+          "subject": "a violet-orange oval stone bearing a fossil-wing spiral, with pale claw accent; ring of light shifts"
+        },
+        {
+          "id": "088e7a40cd462e29.png",
+          "title": "Johto Mega Stones",
+          "row": 1,
+          "subject": "yellow and indigo gemstone with a tiny lightning-shaped central ribbon and red bead; ribbon flashes"
+        },
+        {
+          "id": "08dd03721b905401.png",
+          "title": "Hoenn Mega Stones",
+          "row": 2,
+          "subject": "dark blue and ivory marbled stone cupped by curved pale horn; white glint travels"
+        },
+        {
+          "id": "15f368d4bad00a31.png",
+          "title": "Sinnoh and Unova Mega Stones",
+          "row": 3,
+          "subject": "snow-green and deep purple stone with a frost-crystal vein; cold highlight shifts"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: a violet-orange oval stone bearing a fossil-wing spiral, with pale claw accent; ring of light shifts.\nRow 2: yellow and indigo gemstone with a tiny lightning-shaped central ribbon and red bead; ribbon flashes.\nRow 3: dark blue and ivory marbled stone cupped by curved pale horn; white glint travels.\nRow 4: snow-green and deep purple stone with a frost-crystal vein; cold highlight shifts."
+    },
+    {
+      "file": "power-04.png",
+      "rows": [
+        {
+          "id": "2f696b9791e096db.png",
+          "title": "Kalos Mega Stones",
+          "row": 0,
+          "subject": "faceted orange-green gem with two barnacle-like ridges; inner spot glows"
+        },
+        {
+          "id": "1fe8544b23b4d004.png",
+          "title": "Modern Mega Stones",
+          "row": 1,
+          "subject": "icy steel-blue oval gemstone with jagged cobalt dorsal fin motif; frost sparkles"
+        },
+        {
+          "id": "7adbb4c75c020f62.png",
+          "title": "ZA Mega Expansion",
+          "row": 2,
+          "subject": "ornate silvery setting with cobalt-magenta core and angular gold flare; flare glints"
+        },
+        {
+          "id": "62510432b978745b.png",
+          "title": "Sparkling Stone",
+          "row": 3,
+          "subject": "rough warm gold crystal pebble with pale yellow slanted facets; bright fleck moves"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: faceted orange-green gem with two barnacle-like ridges; inner spot glows.\nRow 2: icy steel-blue oval gemstone with jagged cobalt dorsal fin motif; frost sparkles.\nRow 3: ornate silvery setting with cobalt-magenta core and angular gold flare; flare glints.\nRow 4: rough warm gold crystal pebble with pale yellow slanted facets; bright fleck moves."
+    },
+    {
+      "file": "power-05.png",
+      "rows": [
+        {
+          "id": "44d19ff8528a1430.png",
+          "title": "Blank-Z",
+          "row": 0,
+          "subject": "uncolored pearl-white Z crystal blank with beveled facets; faint silver glint"
+        },
+        {
+          "id": "4e2ffe1bd160b524.png",
+          "title": "Z-Ring",
+          "row": 1,
+          "subject": "black-and-white angular Z bracelet with yellow diamond socket; socket shines"
+        },
+        {
+          "id": "2ee738ca1fc821ab.png",
+          "title": "A Z-Crystal",
+          "row": 2,
+          "subject": "faceted ivory crystal with embossed angular star in gold; little star pulse"
+        },
+        {
+          "id": "129b4413e9edd432.png",
+          "title": "Z-Power Foundations",
+          "row": 3,
+          "subject": "rough milky crystal fragment beside a finely cut Z gem on small stone plinth; edge shines"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: uncolored pearl-white Z crystal blank with beveled facets; faint silver glint.\nRow 2: black-and-white angular Z bracelet with yellow diamond socket; socket shines.\nRow 3: faceted ivory crystal with embossed angular star in gold; little star pulse.\nRow 4: rough milky crystal fragment beside a finely cut Z gem on small stone plinth; edge shines."
+    },
+    {
+      "file": "power-06.png",
+      "rows": [
+        {
+          "id": "4a6cd6e673195717.png",
+          "title": "Z-Ring Styles",
+          "row": 0,
+          "subject": "double blue-white Z wristband with cobalt lightning clasp; clasp flashes"
+        },
+        {
+          "id": "68a31992fdde9c44.png",
+          "title": "Trainer Z-Power Rings",
+          "row": 1,
+          "subject": "charcoal double-strap wrist cuff with crimson angular crystal and gold buckles; red glint"
+        },
+        {
+          "id": "00b0294f99e1022f.png",
+          "title": "Type Z-Crystals I",
+          "row": 2,
+          "subject": "green insect-wing crystal and amber companion shard arranged as fan; facets alternate"
+        },
+        {
+          "id": "09d2d4d56eefc3b5.png",
+          "title": "Type Z-Crystals II",
+          "row": 3,
+          "subject": "emerald leaf-shaped gem paired with an icy sapphire crystal; glimmer crosses their tips"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: double blue-white Z wristband with cobalt lightning clasp; clasp flashes.\nRow 2: charcoal double-strap wrist cuff with crimson angular crystal and gold buckles; red glint.\nRow 3: green insect-wing crystal and amber companion shard arranged as fan; facets alternate.\nRow 4: emerald leaf-shaped gem paired with an icy sapphire crystal; glimmer crosses their tips."
+    },
+    {
+      "file": "power-07.png",
+      "rows": [
+        {
+          "id": "1f41238044280ee6.png",
+          "title": "Signature Z-Crystals I",
+          "row": 0,
+          "subject": "yellow surf-shaped lightning gem with curling turquoise base; electricity flashes"
+        },
+        {
+          "id": "5fcfb653aec59e55.png",
+          "title": "Signature Z-Crystals II",
+          "row": 1,
+          "subject": "golden cloth-ghost pendant with dark ear-like points and a violet Z-crystal; eye gleam"
+        },
+        {
+          "id": "2e1310613d3b46ee.png",
+          "title": "Wishing Star",
+          "row": 2,
+          "subject": "a dark meteor chunk split to reveal rose-colored five-point star; central star pulses"
+        },
+        {
+          "id": "489fd318a06192e0.png",
+          "title": "Dynamax Band",
+          "row": 3,
+          "subject": "a red and navy Dynamax wrist band with projecting red cross motif; band light pulses"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: yellow surf-shaped lightning gem with curling turquoise base; electricity flashes.\nRow 2: golden cloth-ghost pendant with dark ear-like points and a violet Z-crystal; eye gleam.\nRow 3: a dark meteor chunk split to reveal rose-colored five-point star; central star pulses.\nRow 4: a red and navy Dynamax wrist band with projecting red cross motif; band light pulses."
+    },
+    {
+      "file": "power-08.png",
+      "rows": [
+        {
+          "id": "0a96725cef7660ab.png",
+          "title": "Power Spot",
+          "row": 0,
+          "subject": "an indented purplish stone ring with a contained pillar of pink light; beam peaks"
+        },
+        {
+          "id": "74dc2ff2c0533023.png",
+          "title": "Dynamax Candy",
+          "row": 1,
+          "subject": "pink-and-blue dynamax candy wrapped in violet paper; sugar spark glints"
+        },
+        {
+          "id": "0445eac212ec2baa.png",
+          "title": "Maxed Dynamax Level",
+          "row": 2,
+          "subject": "three stacked Dynamax candies below a bright gold rank chevron; top chevron shines"
+        },
+        {
+          "id": "397c4acb3ba3d384.png",
+          "title": "Max Mushrooms",
+          "row": 3,
+          "subject": "a pair of large crimson Max Mushrooms with pink spirals; spores sparkle"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: an indented purplish stone ring with a contained pillar of pink light; beam peaks.\nRow 2: pink-and-blue dynamax candy wrapped in violet paper; sugar spark glints.\nRow 3: three stacked Dynamax candies below a bright gold rank chevron; top chevron shines.\nRow 4: a pair of large crimson Max Mushrooms with pink spirals; spores sparkle."
+    },
+    {
+      "file": "power-09.png",
+      "rows": [
+        {
+          "id": "3b878cbdbe369e99.png",
+          "title": "Max Soup",
+          "row": 0,
+          "subject": "a bronze soup bowl with red spiral mushroom cap and spoon; two small steam curls shift"
+        },
+        {
+          "id": "50bf22c6846cdc63.png",
+          "title": "Max Cuisine Variants",
+          "row": 1,
+          "subject": "golden honey jar next to a miniature red-capped soup bowl; one honey droplet moves"
+        },
+        {
+          "id": "27ffe0e0f21d66ad.png",
+          "title": "FREE ORIGIN CHANGE [beta only]",
+          "row": 2,
+          "subject": "smooth luminous pale-blue orb wrapped by a curved white reset arrow; arrow tip gleams"
+        },
+        {
+          "id": "72d7b491d10cd227.png",
+          "title": "Choose your origin",
+          "row": 3,
+          "subject": "a split tri-color origin orb at a fork of green, blue and amber paths; one path lights"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: a bronze soup bowl with red spiral mushroom cap and spoon; two small steam curls shift.\nRow 2: golden honey jar next to a miniature red-capped soup bowl; one honey droplet moves.\nRow 3: smooth luminous pale-blue orb wrapped by a curved white reset arrow; arrow tip gleams.\nRow 4: a split tri-color origin orb at a fork of green, blue and amber paths; one path lights."
+    },
+    {
+      "file": "power-10.png",
+      "rows": [
+        {
+          "id": "5df44ec527b70000.png",
+          "title": "Read all information quests.",
+          "row": 0,
+          "subject": "a parchment checklist with bright green tick and tiny blue information crystal; tick shines"
+        },
+        {
+          "id": "1625ff5cbf3fbec0.png",
+          "title": "Reward references",
+          "row": 1,
+          "subject": "open velvet reward chest with colored references as tidy prize tokens; one coin glints"
+        },
+        {
+          "id": "46520224c935fd77.png",
+          "title": "Tera Orb",
+          "row": 2,
+          "subject": "round Tera Orb in a dark indigo holder with faceted turquoise star; star flashes"
+        },
+        {
+          "id": "2252f9c43bf99927.png",
+          "title": "Change the Tera Type",
+          "row": 3,
+          "subject": "a white shard turning to a magenta shard above paired curved arrows; color pulse"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: a parchment checklist with bright green tick and tiny blue information crystal; tick shines.\nRow 2: open velvet reward chest with colored references as tidy prize tokens; one coin glints.\nRow 3: round Tera Orb in a dark indigo holder with faceted turquoise star; star flashes.\nRow 4: a white shard turning to a magenta shard above paired curved arrows; color pulse."
+    },
+    {
+      "file": "power-11.png",
+      "rows": [
+        {
+          "id": "21f9e6f229b85ae1.png",
+          "title": "Stellar Tera Shard",
+          "row": 0,
+          "subject": "a vivid multicolored faceted stellar crystal star, indigo shadow and ivory edge; star sparkles"
+        },
+        {
+          "id": "0e941d56199e5726.png",
+          "title": "Tera Shards I",
+          "row": 1,
+          "subject": "fan of amber bug-wing, blue splash and red flame shards; tiny highlights alternate"
+        },
+        {
+          "id": "266e094fed1a6d9e.png",
+          "title": "Tera Shards II",
+          "row": 2,
+          "subject": "fan of green leaf, violet spiral and silver metal shards; tiny highlights alternate"
+        },
+        {
+          "id": "4e68bf8f64cd644c.png",
+          "title": "Tera Pouch Palette",
+          "row": 3,
+          "subject": "a bright cyan canvas drawstring pouch with violet and yellow crystal tips; crystal glints"
+        }
+      ],
+      "prompt": "Make an original sprite animation atlas for a dark Minecraft RPG quest book. Transparent square image, EXACTLY 16 sprites in a precise 4-COLUMN by 4-ROW grid. Four distinct subjects top to bottom; each row repeats its subject in four gentle left-to-right animation phases, rest / rise / peak / return. Keep the BODY, SCALE and center anchored, move only the small material detail described. Center each sprite inside its own cell with 18% clear space on EACH edge. No clip at any edge. Thick hard square pixel clusters, low-resolution icon silhouette designed for a 32px slot, clear dark navy outline, medium-bright plane shading, strong warm ivory highlights and saturated signature accents. Make the subject clear at tiny scale; prefer a handful of broad shapes. No glow halos, cast shadows, words, gridlines, typographic labels, tiles, diffuse gradients or scenery behind the icons. Real zero-alpha background everywhere outside objects. No official sprite copies.\nRow 1: a vivid multicolored faceted stellar crystal star, indigo shadow and ivory edge; star sparkles.\nRow 2: fan of amber bug-wing, blue splash and red flame shards; tiny highlights alternate.\nRow 3: fan of green leaf, violet spiral and silver metal shards; tiny highlights alternate.\nRow 4: a bright cyan canvas drawstring pouch with violet and yellow crystal tips; crystal glints."
+    }
+  ]
+}
