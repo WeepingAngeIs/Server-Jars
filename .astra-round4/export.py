@@ -137,6 +137,26 @@ def export_one(meta,raw_frames):
 def previews(items):
     small=ImageFont.truetype("DejaVuSans.ttf",12)
     title=ImageFont.truetype("DejaVuSans.ttf",15)
+    by_title={item['title']:item for item in items if item['kind']=='quest_art'}
+    picks=[('Your First Raid','First raid'),('Rainbow Badge','Rainbow Badge'),
+           ('Your First Waystone','Waystone'),('Undead Pirate Ship','Pirate ship'),
+           ('Sakura Grove','Sakura Grove'),('Shattered Glacier','Shattered Glacier'),
+           ('Pokédex: 100% Caught','Pokédex complete'),('★ The Complete Pharmacy','Complete pharmacy')]
+    if all(name in by_title for name,_ in picks):
+        film=[]
+        for phase in PLAY:
+            page=Image.new('RGB',(552,236),'#10141f')
+            draw=ImageDraw.Draw(page)
+            for i,(name,label) in enumerate(picks):
+                x=138*(i%4)
+                y=118*(i//4)
+                draw.rounded_rectangle((x+3,y+3,x+134,y+114),radius=7,fill='#20293a')
+                sprite=by_title[name]['frames'][phase].resize((80,80),Image.Resampling.NEAREST)
+                page.paste(sprite,(x+29,y+7),sprite)
+                draw.text((x+69,y+95),label,font=small,anchor='mm',fill='#f4f4ff')
+            film.append(page)
+        film[0].save(OUT/'Astra-Round-4-Preview.gif',save_all=True,append_images=film[1:],
+                     duration=180,loop=0,disposal=2)
     for start in range(0,len(items),20):
         page=items[start:start+20]
         w,h=210,135
