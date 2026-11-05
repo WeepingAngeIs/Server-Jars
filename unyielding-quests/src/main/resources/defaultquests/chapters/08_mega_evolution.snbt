@@ -1,0 +1,820 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "08_mega_evolution"
+	group: "28AD4BAFAFBA049E"
+	icon: {
+		id: "mega_showdown:mega_stone"
+	}
+	id: "7BC769DE437EF0C6"
+	images: [
+		{
+			height: 0.4d
+			id: "62D27757498ADC53"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: -0.75d
+			y: -3.1d
+		}
+		{
+			height: 0.4d
+			id: "46F285A1E4CE7131"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 10.0d
+			x: 0.0d
+			y: -1.05d
+		}
+		{
+			height: 0.4d
+			id: "39D37C72B190B560"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: -2.25d
+			y: 1.05d
+		}
+		{
+			height: 0.4d
+			id: "673A63009A74FE07"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.0d
+			x: 1.5d
+			y: 3.0d
+		}
+	]
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "mega_showdown:mega_stone"
+			}
+			id: "480A38705E5CFDA6"
+			rewards: [
+				{
+					id: "0FEF4AD39FF93B40"
+					type: "xp"
+					xp: 20
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "357433F271E1A084"
+					type: "checkmark"
+				}
+			]
+			x: -4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"480A38705E5CFDA6"
+			]
+			icon: {
+				id: "mega_showdown:keystone"
+			}
+			id: "0B5706115B7EFA01"
+			rewards: [
+				{
+					id: "004AC44D35942A9F"
+					type: "xp"
+					xp: 30
+				}
+				{
+					count: 4
+					id: "4740322E670D2A29"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "2376053263483829"
+					item: {
+						count: 1
+						id: "mega_showdown:keystone"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"0B5706115B7EFA01"
+			]
+			icon: {
+				id: "mega_showdown:mega_bracelet"
+			}
+			id: "770320237AA1C2B3"
+			rewards: [
+				{
+					id: "4A20960E6C2651A8"
+					type: "xp"
+					xp: 30
+				}
+				{
+					count: 2
+					id: "422446EABF801BC7"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5124871AAEED76C6"
+					item: {
+						count: 1
+						id: "mega_showdown:mega_bracelet"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"770320237AA1C2B3"
+			]
+			icon: {
+				id: "mega_showdown:mega_stone_crystal"
+			}
+			id: "76FAB2F14DEE0B48"
+			rewards: [
+				{
+					id: "5E958B8BDBE1623F"
+					type: "xp"
+					xp: 30
+				}
+			]
+			tasks: [
+				{
+					id: "61D8742713835B37"
+					item: {
+						count: 1
+						id: "mega_showdown:mega_stone_crystal"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"76FAB2F14DEE0B48"
+			]
+			icon: {
+				id: "mega_showdown:mega_stone"
+			}
+			id: "6911FAFDAF7DCF82"
+			rewards: [
+				{
+					id: "6A5C2AD5842892C2"
+					type: "xp"
+					xp: 40
+				}
+				{
+					count: 2
+					id: "55A2B62421A7CD9E"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_m"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "71C4B6A4A12147AA"
+					item: {
+						count: 1
+						id: "mega_showdown:mega_stone"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6911FAFDAF7DCF82"
+			]
+			icon: {
+				id: "mega_showdown:mega_bracelet"
+			}
+			id: "33D309E5040CFCC0"
+			rewards: [
+				{
+					id: "3A81159AFF262A68"
+					type: "xp"
+					xp: 100
+				}
+				{
+					count: 2
+					id: "0EF7CEE391D0A0B5"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "2B699BFD6DA2F717"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.3d
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/mega/mega_evolve"
+					criterion: ""
+					id: "637818AD57E0CE57"
+					type: "advancement"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"770320237AA1C2B3"
+			]
+			icon: {
+				id: "mega_showdown:mega_ring"
+			}
+			id: "080F3AFCE5562A92"
+			optional: true
+			rewards: [
+				{
+					id: "7323C41D0F40D64D"
+					type: "xp"
+					xp: 40
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:mega_ring"
+					}
+					id: "2579D22C8BF73FDA"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:mega_ring)item(mega_showdown:mega_bracelet_black)item(mega_showdown:mega_bracelet_blue)item(mega_showdown:mega_bracelet_green)item(mega_showdown:mega_bracelet_pink)item(mega_showdown:mega_bracelet_red)item(mega_showdown:mega_bracelet_yellow))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"76FAB2F14DEE0B48"
+			]
+			icon: {
+				id: "mega_showdown:korrina_glove"
+			}
+			id: "2756E905EE2FB66C"
+			optional: true
+			rewards: [
+				{
+					id: "59A7AAF9994D1FAA"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:brendan_mega_cuff"
+					}
+					id: "3090EBDA4FB3FCE8"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:brendan_mega_cuff)item(mega_showdown:diantha_mega_charm)item(mega_showdown:korrina_glove)item(mega_showdown:lisia_mega_tiara)item(mega_showdown:lysandre_ring)item(mega_showdown:may_bracelet)item(mega_showdown:zinnia_mega_anklet))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"0B5706115B7EFA01"
+			]
+			icon: {
+				id: "mega_showdown:keystone_ore"
+			}
+			id: "094086209A925680"
+			optional: true
+			rewards: [
+				{
+					id: "358492049F60746F"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:keystone_ore"
+					}
+					id: "5D6C9CE7BACA8E52"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:keystone_ore)item(mega_showdown:mega_meteorid_dawn_ore)item(mega_showdown:mega_meteorid_dusk_ore)item(mega_showdown:mega_meteorid_fire_ore)item(mega_showdown:mega_meteorid_ice_ore)item(mega_showdown:mega_meteorid_leaf_ore)item(mega_showdown:mega_meteorid_moon_ore)item(mega_showdown:mega_meteorid_shiny_ore)item(mega_showdown:mega_meteorid_sun_ore)item(mega_showdown:mega_meteorid_thunder_ore)item(mega_showdown:mega_meteorid_water_ore))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"094086209A925680"
+			]
+			icon: {
+				id: "mega_showdown:mega_meteorid_block"
+			}
+			id: "7C741B1FDDAD0137"
+			optional: true
+			rewards: [
+				{
+					id: "56CE6E35D1435F5B"
+					type: "xp"
+					xp: 40
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:keystone_block"
+					}
+					id: "64F5FEE7641D8973"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:keystone_block)item(mega_showdown:mega_meteorid_block)item(mega_showdown:mega_meteorid_brick)item(mega_showdown:chiseled_mega_meteorid_block)item(mega_showdown:chiseled_mega_meteorid_brick)item(mega_showdown:polished_mega_meteorid_block)item(mega_showdown:mega_meteorid_radiated_block))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"6911FAFDAF7DCF82"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "mega_showdown:aerodactylite"
+			}
+			id: "7E88FA5FCCF59100"
+			optional: true
+			rewards: [
+				{
+					id: "0F6BED2660D07F62"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 4
+					id: "027EC8CE91FE3119"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:aerodactylite"
+					}
+					id: "410079B6886D36E5"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:aerodactylite)item(mega_showdown:alakazite)item(mega_showdown:beedrillite)item(mega_showdown:blastoisinite)item(mega_showdown:clefablite)item(mega_showdown:dragoninite)item(mega_showdown:gengarite)item(mega_showdown:gyaradosite)item(mega_showdown:kangaskhanite)item(mega_showdown:pidgeotite)item(mega_showdown:pinsirite)item(mega_showdown:slowbronite)item(mega_showdown:starminite)item(mega_showdown:venusaurite)item(mega_showdown:victreebelite))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"6911FAFDAF7DCF82"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "mega_showdown:ampharosite"
+			}
+			id: "088E7A40CD462E29"
+			optional: true
+			rewards: [
+				{
+					id: "33CC5641B20E8F45"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 4
+					id: "13F8330C0B2106E0"
+					item: {
+						count: 1
+						id: "cobblemon:friend_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:ampharosite"
+					}
+					id: "1AF7DC02DC66C816"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:ampharosite)item(mega_showdown:feraligite)item(mega_showdown:heracronite)item(mega_showdown:houndoominite)item(mega_showdown:meganiumite)item(mega_showdown:scizorite)item(mega_showdown:skarmorite)item(mega_showdown:steelixite)item(mega_showdown:tyranitarite))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"6911FAFDAF7DCF82"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "mega_showdown:absolite"
+			}
+			id: "08DD03721B905401"
+			optional: true
+			rewards: [
+				{
+					id: "6DA94509A7925AA8"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 4
+					id: "082ED81428D5692C"
+					item: {
+						count: 1
+						id: "cobblemon:dive_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:absolite"
+					}
+					id: "33EB45D792048310"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:absolite)item(mega_showdown:aggronite)item(mega_showdown:altarianite)item(mega_showdown:banettite)item(mega_showdown:blazikenite)item(mega_showdown:cameruptite)item(mega_showdown:chimechite)item(mega_showdown:gardevoirite)item(mega_showdown:glalitite)item(mega_showdown:latiasite)item(mega_showdown:latiosite)item(mega_showdown:manectite)item(mega_showdown:mawilite)item(mega_showdown:medichamite)item(mega_showdown:metagrossite)item(mega_showdown:sablenite)item(mega_showdown:salamencite)item(mega_showdown:sceptilite)item(mega_showdown:sharpedonite)item(mega_showdown:swampertite))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"6911FAFDAF7DCF82"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "mega_showdown:abomasite"
+			}
+			id: "15F368D4BAD00A31"
+			optional: true
+			rewards: [
+				{
+					id: "1C5AA4BB9A9C38C9"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 4
+					id: "486D5A40182AA38E"
+					item: {
+						count: 1
+						id: "cobblemon:dusk_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:abomasite"
+					}
+					id: "3C65F2F93B11AA57"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:abomasite)item(mega_showdown:audinite)item(mega_showdown:chandelurite)item(mega_showdown:eelektrossite)item(mega_showdown:emboarite)item(mega_showdown:excadrite)item(mega_showdown:froslassite)item(mega_showdown:galladite)item(mega_showdown:garchompite)item(mega_showdown:golurkite)item(mega_showdown:lopunnite)item(mega_showdown:lucarionite)item(mega_showdown:scolipite)item(mega_showdown:scraftinite)item(mega_showdown:staraptite))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"6911FAFDAF7DCF82"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "mega_showdown:barbaracite"
+			}
+			id: "2F696B9791E096DB"
+			optional: true
+			rewards: [
+				{
+					id: "169841A843D887C9"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 4
+					id: "3C2AF6AB14A2453A"
+					item: {
+						count: 1
+						id: "cobblemon:luxury_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:barbaracite"
+					}
+					id: "45520E40BC87C808"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:barbaracite)item(mega_showdown:chesnaughtite)item(mega_showdown:delphoxite)item(mega_showdown:diancite)item(mega_showdown:dragalgite)item(mega_showdown:floettite)item(mega_showdown:greninjite)item(mega_showdown:hawluchanite)item(mega_showdown:malamarite)item(mega_showdown:meowsticite)item(mega_showdown:pyroarite))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: -0.75d
+			y: 5.5d
+		}
+		{
+			dependencies: [
+				"6911FAFDAF7DCF82"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "mega_showdown:baxcalibrite"
+			}
+			id: "1FE8544B23B4D004"
+			optional: true
+			rewards: [
+				{
+					id: "6777DFE62BB1CC9F"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 4
+					id: "403DDEFEC7611B66"
+					item: {
+						count: 1
+						id: "cobblemon:timer_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:baxcalibrite"
+					}
+					id: "037EB09B840C9508"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:baxcalibrite)item(mega_showdown:crabominite)item(mega_showdown:drampanite)item(mega_showdown:falinksite)item(mega_showdown:glimmoranite)item(mega_showdown:golisopite)item(mega_showdown:scovillainite))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 0.75d
+			y: 5.5d
+		}
+		{
+			dependencies: [
+				"6911FAFDAF7DCF82"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "zamega:ange"
+			}
+			id: "7ADBB4C75C020F62"
+			optional: true
+			rewards: [
+				{
+					id: "6C54B241F98C1161"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 4
+					id: "7C2F19A94D4EF19D"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "zamega:ange"
+					}
+					id: "75DBFE57C7CEE6AF"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(zamega:ange)item(zamega:darkranite)item(zamega:heatranite)item(zamega:magearnite)item(zamega:tatsugirinite)item(zamega:zeraorite)item(zamega:zygardite))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 2.25d
+			y: 5.5d
+		}
+		{
+			dependencies: [
+				"33D309E5040CFCC0"
+				"0C09DE2068F64857"
+				"7C10747650D77F8A"
+				"21F9E6F229B85AE1"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "mega_showdown:omni_ring"
+			}
+			id: "6E21F203B9F3351F"
+			optional: true
+			rewards: [
+				{
+					id: "0B8DAD2D06D4A11D"
+					type: "xp"
+					xp: 150
+				}
+				{
+					id: "05FF1E4C7EDDD413"
+					item: {
+						count: 1
+						id: "cobblemon:pp_max"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "62A4C265E6C8F1B0"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "0F825BF8895C5276"
+					item: {
+						count: 1
+						id: "mega_showdown:omni_ring"
+					}
+					type: "item"
+				}
+			]
+			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"7E88FA5FCCF59100"
+				"088E7A40CD462E29"
+				"08DD03721B905401"
+				"15F368D4BAD00A31"
+				"2F696B9791E096DB"
+				"1FE8544B23B4D004"
+				"7ADBB4C75C020F62"
+			]
+			hide_dependency_lines: true
+			id: "4B7A6E5D3C2F1908"
+			optional: true
+			rewards: [
+				{
+					id: "2B3C4D5E6F708192"
+					type: "xp"
+					xp: 25
+				}
+			]
+			shape: "diamond"
+			size: 1.25d
+			tasks: [
+				{
+					id: "1A2B3C4D5E6F7081"
+					type: "checkmark"
+				}
+			]
+			x: 4.5d
+			y: 5.0d
+		}
+	]
+}

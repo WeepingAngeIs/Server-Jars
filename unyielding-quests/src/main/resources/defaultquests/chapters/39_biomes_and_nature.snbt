@@ -1,0 +1,748 @@
+{
+	autofocus_id: "2F4EE84533B045D9"
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "39_biomes_and_nature"
+	group: "E84A487481E75527"
+	icon: {
+		id: "minecraft:oak_sapling"
+	}
+	id: "9BC193CC57555E15"
+	images: [ ]
+	order_index: 40
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "minecraft:oak_sapling"
+			}
+			id: "2F4EE84533B045D9"
+			rewards: [
+				{
+					count: 1
+					id: "D9937D2F6E09B1D9"
+					item: {
+						count: 1
+						id: "minecraft:oak_boat"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "3200FA1C37B26758"
+					item: {
+						count: 1
+						id: "minecraft:bread"
+					}
+					type: "item"
+				}
+				{
+					id: "6B0526B5DCC19C3A"
+					type: "xp"
+					xp: 30
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "8C40FBE49072C4A9"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:glow_berries"
+			}
+			id: "FCDECCF09C1A4060"
+			rewards: [
+				{
+					id: "9F8D861628E904F2"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomesoplenty:mystic_grove"
+					id: "62C78ECAF4E3E556"
+					type: "biome"
+				}
+			]
+			x: 3.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:lilac"
+			}
+			id: "76FD9F219DD4A242"
+			rewards: [
+				{
+					id: "9EFBE8283ABBA3C5"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomesoplenty:lavender_field"
+					id: "4405EB49460AF156"
+					type: "biome"
+				}
+			]
+			x: 6.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:spruce_log"
+			}
+			id: "39CDF73D9B14E010"
+			rewards: [
+				{
+					id: "F47A97DECB039732"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomesoplenty:redwood_forest"
+					id: "748474F9ACD2E67D"
+					type: "biome"
+				}
+			]
+			x: 9.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:grass_block"
+			}
+			id: "9FC0A6446149C363"
+			rewards: [
+				{
+					id: "88CE0318C12E1B52"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomesoplenty:origin_valley"
+					id: "8DF866590C73B9D0"
+					type: "biome"
+				}
+			]
+			x: 12.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:magma_block"
+			}
+			id: "5280A029DDB11BB1"
+			rewards: [
+				{
+					id: "63041302C99937EF"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomesoplenty:volcano"
+					id: "D82E39205E268402"
+					type: "biome"
+				}
+			]
+			x: 15.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:water_bucket"
+			}
+			id: "754AF9F05C4536B9"
+			rewards: [
+				{
+					id: "14F6A361DFBAC6DB"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomesoplenty:hot_springs"
+					id: "975EF6FE2A46D506"
+					type: "biome"
+				}
+			]
+			x: 18.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:sand"
+			}
+			id: "E03050226F4BC3E0"
+			rewards: [
+				{
+					id: "ABF065D5602788E3"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomesoplenty:tropics"
+					id: "361CD417F67C9447"
+					type: "biome"
+				}
+			]
+			x: 21.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:dark_oak_log"
+			}
+			id: "5E5FCA3140D2D1AC"
+			rewards: [
+				{
+					id: "16D313213F84D755"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomesoplenty:ominous_woods"
+					id: "2A065D6C7CDF189F"
+					type: "biome"
+				}
+			]
+			x: 24.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:dead_bush"
+			}
+			id: "F3A59EE24BE41FDE"
+			rewards: [
+				{
+					id: "123696BF7AB60124"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomesoplenty:wasteland"
+					id: "579226632A4D3AA1"
+					type: "biome"
+				}
+			]
+			x: 27.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:cherry_sapling"
+			}
+			id: "2412BE5209448C86"
+			rewards: [
+				{
+					id: "A67916F2CE3AFD67"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomeswevegone:sakura_grove"
+					id: "4E78E52C2FB814AC"
+					type: "biome"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:blue_orchid"
+			}
+			id: "29709BAC3B4358D2"
+			rewards: [
+				{
+					id: "F43FB440D88ECA5D"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomeswevegone:skyris_vale"
+					id: "3606895C6945A9D3"
+					type: "biome"
+				}
+			]
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:snow_block"
+			}
+			id: "70345DFC8C4AA6AA"
+			rewards: [
+				{
+					id: "A66E487CA34A30FB"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomeswevegone:howling_peaks"
+					id: "9F19C1FAEFD0ACC2"
+					type: "biome"
+				}
+			]
+			x: 9.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:red_sandstone"
+			}
+			id: "644CD59E2AB81A4D"
+			rewards: [
+				{
+					id: "B6185311548B0622"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomeswevegone:red_rock_valley"
+					id: "BF1471953BFB6D7F"
+					type: "biome"
+				}
+			]
+			x: 12.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:cobweb"
+			}
+			id: "58E44C448CAD05B2"
+			rewards: [
+				{
+					id: "11255F602791ED2C"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomeswevegone:weeping_witch_forest"
+					id: "F5D6C0BE0C84AD8C"
+					type: "biome"
+				}
+			]
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:mossy_cobblestone"
+			}
+			id: "26ECDA0F2BE004B5"
+			rewards: [
+				{
+					id: "428F9EACDF299A87"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomeswevegone:forgotten_forest"
+					id: "8578E94DD0CE7B6B"
+					type: "biome"
+				}
+			]
+			x: 18.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:sand"
+			}
+			id: "6F220A13A5562E32"
+			rewards: [
+				{
+					id: "6F8555F955D94122"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomeswevegone:rainbow_beach"
+					id: "2AF6E562869D1F77"
+					type: "biome"
+				}
+			]
+			x: 21.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:carved_pumpkin"
+			}
+			id: "2BDEE0C216FF1411"
+			rewards: [
+				{
+					id: "46F401B175769E53"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomeswevegone:pumpkin_valley"
+					id: "43E90CE6845F5D9F"
+					type: "biome"
+				}
+			]
+			x: 24.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:blue_ice"
+			}
+			id: "A4585A79C6BEF9EF"
+			rewards: [
+				{
+					id: "665AEC67B744CAB4"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "biomeswevegone:shattered_glacier"
+					id: "F18F66715DEFA66F"
+					type: "biome"
+				}
+			]
+			x: 27.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:lilac"
+			}
+			id: "CA84F9DF29634682"
+			rewards: [
+				{
+					id: "9D2E3B46DFD8D533"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "natures_spirit:wisteria_forest"
+					id: "C9A37E334B39ECAD"
+					type: "biome"
+				}
+			]
+			x: 3.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:dandelion"
+			}
+			id: "EB3DDA43FDDB6259"
+			rewards: [
+				{
+					id: "98612A4AF0C23547"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "natures_spirit:marigold_meadows"
+					id: "83046FAAB403B493"
+					type: "biome"
+				}
+			]
+			x: 6.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:spruce_sapling"
+			}
+			id: "A2C66AF9179241E6"
+			rewards: [
+				{
+					id: "89EE047653567079"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "natures_spirit:sugi_forest"
+					id: "E8F667D3D71D985C"
+					type: "biome"
+				}
+			]
+			x: 9.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:calcite"
+			}
+			id: "6C35A548A338A5C4"
+			rewards: [
+				{
+					id: "BE600E1C4E1580FC"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "natures_spirit:white_cliffs"
+					id: "499CA043D2051112"
+					type: "biome"
+				}
+			]
+			x: 12.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:bamboo"
+			}
+			id: "86D8960614975A43"
+			rewards: [
+				{
+					id: "2BD8867D655A5266"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "natures_spirit:bamboo_wetlands"
+					id: "E81DAE4B15077CD9"
+					type: "biome"
+				}
+			]
+			x: 15.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:wheat"
+			}
+			id: "3ACD8F3B7AFD772E"
+			rewards: [
+				{
+					id: "7C3C8FB7BC233A3F"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "natures_spirit:golden_wilds"
+					id: "A12D5CCA3A9923D1"
+					type: "biome"
+				}
+			]
+			x: 18.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:lilac"
+			}
+			id: "32A2198C83C858B1"
+			rewards: [
+				{
+					id: "E5548F7C6CC0467C"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "natures_spirit:lavender_fields"
+					id: "5291F61E9870918D"
+					type: "biome"
+				}
+			]
+			x: 21.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:birch_log"
+			}
+			id: "8C04475A186A1361"
+			rewards: [
+				{
+					id: "9FBCFBDB56CDFACA"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "natures_spirit:aspen_forest"
+					id: "CFF9EAD9707DB8C2"
+					type: "biome"
+				}
+			]
+			x: 24.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["2F4EE84533B045D9"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:red_sand"
+			}
+			id: "686091275A7C9D5B"
+			rewards: [
+				{
+					id: "443C3DA1FA8408A4"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					biome: "natures_spirit:red_peaks"
+					id: "AA92011BD4C384A7"
+					type: "biome"
+				}
+			]
+			x: 27.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["FCDECCF09C1A4060", "76FD9F219DD4A242", "39CDF73D9B14E010", "9FC0A6446149C363", "5280A029DDB11BB1", "754AF9F05C4536B9", "E03050226F4BC3E0", "5E5FCA3140D2D1AC", "F3A59EE24BE41FDE", "2412BE5209448C86", "29709BAC3B4358D2", "70345DFC8C4AA6AA", "644CD59E2AB81A4D", "58E44C448CAD05B2", "26ECDA0F2BE004B5", "6F220A13A5562E32", "2BDEE0C216FF1411", "A4585A79C6BEF9EF", "CA84F9DF29634682", "EB3DDA43FDDB6259", "A2C66AF9179241E6", "6C35A548A338A5C4", "86D8960614975A43", "3ACD8F3B7AFD772E", "32A2198C83C858B1", "8C04475A186A1361", "686091275A7C9D5B"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:compass"
+			}
+			id: "96C62B1EB6F4A042"
+			rewards: [
+				{
+					count: 1
+					id: "B4CBF41C7298D7DA"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "C0085FD27CE7604F"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "1712B10CB4197A40"
+					type: "xp"
+					xp: 800
+				}
+			]
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					id: "5014543969B7419B"
+					type: "checkmark"
+				}
+			]
+			x: 30.0d
+			y: 0.0d
+		}
+	]
+}

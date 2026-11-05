@@ -1,0 +1,557 @@
+{
+	autofocus_id: "6A28015798011CBA"
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "32_raid_dens"
+	group: "28AD4BAFAFBA049E"
+	icon: {
+		id: "cobblemonraiddens:raid_shard"
+	}
+	id: "19C0A2FE0AE53CDA"
+	images: [ ]
+	order_index: 50
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "cobblemonraiddens:raid_shard"
+			}
+			id: "6A28015798011CBA"
+			rewards: [
+				{
+					count: 6
+					id: "5A0C5154623941C4"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "AB3345AEA558EA74"
+					type: "xp"
+					xp: 100
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:join_raid"
+					criterion: ""
+					id: "E3AEAFB10FFC5AEC"
+					type: "advancement"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["6A28015798011CBA"]
+			icon: {
+				id: "cobblemonraiddens:raid_shard"
+			}
+			id: "103CFC56F55D7C27"
+			rewards: [
+				{
+					count: 6
+					id: "41586651C6003E7B"
+					item: {
+						count: 1
+						id: "cobblemon:great_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "7257B7DD91190B20"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:tier_one"
+					criterion: ""
+					id: "880936F6CE031D84"
+					type: "advancement"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["103CFC56F55D7C27"]
+			icon: {
+				id: "cobblemonraiddens:raid_shard"
+			}
+			id: "6F9875FC1EFF5649"
+			rewards: [
+				{
+					count: 6
+					id: "D88EC040D41A2832"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "18AB42BA05774FC6"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:tier_two"
+					criterion: ""
+					id: "6C2502D8E1697F1F"
+					type: "advancement"
+				}
+			]
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["6F9875FC1EFF5649"]
+			icon: {
+				id: "cobblemonraiddens:raid_shard"
+			}
+			id: "4F152910073CFE71"
+			rewards: [
+				{
+					count: 3
+					id: "A100F3B6D06EE3DE"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "BD12BBBBE1DC4B27"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:tier_three"
+					criterion: ""
+					id: "9BEC62F6615EB519"
+					type: "advancement"
+				}
+			]
+			x: 9.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["4F152910073CFE71"]
+			icon: {
+				id: "cobblemon:ultra_ball"
+			}
+			id: "8B9608CBA3BF2600"
+			rewards: [
+				{
+					count: 4
+					id: "A593A8CD2719FCE1"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "A8B5534A22C037DF"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "83FC95729A9F0840"
+					type: "xp"
+					xp: 200
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:tier_four"
+					criterion: ""
+					id: "4073F67FBC1D2523"
+					type: "advancement"
+				}
+			]
+			x: 12.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["8B9608CBA3BF2600"]
+			icon: {
+				id: "cobblemon:ultra_ball"
+			}
+			id: "65A0006D8364E5FC"
+			rewards: [
+				{
+					count: 6
+					id: "3792BD0C46BA037C"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "6BA1274B8E1EC15D"
+					item: {
+						count: 1
+						id: "cobblemon:ability_capsule"
+					}
+					type: "item"
+				}
+				{
+					id: "F0791700F2F331A4"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:tier_five"
+					criterion: ""
+					id: "1EF8E2B1C6A5C616"
+					type: "advancement"
+				}
+			]
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["65A0006D8364E5FC"]
+			icon: {
+				id: "cobblemon:ultra_ball"
+			}
+			id: "D4DCCD7F11AA2ECA"
+			rewards: [
+				{
+					count: 8
+					id: "876164ACE8D8926A"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "BE22ED211D226CC1"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "41970F9B43FAA756"
+					type: "xp"
+					xp: 450
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:tier_six"
+					criterion: ""
+					id: "8A939A135D19CF66"
+					type: "advancement"
+				}
+			]
+			x: 18.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["D4DCCD7F11AA2ECA"]
+			icon: {
+				id: "cobblemon:master_ball"
+			}
+			id: "253CA2B565A22867"
+			rewards: [
+				{
+					count: 2
+					id: "86642C539A1F3158"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "94C38088507576F8"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "FFE5A58ECAFEC97B"
+					type: "xp"
+					xp: 800
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:tier_seven"
+					criterion: ""
+					id: "A1C593F7B5148133"
+					type: "advancement"
+				}
+			]
+			x: 21.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["6A28015798011CBA"]
+			icon: {
+				id: "cobblemonraiddens:cheer_heal"
+			}
+			id: "502D5EEFB35687E4"
+			rewards: [
+				{
+					count: 2
+					id: "5E3C1C94A5C2BC05"
+					item: {
+						count: 1
+						id: "cobblemonraiddens:cheer_heal"
+					}
+					type: "item"
+				}
+				{
+					id: "D8513A6B984ACD70"
+					type: "xp"
+					xp: 120
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:great_friend"
+					criterion: ""
+					id: "A631F7C155FADC69"
+					type: "advancement"
+				}
+			]
+			x: 3.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["6A28015798011CBA"]
+			icon: {
+				id: "cobblemonraiddens:raid_shard"
+			}
+			id: "CA39C6E217F763FC"
+			rewards: [
+				{
+					count: 1
+					id: "D75AD5F95FD9217D"
+					item: {
+						count: 1
+						id: "cobblemonraiddens:raid_shard"
+					}
+					type: "item"
+				}
+				{
+					id: "B6A783C5C8B99DC0"
+					type: "xp"
+					xp: 120
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:raid_shard_charge"
+					criterion: ""
+					id: "F9A111C3288F8F92"
+					type: "advancement"
+				}
+			]
+			x: 6.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["4F152910073CFE71"]
+			icon: {
+				id: "cobblemonraiddens:catching_charm"
+			}
+			id: "1A06DA1BA2C7AA16"
+			optional: true
+			rewards: [
+				{
+					count: 8
+					id: "E610F53907544CEC"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "D25A16B8D89A7859"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "6F3DAACADC357279"
+					item: "cobblemonraiddens:catching_charm"
+					type: "item"
+				}
+			]
+			x: 9.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["8B9608CBA3BF2600"]
+			icon: {
+				id: "mega_showdown:mega_bracelet"
+			}
+			id: "F0A3E8DC4A41E695"
+			optional: true
+			rewards: [
+				{
+					count: 5
+					id: "CF1336CC31396B0C"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "6794A8816C1A3BA9"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:raid_mega"
+					criterion: ""
+					id: "136FDE456E6D3D48"
+					type: "advancement"
+				}
+			]
+			x: 12.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["8B9608CBA3BF2600"]
+			icon: {
+				id: "mega_showdown:dynamax_band"
+			}
+			id: "871F606E0E2E9550"
+			optional: true
+			rewards: [
+				{
+					count: 5
+					id: "2DEDC293FE5664D3"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "7725DE3A439D3477"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:raid_dynamax"
+					criterion: ""
+					id: "A5085A682A09F152"
+					type: "advancement"
+				}
+			]
+			x: 15.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["8B9608CBA3BF2600"]
+			icon: {
+				id: "mega_showdown:tera_orb"
+			}
+			id: "60AF9A0F77E61914"
+			optional: true
+			rewards: [
+				{
+					count: 5
+					id: "FF6D74F0DE0581A2"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "3F75CDA45CB31E89"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:raid_tera"
+					criterion: ""
+					id: "7E65FEEE4F7BD1BA"
+					type: "advancement"
+				}
+			]
+			x: 18.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["6F9875FC1EFF5649"]
+			icon: {
+				id: "cobblemon:premier_ball"
+			}
+			id: "100FBB717712AF5E"
+			optional: true
+			rewards: [
+				{
+					count: 1
+					id: "9AF73F137B6252DC"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "BFF090497990A8A7"
+					type: "xp"
+					xp: 500
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:raid_shiny"
+					criterion: ""
+					id: "AFC505E611E45D30"
+					type: "advancement"
+				}
+			]
+			x: 21.0d
+			y: 3.0d
+		}
+	]
+}

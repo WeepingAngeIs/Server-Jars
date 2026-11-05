@@ -1,0 +1,530 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "09_z_moves"
+	group: "28AD4BAFAFBA049E"
+	icon: {
+		id: "mega_showdown:z_power_ring"
+	}
+	id: "2D68DDD49DA279C3"
+	images: [
+		{
+			height: 0.4d
+			id: "6355CE7FA91406E5"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 10.0d
+			x: 2.25d
+			y: -3.1d
+		}
+		{
+			height: 0.4d
+			id: "6B2CD08BC00B660D"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 10.0d
+			x: -0.75d
+			y: -1.05d
+		}
+		{
+			height: 0.4d
+			id: "58B005E42CF7A0F2"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.0d
+			x: 0.75d
+			y: 1.05d
+		}
+	]
+	order_index: 1
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "mega_showdown:z_power_ring"
+			}
+			id: "5E0C0C7653536F63"
+			rewards: [
+				{
+					id: "78F019379D7AB45D"
+					type: "xp"
+					xp: 20
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "687C694F4DC67E7C"
+					type: "checkmark"
+				}
+			]
+			x: -4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"5E0C0C7653536F63"
+			]
+			icon: {
+				id: "mega_showdown:sparkling_stone_light"
+			}
+			id: "62510432B978745B"
+			rewards: [
+				{
+					id: "64467D4A7F3DCC82"
+					type: "xp"
+					xp: 30
+				}
+			]
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/z/get_sparkling_stone"
+					criterion: ""
+					id: "24145B1725A1DE69"
+					type: "advancement"
+				}
+			]
+			x: -3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"62510432B978745B"
+			]
+			icon: {
+				id: "mega_showdown:blank_z"
+			}
+			id: "44D19FF8528A1430"
+			rewards: [
+				{
+					id: "73660A49996B46CE"
+					type: "xp"
+					xp: 30
+				}
+			]
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/z/get_blank_move"
+					criterion: ""
+					id: "730F3140B94BE3DF"
+					type: "advancement"
+				}
+			]
+			x: -1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"44D19FF8528A1430"
+			]
+			icon: {
+				id: "mega_showdown:z_ring"
+			}
+			id: "4E2FFE1BD160B524"
+			rewards: [
+				{
+					id: "5986F9A9D1F38FF4"
+					type: "xp"
+					xp: 35
+				}
+				{
+					count: 2
+					id: "08F91E9DC92382FC"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/z/get_z_ring"
+					criterion: ""
+					id: "5A0AD6E21B77DC86"
+					type: "advancement"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"4E2FFE1BD160B524"
+			]
+			icon: {
+				id: "mega_showdown:normalium_z"
+			}
+			id: "2EE738CA1FC821AB"
+			rewards: [
+				{
+					id: "7FC3E18DB6B6F9BC"
+					type: "xp"
+					xp: 40
+				}
+				{
+					count: 2
+					id: "3A22C3FF4889B333"
+					item: {
+						count: 1
+						id: "cobblemon:ether"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/z/get_z_move"
+					criterion: ""
+					id: "36FAC63575DB85C4"
+					type: "advancement"
+				}
+			]
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"2EE738CA1FC821AB"
+			]
+			icon: {
+				id: "mega_showdown:z_power_ring"
+			}
+			id: "0C09DE2068F64857"
+			rewards: [
+				{
+					id: "7E8B1CE540D7263E"
+					type: "xp"
+					xp: 100
+				}
+				{
+					count: 2
+					id: "438B7E7F81F7FDA4"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "6AC166E5A3BC430A"
+					item: {
+						count: 1
+						id: "cobblemon:max_elixir"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.3d
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/z/z_moves"
+					criterion: ""
+					id: "1C552A0BBF25427C"
+					type: "advancement"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"44D19FF8528A1430"
+			]
+			icon: {
+				id: "mega_showdown:blank_z"
+			}
+			id: "129B4413E9EDD432"
+			optional: true
+			rewards: [
+				{
+					id: "555EE7C35D50CD1E"
+					type: "xp"
+					xp: 35
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:sparkling_stone_light"
+					}
+					id: "44A62C86C6B53D5F"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:sparkling_stone_light)item(mega_showdown:sparkling_stone_dark)item(mega_showdown:blank_z)item(mega_showdown:pika_case))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"4E2FFE1BD160B524"
+			]
+			icon: {
+				id: "mega_showdown:z_ring_blue"
+			}
+			id: "4A6CD6E673195717"
+			optional: true
+			rewards: [
+				{
+					id: "23A35B67221F4772"
+					type: "xp"
+					xp: 40
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:z_ring"
+					}
+					id: "47311D3E03A8021F"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:z_ring)item(mega_showdown:z_power_ring)item(mega_showdown:z_ring_black)item(mega_showdown:z_ring_blue)item(mega_showdown:z_ring_green)item(mega_showdown:z_ring_pink)item(mega_showdown:z_ring_red)item(mega_showdown:z_ring_yellow))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"4A6CD6E673195717"
+			]
+			icon: {
+				id: "mega_showdown:gladion_z_power_ring"
+			}
+			id: "68A31992FDDE9C44"
+			optional: true
+			rewards: [
+				{
+					id: "675592FC696FDC97"
+					type: "xp"
+					xp: 45
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:gladion_z_power_ring"
+					}
+					id: "210D405D43A4A9B4"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:gladion_z_power_ring)item(mega_showdown:hapu_z_power_ring)item(mega_showdown:hapus_z_ring)item(mega_showdown:nanu_z_power_ring)item(mega_showdown:olivia_z_power_ring)item(mega_showdown:olivias_z_ring)item(mega_showdown:rocket_z_power_ring))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"2EE738CA1FC821AB"
+			]
+			icon: {
+				id: "mega_showdown:buginium_z"
+			}
+			id: "00B0294F99E1022F"
+			optional: true
+			rewards: [
+				{
+					id: "754126DB5DB0C3ED"
+					type: "xp"
+					xp: 50
+				}
+				{
+					count: 4
+					id: "3953D67FFB405ED4"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:buginium_z"
+					}
+					id: "11C249A960157B6F"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:buginium_z)item(mega_showdown:darkinium_z)item(mega_showdown:dragonium_z)item(mega_showdown:electrium_z)item(mega_showdown:fairium_z)item(mega_showdown:fightinium_z)item(mega_showdown:firium_z)item(mega_showdown:flyinium_z)item(mega_showdown:ghostium_z))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"00B0294F99E1022F"
+			]
+			icon: {
+				id: "mega_showdown:grassium_z"
+			}
+			id: "09D2D4D56EEFC3B5"
+			optional: true
+			rewards: [
+				{
+					id: "6BDB48960D817177"
+					type: "xp"
+					xp: 50
+				}
+				{
+					count: 4
+					id: "48504E9510B09260"
+					item: {
+						count: 1
+						id: "cobblemon:timer_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:grassium_z"
+					}
+					id: "2A7789DBEC4B27C8"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:grassium_z)item(mega_showdown:groundium_z)item(mega_showdown:icium_z)item(mega_showdown:normalium_z)item(mega_showdown:poisonium_z)item(mega_showdown:psychium_z)item(mega_showdown:rockium_z)item(mega_showdown:steelium_z)item(mega_showdown:waterium_z))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"0C09DE2068F64857"
+			]
+			icon: {
+				id: "mega_showdown:aloraichium_z"
+			}
+			id: "1F41238044280EE6"
+			optional: true
+			rewards: [
+				{
+					id: "39C2E3284AF72B8E"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 3
+					id: "119A1F4722694AD5"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_m"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:aloraichium_z"
+					}
+					id: "66F8EB034C699EA6"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:aloraichium_z)item(mega_showdown:decidium_z)item(mega_showdown:eevium_z)item(mega_showdown:incinium_z)item(mega_showdown:kommonium_z)item(mega_showdown:lunalium_z)item(mega_showdown:lycanium_z)item(mega_showdown:marshadium_z)item(mega_showdown:mewnium_z))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"1F41238044280EE6"
+			]
+			icon: {
+				id: "mega_showdown:mimikium_z"
+			}
+			id: "5FCFB653AEC59E55"
+			optional: true
+			rewards: [
+				{
+					id: "712B49AEEC568F74"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 3
+					id: "33E9EA63362D2D44"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_m"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:mimikium_z"
+					}
+					id: "49DD51841B4C30D3"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:mimikium_z)item(mega_showdown:pikanium_z)item(mega_showdown:pikashunium_z)item(mega_showdown:primarium_z)item(mega_showdown:snorlium_z)item(mega_showdown:solganium_z)item(mega_showdown:tapunium_z)item(mega_showdown:ultranecrozium_z))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 4.5d
+			y: -2.0d
+		}
+	]
+}

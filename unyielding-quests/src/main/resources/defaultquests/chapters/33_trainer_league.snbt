@@ -1,0 +1,2475 @@
+{
+	autofocus_id: "D241F3DF3A963772"
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "33_trainer_league"
+	group: "28AD4BAFAFBA049E"
+	icon: {
+		id: "rctmod:trainer_card"
+	}
+	id: "845CB53DA766CB37"
+	images: [ ]
+	order_index: 55
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "rctmod:trainer_card"
+			}
+			id: "D241F3DF3A963772"
+			rewards: [
+				{
+					count: 4
+					id: "8887B23D9CD72D64"
+					item: {
+						count: 1
+						id: "cobblemon:potion"
+					}
+					type: "item"
+				}
+				{
+					id: "F9AEBF459CCC23B9"
+					type: "xp"
+					xp: 30
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "339AA2E54E685B45"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["D241F3DF3A963772"]
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			id: "D2638C594107798D"
+			rewards: [
+				{
+					count: 4
+					id: "CD187BED0BF5F503"
+					item: {
+						count: 1
+						id: "cobblemon:super_potion"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "8D757A24C7AD3D47"
+					item: {
+						count: 1
+						id: "cobblemon:great_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "18152EB9068F5A6B"
+					type: "xp"
+					xp: 80
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_any"
+					criterion: ""
+					id: "64378FE8D9BD7A00"
+					type: "advancement"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["D2638C594107798D"]
+			icon: {
+				id: "minecraft:cobblestone"
+			}
+			id: "5414EFCAC4C44E3F"
+			rewards: [
+				{
+					count: 2
+					id: "28EB3727A9CE270A"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "8BF7D137435BCB2E"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "8473FD9EE694AF91"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_brock"
+					criterion: ""
+					id: "BC875042A0725EA2"
+					type: "advancement"
+				}
+			]
+			x: 6.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["5414EFCAC4C44E3F"]
+			icon: {
+				id: "minecraft:water_bucket"
+			}
+			id: "D369618F31902A84"
+			rewards: [
+				{
+					count: 2
+					id: "F5D6D53DAF351F70"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "130A45CA71B69EB9"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "84AA67163FCB6E3D"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_misty"
+					criterion: ""
+					id: "4F3FF6277AE6CBF8"
+					type: "advancement"
+				}
+			]
+			x: 9.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["D369618F31902A84"]
+			icon: {
+				id: "cobblemon:thunder_stone"
+			}
+			id: "1D0E40674FFCA741"
+			rewards: [
+				{
+					count: 2
+					id: "E5F7060FF7B260B4"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "C6D15CF24B6A6D2E"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "D1EF4406423DC8DB"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_lt_surge"
+					criterion: ""
+					id: "B3680A992E3A1C12"
+					type: "advancement"
+				}
+			]
+			x: 12.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["1D0E40674FFCA741"]
+			icon: {
+				id: "cobblemon:leaf_stone"
+			}
+			id: "426BE2E86F631627"
+			rewards: [
+				{
+					count: 2
+					id: "A83837BCCC3EDC0B"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "2A5590C07EEE1B10"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "705E7DA5DF1558AD"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_erika"
+					criterion: ""
+					id: "DE92E16BF7089409"
+					type: "advancement"
+				}
+			]
+			x: 15.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["426BE2E86F631627"]
+			icon: {
+				id: "minecraft:spider_eye"
+			}
+			id: "40A56B29D792D5EF"
+			rewards: [
+				{
+					count: 2
+					id: "BD9F00622F6FA5E3"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "5EA845CAE414CE0D"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "2A876708C0DAF35B"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_koga"
+					criterion: ""
+					id: "E29D269FFD640D6E"
+					type: "advancement"
+				}
+			]
+			x: 18.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["40A56B29D792D5EF"]
+			icon: {
+				id: "cobblemon:twisted_spoon"
+			}
+			id: "16CAA0826DF7D24D"
+			rewards: [
+				{
+					count: 2
+					id: "838685755029020D"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "ADBC9F03F8439F49"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "C43D7637E51761C0"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_sabrina"
+					criterion: ""
+					id: "C8B4D5F27B61A420"
+					type: "advancement"
+				}
+			]
+			x: 21.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["16CAA0826DF7D24D"]
+			icon: {
+				id: "cobblemon:fire_stone"
+			}
+			id: "571C2E7CB529810B"
+			rewards: [
+				{
+					count: 2
+					id: "E431E37B26F0527F"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "ECB7CFF3FDF17E85"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "C70F3E7AC77FAAED"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_blaine"
+					criterion: ""
+					id: "E89D877589CC095F"
+					type: "advancement"
+				}
+			]
+			x: 24.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["571C2E7CB529810B"]
+			icon: {
+				id: "cobblemon:soft_sand"
+			}
+			id: "C06A382E0CDDAF94"
+			rewards: [
+				{
+					count: 2
+					id: "A80F39B93C9C696E"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "5F0E8162ABEB099E"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "6D85010D6FDFBF5D"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_giovanni"
+					criterion: ""
+					id: "F8915EEB1399FBB0"
+					type: "advancement"
+				}
+			]
+			x: 27.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["C06A382E0CDDAF94"]
+			icon: {
+				id: "cobblemon:ice_stone"
+			}
+			id: "89E1F322356D01EE"
+			rewards: [
+				{
+					count: 4
+					id: "B6D1A958219D9838"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "9F65B1A263BD24A1"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "506033D8402EB88C"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_lorelei"
+					criterion: ""
+					id: "D554E782E74CF3A6"
+					type: "advancement"
+				}
+			]
+			x: 30.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["89E1F322356D01EE"]
+			icon: {
+				id: "cobblemon:black_belt"
+			}
+			id: "DBA5B681D9137E1B"
+			rewards: [
+				{
+					count: 4
+					id: "D63C6801B9A9ADBA"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "E2ED089141C15673"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "87FB70CC730EA171"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_bruno"
+					criterion: ""
+					id: "67705B4D7CE7A90D"
+					type: "advancement"
+				}
+			]
+			x: 33.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["DBA5B681D9137E1B"]
+			icon: {
+				id: "cobblemon:spell_tag"
+			}
+			id: "3835281AE0A17D61"
+			rewards: [
+				{
+					count: 4
+					id: "7F14DD44191682D8"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "E0612E5D24BFF3D8"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "B4DE5A5032A25CCF"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_agatha"
+					criterion: ""
+					id: "46E91DB6DCECE323"
+					type: "advancement"
+				}
+			]
+			x: 36.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["3835281AE0A17D61"]
+			icon: {
+				id: "cobblemon:dragon_fang"
+			}
+			id: "C0B2F339E551C6E6"
+			rewards: [
+				{
+					count: 4
+					id: "A2BA55937A06EF88"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "87E94F0C4E2F5E10"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "32D70B4C1A809583"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_lance"
+					criterion: ""
+					id: "37B569B3A56FB3FD"
+					type: "advancement"
+				}
+			]
+			x: 39.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["C0B2F339E551C6E6"]
+			icon: {
+				id: "cobblemon:master_ball"
+			}
+			id: "26B4BC6E071A2E29"
+			rewards: [
+				{
+					count: 1
+					id: "16BB209AB2CDB36E"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "D5AE1C88525E45D1"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "8FDEFBDA4F66F4E2"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "C42408E9F5DB7717"
+					type: "xp"
+					xp: 800
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_champion_terry"
+					criterion: ""
+					id: "7CFBC4091976FF96"
+					type: "advancement"
+				}
+			]
+			x: 42.0d
+			y: -4.0d
+		}
+		{
+			dependencies: ["5414EFCAC4C44E3F"]
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			id: "662A08E2F544771E"
+			optional: true
+			rewards: [
+				{
+					count: 2
+					id: "11AE0D04072A1719"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "A1FBD1AC665DAA84"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "28029D831EF320D0"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_rival_wayne_1"
+					criterion: ""
+					id: "DD75E27D281865D1"
+					type: "advancement"
+				}
+			]
+			x: 9.0d
+			y: -7.0d
+		}
+		{
+			dependencies: ["40A56B29D792D5EF"]
+			icon: {
+				id: "cobblemon:black_glasses"
+			}
+			id: "BC7FC8EFAFF6124F"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "35D0C727EABF599E"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "396B174019766516"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "E02EEBBF00BC76F9"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_rocket_admin_archer_1"
+					criterion: ""
+					id: "52ED2121FAB69EFF"
+					type: "advancement"
+				}
+			]
+			x: 18.0d
+			y: -7.0d
+		}
+		{
+			dependencies: ["BC7FC8EFAFF6124F"]
+			icon: {
+				id: "cobblemon:black_glasses"
+			}
+			id: "DBC3484400AC51C7"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "322EA29BEA037819"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "E4883C7DBBAEC9DA"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "A61DE529C28843DB"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_boss_giovanni_1"
+					criterion: ""
+					id: "27EABCE6DEBDA7DD"
+					type: "advancement"
+				}
+			]
+			x: 21.0d
+			y: -7.0d
+		}
+		{
+			dependencies: ["26B4BC6E071A2E29"]
+			icon: {
+				components: {
+					"cobblemon:pokemon_item": {
+						aspects: [ ]
+						species: "cobblemon:pikachu"
+					}
+				}
+				id: "cobblemon:pokemon_model"
+			}
+			id: "B2D205B21BB4B889"
+			optional: true
+			rewards: [
+				{
+					count: 1
+					id: "62479BFBA2FBFCC0"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "70E3D994CDC8420B"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "F822FFEB3F047E39"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "16F2ED20E5C24233"
+					type: "xp"
+					xp: 800
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_trainer_red"
+					criterion: ""
+					id: "7ED021FA28F79368"
+					type: "advancement"
+				}
+			]
+			x: 45.0d
+			y: -7.0d
+		}
+		{
+			dependencies: ["26B4BC6E071A2E29"]
+			icon: {
+				components: {
+					"cobblemon:pokemon_item": {
+						aspects: [ ]
+						species: "cobblemon:blastoise"
+					}
+				}
+				id: "cobblemon:pokemon_model"
+			}
+			id: "3875ADF5C5E929C8"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "64C32AAB0583EC50"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "365FE089F9C24F1E"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "503ACAA5899A218A"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_trainer_blue"
+					criterion: ""
+					id: "4D26EAA369181C10"
+					type: "advancement"
+				}
+			]
+			x: 45.0d
+			y: -1.0d
+		}
+		{
+			dependencies: ["D2638C594107798D"]
+			icon: {
+				id: "minecraft:cobblestone"
+			}
+			id: "412C1A3CD03F302F"
+			rewards: [
+				{
+					count: 2
+					id: "A5D6315AB25A88F3"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "4A17B17FAA2A5F8C"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "9CD3B7F8EA0BE0BD"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_gym_leader_roark_1"
+					criterion: ""
+					id: "2D546E9E7373E37E"
+					type: "advancement"
+				}
+			]
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["412C1A3CD03F302F"]
+			icon: {
+				id: "cobblemon:leaf_stone"
+			}
+			id: "C065FB1413047889"
+			rewards: [
+				{
+					count: 2
+					id: "C318C13FC72B75BA"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "E0B3E57259C69678"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "3A8751BEB0EDE7A2"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_gym_leader_gardenia_1"
+					criterion: ""
+					id: "6B06322F2D2D1A43"
+					type: "advancement"
+				}
+			]
+			x: 9.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["C065FB1413047889"]
+			icon: {
+				id: "cobblemon:black_belt"
+			}
+			id: "1CE09EE648139982"
+			rewards: [
+				{
+					count: 2
+					id: "18A17EEC46D285C8"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "D5B4D269D2382A66"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "CDE786C571538649"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_gym_leader_maylene_1"
+					criterion: ""
+					id: "1751C0025EE40778"
+					type: "advancement"
+				}
+			]
+			x: 12.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1CE09EE648139982"]
+			icon: {
+				id: "minecraft:water_bucket"
+			}
+			id: "543EFD31791BD0FA"
+			rewards: [
+				{
+					count: 2
+					id: "C734CC8447DD21A0"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "44C2C5D68AB482F4"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "2444285B07CDC97C"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_gym_leader_wake_1"
+					criterion: ""
+					id: "188B69F22818053B"
+					type: "advancement"
+				}
+			]
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["543EFD31791BD0FA"]
+			icon: {
+				id: "cobblemon:spell_tag"
+			}
+			id: "5699E09021A4A245"
+			rewards: [
+				{
+					count: 2
+					id: "D41E9F9A5C528AA4"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "8ABA9055E3C72F11"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "586160D5ABDE0BF4"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_gym_leader_fantina_1"
+					criterion: ""
+					id: "CBA2DC5407CC048D"
+					type: "advancement"
+				}
+			]
+			x: 18.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5699E09021A4A245"]
+			icon: {
+				id: "cobblemon:metal_coat"
+			}
+			id: "9123F14460B86ADB"
+			rewards: [
+				{
+					count: 2
+					id: "43E1280D656BB2CD"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "7B8B7465D2244A83"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "47EB942EC316A2B7"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_gym_leader_byron_1"
+					criterion: ""
+					id: "ED7902F52B856F25"
+					type: "advancement"
+				}
+			]
+			x: 21.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["9123F14460B86ADB"]
+			icon: {
+				id: "cobblemon:ice_stone"
+			}
+			id: "5880EBBC1C6FDE2F"
+			rewards: [
+				{
+					count: 2
+					id: "A07948233D990CC4"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "FBDCC630503D7EBB"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "A2EFD2BB03D6CAB0"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_gym_leader_candice_1"
+					criterion: ""
+					id: "957831C899339EE8"
+					type: "advancement"
+				}
+			]
+			x: 24.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5880EBBC1C6FDE2F"]
+			icon: {
+				id: "cobblemon:thunder_stone"
+			}
+			id: "F03586F68354A96E"
+			rewards: [
+				{
+					count: 2
+					id: "4B315C3499CD3987"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "B63FD712AC435C96"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "838F12692C2A9F61"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_gym_leader_volkner_1"
+					criterion: ""
+					id: "E17036A3FF17FE5E"
+					type: "advancement"
+				}
+			]
+			x: 27.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["F03586F68354A96E"]
+			icon: {
+				id: "cobblemon:silver_powder"
+			}
+			id: "E0403722DD0A4F1B"
+			rewards: [
+				{
+					count: 4
+					id: "AF9F0DDFF8F0F43F"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "F8A220331BEE0066"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "4C21690D71FAB5A2"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_aaron_1"
+					criterion: ""
+					id: "658809AAC5029260"
+					type: "advancement"
+				}
+			]
+			x: 30.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["E0403722DD0A4F1B"]
+			icon: {
+				id: "cobblemon:soft_sand"
+			}
+			id: "6246F0153EB576AB"
+			rewards: [
+				{
+					count: 4
+					id: "C418BBD92AA15508"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "6C87261DB0840C3E"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "D5E6BE5BEC8CB777"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_bertha_1"
+					criterion: ""
+					id: "440E8FE8C288894E"
+					type: "advancement"
+				}
+			]
+			x: 33.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["6246F0153EB576AB"]
+			icon: {
+				id: "cobblemon:fire_stone"
+			}
+			id: "90EAC63F22EAA1B8"
+			rewards: [
+				{
+					count: 4
+					id: "BC010A86C39C870D"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "8FAAB554B60BBA3F"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "75D648A27FF5E072"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_flint_1"
+					criterion: ""
+					id: "2CDB16457CFE347F"
+					type: "advancement"
+				}
+			]
+			x: 36.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["90EAC63F22EAA1B8"]
+			icon: {
+				id: "cobblemon:twisted_spoon"
+			}
+			id: "80DF01725D2E2412"
+			rewards: [
+				{
+					count: 4
+					id: "8E7F35B2327AE696"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "7067C4E155789409"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "253F247C4772B3CD"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_lucian_1"
+					criterion: ""
+					id: "485AAB2A554DE233"
+					type: "advancement"
+				}
+			]
+			x: 39.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["80DF01725D2E2412"]
+			icon: {
+				components: {
+					"cobblemon:pokemon_item": {
+						aspects: [ ]
+						species: "cobblemon:garchomp"
+					}
+				}
+				id: "cobblemon:pokemon_model"
+			}
+			id: "7878AA4366E59967"
+			rewards: [
+				{
+					count: 1
+					id: "D23594430248F4B2"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "1E226AE00406D454"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "416C23C4C610460E"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "292F1690A131DA3F"
+					type: "xp"
+					xp: 800
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_champion_cynthia_1"
+					criterion: ""
+					id: "544DFE13D392378C"
+					type: "advancement"
+				}
+			]
+			x: 42.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7878AA4366E59967"]
+			icon: {
+				components: {
+					"cobblemon:pokemon_item": {
+						aspects: [ ]
+						species: "cobblemon:garchomp"
+					}
+				}
+				id: "cobblemon:pokemon_model"
+			}
+			id: "2DD27D9EF96E9915"
+			optional: true
+			rewards: [
+				{
+					count: 1
+					id: "D72ED96D1F52C824"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "204C2725C1BAF68C"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "9A61B007F0B6D7D4"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "4660C4CC85630612"
+					type: "xp"
+					xp: 800
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_champion_cynthia_3"
+					criterion: ""
+					id: "1DD1D18E2838FB1E"
+					type: "advancement"
+				}
+			]
+			x: 45.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["C065FB1413047889"]
+			icon: {
+				id: "cobblemon:black_glasses"
+			}
+			id: "ADC14FCFB146E718"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "E15C667A11235099"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "B3366C63474873ED"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "3A043B938195F7B8"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_commander_mars_1"
+					criterion: ""
+					id: "19E0E1C015B3EDA4"
+					type: "advancement"
+				}
+			]
+			x: 9.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["ADC14FCFB146E718"]
+			icon: {
+				id: "cobblemon:black_glasses"
+			}
+			id: "CEA5ABA30D092911"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "E52202CFFA904C44"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "2FC9CACB77844237"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "1DD5D4667900DACE"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_commander_saturn_1"
+					criterion: ""
+					id: "DFD37B50F564FAD1"
+					type: "advancement"
+				}
+			]
+			x: 12.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["CEA5ABA30D092911"]
+			icon: {
+				id: "cobblemon:black_glasses"
+			}
+			id: "E053A261885A2BCE"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "6AFDE99025C3C033"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "DE7575BF16F99987"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "CA5EB7BC20D35BFC"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_commander_jupiter_1"
+					criterion: ""
+					id: "AA1114623DA94AFE"
+					type: "advancement"
+				}
+			]
+			x: 15.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["E053A261885A2BCE"]
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			id: "F81C3F185D52DC1D"
+			optional: true
+			rewards: [
+				{
+					count: 1
+					id: "335AB13DECE54341"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "FCB7BD85850D68D1"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "EC59D5044E472241"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "B768FC1014C8A70F"
+					type: "xp"
+					xp: 800
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_team_galactic_boss_cyrus_1"
+					criterion: ""
+					id: "9D0E5C102B9C7547"
+					type: "advancement"
+				}
+			]
+			x: 18.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["D2638C594107798D"]
+			icon: {
+				id: "cobblemon:sharp_beak"
+			}
+			id: "786114C4B6099067"
+			rewards: [
+				{
+					count: 2
+					id: "4EFF253C8FAED648"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "C5885E963EF39C75"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "A93D1C20C7F02DD2"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_alice"
+					criterion: ""
+					id: "279EF0809E25BEB8"
+					type: "advancement"
+				}
+			]
+			x: 6.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["786114C4B6099067"]
+			icon: {
+				id: "cobblemon:twisted_spoon"
+			}
+			id: "4C2AD0B6EA2DCF86"
+			rewards: [
+				{
+					count: 2
+					id: "2350869D4CDDE951"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "7C1AE74C1732E5E3"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "5C4D22AA052340C6"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_benjamin"
+					criterion: ""
+					id: "4D0ACE0662F04D62"
+					type: "advancement"
+				}
+			]
+			x: 9.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["4C2AD0B6EA2DCF86"]
+			icon: {
+				id: "cobblemon:black_belt"
+			}
+			id: "23AA34C4C4A19470"
+			rewards: [
+				{
+					count: 2
+					id: "E25337A414047154"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "57263E8E36923021"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "80BEE73AF3712888"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_big_mo"
+					criterion: ""
+					id: "CF3F8810D722464B"
+					type: "advancement"
+				}
+			]
+			x: 12.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["23AA34C4C4A19470"]
+			icon: {
+				id: "cobblemon:thunder_stone"
+			}
+			id: "F70BAF5D240068B1"
+			rewards: [
+				{
+					count: 2
+					id: "433823A9F2EBB4EB"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "90B16F741441B345"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "F8D57E04A9292A93"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_galavan"
+					criterion: ""
+					id: "7B8AFA4A6208CF68"
+					type: "advancement"
+				}
+			]
+			x: 15.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["F70BAF5D240068B1"]
+			icon: {
+				id: "cobblemon:fire_stone"
+			}
+			id: "9A2F75AE6A8A9A22"
+			rewards: [
+				{
+					count: 2
+					id: "953FB7929F6ED7CD"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "AF2FA786E3F1B862"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "32077E120503A50E"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_mel"
+					criterion: ""
+					id: "E5F3EC7F9F29C801"
+					type: "advancement"
+				}
+			]
+			x: 18.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["9A2F75AE6A8A9A22"]
+			icon: {
+				id: "cobblemon:leaf_stone"
+			}
+			id: "51FB6BA6D487C9B3"
+			rewards: [
+				{
+					count: 2
+					id: "EFE05BC524781F35"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "1D16B00C3B71CB8A"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "7747B6F09FA78DDC"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_mirskle"
+					criterion: ""
+					id: "969B18D247350362"
+					type: "advancement"
+				}
+			]
+			x: 21.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["51FB6BA6D487C9B3"]
+			icon: {
+				id: "minecraft:spider_eye"
+			}
+			id: "432B247A1D0FCFFD"
+			rewards: [
+				{
+					count: 2
+					id: "2F7DACFCD8E7EB84"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "F2DDE992E3D32043"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "13D3BC1C47595EF6"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_tessy"
+					criterion: ""
+					id: "E8BC4BFDF95BB40D"
+					type: "advancement"
+				}
+			]
+			x: 24.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["432B247A1D0FCFFD"]
+			icon: {
+				id: "cobblemon:expert_belt"
+			}
+			id: "C18C73CD60660229"
+			rewards: [
+				{
+					count: 2
+					id: "7BF8579CE5EA1CA2"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "A2258E5A636B7129"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "6D23F7EBA19DFB57"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_leader_vega"
+					criterion: ""
+					id: "F3D720B72B6DBB5E"
+					type: "advancement"
+				}
+			]
+			x: 27.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["C18C73CD60660229"]
+			icon: {
+				id: "cobblemon:sachet"
+			}
+			id: "2CF6A8700E67E83A"
+			rewards: [
+				{
+					count: 4
+					id: "21EA35756C35E0CF"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "FD5CDD40EE2DF70E"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "747CE46760CB7232"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_arabella"
+					criterion: ""
+					id: "1A8D7C27DC9C2D72"
+					type: "advancement"
+				}
+			]
+			x: 30.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["2CF6A8700E67E83A"]
+			icon: {
+				id: "cobblemon:dragon_fang"
+			}
+			id: "8F67907516B62713"
+			rewards: [
+				{
+					count: 4
+					id: "9F022B0F3EC48C57"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "2B3521F8C0946C64"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "D174D6707BC53685"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_elias"
+					criterion: ""
+					id: "4285A687A170D666"
+					type: "advancement"
+				}
+			]
+			x: 33.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["8F67907516B62713"]
+			icon: {
+				id: "cobblemon:soft_sand"
+			}
+			id: "B5FFF93C0585523B"
+			rewards: [
+				{
+					count: 4
+					id: "8D89E3D8B9CD2B16"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "CCE3E5054D10D584"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "C1A58BC7181C79C9"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_moleman"
+					criterion: ""
+					id: "A429E8C1BA3537CA"
+					type: "advancement"
+				}
+			]
+			x: 36.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["B5FFF93C0585523B"]
+			icon: {
+				id: "cobblemon:expert_belt"
+			}
+			id: "714F82F8FF07AFBB"
+			rewards: [
+				{
+					count: 4
+					id: "48EA732FF8E67D6D"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "EA79080233575794"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "3D9F61D2C1973603"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_elite_four_penny"
+					criterion: ""
+					id: "A7E780564B68C960"
+					type: "advancement"
+				}
+			]
+			x: 39.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["714F82F8FF07AFBB"]
+			icon: {
+				id: "cobblemon:master_ball"
+			}
+			id: "99B6231BCA21C863"
+			rewards: [
+				{
+					count: 1
+					id: "F69DFBAD316BA671"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "C83850A522DDEB63"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "24EAD2C3935FD0B8"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "1DEBC6BAFF32A752"
+					type: "xp"
+					xp: 800
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_champion_jax"
+					criterion: ""
+					id: "227CCBFFE774B199"
+					type: "advancement"
+				}
+			]
+			x: 42.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["F70BAF5D240068B1"]
+			icon: {
+				id: "cobblemon:black_glasses"
+			}
+			id: "D252AA93D8C1CEB8"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "7C14FCDAEC019264"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "6C4E71BBCFE83BE1"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "58F1D375524CFD20"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_shadow_admin_ivory_1"
+					criterion: ""
+					id: "861F7FADAD624361"
+					type: "advancement"
+				}
+			]
+			x: 15.0d
+			y: 9.0d
+		}
+		{
+			dependencies: ["D252AA93D8C1CEB8"]
+			icon: {
+				id: "cobblemon:black_glasses"
+			}
+			id: "3F7EF59D7B36E6D5"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "5C68FB7A211229CD"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "A9DA55E1B8213B78"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "E5910173949379E8"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_shadow_admin_marlon_1"
+					criterion: ""
+					id: "218D9643EF5FE786"
+					type: "advancement"
+				}
+			]
+			x: 18.0d
+			y: 9.0d
+		}
+		{
+			dependencies: ["3F7EF59D7B36E6D5"]
+			icon: {
+				id: "minecraft:wither_skeleton_skull"
+			}
+			id: "454C19E059A77BC0"
+			optional: true
+			rewards: [
+				{
+					count: 1
+					id: "DFA5AF82B1349CC7"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "97186B3EC69E08E3"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "AA8C8CEFD5AAC212"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "6B7559FFA56BD772"
+					type: "xp"
+					xp: 800
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_boss_zeph_1"
+					criterion: ""
+					id: "BBEBE320CB162373"
+					type: "advancement"
+				}
+			]
+			x: 21.0d
+			y: 9.0d
+		}
+		{
+			dependencies: ["26B4BC6E071A2E29", "7878AA4366E59967", "99B6231BCA21C863"]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:diamond"
+			}
+			id: "195E7AD114E6B022"
+			rewards: [
+				{
+					count: 1
+					id: "9A5F73F17778E2E4"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 10
+					id: "83A3BA4121D80E6A"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "37816FC806B95E33"
+					type: "xp"
+					xp: 1000
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_all_elite_four"
+					criterion: ""
+					id: "B13D328C48DECB61"
+					type: "advancement"
+				}
+			]
+			x: 48.0d
+			y: 1.0d
+		}
+		{
+			dependencies: ["195E7AD114E6B022"]
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			id: "DEB2736ED1649BF5"
+			rewards: [
+				{
+					count: 2
+					id: "AA8C0964043C4333"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "581644D3A5AB6EE3"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "E8D67D0D6D0575BF"
+					type: "xp"
+					xp: 2000
+				}
+			]
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_all_champion"
+					criterion: ""
+					id: "D100B022248476F3"
+					type: "advancement"
+				}
+			]
+			x: 48.0d
+			y: 5.0d
+		}
+	]
+}

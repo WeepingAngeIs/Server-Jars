@@ -1,0 +1,1872 @@
+{
+	autofocus_id: "717D5537D7253331"
+	default_hide_dependency_lines: true
+	default_quest_shape: "circle"
+	filename: "15_legends_kanto_hoenn"
+	group: "69C15075C3ED44EB"
+	icon: {
+		id: "cobblemon:master_ball"
+	}
+	id: "69AF2FEAB8E68DAB"
+	images: [
+		{
+			height: 0.4d
+			id: "40A3308F40CA2BFB"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 0.0d
+			y: -3.2d
+		}
+		{
+			height: 0.4d
+			id: "4A979016D342C8A2"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 0.0d
+			y: -0.2d
+		}
+		{
+			height: 0.4d
+			id: "34952F6ABB4B1818"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 0.0d
+			y: 2.8d
+		}
+	]
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "cobblemon:rare_candy"
+			}
+			icon_scale: 0.9d
+			id: "717D5537D7253331"
+			rewards: [
+				{
+					id: "075975A66DDDD85C"
+					type: "xp"
+					xp: 5
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "4C82EFA59E400A42"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "hexagon"
+			size: 1.6d
+			tasks: [
+				{
+					id: "5463BEF1E290BE9F"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: -5.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:ice_gem"
+			}
+			icon_scale: 0.9d
+			id: "76EA63E69EC611F5"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "4806CF9E6ABE169E"
+					item: {
+						count: 1
+						id: "cobblemon:never_melt_ice"
+					}
+					type: "item"
+				}
+				{
+					id: "41C39EEE6CA50782"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "32C1FA2F955419C9"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "A95E126BF9E1AA74"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:ice_gem"
+					}
+					id: "4ABB46E9BD72FF7F"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:articuno"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -4.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:electric_gem"
+			}
+			icon_scale: 0.9d
+			id: "2689D6EF3930B24B"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "39FEA986A196638B"
+					item: {
+						count: 1
+						id: "cobblemon:magnet"
+					}
+					type: "item"
+				}
+				{
+					id: "3924D70314F3D38A"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "2D11C8FD1FE31D48"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B4056933CDB4C1BF"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:electric_gem"
+					}
+					id: "69865BDFF076B997"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:zapdos"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -2.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:fire_gem"
+			}
+			icon_scale: 0.9d
+			id: "7E3132D31165B9EC"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "530403D5F72E1068"
+					item: {
+						count: 1
+						id: "cobblemon:charcoal_stick"
+					}
+					type: "item"
+				}
+				{
+					id: "1A1AFB54C3C2894E"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "5C6B41239F197047"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "629B75E49BEAA272"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:fire_gem"
+					}
+					id: "2BA025CFC688E858"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:moltres"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 0.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:choice_specs"
+			}
+			icon_scale: 0.9d
+			id: "4F5E0E16CB39278E"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "56CF183BB71AF2F7"
+					item: {
+						count: 1
+						id: "cobblemon:wise_glasses"
+					}
+					type: "item"
+				}
+				{
+					id: "258B872C195962E0"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "336C0507CE2D7A84"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "5013EAF83565107E"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:choice_specs"
+					}
+					id: "02D99D88120D1442"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:mewtwo"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 2.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:psychic_gem"
+			}
+			icon_scale: 0.9d
+			id: "75B7247EEB2618E8"
+			rewards: [
+				{
+					count: 2
+					id: "16A17EA86164DE9B"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					id: "0896C47E8F7E79A4"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "61060916DA9416F7"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "FF540D3BE741B1C1"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:psychic_gem"
+					}
+					id: "15053ED6A91F4DB2"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:mew"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 4.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:electric_gem"
+			}
+			icon_scale: 0.9d
+			id: "20F15CC12DFDCA97"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "1C6C8F923C1AABBD"
+					item: {
+						count: 1
+						id: "cobblemon:quick_claw"
+					}
+					type: "item"
+				}
+				{
+					id: "28E0A91AC0F43447"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "12705E02936922EE"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "4418C722A8B0D1CE"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:electric_gem"
+					}
+					id: "54A81ED6E367F09F"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:raikou"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -5.0d
+			y: 1.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:fire_gem"
+			}
+			icon_scale: 0.9d
+			id: "58478B8510FABE83"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "57F99246537EA636"
+					item: {
+						count: 1
+						id: "cobblemon:charcoal_stick"
+					}
+					type: "item"
+				}
+				{
+					id: "72570B77DC35A9E6"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "612A7FE04B5E2906"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "5EDD7C676C7B2C6D"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:fire_gem"
+					}
+					id: "16444E5BB1EC4067"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:entei"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -3.0d
+			y: 1.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:water_gem"
+			}
+			icon_scale: 0.9d
+			id: "4CBA26DB7C9215C6"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "4062FAC70B703C39"
+					item: {
+						count: 1
+						id: "cobblemon:mystic_water"
+					}
+					type: "item"
+				}
+				{
+					id: "315A3030671D082A"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "20C655127658DE1D"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "49FD7820C0B51399"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:water_gem"
+					}
+					id: "6F93A19D8FADBA35"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:suicune"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -1.0d
+			y: 1.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:deep_sea_scale"
+			}
+			icon_scale: 0.9d
+			id: "0FF6564D2DD6ED73"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "510CC9F1FB53F962"
+					item: {
+						count: 1
+						id: "cobblemon:mystic_water"
+					}
+					type: "item"
+				}
+				{
+					id: "22FB234750DF1CBC"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "7C9CFE94CF547D97"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "692B1A4FAFA4B0D5"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:deep_sea_scale"
+					}
+					id: "0B6437ADC70BEE65"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:lugia"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 1.0d
+			y: 1.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:charcoal_stick"
+			}
+			icon_scale: 0.9d
+			id: "4025EE4781ED7965"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "2CAEF7E62061C2D3"
+					item: {
+						count: 1
+						id: "cobblemon:fire_gem"
+					}
+					type: "item"
+				}
+				{
+					id: "22F3FD4E28F7DBB0"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "2B72330ED7F727A4"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "FD4836D1E5FCDD1E"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:charcoal_stick"
+					}
+					id: "19B84318527FA8BC"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:hooh"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 3.0d
+			y: 1.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:psychic_gem"
+			}
+			icon_scale: 0.9d
+			id: "57AC1E33FAE63428"
+			rewards: [
+				{
+					count: 2
+					id: "066DE0E9492BCF62"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					id: "5992010E9588A162"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "37BA3EE874FB02CA"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "EF87022A8D0FA8BD"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:psychic_gem"
+					}
+					id: "615FEC3720995372"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:celebi"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 5.0d
+			y: 1.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:mystic_water"
+			}
+			icon_scale: 0.9d
+			id: "45A8D358B0904818"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "3F5388A26E1C2409"
+					item: {
+						count: 1
+						id: "cobblemon:deep_sea_scale"
+					}
+					type: "item"
+				}
+				{
+					id: "71F2C0B02D2B8BC8"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "668BB540B628801B"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "5AD8B7EDCC2BCF14"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:mystic_water"
+					}
+					id: "1C9AB3AE02A94DA0"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:kyogre"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -4.0d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:red_card"
+			}
+			icon_scale: 0.9d
+			id: "5FBF3E26CAF1FFF2"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "3B0CE85E4CBBF7EE"
+					item: {
+						count: 1
+						id: "cobblemon:soft_sand"
+					}
+					type: "item"
+				}
+				{
+					id: "23F8BC615F20CF13"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "58C619371F7AB31D"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "DABC79DF3C71871E"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:red_card"
+					}
+					id: "263E8237329E9164"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:groudon"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -2.0d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:float_stone"
+			}
+			icon_scale: 0.9d
+			id: "214FFCC0DDF22FCE"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "620B42EAA854FE73"
+					item: {
+						count: 1
+						id: "cobblemon:dragon_fang"
+					}
+					type: "item"
+				}
+				{
+					id: "7950ADF53F0D01D1"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "73A905F8E2C9A72E"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "4F85671F8B3FA7AE"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:float_stone"
+					}
+					id: "4EAC4E9EE68CB575"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:rayquaza"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 0.0d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:hard_stone"
+			}
+			icon_scale: 0.9d
+			id: "0406591847628E21"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "6985BFE5F328350D"
+					item: {
+						count: 1
+						id: "cobblemon:rocky_helmet"
+					}
+					type: "item"
+				}
+				{
+					id: "68735CF14CB04178"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "2794F01DE93703A8"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "21681623DAB43076"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:hard_stone"
+					}
+					id: "72CEE47A29EAB0EB"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:regirock"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 2.0d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:icy_rock"
+			}
+			icon_scale: 0.9d
+			id: "7573D293FE474615"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "26779EFB9D404CB2"
+					item: {
+						count: 1
+						id: "cobblemon:never_melt_ice"
+					}
+					type: "item"
+				}
+				{
+					id: "51BC9E061D1B9DE7"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "16AB7CE686283058"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "FB8990AFBFFFDE3D"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:icy_rock"
+					}
+					id: "031CC9CF0CA76549"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:regice"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 4.0d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:metal_coat"
+			}
+			icon_scale: 0.9d
+			id: "19F77DA6A834BB94"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "363B9E7AA5750870"
+					item: {
+						count: 1
+						id: "cobblemon:iron_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "144FCD86A0D91B49"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "6077F11CF480BADF"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B00C87E285F6962E"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:metal_coat"
+					}
+					id: "64628286CE3C14A3"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:registeel"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -4.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:luminous_moss"
+			}
+			icon_scale: 0.9d
+			id: "602664EB0A217C86"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "3D48242B5F84880A"
+					item: {
+						count: 1
+						id: "cobblemon:choice_scarf"
+					}
+					type: "item"
+				}
+				{
+					id: "3D4EA0FD5183C7F6"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "2169F39BF35743C9"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "A43C6BD979DC57CF"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:luminous_moss"
+					}
+					id: "5DE1D5D953DDF950"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:latias"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -2.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:luminous_moss"
+			}
+			icon_scale: 0.9d
+			id: "374B8A3511DBA63A"
+			rewards: [
+				{
+					exclude_from_claim_all: true
+					id: "79C7CF3BC20C7D53"
+					item: {
+						count: 1
+						id: "cobblemon:float_stone"
+					}
+					type: "item"
+				}
+				{
+					id: "7CE207AA0A64FD46"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "7335399E4F41E1A1"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "8B7CAD9E5C9CA897"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:luminous_moss"
+					}
+					id: "5192D2BC388AD3A7"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:latios"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 0.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:steel_gem"
+			}
+			icon_scale: 0.9d
+			id: "54863AF1072E5E59"
+			rewards: [
+				{
+					count: 2
+					id: "17FF5113229B14ED"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					id: "573CD1348DCBD170"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "488445CF26F76DE6"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "A2E63DA0CDDF5633"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:steel_gem"
+					}
+					id: "601EBEBD3844352E"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:jirachi"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 2.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"717D5537D7253331"
+			]
+			icon: {
+				id: "cobblemon:psychic_gem"
+			}
+			icon_scale: 0.9d
+			id: "0D469558DB184F25"
+			rewards: [
+				{
+					count: 2
+					id: "0D8C6EAB31C7D8C2"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					id: "1BC33A88C4D47A91"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					auto: "enabled"
+					icon: {
+						id: "cobblemon:pokerod_smithing_template"
+					}
+					id: "3E0AA022D0BEA40F"
+					ignore: false
+					key: "legendary"
+					type: "extraquests:key_value"
+					value: 1L
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "BBE1CEB34CFE2E29"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					abilities: ""
+					action: "catch"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:psychic_gem"
+					}
+					id: "57E3EA750746101D"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: "cobblemon:deoxys"
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 4.0d
+			y: 6.0d
+		}
+	]
+}

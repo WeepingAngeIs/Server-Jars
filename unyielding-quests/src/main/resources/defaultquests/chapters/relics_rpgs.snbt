@@ -1,0 +1,1724 @@
+{
+	default_hide_dependency_lines: true
+	default_quest_shape: ""
+	filename: "relics_rpgs"
+	group: "6E41A6B769F20602"
+	icon: {
+		id: "relics_rpgs:lesser_evasion"
+	}
+	id: "1C80317FA3B1799D"
+	images: [
+		{
+			height: 0.4d
+			id: "4B12CCBEF1C4150C"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 11.0d
+			x: 0.0d
+			y: -5.5d
+		}
+		{
+			height: 0.4d
+			id: "4141566AEFDDCA81"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.2d
+			x: -12.0d
+			y: -1.35d
+		}
+		{
+			height: 0.4d
+			id: "72E4670209F7E003"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.2d
+			x: -4.0d
+			y: -1.35d
+		}
+		{
+			height: 0.4d
+			id: "3A4DDDF5A12FCAB4"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.2d
+			x: 4.0d
+			y: -1.35d
+		}
+		{
+			height: 0.4d
+			id: "2A1F1CBD62EFABA9"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.2d
+			x: 12.0d
+			y: -1.35d
+		}
+		{
+			height: 0.4d
+			id: "50D2ABBD8BBF9416"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 10.0d
+			x: 0.0d
+			y: 17.25d
+		}
+	]
+	order_index: 1
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [
+				"4B1A9D2D0E307A21"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "relics_rpgs:lesser_evasion"
+			}
+			id: "10E773B2BEB86625"
+			rewards: [
+				{
+					id: "69F6F9E4C9630FF5"
+					type: "xp"
+					xp: 10
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "4E88BB907E412706"
+					type: "checkmark"
+				}
+			]
+			x: -12.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"4B1A9D2D0E307A21"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "relics_rpgs:medium_proc_arcane_power"
+			}
+			id: "00CDEBDE1E21F380"
+			rewards: [
+				{
+					id: "013BC106CFF934D2"
+					type: "xp"
+					xp: 10
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "43362E6E779CD2AA"
+					type: "checkmark"
+				}
+			]
+			x: -4.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"4B1A9D2D0E307A21"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "relics_rpgs:greater_healing_taken"
+			}
+			id: "1EBA1B81110B285B"
+			rewards: [
+				{
+					id: "6F2DD89489288C33"
+					type: "xp"
+					xp: 10
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "4BA425F4FA7376DA"
+					type: "checkmark"
+				}
+			]
+			x: 4.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"4B1A9D2D0E307A21"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "relics_rpgs:superior_use_zone_spell_power"
+			}
+			id: "02D8CA978E55F061"
+			rewards: [
+				{
+					id: "0170127091D66509"
+					type: "xp"
+					xp: 10
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "38029460DA03BA57"
+					type: "checkmark"
+				}
+			]
+			x: 12.0d
+			y: 0.0d
+		}
+		{
+			hide_dependency_lines: true
+			id: "4B1A9D2D0E307A21"
+			rewards: [
+				{
+					id: "23B8C1E9392456DE"
+					type: "xp"
+					xp: 20
+				}
+			]
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					id: "3EB13B9046685257"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: -4.2d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "1A3D1FA7BC8960A9"
+			rewards: [
+				{
+					count: 2
+					id: "1EA2B4C603136234"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "561CB6E05E75DC1D"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_healing_taken"
+					}
+					type: "item"
+				}
+			]
+			x: 1.6d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "65C02D7F8F1B8C20"
+			rewards: [
+				{
+					count: 2
+					id: "17FC695A07A0CA6E"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "0822E8F36C031199"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_perk_defense_block"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "3B8FAA1837F8A88B"
+			rewards: [
+				{
+					count: 2
+					id: "59B82FEDFA10E203"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "44454DE54EB47C1F"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_perk_evasion_attack"
+					}
+					type: "item"
+				}
+			]
+			x: 6.4d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "14B4668EFE1908C6"
+			rewards: [
+				{
+					count: 2
+					id: "6B65A6A48B8148F6"
+					item: {
+						count: 1
+						id: "minecraft:ghast_tear"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "07EE0A2F39E6597E"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_perk_heal_cleanse"
+					}
+					type: "item"
+				}
+			]
+			x: 1.6d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "72FF5D2A386ECBE0"
+			rewards: [
+				{
+					count: 2
+					id: "5420FA0D54DF9BF6"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "4737819096DA1DAC"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_perk_heal_danger"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "54B3AACD5B649891"
+			rewards: [
+				{
+					count: 2
+					id: "6C307511B2B9437A"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "28DF6EC4CE4A2BBD"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_perk_melee_stun"
+					}
+					type: "item"
+				}
+			]
+			x: 6.4d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "47229389571AA876"
+			rewards: [
+				{
+					id: "3F659D52428A8F86"
+					item: {
+						count: 1
+						id: "minecraft:shulker_shell"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "371ECD7B27CD8130"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_perk_ranged_levitate"
+					}
+					type: "item"
+				}
+			]
+			x: 1.6d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "1A2A73ED562B0F79"
+			rewards: [
+				{
+					count: 2
+					id: "5BE6128E18C26797"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6142EA7D17BE3111"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_perk_roll_damage"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "580D7B71D8F56413"
+			rewards: [
+				{
+					count: 2
+					id: "0B1F9163CE9FF57F"
+					item: {
+						count: 1
+						id: "minecraft:iron_block"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "43B7A3A69A8DCA03"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_perk_shield_reset"
+					}
+					type: "item"
+				}
+			]
+			x: 6.4d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "759CDE66BACFB3D0"
+			rewards: [
+				{
+					count: 4
+					id: "37332B990B328F98"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "1FF49B7889463E85"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_perk_spell_stun"
+					}
+					type: "item"
+				}
+			]
+			x: 1.6d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "142C3FE860E7A113"
+			rewards: [
+				{
+					count: 8
+					id: "6CDAE32C3556C059"
+					item: {
+						count: 1
+						id: "minecraft:obsidian"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "4B0DBB418D5288F1"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_proc_defense_danger"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "4CE4AA2259D20E14"
+			rewards: [
+				{
+					count: 3
+					id: "3139D32C93CD59BF"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5C941CF0DC98D2C1"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_proc_physical_trance"
+					}
+					type: "item"
+				}
+			]
+			x: 6.4d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"1EBA1B81110B285B"
+			]
+			hide_dependency_lines: true
+			id: "11CE5DD2B45ED1F0"
+			rewards: [
+				{
+					count: 3
+					id: "3907ABF2E1AD5833"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "710AC2201579ED09"
+					item: {
+						count: 1
+						id: "relics_rpgs:greater_proc_spell_trance"
+					}
+					type: "item"
+				}
+			]
+			x: 1.6d
+			y: 12.6d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "482A4A00F13CAC13"
+			rewards: [
+				{
+					count: 4
+					id: "23456CA7E7092070"
+					item: {
+						count: 1
+						id: "minecraft:gold_ingot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "26350A90208D0924"
+					item: {
+						count: 1
+						id: "relics_rpgs:jewel_figurine_citrine"
+					}
+					type: "item"
+				}
+			]
+			x: -1.6d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "614FF3D719DB3AD0"
+			rewards: [
+				{
+					count: 4
+					id: "3AF2232F60764E1D"
+					item: {
+						count: 1
+						id: "minecraft:emerald"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "7412B29347294739"
+					item: {
+						count: 1
+						id: "relics_rpgs:jewel_figurine_jade"
+					}
+					type: "item"
+				}
+			]
+			x: -6.4d
+			y: 12.6d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "29A3B2E95D65A441"
+			rewards: [
+				{
+					count: 2
+					id: "2D38C708C753486B"
+					item: {
+						count: 1
+						id: "minecraft:redstone_block"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5AF305535EC42E08"
+					item: {
+						count: 1
+						id: "relics_rpgs:jewel_figurine_ruby"
+					}
+					type: "item"
+				}
+			]
+			x: -4.0d
+			y: 12.6d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "718239C89F99B9D7"
+			rewards: [
+				{
+					count: 2
+					id: "12476F57A5E5A5AB"
+					item: {
+						count: 1
+						id: "minecraft:lapis_block"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "4C81A1BE62698362"
+					item: {
+						count: 1
+						id: "relics_rpgs:jewel_figurine_sapphire"
+					}
+					type: "item"
+				}
+			]
+			x: -1.6d
+			y: 12.6d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "449B22795C6012B2"
+			rewards: [
+				{
+					count: 8
+					id: "3EABEDCBBAA80DD4"
+					item: {
+						count: 1
+						id: "minecraft:amethyst_shard"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "75D2B83DF988AB8C"
+					item: {
+						count: 1
+						id: "relics_rpgs:jewel_figurine_tanzanite"
+					}
+					type: "item"
+				}
+			]
+			x: -6.4d
+			y: 15.0d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "7656AF7229D4BEEF"
+			rewards: [
+				{
+					count: 4
+					id: "05A6A82FBA8FE4D2"
+					item: {
+						count: 1
+						id: "minecraft:gold_ingot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "451B4CF36123FDF7"
+					item: {
+						count: 1
+						id: "relics_rpgs:jewel_figurine_topaz"
+					}
+					type: "item"
+				}
+			]
+			x: -4.0d
+			y: 15.0d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "53F548179EA1C601"
+			rewards: [
+				{
+					count: 8
+					id: "5304317FAF42E12F"
+					item: {
+						count: 1
+						id: "minecraft:feather"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "3838B3268E944239"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_evasion"
+					}
+					type: "item"
+				}
+			]
+			x: -14.4d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "207B6045D661ECA7"
+			rewards: [
+				{
+					count: 8
+					id: "0FB5291592F918F8"
+					item: {
+						count: 1
+						id: "minecraft:flint"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "0E51F30DC6A7EE39"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_melee_crit_chance"
+					}
+					type: "item"
+				}
+			]
+			x: -12.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "0BB8F013D772059E"
+			rewards: [
+				{
+					count: 3
+					id: "10F1BC81448AAA9E"
+					item: {
+						count: 1
+						id: "minecraft:iron_ingot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "66B2BC5B50C187FC"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_melee_crit_damage"
+					}
+					type: "item"
+				}
+			]
+			x: -9.6d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "3E8F7FF7B7E21F67"
+			rewards: [
+				{
+					count: 4
+					id: "21F14EA06D283C95"
+					item: {
+						count: 1
+						id: "minecraft:blaze_powder"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "550CAEE967AA80FA"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_proc_arcane_fire"
+					}
+					type: "item"
+				}
+			]
+			x: -14.4d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "366EB16F508EBAD7"
+			rewards: [
+				{
+					count: 4
+					id: "39AD1A8B569A68AB"
+					item: {
+						count: 1
+						id: "minecraft:iron_ingot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "7FCD9EB1A7CAD415"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_proc_crit_damage"
+					}
+					type: "item"
+				}
+			]
+			x: -12.0d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "4E3E618C61AFA181"
+			rewards: [
+				{
+					count: 4
+					id: "23BED01D43CF2FDE"
+					item: {
+						count: 1
+						id: "minecraft:packed_ice"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "24933B83757750A9"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_proc_frost_healing"
+					}
+					type: "item"
+				}
+			]
+			x: -9.6d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "1657F87087476BB8"
+			rewards: [
+				{
+					count: 4
+					id: "1155A49DC014AB72"
+					item: {
+						count: 1
+						id: "minecraft:amethyst_shard"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "307A60E94F89559C"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_proc_spell_crit"
+					}
+					type: "item"
+				}
+			]
+			x: -14.4d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "6DADD6C795A76D79"
+			rewards: [
+				{
+					id: "5CABCC97663F1C97"
+					item: {
+						count: 1
+						id: "minecraft:rabbit_foot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "593AED80B20E9A41"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_roll"
+					}
+					type: "item"
+				}
+			]
+			x: -12.0d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "38469EE5648A2BFA"
+			rewards: [
+				{
+					count: 4
+					id: "7E570DDF827050A8"
+					item: {
+						count: 1
+						id: "minecraft:iron_ingot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "2369B584FF5E9FF0"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_use_damage"
+					}
+					type: "item"
+				}
+			]
+			x: -9.6d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "587F302C1A04E533"
+			rewards: [
+				{
+					count: 8
+					id: "27209BDF1C11F735"
+					item: {
+						count: 1
+						id: "minecraft:sugar"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6EF3DC1AB34B0ED7"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_use_dex"
+					}
+					type: "item"
+				}
+			]
+			x: -14.4d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "28F49481A0A04DC4"
+			rewards: [
+				{
+					count: 4
+					id: "2BC9C04BBD07D464"
+					item: {
+						count: 1
+						id: "minecraft:golden_carrot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "404F2614CBD0C282"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_use_health"
+					}
+					type: "item"
+				}
+			]
+			x: -12.0d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "62801C4510435A10"
+			rewards: [
+				{
+					count: 8
+					id: "77D21E02FF01CF99"
+					item: {
+						count: 1
+						id: "minecraft:spectral_arrow"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "2B0877B5B3868F84"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_use_ranged"
+					}
+					type: "item"
+				}
+			]
+			x: -9.6d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "405CACEC877409A9"
+			rewards: [
+				{
+					count: 6
+					id: "47D16C5FA334DEA8"
+					item: {
+						count: 1
+						id: "minecraft:glowstone_dust"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "16867386109677D4"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_use_spell_haste"
+					}
+					type: "item"
+				}
+			]
+			x: -14.4d
+			y: 12.6d
+		}
+		{
+			dependencies: [
+				"10E773B2BEB86625"
+			]
+			hide_dependency_lines: true
+			id: "76609945E3C80EE8"
+			rewards: [
+				{
+					count: 8
+					id: "206B4437CFC8784C"
+					item: {
+						count: 1
+						id: "minecraft:lapis_lazuli"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "1D53434BB88139B9"
+					item: {
+						count: 1
+						id: "relics_rpgs:lesser_use_spell_power"
+					}
+					type: "item"
+				}
+			]
+			x: -12.0d
+			y: 12.6d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "392C34C6D335D789"
+			rewards: [
+				{
+					count: 6
+					id: "5715BD6FA4161293"
+					item: {
+						count: 1
+						id: "minecraft:amethyst_shard"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "3D34CE31587983C8"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_arcane_power"
+					}
+					type: "item"
+				}
+			]
+			x: -6.4d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "4B22D3081C8EAEE9"
+			rewards: [
+				{
+					id: "00D4AF5974273CA3"
+					item: {
+						count: 1
+						id: "minecraft:iron_block"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "287D06CA6F4CC69A"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_attack_damage"
+					}
+					type: "item"
+				}
+			]
+			x: -4.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "76AE35FFF64A6B48"
+			rewards: [
+				{
+					count: 4
+					id: "1CE0B458B2F15EF4"
+					item: {
+						count: 1
+						id: "minecraft:gold_ingot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "382BC3BBD93BDEA3"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_attack_speed"
+					}
+					type: "item"
+				}
+			]
+			x: -1.6d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "3EE1115397604E19"
+			rewards: [
+				{
+					id: "1B3DBD5CE9A1FA6F"
+					item: {
+						count: 1
+						id: "minecraft:shield"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5CC0672C27B99EAD"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_defense"
+					}
+					type: "item"
+				}
+			]
+			x: -6.4d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "64C378D35CF0991C"
+			rewards: [
+				{
+					count: 2
+					id: "3C81669C35695495"
+					item: {
+						count: 1
+						id: "minecraft:phantom_membrane"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6FB036DE77E00B91"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_evasion"
+					}
+					type: "item"
+				}
+			]
+			x: -4.0d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "32EBD6899BE578C7"
+			rewards: [
+				{
+					count: 2
+					id: "295B4715C333E861"
+					item: {
+						count: 1
+						id: "minecraft:blaze_rod"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5FB8D16C2720797D"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_fire_power"
+					}
+					type: "item"
+				}
+			]
+			x: -1.6d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "49AD4BFB420660F1"
+			rewards: [
+				{
+					count: 2
+					id: "6561F1524FA56171"
+					item: {
+						count: 1
+						id: "minecraft:blue_ice"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "0E05123F355806FD"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_frost_power"
+					}
+					type: "item"
+				}
+			]
+			x: -6.4d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "0822C7DF09D3EF31"
+			rewards: [
+				{
+					count: 4
+					id: "1CA35CFB04FC6D82"
+					item: {
+						count: 1
+						id: "minecraft:glistering_melon_slice"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "7D15438552FBE43B"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_healing_power"
+					}
+					type: "item"
+				}
+			]
+			x: -4.0d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "5CEC4EB5EDD96831"
+			rewards: [
+				{
+					count: 32
+					id: "2FA1624F024E3420"
+					item: {
+						count: 1
+						id: "minecraft:arrow"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "620532923DBAADC2"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_ranged_damage"
+					}
+					type: "item"
+				}
+			]
+			x: -1.6d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "3D4CBF374EB93EFF"
+			rewards: [
+				{
+					count: 2
+					id: "20321E41E65A996A"
+					item: {
+						count: 1
+						id: "minecraft:redstone_block"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "3DA9C2A90ED42F1A"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_spell_haste"
+					}
+					type: "item"
+				}
+			]
+			x: -6.4d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"00CDEBDE1E21F380"
+			]
+			hide_dependency_lines: true
+			id: "14296C07F26B4776"
+			rewards: [
+				{
+					id: "4A03DF6D8C0B20DB"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5EC8DC18DF5B344D"
+					item: {
+						count: 1
+						id: "relics_rpgs:medium_proc_spell_power"
+					}
+					type: "item"
+				}
+			]
+			x: -4.0d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"02D8CA978E55F061"
+			]
+			hide_dependency_lines: true
+			id: "6764065F71ECCA6B"
+			rewards: [
+				{
+					count: 2
+					id: "2031D750C40DB9B4"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "70786F40660D8B7A"
+					item: {
+						count: 1
+						id: "relics_rpgs:superior_use_area_attack_damage"
+					}
+					type: "item"
+				}
+			]
+			x: 10.8d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"02D8CA978E55F061"
+			]
+			hide_dependency_lines: true
+			id: "0AED153E105F2773"
+			rewards: [
+				{
+					count: 2
+					id: "2A45C2AB8CBFEDB0"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "073E9F040FB2F023"
+					item: {
+						count: 1
+						id: "relics_rpgs:superior_use_area_defense_health"
+					}
+					type: "item"
+				}
+			]
+			x: 13.2d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"02D8CA978E55F061"
+			]
+			hide_dependency_lines: true
+			id: "269FB4C22095B0EA"
+			rewards: [
+				{
+					id: "32F9CFA5DCA596D2"
+					item: {
+						count: 1
+						id: "minecraft:totem_of_undying"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6EEB3F213379717A"
+					item: {
+						count: 1
+						id: "relics_rpgs:superior_use_zone_healing_taken"
+					}
+					type: "item"
+				}
+			]
+			x: 10.8d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"02D8CA978E55F061"
+			]
+			hide_dependency_lines: true
+			id: "731EA26134ADB44C"
+			rewards: [
+				{
+					id: "0B5DE83AF30C805A"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "573EF46D2C6F0892"
+					item: {
+						count: 1
+						id: "relics_rpgs:superior_use_zone_spell_power"
+					}
+					type: "item"
+				}
+			]
+			x: 13.2d
+			y: 5.4d
+		}
+		{
+			dependencies: [
+				"53F548179EA1C601"
+				"207B6045D661ECA7"
+				"0BB8F013D772059E"
+				"3E8F7FF7B7E21F67"
+				"366EB16F508EBAD7"
+				"4E3E618C61AFA181"
+				"1657F87087476BB8"
+				"6DADD6C795A76D79"
+				"38469EE5648A2BFA"
+				"587F302C1A04E533"
+				"28F49481A0A04DC4"
+				"62801C4510435A10"
+				"405CACEC877409A9"
+				"76609945E3C80EE8"
+				"482A4A00F13CAC13"
+				"614FF3D719DB3AD0"
+				"29A3B2E95D65A441"
+				"718239C89F99B9D7"
+				"449B22795C6012B2"
+				"7656AF7229D4BEEF"
+				"392C34C6D335D789"
+				"4B22D3081C8EAEE9"
+				"76AE35FFF64A6B48"
+				"3EE1115397604E19"
+				"64C378D35CF0991C"
+				"32EBD6899BE578C7"
+				"49AD4BFB420660F1"
+				"0822C7DF09D3EF31"
+				"5CEC4EB5EDD96831"
+				"3D4CBF374EB93EFF"
+				"14296C07F26B4776"
+				"1A3D1FA7BC8960A9"
+				"65C02D7F8F1B8C20"
+				"3B8FAA1837F8A88B"
+				"14B4668EFE1908C6"
+				"72FF5D2A386ECBE0"
+				"54B3AACD5B649891"
+				"47229389571AA876"
+				"1A2A73ED562B0F79"
+				"580D7B71D8F56413"
+				"759CDE66BACFB3D0"
+				"142C3FE860E7A113"
+				"4CE4AA2259D20E14"
+				"11CE5DD2B45ED1F0"
+				"6764065F71ECCA6B"
+				"0AED153E105F2773"
+				"269FB4C22095B0EA"
+				"731EA26134ADB44C"
+			]
+			hide_dependency_lines: true
+			id: "23788FBE4002B35A"
+			rewards: [
+				{
+					id: "728B3657CCAE405B"
+					item: {
+						count: 1
+						id: "minecraft:netherite_ingot"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.5d
+			tasks: [
+				{
+					id: "66245BFA4FCCA39A"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: 18.6d
+		}
+	]
+}

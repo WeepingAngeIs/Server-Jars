@@ -1,0 +1,217 @@
+{
+	default_hide_dependency_lines: true
+	default_quest_shape: ""
+	filename: "pot_farming"
+	group: "6E41A6B769F20605"
+	icon: {
+		id: "botanypots:terracotta_botany_pot"
+	}
+	id: "4B1660078062E982"
+	images: [
+		{
+			height: 0.45d
+			id: "3E6341E46F20F4FA"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: -3.0d
+			y: -1.5d
+		}
+		{
+			height: 0.45d
+			id: "4D999B1900AE0758"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: 3.0d
+			y: -1.5d
+		}
+		{
+			height: 0.32d
+			id: "37F4C33DAEB0B3F5"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -3.0d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "342BFB703E4ABBFC"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 3.0d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "22F9F96B20E6FFB0"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 3.0d
+			y: 3.92d
+		}
+	]
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "botanypots:terracotta_botany_pot"
+			}
+			id: "7975811B5CC73E69"
+			rewards: [
+				{
+					count: 8
+					id: "31DFFC7E33E9ED9E"
+					item: {
+						count: 1
+						id: "minecraft:clay_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "7A00CE23F78D7133"
+					item: {
+						count: 1
+						id: "minecraft:dirt"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "botanypots:black_glazed_terracotta_botany_pot"
+					}
+					id: "48547EABF253F560"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(botanypots:black_glazed_terracotta_botany_pot)item(botanypots:black_terracotta_botany_pot)item(botanypots:blue_glazed_terracotta_botany_pot)item(botanypots:blue_terracotta_botany_pot)item(botanypots:brown_glazed_terracotta_botany_pot)item(botanypots:brown_terracotta_botany_pot)item(botanypots:cyan_glazed_terracotta_botany_pot)item(botanypots:cyan_terracotta_botany_pot)item(botanypots:gray_glazed_terracotta_botany_pot)item(botanypots:gray_terracotta_botany_pot)item(botanypots:green_glazed_terracotta_botany_pot)item(botanypots:green_terracotta_botany_pot)item(botanypots:light_blue_glazed_terracotta_botany_pot)item(botanypots:light_blue_terracotta_botany_pot)item(botanypots:light_gray_glazed_terracotta_botany_pot)item(botanypots:light_gray_terracotta_botany_pot)item(botanypots:lime_glazed_terracotta_botany_pot)item(botanypots:lime_terracotta_botany_pot)item(botanypots:magenta_glazed_terracotta_botany_pot)item(botanypots:magenta_terracotta_botany_pot)item(botanypots:orange_glazed_terracotta_botany_pot)item(botanypots:orange_terracotta_botany_pot)item(botanypots:pink_glazed_terracotta_botany_pot)item(botanypots:pink_terracotta_botany_pot)item(botanypots:purple_glazed_terracotta_botany_pot)item(botanypots:purple_terracotta_botany_pot)item(botanypots:red_glazed_terracotta_botany_pot)item(botanypots:red_terracotta_botany_pot)item(botanypots:terracotta_botany_pot)item(botanypots:white_glazed_terracotta_botany_pot)item(botanypots:white_terracotta_botany_pot)item(botanypots:yellow_glazed_terracotta_botany_pot)item(botanypots:yellow_terracotta_botany_pot))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"7975811B5CC73E69"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "botanypots:terracotta_hopper_botany_pot"
+			}
+			id: "5B77E152004B28A8"
+			rewards: [
+				{
+					count: 2
+					id: "35B8E767D4F476C9"
+					item: {
+						count: 1
+						id: "minecraft:chest"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "botanypots:black_glazed_terracotta_hopper_botany_pot"
+					}
+					id: "3C6A215B78196A9B"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(botanypots:black_glazed_terracotta_hopper_botany_pot)item(botanypots:black_terracotta_hopper_botany_pot)item(botanypots:blue_glazed_terracotta_hopper_botany_pot)item(botanypots:blue_terracotta_hopper_botany_pot)item(botanypots:brown_glazed_terracotta_hopper_botany_pot)item(botanypots:brown_terracotta_hopper_botany_pot)item(botanypots:cyan_glazed_terracotta_hopper_botany_pot)item(botanypots:cyan_terracotta_hopper_botany_pot)item(botanypots:gray_glazed_terracotta_hopper_botany_pot)item(botanypots:gray_terracotta_hopper_botany_pot)item(botanypots:green_glazed_terracotta_hopper_botany_pot)item(botanypots:green_terracotta_hopper_botany_pot)item(botanypots:light_blue_glazed_terracotta_hopper_botany_pot)item(botanypots:light_blue_terracotta_hopper_botany_pot)item(botanypots:light_gray_glazed_terracotta_hopper_botany_pot)item(botanypots:light_gray_terracotta_hopper_botany_pot)item(botanypots:lime_glazed_terracotta_hopper_botany_pot)item(botanypots:lime_terracotta_hopper_botany_pot)item(botanypots:magenta_glazed_terracotta_hopper_botany_pot)item(botanypots:magenta_terracotta_hopper_botany_pot)item(botanypots:orange_glazed_terracotta_hopper_botany_pot)item(botanypots:orange_terracotta_hopper_botany_pot)item(botanypots:pink_glazed_terracotta_hopper_botany_pot)item(botanypots:pink_terracotta_hopper_botany_pot)item(botanypots:purple_glazed_terracotta_hopper_botany_pot)item(botanypots:purple_terracotta_hopper_botany_pot)item(botanypots:red_glazed_terracotta_hopper_botany_pot)item(botanypots:red_terracotta_hopper_botany_pot)item(botanypots:terracotta_hopper_botany_pot)item(botanypots:white_glazed_terracotta_hopper_botany_pot)item(botanypots:white_terracotta_hopper_botany_pot)item(botanypots:yellow_glazed_terracotta_hopper_botany_pot)item(botanypots:yellow_terracotta_hopper_botany_pot))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"7975811B5CC73E69"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "cobblemon:leppa_berry"
+			}
+			id: "0AD22A138885AD39"
+			rewards: [
+				{
+					count: 8
+					id: "59583FBED3C8B7C5"
+					item: {
+						count: 1
+						id: "minecraft:dirt"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "3D2F5C6E29A9E147"
+					item: {
+						count: 1
+						id: "minecraft:clay_ball"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "cobblemon:oran_berry"
+					}
+					id: "5BF22844A1623F43"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(cobblemon:oran_berry)item(cobblemon:leppa_berry)item(cobblemon:red_apricorn_seed))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 3.0d
+		}
+	]
+}

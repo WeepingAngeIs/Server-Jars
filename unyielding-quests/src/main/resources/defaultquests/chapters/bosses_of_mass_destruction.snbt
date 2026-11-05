@@ -1,0 +1,292 @@
+{
+	default_hide_dependency_lines: true
+	default_quest_shape: ""
+	filename: "bosses_of_mass_destruction"
+	group: "6E41A6B769F20604"
+	icon: {
+		id: "bosses_of_mass_destruction:soul_star"
+	}
+	id: "7562D13384D897B9"
+	images: [
+		{
+			height: 0.45d
+			id: "0C149B85B9BE8605"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.0d
+			x: 0.0d
+			y: -4.5d
+		}
+		{
+			height: 0.32d
+			id: "59FADAA5207F297B"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 0.0d
+			y: -2.08d
+		}
+		{
+			height: 0.45d
+			id: "17B8ED4A29ECE07E"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: -4.0d
+			y: -1.0d
+		}
+		{
+			height: 0.45d
+			id: "103B3D30DDAA5E5B"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: 4.0d
+			y: -1.0d
+		}
+		{
+			height: 0.32d
+			id: "1FFF02B5E8950A4E"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -4.0d
+			y: 1.42d
+		}
+		{
+			height: 0.32d
+			id: "17ADC8538C54E75E"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -4.0d
+			y: 4.92d
+		}
+		{
+			height: 0.32d
+			id: "6FBDAF494AC9EC9B"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 4.0d
+			y: 1.42d
+		}
+		{
+			height: 0.32d
+			id: "67BE2A32DCAC7130"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 4.0d
+			y: 4.92d
+		}
+	]
+	order_index: 6
+	quest_links: [ ]
+	quests: [
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "bosses_of_mass_destruction:soul_star"
+			}
+			id: "44E68F0292B94881"
+			rewards: [
+				{
+					id: "50EE2BB466D5CFDB"
+					type: "xp"
+					xp: 10
+				}
+			]
+			shape: "hexagon"
+			size: 1.0d
+			tasks: [
+				{
+					id: "1CF1862F7A370E79"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: -3.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "bosses_of_mass_destruction:soul_star"
+			}
+			id: "7E373FDE11C902FA"
+			rewards: [
+				{
+					count: 2
+					id: "32714F794684C17E"
+					item: {
+						count: 1
+						id: "minecraft:ghast_tear"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "29A50D6BB91938C4"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "bosses_of_mass_destruction:adventure/night_lich_defeat"
+					criterion: ""
+					id: "6CF9C429A7D8DAC5"
+					type: "advancement"
+				}
+			]
+			x: -4.0d
+			y: 0.5d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "bosses_of_mass_destruction:void_thorn"
+			}
+			id: "7E81CAD2B48E7125"
+			rewards: [
+				{
+					count: 3
+					id: "431BD4AB4FA60B89"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+				{
+					count: 16
+					id: "1629E92E8B0A2BDF"
+					item: {
+						count: 1
+						id: "minecraft:golden_carrot"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "bosses_of_mass_destruction:adventure/void_blossom_defeat"
+					criterion: ""
+					id: "7C065DAC4055A791"
+					type: "advancement"
+				}
+			]
+			x: -4.0d
+			y: 4.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "bosses_of_mass_destruction:blazing_eye"
+			}
+			id: "7A1DA0DAC25269AB"
+			rewards: [
+				{
+					count: 2
+					id: "28405D5F1A9B4809"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "3DF4378F1891B8AE"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "bosses_of_mass_destruction:nether/gauntlet_defeat"
+					criterion: ""
+					id: "0557C6B0C9A00C8B"
+					type: "advancement"
+				}
+			]
+			x: 4.0d
+			y: 0.5d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "bosses_of_mass_destruction:obsidian_heart"
+			}
+			id: "380875CAACF51462"
+			rewards: [
+				{
+					count: 8
+					id: "765FDEEB242A1D6A"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "6627627DC98FF1DF"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "bosses_of_mass_destruction:end/obsidilith_defeat"
+					criterion: ""
+					id: "40702A7FA94B6E7A"
+					type: "advancement"
+				}
+			]
+			x: 4.0d
+			y: 4.0d
+		}
+	]
+}

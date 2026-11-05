@@ -1,0 +1,432 @@
+{
+	autofocus_id: "73C10FEF2A1A7658"
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "37_hobbies"
+	group: "E84A487481E75527"
+	icon: {
+		id: "exposure:camera"
+	}
+	id: "5CC36482605E3836"
+	images: [ ]
+	order_index: 20
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "exposure:camera"
+			}
+			id: "73C10FEF2A1A7658"
+			rewards: [
+				{
+					count: 1
+					id: "C851B83CDA24E1FC"
+					item: {
+						count: 1
+						id: "exposure:color_film"
+					}
+					type: "item"
+				}
+				{
+					id: "6149A5EEFDB7AC73"
+					type: "xp"
+					xp: 60
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					count: 1L
+					id: "1DF8D75C6D8531C3"
+					item: "exposure:camera"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["73C10FEF2A1A7658"]
+			icon: {
+				id: "exposure:photograph"
+			}
+			id: "75A728C47112E495"
+			rewards: [
+				{
+					count: 2
+					id: "A4DCC910F18E201E"
+					item: {
+						count: 1
+						id: "exposure:color_film"
+					}
+					type: "item"
+				}
+				{
+					id: "759600BC5CCB7038"
+					type: "xp"
+					xp: 80
+				}
+			]
+			tasks: [
+				{
+					advancement: "exposure:adventure/exposure"
+					criterion: ""
+					id: "14D6689ED1D625DC"
+					type: "advancement"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["75A728C47112E495"]
+			icon: {
+				id: "exposure:album"
+			}
+			id: "8CC285A6C4B501EB"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "4D48D1767D0608D4"
+					item: {
+						count: 1
+						id: "minecraft:leather"
+					}
+					type: "item"
+				}
+				{
+					id: "920D57C506A30FF7"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "CA9DB83D54251002"
+					item: "exposure:album"
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["75A728C47112E495"]
+			icon: {
+				id: "exposure:aged_photograph"
+			}
+			id: "A4DB2F08513C7F15"
+			optional: true
+			rewards: [
+				{
+					count: 1
+					id: "B1F686CC104C0094"
+					item: {
+						count: 1
+						id: "exposure:high_sensitivity_color_film"
+					}
+					type: "item"
+				}
+				{
+					id: "23C28BA27B5BE915"
+					type: "xp"
+					xp: 120
+				}
+			]
+			tasks: [
+				{
+					advancement: "exposure:adventure/wildlife_archivist"
+					criterion: ""
+					id: "41E41026BAA3B456"
+					type: "advancement"
+				}
+			]
+			x: 6.0d
+			y: 3.0d
+		}
+		{
+			icon: {
+				id: "immersive_melodies:flute"
+			}
+			id: "A835814EC840747C"
+			rewards: [
+				{
+					count: 2
+					id: "FBA3DE1116B8C156"
+					item: {
+						count: 1
+						id: "minecraft:note_block"
+					}
+					type: "item"
+				}
+				{
+					id: "89A464597DD80C96"
+					type: "xp"
+					xp: 60
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					count: 1L
+					id: "92254A156E91F417"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(immersive_melodies:flute)item(immersive_melodies:lute)item(immersive_melodies:trumpet)item(immersive_melodies:piano)item(immersive_melodies:vielle)item(immersive_melodies:bagpipe)item(immersive_melodies:didgeridoo)item(immersive_melodies:triangle)item(immersive_melodies:tiny_drum)item(immersive_melodies:handpan)item(immersive_melodies:ender_bass))"
+						}
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["A835814EC840747C"]
+			icon: {
+				id: "immersive_melodies:lute"
+			}
+			id: "112723E7154DC0C3"
+			optional: true
+			rewards: [
+				{
+					count: 1
+					id: "C2C78535A6E5601F"
+					item: {
+						count: 1
+						id: "minecraft:jukebox"
+					}
+					type: "item"
+				}
+				{
+					id: "B9A84A0B67A8E28C"
+					type: "xp"
+					xp: 120
+				}
+			]
+			tasks: [
+				{
+					count: 3L
+					id: "8E7576236B70FE60"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(immersive_melodies:lute)item(immersive_melodies:trumpet)item(immersive_melodies:piano)item(immersive_melodies:vielle)item(immersive_melodies:bagpipe)item(immersive_melodies:didgeridoo)item(immersive_melodies:handpan)item(immersive_melodies:ender_bass))"
+						}
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 6.0d
+		}
+		{
+			icon: {
+				id: "ribbits:maraca"
+			}
+			id: "1A21EE8308D60EFC"
+			rewards: [
+				{
+					count: 8
+					id: "A9AA5510B67DD65D"
+					item: {
+						count: 1
+						id: "minecraft:lily_pad"
+					}
+					type: "item"
+				}
+				{
+					id: "7FCD5AF6BE612266"
+					type: "xp"
+					xp: 100
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					id: "B4D929167C18B85C"
+					structure: "ribbits:ribbit_village"
+					type: "structure"
+				}
+			]
+			x: 0.0d
+			y: 9.0d
+		}
+		{
+			dependencies: ["1A21EE8308D60EFC"]
+			icon: {
+				id: "ribbits:maraca"
+			}
+			id: "A9CA34C8BA8ABBD5"
+			optional: true
+			rewards: [
+				{
+					count: 1
+					id: "1F0A941954517299"
+					item: {
+						count: 1
+						id: "minecraft:music_disc_cat"
+					}
+					type: "item"
+				}
+				{
+					id: "B571A086ED149B19"
+					type: "xp"
+					xp: 80
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "8AD39607F15EB481"
+					item: "ribbits:maraca"
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 9.0d
+		}
+		{
+			icon: {
+				id: "cobblenav:pokenav_item"
+			}
+			id: "67E7E188B5715650"
+			rewards: [
+				{
+					count: 6
+					id: "3DA03A383CA90A7C"
+					item: {
+						count: 1
+						id: "cobblemon:great_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "3817F348CF57416F"
+					type: "xp"
+					xp: 80
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					count: 1L
+					id: "F41A56FF6BA51ABF"
+					item: "cobblenav:pokenav_item"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 12.0d
+		}
+		{
+			dependencies: ["67E7E188B5715650"]
+			icon: {
+				id: "cobblenav:pokefinder_item"
+			}
+			id: "69F24CAB61B7C5FE"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "8FD02E3FD72A6F95"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "18B2BBF0465203AB"
+					type: "xp"
+					xp: 80
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "339DE04608ED293E"
+					item: "cobblenav:pokefinder_item"
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 12.0d
+		}
+		{
+			dependencies: ["67E7E188B5715650"]
+			icon: {
+				id: "cobblenav:fishingnav_item"
+			}
+			id: "C1951C39767F67CB"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "8458A667BAE27EA5"
+					item: {
+						count: 1
+						id: "cobblemon:lure_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "722F11BFFBD3DE7F"
+					type: "xp"
+					xp: 80
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "D2105AF2A8F06249"
+					item: "cobblenav:fishingnav_item"
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: 12.0d
+		}
+		{
+			icon: {
+				id: "fightorflight:pokestaff"
+			}
+			id: "DC2E54C367157DF0"
+			rewards: [
+				{
+					count: 2
+					id: "B97B13EC23F98391"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "7979AABA3B48A225"
+					type: "xp"
+					xp: 100
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					count: 1L
+					id: "429440B95278496A"
+					item: "fightorflight:pokestaff"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 15.0d
+		}
+	]
+}

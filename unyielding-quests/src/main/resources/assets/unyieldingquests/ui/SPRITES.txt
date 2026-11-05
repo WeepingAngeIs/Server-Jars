@@ -1,0 +1,43 @@
+Unyielding Quests GUI sprites (assets/unyieldingquests/textures/gui/sprites/)
+name | size | nine-slice border | what it is
+panel.png | 32x32 | 5 | Big glass window behind the quest book sidebar, detail page and party screen
+card.png | 16x16 | 4 | Rows inside a window: task cards, reward cards, member rows
+header.png | 32x16 | 4 | Top bar of the quest book and the title strip of windows
+goal.png | 16x16 | 5 | The red "Goal" box at the top of a quest page
+button.png | 32x16 | 4 | Normal button
+button_hover.png | 32x16 | 4 | Normal button under the mouse
+button_disabled.png | 32x16 | 4 | Button that cannot be clicked right now
+button_accent.png | 32x16 | 4 | Red main-action button (Submit, Create party, Invite)
+button_accent_hover.png | 32x16 | 4 | Red button under the mouse
+button_gold.png | 32x16 | 4 | Gold reward button (Claim, Claim all)
+button_gold_hover.png | 32x16 | 4 | Gold button under the mouse
+tab.png | 32x16 | 4 | Party screen tab (not selected)
+tab_hover.png | 32x16 | 4 | Tab under the mouse
+tab_selected.png | 32x16 | 4 | The tab that is open (red underline)
+row_hover.png | 16x16 | 4 | Chapter row under the mouse (sidebar)
+row_selected.png | 16x16 | 4 | The chapter that is open (sidebar)
+field.png | 16x16 | 4 | Text box (party name, chat)
+field_focused.png | 16x16 | 4 | Text box you are typing in
+slot.png | 18x18 | - | Item frame behind task and reward items (18x18)
+bar_bg.png | 8x5 | 2 | Progress bar background
+bar_fill.png | 8x5 | 2 | Progress bar fill (drawn white, the game colours it)
+chip.png | 8x9 | 3 | Small rounded label behind words like DONE / LOCKED (game colours it)
+scroll_thumb.png | 4x12 | 1 | Scroll bar handle
+inv_button.png | 20x20 | - | Square Quests/Teams buttons beside the inventory (20x20)
+inv_button_hover.png | 20x20 | - | Inventory button under the mouse
+toast.png | 160x32 | - | "Quest complete" popup (160x32). The item is drawn inside the square on the left
+badge_check.png | 9x9 | - | Green tick on finished quests
+badge_lock.png | 9x9 | - | Padlock on locked quests
+badge_alert.png | 9x9 | - | Gold "!" on quests with rewards to claim
+icon_close.png | 6x6 | - | Small white icon (the game colours it)
+icon_book.png | 7x7 | - | Small white icon (the game colours it)
+icon_team.png | 10x7 | - | Small white icon (the game colours it)
+icon_gift.png | 7x7 | - | Small white icon (the game colours it)
+icon_crown.png | 7x5 | - | Small white icon (the game colours it)
+icon_star.png | 7x6 | - | Small white icon (the game colours it)
+icon_gear.png | 6x6 | - | Small white icon (the game colours it)
+icon_chat.png | 7x6 | - | Small white icon (the game colours it)
+icon_join.png | 7x5 | - | Small white icon (the game colours it)
+icon_check.png | 7x6 | - | Small white icon (the game colours it)
+icon_lock.png | 6x6 | - | Small white icon (the game colours it)
+icon_quests.png | 9x9 | - | Small white icon (the game colours it)

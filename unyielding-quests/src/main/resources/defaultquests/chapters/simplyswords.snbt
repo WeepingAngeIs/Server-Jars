@@ -1,0 +1,2846 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "simplyswords"
+	group: "6E41A6B769F20602"
+	icon: {
+		id: "simplyswords:runic_tablet"
+	}
+	id: "5D9CDA3648DAF131"
+	images: [
+		{
+			height: 0.4d
+			id: "7EA8BD24729DD3A0"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.0d
+			x: 0.0d
+			y: -9.4d
+		}
+		{
+			height: 0.4d
+			id: "30C95A5B5733ACE5"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.0d
+			x: -5.2d
+			y: -8.3d
+		}
+		{
+			height: 0.4d
+			id: "09BF2010A4F7A287"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.0d
+			x: -5.2d
+			y: 0.25d
+		}
+		{
+			height: 0.4d
+			id: "34D8C63B8A9AF50B"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.0d
+			x: 5.5d
+			y: -8.3d
+		}
+		{
+			height: 0.4d
+			id: "45D07C14D885AB39"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 7.0d
+			y: 3.95d
+		}
+		{
+			height: 0.4d
+			id: "5C201A9D4E1EBF32"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 7.0d
+			y: 6.55d
+		}
+		{
+			height: 0.4d
+			id: "2124BA8F5E99D712"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 7.0d
+			y: 9.149999999999999d
+		}
+		{
+			height: 0.4d
+			id: "1379A02F1487AABB"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 7.0d
+			y: 11.75d
+		}
+		{
+			height: 0.4d
+			id: "3A18A19E849AEBE3"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 7.0d
+			y: 14.35d
+		}
+		{
+			height: 0.4d
+			id: "29FB1045D5526049"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 7.0d
+			y: 16.95d
+		}
+		{
+			height: 0.4d
+			id: "30DEDE0144BEB58E"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 7.0d
+			y: 19.55d
+		}
+	]
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			id: "27CF57E17FDDC52B"
+			rewards: [
+				{
+					id: "2D8A7E00B32512F9"
+					type: "xp"
+					xp: 20
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "44EFDCB694F458BD"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: -8.0d
+		}
+		{
+			dependencies: [
+				"27CF57E17FDDC52B"
+			]
+			id: "3A26D28C67BC754E"
+			rewards: [
+				{
+					count: 8
+					id: "4BC7B1DF54F1FE2C"
+					item: {
+						count: 1
+						id: "minecraft:bread"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "4DC563B8B81335FE"
+					item: {
+						count: 1
+						id: "simplyswords:iron_longsword"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: -6.5d
+		}
+		{
+			dependencies: [
+				"3A26D28C67BC754E"
+			]
+			id: "70C6BE6030F55B6F"
+			rewards: [
+				{
+					count: 4
+					id: "492BA2409514757D"
+					item: {
+						count: 1
+						id: "minecraft:gold_ingot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "4CE8F095EFDB85CF"
+					item: {
+						count: 1
+						id: "simplyswords:gold_longsword"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: -5.0d
+		}
+		{
+			dependencies: [
+				"70C6BE6030F55B6F"
+			]
+			id: "0B5DB05680190520"
+			rewards: [
+				{
+					count: 2
+					id: "5B3EDBD73187FBE2"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			size: 1.1d
+			tasks: [
+				{
+					id: "24D7A1D5493F8E40"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_longsword"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: -3.5d
+		}
+		{
+			dependencies: [
+				"0B5DB05680190520"
+			]
+			id: "6C0F1ACFFB125C26"
+			rewards: [
+				{
+					id: "72B6B924559F29E8"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.25d
+			tasks: [
+				{
+					id: "3E7D59A15555AE76"
+					item: {
+						count: 1
+						id: "simplyswords:netherite_longsword"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"6C0F1ACFFB125C26"
+			]
+			id: "444CE22D5A5657FD"
+			rewards: [
+				{
+					id: "572B215AC6A01F9F"
+					item: {
+						count: 1
+						id: "simplyswords:runic_tablet"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.35d
+			tasks: [
+				{
+					id: "272E6F2559CEF74D"
+					item: {
+						count: 1
+						id: "simplyswords:runic_tablet"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"444CE22D5A5657FD"
+			]
+			id: "6BC747FAAA25A41F"
+			rewards: [
+				{
+					count: 4
+					id: "5D98B991F107FF01"
+					item: {
+						count: 1
+						id: "minecraft:obsidian"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "3EAF6E33B76EB42F"
+					item: {
+						count: 1
+						id: "simplyswords:runic_forge"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"6BC747FAAA25A41F"
+			]
+			id: "0493EB4A4EF38FCE"
+			rewards: [
+				{
+					count: 2
+					id: "246E2A346C89839C"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.25d
+			tasks: [
+				{
+					id: "36814B384F93EFDE"
+					item: {
+						count: 1
+						id: "simplyswords:runic_longsword"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 4.0d
+		}
+		{
+			dependencies: [
+				"0493EB4A4EF38FCE"
+			]
+			id: "1665DDC0097DA4B7"
+			rewards: [
+				{
+					count: 4
+					id: "235A2246473F47C5"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			shape: "square"
+			size: 1.1d
+			tasks: [
+				{
+					id: "1F5E164BCB62B287"
+					item: {
+						count: 1
+						id: "simplyswords:empowered_remnant"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"1665DDC0097DA4B7"
+			]
+			id: "3F4D20241B0FF398"
+			rewards: [
+				{
+					count: 2
+					id: "0B56DE99577D59A6"
+					item: {
+						count: 1
+						id: "minecraft:crying_obsidian"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.2d
+			tasks: [
+				{
+					id: "5B3FD8935749A398"
+					item: {
+						count: 1
+						id: "simplyswords:runefused_gem"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: 7.5d
+		}
+		{
+			dependencies: [
+				"1665DDC0097DA4B7"
+			]
+			id: "35DF9FE05B86F77B"
+			rewards: [
+				{
+					id: "6DF451B057A3C599"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.2d
+			tasks: [
+				{
+					id: "65DC7D6B9B76A7BB"
+					item: {
+						count: 1
+						id: "simplyswords:netherfused_gem"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: 7.5d
+		}
+		{
+			dependencies: [
+				"0B5DB05680190520"
+			]
+			id: "5D3A20B71B782977"
+			rewards: [
+				{
+					id: "0DC6D339669527D5"
+					type: "xp"
+					xp: 25
+				}
+			]
+			shape: "diamond"
+			size: 1.15d
+			tasks: [
+				{
+					id: "36814EAE16B166A7"
+					type: "checkmark"
+				}
+			]
+			x: -1.15d
+			y: -1.15d
+		}
+		{
+			dependencies: [
+				"0B5DB05680190520"
+			]
+			id: "5FFFEFD9F5CA6764"
+			rewards: [
+				{
+					id: "374240751A2DE752"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "527C087910543664"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_claymore"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: -7.0d
+		}
+		{
+			dependencies: [
+				"5FFFEFD9F5CA6764"
+			]
+			id: "2CDDE2BF366CEFDF"
+			rewards: [
+				{
+					id: "788D704812686FCC"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "713BE481B55B095F"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_greathammer"
+					}
+					type: "item"
+				}
+			]
+			x: -4.5d
+			y: -7.0d
+		}
+		{
+			dependencies: [
+				"2CDDE2BF366CEFDF"
+			]
+			id: "27685AF09C590E38"
+			rewards: [
+				{
+					id: "0832F6E35C834166"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "4B1E9CE190AC6F88"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_greataxe"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: -7.0d
+		}
+		{
+			dependencies: [
+				"0B5DB05680190520"
+			]
+			id: "0F27F2296DC2C9D0"
+			rewards: [
+				{
+					id: "6ED3DC1E960B6A7E"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "447C14674BC7ACF0"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_spear"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: -5.0d
+		}
+		{
+			dependencies: [
+				"0F27F2296DC2C9D0"
+			]
+			id: "3E98DDC80562D539"
+			rewards: [
+				{
+					id: "7BC953DC81958617"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "70C6DBAC41315FB9"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_halberd"
+					}
+					type: "item"
+				}
+			]
+			x: -4.5d
+			y: -5.0d
+		}
+		{
+			dependencies: [
+				"3E98DDC80562D539"
+			]
+			id: "79A5EE72DC48C079"
+			rewards: [
+				{
+					id: "081E6EB895C9A4F7"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "5D98B6F8246C6EF9"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_glaive"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: -5.0d
+		}
+		{
+			dependencies: [
+				"0B5DB05680190520"
+			]
+			id: "1EE861A7C5B0AE75"
+			rewards: [
+				{
+					id: "444458E1B9A1A2D3"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "40C5229DA03554D5"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_rapier"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: -3.0d
+		}
+		{
+			dependencies: [
+				"1EE861A7C5B0AE75"
+			]
+			id: "277D3A6286DBF26D"
+			rewards: [
+				{
+					id: "35F047CE9E086F8B"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "27117E3F0F4E6B4D"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_katana"
+					}
+					type: "item"
+				}
+			]
+			x: -4.5d
+			y: -3.0d
+		}
+		{
+			dependencies: [
+				"277D3A6286DBF26D"
+			]
+			id: "3B8731113575B5DF"
+			rewards: [
+				{
+					id: "4B1E7882BA7D5F3D"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "5D8F0B78BF58269F"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_cutlass"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: -3.0d
+		}
+		{
+			dependencies: [
+				"3B8731113575B5DF"
+			]
+			id: "1FD581E6DF447814"
+			rewards: [
+				{
+					id: "73B6F0763C425EF2"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "3E7D3EE8A55EE714"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_sai"
+					}
+					type: "item"
+				}
+			]
+			x: -7.5d
+			y: -3.0d
+		}
+		{
+			dependencies: [
+				"0B5DB05680190520"
+			]
+			id: "2A36B046603F2D40"
+			rewards: [
+				{
+					id: "70C635198CFFCDAE"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "1ED9D267882FE240"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_twinblade"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: -1.0d
+		}
+		{
+			dependencies: [
+				"2A36B046603F2D40"
+			]
+			id: "6BE60037307CD9AE"
+			rewards: [
+				{
+					id: "79A5DCAC6B46FE9C"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "5BD5E3E47702EE4E"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_warglaive"
+					}
+					type: "item"
+				}
+			]
+			x: -4.5d
+			y: -1.0d
+		}
+		{
+			dependencies: [
+				"6BE60037307CD9AE"
+			]
+			id: "456B738EB8220023"
+			rewards: [
+				{
+					id: "6ED37E6714E87411"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "1665727CE736A413"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_scythe"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: -1.0d
+		}
+		{
+			dependencies: [
+				"456B738EB8220023"
+			]
+			id: "667AC17AFBFDB828"
+			rewards: [
+				{
+					id: "3EAF8BAA05201A86"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					id: "272E50482B61DC48"
+					item: {
+						count: 1
+						id: "simplyswords:diamond_chakram"
+					}
+					type: "item"
+				}
+			]
+			x: -7.5d
+			y: -1.0d
+		}
+		{
+			dependencies: [
+				"0493EB4A4EF38FCE"
+			]
+			id: "1EC8E1C9251842AC"
+			rewards: [
+				{
+					id: "1F5EC63DF655610A"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "367129E308F4CECC"
+					item: {
+						count: 1
+						id: "simplyswords:runic_claymore"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"1EC8E1C9251842AC"
+			]
+			id: "375001C6DBBE8A37"
+			rewards: [
+				{
+					id: "166555C08985CE75"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "3D52A08678257007"
+					item: {
+						count: 1
+						id: "simplyswords:runic_greathammer"
+					}
+					type: "item"
+				}
+			]
+			x: -4.5d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"375001C6DBBE8A37"
+			]
+			id: "542385150D328C60"
+			rewards: [
+				{
+					id: "136A2C8FC89C25AF"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "42BC66EBB7BBF6B0"
+					item: {
+						count: 1
+						id: "simplyswords:runic_greataxe"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"0493EB4A4EF38FCE"
+			]
+			id: "37D2DEEE14F75458"
+			rewards: [
+				{
+					id: "4F3A57CAAECE81A6"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "5B2D26ACD0751A78"
+					item: {
+						count: 1
+						id: "simplyswords:runic_spear"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"37D2DEEE14F75458"
+			]
+			id: "6F5868B52E849731"
+			rewards: [
+				{
+					id: "50BF9842F55DF78F"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "6B95908DF3B5C041"
+					item: {
+						count: 1
+						id: "simplyswords:runic_glaive"
+					}
+					type: "item"
+				}
+			]
+			x: -4.5d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"6F5868B52E849731"
+			]
+			id: "4FE5776C54A78CA1"
+			rewards: [
+				{
+					id: "1ED9AA804593C27F"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "44EF8B61F6A88CD1"
+					item: {
+						count: 1
+						id: "simplyswords:runic_halberd"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"0493EB4A4EF38FCE"
+			]
+			id: "5B2DE40728BFDDE5"
+			rewards: [
+				{
+					id: "0A46B3689C44DAC2"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "0F3510526017DF65"
+					item: {
+						count: 1
+						id: "simplyswords:runic_katana"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 4.5d
+		}
+		{
+			dependencies: [
+				"5B2DE40728BFDDE5"
+			]
+			id: "35914107DE7A9A3D"
+			rewards: [
+				{
+					id: "491873ED0EB397EB"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "172DE59D5BF0A77D"
+					item: {
+						count: 1
+						id: "simplyswords:runic_rapier"
+					}
+					type: "item"
+				}
+			]
+			x: -4.5d
+			y: 4.5d
+		}
+		{
+			dependencies: [
+				"35914107DE7A9A3D"
+			]
+			id: "57B652E2DEE7D7A8"
+			rewards: [
+				{
+					id: "7B28B452778B5C06"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "74D68357735B0A6E"
+					item: {
+						count: 1
+						id: "simplyswords:runic_twinblade"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: 4.5d
+		}
+		{
+			dependencies: [
+				"57B652E2DEE7D7A8"
+			]
+			id: "5A0ACFAAB594AF44"
+			rewards: [
+				{
+					id: "434B8F2039A3D80D"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "6322C84E20DA98BF"
+					item: {
+						count: 1
+						id: "simplyswords:runic_warglaive"
+					}
+					type: "item"
+				}
+			]
+			x: -7.5d
+			y: 4.5d
+		}
+		{
+			dependencies: [
+				"0493EB4A4EF38FCE"
+			]
+			id: "5F00E880B660706B"
+			rewards: [
+				{
+					id: "2B700DB59985E992"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "445562A9C6040BF4"
+					item: {
+						count: 1
+						id: "simplyswords:runic_scythe"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"5F00E880B660706B"
+			]
+			id: "75390709424B49EE"
+			rewards: [
+				{
+					id: "4F7DDA49B803DC13"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					id: "77A773A1A74E5EC7"
+					item: {
+						count: 1
+						id: "simplyswords:runic_chakram"
+					}
+					type: "item"
+				}
+			]
+			x: -4.5d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"6BC747FAAA25A41F"
+			]
+			id: "220BC58941783FA4"
+			rewards: [
+				{
+					id: "484B6F7FB760B716"
+					type: "xp"
+					xp: 25
+				}
+			]
+			shape: "diamond"
+			size: 1.25d
+			tasks: [
+				{
+					id: "7C4B0869CE375084"
+					type: "checkmark"
+				}
+			]
+			x: 3.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"444CE22D5A5657FD"
+			]
+			id: "16C1DCB8CA968F17"
+			rewards: [
+				{
+					id: "777D70A1A22E17A5"
+					item: {
+						count: 1
+						id: "simplyswords:runic_tablet"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.25d
+			tasks: [
+				{
+					id: "57614E47D261A931"
+					item: {
+						count: 1
+						id: "simplyswords:contained_remnant"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"16C1DCB8CA968F17"
+			]
+			id: "6BE6393962638848"
+			rewards: [
+				{
+					count: 2
+					id: "070DEA2AD2009CAB"
+					item: {
+						count: 1
+						id: "minecraft:ender_eye"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.2d
+			tasks: [
+				{
+					id: "6F587D50DE22EB68"
+					item: {
+						count: 1
+						id: "simplyswords:tampered_remnant"
+					}
+					type: "item"
+				}
+			]
+			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6BC747FAAA25A41F"
+			]
+			id: "4CCAE3E7FB8E1492"
+			rewards: [
+				{
+					id: "136A6EB4550D2422"
+					type: "xp"
+					xp: 150
+				}
+				{
+					count: 4
+					id: "3AF4A9014942F2D9"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "4BE8BF9907C6CEFA"
+					item: {
+						count: 1
+						id: "simplyswords:slumbering_lichblade"
+					}
+					type: "item"
+				}
+			]
+			x: 3.5d
+			y: -6.5d
+		}
+		{
+			dependencies: [
+				"4CCAE3E7FB8E1492"
+			]
+			id: "6DF401211DE6B87B"
+			rewards: [
+				{
+					count: 2
+					id: "56501174984F7549"
+					item: {
+						count: 1
+						id: "simplyswords:runic_tablet"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "0B98685A4EA1BE76"
+					item: {
+						count: 1
+						id: "simplyswords:waking_lichblade"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: -6.5d
+		}
+		{
+			dependencies: [
+				"6DF401211DE6B87B"
+			]
+			id: "5DF8BDD6DFDF104E"
+			rewards: [
+				{
+					id: "010B0086AF11BDE0"
+					type: "xp"
+					xp: 500
+				}
+				{
+					count: 2
+					id: "32FD951F92A2E135"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "6E62E4F0C9765C7D"
+					item: {
+						count: 1
+						id: "simplyswords:awakened_lichblade"
+					}
+					type: "item"
+				}
+			]
+			x: 7.5d
+			y: -6.5d
+		}
+		{
+			dependencies: [
+				"6BC747FAAA25A41F"
+			]
+			id: "6148A146FBE43D0B"
+			rewards: [
+				{
+					id: "468AF1D698B0520D"
+					type: "xp"
+					xp: 150
+				}
+				{
+					id: "774B3BA49A59F351"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5A909166351BE807"
+					item: {
+						count: 1
+						id: "simplyswords:dormant_relic"
+					}
+					type: "item"
+				}
+			]
+			x: 3.5d
+			y: -4.0d
+		}
+		{
+			dependencies: [
+				"6148A146FBE43D0B"
+			]
+			id: "444407B640A0F672"
+			rewards: [
+				{
+					count: 2
+					id: "5868977DAF647FF2"
+					item: {
+						count: 1
+						id: "simplyswords:runic_tablet"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5C42BCFE3E3727B6"
+					item: {
+						count: 1
+						id: "simplyswords:righteous_relic"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: -5.0d
+		}
+		{
+			dependencies: [
+				"444407B640A0F672"
+			]
+			id: "235A0234EB7DBAC6"
+			rewards: [
+				{
+					id: "7E043A78F22A05C3"
+					type: "xp"
+					xp: 500
+				}
+				{
+					id: "3D724E86D6E17176"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "2CB8F5FEC41AC904"
+					item: {
+						count: 1
+						id: "simplyswords:sunfire"
+					}
+					type: "item"
+				}
+			]
+			x: 7.5d
+			y: -5.0d
+		}
+		{
+			dependencies: [
+				"6148A146FBE43D0B"
+			]
+			id: "4FE54C91901C1EB1"
+			rewards: [
+				{
+					count: 2
+					id: "2336E48890A3D1FA"
+					item: {
+						count: 1
+						id: "simplyswords:runic_tablet"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "1C63BA920A77D4CB"
+					item: {
+						count: 1
+						id: "simplyswords:tainted_relic"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: -3.0d
+		}
+		{
+			dependencies: [
+				"4FE54C91901C1EB1"
+			]
+			id: "0BD78F0D52A0C68C"
+			rewards: [
+				{
+					id: "7398904880E72AC1"
+					type: "xp"
+					xp: 500
+				}
+				{
+					id: "3C7802C364A45FC6"
+					item: {
+						count: 1
+						id: "minecraft:totem_of_undying"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "64D9DD5DEB8E2B7B"
+					item: {
+						count: 1
+						id: "simplyswords:harbinger"
+					}
+					type: "item"
+				}
+			]
+			x: 7.5d
+			y: -3.0d
+		}
+		{
+			dependencies: [
+				"6BE6393962638848"
+			]
+			id: "6A31A6F59416D7D2"
+			rewards: [
+				{
+					count: 2
+					id: "36CE8F3B87EF46C3"
+					item: {
+						count: 1
+						id: "minecraft:echo_shard"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "38E84C1272A0353B"
+					item: {
+						count: 1
+						id: "simplyswords:decaying_relic"
+					}
+					type: "item"
+				}
+			]
+			x: 4.5d
+			y: -1.0d
+		}
+		{
+			dependencies: [
+				"6A31A6F59416D7D2"
+			]
+			id: "41EF28B842F50CE8"
+			rewards: [
+				{
+					id: "2C58E07C03A8BC99"
+					type: "xp"
+					xp: 300
+				}
+				{
+					count: 16
+					id: "1C61BD68D2EBDB57"
+					item: {
+						count: 1
+						id: "minecraft:amethyst_shard"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "79DA89040EE40863"
+					item: {
+						count: 1
+						id: "simplyswords:magiblade"
+					}
+					type: "item"
+				}
+			]
+			x: 6.5d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"6A31A6F59416D7D2"
+			]
+			id: "2726C637C64CA9D1"
+			rewards: [
+				{
+					id: "516C78461E81C004"
+					type: "xp"
+					xp: 300
+				}
+				{
+					count: 4
+					id: "4BCEB02E8883E4EF"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5A6ABFE71C989C58"
+					item: {
+						count: 1
+						id: "simplyswords:magispear"
+					}
+					type: "item"
+				}
+			]
+			x: 6.5d
+			y: -1.0d
+		}
+		{
+			dependencies: [
+				"6A31A6F59416D7D2"
+			]
+			id: "4BA6B9119C560B4A"
+			rewards: [
+				{
+					id: "23BAEE7C3FB2D6EB"
+					type: "xp"
+					xp: 300
+				}
+				{
+					count: 2
+					id: "3B651E5345BDDE2E"
+					item: {
+						count: 1
+						id: "minecraft:ghast_tear"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "200063CBF698DFA0"
+					item: {
+						count: 1
+						id: "simplyswords:magiscythe"
+					}
+					type: "item"
+				}
+			]
+			x: 6.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"220BC58941783FA4"
+			]
+			id: "6B7EC1A8F446CDBF"
+			rewards: [
+				{
+					id: "1BE41EE29C37C6A3"
+					type: "xp"
+					xp: 200
+				}
+				{
+					id: "4FC652F26535D6C4"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "743B8B8CE9B3C6B0"
+					item: {
+						count: 1
+						id: "simplyswords:watcher_claymore"
+					}
+					type: "item"
+				}
+			]
+			x: 5.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"6B7EC1A8F446CDBF"
+			]
+			id: "56B88C373ABBCD5E"
+			rewards: [
+				{
+					id: "4980A69DDB69010C"
+					type: "xp"
+					xp: 500
+				}
+				{
+					count: 2
+					id: "34B6C2C9F2D76C52"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "3055B64CBA979B4B"
+					item: {
+						count: 1
+						id: "simplyswords:the_devourer"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"220BC58941783FA4"
+			]
+			id: "29DA5C9F6B369B48"
+			rewards: [
+				{
+					id: "39D05F2245F00AC8"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 2
+					id: "7B0F61CE881FF9F4"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "46F967B9152B3C18"
+					item: {
+						count: 1
+						id: "simplyswords:stormscale"
+					}
+					type: "item"
+				}
+			]
+			x: 5.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"29DA5C9F6B369B48"
+			]
+			id: "5DD887A9C4A573AE"
+			rewards: [
+				{
+					id: "000C74D77CFB8C09"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 4
+					id: "76F1D4DCEFC116AF"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "6ABC2D9AB9317BD5"
+					item: {
+						count: 1
+						id: "simplyswords:ionbound_stormscale"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"220BC58941783FA4"
+			]
+			id: "2ED60875704E4D71"
+			rewards: [
+				{
+					id: "4111045E3D559114"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 4
+					id: "79048E3B4F735D29"
+					item: {
+						count: 1
+						id: "minecraft:blaze_rod"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "17C2292B94107C88"
+					item: {
+						count: 1
+						id: "simplyswords:brimstone_claymore"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 5.0d
+		}
+		{
+			dependencies: [
+				"2ED60875704E4D71"
+			]
+			id: "2ED6286B91BC2FE8"
+			rewards: [
+				{
+					id: "6A973571FAA59DF1"
+					type: "xp"
+					xp: 200
+				}
+				{
+					id: "440604E53B93ED7D"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6FCF003CCDA84E8F"
+					item: {
+						count: 1
+						id: "simplyswords:emberblade"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: 5.0d
+		}
+		{
+			dependencies: [
+				"2ED6286B91BC2FE8"
+			]
+			id: "5B2A0A47B07FF3B3"
+			rewards: [
+				{
+					id: "73166FB206C28EEA"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 4
+					id: "1E73EA9336CCE07F"
+					item: {
+						count: 1
+						id: "minecraft:magma_cream"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "1D173A646AD54DF9"
+					item: {
+						count: 1
+						id: "simplyswords:emberlash"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 5.0d
+		}
+		{
+			dependencies: [
+				"5B2A0A47B07FF3B3"
+			]
+			id: "13F9F1EAF3806D6C"
+			rewards: [
+				{
+					id: "331B66015D6EBBED"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 8
+					id: "69CA361AD4BDD554"
+					item: {
+						count: 1
+						id: "minecraft:blaze_powder"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5972A3F2E15A056D"
+					item: {
+						count: 1
+						id: "simplyswords:molten_edge"
+					}
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: 5.0d
+		}
+		{
+			dependencies: [
+				"13F9F1EAF3806D6C"
+			]
+			id: "0630586914122A00"
+			rewards: [
+				{
+					id: "01B1C975531FBFFB"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 2
+					id: "12D2A638E436EB37"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "28CF1968F938CEEC"
+					item: {
+						count: 1
+						id: "simplyswords:flamewind"
+					}
+					type: "item"
+				}
+				{
+					id: "4C89B1002A3C19EF"
+					item: {
+						count: 1
+						id: "simplyswords:hearthflame"
+					}
+					type: "item"
+				}
+			]
+			x: 10.0d
+			y: 5.0d
+		}
+		{
+			dependencies: [
+				"220BC58941783FA4"
+			]
+			id: "7580143AA2A2CC71"
+			rewards: [
+				{
+					id: "172D38652811D42B"
+					type: "xp"
+					xp: 250
+				}
+				{
+					count: 3
+					id: "48AA5DE59D21095D"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5537BCC515486A50"
+					item: {
+						count: 1
+						id: "simplyswords:mjolnir"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 7.6d
+		}
+		{
+			dependencies: [
+				"7580143AA2A2CC71"
+			]
+			id: "1A0B43E16D923FF8"
+			rewards: [
+				{
+					id: "787FFE8493448963"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 4
+					id: "3D8B27E1881B967E"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "729978547A68DB92"
+					item: {
+						count: 1
+						id: "simplyswords:storms_edge"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: 7.6d
+		}
+		{
+			dependencies: [
+				"1A0B43E16D923FF8"
+			]
+			id: "785C85DCFB4D9BB2"
+			rewards: [
+				{
+					id: "2B29C95A4631A5B5"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 2
+					id: "3D87D09007FF0D9A"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6308CF19FAA236F9"
+					item: {
+						count: 1
+						id: "simplyswords:stormbringer"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 7.6d
+		}
+		{
+			dependencies: [
+				"785C85DCFB4D9BB2"
+			]
+			id: "3913EA646AB911F5"
+			rewards: [
+				{
+					id: "4986BE17A56B37F2"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 4
+					id: "7D1513F982E383DF"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "768B057E6FA4FF17"
+					item: {
+						count: 1
+						id: "simplyswords:tempest"
+					}
+					type: "item"
+				}
+				{
+					id: "7048A41E1C932DFB"
+					item: {
+						count: 1
+						id: "simplyswords:thunderbrand"
+					}
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: 7.6d
+		}
+		{
+			dependencies: [
+				"220BC58941783FA4"
+			]
+			id: "35CEE133EBACDC43"
+			rewards: [
+				{
+					id: "29EC42815761D887"
+					type: "xp"
+					xp: 200
+				}
+				{
+					id: "32FBFA14E05D50F5"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "617890604260A7A9"
+					item: {
+						count: 1
+						id: "simplyswords:frostfall"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"35CEE133EBACDC43"
+			]
+			id: "3B996485D29AF54F"
+			rewards: [
+				{
+					id: "68977DED3D9496C6"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 2
+					id: "0D4410DA5A46BB2B"
+					item: {
+						count: 1
+						id: "minecraft:ghast_tear"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6EF3C3DB73A0598A"
+					item: {
+						count: 1
+						id: "simplyswords:icewhisper"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"3B996485D29AF54F"
+			]
+			id: "293316B17A3362E9"
+			rewards: [
+				{
+					id: "4C65DE40944105B3"
+					type: "xp"
+					xp: 250
+				}
+				{
+					count: 3
+					id: "22F89A6E4359712E"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6C8BA3C50CF9DD03"
+					item: {
+						count: 1
+						id: "simplyswords:livyatan"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 10.2d
+		}
+		{
+			dependencies: [
+				"220BC58941783FA4"
+			]
+			id: "00AC201D587D1DFB"
+			rewards: [
+				{
+					id: "5284FFBDAC27F9AC"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 4
+					id: "08FCA4C212CCF16D"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "7EEF80CD6D8B0D10"
+					item: {
+						count: 1
+						id: "simplyswords:soulrender"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 12.8d
+		}
+		{
+			dependencies: [
+				"00AC201D587D1DFB"
+			]
+			id: "3B9B9E87D4F40AE2"
+			rewards: [
+				{
+					id: "7B49E520E288C030"
+					type: "xp"
+					xp: 200
+				}
+				{
+					id: "57396428E7D56073"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "481FF8FC40422894"
+					item: {
+						count: 1
+						id: "simplyswords:soulstalker"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: 12.8d
+		}
+		{
+			dependencies: [
+				"3B9B9E87D4F40AE2"
+			]
+			id: "6DBC1F8FBAC55654"
+			rewards: [
+				{
+					id: "7C301C7410E67A46"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 2
+					id: "0AD5BED3997713E9"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "1C76DCA501A3EB52"
+					item: {
+						count: 1
+						id: "simplyswords:soulkeeper"
+					}
+					type: "item"
+				}
+				{
+					id: "354C118B8AEF771A"
+					item: {
+						count: 1
+						id: "simplyswords:soulpyre"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 12.8d
+		}
+		{
+			dependencies: [
+				"6DBC1F8FBAC55654"
+			]
+			id: "27F4531A178A7876"
+			rewards: [
+				{
+					id: "7A626A5EFD3A1050"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 2
+					id: "6F27064A2384FB4B"
+					item: {
+						count: 1
+						id: "minecraft:ghast_tear"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "75B045B18C2877BA"
+					item: {
+						count: 1
+						id: "simplyswords:soulstealer"
+					}
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: 12.8d
+		}
+		{
+			dependencies: [
+				"220BC58941783FA4"
+			]
+			id: "694060873B430FB9"
+			rewards: [
+				{
+					id: "338B16E102F9140F"
+					type: "xp"
+					xp: 250
+				}
+				{
+					count: 3
+					id: "1740F883A07326CA"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "68D1D83F495D9A81"
+					item: {
+						count: 1
+						id: "simplyswords:caelestis"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 15.4d
+		}
+		{
+			dependencies: [
+				"694060873B430FB9"
+			]
+			id: "5593E15BE3BE6CBE"
+			rewards: [
+				{
+					id: "2BD25AC845569431"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 4
+					id: "3B5C5C8935FDDEB3"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "753F0FDB81A49B35"
+					item: {
+						count: 1
+						id: "simplyswords:stars_edge"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: 15.4d
+		}
+		{
+			dependencies: [
+				"5593E15BE3BE6CBE"
+			]
+			id: "30D4914B9727ADD5"
+			rewards: [
+				{
+					id: "15F509A36A98CA63"
+					type: "xp"
+					xp: 200
+				}
+				{
+					id: "765D5B45685D44F0"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "3A7B761EB81E8B27"
+					item: {
+						count: 1
+						id: "simplyswords:shadowsting"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 15.4d
+		}
+		{
+			dependencies: [
+				"30D4914B9727ADD5"
+			]
+			id: "24AB05C1536FA9A7"
+			rewards: [
+				{
+					id: "3511F78399F05744"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 2
+					id: "55CA12A409EC101C"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6E5BE9AD739F728F"
+					item: {
+						count: 1
+						id: "simplyswords:gloampiercer"
+					}
+					type: "item"
+				}
+				{
+					id: "2BD8C04F4C179DF6"
+					item: {
+						count: 1
+						id: "simplyswords:enigma"
+					}
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: 15.4d
+		}
+		{
+			dependencies: [
+				"24AB05C1536FA9A7"
+			]
+			id: "5148EF72A80F9FCF"
+			rewards: [
+				{
+					id: "4163C5308C392716"
+					type: "xp"
+					xp: 300
+				}
+				{
+					count: 3
+					id: "5A2E86EDBC39A7E6"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "1E30B9B2A015B7FD"
+					item: {
+						count: 1
+						id: "simplyswords:dreadwhisper"
+					}
+					type: "item"
+				}
+			]
+			x: 10.0d
+			y: 15.4d
+		}
+		{
+			dependencies: [
+				"220BC58941783FA4"
+			]
+			id: "0D173E474E34977A"
+			rewards: [
+				{
+					id: "58FDC20AD5C67D03"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 16
+					id: "5DA79061D2BE2A1C"
+					item: {
+						count: 1
+						id: "minecraft:golden_carrot"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "5D1FB468E81F5875"
+					item: {
+						count: 1
+						id: "simplyswords:bramblethorn"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 18.0d
+		}
+		{
+			dependencies: [
+				"0D173E474E34977A"
+			]
+			id: "09F7EE3D3C9F6256"
+			rewards: [
+				{
+					id: "1014307C5D755967"
+					type: "xp"
+					xp: 200
+				}
+				{
+					id: "33C0C1F9F39735CE"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "6EDF0C7BB95F1658"
+					item: {
+						count: 1
+						id: "simplyswords:toxic_longsword"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: 18.0d
+		}
+		{
+			dependencies: [
+				"09F7EE3D3C9F6256"
+			]
+			id: "393494DC7EEF2CA2"
+			rewards: [
+				{
+					id: "3A0A5D162BAA7C1C"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 2
+					id: "3296C687272A218D"
+					item: {
+						count: 1
+						id: "minecraft:ghast_tear"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "07464436C15A94A6"
+					item: {
+						count: 1
+						id: "simplyswords:bloodwake"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 18.0d
+		}
+		{
+			dependencies: [
+				"393494DC7EEF2CA2"
+			]
+			id: "255B1F2EE573D24A"
+			rewards: [
+				{
+					id: "76D981A6DCABF57D"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 3
+					id: "1470B8A6D283706C"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "79A7E1AB311C2582"
+					item: {
+						count: 1
+						id: "simplyswords:hiveheart"
+					}
+					type: "item"
+				}
+				{
+					id: "5B1E87DC19A42BE1"
+					item: {
+						count: 1
+						id: "simplyswords:waxweaver"
+					}
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: 18.0d
+		}
+		{
+			dependencies: [
+				"220BC58941783FA4"
+			]
+			id: "42B4DC9DC48227D3"
+			rewards: [
+				{
+					id: "2805ECC14BC4C823"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 2
+					id: "3937D1EDBD817E2A"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "1BE6ED60915F77C2"
+					item: {
+						count: 1
+						id: "simplyswords:ribboncleaver"
+					}
+					type: "item"
+				}
+			]
+			x: 4.0d
+			y: 20.6d
+		}
+		{
+			dependencies: [
+				"42B4DC9DC48227D3"
+			]
+			id: "4D89B73A9422AF3A"
+			rewards: [
+				{
+					id: "048D61FFC9954DEA"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 8
+					id: "1670C219E50AAA72"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "2C107A8B5C69DAA0"
+					item: {
+						count: 1
+						id: "simplyswords:riftmane"
+					}
+					type: "item"
+				}
+				{
+					id: "4E5A8D397C224EBA"
+					item: {
+						count: 1
+						id: "simplyswords:whisperwind"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: 20.6d
+		}
+		{
+			dependencies: [
+				"4D89B73A9422AF3A"
+			]
+			id: "79FA27F5D05A4972"
+			rewards: [
+				{
+					id: "18B945166C03BDB5"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 32
+					id: "290D22321312DD14"
+					item: {
+						count: 1
+						id: "minecraft:spectral_arrow"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "235B069F99EE78FE"
+					item: {
+						count: 1
+						id: "simplyswords:dawnquiver"
+					}
+					type: "item"
+				}
+				{
+					id: "527C087910543665"
+					item: {
+						count: 1
+						id: "simplyswords:wickpiercer"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 20.6d
+		}
+		{
+			dependencies: [
+				"79FA27F5D05A4972"
+			]
+			id: "4F395F4C9FCB4315"
+			rewards: [
+				{
+					id: "1C782E91BD667BED"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 2
+					id: "430F03F86E65FFCF"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "58D71931A1BDE7A3"
+					item: {
+						count: 1
+						id: "simplyswords:wraithfang"
+					}
+					type: "item"
+				}
+				{
+					id: "6C0F1ACFFB125C27"
+					item: {
+						count: 1
+						id: "simplyswords:wraithmaw"
+					}
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: 20.6d
+		}
+		{
+			dependencies: [
+				"4F395F4C9FCB4315"
+			]
+			id: "33AB3C6510A3DF58"
+			rewards: [
+				{
+					id: "12F8D1D99E06CFB5"
+					type: "xp"
+					xp: 350
+				}
+				{
+					count: 3
+					id: "6C9AA59520524F10"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "36427A9E90B47988"
+					item: {
+						count: 1
+						id: "simplyswords:chompolotl"
+					}
+					type: "item"
+				}
+				{
+					id: "47BC0519DF447815"
+					item: {
+						count: 1
+						id: "simplyswords:sword_on_a_stick"
+					}
+					type: "item"
+				}
+			]
+			x: 10.0d
+			y: 20.6d
+		}
+	]
+}

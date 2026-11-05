@@ -1,0 +1,277 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "exploration_fossils_and_trainer_utilities"
+	group: "69C15075C3ED44EB"
+	icon: {
+		id: "minecraft:book"
+	}
+	id: "22784A1DBB58AAC8"
+	images: [
+		{
+			height: 0.4d
+			id: "6ECB3086B3E9E74F"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.8d
+			x: -8.0d
+			y: -1.3d
+		}
+		{
+			height: 0.4d
+			id: "56DDD3367A1AE9C0"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.8d
+			x: 0.0d
+			y: -1.3d
+		}
+	]
+	order_index: 6
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [
+				"688470F43F810C32"
+			]
+			hide_dependency_lines: true
+			id: "0385EF57ACAB8BE9"
+			rewards: [
+				{
+					count: 8
+					id: "3DB23D22B2407EFE"
+					item: {
+						components: {
+							"cobblemon:bait_effects": [
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+							]
+							"cobblemon:food_colour": [
+								"yellow"
+								"yellow"
+								"yellow"
+							]
+							"cobblemon:ingredient": [
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+							]
+						}
+						count: 1
+						id: "cobblemon:poke_snack"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 4L
+					id: "119597DD4622A5EF"
+					item: {
+						count: 1
+						id: "cobblemon:poke_bait"
+					}
+					type: "item"
+				}
+				{
+					count: 4L
+					id: "4F0BB40B5CA82A94"
+					item: {
+						count: 1
+						id: "cobblemon:poke_snack"
+					}
+					type: "item"
+				}
+			]
+			x: -10.4d
+			y: 2.4d
+		}
+		{
+			dependencies: [
+				"507518777C14EB2B"
+				"6D49581E29ACFA55"
+			]
+			hide_dependency_lines: true
+			id: "7B2DF4D19E2B5AE4"
+			rewards: [
+				{
+					id: "4444DF21F5FF4CE3"
+					item: {
+						count: 1
+						id: "cobblemon:pc"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.1d
+			tasks: [
+				{
+					id: "08B7D6DFC1D7A18A"
+					item: {
+						count: 1
+						id: "cobblemonboxlink:box_link"
+					}
+					type: "item"
+				}
+			]
+			x: -5.6d
+			y: 2.4d
+		}
+		{
+			hide_dependency_lines: true
+			id: "6D49581E29ACFA55"
+			rewards: [
+				{
+					count: 2
+					id: "67FFCB2E6C2FD0C3"
+					item: {
+						count: 1
+						id: "cobblemon:display_case"
+					}
+					type: "item"
+				}
+			]
+			shape: "rsquare"
+			size: 1.2d
+			tasks: [
+				{
+					id: "09C3780411BE73D9"
+					item: {
+						count: 1
+						id: "cobblemon:pc"
+					}
+					type: "item"
+				}
+				{
+					id: "08479BA39D6CD9D7"
+					item: {
+						count: 1
+						id: "cobblemon:healing_machine"
+					}
+					type: "item"
+				}
+			]
+			x: -1.2d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6D49581E29ACFA55"
+			]
+			hide_dependency_lines: true
+			id: "19D2B4E63F3B4C58"
+			rewards: [
+				{
+					id: "71DE7D8C1A9D1CF6"
+					type: "xp"
+					xp: 250
+				}
+			]
+			shape: "square"
+			size: 1.0d
+			tasks: [
+				{
+					id: "2D3B505EC8EC2EB3"
+					item: {
+						count: 1
+						id: "cobblemon:pasture"
+					}
+					type: "item"
+				}
+			]
+			x: 1.2d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6D49581E29ACFA55"
+			]
+			hide_dependency_lines: true
+			id: "5D14E53B1CD670F6"
+			rewards: [
+				{
+					count: 8
+					id: "3E0FF922485E86E2"
+					item: {
+						count: 1
+						id: "minecraft:glass"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "46AE33E767EBD755"
+					item: {
+						count: 1
+						id: "cobblemon:display_case"
+					}
+					type: "item"
+				}
+			]
+			x: -1.2d
+			y: 2.4d
+		}
+		{
+			hide_dependency_lines: true
+			id: "4B19DBFFFA7F1FE2"
+			rewards: [
+				{
+					id: "19FA1DE9A7067D2F"
+					item: {
+						count: 1
+						id: "cobblemon:healing_machine"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					abilities: ""
+					action: "defeat"
+					amount: 5L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: "alpha"
+					gender: ""
+					held_items: ""
+					id: "52EF6B434BB3E90D"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: ""
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -8.0d
+			y: 4.550000000000001d
+		}
+	]
+}

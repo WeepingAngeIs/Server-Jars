@@ -1,0 +1,1026 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "medicine_and_recovery"
+	group: "582E67E18C086508"
+	icon: {
+		id: "minecraft:book"
+	}
+	id: "7F4D5402148E66FC"
+	images: [
+		{
+			height: 0.4d
+			id: "B2B5620C2D385DC4"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.0d
+			x: 0.0d
+			y: -3.6d
+		}
+	]
+	order_index: 1
+	quest_links: [ ]
+	quests: [
+		{
+			id: "BE7AAB2C2B9DDE41"
+			icon: {
+				id: "cobblemon:full_restore"
+			}
+			rewards: [
+				{
+					count: 3
+					id: "6DA3304A5A893076"
+					item: {
+						count: 1
+						id: "cobblemon:full_restore"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 50"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "DA1F11FA3A0801A4"
+					title: "50 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "A86649D5FB631BA3"
+					type: "xp"
+					xp: 200
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "C34EEC4F7BE2B572"
+					item: "cobblemon:potion"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "FF85F11879F70383"
+					item: "cobblemon:super_potion"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "FB44196C94048CCB"
+					item: "cobblemon:hyper_potion"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "A7E199F09DFCB2F0"
+					item: "cobblemon:max_potion"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "B2EC566DCE58E400"
+					item: "cobblemon:full_restore"
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: -2.0d
+		}
+		{
+			id: "E82FBEE59E4384CE"
+			icon: {
+				id: "cobblemon:full_heal"
+			}
+			rewards: [
+				{
+					count: 5
+					id: "E0F947A09BBC702B"
+					item: {
+						count: 1
+						id: "cobblemon:full_heal"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 50"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "C6C92E7ED71C7D85"
+					title: "50 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "A681A4444101CB08"
+					type: "xp"
+					xp: 200
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "109058C3AF8B8C7B"
+					item: "cobblemon:antidote"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "EF1C0F49F1D688F5"
+					item: "cobblemon:awakening"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "EA9B2B1C4A198B7D"
+					item: "cobblemon:burn_heal"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "8619D5870A86CB11"
+					item: "cobblemon:ice_heal"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "55B5C2BE3CBBC248"
+					item: "cobblemon:paralyze_heal"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "A52868B567CCF0D6"
+					item: "cobblemon:full_heal"
+					type: "item"
+				}
+			]
+			x: -2.0d
+			y: -2.0d
+		}
+		{
+			id: "C533BE7A12E1DA24"
+			icon: {
+				id: "cobblemon:max_revive"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "B63400D6D739C8C3"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "AC0D23227B9D1037"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "8954C2FF686B6A8D"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "A14BADE1EDBEC4E3"
+					item: "cobblemon:revive"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "A7BD16CCB7084E50"
+					item: "cobblemon:max_revive"
+					type: "item"
+				}
+			]
+			x: 2.0d
+			y: -2.0d
+		}
+		{
+			id: "CEE5D0B2A01DEF39"
+			icon: {
+				id: "cobblemon:pp_max"
+			}
+			rewards: [
+				{
+					id: "F73733A84A327EFF"
+					item: {
+						count: 1
+						id: "cobblemon:pp_max"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "4D1362573CC75DC9"
+					item: {
+						count: 1
+						id: "cobblemon:max_elixir"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 50"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "F0E47D62762FDF83"
+					title: "50 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "AD487638BAB56775"
+					type: "xp"
+					xp: 250
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "AFD3584360806ED1"
+					item: "cobblemon:ether"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "2412C942AD4616D6"
+					item: "cobblemon:max_ether"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "C0BC01DD557CD875"
+					item: "cobblemon:elixir"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "8F0620CBBB908222"
+					item: "cobblemon:max_elixir"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "3DEDB1607AB6F626"
+					item: "cobblemon:pp_up"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "62026CED4183704D"
+					item: "cobblemon:pp_max"
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: -2.0d
+		}
+		{
+			id: "94E70C0398E3C189"
+			icon: {
+				id: "cobblemon:oran_berry"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "F6DAF8329C48B330"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "8F65A9D186A93821"
+					item: {
+						count: 1
+						id: "cobblemon:lum_berry"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 50"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "89E8E332028AECEB"
+					title: "50 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "4575F07CC5EA2923"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "706788055D09E6B6"
+					item: "cobblemon:cheri_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "F165E81BD765C70F"
+					item: "cobblemon:chesto_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "99E9052400DB9CD5"
+					item: "cobblemon:pecha_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "220B8F527E9573FC"
+					item: "cobblemon:rawst_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "F97C6034E211C865"
+					item: "cobblemon:aspear_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "D04493A6A09F823B"
+					item: "cobblemon:leppa_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "650361C0D1BEFB48"
+					item: "cobblemon:oran_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "2F7F6FE906FB1DDB"
+					item: "cobblemon:persim_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "891BF04CD0D0DDAB"
+					item: "cobblemon:lum_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "3A803F8D10770945"
+					item: "cobblemon:sitrus_berry"
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: 2.0d
+		}
+		{
+			id: "5074A4B3DCD6BC5D"
+			icon: {
+				id: "cobblemon:liechi_berry"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "D872FF48BA0D9B7A"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "CA88372423B07383"
+					item: {
+						count: 1
+						id: "cobblemon:lum_berry"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 50"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "6A31637FE9664A88"
+					title: "50 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "43A290D49D39656A"
+					type: "xp"
+					xp: 240
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "EDDFCF13C5DE641E"
+					item: "cobblemon:figy_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "B972CB61D71D7B60"
+					item: "cobblemon:wiki_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "E02F8EE425C4488A"
+					item: "cobblemon:mago_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "E821EBBE1817A12A"
+					item: "cobblemon:aguav_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "4D1BDCC3B13DB04A"
+					item: "cobblemon:iapapa_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "E7034A68ED0030D5"
+					item: "cobblemon:liechi_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "96FD77549005C701"
+					item: "cobblemon:ganlon_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "B35275B3A206C3CB"
+					item: "cobblemon:salac_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "90A5802D4F17AC48"
+					item: "cobblemon:petaya_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "6A866B61F4061DC8"
+					item: "cobblemon:apicot_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "EEE672F278DFAD2F"
+					item: "cobblemon:lansat_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "D41EB6835787F65E"
+					item: "cobblemon:starf_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "65075BF24D40667B"
+					item: "cobblemon:enigma_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "9BB88879383C2CD5"
+					item: "cobblemon:micle_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "3EAF936C811B4F6D"
+					item: "cobblemon:custap_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "8608F2E499D344CC"
+					item: "cobblemon:jaboca_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "8A78556C39F98348"
+					item: "cobblemon:rowap_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "8D84ED473D286321"
+					item: "cobblemon:kee_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "B684B81E373060E7"
+					item: "cobblemon:maranga_berry"
+					type: "item"
+				}
+			]
+			x: -2.0d
+			y: 2.0d
+		}
+		{
+			id: "4491802458CE0079"
+			icon: {
+				id: "cobblemon:pomeg_berry"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "79285BD08392C07E"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "DC2AA1BA74FDBE78"
+					item: {
+						count: 1
+						id: "cobblemon:lum_berry"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 50"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "AC7FA7C0E0512CA4"
+					title: "50 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "B59DBF9C55706670"
+					type: "xp"
+					xp: 110
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "B5232149054B5F2C"
+					item: "cobblemon:pomeg_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "FCCC5BBDB9B0DD02"
+					item: "cobblemon:kelpsy_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "425D282ED7D45F42"
+					item: "cobblemon:qualot_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "713D9C44698379F6"
+					item: "cobblemon:hondew_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "6ECF0382B557300B"
+					item: "cobblemon:grepa_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "EA474F8626E9384B"
+					item: "cobblemon:tamato_berry"
+					type: "item"
+				}
+			]
+			x: 2.0d
+			y: 2.0d
+		}
+		{
+			id: "CD8E12ED347D30E4"
+			icon: {
+				id: "cobblemon:occa_berry"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "4E530C1DBA2D8EEA"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "D225301C1E1AB308"
+					item: {
+						count: 1
+						id: "cobblemon:lum_berry"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 50"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "2348928E176B93EB"
+					title: "50 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "278373D4115E6768"
+					type: "xp"
+					xp: 230
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "171C0DF157E035F5"
+					item: "cobblemon:occa_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "1A6D8DE0EFE31FA1"
+					item: "cobblemon:passho_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "DDCB679716FFDE78"
+					item: "cobblemon:wacan_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "27E1B886A14C7224"
+					item: "cobblemon:rindo_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "F68533B19429116B"
+					item: "cobblemon:yache_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "B5CEAE5E211E5C81"
+					item: "cobblemon:chople_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "320B59B8050DF6D6"
+					item: "cobblemon:kebia_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "9C509F56EF085FB8"
+					item: "cobblemon:shuca_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "CE25E655408227A9"
+					item: "cobblemon:coba_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "CFEB334C9123E531"
+					item: "cobblemon:payapa_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "83031F7518698200"
+					item: "cobblemon:tanga_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "2734634173ED541B"
+					item: "cobblemon:charti_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "7F52903D3456EA06"
+					item: "cobblemon:kasib_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "E0500C5F2DA9950E"
+					item: "cobblemon:haban_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "303C509C7883A9B0"
+					item: "cobblemon:colbur_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "2910A142B7491740"
+					item: "cobblemon:babiri_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "2D62D2452E15AD23"
+					item: "cobblemon:chilan_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "139EAEB58819B98F"
+					item: "cobblemon:roseli_berry"
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: 2.0d
+		}
+		{
+			id: "78E18CFEBDE36365"
+			icon: {
+				id: "cobblemon:pinap_berry"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "E2C9B086916E3719"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "C1FAF31B99B2FD44"
+					item: {
+						count: 1
+						id: "cobblemon:lum_berry"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 50"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "4DE4BC3508839EA9"
+					title: "50 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "1F32D7A793D1AAA6"
+					type: "xp"
+					xp: 220
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "6DCE9381383C07C8"
+					item: "cobblemon:razz_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "B9E5E0F382CFA1C4"
+					item: "cobblemon:bluk_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "CFAA6D4857C8DCC2"
+					item: "cobblemon:nanab_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "BA8E1D72F3E36531"
+					item: "cobblemon:wepear_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "FA2CDC6DC4ED4C4D"
+					item: "cobblemon:pinap_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "E23C46AFD7E67D99"
+					item: "cobblemon:cornn_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "C55EB5FBA950F715"
+					item: "cobblemon:magost_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "FF06AB736A3C3FF1"
+					item: "cobblemon:rabuta_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "6A1184508C064F76"
+					item: "cobblemon:nomel_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "EAFFDDC2C2A63D4D"
+					item: "cobblemon:spelon_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "C318EEE5BA6F87EE"
+					item: "cobblemon:pamtre_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "5BA43D33C36C13B1"
+					item: "cobblemon:watmel_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "440E40182C27013D"
+					item: "cobblemon:durin_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "246BDDD5A04AA54C"
+					item: "cobblemon:belue_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "FA455C9EC5A2B89F"
+					item: "cobblemon:hopo_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "A4128708C478AF03"
+					item: "cobblemon:eggant_berry"
+					type: "item"
+				}
+				{
+					count: 1L
+					id: "B56AF7BF1AC8EE77"
+					item: "cobblemon:touga_berry"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 5.0d
+		}
+		{
+			id: "7844E95ED9E3B5E1"
+			dependencies: [
+				"BE7AAB2C2B9DDE41"
+				"E82FBEE59E4384CE"
+				"C533BE7A12E1DA24"
+				"CEE5D0B2A01DEF39"
+				"94E70C0398E3C189"
+				"5074A4B3DCD6BC5D"
+				"4491802458CE0079"
+				"CD8E12ED347D30E4"
+				"78E18CFEBDE36365"
+			]
+			icon: {
+				id: "cobblemon:medicinal_brew"
+			}
+			rewards: [
+				{
+					id: "1DA281B75C5CDF80"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 10
+					id: "62315C1F24CF17DC"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "9DABD553FC5A395E"
+					item: {
+						count: 1
+						id: "cobblemon:ability_capsule"
+					}
+					type: "item"
+				}
+				{
+					count: 10
+					id: "25CD0D233EB1D1A4"
+					item: {
+						count: 1
+						id: "cobblemon:full_restore"
+					}
+					type: "item"
+				}
+				{
+					count: 5
+					id: "DEC156E26B51498B"
+					item: {
+						count: 1
+						id: "cobblemon:max_elixir"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 300"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "4B0E48DACA7D1B46"
+					title: "300 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "2A9CD3CC3F315447"
+					type: "xp"
+					xp: 1000
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "2B71F8046B5C7370"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: 7.4d
+		}
+	]
+}

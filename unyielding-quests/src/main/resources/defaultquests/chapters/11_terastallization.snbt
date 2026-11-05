@@ -1,0 +1,357 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "11_terastallization"
+	group: "28AD4BAFAFBA049E"
+	icon: {
+		id: "mega_showdown:tera_orb"
+	}
+	id: "60D2C72B41DF8841"
+	images: [
+		{
+			height: 0.4d
+			id: "7953835672122BF7"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: -3.0d
+			y: -3.1d
+		}
+		{
+			height: 0.4d
+			id: "684735AC62781F8B"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: -1.5d
+			y: -1.05d
+		}
+		{
+			height: 0.4d
+			id: "38D0305CE0537B86"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: 0.75d
+			y: 1.05d
+		}
+	]
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "mega_showdown:tera_orb"
+			}
+			id: "4A7EF0B740CAB888"
+			rewards: [
+				{
+					id: "5FD5816D610C1AA1"
+					type: "xp"
+					xp: 20
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "7D42A85634332629"
+					type: "checkmark"
+				}
+			]
+			x: -4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"4A7EF0B740CAB888"
+			]
+			icon: {
+				id: "mega_showdown:tera_orb"
+			}
+			id: "46520224C935FD77"
+			rewards: [
+				{
+					id: "070AF3C323A33483"
+					type: "xp"
+					xp: 35
+				}
+				{
+					count: 2
+					id: "0EEC1D22420546BE"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "61C6FF30CDE509D0"
+					item: {
+						count: 1
+						id: "mega_showdown:tera_orb"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"46520224C935FD77"
+			]
+			icon: {
+				id: "mega_showdown:tera_orb"
+			}
+			id: "06700B7C160392F4"
+			rewards: [
+				{
+					id: "05317D8235C28783"
+					type: "xp"
+					xp: 90
+				}
+				{
+					id: "4681EA53011ECC3C"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "398AE39BA22EF82B"
+					item: {
+						count: 1
+						id: "cobblemon:revive"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.3d
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/tera/terastallized"
+					criterion: ""
+					id: "5B46CBA40894B6C8"
+					type: "advancement"
+				}
+			]
+			x: -1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"06700B7C160392F4"
+			]
+			icon: {
+				id: "mega_showdown:normal_tera_shard"
+			}
+			id: "2252F9C43BF99927"
+			rewards: [
+				{
+					id: "7181FCDA367ECA6C"
+					type: "xp"
+					xp: 80
+				}
+				{
+					count: 2
+					id: "6A83592B24A31EA3"
+					item: {
+						count: 1
+						id: "cobblemon:pp_up"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.3d
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/tera/change_tera"
+					criterion: ""
+					id: "2752BB03299D2F4F"
+					type: "advancement"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"2252F9C43BF99927"
+			]
+			icon: {
+				id: "mega_showdown:stellar_tera_shard"
+			}
+			id: "21F9E6F229B85AE1"
+			rewards: [
+				{
+					id: "2F86D06B2FA682D6"
+					type: "xp"
+					xp: 60
+				}
+				{
+					count: 2
+					id: "6F47DDD627FDB927"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "042B2F51A524DD41"
+					item: {
+						count: 1
+						id: "mega_showdown:stellar_tera_shard"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"2252F9C43BF99927"
+			]
+			icon: {
+				id: "mega_showdown:bug_tera_shard"
+			}
+			id: "0E941D56199E5726"
+			optional: true
+			rewards: [
+				{
+					id: "55653EAE29AC1021"
+					type: "xp"
+					xp: 50
+				}
+				{
+					count: 4
+					id: "570969DAAFFEFFCF"
+					item: {
+						count: 1
+						id: "cobblemon:timer_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:bug_tera_shard"
+					}
+					id: "70D151FDCDF8696A"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:bug_tera_shard)item(mega_showdown:dark_tera_shard)item(mega_showdown:dragon_tera_shard)item(mega_showdown:electric_tera_shard)item(mega_showdown:fairy_tera_shard)item(mega_showdown:fighting_tera_shard)item(mega_showdown:fire_tera_shard)item(mega_showdown:flying_tera_shard)item(mega_showdown:ghost_tera_shard))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"0E941D56199E5726"
+			]
+			icon: {
+				id: "mega_showdown:grass_tera_shard"
+			}
+			id: "266E094FED1A6D9E"
+			optional: true
+			rewards: [
+				{
+					id: "2A2803EC3F6C35CB"
+					type: "xp"
+					xp: 50
+				}
+				{
+					count: 4
+					id: "4630590D29F87752"
+					item: {
+						count: 1
+						id: "cobblemon:dusk_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:grass_tera_shard"
+					}
+					id: "0D0AA05391A3E22E"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:grass_tera_shard)item(mega_showdown:ground_tera_shard)item(mega_showdown:ice_tera_shard)item(mega_showdown:normal_tera_shard)item(mega_showdown:poison_tera_shard)item(mega_showdown:psychic_tera_shard)item(mega_showdown:rock_tera_shard)item(mega_showdown:steel_tera_shard)item(mega_showdown:water_tera_shard))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"46520224C935FD77"
+			]
+			icon: {
+				id: "mega_showdown:tera_pouch_cyan"
+			}
+			id: "4E68BF8F64CD644C"
+			optional: true
+			rewards: [
+				{
+					id: "12DA16FAB274162B"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:tera_pouch_black"
+					}
+					id: "019F9333554C648F"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:tera_pouch_black)item(mega_showdown:tera_pouch_blue)item(mega_showdown:tera_pouch_brown)item(mega_showdown:tera_pouch_cyan)item(mega_showdown:tera_pouch_gray)item(mega_showdown:tera_pouch_green)item(mega_showdown:tera_pouch_light_blue)item(mega_showdown:tera_pouch_light_gray)item(mega_showdown:tera_pouch_lime)item(mega_showdown:tera_pouch_magenta)item(mega_showdown:tera_pouch_orange)item(mega_showdown:tera_pouch_pink)item(mega_showdown:tera_pouch_purple)item(mega_showdown:tera_pouch_red)item(mega_showdown:tera_pouch_white)item(mega_showdown:tera_pouch_yellow))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: -2.0d
+		}
+	]
+}

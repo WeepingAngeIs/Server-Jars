@@ -1,0 +1,591 @@
+{
+	default_hide_dependency_lines: true
+	default_quest_shape: ""
+	filename: "cataclysm_boss_hunts"
+	group: "6E41A6B769F20604"
+	icon: {
+		id: "cataclysm:void_eye"
+	}
+	id: "03DEB2B4F38F4C63"
+	images: [
+		{
+			height: 0.45d
+			id: "5AFE7A5695844052"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.0d
+			x: 0.0d
+			y: -5.5d
+		}
+		{
+			height: 0.32d
+			id: "600A6C924A1F69AC"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 0.0d
+			y: -3.08d
+		}
+		{
+			height: 0.45d
+			id: "594317B87DBE6A50"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: -5.0d
+			y: -1.5d
+		}
+		{
+			height: 0.45d
+			id: "4ADEAF6F8F9E06D2"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: 5.0d
+			y: -1.5d
+		}
+		{
+			height: 0.45d
+			id: "43B32B41C08D9F53"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: -5.0d
+			y: 3.0d
+		}
+		{
+			height: 0.45d
+			id: "1902766D2F4B9504"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: 5.0d
+			y: 3.0d
+		}
+		{
+			height: 0.32d
+			id: "77D043975BBE774C"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -6.5d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "73257E0A8B43AA80"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -3.5d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "73565957E512982E"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 3.5d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "733C3CE150A85507"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 6.5d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "68471B92E7330994"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -6.5d
+			y: 5.42d
+		}
+		{
+			height: 0.32d
+			id: "6FA102DD25D9F17C"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -3.5d
+			y: 5.42d
+		}
+		{
+			height: 0.32d
+			id: "5DCA0DCA19E80241"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 3.5d
+			y: 5.42d
+		}
+		{
+			height: 0.32d
+			id: "72DE4A2622A46560"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 6.5d
+			y: 5.42d
+		}
+		{
+			height: 0.45d
+			id: "43BC200BB5391601"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.0d
+			x: 0.0d
+			y: 8.0d
+		}
+		{
+			height: 0.32d
+			id: "0E072F2BE6AA3D95"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 0.0d
+			y: 10.42d
+		}
+	]
+	order_index: 5
+	quest_links: [ ]
+	quests: [
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cataclysm:void_eye"
+			}
+			id: "435B22D803E6A51A"
+			rewards: [
+				{
+					id: "66A1D22B933786BA"
+					type: "xp"
+					xp: 15
+				}
+			]
+			shape: "hexagon"
+			size: 1.0d
+			tasks: [
+				{
+					id: "464527FE7099AB7B"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: -4.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cataclysm:monstrous_eye"
+			}
+			id: "59A5F3E519004B31"
+			rewards: [
+				{
+					count: 2
+					id: "468141D161F5E5D0"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "781A1593C3F2EAAB"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cataclysm:kill_monstrosity"
+					criterion: ""
+					id: "442CA553254455F3"
+					type: "advancement"
+				}
+			]
+			x: -6.5d
+			y: 0.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cataclysm:flame_eye"
+			}
+			id: "11FC03CFE52989BD"
+			rewards: [
+				{
+					id: "08996827F27A4A49"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "2D61E101662117F1"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cataclysm:kill_ignis"
+					criterion: ""
+					id: "1CDA95AEBF7E19D7"
+					type: "advancement"
+				}
+			]
+			x: -3.5d
+			y: 0.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cataclysm:mech_eye"
+			}
+			id: "19AC5F807C33115B"
+			rewards: [
+				{
+					count: 4
+					id: "68046217B2D4A3AF"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "198CEFC77B27B589"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cataclysm:kill_harbinger"
+					criterion: ""
+					id: "638AA8898DD7FDCD"
+					type: "advancement"
+				}
+			]
+			x: 3.5d
+			y: 0.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cataclysm:desert_eye"
+			}
+			id: "24077C47B78C4543"
+			rewards: [
+				{
+					count: 3
+					id: "7813C3EA97CD4EDD"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "44DE8E06378F348B"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cataclysm:kill_remnant"
+					criterion: ""
+					id: "5F67E9B10AE3F2D1"
+					type: "advancement"
+				}
+			]
+			x: 6.5d
+			y: 0.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cataclysm:abyss_eye"
+			}
+			id: "788741F04C5B7DCB"
+			rewards: [
+				{
+					id: "198A05517278A68F"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "6C5171A3C550753F"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cataclysm:kill_leviathan"
+					criterion: ""
+					id: "6784E608422C11E8"
+					type: "advancement"
+				}
+			]
+			x: -6.5d
+			y: 4.5d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cataclysm:storm_eye"
+			}
+			id: "7A863144C8CDCD8E"
+			rewards: [
+				{
+					count: 4
+					id: "4DFDD0B23B1EE5B9"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "22981B86CC2F6371"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cataclysm:kill_scylla"
+					criterion: ""
+					id: "70E452FCCA53D0F9"
+					type: "advancement"
+				}
+			]
+			x: -3.5d
+			y: 4.5d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cataclysm:void_eye"
+			}
+			id: "10034EE483CD76D4"
+			rewards: [
+				{
+					count: 8
+					id: "747D874312F46DB8"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "6EF08315ECC3E041"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cataclysm:kill_ender_guardian"
+					criterion: ""
+					id: "08F92709FA1FCDA6"
+					type: "advancement"
+				}
+			]
+			x: 3.5d
+			y: 4.5d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cataclysm:cursed_eye"
+			}
+			id: "30F083E4A9527B88"
+			rewards: [
+				{
+					count: 4
+					id: "639128226B2E4B35"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "2A38725F2D83612F"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cataclysm:kill_maledictus"
+					criterion: ""
+					id: "243B400124A87F25"
+					type: "advancement"
+				}
+			]
+			x: 6.5d
+			y: 4.5d
+		}
+		{
+			dependencies: [
+				"59A5F3E519004B31"
+				"11FC03CFE52989BD"
+				"19AC5F807C33115B"
+				"24077C47B78C4543"
+				"788741F04C5B7DCB"
+				"7A863144C8CDCD8E"
+				"10034EE483CD76D4"
+				"30F083E4A9527B88"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:netherite_ingot"
+			}
+			id: "3CF05B98E615CAC8"
+			rewards: [
+				{
+					count: 2
+					id: "69166FEFB456865E"
+					item: {
+						count: 1
+						id: "minecraft:netherite_ingot"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "6B9F9CB6E529E534"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cataclysm:kill_all_bosses"
+					criterion: ""
+					id: "3CE2BD225B07BA87"
+					type: "advancement"
+				}
+			]
+			x: 0.0d
+			y: 9.5d
+		}
+	]
+}

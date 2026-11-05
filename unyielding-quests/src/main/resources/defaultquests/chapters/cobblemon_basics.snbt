@@ -1,0 +1,996 @@
+{
+	autofocus_id: "3E8A0000000051B9"
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "cobblemon_basics"
+	group: "6E41A6B769F20601"
+	icon: {
+		id: "cobblemon:pokedex_red"
+	}
+	id: "5A9D2C7E4F100001"
+	images: [
+		{
+			click_action: "none:"
+			height: 0.4d
+			id: "5AFAC98362E2E6E4"
+			image: ""
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.6d
+			x: -4.5d
+			y: -2.5d
+		}
+		{
+			click_action: "none:"
+			height: 0.4d
+			id: "4C0D17E31D6BBCAE"
+			image: ""
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.6d
+			x: 3.5d
+			y: -2.5d
+		}
+	]
+	order_index: 2
+	quest_links: [ ]
+	quests: [
+		{
+			dependencies: [
+				"05AAEB7B168BFD49"
+				"6BE5E68F55EDDE2D"
+				"29B6F62DE601495A"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "cobblemon:quick_ball"
+			}
+			id: "3E8A0000000BD325"
+			rewards: [
+				{
+					id: "6EADA33879A85D8E"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.1d
+			tasks: [
+				{
+					id: "27DC57BA521EC012"
+					type: "checkmark"
+				}
+			]
+			x: -4.4d
+			y: 0.55d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cobblemon:tm_machine"
+			}
+			id: "3E8A0000001C702B"
+			rewards: [
+				{
+					count: 2
+					id: "62DC8684E1086729"
+					item: {
+						count: 1
+						id: "cobblemon:blank_tm"
+					}
+					type: "item"
+				}
+				{
+					id: "7C67A1B20FB73EBF"
+					item: {
+						count: 1
+						id: "cobblemon:disc_shelf"
+					}
+					type: "item"
+				}
+			]
+			size: 1.15d
+			tasks: [
+				{
+					consume_items: false
+					id: "60131331035BC3FE"
+					item: {
+						count: 1
+						id: "cobblemon:tm_machine"
+					}
+					type: "item"
+				}
+			]
+			x: 1.15d
+			y: 0.575d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cobblemon:adamant_mint"
+			}
+			id: "3E8A00000014C51A"
+			rewards: [
+				{
+					id: "4DE1B82A6ADE2B26"
+					type: "xp"
+					xp: 250
+				}
+				{
+					id: "4F5C86E4DA672986"
+					item: {
+						count: 1
+						id: "cobblemon:adamant_mint"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.15d
+			tasks: [
+				{
+					id: "206AF62A150B5FF3"
+					item: {
+						count: 1
+						id: "cobblemon:red_mint_leaf"
+					}
+					type: "item"
+				}
+				{
+					id: "23377B0992F00597"
+					item: {
+						count: 1
+						id: "cobblemon:blue_mint_leaf"
+					}
+					type: "item"
+				}
+				{
+					id: "1EF95AA889B7D08D"
+					item: {
+						count: 1
+						id: "cobblemon:cyan_mint_leaf"
+					}
+					type: "item"
+				}
+				{
+					id: "19C9636D44B4CAA6"
+					item: {
+						count: 1
+						id: "cobblemon:pink_mint_leaf"
+					}
+					type: "item"
+				}
+				{
+					id: "50118C30039956D3"
+					item: {
+						count: 1
+						id: "cobblemon:green_mint_leaf"
+					}
+					type: "item"
+				}
+				{
+					id: "7635E1B5C46BFE32"
+					item: {
+						count: 1
+						id: "cobblemon:white_mint_leaf"
+					}
+					type: "item"
+				}
+			]
+			x: 5.749999999999999d
+			y: -1.15d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cobblemon:power_bracer"
+			}
+			id: "3E8A00000015BA45"
+			rewards: [
+				{
+					id: "28083BD2366FBDC0"
+					type: "xp"
+					xp: 250
+				}
+			]
+			shape: "circle"
+			size: 1.15d
+			tasks: [
+				{
+					id: "3B052C62CE88EA46"
+					item: {
+						count: 1
+						id: "cobblemon:power_anklet"
+					}
+					type: "item"
+				}
+				{
+					id: "1006918AA9CFEED9"
+					item: {
+						count: 1
+						id: "cobblemon:power_band"
+					}
+					type: "item"
+				}
+				{
+					id: "2C38B54EC0BE518F"
+					item: {
+						count: 1
+						id: "cobblemon:power_belt"
+					}
+					type: "item"
+				}
+				{
+					id: "37B03501192F2E94"
+					item: {
+						count: 1
+						id: "cobblemon:power_bracer"
+					}
+					type: "item"
+				}
+				{
+					id: "77F5394E1C1251C8"
+					item: {
+						count: 1
+						id: "cobblemon:power_lens"
+					}
+					type: "item"
+				}
+				{
+					id: "3C161FECC8C4BD30"
+					item: {
+						count: 1
+						id: "cobblemon:power_weight"
+					}
+					type: "item"
+				}
+			]
+			x: 5.749999999999999d
+			y: 0.575d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cobblemon:ability_capsule"
+			}
+			id: "3E8A00000017F80D"
+			rewards: [
+				{
+					id: "6105AF5B94FDDB12"
+					type: "xp"
+					xp: 250
+				}
+				{
+					id: "6A3D2941104A4ACA"
+					item: {
+						count: 1
+						id: "cobblemon:ability_patch"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.15d
+			tasks: [
+				{
+					id: "2C9F66A73E897D6E"
+					item: {
+						count: 1
+						id: "cobblemon:ability_capsule"
+					}
+					type: "item"
+				}
+				{
+					id: "283D8A79BC9EFE93"
+					item: {
+						count: 1
+						id: "cobblemon:ability_patch"
+					}
+					type: "item"
+				}
+			]
+			x: 3.4499999999999997d
+			y: 0.575d
+		}
+		{
+			hide_dependency_lines: true
+			id: "05AAEB7B168BFD49"
+			rewards: [
+				{
+					id: "1BE3E755C666180E"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 4
+					id: "276BFFF8A8387E8D"
+					item: {
+						count: 1
+						id: "cobblemon:cherish_ball"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.1d
+			tasks: [
+				{
+					consume_items: false
+					id: "069635B35056C216"
+					item: {
+						count: 1
+						id: "cobblemon:poke_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "050D3F5CE137905A"
+					item: {
+						count: 1
+						id: "cobblemon:citrine_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "3185DC33D97323F9"
+					item: {
+						count: 1
+						id: "cobblemon:verdant_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "2DECB97F668A9CCD"
+					item: {
+						count: 1
+						id: "cobblemon:azure_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "354B66569D7E3FCA"
+					item: {
+						count: 1
+						id: "cobblemon:roseate_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "6165C892DBEFE27E"
+					item: {
+						count: 1
+						id: "cobblemon:slate_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "6885CFC786C94DDA"
+					item: {
+						count: 1
+						id: "cobblemon:premier_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "5B629776AFF64645"
+					item: {
+						count: 1
+						id: "cobblemon:great_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "15883B6D2B22D1A3"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+			]
+			x: -6.6000000000000005d
+			y: -1.1d
+		}
+		{
+			hide_dependency_lines: true
+			id: "49A4AA72407D550F"
+			rewards: [
+				{
+					id: "06A629890F41E23D"
+					type: "xp"
+					xp: 250
+				}
+				{
+					count: 16
+					id: "5DFBE3768F3F449D"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.15d
+			tasks: [
+				{
+					id: "5408458FFE36A8DB"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_xs"
+					}
+					type: "item"
+				}
+				{
+					id: "4447694E94FC2C5F"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_s"
+					}
+					type: "item"
+				}
+				{
+					id: "418607C1909D3DCB"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_m"
+					}
+					type: "item"
+				}
+				{
+					id: "05E525CDB012E2EC"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					id: "041159CAAD2F87EE"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_xl"
+					}
+					type: "item"
+				}
+			]
+			x: 3.4499999999999997d
+			y: -1.15d
+		}
+		{
+			id: "6BEA397DFCDA7261"
+			rewards: [
+				{
+					id: "775E22B37BE13D20"
+					type: "xp"
+					xp: 250
+				}
+				{
+					exclude_from_claim_all: true
+					id: "1A71471B940AB550"
+					table_id: 3564428506269399875L
+					type: "loot"
+				}
+			]
+			size: 1.15d
+			tasks: [
+				{
+					id: "1A12888C46DC06F6"
+					item: {
+						count: 1
+						id: "cobblemon:health_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "14D15121D2493829"
+					item: {
+						count: 1
+						id: "cobblemon:mighty_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "10A526D282FEF51E"
+					item: {
+						count: 1
+						id: "cobblemon:tough_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "489664F844072640"
+					item: {
+						count: 1
+						id: "cobblemon:smart_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "1E6363102C2E814D"
+					item: {
+						count: 1
+						id: "cobblemon:courage_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "77F3E3CEC77F5554"
+					item: {
+						count: 1
+						id: "cobblemon:quick_candy"
+					}
+					type: "item"
+				}
+			]
+			x: 1.15d
+			y: -1.15d
+		}
+		{
+			hide_dependency_lines: true
+			id: "6BE5E68F55EDDE2D"
+			rewards: [
+				{
+					id: "64FBD06200E2E74B"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 4
+					id: "2FADDF6C7448070F"
+					item: {
+						count: 1
+						id: "cobblemon:cherish_ball"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.1d
+			tasks: [
+				{
+					id: "35DC1BD641BEF74D"
+					item: {
+						count: 1
+						id: "cobblemon:safari_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "45B0AF1734078422"
+					item: {
+						count: 1
+						id: "cobblemon:fast_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "1576B2F3BCB13662"
+					item: {
+						count: 1
+						id: "cobblemon:level_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "69A3630DEADE6ECA"
+					item: {
+						count: 1
+						id: "cobblemon:lure_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "48A56181F0E6FCF8"
+					item: {
+						count: 1
+						id: "cobblemon:heavy_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "38A0E3B735036AE2"
+					item: {
+						count: 1
+						id: "cobblemon:love_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "1E8790B9A8B6BA12"
+					item: {
+						count: 1
+						id: "cobblemon:friend_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "3587B598BA877E6B"
+					item: {
+						count: 1
+						id: "cobblemon:moon_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "52B9B3233DA4FA3B"
+					item: {
+						count: 1
+						id: "cobblemon:sport_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "1D2413E16B9C4074"
+					item: {
+						count: 1
+						id: "cobblemon:park_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "105E56DA85441982"
+					item: {
+						count: 1
+						id: "cobblemon:net_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "1AC6B6FC01DF1045"
+					item: {
+						count: 1
+						id: "cobblemon:dive_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "531DC73372F9F8A7"
+					item: {
+						count: 1
+						id: "cobblemon:nest_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "24CB77B51C2D69E9"
+					item: {
+						count: 1
+						id: "cobblemon:repeat_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "03A3FC7B6B6F96A7"
+					item: {
+						count: 1
+						id: "cobblemon:timer_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "63DEDD9B917BB890"
+					item: {
+						count: 1
+						id: "cobblemon:luxury_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "39C0B692FF628CDB"
+					item: {
+						count: 1
+						id: "cobblemon:dusk_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "0DD5BCEA810A67B8"
+					item: {
+						count: 1
+						id: "cobblemon:heal_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "0FF767504DFAB0A6"
+					item: {
+						count: 1
+						id: "cobblemon:quick_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "38EFA1676D24C6AC"
+					item: {
+						count: 1
+						id: "cobblemon:dream_ball"
+					}
+					type: "item"
+				}
+			]
+			x: -4.4d
+			y: -1.1d
+		}
+		{
+			hide_dependency_lines: true
+			id: "29B6F62DE601495A"
+			rewards: [
+				{
+					id: "3D412522504CD2D6"
+					type: "xp"
+					xp: 200
+				}
+				{
+					count: 4
+					id: "26C4F3A061F7B724"
+					item: {
+						count: 1
+						id: "cobblemon:cherish_ball"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.1d
+			tasks: [
+				{
+					id: "4341A1E2B1A85760"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_poke_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "1F14FFDE13E79BEE"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_citrine_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "3A0F51A442540367"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_verdant_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "339B67C40E507676"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_azure_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "1650C45AFDA25EBC"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_roseate_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "79B1A1D5D021EEF4"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_slate_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "0E1E482C228BA181"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_ivory_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "38AE3EEC9EF53B61"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_great_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "31013699EF77002B"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_ultra_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "6EFE98A10808DEB7"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_feather_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "083CB56F68FC29A2"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_wing_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "111CFF0061EAA2C2"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_jet_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "24EC18BCB5DEBCF4"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_heavy_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "71D3B13E5C9D6A98"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_leaden_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "4D90C16FE3332010"
+					item: {
+						count: 1
+						id: "cobblemon:ancient_gigaton_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "6E146D7119F4A16C"
+					item: {
+						count: 1
+						id: "cobblemon:beast_ball"
+					}
+					type: "item"
+				}
+			]
+			x: -2.2d
+			y: -1.1d
+		}
+		{
+			hide_dependency_lines: true
+			id: "654A0D01FA03457E"
+			rewards: [
+				{
+					count: 5
+					id: "4A4B5B9D7BA9E08D"
+					item: {
+						count: 1
+						id: "cobblemon:protein"
+					}
+					type: "item"
+				}
+				{
+					count: 5
+					id: "45249938987EFA09"
+					item: {
+						count: 1
+						id: "cobblemon:calcium"
+					}
+					type: "item"
+				}
+			]
+			size: 1.15d
+			tasks: [
+				{
+					id: "3E8517B32933AAFC"
+					item: {
+						count: 1
+						id: "cobblemon:hp_up"
+					}
+					type: "item"
+				}
+				{
+					id: "1D5E9BCCEF59FF6F"
+					item: {
+						count: 1
+						id: "cobblemon:protein"
+					}
+					type: "item"
+				}
+				{
+					id: "3B84F00754EF5265"
+					item: {
+						count: 1
+						id: "cobblemon:iron"
+					}
+					type: "item"
+				}
+				{
+					id: "4482884246872268"
+					item: {
+						count: 1
+						id: "cobblemon:calcium"
+					}
+					type: "item"
+				}
+				{
+					id: "21F4BB7BE7DB17D2"
+					item: {
+						count: 1
+						id: "cobblemon:zinc"
+					}
+					type: "item"
+				}
+				{
+					id: "7ED1995ADE42E468"
+					item: {
+						count: 1
+						id: "cobblemon:carbos"
+					}
+					type: "item"
+				}
+			]
+			x: 1.15d
+			y: 2.3d
+		}
+		{
+			hide_dependency_lines: true
+			id: "51A9BF99AA2D0F19"
+			rewards: [
+				{
+					count: 3
+					id: "3F6AD45831A83AD0"
+					item: {
+						count: 1
+						id: "cobblemon:berry_juice"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "2128E1DB36B95996"
+					item: {
+						count: 1
+						id: "cobblemon:aprijuice_red"
+					}
+					type: "item"
+				}
+			]
+			size: 1.15d
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "cobblemon:aprijuice_black"
+					}
+					id: "779B2A3E9DB2DBDC"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(cobblemon:aprijuice_black)item(cobblemon:aprijuice_blue)item(cobblemon:aprijuice_green)item(cobblemon:aprijuice_pink)item(cobblemon:aprijuice_red)item(cobblemon:aprijuice_white)item(cobblemon:aprijuice_yellow))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.4499999999999997d
+			y: 2.3d
+		}
+	]
+}

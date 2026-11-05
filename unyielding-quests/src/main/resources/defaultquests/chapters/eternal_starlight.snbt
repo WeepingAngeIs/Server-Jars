@@ -1,0 +1,1359 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "eternal_starlight"
+	group: "6E41A6B769F20604"
+	icon: {
+		id: "eternal_starlight:orb_of_prophecy"
+	}
+	id: "68FED9ABD2D48FE4"
+	images: [
+		{
+			height: 0.4d
+			id: "63E6CDDA73D7C3DC"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: -8.0d
+			y: -1.4d
+		}
+		{
+			height: 0.4d
+			id: "7A786832B94C1D8F"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: -7.0d
+			y: -6.8d
+		}
+		{
+			height: 0.4d
+			id: "590163C93E303243"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.0d
+			x: 0.0d
+			y: -9.3d
+		}
+		{
+			height: 0.4d
+			id: "159DF2F5332EF05E"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.0d
+			x: 6.7d
+			y: -7.5d
+		}
+		{
+			height: 0.4d
+			id: "728D4E288284AD28"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: -2.0d
+			y: 1.65d
+		}
+		{
+			height: 0.4d
+			id: "5B810D320D26BC86"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: 5.5d
+			y: 3.0d
+		}
+		{
+			height: 0.3d
+			id: "7C96B6633271245E"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 12.0d
+			x: 5.5d
+			y: 3.9d
+		}
+	]
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			id: "27E898CE534ECB57"
+			rewards: [
+				{
+					id: "175878C0F34D258E"
+					type: "xp"
+					xp: 20
+				}
+			]
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					id: "54E587DB8E4B2750"
+					type: "checkmark"
+				}
+			]
+			x: -9.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"27E898CE534ECB57"
+			]
+			id: "04F759D9CFE44B45"
+			rewards: [
+				{
+					count: 4
+					id: "418D6D16025D003C"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlight_silver_coin"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "2A5F89A5EB60C034"
+					item: {
+						count: 1
+						id: "eternal_starlight:nightfall_dirt"
+					}
+					type: "item"
+				}
+			]
+			shape: "octagon"
+			size: 1.25d
+			tasks: [
+				{
+					id: "6ED373F28EDD1380"
+					item: {
+						count: 1
+						id: "eternal_starlight:orb_of_prophecy"
+					}
+					type: "item"
+				}
+			]
+			x: -6.875d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"04F759D9CFE44B45"
+			]
+			id: "46911D0A86CD73E9"
+			rewards: [
+				{
+					count: 16
+					id: "6A6007DA7BF90425"
+					item: {
+						count: 1
+						id: "eternal_starlight:voidstone"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "39E6C77C5AC5E471"
+					item: {
+						count: 1
+						id: "eternal_starlight:lunar_log"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.35d
+			tasks: [
+				{
+					id: "2EB90A9260FF6E43"
+					item: {
+						count: 1
+						id: "eternal_starlight:chiseled_voidstone"
+					}
+					type: "item"
+				}
+			]
+			x: -5.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"46911D0A86CD73E9"
+			]
+			id: "374846CF30213B4E"
+			rewards: [
+				{
+					count: 8
+					id: "68352BE087F869B3"
+					item: {
+						count: 1
+						id: "eternal_starlight:saltpeter_powder"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "469B561CD2886CE9"
+					item: {
+						count: 1
+						id: "eternal_starlight:lunar_berries"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "1A8216C42328C0F1"
+					item: {
+						count: 1
+						id: "eternal_starlight:torreya_campfire"
+					}
+					type: "item"
+				}
+			]
+			x: -5.0d
+			y: 5.0d
+		}
+		{
+			dependencies: [
+				"46911D0A86CD73E9"
+			]
+			id: "44249DA3F558DA42"
+			rewards: [
+				{
+					count: 4
+					id: "08C23BC98AC0B574"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlight_flower"
+					}
+					type: "item"
+				}
+				{
+					id: "4203D4C1838CE5EB"
+					item: {
+						count: 1
+						id: "eternal_starlight:saltpeter_matchbox"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					id: "5D9B4A0B7EC98C0C"
+					item: {
+						count: 1
+						id: "eternal_starlight:seeking_eye"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: -4.0d
+		}
+		{
+			dependencies: [
+				"46911D0A86CD73E9"
+			]
+			id: "6835FB48E5531B94"
+			rewards: [
+				{
+					count: 6
+					id: "223345F13B2AB99F"
+					item: {
+						count: 1
+						id: "eternal_starlight:saltpeter_powder"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "04938459424D0A0F"
+					item: {
+						count: 1
+						id: "eternal_starlight:crinoa_porridge"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "4376483BF9FBDFD3"
+					item: {
+						count: 1
+						id: "eternal_starlight:raw_deepsilver"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 4.5d
+		}
+		{
+			dependencies: [
+				"6835FB48E5531B94"
+			]
+			id: "0FDED4DECACEE987"
+			rewards: [
+				{
+					count: 4
+					id: "30D8756858A6E617"
+					item: {
+						count: 1
+						id: "eternal_starlight:deepsilver_ingot"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "70C6CDDB62B0145E"
+					item: {
+						count: 1
+						id: "eternal_starlight:nightfall_mud"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "626BA855E5D884A2"
+					item: {
+						count: 1
+						id: "eternal_starlight:malarite"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: 4.5d
+		}
+		{
+			dependencies: [
+				"46911D0A86CD73E9"
+			]
+			id: "6DF490E7A23E3EC0"
+			rewards: [
+				{
+					count: 4
+					id: "5B099BD2FE7D6195"
+					item: {
+						count: 1
+						id: "eternal_starlight:blue_starlight_crystal_shard"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "5EDF71ED389659A1"
+					item: {
+						count: 1
+						id: "eternal_starlight:red_starlight_crystal_shard"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "0B5B3B737A4B62CE"
+					item: {
+						count: 1
+						id: "eternal_starlight:starcore"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"6DF490E7A23E3EC0"
+			]
+			id: "6CD61F0338AE3BDC"
+			rewards: [
+				{
+					count: 2
+					id: "1C13399588D9D3A4"
+					item: {
+						count: 1
+						id: "eternal_starlight:starcore"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "3BDE23EEA4C5110E"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlight_silver_coin"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "3E1B95B309A4644B"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlit_diamond"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"46911D0A86CD73E9"
+			]
+			id: "6AC8FE33AB9EEC94"
+			rewards: [
+				{
+					count: 8
+					id: "742993EBF20DD834"
+					item: {
+						count: 1
+						id: "eternal_starlight:torreya_log"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "4BA4F6184E332E93"
+					item: {
+						count: 1
+						id: "eternal_starlight:amaramber_candle"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "5988284C31D31598"
+					item: {
+						count: 1
+						id: "eternal_starlight:raw_amaramber"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"6AC8FE33AB9EEC94"
+			]
+			id: "5C07B83843CAD277"
+			rewards: [
+				{
+					count: 8
+					id: "193E623BA07F882C"
+					item: {
+						count: 1
+						id: "eternal_starlight:springstone"
+					}
+					type: "item"
+				}
+				{
+					id: "40C7F598ECBCBF5D"
+					item: {
+						count: 1
+						id: "eternal_starlight:torreya_campfire"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "701E96562063D4DA"
+					item: {
+						count: 1
+						id: "eternal_starlight:thermal_springstone_ingot"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"46911D0A86CD73E9"
+			]
+			id: "793D6281D6605669"
+			rewards: [
+				{
+					count: 8
+					id: "2B1DC15282EE70B6"
+					item: {
+						count: 1
+						id: "eternal_starlight:eternal_ice"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "5D9B6997B89FD0AC"
+					item: {
+						count: 1
+						id: "eternal_starlight:icicle"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "3059CEC2CC406557"
+					item: {
+						count: 1
+						id: "eternal_starlight:glacite_shard"
+					}
+					type: "item"
+				}
+			]
+			x: -5.0d
+			y: -5.5d
+		}
+		{
+			dependencies: [
+				"793D6281D6605669"
+			]
+			id: "59FB229E4F60D0A5"
+			rewards: [
+				{
+					id: "21938D103BA6B7E7"
+					item: {
+						count: 1
+						id: "eternal_starlight:thioquartz_block"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "44445CE4DFB6CE80"
+					item: {
+						count: 1
+						id: "eternal_starlight:saltpeter_powder"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "3B5DB17D343E8148"
+					item: {
+						count: 1
+						id: "eternal_starlight:ether_bucket"
+					}
+					type: "item"
+				}
+				{
+					id: "29BBF3FAEACA445E"
+					item: {
+						count: 1
+						id: "eternal_starlight:thioquartz_shard"
+					}
+					type: "item"
+				}
+			]
+			x: -3.5d
+			y: -5.5d
+		}
+		{
+			dependencies: [
+				"46911D0A86CD73E9"
+			]
+			id: "7F6EBD213CAD0348"
+			rewards: [
+				{
+					count: 2
+					id: "19875225E2B80010"
+					item: {
+						count: 1
+						id: "eternal_starlight:drying_rack"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "52368A75C19939E9"
+					item: {
+						count: 1
+						id: "eternal_starlight:crinoa_porridge"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "5B09FB8B8F89A5EB"
+					item: {
+						count: 1
+						id: "eternal_starlight:crinoa"
+					}
+					type: "item"
+				}
+				{
+					id: "65009D12D37DBFC9"
+					item: {
+						count: 1
+						id: "eternal_starlight:nocturnal_millet"
+					}
+					type: "item"
+				}
+				{
+					id: "2ABF43536DE67827"
+					item: {
+						count: 1
+						id: "eternal_starlight:pungency_fruit"
+					}
+					type: "item"
+				}
+			]
+			x: -5.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"7F6EBD213CAD0348"
+			]
+			id: "573C350DF46D835F"
+			rewards: [
+				{
+					id: "27E898CE534ECB58"
+					item: {
+						count: 1
+						id: "eternal_starlight:torreya_starfire_bird_aviary"
+					}
+					type: "item"
+				}
+				{
+					id: "1A2AD3E7D1A01067"
+					item: {
+						count: 1
+						id: "eternal_starlight:starfire_upgrade_smithing_template"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "19C91FD74534BF09"
+					item: {
+						count: 1
+						id: "eternal_starlight:starfire_bird_egg"
+					}
+					type: "item"
+				}
+			]
+			x: -5.0d
+			y: -3.5d
+		}
+		{
+			dependencies: [
+				"44249DA3F558DA42"
+			]
+			id: "283F41940E408544"
+			rewards: [
+				{
+					count: 8
+					id: "43FB5214C3D4AC13"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlight_silver_coin"
+					}
+					type: "item"
+				}
+				{
+					id: "6835FBA597FB18D0"
+					item: {
+						count: 1
+						id: "eternal_starlight:golem_steel_crate"
+					}
+					type: "item"
+				}
+			]
+			shape: "square"
+			size: 1.4d
+			tasks: [
+				{
+					id: "16AA68E10ADFE364"
+					item: {
+						count: 1
+						id: "eternal_starlight:golem_steel_ingot"
+					}
+					type: "item"
+				}
+			]
+			x: -0.7d
+			y: -4.2d
+		}
+		{
+			dependencies: [
+				"283F41940E408544"
+			]
+			id: "24D3E35D8A388D56"
+			rewards: [
+				{
+					count: 4
+					id: "2524ED5E95373B35"
+					item: {
+						count: 1
+						id: "eternal_starlight:glacite"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "39A2BC60858E8945"
+					item: {
+						count: 1
+						id: "eternal_starlight:golem_steel_pillar"
+					}
+					type: "item"
+				}
+			]
+			shape: "octagon"
+			size: 1.35d
+			tasks: [
+				{
+					id: "3E1B59BD0E0AF8AE"
+					item: {
+						count: 1
+						id: "eternal_starlight:alloy_furnace"
+					}
+					type: "item"
+				}
+			]
+			x: 3.375d
+			y: -5.4d
+		}
+		{
+			dependencies: [
+				"283F41940E408544"
+			]
+			id: "5DC3513A2BF77500"
+			rewards: [
+				{
+					id: "2A5F89A5EB60C035"
+					item: {
+						count: 1
+						id: "eternal_starlight:golem_steel_jet"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "20BF9CDD0A37B634"
+					item: {
+						count: 1
+						id: "eternal_starlight:golem_steel_bars"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "44445CE4DFB6CE81"
+					item: {
+						count: 1
+						id: "eternal_starlight:golem_steel_greatsword"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: -2.5d
+		}
+		{
+			dependencies: [
+				"44249DA3F558DA42"
+			]
+			id: "277A8291BA8504B6"
+			rewards: [
+				{
+					id: "46911D0A86CD73EA"
+					item: {
+						count: 1
+						id: "eternal_starlight:chain_of_souls"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "2586E8A9EEBA73D5"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlight_silver_coin"
+					}
+					type: "item"
+				}
+			]
+			shape: "square"
+			size: 1.4d
+			tasks: [
+				{
+					id: "19875225E2B80011"
+					item: {
+						count: 1
+						id: "eternal_starlight:tenacious_petal"
+					}
+					type: "item"
+				}
+				{
+					id: "7749AF5E0FD51206"
+					item: {
+						count: 1
+						id: "eternal_starlight:tangled_skull"
+					}
+					type: "item"
+				}
+			]
+			x: -0.7d
+			y: -6.3d
+		}
+		{
+			dependencies: [
+				"277A8291BA8504B6"
+			]
+			id: "159DF9475EF5BB55"
+			rewards: [
+				{
+					count: 2
+					id: "08C23BC98AC0B575"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlit_diamond"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "68352BE087F869B4"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlight_silver_coin"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "06D81F358006F2B1"
+					item: {
+						count: 1
+						id: "eternal_starlight:moonring_greatsword"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: -6.5d
+		}
+		{
+			dependencies: [
+				"44249DA3F558DA42"
+				"793D6281D6605669"
+			]
+			id: "59E63CFAB048A6A9"
+			rewards: [
+				{
+					id: "2EB90A9260FF6E44"
+					item: {
+						count: 1
+						id: "eternal_starlight:coldsnap"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "4376483BF9FBDFD4"
+					item: {
+						count: 1
+						id: "eternal_starlight:glacite_block"
+					}
+					type: "item"
+				}
+			]
+			shape: "square"
+			size: 1.3d
+			tasks: [
+				{
+					id: "6ED373F28EDD1381"
+					item: {
+						count: 1
+						id: "eternal_starlight:frozen_tube"
+					}
+					type: "item"
+				}
+			]
+			x: -0.65d
+			y: -7.800000000000001d
+		}
+		{
+			dependencies: [
+				"46911D0A86CD73E9"
+			]
+			id: "09BC70328F30BD0F"
+			rewards: [
+				{
+					count: 8
+					id: "626BA855E5D884A3"
+					item: {
+						count: 1
+						id: "eternal_starlight:aethersent_nugget"
+					}
+					type: "item"
+				}
+				{
+					count: 16
+					id: "5BFDAB570352DED3"
+					item: {
+						count: 1
+						id: "eternal_starlight:aethersent_arrow"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.1d
+			tasks: [
+				{
+					id: "25E36B28526FED67"
+					item: {
+						count: 1
+						id: "eternal_starlight:raw_aethersent"
+					}
+					type: "item"
+				}
+			]
+			x: -2.75d
+			y: 7.95d
+		}
+		{
+			dependencies: [
+				"09BC70328F30BD0F"
+			]
+			id: "19C9FB8B8F89A5EB"
+			rewards: [
+				{
+					count: 4
+					id: "5D9B4A0B7EC98C0D"
+					item: {
+						count: 1
+						id: "eternal_starlight:aethersent_ingot"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "74F4EE213609BA74"
+					item: {
+						count: 1
+						id: "eternal_starlight:aetherstrike_rocket"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.1d
+			tasks: [
+				{
+					id: "2D528958C0D737D7"
+					item: {
+						count: 1
+						id: "eternal_starlight:aethersent_cape"
+					}
+					type: "item"
+				}
+				{
+					id: "6DF490E7A23E3EC1"
+					item: {
+						count: 1
+						id: "eternal_starlight:aethersent_hood"
+					}
+					type: "item"
+				}
+			]
+			x: -1.3000000000000003d
+			y: 7.95d
+		}
+		{
+			dependencies: [
+				"46911D0A86CD73E9"
+			]
+			id: "44445CE4DFB6CE7F"
+			rewards: [
+				{
+					count: 4
+					id: "469B561CD2886CEA"
+					item: {
+						count: 1
+						id: "eternal_starlight:shadow_snail_shell"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "0961FC7F463AF848"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlight_silver_coin"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.1d
+			tasks: [
+				{
+					id: "0DE41053BCB32812"
+					item: {
+						count: 1
+						id: "eternal_starlight:seeker_tentacle"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: -1.5d
+		}
+		{
+			dependencies: [
+				"44445CE4DFB6CE7F"
+			]
+			id: "04EA46E634FE7A4D"
+			rewards: [
+				{
+					count: 2
+					id: "42347D74A0AFF789"
+					item: {
+						count: 1
+						id: "eternal_starlight:seeker_tentacle"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "5B099BD2FE7D6196"
+					item: {
+						count: 1
+						id: "eternal_starlight:abyssal_fruit"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "677E38097F9502C8"
+					item: {
+						count: 1
+						id: "eternal_starlight:tentacle_spike"
+					}
+					type: "item"
+				}
+			]
+			x: -1.0d
+			y: -1.5d
+		}
+		{
+			dependencies: [
+				"283F41940E408544"
+				"277A8291BA8504B6"
+			]
+			id: "3E1B95B309A4644A"
+			rewards: [
+				{
+					id: "0B5B3B737A4B62CF"
+					item: {
+						count: 1
+						id: "eternal_starlight:tangled_skull"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "3BDE23EEA4C5110F"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlight_silver_coin"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.2d
+			tasks: [
+				{
+					id: "3A647A485DDADB56"
+					item: {
+						count: 1
+						id: "eternal_starlight:soul_dew"
+					}
+					type: "item"
+				}
+			]
+			x: 3.5999999999999996d
+			y: -3.5999999999999996d
+		}
+		{
+			dependencies: [
+				"24D3E35D8A388D56"
+				"3E1B95B309A4644A"
+				"0FDED4DECACEE987"
+			]
+			id: "4BA4F6184E332E92"
+			rewards: [
+				{
+					count: 4
+					id: "6CD61F0338AE3BDD"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlit_diamond"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "0E025B18F52E9576"
+					item: {
+						count: 1
+						id: "eternal_starlight:soul_dew"
+					}
+					type: "item"
+				}
+			]
+			shape: "octagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "49E3D0DED82DCCC4"
+					item: {
+						count: 1
+						id: "eternal_starlight:unrealium_ingot"
+					}
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: -4.0d
+		}
+		{
+			dependencies: [
+				"4BA4F6184E332E92"
+			]
+			id: "17579892204F63CD"
+			rewards: [
+				{
+					id: "44249DA3F558DA43"
+					item: {
+						count: 1
+						id: "eternal_starlight:crescent_pendant"
+					}
+					type: "item"
+				}
+				{
+					count: 16
+					id: "12AEC4AF2F894C5C"
+					item: {
+						count: 1
+						id: "eternal_starlight:starlight_silver_coin"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "534BE40D7680CD9C"
+					item: {
+						count: 1
+						id: "eternal_starlight:unrealium_ingot"
+					}
+					type: "item"
+				}
+			]
+			shape: "gear"
+			size: 1.75d
+			tasks: [
+				{
+					id: "4203D4C1838CE5EC"
+					item: {
+						count: 1
+						id: "eternal_starlight:unrealium_sword"
+					}
+					type: "item"
+				}
+				{
+					id: "45FDCE8473B3DBB1"
+					item: {
+						count: 1
+						id: "eternal_starlight:unrealium_pickaxe"
+					}
+					type: "item"
+				}
+				{
+					id: "6835FB48E5531B95"
+					item: {
+						count: 1
+						id: "eternal_starlight:unrealium_chestplate"
+					}
+					type: "item"
+				}
+				{
+					id: "75E8B589186DBFFD"
+					item: {
+						count: 1
+						id: "eternal_starlight:unrealium_crossbow"
+					}
+					type: "item"
+				}
+			]
+			x: 8.0d
+			y: -4.0d
+		}
+		{
+			dependencies: [
+				"4BA4F6184E332E92"
+			]
+			id: "3FD54C6D176262FA"
+			rewards: [
+				{
+					id: "7C4388FD9A254EED"
+					item: {
+						count: 1
+						id: "eternal_starlight:butterfly_wings_amulet"
+					}
+					type: "item"
+				}
+				{
+					id: "3E5D7A9259A1235E"
+					item: {
+						count: 1
+						id: "eternal_starlight:fungus_amulet"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.2d
+			tasks: [
+				{
+					id: "04938459424D0A10"
+					item: {
+						count: 1
+						id: "eternal_starlight:etheric_eye"
+					}
+					type: "item"
+				}
+				{
+					id: "5CD456D5527AF272"
+					item: {
+						count: 1
+						id: "eternal_starlight:wand_of_teleportation"
+					}
+					type: "item"
+				}
+			]
+			x: 8.0d
+			y: -6.0d
+		}
+		{
+			dependencies: [
+				"4BA4F6184E332E92"
+			]
+			id: "39FE9D1261E5FD0D"
+			rewards: [
+				{
+					id: "70C6CDDB62B0145F"
+					item: {
+						count: 1
+						id: "eternal_starlight:flowglaze_upgrade_smithing_template"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "1C12EA3A803CCDA6"
+					item: {
+						count: 1
+						id: "eternal_starlight:flowglaze"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.2d
+			tasks: [
+				{
+					id: "64C4151D89831512"
+					item: {
+						count: 1
+						id: "eternal_starlight:crystalborn_catalyst"
+					}
+					type: "item"
+				}
+				{
+					id: "5EDF71ED389659A2"
+					item: {
+						count: 1
+						id: "eternal_starlight:shattered_sword_blade"
+					}
+					type: "item"
+				}
+			]
+			x: 8.0d
+			y: -2.0d
+		}
+	]
+}

@@ -1,0 +1,1415 @@
+{
+	autofocus_id: "30B091E928A747BA"
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "14_sunny_time"
+	group: "69C15075C3ED44EB"
+	icon: {
+		id: "cobblemon:pokedex_red"
+	}
+	id: "7518EBE7DCB985AC"
+	images: [
+		{
+			height: 0.4d
+			id: "AC999AFCEE1095C5"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.0d
+			x: 0.0d
+			y: -5.5d
+		}
+		{
+			height: 0.4d
+			id: "7365609B07748411"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.8d
+			x: -6.6d
+			y: -1.3d
+		}
+		{
+			height: 0.4d
+			id: "24A32422ECCF3718"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.8d
+			x: 3.6d
+			y: -1.3d
+		}
+		{
+			height: 0.4d
+			id: "E64C717479FA8C59"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 12.0d
+			x: 0.0d
+			y: 5.7d
+		}
+		{
+			height: 0.3d
+			id: "2C39870C28F892B6"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.25d
+			x: -6.0d
+			y: 8.4d
+		}
+		{
+			height: 0.3d
+			id: "A3DA24C86F85E3C6"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.25d
+			x: -3.6d
+			y: 8.4d
+		}
+		{
+			height: 0.3d
+			id: "17421F7E1CD5884B"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.25d
+			x: -1.2d
+			y: 8.4d
+		}
+		{
+			height: 0.3d
+			id: "19868F82B83F6236"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.25d
+			x: 1.2d
+			y: 8.4d
+		}
+		{
+			height: 0.3d
+			id: "4EB41A088001ABBF"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.25d
+			x: 3.6d
+			y: 8.4d
+		}
+		{
+			height: 0.3d
+			id: "AD659DBFA3A4A57C"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.25d
+			x: 6.0d
+			y: 8.4d
+		}
+	]
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			id: "B605F536326D2383"
+			icon: {
+				id: "cobblemon:pokedex_red"
+			}
+			rewards: [
+				{
+					count: 10
+					id: "6A60E295B448AD07"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "A67DE4136690B4CE"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "2E40D5BD10AFEC8E"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "62427DFE06E13CE6"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 10L
+					dex_progress: "caught_percent"
+					id: "84ABB43E97DCB419"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: -10.8d
+			y: -4.2d
+		}
+		{
+			id: "BE5AB16C58610BC4"
+			dependencies: [
+				"B605F536326D2383"
+			]
+			icon: {
+				id: "cobblemon:pokedex_blue"
+			}
+			rewards: [
+				{
+					count: 5
+					id: "9EE559B318D63FF8"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "1A9B3D1F197BED75"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 50"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "1ECF09F00DA8C3CF"
+					title: "50 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "C5E62CAB8891E180"
+					type: "xp"
+					xp: 200
+				}
+			]
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 20L
+					dex_progress: "caught_percent"
+					id: "60D5E1EA3DAF4AED"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: -8.4d
+			y: -4.2d
+		}
+		{
+			id: "224591B33E7EEE8B"
+			dependencies: [
+				"BE5AB16C58610BC4"
+			]
+			icon: {
+				id: "cobblemon:pokedex_green"
+			}
+			rewards: [
+				{
+					id: "90FD9CAF2C405EBC"
+					item: {
+						count: 1
+						id: "cobblemon:ability_capsule"
+					}
+					type: "item"
+				}
+				{
+					count: 5
+					id: "BA128A9C7CB47632"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 10
+					id: "C6E137F837C6AAFC"
+					item: {
+						count: 1
+						id: "cobblemon:dusk_ball"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 75"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "1424991FD26BDF20"
+					title: "75 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "E136C858C87710E2"
+					type: "xp"
+					xp: 300
+				}
+			]
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 30L
+					dex_progress: "caught_percent"
+					id: "338E26F592639FFB"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: -6.000000000000001d
+			y: -4.2d
+		}
+		{
+			id: "64D6813CA853E032"
+			dependencies: [
+				"224591B33E7EEE8B"
+			]
+			icon: {
+				id: "cobblemon:pokedex_yellow"
+			}
+			rewards: [
+				{
+					count: 10
+					id: "9350DE9D7B13C8FA"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "EB9FF0ECA77645FF"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_xl"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "667068818AE4FAD5"
+					title: "100 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "2F9867195D5B089C"
+					type: "xp"
+					xp: 400
+				}
+			]
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 40L
+					dex_progress: "caught_percent"
+					id: "FA32CDC59EFA9F3E"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: -3.6000000000000014d
+			y: -4.2d
+		}
+		{
+			id: "C7A668A993A34DB6"
+			dependencies: [
+				"64D6813CA853E032"
+			]
+			icon: {
+				id: "cobblemon:pokedex_pink"
+			}
+			rewards: [
+				{
+					id: "374C92B2B6EF927F"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "5AA9400074CAEA28"
+					item: {
+						count: 1
+						id: "cobblemon:ability_patch"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 150"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "EABE4E4DDF0A2BF1"
+					title: "150 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "9542FE14BE78569C"
+					type: "xp"
+					xp: 500
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 50L
+					dex_progress: "caught_percent"
+					id: "CD8D11D83C7C1606"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: -1.200000000000001d
+			y: -4.2d
+		}
+		{
+			id: "73A93E9DF2B9D8E8"
+			dependencies: [
+				"C7A668A993A34DB6"
+			]
+			icon: {
+				id: "cobblemon:pokedex_white"
+			}
+			rewards: [
+				{
+					count: 10
+					id: "485E47E89EBAA097"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 5
+					id: "2305CF6A48699215"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_xl"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "BE8B52822E73209E"
+					item: {
+						count: 1
+						id: "cobblemon:pp_max"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 200"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "19B61E30BD068446"
+					title: "200 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "6450A8A0D736154A"
+					type: "xp"
+					xp: 600
+				}
+			]
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 60L
+					dex_progress: "caught_percent"
+					id: "E5EF23DF66A03F29"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: 1.1999999999999993d
+			y: -4.2d
+		}
+		{
+			id: "1B115A7A9BFED77B"
+			dependencies: [
+				"73A93E9DF2B9D8E8"
+			]
+			icon: {
+				id: "cobblemon:pokedex_black"
+			}
+			rewards: [
+				{
+					id: "772D288B18CCFE5C"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 15
+					id: "AAF32E3853D0A6E0"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "7FD63B62CFDA9A41"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 250"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B6F32D8B2A75A6A1"
+					title: "250 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "942903C9BAE7BB17"
+					type: "xp"
+					xp: 700
+				}
+			]
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 70L
+					dex_progress: "caught_percent"
+					id: "53900BCBA3AA0B5F"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: 3.599999999999998d
+			y: -4.2d
+		}
+		{
+			id: "4B56D275187D038E"
+			dependencies: [
+				"1B115A7A9BFED77B"
+			]
+			icon: {
+				id: "cobblemon:luxury_ball"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "675CC24BA92CDA24"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "4ACBE5CA3FA24910"
+					item: {
+						count: 1
+						id: "cobblemon:ability_patch"
+					}
+					type: "item"
+				}
+				{
+					count: 15
+					id: "D112F008CD8FB7E0"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 300"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "EC665B6B67ABEA4D"
+					title: "300 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "80CDA85718DD2C65"
+					type: "xp"
+					xp: 800
+				}
+			]
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 80L
+					dex_progress: "caught_percent"
+					id: "DDE665602E87D6D6"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: 6.0d
+			y: -4.2d
+		}
+		{
+			id: "E8EBB55FF1D1A979"
+			dependencies: [
+				"4B56D275187D038E"
+			]
+			icon: {
+				id: "cobblemon:master_ball"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "C4AC7A12D5BE544E"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 20
+					id: "BF206E9BA960A022"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "549F7E319CF4EC87"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 400"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "96E677D23C3B4051"
+					title: "400 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "9CBB0ED76702E154"
+					type: "xp"
+					xp: 900
+				}
+			]
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 90L
+					dex_progress: "caught_percent"
+					id: "FA6F5E097995C384"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: 8.399999999999999d
+			y: -4.2d
+		}
+		{
+			id: "99ACA1CBF54D48EC"
+			dependencies: [
+				"E8EBB55FF1D1A979"
+			]
+			icon: {
+				id: "cobblemon:master_ball"
+			}
+			rewards: [
+				{
+					count: 3
+					id: "8DE861A9FE3529D5"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 32
+					id: "14D01E66D593F3B0"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 3
+					id: "9A6BCE15B516B3A3"
+					item: {
+						count: 1
+						id: "minecraft:enchanted_golden_apple"
+					}
+					type: "item"
+				}
+				{
+					id: "501736E79DE9860D"
+					item: {
+						count: 1
+						id: "cobblemon:relic_coin_sack"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 1000"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "11958CC218AF50A5"
+					title: "1000 CobbleDollars"
+					type: "command"
+				}
+				{
+					id: "2A85E20068B87C5E"
+					type: "xp"
+					xp: 2000
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					action: "have_registered"
+					amount: 100L
+					dex_progress: "caught_percent"
+					id: "4416148EF21E5B77"
+					type: "unyieldingquests:cobblemon"
+				}
+			]
+			x: 10.799999999999997d
+			y: -4.2d
+		}
+		{
+			hide_dependency_lines: true
+			id: "688470F43F810C32"
+			rewards: [
+				{
+					count: 8
+					id: "02B9CC5F878B7E4E"
+					item: {
+						components: {
+							"cobblemon:bait_effects": [
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+							]
+							"cobblemon:food_colour": [
+								"yellow"
+								"yellow"
+								"yellow"
+							]
+							"cobblemon:ingredient": [
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+							]
+						}
+						count: 1
+						id: "cobblemon:poke_snack"
+					}
+					type: "item"
+				}
+			]
+			shape: "rsquare"
+			size: 1.25d
+			tasks: [
+				{
+					id: "278E298EEDC936CE"
+					item: {
+						count: 1
+						id: "cobblemon:pokedex_red"
+					}
+					type: "item"
+				}
+				{
+					abilities: ""
+					action: "scan"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					id: "61E5B59B93939687"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: ""
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: -9.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"688470F43F810C32"
+			]
+			hide_dependency_lines: true
+			id: "507518777C14EB2B"
+			rewards: [
+				{
+					id: "53CB2DD20F354FF1"
+					item: {
+						components: {
+							"cobblemon:bait_effects": [
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+							]
+							"cobblemon:food_colour": [
+								"yellow"
+								"yellow"
+								"yellow"
+							]
+							"cobblemon:ingredient": [
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+							]
+						}
+						count: 1
+						id: "cobblemon:poke_snack"
+					}
+					type: "item"
+					count: 2
+				}
+			]
+			shape: "square"
+			size: 1.1d
+			tasks: [
+				{
+					id: "1F2C6B0720ECCE2C"
+					item: {
+						count: 1
+						id: "cobblenav:pokenav_item_base"
+					}
+					type: "item"
+				}
+			]
+			x: -6.6d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"507518777C14EB2B"
+			]
+			hide_dependency_lines: true
+			id: "751F2F2CFF0F8EF2"
+			rewards: [
+				{
+					count: 6
+					id: "614838F5F5BFDCE1"
+					item: {
+						components: {
+							"cobblemon:bait_effects": [
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+							]
+							"cobblemon:food_colour": [
+								"yellow"
+								"yellow"
+								"yellow"
+							]
+							"cobblemon:ingredient": [
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+							]
+						}
+						count: 1
+						id: "cobblemon:poke_snack"
+					}
+					type: "item"
+				}
+			]
+			shape: "square"
+			size: 1.1d
+			tasks: [
+				{
+					id: "3D515431BA689BE5"
+					item: {
+						count: 1
+						id: "cobblenav:pokefinder_item_black"
+					}
+					type: "item"
+				}
+			]
+			x: -4.2d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"507518777C14EB2B"
+			]
+			hide_dependency_lines: true
+			id: "622867D85C28F95C"
+			rewards: [
+				{
+					count: 8
+					id: "6ED374229B7F1FE8"
+					item: {
+						components: {
+							"cobblemon:bait_effects": [
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+							]
+							"cobblemon:food_colour": [
+								"yellow"
+								"yellow"
+								"yellow"
+							]
+							"cobblemon:ingredient": [
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+							]
+						}
+						count: 1
+						id: "cobblemon:poke_snack"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "7A35734EFC999AB3"
+					item: {
+						count: 1
+						id: "cobblenav:fishingnav_item"
+					}
+					type: "item"
+				}
+			]
+			x: -6.6d
+			y: 2.4d
+		}
+		{
+			hide_dependency_lines: true
+			id: "277A8287F1735165"
+			rewards: [
+				{
+					id: "33248904090C6881"
+					type: "xp_levels"
+					xp_levels: 10
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "311877A26403ADA3"
+					item: {
+						count: 1
+						id: "minecraft:brush"
+					}
+					type: "item"
+				}
+			]
+			x: 2.4d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"277A8287F1735165"
+			]
+			hide_dependency_lines: true
+			id: "3E1E90E95C3C00A1"
+			rewards: [
+				{
+					count: 2
+					id: "219789447A1CD0F1"
+					item: {
+						count: 1
+						id: "cobblemon:display_case"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "2A3CF194DE898950"
+					item: {
+						count: 1
+						id: "cobblemon:bygone_sherd"
+					}
+					type: "item"
+				}
+				{
+					id: "7DC26848A18FD9AE"
+					item: {
+						count: 1
+						id: "cobblemon:dome_sherd"
+					}
+					type: "item"
+				}
+				{
+					id: "7FD9EEED383BF16D"
+					item: {
+						count: 1
+						id: "cobblemon:helix_sherd"
+					}
+					type: "item"
+				}
+				{
+					id: "4112F7B08BB4955A"
+					item: {
+						count: 1
+						id: "cobblemon:nostalgic_sherd"
+					}
+					type: "item"
+				}
+				{
+					id: "78809B93563FB6D7"
+					item: {
+						count: 1
+						id: "cobblemon:suspicious_sherd"
+					}
+					type: "item"
+				}
+			]
+			x: 2.4d
+			y: 2.4d
+		}
+		{
+			dependencies: [
+				"277A8287F1735165"
+			]
+			hide_dependency_lines: false
+			id: "5B760F0C10DFE721"
+			rewards: [
+				{
+					id: "74D6079300B93DE2"
+					item: {
+						count: 1
+						id: "cobblemon:old_amber_fossil"
+					}
+					type: "item"
+				}
+			]
+			shape: "rsquare"
+			size: 1.2d
+			tasks: [
+				{
+					id: "423219FBB8C799DB"
+					item: {
+						count: 1
+						id: "cobblemon:fossil_analyzer"
+					}
+					type: "item"
+				}
+				{
+					id: "745C5DF34591AD92"
+					item: {
+						count: 1
+						id: "cobblemon:monitor"
+					}
+					type: "item"
+				}
+				{
+					id: "4756370FE2322EA2"
+					item: {
+						count: 1
+						id: "cobblemon:restoration_tank"
+					}
+					type: "item"
+				}
+			]
+			x: 4.8d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"5B760F0C10DFE721"
+			]
+			hide_dependency_lines: false
+			id: "7D53223287FDC43F"
+			rewards: [
+				{
+					id: "08C23A4CF53825EB"
+					item: {
+						count: 1
+						id: "cobblemon:helix_fossil"
+					}
+					type: "item"
+				}
+			]
+			shape: "star"
+			size: 1.5d
+			tasks: [
+				{
+					abilities: ""
+					action: "revive_fossil"
+					amount: 1L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					icon: {
+						id: "cobblemon:fossil_analyzer"
+					}
+					id: "1631BBEA3A3EC0A7"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: ""
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 4.8d
+			y: 2.6d
+		}
+		{
+			dependencies: [
+				"7D53223287FDC43F"
+			]
+			hide_dependency_lines: true
+			id: "560461A3F608A747"
+			rewards: [
+				{
+					id: "06B43603A030B254"
+					item: {
+						count: 1
+						id: "cobblemon:dome_fossil"
+					}
+					type: "item"
+				}
+			]
+			shape: "octagon"
+			size: 1.1d
+			tasks: [
+				{
+					id: "44CBE3BC4E35BCBC"
+					item: {
+						count: 1
+						id: "cobblemon:helix_fossil"
+					}
+					type: "item"
+				}
+				{
+					id: "3934AC4001775E9E"
+					item: {
+						count: 1
+						id: "cobblemon:dome_fossil"
+					}
+					type: "item"
+				}
+				{
+					id: "0E8EB294DA6351EE"
+					item: {
+						count: 1
+						id: "cobblemon:old_amber_fossil"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: 7.2d
+		}
+		{
+			dependencies: [
+				"7D53223287FDC43F"
+			]
+			hide_dependency_lines: true
+			id: "6C51BEE295979C3B"
+			rewards: [
+				{
+					id: "1AF09ED2AE05C558"
+					item: {
+						count: 1
+						id: "cobblemon:claw_fossil"
+					}
+					type: "item"
+				}
+			]
+			shape: "octagon"
+			size: 1.1d
+			tasks: [
+				{
+					id: "163D662121DF1519"
+					item: {
+						count: 1
+						id: "cobblemon:root_fossil"
+					}
+					type: "item"
+				}
+				{
+					id: "15FD93A88541A421"
+					item: {
+						count: 1
+						id: "cobblemon:claw_fossil"
+					}
+					type: "item"
+				}
+			]
+			x: -3.6d
+			y: 7.2d
+		}
+		{
+			dependencies: [
+				"7D53223287FDC43F"
+			]
+			hide_dependency_lines: true
+			id: "3E106D44040F5F68"
+			rewards: [
+				{
+					id: "69CE47D5CAEF335B"
+					item: {
+						count: 1
+						id: "cobblemon:armor_fossil"
+					}
+					type: "item"
+				}
+			]
+			shape: "octagon"
+			size: 1.1d
+			tasks: [
+				{
+					id: "6C3740D2F406001E"
+					item: {
+						count: 1
+						id: "cobblemon:skull_fossil"
+					}
+					type: "item"
+				}
+				{
+					id: "5D917FD18809EC1E"
+					item: {
+						count: 1
+						id: "cobblemon:armor_fossil"
+					}
+					type: "item"
+				}
+			]
+			x: -1.2d
+			y: 7.2d
+		}
+		{
+			dependencies: [
+				"7D53223287FDC43F"
+			]
+			hide_dependency_lines: true
+			id: "2CE8DE01FA1BC458"
+			rewards: [
+				{
+					id: "5F313DA85A3F0E6D"
+					item: {
+						count: 1
+						id: "cobblemon:plume_fossil"
+					}
+					type: "item"
+				}
+			]
+			shape: "octagon"
+			size: 1.1d
+			tasks: [
+				{
+					id: "3593D6B57BAF5092"
+					item: {
+						count: 1
+						id: "cobblemon:cover_fossil"
+					}
+					type: "item"
+				}
+				{
+					id: "600AE7260415CF14"
+					item: {
+						count: 1
+						id: "cobblemon:plume_fossil"
+					}
+					type: "item"
+				}
+			]
+			x: 1.2d
+			y: 7.2d
+		}
+		{
+			dependencies: [
+				"7D53223287FDC43F"
+			]
+			hide_dependency_lines: true
+			id: "05A1345C164645D7"
+			rewards: [
+				{
+					id: "305B80BEF66B1EFF"
+					item: {
+						count: 1
+						id: "cobblemon:jaw_fossil"
+					}
+					type: "item"
+				}
+			]
+			shape: "octagon"
+			size: 1.1d
+			tasks: [
+				{
+					id: "2BD263BEE558F49F"
+					item: {
+						count: 1
+						id: "cobblemon:jaw_fossil"
+					}
+					type: "item"
+				}
+				{
+					id: "7227F869C1DD2753"
+					item: {
+						count: 1
+						id: "cobblemon:sail_fossil"
+					}
+					type: "item"
+				}
+			]
+			x: 3.6d
+			y: 7.2d
+		}
+		{
+			dependencies: [
+				"7D53223287FDC43F"
+			]
+			hide_dependency_lines: true
+			id: "4B2CB1500216AE27"
+			rewards: [
+				{
+					id: "4B2D535AA7D89805"
+					item: {
+						count: 1
+						id: "cobblemon:fossilized_dino"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.3d
+			tasks: [
+				{
+					id: "48A43AE1BABFC135"
+					item: {
+						count: 1
+						id: "cobblemon:fossilized_bird"
+					}
+					type: "item"
+				}
+				{
+					id: "42CB9D953279FD51"
+					item: {
+						count: 1
+						id: "cobblemon:fossilized_dino"
+					}
+					type: "item"
+				}
+				{
+					id: "3C1BA7499DC2E15F"
+					item: {
+						count: 1
+						id: "cobblemon:fossilized_drake"
+					}
+					type: "item"
+				}
+				{
+					id: "152F0974782482BF"
+					item: {
+						count: 1
+						id: "cobblemon:fossilized_fish"
+					}
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: 7.2d
+		}
+	]
+}

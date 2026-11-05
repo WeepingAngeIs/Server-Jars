@@ -1,0 +1,433 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "10_dynamaxing"
+	group: "28AD4BAFAFBA049E"
+	icon: {
+		id: "mega_showdown:dynamax_band"
+	}
+	id: "28391705B2DBC363"
+	images: [
+		{
+			height: 0.4d
+			id: "484013B04DDEECD4"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.0d
+			x: 3.0d
+			y: -5.1d
+		}
+		{
+			height: 0.4d
+			id: "1B7ECFF6580291F0"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.0d
+			x: -1.5d
+			y: -1.05d
+		}
+		{
+			height: 0.4d
+			id: "4D23D300D2E4F888"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: 2.25d
+			y: 1.05d
+		}
+	]
+	order_index: 2
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "mega_showdown:dynamax_band"
+			}
+			id: "69E6DCF3B6A8F0F8"
+			rewards: [
+				{
+					id: "13DC3F0FD7D8D029"
+					type: "xp"
+					xp: 20
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "0A8A5488DED8B5C2"
+					type: "checkmark"
+				}
+			]
+			x: -4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"69E6DCF3B6A8F0F8"
+			]
+			icon: {
+				id: "mega_showdown:wishing_star"
+			}
+			id: "2E1310613D3B46EE"
+			rewards: [
+				{
+					id: "1641C242FD179169"
+					type: "xp"
+					xp: 30
+				}
+			]
+			tasks: [
+				{
+					id: "208828BEAD944F11"
+					item: {
+						count: 1
+						id: "mega_showdown:wishing_star"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"2E1310613D3B46EE"
+			]
+			icon: {
+				id: "mega_showdown:dynamax_band"
+			}
+			id: "489FD318A06192E0"
+			rewards: [
+				{
+					id: "67588C52802CC7FD"
+					type: "xp"
+					xp: 35
+				}
+				{
+					count: 4
+					id: "1D445C0F042E2CA3"
+					item: {
+						count: 1
+						id: "cobblemon:super_potion"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "7260BEC0EEC71895"
+					item: {
+						count: 1
+						id: "mega_showdown:dynamax_band"
+					}
+					type: "item"
+				}
+			]
+			x: -1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"489FD318A06192E0"
+			]
+			icon: {
+				id: "mega_showdown:power_spot"
+			}
+			id: "0A96725CEF7660AB"
+			rewards: [
+				{
+					id: "7DADD28840A31705"
+					type: "xp"
+					xp: 40
+				}
+				{
+					count: 4
+					id: "38482E95F6EFB33D"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "77FADDBF1E280E64"
+					item: {
+						count: 1
+						id: "mega_showdown:power_spot"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"0A96725CEF7660AB"
+			]
+			icon: {
+				id: "mega_showdown:dynamax_band"
+			}
+			id: "70E8E45E68750488"
+			rewards: [
+				{
+					id: "3FEFA31B03963B0C"
+					type: "xp"
+					xp: 90
+				}
+				{
+					id: "26A638678F4BA8C7"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "4FD2E32580B1C4F1"
+					item: {
+						count: 1
+						id: "cobblemon:revive"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.3d
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/dynamax/dynamax"
+					criterion: ""
+					id: "3BF3D01E4D83AFF0"
+					type: "advancement"
+				}
+			]
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"70E8E45E68750488"
+			]
+			icon: {
+				id: "mega_showdown:dynamax_candy"
+			}
+			id: "74DC2FF2C0533023"
+			rewards: [
+				{
+					id: "34658F0AD7E564AA"
+					type: "xp"
+					xp: 35
+				}
+			]
+			tasks: [
+				{
+					id: "108F7622DA4663B0"
+					item: {
+						count: 1
+						id: "mega_showdown:dynamax_candy"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"74DC2FF2C0533023"
+			]
+			icon: {
+				id: "mega_showdown:dynamax_candy"
+			}
+			id: "0445EAC212EC2BAA"
+			rewards: [
+				{
+					id: "58E4171AFC5E8546"
+					type: "xp"
+					xp: 70
+				}
+				{
+					count: 2
+					id: "47CB51E1D8914DA1"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.3d
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/dynamax/dynamax_candy_max"
+					criterion: ""
+					id: "5106EEC1BFACA361"
+					type: "advancement"
+				}
+			]
+			x: 3.0d
+			y: 2.0d
+		}
+		{
+			dependencies: [
+				"70E8E45E68750488"
+			]
+			icon: {
+				id: "mega_showdown:max_mushroom"
+			}
+			id: "397C4ACB3BA3D384"
+			rewards: [
+				{
+					id: "4F28B3645E15F36D"
+					type: "xp"
+					xp: 35
+				}
+			]
+			tasks: [
+				{
+					id: "54F1D79E82CD6FAA"
+					item: {
+						count: 1
+						id: "mega_showdown:max_mushroom"
+					}
+					type: "item"
+				}
+			]
+			x: 1.5d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"397C4ACB3BA3D384"
+			]
+			icon: {
+				id: "mega_showdown:max_soup"
+			}
+			id: "3B878CBDBE369E99"
+			rewards: [
+				{
+					id: "544B6F19EDD812BB"
+					type: "xp"
+					xp: 45
+				}
+				{
+					count: 2
+					id: "1F533023D113855D"
+					item: {
+						count: 1
+						id: "cobblemon:full_restore"
+					}
+					type: "item"
+				}
+			]
+			tasks: [
+				{
+					id: "210827D0327C9801"
+					item: {
+						count: 1
+						id: "mega_showdown:max_soup"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"3B878CBDBE369E99"
+			]
+			icon: {
+				id: "mega_showdown:max_soup"
+			}
+			id: "7C10747650D77F8A"
+			rewards: [
+				{
+					id: "36F3A8792E5FDFA8"
+					type: "xp"
+					xp: 110
+				}
+				{
+					count: 2
+					id: "709885CB3D0F1F49"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					id: "3B0C0F15206C48C6"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.3d
+			tasks: [
+				{
+					advancement: "mega_showdown:mega_showdown/dynamax/gigantamax"
+					criterion: ""
+					id: "2F9176BFBB129061"
+					type: "advancement"
+				}
+			]
+			x: 4.5d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"3B878CBDBE369E99"
+			]
+			icon: {
+				id: "mega_showdown:max_honey"
+			}
+			id: "50BF22C6846CDC63"
+			optional: true
+			rewards: [
+				{
+					id: "2A28824DADF83132"
+					type: "xp"
+					xp: 45
+				}
+			]
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "mega_showdown:max_honey"
+					}
+					id: "15F9EF6A2BF6D757"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(mega_showdown:max_honey)item(mega_showdown:sweet_max_soup))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: -4.0d
+		}
+	]
+}

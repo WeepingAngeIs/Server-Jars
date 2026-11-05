@@ -1,0 +1,602 @@
+{
+	autofocus_id: "5F8E9C2A4D1B7063"
+	default_hide_dependency_lines: true
+	default_quest_shape: "circle"
+	filename: "10_start_here"
+	group: "6E41A6B769F20601"
+	icon: {
+		id: "minecraft:book"
+	}
+	id: "6B1A8C3D2E5F490A"
+	images: [ ]
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "minecraft:book"
+			}
+			id: "5F8E9C2A4D1B7063"
+			rewards: [
+				{
+					id: "5A38380D2B01B975"
+					type: "xp"
+					xp: 5
+				}
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "3EDF13B478422CAB"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "5B278A399D4BF1D1"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: -6.0d
+		}
+		{
+			icon: {
+				id: "minecraft:compass"
+			}
+			id: "4C9B37DFA79C17A2"
+			rewards: [
+				{
+					id: "7B601C36A4F9DE11"
+					type: "xp"
+					xp: 5
+				}
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "3C024ACD08B71743"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					id: "5EC620CEF4F3FB48"
+					type: "checkmark"
+				}
+			]
+			x: -3.75d
+			y: -5.625d
+		}
+		{
+			icon: {
+				id: "minecraft:filled_map"
+			}
+			id: "7D0C9224185199DA"
+			rewards: [
+				{
+					id: "25A0BC0470B200C6"
+					type: "xp"
+					xp: 5
+				}
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "78CDA295E28C76E0"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					id: "57B627185A9DCD8F"
+					type: "checkmark"
+				}
+			]
+			x: 3.75d
+			y: -5.625d
+		}
+		{
+			icon: {
+				id: "ftbquests:book"
+			}
+			id: "50A18B50284AE345"
+			size: 1.0d
+			tasks: [
+				{
+					id: "4C07E98B5E159231"
+					type: "checkmark"
+				}
+			]
+			x: -6.0d
+			y: -1.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "2EB6C46DB6715365"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			icon: {
+				id: "minecraft:crafting_table"
+			}
+			id: "22218643CBC2274B"
+			shape: "circle"
+			tasks: [
+				{
+					id: "23EC01A630F4319E"
+					type: "checkmark"
+				}
+			]
+			x: 1.5d
+			y: -1.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "DB4B9CC81C323D5A"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			icon: {
+				id: "minecraft:spyglass"
+			}
+			id: "08CD8D2639C885F6"
+			shape: "circle"
+			tasks: [
+				{
+					id: "21DA639185A41D34"
+					type: "checkmark"
+				}
+			]
+			x: 6.0d
+			y: -1.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "E01D61051DB01C71"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:compass"
+			}
+			id: "3ED1C14CD3070B66"
+			shape: "circle"
+			tasks: [
+				{
+					id: "7B7C27B0B1ADCBBE"
+					type: "checkmark"
+				}
+			]
+			x: -6.0d
+			y: -3.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B7931D019CDBC66B"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:golden_shovel"
+			}
+			id: "0CC82D42835D8A32"
+			shape: "circle"
+			tasks: [
+				{
+					id: "4A10E54F487C956E"
+					type: "checkmark"
+				}
+			]
+			x: -3.75d
+			y: -3.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B1AF9AB352BA9AAF"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:goat_horn"
+			}
+			id: "168960D9CD2F9DC4"
+			shape: "circle"
+			tasks: [
+				{
+					id: "63A6359C6299904D"
+					type: "checkmark"
+				}
+			]
+			x: -1.5d
+			y: -3.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "353F7C776DA05F8A"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "lootr:lootr_chest"
+			}
+			id: "51702B3368C88E05"
+			shape: "circle"
+			tasks: [
+				{
+					id: "70582AD9805A7A2B"
+					type: "checkmark"
+				}
+			]
+			x: -3.75d
+			y: -1.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "17B88CDA621E71B9"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:map"
+			}
+			id: "0DDD246AAF717A3B"
+			shape: "circle"
+			tasks: [
+				{
+					id: "5A317F7489F2B158"
+					type: "checkmark"
+				}
+			]
+			x: 1.5d
+			y: -3.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "4E2A9B649BD86611"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "waystones:waystone"
+			}
+			id: "4C99AFD9386E20AA"
+			shape: "circle"
+			tasks: [
+				{
+					id: "6A8B23DB601C9B30"
+					type: "checkmark"
+				}
+			]
+			x: 3.75d
+			y: -3.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "35F251023E55F295"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:bundle"
+			}
+			id: "240EF96D61EA04BD"
+			shape: "circle"
+			tasks: [
+				{
+					id: "6DBB5DA155158260"
+					type: "checkmark"
+				}
+			]
+			x: 6.0d
+			y: -3.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "C57783C227B8ADC9"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "minecraft:diamond_pickaxe"
+			}
+			id: "5336132F3CA70A43"
+			shape: "circle"
+			tasks: [
+				{
+					id: "614089A35E494AA3"
+					type: "checkmark"
+				}
+			]
+			x: 3.75d
+			y: -1.5d
+			rewards: [
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "D32E18E26E4039D3"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+		}
+		{
+			can_repeat: true
+			icon: {
+				id: "neoorigins:orb_of_origin"
+			}
+			id: "27FFE0E0F21D66AD"
+			repeat_cooldown: 1800
+			rewards: [
+				{
+					id: "721ED40D41F8D545"
+					item: {
+						count: 1
+						id: "neoorigins:orb_of_origin"
+					}
+					type: "item"
+				}
+				{
+					id: "3D39503AE543656E"
+					item: {
+						count: 1
+						id: "neoorigins:orb_of_class"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "E2E8CEEBF9153B9B"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+			size: 2.0d
+			tasks: [
+				{
+					id: "6A8F302302AE3D4B"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: -9.0d
+		}
+		{
+			icon: {
+				id: "neoorigins:orb_of_origin"
+			}
+			id: "72D7B491D10CD227"
+			rewards: [
+				{
+					id: "137FC7458F900AB5"
+					type: "xp_levels"
+					xp_levels: 5
+				}
+				{
+					command: "/cobbledollars give {p} 25"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "81076C566AB94EE6"
+					title: "25 CobbleDollars"
+					type: "command"
+				}
+			]
+			size: 1.0d
+			tasks: [
+				{
+					id: "35B682716DC4135E"
+					type: "checkmark"
+				}
+			]
+			x: -1.5d
+			y: -1.5d
+		}
+		{
+			dependencies: [
+				"5F8E9C2A4D1B7063"
+				"4C9B37DFA79C17A2"
+				"7D0C9224185199DA"
+				"3ED1C14CD3070B66"
+				"0CC82D42835D8A32"
+				"168960D9CD2F9DC4"
+				"50A18B50284AE345"
+				"51702B3368C88E05"
+				"72D7B491D10CD227"
+				"0DDD246AAF717A3B"
+				"4C99AFD9386E20AA"
+				"240EF96D61EA04BD"
+				"22218643CBC2274B"
+				"5336132F3CA70A43"
+				"08CD8D2639C885F6"
+			]
+			id: "5DF44EC527B70000"
+			rewards: [
+				{
+					id: "5DCB4E7EE81498F2"
+					item: {
+						count: 1
+						id: "neoorigins:orb_of_origin"
+					}
+					type: "item"
+				}
+				{
+					id: "6F8CED8ECBBA5F8B"
+					item: {
+						count: 1
+						id: "neoorigins:orb_of_class"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "minecraft:emerald"
+					}
+					id: "6FD6A132291D69FB"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					id: "7F301F20A827C0E0"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: 0.5d
+		}
+		{
+			id: "1625FF5CBF3FBEC0"
+			rewards: [
+				{
+					count: 2
+					id: "5D1D9F16975E24A1"
+					item: {
+						components: {
+							"cobblemon:bait_effects": [
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+							]
+							"cobblemon:food_colour": [
+								"yellow"
+								"yellow"
+								"yellow"
+							]
+							"cobblemon:ingredient": [
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+							]
+						}
+						count: 1
+						id: "cobblemon:poke_snack"
+					}
+					type: "item"
+				}
+				{
+					command: "/cobbledollars give {p} 100"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin_sack"
+					}
+					id: "0B90D6FE9FAF344D"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					entity: "minecraft:wandering_trader"
+					id: "459FCB6B3E8FB6F1"
+					type: "kill"
+					value: 100L
+				}
+			]
+			x: -3.5d
+			y: -8.5d
+		}
+	]
+}

@@ -1,0 +1,239 @@
+{
+	default_hide_dependency_lines: true
+	default_quest_shape: ""
+	filename: "simply_more_field_guide"
+	group: "6E41A6B769F20602"
+	icon: {
+		id: "simplymore:diamond_great_katana"
+	}
+	id: "19BCECE8B68147FD"
+	images: [
+		{
+			height: 0.45d
+			id: "3FFD18156FCEA9E1"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: -3.0d
+			y: -1.5d
+		}
+		{
+			height: 0.45d
+			id: "3D60B5850824533D"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: 3.0d
+			y: -1.5d
+		}
+		{
+			height: 0.32d
+			id: "48C30173608EDC45"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -3.0d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "2C9C603EAB5D8A15"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 3.0d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "523614400B3414E9"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 3.0d
+			y: 3.92d
+		}
+		{
+			height: 0.32d
+			id: "3D165C48406AE176"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -3.0d
+			y: 3.92d
+		}
+	]
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "simplymore:diamond_great_katana"
+			}
+			id: "7E259C18DE7A6829"
+			rewards: [
+				{
+					id: "699520B52229F25F"
+					type: "xp"
+					xp: 10
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "4A87C3EA7C5EA1C0"
+					type: "checkmark"
+				}
+			]
+			x: -3.0d
+			y: 0.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "simplymore:diamond_great_katana"
+			}
+			id: "698E17F49802CAC4"
+			rewards: [
+				{
+					count: 12
+					id: "6E0C3665B988A9CF"
+					item: {
+						count: 1
+						id: "minecraft:lapis_lazuli"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "simplymore:diamond_great_katana"
+					}
+					id: "6D7152EF666B80E8"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(simplymore:diamond_great_katana)item(simplymore:diamond_pernach)item(simplymore:diamond_grandsword)item(simplymore:diamond_backhand_blade)item(simplymore:diamond_great_spear)item(simplymore:diamond_lance)item(simplymore:diamond_quarterstaff)item(simplymore:diamond_khopesh)item(simplymore:diamond_dagger)item(simplymore:diamond_deer_horns))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"698E17F49802CAC4"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "simplymore:runic_great_katana"
+			}
+			id: "522127129B06AC31"
+			rewards: [
+				{
+					count: 3
+					id: "46CAF82066988568"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+				{
+					id: "3E68FB5C0BF8AA79"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "simplymore:runic_gear"
+					criterion: ""
+					id: "5CE206E0DEACD84E"
+					type: "advancement"
+				}
+			]
+			x: 3.0d
+			y: 3.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "simplymore:black_pearl"
+			}
+			id: "65C990B4219D8BE8"
+			rewards: [
+				{
+					id: "631C432D1AC55434"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "55059035DFC8685E"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "simplymore:black_pearl"
+					}
+					id: "194DE88CF0C17497"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(simplymore:black_pearl)item(simplymore:timekeeper)item(simplymore:earthshatter)item(simplymore:tidebreaker)item(simplymore:grandfrost)item(simplymore:the_pan))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: -3.0d
+			y: 3.0d
+		}
+	]
+}

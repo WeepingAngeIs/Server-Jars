@@ -1,0 +1,36 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+version = mod_version
+group = 'dev.unyielding'
+base { archivesName = 'UnyieldingQuests' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(21) }
+neoForge {
+    version = neo_version
+    runs {
+        server {
+            server()
+            programArgument '--nogui'
+            jvmArgument '-Xmx3G'
+            gameDirectory = project.file('run-server')
+        }
+        client {
+            client()
+            gameDirectory = project.file('run')
+            jvmArgument '-Xmx3500m'
+            if (System.getProperty('uq.autotest', '') == '1') { programArguments.addAll('--quickPlayMultiplayer', 'localhost:25565', '--username', 'Dev') }
+            if (System.getProperty('uq.autotest', '') == '2') { programArguments.addAll('--quickPlaySingleplayer', 'testworld', '--username', 'Dev', '--width', '1280', '--height', '800') }
+            systemProperty 'uq.autotest', (System.getProperty('uq.autotest', '') == '2' ? '1' : System.getProperty('uq.autotest', ''))
+        }
+    }
+    mods { "${mod_id}" { sourceSet(sourceSets.main) } }
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+dependencies {
+    compileOnly files('libs/cobblemon.jar', 'libs/kotlin-stdlib.jar', 'libs/emi.jar')
+}
+jar {
+    exclude 'dev/unyielding/quests/devtest/**'
+    manifest { attributes('Implementation-Title': 'UnyieldingQuests', 'Implementation-Version': project.version) }
+}

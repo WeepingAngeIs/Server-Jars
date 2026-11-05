@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "MIT"
+
+[[mods]]
+    modId = "unyieldingquests"
+    version = "${file.jarVersion}"
+    displayName = "Unyielding Quests, Teams, Essentials & Ultimine"
+    authors = "Cobblemon Unyielding"
+    displayTest = "MATCH_VERSION"
+    description = '''
+An all-in-one replacement for FTB Quests, FTB Teams, FTB Essentials and FTB Ultimine.
+Quest book with Cobblemon tasks, personal teams and parties, home/warp/tpa/rtp/back and admin commands,
+crafting anywhere, kits, and hold-a-key vein mining. Install the same jar on the server and on every client.
+'''
+
+[[dependencies.unyieldingquests]]
+    modId = "neoforge"
+    type = "required"
+    versionRange = "[21.1,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.unyieldingquests]]
+    modId = "minecraft"
+    type = "required"
+    versionRange = "[1.21.1,1.22)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.unyieldingquests]]
+    modId = "cobblemon"
+    type = "optional"
+    versionRange = "[1.6,)"
+    ordering = "AFTER"
+    side = "BOTH"

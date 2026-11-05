@@ -1,0 +1,544 @@
+{
+	autofocus_id: "7AC327FAFC215D4A"
+	default_hide_dependency_lines: false
+	default_quest_shape: "circle"
+	filename: "36_travel_and_trade"
+	group: "E84A487481E75527"
+	icon: {
+		id: "waystones:waystone"
+	}
+	id: "8DB5AD17839C2945"
+	images: [ ]
+	order_index: 10
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "waystones:waystone"
+			}
+			id: "7AC327FAFC215D4A"
+			rewards: [
+				{
+					count: 4
+					id: "A9A435E379D270AC"
+					item: {
+						count: 1
+						id: "waystones:warp_dust"
+					}
+					type: "item"
+				}
+				{
+					id: "FE26401267EC28C0"
+					type: "xp"
+					xp: 60
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					count: 1L
+					id: "1D077F18BEA197AC"
+					item: "waystones:waystone"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7AC327FAFC215D4A"]
+			icon: {
+				id: "waystones:warp_stone"
+			}
+			id: "BE64B17C8B1926EB"
+			rewards: [
+				{
+					count: 4
+					id: "40269DA3FCC10159"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+				{
+					id: "6F4669AB78B93964"
+					type: "xp"
+					xp: 80
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "2B8DAE1714ED97C3"
+					item: "waystones:warp_stone"
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7AC327FAFC215D4A"]
+			icon: {
+				id: "waystones:warp_scroll"
+			}
+			id: "DB4FC0C631557382"
+			rewards: [
+				{
+					count: 2
+					id: "2A8E5F5DF2182F3D"
+					item: {
+						count: 1
+						id: "waystones:warp_scroll"
+					}
+					type: "item"
+				}
+				{
+					id: "59769BFA455C8792"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "F39C390D5F02D69E"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(waystones:warp_scroll)item(waystones:return_scroll)item(waystones:bound_scroll))"
+						}
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["BE64B17C8B1926EB"]
+			icon: {
+				id: "waystones:blue_sharestone"
+			}
+			id: "E7476A8A4293BCD6"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "AED5B0CD6BCDC491"
+					item: {
+						count: 1
+						id: "minecraft:emerald"
+					}
+					type: "item"
+				}
+				{
+					id: "158BA1C8258959FE"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "69E8B9EB05933F14"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(waystones:orange_sharestone)item(waystones:magenta_sharestone)item(waystones:light_blue_sharestone)item(waystones:yellow_sharestone)item(waystones:lime_sharestone)item(waystones:pink_sharestone)item(waystones:gray_sharestone)item(waystones:light_gray_sharestone)item(waystones:cyan_sharestone)item(waystones:purple_sharestone)item(waystones:blue_sharestone)item(waystones:brown_sharestone)item(waystones:green_sharestone)item(waystones:red_sharestone)item(waystones:black_sharestone))"
+						}
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["BE64B17C8B1926EB"]
+			icon: {
+				id: "waystones:warp_plate"
+			}
+			id: "AD588BDE1DFAEA52"
+			optional: true
+			rewards: [
+				{
+					count: 8
+					id: "D7CFA1760B1680C3"
+					item: {
+						count: 1
+						id: "waystones:warp_dust"
+					}
+					type: "item"
+				}
+				{
+					id: "9297B1B8C84E4FA2"
+					type: "xp"
+					xp: 120
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "B8E4BEBA720FFFDF"
+					item: "waystones:warp_plate"
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["BE64B17C8B1926EB"]
+			icon: {
+				id: "waystones:white_portstone"
+			}
+			id: "5B7996F014ABFAFD"
+			optional: true
+			rewards: [
+				{
+					count: 4
+					id: "3C2E58D81AD3DC3E"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+				{
+					id: "BC2C15824560CD55"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "56E1CFCEC4E3F7DF"
+					item: "waystones:white_portstone"
+					type: "item"
+				}
+			]
+			x: 9.0d
+			y: 0.0d
+		}
+		{
+			icon: {
+				id: "lightmanscurrency:coin_copper"
+			}
+			id: "1035371DED21B6DA"
+			rewards: [
+				{
+					count: 32
+					id: "75F08FCF03D161ED"
+					item: {
+						count: 1
+						id: "lightmanscurrency:coin_copper"
+					}
+					type: "item"
+				}
+				{
+					id: "F91568E30F4ACF98"
+					type: "xp"
+					xp: 50
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					count: 1L
+					id: "C49A2044E8735C5C"
+					item: "lightmanscurrency:coin_copper"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["1035371DED21B6DA"]
+			icon: {
+				id: "lightmanscurrency:coin_copper"
+			}
+			id: "9B285306F9B22FD4"
+			rewards: [
+				{
+					count: 10
+					id: "8EBFA7FD2F8648C2"
+					item: {
+						count: 1
+						id: "lightmanscurrency:coin_iron"
+					}
+					type: "item"
+				}
+				{
+					id: "97F80BD5F5CD34D1"
+					type: "xp"
+					xp: 80
+				}
+			]
+			tasks: [
+				{
+					advancement: "lightmanscurrency:currency/coin_mint"
+					criterion: ""
+					id: "7932A42D4FD350F2"
+					type: "advancement"
+				}
+			]
+			x: 3.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["1035371DED21B6DA"]
+			icon: {
+				id: "lightmanscurrency:wallet_leather"
+			}
+			id: "2C85C0E959B0CB00"
+			rewards: [
+				{
+					count: 10
+					id: "C75EADD36911A648"
+					item: {
+						count: 1
+						id: "lightmanscurrency:coin_iron"
+					}
+					type: "item"
+				}
+				{
+					id: "F609259359736123"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "2D57C0FBAF16BF65"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(lightmanscurrency:wallet_leather)item(lightmanscurrency:wallet_copper)item(lightmanscurrency:wallet_iron)item(lightmanscurrency:wallet_gold)item(lightmanscurrency:wallet_emerald)item(lightmanscurrency:wallet_diamond)item(lightmanscurrency:wallet_netherite))"
+						}
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 3.0d
+			y: 9.0d
+		}
+		{
+			dependencies: ["2C85C0E959B0CB00"]
+			icon: {
+				id: "lightmanscurrency:portable_atm"
+			}
+			id: "E50596EB04401037"
+			rewards: [
+				{
+					count: 5
+					id: "F183BC4847E4CCED"
+					item: {
+						count: 1
+						id: "lightmanscurrency:coin_gold"
+					}
+					type: "item"
+				}
+				{
+					id: "13E0CDB861778318"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					advancement: "lightmanscurrency:currency/atm"
+					criterion: ""
+					id: "D2CB940D13C70D95"
+					type: "advancement"
+				}
+			]
+			x: 6.0d
+			y: 9.0d
+		}
+		{
+			dependencies: ["9B285306F9B22FD4"]
+			icon: {
+				id: "lightmanscurrency:trading_core"
+			}
+			id: "FFBAA4F8201116DC"
+			rewards: [
+				{
+					count: 10
+					id: "DF233426C846A9A2"
+					item: {
+						count: 1
+						id: "lightmanscurrency:coin_gold"
+					}
+					type: "item"
+				}
+				{
+					id: "D477A138B4E5F91C"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [
+				{
+					advancement: "lightmanscurrency:currency/trader"
+					criterion: ""
+					id: "D50D0740923277BE"
+					type: "advancement"
+				}
+			]
+			x: 6.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["FFBAA4F8201116DC"]
+			icon: {
+				id: "lightmanscurrency:portable_terminal"
+			}
+			id: "758208C0A1370F2D"
+			optional: true
+			rewards: [
+				{
+					count: 5
+					id: "EC592A565F7993FF"
+					item: {
+						count: 1
+						id: "lightmanscurrency:coin_gold"
+					}
+					type: "item"
+				}
+				{
+					id: "B1D95D6EB0F41E71"
+					type: "xp"
+					xp: 100
+				}
+			]
+			tasks: [
+				{
+					advancement: "lightmanscurrency:currency/terminal"
+					criterion: ""
+					id: "2A3C21C47CC0B69E"
+					type: "advancement"
+				}
+			]
+			x: 9.0d
+			y: 6.0d
+		}
+		{
+			dependencies: ["E50596EB04401037"]
+			icon: {
+				id: "lightmanscurrency:coin_diamond"
+			}
+			id: "C5ECD91FBA5A4E1C"
+			rewards: [
+				{
+					count: 5
+					id: "FBB5B7BD78E455AE"
+					item: {
+						count: 1
+						id: "lightmanscurrency:coin_emerald"
+					}
+					type: "item"
+				}
+				{
+					id: "7CEC21FB6E1EC649"
+					type: "xp"
+					xp: 300
+				}
+			]
+			shape: "hexagon"
+			size: 1.25d
+			tasks: [
+				{
+					count: 1L
+					id: "50A12307FE433BCF"
+					item: "lightmanscurrency:coin_diamond"
+					type: "item"
+				}
+			]
+			x: 9.0d
+			y: 9.0d
+		}
+		{
+			dependencies: ["C5ECD91FBA5A4E1C"]
+			icon: {
+				id: "lightmanscurrency:coin_netherite"
+			}
+			id: "66D5F41C1EBEE825"
+			optional: true
+			rewards: [
+				{
+					count: 2
+					id: "5EE8D0A05E91384F"
+					item: {
+						count: 1
+						id: "lightmanscurrency:coin_diamond"
+					}
+					type: "item"
+				}
+				{
+					count: 1
+					id: "DE72BBD94821E2BE"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "1AB34FEBDA9BC2B4"
+					type: "xp"
+					xp: 800
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					count: 1L
+					id: "7EBC068117ED5A8B"
+					item: "lightmanscurrency:coin_netherite"
+					type: "item"
+				}
+			]
+			x: 12.0d
+			y: 9.0d
+		}
+		{
+			dependencies: ["1035371DED21B6DA"]
+			icon: {
+				id: "cobbledollars:cobble_merchant_spawn_egg"
+			}
+			id: "AB6CD5AF715F7127"
+			rewards: [
+				{
+					count: 8
+					id: "A616778A239C07A2"
+					item: {
+						count: 1
+						id: "cobblemon:poke_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "28D0A8F65D21D872"
+					type: "xp"
+					xp: 60
+				}
+			]
+			tasks: [
+				{
+					id: "28F6262EA4F3DBEC"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: 9.0d
+		}
+	]
+}

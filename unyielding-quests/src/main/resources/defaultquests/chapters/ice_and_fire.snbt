@@ -1,0 +1,1742 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "ice_and_fire"
+	group: "6E41A6B769F20604"
+	icon: {
+		id: "minecraft:book"
+	}
+	id: "61DEDAD98F3720D8"
+	images: [
+		{
+			height: 0.4d
+			id: "3338B7E07B180BDD"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.6d
+			x: -7.0d
+			y: -1.3d
+		}
+		{
+			height: 0.4d
+			id: "61F736E0A49FC751"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.0d
+			x: -3.5d
+			y: -5.8d
+		}
+		{
+			height: 0.4d
+			id: "7141D60CA37D1557"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.0d
+			x: -2.5d
+			y: 4.75d
+		}
+		{
+			height: 0.4d
+			id: "551C803983D3FA71"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.0d
+			x: 1.0d
+			y: -3.7d
+		}
+		{
+			height: 0.4d
+			id: "6E5B371FF0783107"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.0d
+			x: 8.0d
+			y: -3.4d
+		}
+		{
+			height: 0.4d
+			id: "65A374EC1A7DCAAA"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: 13.75d
+			y: -2.2d
+		}
+		{
+			height: 0.4d
+			id: "0B777B56A2106BE7"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: 6.25d
+			y: 4.0d
+		}
+	]
+	order_index: 2
+	quest_links: [ ]
+	quests: [
+		{
+			id: "515C83333A04B486"
+			rewards: [
+				{
+					id: "406F614AC05A1E7F"
+					type: "xp"
+					xp: 15
+				}
+			]
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{
+					id: "4E7D92B228D9CDD6"
+					type: "checkmark"
+				}
+			]
+			x: -10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"515C83333A04B486"
+			]
+			id: "501F2B5E9BC9A6E3"
+			rewards: [
+				{
+					count: 3
+					id: "3882BE2569D75A95"
+					item: {
+						count: 1
+						id: "iceandfire:manuscript"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "131E2ED2BB0A10E9"
+					item: {
+						count: 1
+						id: "minecraft:leather"
+					}
+					type: "item"
+				}
+			]
+			shape: "square"
+			size: 1.2d
+			tasks: [
+				{
+					id: "107540D48BEB9BBE"
+					item: {
+						count: 1
+						id: "iceandfire:bestiary"
+					}
+					type: "item"
+				}
+				{
+					id: "278E6C8449AE6764"
+					item: {
+						count: 1
+						id: "iceandfire:manuscript"
+					}
+					type: "item"
+				}
+			]
+			x: -8.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"501F2B5E9BC9A6E3"
+			]
+			id: "7D229D2A2365E3C0"
+			rewards: [
+				{
+					count: 8
+					id: "5B036FD7267156CE"
+					item: {
+						count: 1
+						id: "iceandfire:raw_silver"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 8L
+					id: "3544C1E55FF037A8"
+					item: {
+						count: 1
+						id: "iceandfire:silver_ingot"
+					}
+					type: "item"
+				}
+				{
+					id: "5278D95DFF057B3F"
+					item: {
+						count: 1
+						id: "iceandfire:silver_sword"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"7D229D2A2365E3C0"
+			]
+			id: "338870A212E52F6B"
+			rewards: [
+				{
+					count: 2
+					id: "0BFF865B88849EBE"
+					item: {
+						count: 1
+						id: "iceandfire:ambrosia"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "1D05372AA0EFBF00"
+					item: {
+						count: 1
+						id: "iceandfire:pixie_dust"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "08472BFFD4FF2135"
+					item: {
+						count: 1
+						id: "iceandfire:pixie_jar_empty"
+					}
+					type: "item"
+				}
+				{
+					count: 4L
+					id: "4799387A65FDA806"
+					item: {
+						count: 1
+						id: "iceandfire:pixie_dust"
+					}
+					type: "item"
+				}
+			]
+			x: -5.0d
+			y: -2.5d
+		}
+		{
+			dependencies: [
+				"338870A212E52F6B"
+			]
+			id: "6E473CCF2A6D1FA8"
+			rewards: [
+				{
+					count: 3
+					id: "112B1C5969F061BD"
+					item: {
+						count: 1
+						id: "minecraft:rabbit_foot"
+					}
+					type: "item"
+				}
+				{
+					id: "62BF18E826C2BEB2"
+					item: {
+						count: 1
+						id: "iceandfire:iron_hippogryph_armor"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "394BCBC207DC9FCD"
+					item: {
+						count: 1
+						id: "iceandfire:hippogryph_talon"
+					}
+					type: "item"
+				}
+			]
+			x: -3.5d
+			y: -3.5d
+		}
+		{
+			dependencies: [
+				"6E473CCF2A6D1FA8"
+			]
+			id: "6ED374465B47B8F9"
+			rewards: [
+				{
+					count: 16
+					id: "42D6C49E20EB607F"
+					item: {
+						count: 1
+						id: "iceandfire:amphithere_arrow"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "560694167C4C5848"
+					item: {
+						count: 1
+						id: "minecraft:cookie"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 4L
+					id: "7ED34DD136CAF303"
+					item: {
+						count: 1
+						id: "iceandfire:amphithere_feather"
+					}
+					type: "item"
+				}
+			]
+			x: -2.0d
+			y: -4.5d
+		}
+		{
+			dependencies: [
+				"338870A212E52F6B"
+			]
+			id: "7AEF0F135B3097FE"
+			rewards: [
+				{
+					count: 4
+					id: "4DBEF4E18151D33C"
+					item: {
+						count: 1
+						id: "iceandfire:rotten_egg"
+					}
+					type: "item"
+				}
+				{
+					id: "4B81501F07F9FA60"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "2A35876B45B3EE6C"
+					item: {
+						count: 1
+						id: "iceandfire:cockatrice_eye"
+					}
+					type: "item"
+				}
+			]
+			x: -3.5d
+			y: -1.5d
+		}
+		{
+			dependencies: [
+				"7AEF0F135B3097FE"
+			]
+			id: "21D5E7976145DB0E"
+			rewards: [
+				{
+					count: 16
+					id: "05D1796A59648216"
+					item: {
+						count: 1
+						id: "iceandfire:stymphalian_arrow"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "68934A4284092096"
+					item: {
+						count: 1
+						id: "minecraft:copper_ingot"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 6L
+					id: "6DF40ED0C4C8737D"
+					item: {
+						count: 1
+						id: "iceandfire:stymphalian_bird_feather"
+					}
+					type: "item"
+				}
+			]
+			x: -2.0d
+			y: -2.5d
+		}
+		{
+			dependencies: [
+				"7D229D2A2365E3C0"
+			]
+			id: "727139B409E0F110"
+			rewards: [
+				{
+					count: 2
+					id: "4D4D8A8D2C517CE9"
+					item: {
+						count: 1
+						id: "iceandfire:ghost_cream"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "46FE5896E4909DA3"
+					item: {
+						count: 1
+						id: "minecraft:soul_sand"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 4L
+					id: "5E2DE48ECDB67559"
+					item: {
+						count: 1
+						id: "iceandfire:ectoplasm"
+					}
+					type: "item"
+				}
+				{
+					id: "35AFE6D99A9B61E2"
+					item: {
+						count: 1
+						id: "iceandfire:ghost_ingot"
+					}
+					type: "item"
+				}
+			]
+			x: -5.0d
+			y: 5.8d
+		}
+		{
+			dependencies: [
+				"7D229D2A2365E3C0"
+			]
+			id: "60533BE364DFE409"
+			rewards: [
+				{
+					count: 6
+					id: "5B3A5FEB75294C3C"
+					item: {
+						count: 1
+						id: "iceandfire:shiny_scales"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "5E3B8D14C1422C9C"
+					item: {
+						count: 1
+						id: "minecraft:prismarine_shard"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "39697E5170296FAB"
+					item: {
+						count: 1
+						id: "iceandfire:earplugs"
+					}
+					type: "item"
+				}
+				{
+					id: "571852A5F0562634"
+					item: {
+						count: 1
+						id: "iceandfire:siren_tear"
+					}
+					type: "item"
+				}
+			]
+			x: -5.0d
+			y: 7.3d
+		}
+		{
+			dependencies: [
+				"60533BE364DFE409"
+			]
+			id: "5842C8D77908C670"
+			rewards: [
+				{
+					id: "433AF4E29F18ABA2"
+					item: {
+						count: 1
+						id: "iceandfire:sheep_helmet"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "0E796118A5C98D0E"
+					item: {
+						count: 1
+						id: "minecraft:cooked_mutton"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "13CE42A8FDEE85A1"
+					item: {
+						count: 1
+						id: "iceandfire:cyclops_eye"
+					}
+					type: "item"
+				}
+			]
+			x: -3.5d
+			y: 8.3d
+		}
+		{
+			dependencies: [
+				"5842C8D77908C670"
+			]
+			id: "77FAAB8C21C0F560"
+			rewards: [
+				{
+					count: 8
+					id: "27CF22F098C15486"
+					item: {
+						count: 1
+						id: "minecraft:golden_carrot"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "43B1A80C752B15D8"
+					item: {
+						count: 1
+						id: "iceandfire:blindfold"
+					}
+					type: "item"
+				}
+				{
+					id: "56392B58174D8B25"
+					item: {
+						count: 1
+						id: "iceandfire:gorgon_head"
+					}
+					type: "item"
+				}
+			]
+			x: -2.0d
+			y: 9.3d
+		}
+		{
+			dependencies: [
+				"7D229D2A2365E3C0"
+			]
+			id: "468F55C3E20B880C"
+			rewards: [
+				{
+					count: 6
+					id: "0BECDC2C25562D17"
+					item: {
+						count: 1
+						id: "iceandfire:deathworm_chitin_yellow"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "604A248B1ED9C886"
+					item: {
+						count: 1
+						id: "minecraft:tnt"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 8L
+					id: "16C1530A24A6A810"
+					item: {
+						count: 1
+						id: "iceandfire:deathworm_chitin_yellow"
+					}
+					type: "item"
+				}
+				{
+					id: "48E60A0EAFB10611"
+					item: {
+						count: 1
+						id: "iceandfire:deathworm_tounge"
+					}
+					type: "item"
+				}
+			]
+			x: -5.0d
+			y: 9.3d
+		}
+		{
+			dependencies: [
+				"468F55C3E20B880C"
+			]
+			id: "3037620426AA71EB"
+			rewards: [
+				{
+					count: 4
+					id: "78F2DC285FB65923"
+					item: {
+						count: 1
+						id: "iceandfire:troll_leather_forest"
+					}
+					type: "item"
+				}
+				{
+					id: "63C829CC2B2AF899"
+					item: {
+						count: 1
+						id: "minecraft:iron_block"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 4L
+					id: "5E827B8AE62A390A"
+					item: {
+						count: 1
+						id: "iceandfire:troll_leather_forest"
+					}
+					type: "item"
+				}
+				{
+					count: 2L
+					id: "181E2E8A838F9DD3"
+					item: {
+						count: 1
+						id: "iceandfire:troll_tusk"
+					}
+					type: "item"
+				}
+			]
+			x: -3.5d
+			y: 10.3d
+		}
+		{
+			dependencies: [
+				"60533BE364DFE409"
+			]
+			id: "6D74185981D07294"
+			rewards: [
+				{
+					count: 16
+					id: "2C16EB83E4C0C1F8"
+					item: {
+						count: 1
+						id: "iceandfire:sea_serpent_arrow"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "0CF3BC021287965E"
+					item: {
+						count: 1
+						id: "iceandfire:sea_serpent_fang"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 8L
+					id: "30941B1A56325F51"
+					item: {
+						count: 1
+						id: "iceandfire:sea_serpent_scales_blue"
+					}
+					type: "item"
+				}
+				{
+					count: 2L
+					id: "6ED374E5160EBC93"
+					item: {
+						count: 1
+						id: "iceandfire:sea_serpent_fang"
+					}
+					type: "item"
+				}
+			]
+			x: -0.5d
+			y: 7.8d
+		}
+		{
+			dependencies: [
+				"6D74185981D07294"
+			]
+			id: "2D8B33B918AC19DC"
+			rewards: [
+				{
+					count: 8
+					id: "4C73CFFEBCEECBF6"
+					item: {
+						count: 1
+						id: "iceandfire:sea_serpent_scales_blue"
+					}
+					type: "item"
+				}
+				{
+					id: "57DA2C8D230EF022"
+					item: {
+						count: 1
+						id: "minecraft:heart_of_the_sea"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "2F6F583EEC52B403"
+					item: {
+						count: 1
+						id: "iceandfire:tide_trident"
+					}
+					type: "item"
+				}
+			]
+			x: 1.0d
+			y: 8.8d
+		}
+		{
+			dependencies: [
+				"727139B409E0F110"
+			]
+			id: "4703B6683F4CB946"
+			rewards: [
+				{
+					count: 16
+					id: "277A8211E66E1D2D"
+					item: {
+						count: 1
+						id: "iceandfire:hydra_arrow"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "71A7D187ED3DBFF8"
+					item: {
+						count: 1
+						id: "minecraft:glistering_melon_slice"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 2L
+					id: "6A84FE7DF739AA5D"
+					item: {
+						count: 1
+						id: "iceandfire:hydra_fang"
+					}
+					type: "item"
+				}
+				{
+					id: "354D4C560417937A"
+					item: {
+						count: 1
+						id: "iceandfire:hydra_heart"
+					}
+					type: "item"
+				}
+			]
+			x: -0.5d
+			y: 6.3d
+		}
+		{
+			dependencies: [
+				"7D229D2A2365E3C0"
+			]
+			id: "6C3478BDDB5E583A"
+			rewards: [
+				{
+					id: "1665D829BFA8495E"
+					type: "xp"
+					xp: 15
+				}
+			]
+			shape: "hexagon"
+			size: 1.2d
+			tasks: [
+				{
+					id: "0D98BD5838C19F89"
+					type: "checkmark"
+				}
+			]
+			x: -3.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"6C3478BDDB5E583A"
+			]
+			id: "3E7E8674FD12EE06"
+			rewards: [
+				{
+					count: 8
+					id: "272AE718A987D70A"
+					item: {
+						count: 1
+						id: "iceandfire:dragonbone"
+					}
+					type: "item"
+				}
+				{
+					count: 32
+					id: "32353A238A4B6951"
+					item: {
+						count: 1
+						id: "minecraft:arrow"
+					}
+					type: "item"
+				}
+			]
+			shape: "square"
+			size: 1.2d
+			tasks: [
+				{
+					count: 16L
+					id: "3E7D31D52309C152"
+					item: {
+						count: 1
+						id: "iceandfire:dragonbone"
+					}
+					type: "item"
+				}
+			]
+			x: -1.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"3E7E8674FD12EE06"
+			]
+			id: "082A67FE075F15CD"
+			rewards: [
+				{
+					count: 8
+					id: "624021272714D984"
+					item: {
+						count: 1
+						id: "minecraft:glass_bottle"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "392F7CFD2C683EF9"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_meal"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 4L
+					id: "0F564FFBE27CC8F4"
+					item: {
+						count: 1
+						id: "iceandfire:fire_dragon_blood"
+					}
+					type: "item"
+				}
+			]
+			x: 1.0d
+			y: -1.5d
+		}
+		{
+			dependencies: [
+				"3E7E8674FD12EE06"
+			]
+			id: "6C36154378A693FE"
+			rewards: [
+				{
+					count: 16
+					id: "2D41D54D2A63C6C7"
+					item: {
+						count: 1
+						id: "iceandfire:dragonbone_arrow"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "08DA7E47EDBEA25C"
+					item: {
+						count: 1
+						id: "iceandfire:dragonbone"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "1631BF856860E185"
+					item: {
+						count: 1
+						id: "iceandfire:dragonbone_sword"
+					}
+					type: "item"
+				}
+				{
+					id: "086AEAE8B39B228B"
+					item: {
+						count: 1
+						id: "iceandfire:dragonbone_bow"
+					}
+					type: "item"
+				}
+			]
+			x: 1.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"082A67FE075F15CD"
+				"6C36154378A693FE"
+			]
+			id: "7E298AC1AC821DC7"
+			rewards: [
+				{
+					count: 2
+					id: "05859DDE1149A0DC"
+					item: {
+						count: 1
+						id: "iceandfire:fire_dragon_blood"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "3E79DF1CF8081691"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "3A4B89270F341C61"
+					item: {
+						count: 1
+						id: "iceandfire:dragonbone_sword_fire"
+					}
+					type: "item"
+				}
+			]
+			x: 2.5d
+			y: -0.5d
+		}
+		{
+			dependencies: [
+				"3E7E8674FD12EE06"
+			]
+			id: "084F8BA7B3FF879D"
+			rewards: [
+				{
+					count: 6
+					id: "5054C4236CB964AF"
+					item: {
+						count: 1
+						id: "iceandfire:dragonscales_red"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "69ACF6C7CE20168E"
+					item: {
+						count: 1
+						id: "minecraft:iron_ingot"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "1720DEBD83526F74"
+					item: {
+						count: 1
+						id: "iceandfire:armor_red_chestplate"
+					}
+					type: "item"
+				}
+			]
+			x: 1.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"3E7E8674FD12EE06"
+			]
+			id: "272AEFA5C4FBDA29"
+			rewards: [
+				{
+					count: 4
+					id: "4FBB1CC203791A3F"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "0F3124C65D65A4EB"
+					item: {
+						count: 1
+						id: "minecraft:gold_ingot"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "500722141E3787F2"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_seeker"
+					}
+					type: "item"
+				}
+			]
+			x: 2.5d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"272AEFA5C4FBDA29"
+			]
+			id: "4446F3DF604F4730"
+			rewards: [
+				{
+					id: "54BFDC7F7770A8EF"
+					type: "xp"
+					xp: 20
+				}
+			]
+			shape: "hexagon"
+			size: 1.2d
+			tasks: [
+				{
+					id: "4D560F06F02C44FD"
+					type: "checkmark"
+				}
+			]
+			x: 4.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"4446F3DF604F4730"
+			]
+			id: "7554521798381FD6"
+			rewards: [
+				{
+					count: 2
+					id: "6DF4C6BDE5A122E1"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_bone_block"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "3544EEFBE7F85F85"
+					item: {
+						count: 1
+						id: "minecraft:netherrack"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.2d
+			tasks: [
+				{
+					id: "7E294AC3353597D8"
+					item: {
+						count: 1
+						id: "iceandfire:dragonegg_red"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"7554521798381FD6"
+			]
+			id: "084FBE217E663557"
+			rewards: [
+				{
+					count: 8
+					id: "71A7969A68F8DF6E"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_meal"
+					}
+					type: "item"
+				}
+				{
+					id: "715EB636DD1D5A0D"
+					item: {
+						count: 1
+						id: "minecraft:flint_and_steel"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "5F8812AFAAA063E1"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_stick"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: -1.0d
+		}
+		{
+			dependencies: [
+				"084FBE217E663557"
+			]
+			id: "6FAA334538037984"
+			rewards: [
+				{
+					count: 16
+					id: "11C1E7788FB8CADD"
+					item: {
+						count: 1
+						id: "minecraft:cooked_beef"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "0CF3BDD927E7EB48"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_meal"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					count: 4L
+					id: "361A47BE397C6417"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_meal"
+					}
+					type: "item"
+				}
+				{
+					id: "18F101F22DC0FB9E"
+					item: {
+						count: 1
+						id: "iceandfire:sickly_dragon_meal"
+					}
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: -2.0d
+		}
+		{
+			dependencies: [
+				"084FBE217E663557"
+			]
+			id: "6F4C67BC00F35604"
+			rewards: [
+				{
+					id: "7B0301D49AF03C02"
+					item: {
+						count: 1
+						id: "minecraft:saddle"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "18BF5C5BB70A520B"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_bone_wall"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "0CC4514D71610F3B"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_flute"
+					}
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: -0.5d
+		}
+		{
+			dependencies: [
+				"084FBE217E663557"
+			]
+			id: "722D0BEFA389964F"
+			rewards: [
+				{
+					count: 8
+					id: "00323CA3B8D93323"
+					item: {
+						count: 1
+						id: "iceandfire:dragonbone"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "3B704CD46F2E3B3B"
+					item: {
+						count: 1
+						id: "minecraft:leather"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "37C01989310FC7F1"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_horn"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 0.5d
+		}
+		{
+			dependencies: [
+				"6F4C67BC00F35604"
+			]
+			id: "418F05270C45F9B5"
+			rewards: [
+				{
+					count: 4
+					id: "07E97D24E5CA1DFA"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+				{
+					id: "4AA783644B05AA68"
+					item: {
+						count: 1
+						id: "minecraft:netherite_scrap"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "0FDFFA4C523BDD85"
+					item: {
+						count: 1
+						id: "iceandfire:dragonarmor_diamond_head"
+					}
+					type: "item"
+				}
+			]
+			x: 10.0d
+			y: -1.5d
+		}
+		{
+			dependencies: [
+				"722D0BEFA389964F"
+			]
+			id: "402291AC55774BAC"
+			rewards: [
+				{
+					count: 2
+					id: "208E5D6FCB5845BC"
+					item: {
+						count: 1
+						id: "minecraft:ender_eye"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "2C6965F9856DDD28"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "21582C6C57D0DCFE"
+					item: {
+						count: 1
+						id: "iceandfire:summoning_crystal_fire"
+					}
+					type: "item"
+				}
+			]
+			x: 8.5d
+			y: 1.0d
+		}
+		{
+			dependencies: [
+				"6F4C67BC00F35604"
+				"084F8BA7B3FF879D"
+			]
+			id: "7B3E4E8EAD07C026"
+			rewards: [
+				{
+					count: 4
+					id: "47F14475A6DC647A"
+					item: {
+						count: 1
+						id: "iceandfire:dragonforge_fire_brick"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "7711B0A341F9709D"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_bone_block"
+					}
+					type: "item"
+				}
+			]
+			shape: "square"
+			size: 1.3d
+			tasks: [
+				{
+					id: "70E03D3D0A3D07EE"
+					item: {
+						count: 1
+						id: "iceandfire:dragonforge_fire_core_disabled"
+					}
+					type: "item"
+				}
+				{
+					id: "09469CC3EA9F156E"
+					item: {
+						count: 1
+						id: "iceandfire:dragonforge_fire_input"
+					}
+					type: "item"
+				}
+				{
+					count: 17L
+					id: "36DD40772FFB77F9"
+					item: {
+						count: 1
+						id: "iceandfire:dragonforge_fire_brick"
+					}
+					type: "item"
+				}
+				{
+					count: 8L
+					id: "79864C7DB11E42D8"
+					item: {
+						count: 1
+						id: "iceandfire:dragon_bone_block"
+					}
+					type: "item"
+				}
+			]
+			x: 10.0d
+			y: 0.5d
+		}
+		{
+			dependencies: [
+				"7B3E4E8EAD07C026"
+			]
+			id: "715A543F5A8D6404"
+			rewards: [
+				{
+					count: 4
+					id: "1E5F4CB5802D3BDC"
+					item: {
+						count: 1
+						id: "iceandfire:fire_dragon_blood"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "701701EF86CA6AB7"
+					item: {
+						count: 1
+						id: "minecraft:iron_block"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.4d
+			tasks: [
+				{
+					count: 4L
+					id: "09770F7E27A468AB"
+					item: {
+						count: 1
+						id: "iceandfire:dragonsteel_fire_ingot"
+					}
+					type: "item"
+				}
+			]
+			x: 11.5d
+			y: 0.5d
+		}
+		{
+			dependencies: [
+				"715A543F5A8D6404"
+			]
+			id: "36F77C65B1037604"
+			rewards: [
+				{
+					count: 2
+					id: "6678B405F85A171E"
+					item: {
+						count: 1
+						id: "iceandfire:dragonsteel_fire_ingot"
+					}
+					type: "item"
+				}
+				{
+					id: "0C8832CD85C89F2C"
+					item: {
+						count: 1
+						id: "minecraft:nether_star"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "55C5AD3C78B8331C"
+					item: {
+						count: 1
+						id: "iceandfire:dragonsteel_fire_sword"
+					}
+					type: "item"
+				}
+			]
+			x: 13.0d
+			y: -0.5d
+		}
+		{
+			dependencies: [
+				"715A543F5A8D6404"
+			]
+			id: "4B5619E058AC940F"
+			rewards: [
+				{
+					count: 2
+					id: "6913AC293605F66D"
+					item: {
+						count: 1
+						id: "iceandfire:dragonsteel_fire_ingot"
+					}
+					type: "item"
+				}
+				{
+					id: "41FC59505D34AAEE"
+					item: {
+						count: 1
+						id: "minecraft:diamond_block"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "0BCBF842BA85CE25"
+					item: {
+						count: 1
+						id: "iceandfire:dragonsteel_fire_chestplate"
+					}
+					type: "item"
+				}
+			]
+			x: 13.0d
+			y: 1.5d
+		}
+		{
+			dependencies: [
+				"4446F3DF604F4730"
+			]
+			id: "34285CB18AF2317E"
+			rewards: [
+				{
+					count: 16
+					id: "3160D175996FAF89"
+					item: {
+						count: 1
+						id: "iceandfire:dread_stone_bricks"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "68031C783E4FCA7D"
+					item: {
+						count: 1
+						id: "iceandfire:witherbone"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "01840EC2E78849BC"
+					item: {
+						count: 1
+						id: "iceandfire:dread_key"
+					}
+					type: "item"
+				}
+				{
+					count: 4L
+					id: "07996388483C8DF4"
+					item: {
+						count: 1
+						id: "iceandfire:dread_shard"
+					}
+					type: "item"
+				}
+			]
+			x: 5.5d
+			y: 2.5d
+		}
+		{
+			dependencies: [
+				"34285CB18AF2317E"
+			]
+			id: "7EB37B551F782988"
+			rewards: [
+				{
+					count: 4
+					id: "0C08C74AAC3FDFF0"
+					item: {
+						count: 1
+						id: "iceandfire:wither_shard"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "1C386C30451821A1"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "2B8F9D45B03E35FE"
+					item: {
+						count: 1
+						id: "iceandfire:lich_staff"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 2.5d
+		}
+		{
+			dependencies: [
+				"6ED374465B47B8F9"
+				"21D5E7976145DB0E"
+				"77FAAB8C21C0F560"
+				"3037620426AA71EB"
+				"2D8B33B918AC19DC"
+				"4703B6683F4CB946"
+				"7E298AC1AC821DC7"
+				"6FAA334538037984"
+				"418F05270C45F9B5"
+				"402291AC55774BAC"
+				"7EB37B551F782988"
+				"36F77C65B1037604"
+				"4B5619E058AC940F"
+			]
+			hide_dependency_lines: true
+			id: "4D4A343E9683147D"
+			rewards: [
+				{
+					id: "0363F1F1EA63E0AB"
+					item: {
+						count: 1
+						id: "iceandfire:dragonarmor_dragon_steel_fire_head"
+					}
+					type: "item"
+				}
+				{
+					id: "0D80F98E83E73A42"
+					item: {
+						count: 1
+						id: "iceandfire:dragonsteel_fire_block"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "141E0010E0D1CC79"
+					item: {
+						count: 1
+						id: "minecraft:diamond_block"
+					}
+					type: "item"
+				}
+			]
+			shape: "gear"
+			size: 1.8d
+			tasks: [
+				{
+					id: "4587D32BBED50106"
+					type: "checkmark"
+				}
+			]
+			x: 15.0d
+			y: 0.5d
+		}
+	]
+}

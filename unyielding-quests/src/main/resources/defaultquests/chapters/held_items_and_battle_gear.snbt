@@ -1,0 +1,4183 @@
+{
+	default_hide_dependency_lines: true
+	default_quest_shape: ""
+	filename: "held_items_and_battle_gear"
+	group: "582E67E18C086508"
+	icon: {
+		id: "minecraft:book"
+	}
+	id: "7DCE1F23D65C8760"
+	images: [
+		{
+			height: 0.4d
+			id: "D970F955E2F3C0AA"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 10.0d
+			x: 0.0d
+			y: -6.0d
+		}
+		{
+			height: 0.32d
+			id: "FAFD92F75E4CB5A6"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.5d
+			x: -10.0d
+			y: -4.95d
+		}
+		{
+			height: 0.32d
+			id: "B647AE6D48381EE6"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.62d
+			x: 0.0d
+			y: -4.95d
+		}
+		{
+			height: 0.32d
+			id: "A7EFF0AD1931491A"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.5d
+			x: 10.0d
+			y: -4.95d
+		}
+		{
+			height: 0.32d
+			id: "7A01262EDF5D9F71"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.5d
+			x: -10.0d
+			y: -2.8499999999999996d
+		}
+		{
+			height: 0.32d
+			id: "4F3FCCB17EBE58F1"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.14d
+			x: 0.0d
+			y: -2.8499999999999996d
+		}
+		{
+			height: 0.32d
+			id: "3013503385C43368"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.14d
+			x: 10.0d
+			y: -2.8499999999999996d
+		}
+		{
+			height: 0.32d
+			id: "3F372B774E6F6C88"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.3d
+			x: -10.0d
+			y: -0.7499999999999998d
+		}
+		{
+			height: 0.32d
+			id: "C1C04F9C30609B58"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.4d
+			x: 0.0d
+			y: -0.7499999999999998d
+		}
+		{
+			height: 0.32d
+			id: "BF1B75D4320A5BD5"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.14d
+			x: 10.0d
+			y: -0.7499999999999998d
+		}
+		{
+			height: 0.32d
+			id: "9477A82FA6EDF86D"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.3d
+			x: -10.0d
+			y: 1.3500000000000003d
+		}
+		{
+			height: 0.32d
+			id: "AF2631EFEA438E91"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.5d
+			x: 0.0d
+			y: 1.3500000000000003d
+		}
+		{
+			height: 0.32d
+			id: "8F2AB3220C49C7EB"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.559999999999999d
+			x: 10.0d
+			y: 1.3500000000000003d
+		}
+		{
+			height: 0.32d
+			id: "1A76269AA48DA1CA"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 6.46d
+			x: -10.0d
+			y: 3.45d
+		}
+		{
+			height: 0.32d
+			id: "822A8F4B760D3A9F"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.98d
+			x: 0.0d
+			y: 3.45d
+		}
+		{
+			height: 0.32d
+			id: "BB2183247D97C23A"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.4d
+			x: 10.0d
+			y: 3.45d
+		}
+		{
+			height: 0.32d
+			id: "45C1FD15BD7B25EA"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.559999999999999d
+			x: -10.0d
+			y: 5.55d
+		}
+		{
+			height: 0.32d
+			id: "63A2720B1B8300C8"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.559999999999999d
+			x: 0.0d
+			y: 5.55d
+		}
+		{
+			height: 0.32d
+			id: "14E8C22F1D8DDB89"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.559999999999999d
+			x: 10.0d
+			y: 5.55d
+		}
+		{
+			height: 0.32d
+			id: "5E4700D838FEF8EC"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.5d
+			x: -10.0d
+			y: 7.6499999999999995d
+		}
+		{
+			height: 0.32d
+			id: "7B5065CDB882E5A8"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 8.14d
+			x: 0.0d
+			y: 7.6499999999999995d
+		}
+		{
+			height: 0.32d
+			id: "98F7474729B58D49"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.3d
+			x: 10.0d
+			y: 7.6499999999999995d
+		}
+		{
+			height: 0.32d
+			id: "77E15FB4197DD86C"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.4d
+			x: -10.0d
+			y: 9.75d
+		}
+		{
+			height: 0.32d
+			id: "39D17031F8287A09"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.4d
+			x: 0.0d
+			y: 9.75d
+		}
+		{
+			height: 0.32d
+			id: "C87EFCABDEC1B30E"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 7.3d
+			x: 10.0d
+			y: 9.75d
+		}
+		{
+			height: 0.32d
+			id: "5C9D0D409E04096D"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.5d
+			x: -10.0d
+			y: 11.85d
+		}
+		{
+			height: 0.32d
+			id: "1FC37CDFEC434CF1"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.5d
+			x: 0.0d
+			y: 11.85d
+		}
+		{
+			height: 0.32d
+			id: "3DD46D88DD3CA415"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 9.5d
+			x: 10.0d
+			y: 11.85d
+		}
+	]
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			id: "C504B2E14EDE1211"
+			icon: {
+				id: "cobblemon:lucky_egg"
+			}
+			rewards: [
+				{
+					count: 3
+					id: "FB4FA8CA211E1980"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "1634296C9C19ABCB"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "D309CBC1CC8C5A15"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "D71E25A9109997AF"
+					item: "cobblemon:lucky_egg"
+					type: "item"
+				}
+			]
+			x: -11.875d
+			y: -4.0d
+		}
+		{
+			id: "B202DE2331630B67"
+			icon: {
+				id: "cobblemon:exp_share"
+			}
+			rewards: [
+				{
+					id: "681EF8EC6834614F"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "6981E0039A0A8285"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "5997760A9C7D4E9E"
+					item: "cobblemon:exp_share"
+					type: "item"
+				}
+			]
+			x: -10.625d
+			y: -4.0d
+		}
+		{
+			id: "76E8E6E88F869D40"
+			icon: {
+				id: "cobblemon:soothe_bell"
+			}
+			rewards: [
+				{
+					id: "456F3B2A9C132A36"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "FF79ADFCA268FF81"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "58A615622BD96F91"
+					item: "cobblemon:soothe_bell"
+					type: "item"
+				}
+			]
+			x: -9.375d
+			y: -4.0d
+		}
+		{
+			id: "7D10B2F45415062F"
+			icon: {
+				id: "fightorflight:oran_lucky_egg"
+			}
+			rewards: [
+				{
+					id: "875CB99DF1150959"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "33E48D2EE26FA944"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "FB266164B0718881"
+					item: "fightorflight:oran_lucky_egg"
+					type: "item"
+				}
+			]
+			x: -8.125d
+			y: -4.0d
+		}
+		{
+			id: "D654A2D4E6CDBDEA"
+			icon: {
+				id: "cobblemon:power_weight"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "1F40A23062991CCF"
+					item: {
+						count: 1
+						id: "cobblemon:carbos"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "E596AD9426FD3AA6"
+					item: {
+						count: 1
+						id: "cobblemon:calcium"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "5302CD47DCAB9ACE"
+					item: {
+						count: 1
+						id: "cobblemon:protein"
+					}
+					type: "item"
+				}
+				{
+					id: "73378EFD465D1400"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "FC48871BB0C4EF94"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "EFCF2B8B9327E1B0"
+					item: "cobblemon:power_weight"
+					type: "item"
+				}
+			]
+			x: -3.125d
+			y: -4.0d
+		}
+		{
+			id: "9ED525B4D9E7156D"
+			icon: {
+				id: "cobblemon:power_bracer"
+			}
+			rewards: [
+				{
+					id: "3ECB79C6D615E115"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "7E31A55A9EF1132B"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "C6C8D25C1FFCB346"
+					item: "cobblemon:power_bracer"
+					type: "item"
+				}
+			]
+			x: -1.875d
+			y: -4.0d
+		}
+		{
+			id: "779E09D3443F844E"
+			icon: {
+				id: "cobblemon:power_belt"
+			}
+			rewards: [
+				{
+					id: "11462F19413321AB"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "6E4FD1F3591A797A"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "C79B3F5BED17AAB0"
+					item: "cobblemon:power_belt"
+					type: "item"
+				}
+			]
+			x: -0.625d
+			y: -4.0d
+		}
+		{
+			id: "965581DD4FBDA6C2"
+			icon: {
+				id: "cobblemon:power_lens"
+			}
+			rewards: [
+				{
+					id: "C124D19748058726"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "D12C5A5F9950CE15"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "C36B9D2677266299"
+					item: "cobblemon:power_lens"
+					type: "item"
+				}
+			]
+			x: 0.625d
+			y: -4.0d
+		}
+		{
+			id: "D01CE690BED16775"
+			icon: {
+				id: "cobblemon:power_band"
+			}
+			rewards: [
+				{
+					id: "5D28465FBA111AE1"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "906474E5F011CA62"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "BA1155F738A5F80D"
+					item: "cobblemon:power_band"
+					type: "item"
+				}
+			]
+			x: 1.875d
+			y: -4.0d
+		}
+		{
+			id: "93978EFFDE0C75B9"
+			icon: {
+				id: "cobblemon:power_anklet"
+			}
+			rewards: [
+				{
+					id: "60880CD7CF5B4A57"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "E5F0AE4BAFB5F1BB"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "536FC94C53663419"
+					item: "cobblemon:power_anklet"
+					type: "item"
+				}
+			]
+			x: 3.125d
+			y: -4.0d
+		}
+		{
+			id: "D01966B3A8516AD2"
+			icon: {
+				id: "cobblemon:destiny_knot"
+			}
+			rewards: [
+				{
+					count: 3
+					id: "30BB4CCE64CE0527"
+					item: {
+						count: 1
+						id: "cobblemon:love_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "96A110C016034FA0"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "2F98AD3E1FE59D4F"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "8E3AC41AE5823355"
+					item: "cobblemon:destiny_knot"
+					type: "item"
+				}
+			]
+			x: 10.0d
+			y: -4.0d
+		}
+		{
+			id: "8015046431688FB7"
+			icon: {
+				id: "cobblemon:cleanse_tag"
+			}
+			rewards: [
+				{
+					count: 4
+					id: "ED7BFE73D2D840D6"
+					item: {
+						count: 1
+						id: "cobblemon:quick_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "DB259B9A4034D41D"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "BAF8025ADD1DB657"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "F4D371D6E4B05951"
+					item: "cobblemon:cleanse_tag"
+					type: "item"
+				}
+			]
+			x: -11.25d
+			y: -1.9d
+		}
+		{
+			id: "7918F853E20EF420"
+			icon: {
+				id: "cobblemon:smoke_ball"
+			}
+			rewards: [
+				{
+					id: "8CF59CC2E01CA07B"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "F58C233C5134EA04"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "356E5E1E807A9E4E"
+					item: "cobblemon:smoke_ball"
+					type: "item"
+				}
+			]
+			x: -10.0d
+			y: -1.9d
+		}
+		{
+			id: "BF788B4A3E8B9C92"
+			icon: {
+				id: "cobblemon:float_stone"
+			}
+			rewards: [
+				{
+					id: "8ABAFD12EB41AC3E"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "17AEE261C6091F92"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "67663755BD4080E5"
+					item: "cobblemon:float_stone"
+					type: "item"
+				}
+			]
+			x: -8.75d
+			y: -1.9d
+		}
+		{
+			id: "BF6C599F5250FA6E"
+			icon: {
+				id: "cobblemon:x_attack"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "6F833E6DD3A4E1FD"
+					item: {
+						count: 1
+						id: "cobblemon:dire_hit"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "F67A29DBB3DDC599"
+					item: {
+						count: 1
+						id: "cobblemon:guard_spec"
+					}
+					type: "item"
+				}
+				{
+					id: "8419EAEC97F049F7"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B86C3B13931C7A87"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "783D25544D54D625"
+					item: "cobblemon:x_attack"
+					type: "item"
+				}
+			]
+			x: -4.375d
+			y: -1.9d
+		}
+		{
+			id: "E6D72FDBD4B2D83C"
+			icon: {
+				id: "cobblemon:x_defence"
+			}
+			rewards: [
+				{
+					id: "4D38E93E7CF78FE0"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "5FF6684F0AD98232"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "43D4A80959C9B0A3"
+					item: "cobblemon:x_defence"
+					type: "item"
+				}
+			]
+			x: -3.125d
+			y: -1.9d
+		}
+		{
+			id: "78A884F1ACED50EC"
+			icon: {
+				id: "cobblemon:x_speed"
+			}
+			rewards: [
+				{
+					id: "ACAACEC1D5AD0076"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "9A452B2879B0FC20"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "785AB903613E55D8"
+					item: "cobblemon:x_speed"
+					type: "item"
+				}
+			]
+			x: -1.875d
+			y: -1.9d
+		}
+		{
+			id: "1580425FFFC4310B"
+			icon: {
+				id: "cobblemon:x_special_attack"
+			}
+			rewards: [
+				{
+					id: "7C44BC70C1F1094C"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "EFB9499713AB8353"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "8408202BE8EA1523"
+					item: "cobblemon:x_special_attack"
+					type: "item"
+				}
+			]
+			x: -0.625d
+			y: -1.9d
+		}
+		{
+			id: "E75D104FF64E8F20"
+			icon: {
+				id: "cobblemon:x_special_defence"
+			}
+			rewards: [
+				{
+					id: "809C99BD415465A2"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "7542213ECF00E956"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "A60880CA33CA525F"
+					item: "cobblemon:x_special_defence"
+					type: "item"
+				}
+			]
+			x: 0.625d
+			y: -1.9d
+		}
+		{
+			id: "B9D7896B2A200EA7"
+			icon: {
+				id: "cobblemon:x_accuracy"
+			}
+			rewards: [
+				{
+					id: "E002A9B019310684"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B52FF051CAF44C94"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "8AFF810991DC1012"
+					item: "cobblemon:x_accuracy"
+					type: "item"
+				}
+			]
+			x: 1.875d
+			y: -1.9d
+		}
+		{
+			id: "1342F2B5F6888423"
+			icon: {
+				id: "cobblemon:dire_hit"
+			}
+			rewards: [
+				{
+					id: "34BCF6D86DBF096F"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "25232AC41B207A4C"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "417CEBC940A5FF74"
+					item: "cobblemon:dire_hit"
+					type: "item"
+				}
+			]
+			x: 3.125d
+			y: -1.9d
+		}
+		{
+			id: "DC86A38C52428BB8"
+			icon: {
+				id: "cobblemon:guard_spec"
+			}
+			rewards: [
+				{
+					id: "7EEB3DC7F49E3920"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B5A7054E1921CD22"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "FB7600306D0318B2"
+					item: "cobblemon:guard_spec"
+					type: "item"
+				}
+			]
+			x: 4.375d
+			y: -1.9d
+		}
+		{
+			id: "EB3C6FC1AFC0FB42"
+			icon: {
+				id: "cobblemon:focus_sash"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "D61BF5161BD5A1F4"
+					item: {
+						count: 1
+						id: "cobblemon:revive"
+					}
+					type: "item"
+				}
+				{
+					id: "7076FB6361299A88"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "462174AB77E74463"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B4F5E0E603C21B55"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "2AB58B78767DFC07"
+					item: "cobblemon:focus_sash"
+					type: "item"
+				}
+			]
+			x: 9.375d
+			y: -1.9d
+		}
+		{
+			id: "F6587717CA14AA01"
+			icon: {
+				id: "cobblemon:focus_band"
+			}
+			rewards: [
+				{
+					id: "256ED601D6FC8E41"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "C1BFFE42DD7D0A3C"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "A42DC9E43E721552"
+					item: "cobblemon:focus_band"
+					type: "item"
+				}
+			]
+			x: 10.625d
+			y: -1.9d
+		}
+		{
+			id: "5BC04DF45CA944EC"
+			icon: {
+				id: "cobblemon:heavy_duty_boots"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "A65646415EF2A551"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "D4B03CF761487192"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "173EA29B29680B0A"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "B3EE29FF9652AD57"
+					item: "cobblemon:heavy_duty_boots"
+					type: "item"
+				}
+			]
+			x: -10.0d
+			y: 0.20000000000000018d
+		}
+		{
+			id: "318BAB8A8617ED0C"
+			icon: {
+				id: "cobblemon:eviolite"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "EE880609C3B2A65C"
+					item: {
+						count: 1
+						id: "cobblemon:zinc"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "541DD439297338BA"
+					item: {
+						count: 1
+						id: "cobblemon:iron"
+					}
+					type: "item"
+				}
+				{
+					id: "F2C96C96117B7AC6"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "99D69A56FEA98585"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "A29954DAAFF4297E"
+					item: "cobblemon:eviolite"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 0.20000000000000018d
+		}
+		{
+			id: "E56D8B130779E6FE"
+			icon: {
+				id: "cobblemon:rocky_helmet"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "496B766994C38D19"
+					item: {
+						count: 1
+						id: "cobblemon:max_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "5BBCEE97212A5A08"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "91CDD058D4EE542C"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "69644DE3823111D4"
+					item: "cobblemon:rocky_helmet"
+					type: "item"
+				}
+			]
+			x: 9.375d
+			y: 0.20000000000000018d
+		}
+		{
+			id: "920CD277BA9B8A86"
+			icon: {
+				id: "cobblemon:protective_pads"
+			}
+			rewards: [
+				{
+					id: "379574A14F2015EC"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "EDA5DCD04BBA6697"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "1929233070DF97E5"
+					item: "cobblemon:protective_pads"
+					type: "item"
+				}
+			]
+			x: 10.625d
+			y: 0.20000000000000018d
+		}
+		{
+			id: "E5F0163D21A9C862"
+			icon: {
+				id: "cobblemon:air_balloon"
+			}
+			rewards: [
+				{
+					count: 4
+					id: "639CF33211E7C293"
+					item: {
+						count: 1
+						id: "cobblemon:lum_berry"
+					}
+					type: "item"
+				}
+				{
+					id: "F9A2D61A54060568"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "5F2B494F0CB65282"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "677F22FECD9C8BE6"
+					item: "cobblemon:air_balloon"
+					type: "item"
+				}
+			]
+			x: -11.25d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "151DED31FC86BCA8"
+			icon: {
+				id: "cobblemon:covert_cloak"
+			}
+			rewards: [
+				{
+					id: "E62B577CFDF0B319"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "10F1E485688AC4ED"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "D71878B4851C3D0B"
+					item: "cobblemon:covert_cloak"
+					type: "item"
+				}
+			]
+			x: -10.0d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "A88DAA863CB57444"
+			icon: {
+				id: "cobblemon:safety_goggles"
+			}
+			rewards: [
+				{
+					id: "8B678B6835FDEE6A"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "805A60CFC787CE05"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "14A5C598529ABF02"
+					item: "cobblemon:safety_goggles"
+					type: "item"
+				}
+			]
+			x: -8.75d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "7C666CD222718835"
+			icon: {
+				id: "cobblemon:leftovers"
+			}
+			rewards: [
+				{
+					count: 4
+					id: "4AC0A3ED1367528A"
+					item: {
+						count: 1
+						id: "cobblemon:leppa_berry"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "BCFDD0487C6A563F"
+					item: {
+						count: 1
+						id: "cobblemon:sitrus_berry"
+					}
+					type: "item"
+				}
+				{
+					id: "BC4AC306D694C8A1"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "E3A85DE38E7A3CD3"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "19ED5928496C0AA5"
+					item: "cobblemon:leftovers"
+					type: "item"
+				}
+			]
+			x: -1.25d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "2D3E0039627507A9"
+			icon: {
+				id: "cobblemon:black_sludge"
+			}
+			rewards: [
+				{
+					id: "6F538FA9C50766B2"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "597A3C8138AB9E00"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "AF5EFFFC9BAC06F7"
+					item: "cobblemon:black_sludge"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "F636C9A79987C2F0"
+			icon: {
+				id: "cobblemon:shell_bell"
+			}
+			rewards: [
+				{
+					id: "288527F1431CA2F9"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "C41737739FBA02F1"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "E357452746586D10"
+					item: "cobblemon:shell_bell"
+					type: "item"
+				}
+			]
+			x: 1.25d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "98E90DBD8B869000"
+			icon: {
+				id: "cobblemon:charcoal_stick"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "292C5E028925B1CA"
+					item: {
+						count: 1
+						id: "cobblemon:pp_up"
+					}
+					type: "item"
+				}
+				{
+					id: "54C702D4C71702AB"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "894EC903CA84FBD1"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "F01BEEF1DE431C73"
+					item: "cobblemon:charcoal_stick"
+					type: "item"
+				}
+			]
+			x: 7.5d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "ADBEFED273A18FF7"
+			icon: {
+				id: "cobblemon:mystic_water"
+			}
+			rewards: [
+				{
+					id: "DA21E126340A236A"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "A579804ADBB66BF3"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "4B5319FF79BAB8F9"
+					item: "cobblemon:mystic_water"
+					type: "item"
+				}
+			]
+			x: 8.75d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "7F53AC8BDE2186A9"
+			icon: {
+				id: "cobblemon:miracle_seed"
+			}
+			rewards: [
+				{
+					id: "5B2A0468BA126EBF"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "50C97AF7E75E6105"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "C52322BCEC1958D6"
+					item: "cobblemon:miracle_seed"
+					type: "item"
+				}
+			]
+			x: 10.0d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "4BFF6AC4C3B9D03A"
+			icon: {
+				id: "cobblemon:magnet"
+			}
+			rewards: [
+				{
+					id: "EE06709AAE0C5158"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "F98E0D3CBBF49F9E"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "AED2CBE79E369B47"
+					item: "cobblemon:magnet"
+					type: "item"
+				}
+			]
+			x: 11.25d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "AA3CAC30B057C6BE"
+			icon: {
+				id: "cobblemon:dragon_fang"
+			}
+			rewards: [
+				{
+					id: "2221DD72EF1E0B1F"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "457F7C5FE2981A82"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "2AF212652A8E8B4A"
+					item: "cobblemon:dragon_fang"
+					type: "item"
+				}
+			]
+			x: 12.5d
+			y: 2.3000000000000003d
+		}
+		{
+			id: "BE1797CED273DB07"
+			icon: {
+				id: "cobblemon:normal_gem"
+			}
+			rewards: [
+				{
+					id: "4652D94AD5EB2EF4"
+					item: {
+						count: 1
+						id: "cobblemon:max_elixir"
+					}
+					type: "item"
+				}
+				{
+					id: "38C421CEF8E0E5AD"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "87FEF97A0EAE0FBE"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "2B47103C02620720"
+					item: "cobblemon:normal_gem"
+					type: "item"
+				}
+			]
+			x: -11.875d
+			y: 4.4d
+		}
+		{
+			id: "69FF8355995A37CF"
+			icon: {
+				id: "cobblemon:fire_gem"
+			}
+			rewards: [
+				{
+					id: "584960C136FAED7E"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "C90649345697F190"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "CDA5DA20A710D136"
+					item: "cobblemon:fire_gem"
+					type: "item"
+				}
+			]
+			x: -10.625d
+			y: 4.4d
+		}
+		{
+			id: "496847E30561F33B"
+			icon: {
+				id: "cobblemon:flying_gem"
+			}
+			rewards: [
+				{
+					id: "76CE2D625A8A21F8"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "F444C3A9E99255A6"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "4A64280ADBECB408"
+					item: "cobblemon:flying_gem"
+					type: "item"
+				}
+			]
+			x: -9.375d
+			y: 4.4d
+		}
+		{
+			id: "E91FDAD93FADB6F8"
+			icon: {
+				id: "cobblemon:dragon_gem"
+			}
+			rewards: [
+				{
+					id: "D8DC09B107B99CCC"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "339AC34C468BA9B8"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "B67854694A10694D"
+					item: "cobblemon:dragon_gem"
+					type: "item"
+				}
+			]
+			x: -8.125d
+			y: 4.4d
+		}
+		{
+			id: "143EB96C57817D4C"
+			icon: {
+				id: "cobblemon:life_orb"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "560B62AED7618854"
+					item: {
+						count: 1
+						id: "cobblemon:calcium"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "D8620BA05FE9B15C"
+					item: {
+						count: 1
+						id: "cobblemon:protein"
+					}
+					type: "item"
+				}
+				{
+					id: "396308700635B4EA"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "6F85E3B3A901EF60"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "D25925278716735B"
+					item: "cobblemon:life_orb"
+					type: "item"
+				}
+			]
+			x: -1.875d
+			y: 4.4d
+		}
+		{
+			id: "D3A5F019E3954846"
+			icon: {
+				id: "cobblemon:expert_belt"
+			}
+			rewards: [
+				{
+					id: "804148B011095D76"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "9AF514B352ED6E63"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "449643DEDE289F40"
+					item: "cobblemon:expert_belt"
+					type: "item"
+				}
+			]
+			x: -0.625d
+			y: 4.4d
+		}
+		{
+			id: "7BE261EC74A9FD87"
+			icon: {
+				id: "cobblemon:muscle_band"
+			}
+			rewards: [
+				{
+					id: "E16FE12140241422"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "1C0C0D55083D4101"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "BC7E0C9C2BA2E4A5"
+					item: "cobblemon:muscle_band"
+					type: "item"
+				}
+			]
+			x: 0.625d
+			y: 4.4d
+		}
+		{
+			id: "256F69031AF4FE23"
+			icon: {
+				id: "cobblemon:wise_glasses"
+			}
+			rewards: [
+				{
+					id: "88C69D41D116F353"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "9A5E7306C1313C16"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "852456EAC8FED2D1"
+					item: "cobblemon:wise_glasses"
+					type: "item"
+				}
+			]
+			x: 1.875d
+			y: 4.4d
+		}
+		{
+			id: "51257F08CDBDEE88"
+			icon: {
+				id: "cobblemon:loaded_dice"
+			}
+			rewards: [
+				{
+					id: "366043D8ECF92598"
+					item: {
+						count: 1
+						id: "cobblemon:pp_max"
+					}
+					type: "item"
+				}
+				{
+					id: "620FF879D1E0D924"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "1755C44584323428"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "3228EBC561469799"
+					item: "cobblemon:loaded_dice"
+					type: "item"
+				}
+			]
+			x: 8.125d
+			y: 4.4d
+		}
+		{
+			id: "D6B4E385F47A0E75"
+			icon: {
+				id: "cobblemon:punching_glove"
+			}
+			rewards: [
+				{
+					id: "BDA131F104E47E2C"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "6C21AFCF1255A284"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "384F3593466B9578"
+					item: "cobblemon:punching_glove"
+					type: "item"
+				}
+			]
+			x: 9.375d
+			y: 4.4d
+		}
+		{
+			id: "624D8E345D77E6E5"
+			icon: {
+				id: "cobblemon:metronome"
+			}
+			rewards: [
+				{
+					id: "3553C8E36549F21E"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "1C49D6EEA0D81BCA"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "42415D895C08E7BD"
+					item: "cobblemon:metronome"
+					type: "item"
+				}
+			]
+			x: 10.625d
+			y: 4.4d
+		}
+		{
+			id: "DB2245310673BE84"
+			icon: {
+				id: "cobblemon:big_root"
+			}
+			rewards: [
+				{
+					id: "86522DA878070948"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B109DB8FAB0DB507"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "EF3D2491A3E33B2E"
+					item: "cobblemon:big_root"
+					type: "item"
+				}
+			]
+			x: 11.875d
+			y: 4.4d
+		}
+		{
+			id: "B7F64C196FD7CC43"
+			icon: {
+				id: "cobblemon:choice_band"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "7DE41877B48337AA"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 6
+					id: "76D009003CE4439C"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "CB8BDCEDDA642A94"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "13B56DC6437EABD6"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "287F6C6C548487AC"
+					item: "cobblemon:choice_band"
+					type: "item"
+				}
+			]
+			x: -11.25d
+			y: 6.5d
+		}
+		{
+			id: "368C3065102D9470"
+			icon: {
+				id: "cobblemon:choice_specs"
+			}
+			rewards: [
+				{
+					id: "4083AEEB5AD2F67F"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "B05491D9EE0F61E6"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "93B81838FE4B1BC2"
+					item: "cobblemon:choice_specs"
+					type: "item"
+				}
+			]
+			x: -10.0d
+			y: 6.5d
+		}
+		{
+			id: "35AF02F9864BA732"
+			icon: {
+				id: "cobblemon:choice_scarf"
+			}
+			rewards: [
+				{
+					id: "54E180D123598D1B"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "6BA1EC43033315E3"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "EAD6500410688A7B"
+					item: "cobblemon:choice_scarf"
+					type: "item"
+				}
+			]
+			x: -8.75d
+			y: 6.5d
+		}
+		{
+			id: "2B7FC46F459E5E4F"
+			icon: {
+				id: "cobblemon:assault_vest"
+			}
+			rewards: [
+				{
+					count: 4
+					id: "AB2F2889BFFF421D"
+					item: {
+						count: 1
+						id: "cobblemon:zinc"
+					}
+					type: "item"
+				}
+				{
+					id: "9DFCAB3DF157B7D1"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "38AB2555C6A83522"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "5611D54373BDC4F7"
+					item: "cobblemon:assault_vest"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 6.5d
+		}
+		{
+			id: "1C7F56864C08CBF1"
+			icon: {
+				id: "cobblemon:scope_lens"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "7E3789E144B328DA"
+					item: {
+						count: 1
+						id: "cobblemon:dire_hit"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "95454F9FAE35B862"
+					item: {
+						count: 1
+						id: "cobblemon:carbos"
+					}
+					type: "item"
+				}
+				{
+					id: "7E26EB1D221B1A69"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "8555643B7169B2C6"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "1EA61A090D1E1342"
+					item: "cobblemon:scope_lens"
+					type: "item"
+				}
+			]
+			x: 8.125d
+			y: 6.5d
+		}
+		{
+			id: "AB7BFEDBABD73AF5"
+			icon: {
+				id: "cobblemon:wide_lens"
+			}
+			rewards: [
+				{
+					id: "3C58D07AE847DE40"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "14FE9A8627B00DCB"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "7023DF0B6C6CBE97"
+					item: "cobblemon:wide_lens"
+					type: "item"
+				}
+			]
+			x: 9.375d
+			y: 6.5d
+		}
+		{
+			id: "B1347069A594B58F"
+			icon: {
+				id: "cobblemon:zoom_lens"
+			}
+			rewards: [
+				{
+					id: "427827E4BE92CF65"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "EF8A05EE34ADF52A"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "3280AD40EE54A293"
+					item: "cobblemon:zoom_lens"
+					type: "item"
+				}
+			]
+			x: 10.625d
+			y: 6.5d
+		}
+		{
+			id: "24F7174E2A2B2C14"
+			icon: {
+				id: "cobblemon:blunder_policy"
+			}
+			rewards: [
+				{
+					id: "3AE128DE8C942650"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "5621D9047BB4304A"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "FF4B2469DE84C076"
+					item: "cobblemon:blunder_policy"
+					type: "item"
+				}
+			]
+			x: 11.875d
+			y: 6.5d
+		}
+		{
+			id: "ED97EAD1CCC39303"
+			icon: {
+				id: "cobblemon:power_herb"
+			}
+			rewards: [
+				{
+					id: "2BBCB1DC07DA2BCD"
+					item: {
+						count: 1
+						id: "cobblemon:mental_herb"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "A81A94426D7FCB28"
+					item: {
+						count: 1
+						id: "cobblemon:revival_herb"
+					}
+					type: "item"
+				}
+				{
+					id: "5942D04F72236D15"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "32E5340A12AF87FF"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "442AC602459B1262"
+					item: "cobblemon:power_herb"
+					type: "item"
+				}
+			]
+			x: -11.875d
+			y: 8.6d
+		}
+		{
+			id: "929B4B828B9BE8C0"
+			icon: {
+				id: "cobblemon:white_herb"
+			}
+			rewards: [
+				{
+					id: "EF8CA43454857A1C"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "5CBFEE1627FB075C"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "B81C58FC1A9A2A56"
+					item: "cobblemon:white_herb"
+					type: "item"
+				}
+			]
+			x: -10.625d
+			y: 8.6d
+		}
+		{
+			id: "F80B78DBEA9526F4"
+			icon: {
+				id: "cobblemon:mental_herb"
+			}
+			rewards: [
+				{
+					id: "7E16B45E9322EE25"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "FD5E45B245CC58B5"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "2996EFD88B112F9B"
+					item: "cobblemon:mental_herb"
+					type: "item"
+				}
+			]
+			x: -9.375d
+			y: 8.6d
+		}
+		{
+			id: "5D35A4B59091A710"
+			icon: {
+				id: "cobblemon:mirror_herb"
+			}
+			rewards: [
+				{
+					id: "6F529E28251CEA96"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "40DEAD5CCB597BA7"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "FF4B666D4A266302"
+					item: "cobblemon:mirror_herb"
+					type: "item"
+				}
+			]
+			x: -8.125d
+			y: 8.6d
+		}
+		{
+			id: "97A21810677E2A8B"
+			icon: {
+				id: "cobblemon:weakness_policy"
+			}
+			rewards: [
+				{
+					count: 4
+					id: "49D305705770944D"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "B8CA73A02D1FF1D7"
+					item: {
+						count: 1
+						id: "cobblemon:max_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "91C12222F61C70DA"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "A84466D5A0437648"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "B597D5EC635D608A"
+					item: "cobblemon:weakness_policy"
+					type: "item"
+				}
+			]
+			x: -2.5d
+			y: 8.6d
+		}
+		{
+			id: "721BACC245F8E560"
+			icon: {
+				id: "cobblemon:throat_spray"
+			}
+			rewards: [
+				{
+					id: "2D7BDE9A448C5BF1"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "ABAB1CE122A2D323"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "C98617A9D49E1C5F"
+					item: "cobblemon:throat_spray"
+					type: "item"
+				}
+			]
+			x: -1.25d
+			y: 8.6d
+		}
+		{
+			id: "11EC5B468F66C566"
+			icon: {
+				id: "cobblemon:absorb_bulb"
+			}
+			rewards: [
+				{
+					id: "6BE67F9C84FD436D"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "562A3472153999B2"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "934A3CBA6995BF7D"
+					item: "cobblemon:absorb_bulb"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 8.6d
+		}
+		{
+			id: "C8FA8D979F33AAD6"
+			icon: {
+				id: "cobblemon:cell_battery"
+			}
+			rewards: [
+				{
+					id: "FA08F9AF724046E4"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "D6C488B202E7C3F4"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "1C4E30D4A2F16D44"
+					item: "cobblemon:cell_battery"
+					type: "item"
+				}
+			]
+			x: 1.25d
+			y: 8.6d
+		}
+		{
+			id: "BA6434DEE0AFAE25"
+			icon: {
+				id: "cobblemon:luminous_moss"
+			}
+			rewards: [
+				{
+					id: "9533186378480EC5"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "3D5672E192F6D575"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "5F5A516869999D9C"
+					item: "cobblemon:luminous_moss"
+					type: "item"
+				}
+			]
+			x: 2.5d
+			y: 8.6d
+		}
+		{
+			id: "ABC5B0900C64794C"
+			icon: {
+				id: "cobblemon:toxic_orb"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "416165F931C150EF"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "B734A609F359C997"
+					item: {
+						count: 1
+						id: "cobblemon:full_heal"
+					}
+					type: "item"
+				}
+				{
+					id: "934209106FF8F256"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "546DE604D076492C"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "42F88D9588EAD628"
+					item: "cobblemon:toxic_orb"
+					type: "item"
+				}
+			]
+			x: 9.375d
+			y: 8.6d
+		}
+		{
+			id: "D580AD8024FF0E33"
+			icon: {
+				id: "cobblemon:flame_orb"
+			}
+			rewards: [
+				{
+					id: "AD0EF7AD2C4EB89B"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "C4D77EE85C6E0A52"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "4A629181C689514E"
+					item: "cobblemon:flame_orb"
+					type: "item"
+				}
+			]
+			x: 10.625d
+			y: 8.6d
+		}
+		{
+			id: "6A2A04840C69219E"
+			icon: {
+				id: "cobblemon:heat_rock"
+			}
+			rewards: [
+				{
+					count: 4
+					id: "4C11CE51424EBC5E"
+					item: {
+						count: 1
+						id: "cobblemon:timer_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "CFD593B24AE34DA7"
+					item: {
+						count: 1
+						id: "cobblemon:max_elixir"
+					}
+					type: "item"
+				}
+				{
+					id: "2DCC02D220D644D4"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "84278D96D52B75B7"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "A3E7D51BBAAB8764"
+					item: "cobblemon:heat_rock"
+					type: "item"
+				}
+			]
+			x: -12.5d
+			y: 10.7d
+		}
+		{
+			id: "88FD928FF8539DD9"
+			icon: {
+				id: "cobblemon:damp_rock"
+			}
+			rewards: [
+				{
+					id: "9D2F6A49E730BAA0"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "A4614B5EBAB2EF3F"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "C2C7E49A9A1F39FC"
+					item: "cobblemon:damp_rock"
+					type: "item"
+				}
+			]
+			x: -11.25d
+			y: 10.7d
+		}
+		{
+			id: "7009AA8784234105"
+			icon: {
+				id: "cobblemon:smooth_rock"
+			}
+			rewards: [
+				{
+					id: "D05DBDA290C68A49"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "52A2A26B36BDEA2E"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "7AEA381A9DF226ED"
+					item: "cobblemon:smooth_rock"
+					type: "item"
+				}
+			]
+			x: -10.0d
+			y: 10.7d
+		}
+		{
+			id: "1DA2D596A1FC6361"
+			icon: {
+				id: "cobblemon:icy_rock"
+			}
+			rewards: [
+				{
+					id: "4CBC381D69024CC9"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "4D66C6EA80351791"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "A6926CE0B83901CF"
+					item: "cobblemon:icy_rock"
+					type: "item"
+				}
+			]
+			x: -8.75d
+			y: 10.7d
+		}
+		{
+			id: "852CAF9E1774F07E"
+			icon: {
+				id: "cobblemon:utility_umbrella"
+			}
+			rewards: [
+				{
+					id: "9F85385FD66AE690"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "3F3255EB9FE25EC7"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "951B9220386A7C60"
+					item: "cobblemon:utility_umbrella"
+					type: "item"
+				}
+			]
+			x: -7.5d
+			y: 10.7d
+		}
+		{
+			id: "26A820A7F5855196"
+			icon: {
+				id: "cobblemon:terrain_extender"
+			}
+			rewards: [
+				{
+					count: 4
+					id: "3E4EEDAA87E4F33F"
+					item: {
+						count: 1
+						id: "cobblemon:dusk_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "C4DFAF58E83890D8"
+					item: {
+						count: 1
+						id: "cobblemon:timer_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "68CC029CD138C773"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "9CACB44775D4A640"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "2D7B9C1BB091A08C"
+					item: "cobblemon:terrain_extender"
+					type: "item"
+				}
+			]
+			x: -2.5d
+			y: 10.7d
+		}
+		{
+			id: "ED4BFA07C3A11868"
+			icon: {
+				id: "cobblemon:electric_seed"
+			}
+			rewards: [
+				{
+					id: "AA9D5359FBCD0947"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "7A14C237034BE3B0"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "D186D6BA64711F23"
+					item: "cobblemon:electric_seed"
+					type: "item"
+				}
+			]
+			x: -1.25d
+			y: 10.7d
+		}
+		{
+			id: "5550E8A562E15685"
+			icon: {
+				id: "cobblemon:grassy_seed"
+			}
+			rewards: [
+				{
+					id: "728D944A0C9B251A"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "A8C749B4BC5D6F70"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "61C2E9C9B94352C8"
+					item: "cobblemon:grassy_seed"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 10.7d
+		}
+		{
+			id: "4B6D061F703FAD02"
+			icon: {
+				id: "cobblemon:misty_seed"
+			}
+			rewards: [
+				{
+					id: "F11EDF652FA99EDD"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "5772F14D470D86ED"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "784A7BA020C0663E"
+					item: "cobblemon:misty_seed"
+					type: "item"
+				}
+			]
+			x: 1.25d
+			y: 10.7d
+		}
+		{
+			id: "786B514301C7E96A"
+			icon: {
+				id: "cobblemon:psychic_seed"
+			}
+			rewards: [
+				{
+					id: "8AFB02C11A173FC5"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "FDC9FC77BD32A029"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "3165A90BA76ED410"
+					item: "cobblemon:psychic_seed"
+					type: "item"
+				}
+			]
+			x: 2.5d
+			y: 10.7d
+		}
+		{
+			id: "23FB6B90A301E174"
+			icon: {
+				id: "cobblemon:eject_button"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "80D1D718F985E196"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "7AAE52B420C18658"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+				{
+					id: "D5A9394F759005E7"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "C3230F00B61E6FC5"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "71987817BF220E98"
+					item: "cobblemon:eject_button"
+					type: "item"
+				}
+			]
+			x: 8.125d
+			y: 10.7d
+		}
+		{
+			id: "FC57CCAE2C69D889"
+			icon: {
+				id: "cobblemon:eject_pack"
+			}
+			rewards: [
+				{
+					id: "6CB1B775FEACE4A1"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "838A194162B57A7E"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "25368B180119980D"
+					item: "cobblemon:eject_pack"
+					type: "item"
+				}
+			]
+			x: 9.375d
+			y: 10.7d
+		}
+		{
+			id: "21F6E6D2BA748918"
+			icon: {
+				id: "cobblemon:red_card"
+			}
+			rewards: [
+				{
+					id: "A3D103D4275C05C9"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "AA10650779031A05"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "17082C379EC1C604"
+					item: "cobblemon:red_card"
+					type: "item"
+				}
+			]
+			x: 10.625d
+			y: 10.7d
+		}
+		{
+			id: "5DA0533C28358901"
+			icon: {
+				id: "cobblemon:shed_shell"
+			}
+			rewards: [
+				{
+					id: "8F8A3E6DE05EC711"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "A7E571BF039C3676"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "1FC06BC8C026AF9F"
+					item: "cobblemon:shed_shell"
+					type: "item"
+				}
+			]
+			x: 11.875d
+			y: 10.7d
+		}
+		{
+			id: "36ADCC5D0C183778"
+			icon: {
+				id: "cobblemon:light_clay"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "F4C45DD87CFE7D25"
+					item: {
+						count: 1
+						id: "cobblemon:max_potion"
+					}
+					type: "item"
+				}
+				{
+					id: "8E021028B5B356F7"
+					item: {
+						count: 1
+						id: "cobblemon:pp_up"
+					}
+					type: "item"
+				}
+				{
+					id: "B4BAA5D73ED5E0F0"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "927D4F5A4F43F76B"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "E6FAF5F3B933C54A"
+					item: "cobblemon:light_clay"
+					type: "item"
+				}
+			]
+			x: -12.5d
+			y: 12.799999999999999d
+		}
+		{
+			id: "64187A64DFAB159C"
+			icon: {
+				id: "cobblemon:quick_claw"
+			}
+			rewards: [
+				{
+					id: "840724369B7CE5AF"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "298D8F1B40E1B59F"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "809786F238B9BF1A"
+					item: "cobblemon:quick_claw"
+					type: "item"
+				}
+			]
+			x: -11.25d
+			y: 12.799999999999999d
+		}
+		{
+			id: "A95D86772FB74A4F"
+			icon: {
+				id: "cobblemon:lagging_tail"
+			}
+			rewards: [
+				{
+					id: "58A326DB94019B89"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "6D4559BB4C654D81"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "52C1CC2EB31A8258"
+					item: "cobblemon:lagging_tail"
+					type: "item"
+				}
+			]
+			x: -10.0d
+			y: 12.799999999999999d
+		}
+		{
+			id: "55963E07A145DA0E"
+			icon: {
+				id: "cobblemon:iron_ball"
+			}
+			rewards: [
+				{
+					id: "6B5D04034FDE5B3B"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "F308E0D4F22E420E"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "84420EFEE85CB321"
+					item: "cobblemon:iron_ball"
+					type: "item"
+				}
+			]
+			x: -8.75d
+			y: 12.799999999999999d
+		}
+		{
+			id: "979A1ECCAC528D36"
+			icon: {
+				id: "cobblemon:room_service"
+			}
+			rewards: [
+				{
+					id: "B1F2B9C9D0CA8183"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "D77515825C89307F"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "89F74BF7327454AC"
+					item: "cobblemon:room_service"
+					type: "item"
+				}
+			]
+			x: -7.5d
+			y: 12.799999999999999d
+		}
+		{
+			id: "E51E9DB899C1AD0B"
+			icon: {
+				id: "cobblemon:binding_band"
+			}
+			rewards: [
+				{
+					count: 2
+					id: "7FA313CB5E40C85D"
+					item: {
+						count: 1
+						id: "cobblemon:max_revive"
+					}
+					type: "item"
+				}
+				{
+					id: "C0DEC2D85B83665F"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "85E204381A361D11"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "A7C2148305070664"
+					item: "cobblemon:binding_band"
+					type: "item"
+				}
+			]
+			x: -3.75d
+			y: 12.799999999999999d
+		}
+		{
+			id: "91F161863F1B0AF4"
+			icon: {
+				id: "cobblemon:grip_claw"
+			}
+			rewards: [
+				{
+					id: "D32F5D26FAD1F974"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "95A9DCD9A8872DF1"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "17510079E6DCA99C"
+					item: "cobblemon:grip_claw"
+					type: "item"
+				}
+			]
+			x: -2.5d
+			y: 12.799999999999999d
+		}
+		{
+			id: "5E56973697DF5C7E"
+			icon: {
+				id: "cobblemon:sticky_barb"
+			}
+			rewards: [
+				{
+					id: "ECC521A04E22704A"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "1A66799ADA21C9E8"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "BE3F6EFB5EB9925A"
+					item: "cobblemon:sticky_barb"
+					type: "item"
+				}
+			]
+			x: -1.25d
+			y: 12.799999999999999d
+		}
+		{
+			id: "14D961A2249FDF50"
+			icon: {
+				id: "cobblemon:ring_target"
+			}
+			rewards: [
+				{
+					id: "D11F5068344517E8"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "E38E0C408271A1CC"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "D67D21CD8D7CB2BE"
+					item: "cobblemon:ring_target"
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 12.799999999999999d
+		}
+		{
+			id: "C46303E055567197"
+			icon: {
+				id: "cobblemon:bright_powder"
+			}
+			rewards: [
+				{
+					id: "5CD29E5FEA0C5394"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "A438EBEE54B01862"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "DA9546D9005A9B8F"
+					item: "cobblemon:bright_powder"
+					type: "item"
+				}
+			]
+			x: 1.25d
+			y: 12.799999999999999d
+		}
+		{
+			id: "40A9BEE78F97F801"
+			icon: {
+				id: "cobblemon:clear_amulet"
+			}
+			rewards: [
+				{
+					id: "40037F68D4699D26"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "EC04F50D85ED1A08"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "EA5BBD82B29FA621"
+					item: "cobblemon:clear_amulet"
+					type: "item"
+				}
+			]
+			x: 2.5d
+			y: 12.799999999999999d
+		}
+		{
+			id: "88BC2BE81DCC1592"
+			icon: {
+				id: "cobblemon:ability_shield"
+			}
+			rewards: [
+				{
+					id: "6916DC2B1CDDD0B1"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "9DB2EFF86445BE36"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "C8895F8BF6AB0661"
+					item: "cobblemon:ability_shield"
+					type: "item"
+				}
+			]
+			x: 3.75d
+			y: 12.799999999999999d
+		}
+		{
+			id: "7F86524ED6D0ECF3"
+			icon: {
+				id: "cobblemon:light_ball"
+			}
+			rewards: [
+				{
+					count: 3
+					id: "D30D272B02968500"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "1E19105F08AD4C04"
+					item: {
+						count: 1
+						id: "cobblemon:thunder_stone"
+					}
+					type: "item"
+				}
+				{
+					id: "94AA31B3030F2C88"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "EA3DBAE44B8D616E"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "46605DBD9A2DC5F8"
+					item: "cobblemon:light_ball"
+					type: "item"
+				}
+			]
+			x: 8.75d
+			y: 12.799999999999999d
+		}
+		{
+			id: "E824051BD0035098"
+			icon: {
+				id: "cobblemon:metal_powder"
+			}
+			rewards: [
+				{
+					id: "94D4894DA51EDF54"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "6CA1B33016B44687"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "2DB3BE07C58F300E"
+					item: "cobblemon:metal_powder"
+					type: "item"
+				}
+			]
+			x: 10.0d
+			y: 12.799999999999999d
+		}
+		{
+			id: "4F2992A556FE96BC"
+			icon: {
+				id: "cobblemon:quick_powder"
+			}
+			rewards: [
+				{
+					id: "C15A9CA4800BDC15"
+					type: "xp"
+					xp: 100
+				}
+				{
+					command: "/cobbledollars give {p} 10"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin"
+					}
+					id: "944C724B226BE5C3"
+					title: "10 CobbleDollars"
+					type: "command"
+				}
+			]
+			tasks: [
+				{
+					count: 1L
+					id: "B0C218C8F8BD8749"
+					item: "cobblemon:quick_powder"
+					type: "item"
+				}
+			]
+			x: 11.25d
+			y: 12.799999999999999d
+		}
+		{
+			dependencies: [
+				"C504B2E14EDE1211"
+				"B202DE2331630B67"
+				"76E8E6E88F869D40"
+				"7D10B2F45415062F"
+				"D654A2D4E6CDBDEA"
+				"9ED525B4D9E7156D"
+				"779E09D3443F844E"
+				"965581DD4FBDA6C2"
+				"D01CE690BED16775"
+				"93978EFFDE0C75B9"
+				"D01966B3A8516AD2"
+				"8015046431688FB7"
+				"7918F853E20EF420"
+				"BF788B4A3E8B9C92"
+				"BF6C599F5250FA6E"
+				"E6D72FDBD4B2D83C"
+				"78A884F1ACED50EC"
+				"1580425FFFC4310B"
+				"E75D104FF64E8F20"
+				"B9D7896B2A200EA7"
+				"1342F2B5F6888423"
+				"DC86A38C52428BB8"
+				"EB3C6FC1AFC0FB42"
+				"F6587717CA14AA01"
+				"5BC04DF45CA944EC"
+				"318BAB8A8617ED0C"
+				"E56D8B130779E6FE"
+				"920CD277BA9B8A86"
+				"E5F0163D21A9C862"
+				"151DED31FC86BCA8"
+				"A88DAA863CB57444"
+				"7C666CD222718835"
+				"2D3E0039627507A9"
+				"F636C9A79987C2F0"
+				"98E90DBD8B869000"
+				"ADBEFED273A18FF7"
+				"7F53AC8BDE2186A9"
+				"4BFF6AC4C3B9D03A"
+				"AA3CAC30B057C6BE"
+				"BE1797CED273DB07"
+				"69FF8355995A37CF"
+				"496847E30561F33B"
+				"E91FDAD93FADB6F8"
+				"143EB96C57817D4C"
+				"D3A5F019E3954846"
+				"7BE261EC74A9FD87"
+				"256F69031AF4FE23"
+				"51257F08CDBDEE88"
+				"D6B4E385F47A0E75"
+				"624D8E345D77E6E5"
+				"DB2245310673BE84"
+				"B7F64C196FD7CC43"
+				"368C3065102D9470"
+				"35AF02F9864BA732"
+				"2B7FC46F459E5E4F"
+				"1C7F56864C08CBF1"
+				"AB7BFEDBABD73AF5"
+				"B1347069A594B58F"
+				"24F7174E2A2B2C14"
+				"ED97EAD1CCC39303"
+				"929B4B828B9BE8C0"
+				"F80B78DBEA9526F4"
+				"5D35A4B59091A710"
+				"97A21810677E2A8B"
+				"721BACC245F8E560"
+				"11EC5B468F66C566"
+				"C8FA8D979F33AAD6"
+				"BA6434DEE0AFAE25"
+				"ABC5B0900C64794C"
+				"D580AD8024FF0E33"
+				"6A2A04840C69219E"
+				"88FD928FF8539DD9"
+				"7009AA8784234105"
+				"1DA2D596A1FC6361"
+				"852CAF9E1774F07E"
+				"26A820A7F5855196"
+				"ED4BFA07C3A11868"
+				"5550E8A562E15685"
+				"4B6D061F703FAD02"
+				"786B514301C7E96A"
+				"23FB6B90A301E174"
+				"FC57CCAE2C69D889"
+				"21F6E6D2BA748918"
+				"5DA0533C28358901"
+				"36ADCC5D0C183778"
+				"64187A64DFAB159C"
+				"A95D86772FB74A4F"
+				"55963E07A145DA0E"
+				"979A1ECCAC528D36"
+				"E51E9DB899C1AD0B"
+				"91F161863F1B0AF4"
+				"5E56973697DF5C7E"
+				"14D961A2249FDF50"
+				"C46303E055567197"
+				"40A9BEE78F97F801"
+				"88BC2BE81DCC1592"
+				"7F86524ED6D0ECF3"
+				"E824051BD0035098"
+				"4F2992A556FE96BC"
+			]
+			hide_dependency_lines: 1b
+			id: "0D58D3F30EF397C3"
+			rewards: [
+				{
+					id: "600AFB718A658286"
+					item: {
+						count: 1
+						id: "cobblemon:master_ball"
+					}
+					type: "item"
+				}
+				{
+					count: 5
+					id: "502309446FB2CF8A"
+					item: {
+						count: 1
+						id: "cobblemon:rare_candy"
+					}
+					type: "item"
+				}
+				{
+					id: "6AB6EBB7CA8783D2"
+					type: "xp"
+					xp: 1000
+				}
+				{
+					command: "/cobbledollars give {p} 500"
+					console: true
+					icon: {
+						id: "cobblemon:relic_coin_sack"
+					}
+					id: "E480D948C11CCBA6"
+					title: "500 CobbleDollars"
+					type: "command"
+				}
+			]
+			shape: "gear"
+			size: 1.6d
+			tasks: [
+				{
+					abilities: ""
+					action: "defeat"
+					amount: 25L
+					aspects: ""
+					biome: ""
+					dex_progress: "seen"
+					dimension: ""
+					form: ""
+					gender: ""
+					held_items: ""
+					id: "03E79EFD4D97F8DF"
+					max_level: 0
+					max_turns: 0
+					min_level: 0
+					moves: ""
+					natures: ""
+					poke_ball_used: ""
+					pokemon: ""
+					pokemon_type: ""
+					raid_tiers: ""
+					region: ""
+					shiny: false
+					targetPlayer: ""
+					time_max: 24000L
+					time_min: 0L
+					trainers: ""
+					type: "cobblemon_tasks:cobblemon_task"
+				}
+			]
+			x: 0.0d
+			y: 15.399999999999999d
+		}
+	]
+}

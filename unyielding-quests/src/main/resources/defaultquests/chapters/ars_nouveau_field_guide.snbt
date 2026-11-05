@@ -1,0 +1,558 @@
+{
+	default_hide_dependency_lines: true
+	default_quest_shape: ""
+	filename: "ars_nouveau_field_guide"
+	group: "6E41A6B769F20602"
+	icon: {
+		id: "ars_nouveau:novice_spell_book"
+	}
+	id: "00AF23F983270E83"
+	images: [
+		{
+			height: 0.45d
+			id: "55D7255822ACB646"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: -6.0d
+			y: -1.5d
+		}
+		{
+			height: 0.45d
+			id: "6668CC013F0616F0"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: 0.0d
+			y: -1.5d
+		}
+		{
+			height: 0.45d
+			id: "544A4313B62F68AC"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: 6.0d
+			y: -1.5d
+		}
+		{
+			height: 0.32d
+			id: "07EF3B1E75B351F8"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -6.0d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "1DFF559CB6888DAE"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -6.0d
+			y: 3.92d
+		}
+		{
+			height: 0.32d
+			id: "1E012B769B781839"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -6.0d
+			y: 6.92d
+		}
+		{
+			height: 0.32d
+			id: "48FA716304C3100B"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 0.0d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "6A80F33674E0BBF3"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 0.0d
+			y: 3.92d
+		}
+		{
+			height: 0.32d
+			id: "6897B5172CB37E01"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 0.0d
+			y: 6.92d
+		}
+		{
+			height: 0.32d
+			id: "6FA1A1B7638C7861"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 6.0d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "666813A705640284"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 6.0d
+			y: 3.92d
+		}
+		{
+			height: 0.32d
+			id: "38BBF6FFF800B87F"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 6.0d
+			y: 6.92d
+		}
+	]
+	order_index: 2
+	quest_links: [ ]
+	quests: [
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "ars_nouveau:worn_notebook"
+			}
+			id: "5F178E66FD3C2873"
+			rewards: [
+				{
+					count: 4
+					id: "6C873146CA6C27A7"
+					item: {
+						count: 1
+						id: "minecraft:amethyst_shard"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "317CBA0FD19D7837"
+					item: {
+						count: 1
+						id: "ars_nouveau:worn_notebook"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"5F178E66FD3C2873"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "ars_nouveau:novice_spell_book"
+			}
+			id: "7FCF65E05946A7B2"
+			rewards: [
+				{
+					count: 12
+					id: "1E7F23835CD50961"
+					item: {
+						count: 1
+						id: "minecraft:lapis_lazuli"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "30D530D8ADFCA735"
+					item: {
+						count: 1
+						id: "ars_nouveau:novice_spell_book"
+					}
+					type: "item"
+				}
+				{
+					consume_items: false
+					id: "7DD7B0EA4CC66E4D"
+					item: {
+						count: 1
+						id: "ars_nouveau:scribes_table"
+					}
+					type: "item"
+				}
+			]
+			x: -6.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"7FCF65E05946A7B2"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "ars_nouveau:apprentice_spell_book"
+			}
+			id: "770F318F03D29D64"
+			rewards: [
+				{
+					count: 2
+					id: "16FA6CC8EED3B67F"
+					item: {
+						count: 1
+						id: "minecraft:diamond"
+					}
+					type: "item"
+				}
+				{
+					id: "526038840235C387"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "ars_nouveau:apprentice_spell_book"
+					criterion: ""
+					id: "508DA0BB32AE2DCE"
+					type: "advancement"
+				}
+			]
+			x: -6.0d
+			y: 6.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "ars_nouveau:imbuement_chamber"
+			}
+			id: "36826CA9D17F379E"
+			rewards: [
+				{
+					count: 8
+					id: "301213E7B7F4FCAB"
+					item: {
+						count: 1
+						id: "minecraft:amethyst_shard"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "6F10D3748699A97B"
+					item: {
+						count: 1
+						id: "ars_nouveau:imbuement_chamber"
+					}
+					type: "item"
+				}
+				{
+					consume_items: false
+					id: "0D14A7956ECE6139"
+					item: {
+						count: 1
+						id: "ars_nouveau:source_gem"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"36826CA9D17F379E"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "ars_nouveau:agronomic_sourcelink"
+			}
+			id: "0C0124A5249E9D39"
+			rewards: [
+				{
+					count: 8
+					id: "40F53D51173EA3A8"
+					item: {
+						count: 1
+						id: "minecraft:wheat_seeds"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "356A78DA8802626F"
+					item: {
+						count: 1
+						id: "minecraft:glass"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "3DB445C5AFF96D50"
+					item: {
+						count: 1
+						id: "ars_nouveau:agronomic_sourcelink"
+					}
+					type: "item"
+				}
+				{
+					consume_items: false
+					id: "6319C2DCBF17F5FD"
+					item: {
+						count: 1
+						id: "ars_nouveau:source_jar"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"0C0124A5249E9D39"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "ars_nouveau:enchanting_apparatus"
+			}
+			id: "79F48133C937F5A3"
+			rewards: [
+				{
+					count: 4
+					id: "4F4114ECE2821C72"
+					item: {
+						count: 1
+						id: "minecraft:gold_ingot"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "672C1671D9A4135B"
+					item: {
+						count: 1
+						id: "minecraft:lapis_lazuli"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "7E27F00C6848DF2B"
+					item: {
+						count: 1
+						id: "ars_nouveau:enchanting_apparatus"
+					}
+					type: "item"
+				}
+				{
+					consume_items: false
+					id: "2AF61000713E5894"
+					item: {
+						count: 1
+						id: "ars_nouveau:arcane_core"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 6.0d
+		}
+		{
+			dependencies: [
+				"79F48133C937F5A3"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "ars_nouveau:starbuncle_charm"
+			}
+			id: "7529A7734DC5015E"
+			rewards: [
+				{
+					count: 2
+					id: "61BD09F149E2980A"
+					item: {
+						count: 1
+						id: "minecraft:chest"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "239B88829915CA7B"
+					item: {
+						count: 1
+						id: "ars_nouveau:starbuncle_charm"
+					}
+					type: "item"
+				}
+				{
+					consume_items: false
+					id: "567149D3E896F7D7"
+					item: {
+						count: 1
+						id: "ars_nouveau:dominion_wand"
+					}
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"79F48133C937F5A3"
+			]
+			hide_dependency_lines: true
+			icon: {
+				id: "ars_elemental:lesser_air_focus"
+			}
+			id: "19B1FC8DDF14322B"
+			rewards: [
+				{
+					count: 2
+					id: "58BD16619E7099C3"
+					item: {
+						count: 1
+						id: "minecraft:golden_apple"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					icon: {
+						id: "ars_elemental:lesser_air_focus"
+					}
+					id: "6DD7EC14F3193793"
+					item: {
+						components: {
+							"ftbfiltersystem:filter": "or(item(ars_elemental:lesser_air_focus)item(ars_elemental:lesser_earth_focus)item(ars_elemental:lesser_fire_focus)item(ars_elemental:lesser_water_focus))"
+						}
+						count: 1
+						id: "ftbfiltersystem:smart_filter"
+					}
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: 3.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "ars_additions:wayfinder"
+			}
+			id: "2670E31F1B8FD5DF"
+			rewards: [
+				{
+					count: 2
+					id: "04AC3E711049AE54"
+					item: {
+						count: 1
+						id: "minecraft:ender_pearl"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "0426BA66C2126979"
+					item: {
+						count: 1
+						id: "ars_additions:ritual_locate_structure"
+					}
+					type: "item"
+				}
+				{
+					consume_items: false
+					id: "436C960E8A2A170E"
+					item: {
+						count: 1
+						id: "ars_nouveau:ritual_brazier"
+					}
+					type: "item"
+				}
+			]
+			x: 6.0d
+			y: 6.0d
+		}
+	]
+}

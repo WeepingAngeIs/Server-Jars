@@ -1,0 +1,377 @@
+{
+	default_hide_dependency_lines: true
+	default_quest_shape: ""
+	filename: "trainer_activities"
+	group: "6E41A6B769F20601"
+	icon: {
+		id: "cobblemon_battle_tower:holo_battle_tower"
+	}
+	id: "5A575B69815437BB"
+	images: [
+		{
+			height: 0.45d
+			id: "5B4498E121963101"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: -6.0d
+			y: -1.5d
+		}
+		{
+			height: 0.45d
+			id: "356DD0905DDBAE0C"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: 0.0d
+			y: -1.5d
+		}
+		{
+			height: 0.45d
+			id: "347B4A6DEADCC759"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 5.0d
+			x: 6.0d
+			y: -1.5d
+		}
+		{
+			height: 0.32d
+			id: "521D828F3998E6F8"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -6.0d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "22A5BC83E08B8831"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -7.5d
+			y: 3.92d
+		}
+		{
+			height: 0.32d
+			id: "22E6CA10A316028B"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: -4.5d
+			y: 3.92d
+		}
+		{
+			height: 0.32d
+			id: "65EB96ACBDAE9146"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 0.0d
+			y: 0.92d
+		}
+		{
+			height: 0.32d
+			id: "22D53EA5ED799B86"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 0.0d
+			y: 3.92d
+		}
+		{
+			height: 0.32d
+			id: "273A41B3C0EAFB01"
+			image: ""
+			position_locked: 1b
+			rotation: 0.0d
+			text_on_image: 1b
+			text_shadow: 1b
+			width: 2.9d
+			x: 6.0d
+			y: 0.92d
+		}
+	]
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cobblemonraiddens:raid_shard"
+			}
+			id: "44A8C4D8EA3022C1"
+			rewards: [
+				{
+					count: 2
+					id: "1E478F8DF9E81EC2"
+					item: {
+						count: 1
+						id: "cobblemon:super_potion"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:join_raid"
+					criterion: ""
+					id: "18B3E623BA05A3B6"
+					type: "advancement"
+				}
+			]
+			x: -6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"44A8C4D8EA3022C1"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "cobblemonraiddens:catching_charm"
+			}
+			id: "7186B9A47F3D7C20"
+			rewards: [
+				{
+					count: 2
+					id: "14CD14EF4B363EF4"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_m"
+					}
+					type: "item"
+				}
+				{
+					count: 2
+					id: "57DFFC1FA2A52202"
+					item: {
+						count: 1
+						id: "cobblemon:revive"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:tier_one"
+					criterion: ""
+					id: "677BE14AD36B3723"
+					type: "advancement"
+				}
+			]
+			x: -7.5d
+			y: 3.0d
+		}
+		{
+			dependencies: [
+				"44A8C4D8EA3022C1"
+			]
+			hide_dependency_lines: false
+			icon: {
+				id: "cobblemon:ultra_ball"
+			}
+			id: "398404A249874E2E"
+			rewards: [
+				{
+					id: "63AD832C2071FF38"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_l"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "1138495E78145464"
+					item: {
+						count: 1
+						id: "cobblemon:ultra_ball"
+					}
+					type: "item"
+				}
+			]
+			shape: "diamond"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "cobblemonraiddens:tier_three"
+					criterion: ""
+					id: "0AC46C28C328881A"
+					type: "advancement"
+				}
+			]
+			x: -4.5d
+			y: 3.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cobblemon_battle_tower:holo_battle_tower"
+			}
+			id: "45DFC05D13751989"
+			rewards: [
+				{
+					count: 3
+					id: "1FEAC6E05E01AC95"
+					item: {
+						count: 1
+						id: "cobblemon:hyper_potion"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "1221B987878061B3"
+					item: {
+						count: 1
+						id: "cobblemon:leppa_berry"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "5F629FAD65CBBCFC"
+					item: {
+						count: 1
+						id: "cobblemon_battle_tower:holo_battle_tower"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "cobblemon_expeditions:copper_expedition_board"
+			}
+			id: "382C7217C7FDF203"
+			rewards: [
+				{
+					count: 2
+					id: "3B42A8FFD0D0C03F"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_m"
+					}
+					type: "item"
+				}
+				{
+					count: 8
+					id: "749321FFE27BDAF1"
+					item: {
+						components: {
+							"cobblemon:bait_effects": [
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+								"cobblemon:golden_apple"
+							]
+							"cobblemon:food_colour": [
+								"yellow"
+								"yellow"
+								"yellow"
+							]
+							"cobblemon:ingredient": [
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+								"minecraft:golden_apple"
+							]
+						}
+						count: 1
+						id: "cobblemon:poke_snack"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "0D548843F5994C3E"
+					item: {
+						count: 1
+						id: "cobblemon_expeditions:copper_expedition_board"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 3.0d
+		}
+		{
+			hide_dependency_lines: true
+			icon: {
+				id: "rctmod:trainer_card"
+			}
+			id: "70A195D4F71CF95D"
+			rewards: [
+				{
+					count: 2
+					id: "7827B66F47C00810"
+					item: {
+						count: 1
+						id: "cobblemon:exp_candy_m"
+					}
+					type: "item"
+				}
+				{
+					count: 4
+					id: "548044DDE34D59FD"
+					item: {
+						count: 1
+						id: "cobblemon:great_ball"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					advancement: "rctmod:trainers/defeat_any"
+					criterion: ""
+					id: "78B36775C9A25AD6"
+					type: "advancement"
+				}
+			]
+			x: 6.0d
+			y: 0.0d
+		}
+	]
+}
