@@ -611,12 +611,6 @@
           "subject": "RUNIC KATANA, gently curved single dark edge, small round guard, dark double-handed grip with violet wrapping and a glowing lilac rune; glint travels."
         },
         {
-          "id": "35914107de7a9a3d.png",
-          "title": "Runic Rapier",
-          "row": 1,
-          "subject": "RUNIC RAPIER, needle-thin pointed charcoal blade with open horseshoe guard of antique gold and a violet gem; purple gleam runs along slender point."
-        },
-        {
           "id": "57b652e2dee7d7a8.png",
           "title": "Runic Twinblade",
           "row": 2,
@@ -959,6 +953,20 @@
           "subject": "Wraithfang, ghostly CUTLASS with a curved spectral mint fang blade, midnight-blue basket guard and one violet wisp hugging its back edge; green fang highlight pulses."
         }
       ]
+    },
+    {
+      "file": "armory-rapier.png",
+      "prompt": "Use case: stylized-concept. Make a genuinely transparent wide landscape sprite strip for a fantasy Minecraft quest icon called Runic Rapier. Exactly ONE horizontal row with FOUR equal-width frame cells centered at 12.5%, 37.5%, 62.5% and 87.5% across. Same original pixel-art rapier in every frame, point toward the upper right, pommel at lower left. Each complete sword centered with ample clear gutter. This is meant to be legible on a dark navy inventory panel after shrinking to 28×28 pixels. Slim tapering rapier blade, but make it THREE native pixels wide throughout the main portion. Bright silver-lavender steel cutting edge runs uninterrupted from hilt to near tip, providing strong contrast on dark navy in EVERY frame. Dark gunmetal forms the recessed spine only. Make two bright violet angular rune notches in the steel, a clearly open curved old-gold knuckle bow, rich purple wrapped grip, gold pommel. Thick amber guard is subordinate to a clean visible long pale lavender thrusting blade. Style: classic hand-pixelled 24×24 game inventory icon, true chunky stepped shapes, one-pixel deep plum contour, about 10 flat colors. Four subtle glint phases: a short white-violet highlight travels from forte to lower-middle to upper-middle to tip, keeping the permanent silver-lavender steel edge bright in all four. Exact same main silhouette and position, no bobbing. Strictly transparent background and interior holes, no card outlines, text or labels, no backdrop, no glowing haze, no ground/shadow, no effects extending past the blade.",
+      "rows": [
+        {
+          "id": "35914107de7a9a3d.png",
+          "title": "Runic Rapier",
+          "row": 0,
+          "subject": "Needle-tipped silver-lavender runic rapier, gold loop guard and purple grip with a sweeping violet blade glint."
+        }
+      ],
+      "row_count": 1,
+      "columns": 4
     }
   ]
 }

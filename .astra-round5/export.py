@@ -16,6 +16,13 @@ OUT = REPO / ".astra-output"
 SIZE = 32
 PLAY = [0, 1, 2, 3, 2, 1]
 EXPECTED = json.loads((ROOT / "expected.json").read_text(encoding="utf-8-sig"))
+# Lift only these dark subjects' midtones on the navy quest-book background.
+CONTRAST_GAMMA = {
+    '56bde069e49cedf1.png': 0.66,  # Zekrom
+    '3b9b9e87d4f40ae2.png': 0.75,  # Soulstalker
+    '24ab05c1536fa9a7.png': 0.70,  # Shadow and Gloam
+    '0d173e474e34977a.png': 0.75,  # Bramblethorn
+}
 
 
 def check(ok, message):
@@ -104,10 +111,10 @@ def encode(im,fmt,**kw):
 
 
 def export_one(meta,raw_frames):
-    if meta['id']=='56bde069e49cedf1.png':
-        # Give Zekrom's charcoal armor enough midtone contrast on the navy quest panel.
-        slate_curve=[round(255*(value/255)**0.66) for value in range(256)]
-        raw_frames=[f.point(slate_curve*3+list(range(256))) for f in raw_frames]
+    gamma = CONTRAST_GAMMA.get(meta['id'])
+    if gamma:
+        curve = [round(255*(value/255)**gamma) for value in range(256)]
+        raw_frames = [f.point(curve*3+list(range(256))) for f in raw_frames]
     frames=shared_palette(raw_frames)
     strip=Image.new("RGBA",(32,128))
     palette=set()
@@ -121,7 +128,7 @@ def export_one(meta,raw_frames):
         strip.paste(f,(0,i*SIZE))
     check(2<=len(palette)<=24, f"palette size {len(palette)}")
     distinct=len({f.tobytes() for f in frames})
-    check(distinct>=2,"motion disappeared at native size")
+    check(distinct==4,"four distinct animation frames required at native size")
     data=encode(strip,"PNG",optimize=True)
     with Image.open(io.BytesIO(data)) as decoded:
         check(decoded.size==(32,128) and decoded.mode=="RGBA","invalid saved strip")

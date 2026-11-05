@@ -1,6 +1,36 @@
 {
   "sheets": [
     {
+      "file": "legend-01.png",
+      "prompt": "Use case: stylized-concept. Original artist-drawn pixel-art inventory of four fantasy expedition collectibles, 4-frame loops for a dark RPG quest book. One transparent square PNG with an invisible precisely even 4-column x4-row grid. Each ROW shows ONE particular inanimate inventory item four times across; columns are animation phases 1,2,3,4 of a repeating tiny local motion. Fixed pose and same object size within each row. Each item fits within the central 65% of a cell. Keep generous empty transparent gutters horizontally and vertically. Square center positions on each axis: 12.5%,37.5%,62.5%,87.5%. Chunky and decisive 32px pixel-art silhouettes with flat deep navy outlines, pale sharp specular pixels and saturated colors, like beautiful hand-pixelled loot. A few bold features per item and own distinct colors. No creatures, characters, faces, scenes, card rectangles, backgrounds, text or labels or gridlines. Top-to-bottom four row specifications:\n1. Single long icy blue tail feather curved like a ribbon, dangling two clear icicle beads. A white glint slides down the beads.\n2. Yellow bolt-shaped power-station fuse clamped in a black steel bracket with orange copper tips. An arc crawls across its terminals.\n3. Red-gold phoenix plume kept in a brass torch socket. Its small orange flame crown bends and springs upright.\n4. Psychic laboratory vial with two curled lilac DNA strands, steel stopper and magenta liquid. One white bubble rises inside.\nDeliver a transparent PNG of these exact four rows of animated inanimate artifacts. No scenery or cast shadows.",
+      "rows": [
+        {
+          "id": "76ea63e69ec611f5.png",
+          "title": "Articuno",
+          "row": 0,
+          "subject": "Expedition artifact: Single long icy blue tail feather curved like a ribbon, dangling two clear icicle beads. A white glint slides down the beads."
+        },
+        {
+          "id": "2689d6ef3930b24b.png",
+          "title": "Zapdos",
+          "row": 1,
+          "subject": "Expedition artifact: Yellow bolt-shaped power-station fuse clamped in a black steel bracket with orange copper tips. An arc crawls across its terminals."
+        },
+        {
+          "id": "7e3132d31165b9ec.png",
+          "title": "Moltres",
+          "row": 2,
+          "subject": "Expedition artifact: Red-gold phoenix plume kept in a brass torch socket. Its small orange flame crown bends and springs upright."
+        },
+        {
+          "id": "4f5e0e16cb39278e.png",
+          "title": "Mewtwo",
+          "row": 3,
+          "subject": "Expedition artifact: Psychic laboratory vial with two curled lilac DNA strands, steel stopper and magenta liquid. One white bubble rises inside."
+        }
+      ]
+    },
+    {
       "file": "legend-02.png",
       "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Mew — Rounded bubblegum-pink catlike face, high triangular ears, enormous blue eyes and the curl of its long pink tail beside the cheek. A blue eye glints, lids lower, blink and reopen.\n2. Raikou — Yellow sabertooth cat face with black lightning stripes, two cream fangs, pale-blue muzzle and purple thundercloud mane. A ripple of light slides through the mane.\n3. Entei — Brown volcanic lion face in a red and yellow forehead mask, broad white cheek tufts and gray smoke mane. An amber glint slides across the mask.\n4. Suicune — Cobalt-blue water beast head, white muzzle, tall angular aquamarine crown and purple flowing mane. Cyan highlight moves up and across the crown.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
       "rows": [
@@ -27,6 +57,36 @@
           "title": "Suicune",
           "row": 3,
           "subject": "Cobalt-blue water beast head, white muzzle, tall angular aquamarine crown and purple flowing mane. Cyan highlight moves up and across the crown."
+        }
+      ]
+    },
+    {
+      "file": "legend-03.png",
+      "prompt": "Use case: stylized-concept. Original artist-drawn pixel-art inventory of four fantasy expedition collectibles, 4-frame loops for a dark RPG quest book. One transparent square PNG with an invisible precisely even 4-column x4-row grid. Each ROW shows ONE particular inanimate inventory item four times across; columns are animation phases 1,2,3,4 of a repeating tiny local motion. Fixed pose and same object size within each row. Each item fits within the central 65% of a cell. Keep generous empty transparent gutters horizontally and vertically. Square center positions on each axis: 12.5%,37.5%,62.5%,87.5%. Chunky and decisive 32px pixel-art silhouettes with flat deep navy outlines, pale sharp specular pixels and saturated colors, like beautiful hand-pixelled loot. A few bold features per item and own distinct colors. No creatures, characters, faces, scenes, card rectangles, backgrounds, text or labels or gridlines. Top-to-bottom four row specifications:\n1. Silver-white sea feather with a diamond-blue quill, suspended over a knotted sailor's cord. A cool blue glint climbs the quill.\n2. A single rainbow-colored quill with a gold shaft, russet, yellow and green barbs, curved in a sweeping arc. A traveling highlight passes through the bands.\n3. Tiny moss-grown wooden forest shrine with a roof of fresh leaves and a small golden time dial framed inside. A leaf sways and a dial tick glimmers.\n4. Deep blue ocean orb with a vivid red engraved spiral, cushioned in one white shell half. Its reflection ripples across the surface.\nDeliver a transparent PNG of these exact four rows of animated inanimate artifacts. No scenery or cast shadows.",
+      "rows": [
+        {
+          "id": "0ff6564d2dd6ed73.png",
+          "title": "Lugia",
+          "row": 0,
+          "subject": "Expedition artifact: Silver-white sea feather with a diamond-blue quill, suspended over a knotted sailor's cord. A cool blue glint climbs the quill."
+        },
+        {
+          "id": "4025ee4781ed7965.png",
+          "title": "Ho-Oh",
+          "row": 1,
+          "subject": "Expedition artifact: A single rainbow-colored quill with a gold shaft, russet, yellow and green barbs, curved in a sweeping arc. A traveling highlight passes through the bands."
+        },
+        {
+          "id": "57ac1e33fae63428.png",
+          "title": "Celebi",
+          "row": 2,
+          "subject": "Expedition artifact: Tiny moss-grown wooden forest shrine with a roof of fresh leaves and a small golden time dial framed inside. A leaf sways and a dial tick glimmers."
+        },
+        {
+          "id": "45a8d358b0904818.png",
+          "title": "Kyogre",
+          "row": 3,
+          "subject": "Expedition artifact: Deep blue ocean orb with a vivid red engraved spiral, cushioned in one white shell half. Its reflection ripples across the surface."
         }
       ]
     },
@@ -121,6 +181,96 @@
       ]
     },
     {
+      "file": "legend-07.png",
+      "prompt": "Use case: stylized-concept. Original artist-drawn pixel-art inventory of four fantasy expedition collectibles, 4-frame loops for a dark RPG quest book. One transparent square PNG with an invisible precisely even 4-column x4-row grid. Each ROW shows ONE particular inanimate inventory item four times across; columns are animation phases 1,2,3,4 of a repeating tiny local motion. Fixed pose and same object size within each row. Each item fits within the central 65% of a cell. Keep generous empty transparent gutters horizontally and vertically. Square center positions on each axis: 12.5%,37.5%,62.5%,87.5%. Chunky and decisive 32px pixel-art silhouettes with flat deep navy outlines, pale sharp specular pixels and saturated colors, like beautiful hand-pixelled loot. A few bold features per item and own distinct colors. No creatures, characters, faces, scenes, card rectangles, backgrounds, text or labels or gridlines. Top-to-bottom four row specifications:\n1. Adamant time relic: a big faceted cobalt diamond held between two silver clockwork prongs with a tiny gold hour hand. Glint ticks between facets.\n2. Lustrous space relic: a round blush-pink pearl resting in a crescent silver setting with two lavender orbit rings. One white reflection shifts along the rings.\n3. Griseous distortion relic: an amber gold prism split by a charcoal fissure and crimson stripe, held in a dark bracket. The fissure flickers red in sequence.\n4. Pearl-white ceremonial flute tipped with gold, one green gem among a row of simple dark finger holes. One gold sparkle travels up the tube.\nDeliver a transparent PNG of these exact four rows of animated inanimate artifacts. No scenery or cast shadows.",
+      "rows": [
+        {
+          "id": "40ffed4044ce7c93.png",
+          "title": "Dialga",
+          "row": 0,
+          "subject": "Expedition artifact: Adamant time relic: a big faceted cobalt diamond held between two silver clockwork prongs with a tiny gold hour hand. Glint ticks between facets."
+        },
+        {
+          "id": "0dd320459d623036.png",
+          "title": "Palkia",
+          "row": 1,
+          "subject": "Expedition artifact: Lustrous space relic: a round blush-pink pearl resting in a crescent silver setting with two lavender orbit rings. One white reflection shifts along the rings."
+        },
+        {
+          "id": "1a5f65b1942f6efc.png",
+          "title": "Giratina",
+          "row": 2,
+          "subject": "Expedition artifact: Griseous distortion relic: an amber gold prism split by a charcoal fissure and crimson stripe, held in a dark bracket. The fissure flickers red in sequence."
+        },
+        {
+          "id": "5d41e75f17258903.png",
+          "title": "Arceus",
+          "row": 3,
+          "subject": "Expedition artifact: Pearl-white ceremonial flute tipped with gold, one green gem among a row of simple dark finger holes. One gold sparkle travels up the tube."
+        }
+      ]
+    },
+    {
+      "file": "legend-08.png",
+      "prompt": "Use case: stylized-concept. Original artist-drawn pixel-art inventory of four fantasy expedition collectibles, 4-frame loops for a dark RPG quest book. One transparent square PNG with an invisible precisely even 4-column x4-row grid. Each ROW shows ONE particular inanimate inventory item four times across; columns are animation phases 1,2,3,4 of a repeating tiny local motion. Fixed pose and same object size within each row. Each item fits within the central 65% of a cell. Keep generous empty transparent gutters horizontally and vertically. Square center positions on each axis: 12.5%,37.5%,62.5%,87.5%. Chunky and decisive 32px pixel-art silhouettes with flat deep navy outlines, pale sharp specular pixels and saturated colors, like beautiful hand-pixelled loot. A few bold features per item and own distinct colors. No creatures, characters, faces, scenes, card rectangles, backgrounds, text or labels or gridlines. Top-to-bottom four row specifications:\n1. Magma Stone: jagged rust-colored volcanic chunk with rounded steel crust, fissure of liquid orange magma and a square brass specimen clamp. Bright magma bubbles under the crust.\n2. Lunar feather brooch: arcing crescent-shaped gold quill with pink and lavender vanes, pearl-blue teardrop at its tip. The tip brightens in phases.\n3. Moss-covered ancient white stone temple key, triple red blue and gray gems and a gold lintel-shaped handle. The three gems light in succession.\n4. Round aqua glass drift buoy with a tiny red glass bead captured in its neck and a SINGLE long blue rope loop tied at the top. A bubble ascends inside glass.\nDeliver a transparent PNG of these exact four rows of animated inanimate artifacts. No scenery or cast shadows.",
+      "rows": [
+        {
+          "id": "4805af5b5a60f9ad.png",
+          "title": "Heatran",
+          "row": 0,
+          "subject": "Expedition artifact: Magma Stone: jagged rust-colored volcanic chunk with rounded steel crust, fissure of liquid orange magma and a square brass specimen clamp. Bright magma bubbles under the crust."
+        },
+        {
+          "id": "764d449e0c711fa6.png",
+          "title": "Cresselia",
+          "row": 1,
+          "subject": "Expedition artifact: Lunar feather brooch: arcing crescent-shaped gold quill with pink and lavender vanes, pearl-blue teardrop at its tip. The tip brightens in phases."
+        },
+        {
+          "id": "4ddb96fd3421ee53.png",
+          "title": "Regigigas",
+          "row": 2,
+          "subject": "Expedition artifact: Moss-covered ancient white stone temple key, triple red blue and gray gems and a gold lintel-shaped handle. The three gems light in succession."
+        },
+        {
+          "id": "53ea61e8b8eb6e1b.png",
+          "title": "Phione",
+          "row": 3,
+          "subject": "Expedition artifact: Round aqua glass drift buoy with a tiny red glass bead captured in its neck and a SINGLE long blue rope loop tied at the top. A bubble ascends inside glass."
+        }
+      ]
+    },
+    {
+      "file": "legend-09.png",
+      "prompt": "Use case: stylized-concept. Original artist-drawn pixel-art inventory of four fantasy expedition collectibles, 4-frame loops for a dark RPG quest book. One transparent square PNG with an invisible precisely even 4-column x4-row grid. Each ROW shows ONE particular inanimate inventory item four times across; columns are animation phases 1,2,3,4 of a repeating tiny local motion. Fixed pose and same object size within each row. Each item fits within the central 65% of a cell. Keep generous empty transparent gutters horizontally and vertically. Square center positions on each axis: 12.5%,37.5%,62.5%,87.5%. Chunky and decisive 32px pixel-art silhouettes with flat deep navy outlines, pale sharp specular pixels and saturated colors, like beautiful hand-pixelled loot. A few bold features per item and own distinct colors. No creatures, characters, faces, scenes, card rectangles, backgrounds, text or labels or gridlines. Top-to-bottom four row specifications:\n1. An ivory sea egg with blue translucent shell, gold crown-shaped marking and red jewel at the heart, gently nestled on a small sea-blue cushion. Light moves around the red jewel.\n2. A tarnished silver hotel-room key on a dark membership pass with a scarlet crescent wax seal. No writing. The seal flashes pale red in phases.\n3. A single coral-pink Gracidea flower on a glossy green leaf with two golden droplet seeds. Upper petals flutter in a breeze.\n4. A mint-green wind vane with a white cloud-shaped tail and twisted violet cord wrapped around its brass spindle. One short white ribbon flicks in the wind.\nDeliver a transparent PNG of these exact four rows of animated inanimate artifacts. No scenery or cast shadows.",
+      "rows": [
+        {
+          "id": "4ecddf34f0750317.png",
+          "title": "Manaphy",
+          "row": 0,
+          "subject": "Expedition artifact: An ivory sea egg with blue translucent shell, gold crown-shaped marking and red jewel at the heart, gently nestled on a small sea-blue cushion. Light moves around the red jewel."
+        },
+        {
+          "id": "63427c724fd4c4ad.png",
+          "title": "Darkrai",
+          "row": 1,
+          "subject": "Expedition artifact: A tarnished silver hotel-room key on a dark membership pass with a scarlet crescent wax seal. No writing. The seal flashes pale red in phases."
+        },
+        {
+          "id": "134833b34e0d8fab.png",
+          "title": "Shaymin",
+          "row": 2,
+          "subject": "Expedition artifact: A single coral-pink Gracidea flower on a glossy green leaf with two golden droplet seeds. Upper petals flutter in a breeze."
+        },
+        {
+          "id": "4b06d351390ed20e.png",
+          "title": "Tornadus",
+          "row": 3,
+          "subject": "Expedition artifact: A mint-green wind vane with a white cloud-shaped tail and twisted violet cord wrapped around its brass spindle. One short white ribbon flicks in the wind."
+        }
+      ]
+    },
+    {
       "file": "legend-10.png",
       "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Thundurus — Blue storm genie bust, one projecting brow horn and curling white moustache, dark tail with blue spike. Electric spark steps along the tail.\n2. Landorus — Orange earth genie bust with brown spots, tied crest of white hair and white moustache, thick brown hammerlike tail segment. Amber glint crosses a spot.\n3. Reshiram — Ivory feathered dragon head with flowing white mane, bright blue eye and a small fiery orange reflection in its mane. Feather tips lift and settle.\n4. Zekrom — Charcoal angular electric dragon head with crested dark horn, red eye and an electric-blue highlight along its collar. A thin blue dash travels across the horn.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
       "rows": [
@@ -147,6 +297,66 @@
           "title": "Zekrom",
           "row": 3,
           "subject": "Charcoal angular electric dragon head with crested dark horn, red eye and an electric-blue highlight along its collar. A thin blue dash travels across the horn."
+        }
+      ]
+    },
+    {
+      "file": "legend-11.png",
+      "prompt": "Use case: stylized-concept. Original artist-drawn pixel-art inventory of four fantasy expedition collectibles, 4-frame loops for a dark RPG quest book. One transparent square PNG with an invisible precisely even 4-column x4-row grid. Each ROW shows ONE particular inanimate inventory item four times across; columns are animation phases 1,2,3,4 of a repeating tiny local motion. Fixed pose and same object size within each row. Each item fits within the central 65% of a cell. Keep generous empty transparent gutters horizontally and vertically. Square center positions on each axis: 12.5%,37.5%,62.5%,87.5%. Chunky and decisive 32px pixel-art silhouettes with flat deep navy outlines, pale sharp specular pixels and saturated colors, like beautiful hand-pixelled loot. A few bold features per item and own distinct colors. No creatures, characters, faces, scenes, card rectangles, backgrounds, text or labels or gridlines. Top-to-bottom four row specifications:\n1. DNA splicing instrument: a steel-gray double clamp clasping one asymmetrical icy blue crystal with a yellow center. A blue pulse travels along one jaw of the clamp.\n2. A knight's cobalt-and-silver helmet crest trophy carrying two straight golden horns and an ivory neck ribbon, clearly empty armor. Gold edge glints on the horn.\n3. A dense blocky stone-horn knocker with a russet shoulder plate and paired brown blunt tines on a gray circular hinge. One copper rivet gleams then the tines flash.\n4. An elegant green leaf rapier, pale mint blade, two pink petals at the hilt and a curved spring-green guard. One clear dew bead glides along its edge.\nDeliver a transparent PNG of these exact four rows of animated inanimate artifacts. No scenery or cast shadows.",
+      "rows": [
+        {
+          "id": "53b1fca83f6cae89.png",
+          "title": "Kyurem",
+          "row": 0,
+          "subject": "Expedition artifact: DNA splicing instrument: a steel-gray double clamp clasping one asymmetrical icy blue crystal with a yellow center. A blue pulse travels along one jaw of the clamp."
+        },
+        {
+          "id": "25ae07a032c6311e.png",
+          "title": "Cobalion",
+          "row": 1,
+          "subject": "Expedition artifact: A knight's cobalt-and-silver helmet crest trophy carrying two straight golden horns and an ivory neck ribbon, clearly empty armor. Gold edge glints on the horn."
+        },
+        {
+          "id": "0e8844d9420aa2a7.png",
+          "title": "Terrakion",
+          "row": 2,
+          "subject": "Expedition artifact: A dense blocky stone-horn knocker with a russet shoulder plate and paired brown blunt tines on a gray circular hinge. One copper rivet gleams then the tines flash."
+        },
+        {
+          "id": "3aed514a08c392d2.png",
+          "title": "Virizion",
+          "row": 3,
+          "subject": "Expedition artifact: An elegant green leaf rapier, pale mint blade, two pink petals at the hilt and a curved spring-green guard. One clear dew bead glides along its edge."
+        }
+      ]
+    },
+    {
+      "file": "legend-12.png",
+      "prompt": "Use case: stylized-concept. Original artist-drawn pixel-art inventory of four fantasy expedition collectibles, 4-frame loops for a dark RPG quest book. One transparent square PNG with an invisible precisely even 4-column x4-row grid. Each ROW shows ONE particular inanimate inventory item four times across; columns are animation phases 1,2,3,4 of a repeating tiny local motion. Fixed pose and same object size within each row. Each item fits within the central 65% of a cell. Keep generous empty transparent gutters horizontally and vertically. Square center positions on each axis: 12.5%,37.5%,62.5%,87.5%. Chunky and decisive 32px pixel-art silhouettes with flat deep navy outlines, pale sharp specular pixels and saturated colors, like beautiful hand-pixelled loot. A few bold features per item and own distinct colors. No creatures, characters, faces, scenes, card rectangles, backgrounds, text or labels or gridlines. Top-to-bottom four row specifications:\n1. A scarlet water-duelist plume tied to an ivory horn-shaped practice blade by a blue ribbon at its hilt. Blue ribbon lifts and settles.\n2. Victory keepsake: two orange pennants form a large V rising from a cream medal with a blue jewel. One pennant flutters and the blue jewel sparkles.\n3. Concert relic: a sweeping mint green treble-clef pendant nested in a dark music comb, with a round teal jewel. Three small comb teeth light in succession.\n4. A chunky purple cartridge with a steel connector and a magenta crystal drive window for a back-mounted cannon. The drive indicator fills and dims.\nDeliver a transparent PNG of these exact four rows of animated inanimate artifacts. No scenery or cast shadows.",
+      "rows": [
+        {
+          "id": "7a338894ccaeda2c.png",
+          "title": "Keldeo",
+          "row": 0,
+          "subject": "Expedition artifact: A scarlet water-duelist plume tied to an ivory horn-shaped practice blade by a blue ribbon at its hilt. Blue ribbon lifts and settles."
+        },
+        {
+          "id": "297d850a6eee879a.png",
+          "title": "Victini",
+          "row": 1,
+          "subject": "Expedition artifact: Victory keepsake: two orange pennants form a large V rising from a cream medal with a blue jewel. One pennant flutters and the blue jewel sparkles."
+        },
+        {
+          "id": "31301d847dbfb626.png",
+          "title": "Meloetta",
+          "row": 2,
+          "subject": "Expedition artifact: Concert relic: a sweeping mint green treble-clef pendant nested in a dark music comb, with a round teal jewel. Three small comb teeth light in succession."
+        },
+        {
+          "id": "0ab96cf3fa9ee843.png",
+          "title": "Genesect",
+          "row": 3,
+          "subject": "Expedition artifact: A chunky purple cartridge with a steel connector and a magenta crystal drive window for a back-mounted cannon. The drive indicator fills and dims."
         }
       ]
     },
@@ -357,6 +567,36 @@
           "title": "Blacephalon",
           "row": 3,
           "subject": "White spherical performer head covered in polka dots of pink blue and yellow, thin striped pointed collar. Colored dots light one after another."
+        }
+      ]
+    },
+    {
+      "file": "legend-20.png",
+      "prompt": "Use case: stylized-concept. Original artist-drawn pixel-art inventory of four fantasy expedition collectibles, 4-frame loops for a dark RPG quest book. One transparent square PNG with an invisible precisely even 4-column x4-row grid. Each ROW shows ONE particular inanimate inventory item four times across; columns are animation phases 1,2,3,4 of a repeating tiny local motion. Fixed pose and same object size within each row. Each item fits within the central 65% of a cell. Keep generous empty transparent gutters horizontally and vertically. Square center positions on each axis: 12.5%,37.5%,62.5%,87.5%. Chunky and decisive 32px pixel-art silhouettes with flat deep navy outlines, pale sharp specular pixels and saturated colors, like beautiful hand-pixelled loot. A few bold features per item and own distinct colors. No creatures, characters, faces, scenes, card rectangles, backgrounds, text or labels or gridlines. Top-to-bottom four row specifications:\n1. Soul-heart engine: a large ruby mechanical heart held inside a golden toothed gear and silver curly brackets. The ruby core pulses from red to ivory pink.\n2. A charcoal training handwrap wound around a little fighting-gym bell, finished with a teal spectral flame stitched at its knot. Green flame flickers in four steps.\n3. A yellow electric claw gauntlet with jagged black knuckles and two bright blue conductor tips. An electric-blue spark crawls between its tips.\n4. A little pool of liquid silver supporting a single brass hexagonal nut with a hollow central hole, plus a short red wire. A bright metallic ripple flows around the nut.\nDeliver a transparent PNG of these exact four rows of animated inanimate artifacts. No scenery or cast shadows.",
+      "rows": [
+        {
+          "id": "4dd68f43b2e1204d.png",
+          "title": "Magearna",
+          "row": 0,
+          "subject": "Expedition artifact: Soul-heart engine: a large ruby mechanical heart held inside a golden toothed gear and silver curly brackets. The ruby core pulses from red to ivory pink."
+        },
+        {
+          "id": "30c33937ab1a1857.png",
+          "title": "Marshadow",
+          "row": 1,
+          "subject": "Expedition artifact: A charcoal training handwrap wound around a little fighting-gym bell, finished with a teal spectral flame stitched at its knot. Green flame flickers in four steps."
+        },
+        {
+          "id": "7e91d08725b18463.png",
+          "title": "Zeraora",
+          "row": 2,
+          "subject": "Expedition artifact: A yellow electric claw gauntlet with jagged black knuckles and two bright blue conductor tips. An electric-blue spark crawls between its tips."
+        },
+        {
+          "id": "64dd39543d9a50f9.png",
+          "title": "Meltan",
+          "row": 3,
+          "subject": "Expedition artifact: A little pool of liquid silver supporting a single brass hexagonal nut with a hollow central hole, plus a short red wire. A bright metallic ripple flows around the nut."
         }
       ]
     },
