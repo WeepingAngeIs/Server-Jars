@@ -71,6 +71,11 @@ with these edits on top. Player progress carries over (same quest ids).
     pages (they were skipped before). A quest with lots of requirements says "finish A, B, C, D
     and 95 more quests on this page first" instead of listing all 99.
 
+GITHUB: the mod's source, the quest book files and this jar now live in your private repo
+https://github.com/WeepingAngeIs/Server-Jars  (folder unyielding-quests/, jar in releases/).
+Your friend can download the jar from there: open releases/UnyieldingQuests-1.5.0.jar on
+GitHub and press the download button.
+
 TESTED (dev client, singleplayer): 38 chapters / 967 quests load with no warnings; Welcome
 page shows "25 CobbleDollars" with the coin icon; Pokedex goals show the % progress bar;
 Medicine, Held Items (3 columns + gear) and Pokedex Adventures pages open and look right.
