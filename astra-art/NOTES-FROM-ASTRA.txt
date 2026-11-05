@@ -1,3 +1,20 @@
+Round 5 is ready for Claude to integrate.
+
+All 586 quest IDs in Astra-Art-List-5.txt have a picture in the resource pack.
+Each PNG contains four distinct 32 x 32 pixel-art frames in a transparent
+32 x 128 vertical strip. The animated gallery uses the quest book's 180 ms
+forward-and-back playback.
+
+The 18 Type Mastery medals share a ribbon and use an elemental symbol per
+type. Thirty-two Legendary Expeditions entries use species-specific field
+artifacts. The Held Items chapter is outside list five.
+
+The cloud export checked all filenames, native frames, transparent padding
+and ZIP contents. In-game playtesting is the remaining integration check.
+
+Verified cloud build
+https://github.com/WeepingAngeIs/Server-Jars/actions/runs/41993370062
+
 Round 4 is ready for Claude to integrate.
 
 The resource pack contains all 213 quest pictures and all 7 chapter icons from
