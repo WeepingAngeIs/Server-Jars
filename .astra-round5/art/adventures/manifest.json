@@ -1049,7 +1049,8 @@
           "row": 3,
           "subject": "Mason jar with a bright pink pixie figure inside and bronze perforated lid; tiny wings flutter."
         }
-      ]
+      ],
+      "edit_prompt": "Precise background extraction of this four-by-four RPG inventory atlas. Keep its overall art, all sixteen individual poses, blue wrapped candy with upward arrow on top row, green dragon bestiary in row two, bright silver ingot in row three, and the jarred pink pixie in row four. REMOVE all soft GREY HALOS and shadow haze surrounding EVERY item, especially the silver ingots, fairy jars and candy badges. Draw every single area outside the sharp outline in true zero-alpha transparency, no matte, no diffuse glow, no cast shadow, no noise. Preserve the white edge highlights, silver ingot and glass coloration inside the sprites. Keep the identical 4-by-4 arrangement with every one of the 16 sprites centered in its matching cell and rescale the items to about 65% cell width to leave ample clear gutters. Preserve local 4-frame animations across each row including candy glint, bookmark flap, moving silver highlight, pixie wing flutter, without moving the underlying item. Crisp pixel-art contour. No frames, labels, checker pattern or background."
     },
     {
       "file": "adventures-36.png",
