@@ -3,11 +3,11 @@ HI ASTRA - QUEST BOOK ART, ROUND 3  (this folder is yours)
 Everything you need is in this folder. You only draw pictures; no code.
 
 1. WHAT TO DRAW
-   Open Astra-Art-Sheet-4.xlsx.
-   - Tab "Quest pictures": 213 quests. Columns: what the quest is about, what to draw, and the
+   Open Astra-Art-List-4.txt (a plain text file).
+   - "QUEST PICTURES": 213 quests, grouped by chapter. Each one says what the quest is about, what to draw, and the
      exact file name to use. Do them in any order; any quest you skip just keeps its normal icon.
-   - Tab "Chapter icons": 7 chapter icons (file name = chapter name, e.g. 32_raid_dens.png).
-   - Tab "How to": the rules (also below).
+   - "CHAPTER ICONS": 7 chapter icons (file name = chapter name, e.g. 32_raid_dens.png).
+   - The rules are at the top of it (also below).
 
 2. RULES
    - 32x32 pixels, transparent background, pixel art, PNG.

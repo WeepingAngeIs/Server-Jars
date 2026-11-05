@@ -1,0 +1,690 @@
+ASTRA ART LIST 4 - COBBLEMON UNYIELDING QUEST BOOK
+====================================================
+
+HOW TO MAKE THE PICTURES (same rules as last time)
+
+Quest pictures go in:   assets/unyieldingquests/textures/quest_art/
+Chapter icons go in:    assets/unyieldingquests/textures/chapter_icon/
+Size: 32x32 pixels, transparent background, pixel art.
+Moving picture: stack 4 frames top to bottom in ONE file -> 32 wide x 128 tall. A plain 32x32 file is a still picture (also fine).
+Keep the main shape the same in all 4 frames and only move small parts (eyes, flames, water, sparkles); the game plays 1-2-3-4-3-2-1.
+File name: exactly the name in this list, lower case, .png.
+Test it yourself: drop the assets folder into a resource pack (example pack in the kit) and open the quest book.
+No plain book icons please. Badges for the Trainer League are welcome (one badge per gym leader).
+
+NOTES:
+ - This is the complete list for this round (7 new chapters + the Pokédex goals + the Medicine page). Nothing else is needed.
+ - The 10 "Pokédex: N% Caught" pictures work best as a set: same Pokédex shape, fuller/fancier each step (10% plain red ... 100% rainbow/diamond).
+ - The Held Items page uses the real item icons, so no art needed there.
+
+Total: 7 chapter icons + 213 quest pictures.
+
+CHAPTER ICONS (7)   -> folder assets/unyieldingquests/textures/chapter_icon/
+----------------------------------------------------------------------
+31_trainer_milestones.png        Trainer Milestones
+    draw: A gold trophy with a Poké Ball on it
+32_raid_dens.png                 Raid Dens
+    draw: A glowing pink raid den rock with a beam of light
+33_trainer_league.png            Trainer League
+    draw: A gym badge case / a row of three badges
+36_travel_and_trade.png          Travel and Trade
+    draw: A waystone with a gold coin in front
+37_hobbies.png                   Hobbies and Gadgets
+    draw: An old camera and a flute
+38_dungeons_and_ruins.png        Dungeons and Ruins
+    draw: A rolled treasure map with an X and a small castle
+39_biomes_and_nature.png         Biomes and Nature
+    draw: A cherry blossom tree on a hill
+
+QUEST PICTURES (213)   -> folder assets/unyieldingquests/textures/quest_art/
+----------------------------------------------------------------------
+Format:  file name  |  quest name
+         about: what the quest is about
+         draw:  what to draw
+
+### TRAINER MILESTONES
+76c1c404963e797e.png  |  Ten Friends
+    about: Catch 10 Pokémon in total
+    draw:  Pokémon theme: Catch 10 Pokémon
+f26149e45fbbca73.png  |  Fifty Strong
+    about: Catch 50 Pokémon in total
+    draw:  Pokémon theme: Catch 50 Pokémon
+48d72223e6bad663.png  |  The Hundred Club
+    about: Catch 100 Pokémon in total
+    draw:  Pokémon theme: Catch 100 Pokémon
+3e0462e3e877716d.png  |  Collector
+    about: Catch 250 Pokémon in total
+    draw:  Pokémon theme: Catch 250 Pokémon
+69c34042fe701db2.png  |  Living Pokédex Hunter
+    about: Catch 500 Pokémon in total
+    draw:  Pokémon theme: Catch 500 Pokémon
+5014c39ad9155ca3.png  |  Ten Victories
+    about: Win 10 battles against wild Pokémon, trainers or players
+    draw:  Pokémon theme: Win 10 Pokémon battles
+7a19f67ff1fc5227.png  |  Battle Hardened
+    about: Win 50 battles against wild Pokémon, trainers or players
+    draw:  Pokémon theme: Win 50 Pokémon battles
+3892c233f2f04582.png  |  Arena Legend
+    about: Win 200 battles against wild Pokémon, trainers or players
+    draw:  Pokémon theme: Win 200 Pokémon battles
+a2d75bb949900b3d.png  |  Five Evolutions
+    about: Grow your team
+    draw:  Pokémon theme: Evolve 5 Pokémon
+37401aa565276e01.png  |  Evolution Expert
+    about: Twenty-five evolutions
+    draw:  Pokémon theme: Evolve 25 Pokémon
+ea07e270cfde7463.png  |  Level 50
+    about: Halfway to the top
+    draw:  Pokémon theme: Raise a Pokémon to level 50
+f8e477086ea65524.png  |  Level 100
+    about: The maximum level
+    draw:  Pokémon theme: Raise a Pokémon to level 100
+6be668d48a5b3027.png  |  Darwin? Who's That?
+    about: Level 100 without ever evolving
+    draw:  Take an unevolved Pokémon to level 100
+96918b27e8d00208.png  |  A Shiny Friend
+    about: Sparkles on sight
+    draw:  Pokémon theme: Catch a shiny Pokémon
+def369e1a30be665.png  |  Shiny Hunter
+    about: Five shinies caught
+    draw:  Pokémon theme: Catch 5 shiny Pokémon
+c39c7c14ba277cef.png  |  Angler
+    about: Pokémon on the line
+    draw:  Pokémon theme: Fish up 10 Pokémon with a Poké Rod
+60738b8b6e20d8c0.png  |  Master Rod
+    about: Fishing with the best ball
+    draw:  Craft a Poké Rod with a Master Ball
+27151c620fa4fe5d.png  |  Fossil Reviver
+    about: Bring the past back to life
+    draw:  Pokémon theme: Revive 3 fossil Pokémon
+52af2d9ef2417f8e.png  |  Didn't Stop to Think
+    about: Dracovish, Dracozolt, Arctovish or Arctozolt
+    draw:  Revive a Galar fossil combination
+81856bd0a2633ea6.png  |  Field Researcher
+    about: Point, scan, learn
+    draw:  Pokémon theme: Scan 50 wild Pokémon with your Pokédex
+221ce237ed58a054.png  |  Seen: 100
+    about: 100 species seen
+    draw:  Pokémon theme: Register 100 Pokémon as seen in the Pokédex
+b08368c7902d3c29.png  |  Seen: 300
+    about: 300 species seen
+    draw:  Pokémon theme: Register 300 Pokémon as seen in the Pokédex
+c61e03ad430402d9.png  |  Caught: 100
+    about: 100 species caught
+    draw:  Pokémon theme: Register 100 Pokémon as caught in the Pokédex
+96b535d05ce9117f.png  |  Caught: 300
+    about: 300 species caught
+    draw:  Pokémon theme: Register 300 Pokémon as caught in the Pokédex
+24168b4fac57c4fa.png  |  Caught: 500
+    about: 500 species caught
+    draw:  Pokémon theme: Register 500 Pokémon as caught in the Pokédex
+6e75585a054bc3c6.png  |  Full House
+    about: Six Pokémon in your party
+    draw:  Fill all six party slots
+70837f7d924b6119.png  |  Take Good Care!
+    about: Trade with a friend
+    draw:  Trade a Pokémon with another player
+e4881e0fef6e6c18.png  |  Pokémon Jockey
+    about: Hop on
+    draw:  Ride a Pokémon
+1995ba4e08f1ca5f.png  |  Free Roam
+    about: Let them out
+    draw:  Put a Pokémon in a Pasture block
+c7307743cb9012aa.png  |  Call Me Ishmael!
+    about: The biggest catch of all
+    draw:  Reel in an Alpha Wailord
+fb918efda55ce997.png  |  Poké Ball Maniac
+    about: Every ball in the game
+    draw:  Craft one of every Poké Ball
+96d2616b0a435224.png  |  Oops, All Berries!
+    about: A full berry collection
+    draw:  Obtain one of every berry
+f708d898b09bcd5d.png  |  Collector's Discography
+    about: Every TM registered
+    draw:  Register every move in a TM Machine
+e263d6f8152c626c.png  |  Vivillionaire
+    about: Every wing pattern
+    draw:  Collect every Vivillon pattern
+3afb466a7ac53389.png  |  Ghost in the Shell
+    about: One Nincada, two Pokémon
+    draw:  Get a Shedinja
+
+### RAID DENS
+6a28015798011cba.png  |  Your First Raid
+    about: Giant Pokémon in glowing dens
+    draw:  Join a raid battle
+103cfc56f55d7c27.png  |  Tier 1: First Steps
+    about: Beat a tier 1 raid boss
+    draw:  Win a tier 1 raid
+6f9875fc1eff5649.png  |  Tier 2: Raid Buddy
+    about: Beat a tier 2 raid boss
+    draw:  Win a tier 2 raid
+4f152910073cfe71.png  |  Tier 3: A Formidable Foe
+    about: Beat a tier 3 raid boss
+    draw:  Win a tier 3 raid
+8b9608cba3bf2600.png  |  Tier 4: Raid Veteran
+    about: Beat a tier 4 raid boss
+    draw:  Win a tier 4 raid
+65a0006d8364e5fc.png  |  Tier 5: Raid Master
+    about: Beat a tier 5 raid boss
+    draw:  Win a tier 5 raid
+d4dccd7f11aa2eca.png  |  Tier 6: Even Further Beyond
+    about: Beat a tier 6 raid boss
+    draw:  Win a tier 6 raid
+253ca2b565a22867.png  |  Tier 7: The Mightiest
+    about: Beat a tier 7 raid boss
+    draw:  Win a tier 7 raid
+502d5eefb35687e4.png  |  The Great Friend
+    about: Support your raid team
+    draw:  Use an Attack, Defense and Heal Cheer in raids
+ca39c6e217f763fc.png  |  Raid Energy
+    about: Start your own raids
+    draw:  Fully charge a Raid Shard
+1a06da1ba2c7aa16.png  |  Catching Charm
+    about: Better odds on raid bosses
+    draw:  The item: Get a Catching Charm
+f0a3e8dc4a41e695.png  |  Overflowing With Power
+    about: A Mega-Evolved raid boss
+    draw:  Win a Mega raid
+871f606e0e2e9550.png  |  A Dynamax Adventure
+    about: A Dynamaxed raid boss
+    draw:  Win a Dynamax raid
+60af9a0f77e61914.png  |  The Treasure of Area Zero
+    about: A Terastallized raid boss
+    draw:  Win a Tera raid
+100fbb717712af5e.png  |  A Sparkling Success
+    about: Lucky raid catch
+    draw:  Get a shiny Pokémon from a raid
+
+### TRAINER LEAGUE
+d241f3df3a963772.png  |  The Trainer League
+    about: NPC trainers, gym leaders, the Elite Four and champions
+    draw:  Chapter intro picture: NPC trainers, gym leaders, the Elite Four and champions
+d2638c594107798d.png  |  Radical Trainers
+    about: Your first trainer battle
+    draw:  Defeat any trainer
+5414efcac4c44e3f.png  |  Boulder Badge
+    about: Kanto gym leader: Rock
+    draw:  The gym badge: Boulder Badge (Kanto Rock)
+d369618f31902a84.png  |  Cascade Badge
+    about: Kanto gym leader: Water
+    draw:  The gym badge: Cascade Badge (Kanto Water)
+1d0e40674ffca741.png  |  Thunder Badge
+    about: Kanto gym leader: Electric
+    draw:  The gym badge: Thunder Badge (Kanto Electric)
+426be2e86f631627.png  |  Rainbow Badge
+    about: Kanto gym leader: Grass
+    draw:  The gym badge: Rainbow Badge (Kanto Grass)
+40a56b29d792d5ef.png  |  Soul Badge
+    about: Kanto gym leader: Poison
+    draw:  The gym badge: Soul Badge (Kanto Poison)
+16caa0826df7d24d.png  |  Marsh Badge
+    about: Kanto gym leader: Psychic
+    draw:  The gym badge: Marsh Badge (Kanto Psychic)
+571c2e7cb529810b.png  |  Volcano Badge
+    about: Kanto gym leader: Fire
+    draw:  The gym badge: Volcano Badge (Kanto Fire)
+c06a382e0cddaf94.png  |  Earth Badge
+    about: Kanto gym leader: Ground
+    draw:  The gym badge: Earth Badge (Kanto Ground)
+89e1f322356d01ee.png  |  Elite Four: Lorelei
+    about: Kanto Elite Four: Ice
+    draw:  Defeat Elite Four Lorelei
+dba5b681d9137e1b.png  |  Elite Four: Bruno
+    about: Kanto Elite Four: Fighting
+    draw:  Defeat Elite Four Bruno
+3835281ae0a17d61.png  |  Elite Four: Agatha
+    about: Kanto Elite Four: Ghost
+    draw:  Defeat Elite Four Agatha
+c0b2f339e551c6e6.png  |  Elite Four: Lance
+    about: Kanto Elite Four: Dragon
+    draw:  Defeat Elite Four Lance
+26b4bc6e071a2e29.png  |  Kanto Champion
+    about: The top of the Kanto series
+    draw:  Defeat Champion Terry
+662a08e2f544771e.png  |  Rival Wayne
+    about: He keeps coming back
+    draw:  Defeat your rival Wayne
+bc7fc8efaff6124f.png  |  Team Rocket
+    about: Admins of the villain team
+    draw:  Defeat Rocket Admin Archer
+dbc3484400ac51c7.png  |  Behind the Scenes
+    about: The head of Team Rocket
+    draw:  Defeat Boss Giovanni
+b2d205b21bb4b889.png  |  Trainer Red
+    about: The silent legend
+    draw:  Defeat Trainer Red
+3875adf5c5e929c8.png  |  Trainer Blue
+    about: Smell ya later
+    draw:  Defeat Trainer Blue
+412c1a3cd03f302f.png  |  Coal Badge
+    about: Sinnoh gym leader: Rock
+    draw:  The gym badge: Coal Badge (Sinnoh Rock)
+c065fb1413047889.png  |  Forest Badge
+    about: Sinnoh gym leader: Grass
+    draw:  The gym badge: Forest Badge (Sinnoh Grass)
+1ce09ee648139982.png  |  Cobble Badge
+    about: Sinnoh gym leader: Fighting
+    draw:  The gym badge: Cobble Badge (Sinnoh Fighting)
+543efd31791bd0fa.png  |  Fen Badge
+    about: Sinnoh gym leader: Water
+    draw:  The gym badge: Fen Badge (Sinnoh Water)
+5699e09021a4a245.png  |  Relic Badge
+    about: Sinnoh gym leader: Ghost
+    draw:  The gym badge: Relic Badge (Sinnoh Ghost)
+9123f14460b86adb.png  |  Mine Badge
+    about: Sinnoh gym leader: Steel
+    draw:  The gym badge: Mine Badge (Sinnoh Steel)
+5880ebbc1c6fde2f.png  |  Icicle Badge
+    about: Sinnoh gym leader: Ice
+    draw:  The gym badge: Icicle Badge (Sinnoh Ice)
+f03586f68354a96e.png  |  Beacon Badge
+    about: Sinnoh gym leader: Electric
+    draw:  The gym badge: Beacon Badge (Sinnoh Electric)
+e0403722dd0a4f1b.png  |  Elite Four: Aaron
+    about: Sinnoh Elite Four: Bug
+    draw:  Defeat Elite Four Aaron
+6246f0153eb576ab.png  |  Elite Four: Bertha
+    about: Sinnoh Elite Four: Ground
+    draw:  Defeat Elite Four Bertha
+90eac63f22eaa1b8.png  |  Elite Four: Flint
+    about: Sinnoh Elite Four: Fire
+    draw:  Defeat Elite Four Flint
+80df01725d2e2412.png  |  Elite Four: Lucian
+    about: Sinnoh Elite Four: Psychic
+    draw:  Defeat Elite Four Lucian
+7878aa4366e59967.png  |  Sinnoh Champion
+    about: Cynthia and her Garchomp
+    draw:  Defeat Champion Cynthia
+2dd27d9ef96e9915.png  |  Sinnoh Legend
+    about: Beat her twice more
+    draw:  Defeat Cynthia in the final rematch
+adc14fcfb146e718.png  |  Team Galactic
+    about: Commanders of Team Galactic
+    draw:  Defeat Commander Mars
+cea5aba30d092911.png  |  Commander Saturn
+    about: Another Galactic commander
+    draw:  Defeat Commander Saturn
+e053a261885a2bce.png  |  Commander Jupiter
+    about: The third commander
+    draw:  Defeat Commander Jupiter
+f81c3f185d52dc1d.png  |  Red Dwarf
+    about: The boss of Team Galactic
+    draw:  Defeat Galactic Boss Cyrus
+786114c4b6099067.png  |  Wings Badge
+    about: Borrius gym leader: Flying
+    draw:  The gym badge: Wings Badge (Borrius Flying)
+4c2ad0b6ea2dcf86.png  |  Time Badge
+    about: Borrius gym leader: Psychic
+    draw:  The gym badge: Time Badge (Borrius Psychic)
+23aa34c4c4a19470.png  |  Ring Badge
+    about: Borrius gym leader: Fighting
+    draw:  The gym badge: Ring Badge (Borrius Fighting)
+f70baf5d240068b1.png  |  Battery Badge
+    about: Borrius gym leader: Electric
+    draw:  The gym badge: Battery Badge (Borrius Electric)
+9a2f75ae6a8a9a22.png  |  Fall Badge
+    about: Borrius gym leader: Fire
+    draw:  The gym badge: Fall Badge (Borrius Fire)
+51fb6ba6d487c9b3.png  |  Leaf Badge
+    about: Borrius gym leader: Grass
+    draw:  The gym badge: Leaf Badge (Borrius Grass)
+432b247a1d0fcffd.png  |  Swamp Badge
+    about: Borrius gym leader: Poison
+    draw:  The gym badge: Swamp Badge (Borrius Poison)
+c18c73cd60660229.png  |  Vision Badge
+    about: Borrius gym leader: Mixed
+    draw:  The gym badge: Vision Badge (Borrius Mixed)
+2cf6a8700e67e83a.png  |  Elite Four: Arabella
+    about: Borrius Elite Four
+    draw:  Defeat Elite Four Arabella
+8f67907516b62713.png  |  Elite Four: Elias
+    about: Borrius Elite Four
+    draw:  Defeat Elite Four Elias
+b5fff93c0585523b.png  |  Elite Four: Moleman
+    about: Borrius Elite Four
+    draw:  Defeat Elite Four Moleman
+714f82f8ff07afbb.png  |  Elite Four: Penny
+    about: Borrius Elite Four
+    draw:  Defeat Elite Four Penny
+99b6231bca21c863.png  |  Borrius Champion
+    about: The top of the Borrius series
+    draw:  Defeat Champion Jax
+d252aa93d8c1ceb8.png  |  The Shadows
+    about: Borrius' villain team
+    draw:  Defeat Shadow Admin Ivory
+3f7ef59d7b36e6d5.png  |  Shadow Admin Marlon
+    about: Another Shadow admin
+    draw:  Defeat Shadow Admin Marlon
+454c19e059a77bc0.png  |  Dark Omen
+    about: The boss of The Shadows
+    draw:  Defeat Shadow Boss Zeph
+195e7ad114e6b022.png  |  Elite Trainer
+    about: All twelve Elite Four trainers beaten
+    draw:  Defeat every Elite Four member
+deb2736ed1649bf5.png  |  True Champ
+    about: Champion of all three regions
+    draw:  Defeat every champion
+
+### TRAVEL AND TRADE
+7ac327fafc215d4a.png  |  Your First Waystone
+    about: Fast travel between the places you have been
+    draw:  The item: Craft a Waystone
+be64b17c8b1926eb.png  |  Warp Stone
+    about: A reusable teleport item
+    draw:  The item: Craft a Warp Stone
+db4fc0c631557382.png  |  Warp Scrolls
+    about: One-use teleports
+    draw:  The item: Craft a Warp, Return or Bound Scroll
+e7476a8a4293bcd6.png  |  Sharestones
+    about: A network only your color can see
+    draw:  The item: Craft a Sharestone of any color
+ad588bde1dfaea52.png  |  Warp Plate
+    about: Step on it and go
+    draw:  The item: Craft a Warp Plate
+5b7996f014abfafd.png  |  Portstone
+    about: A public departure point
+    draw:  The item: Craft a Portstone
+1035371ded21b6da.png  |  Your First Coins
+    about: Lightman's Currency: the server economy
+    draw:  The item: Get a Copper Coin
+9b285306f9b22fd4.png  |  Coin Mint
+    about: Turn ingots into coins
+    draw:  Craft a Coin Mint
+2c85c0e959b0cb00.png  |  A Wallet
+    about: Keep your coins in one place
+    draw:  The item: Craft any wallet
+e50596eb04401037.png  |  The Bank
+    about: Deposit, withdraw, exchange
+    draw:  Use an ATM
+ffbaa4f8201116dc.png  |  Open a Shop
+    about: Sell to other players while you are away
+    draw:  Set up a trader
+758208c0a1370f2d.png  |  Trading Terminal
+    about: Shop from anywhere
+    draw:  Use a Trading Terminal
+c5ecd91fba5a4e1c.png  |  Diamond Coin
+    about: Ten thousand copper in one coin
+    draw:  The item: Hold a Diamond Coin (10,000 copper)
+66d5f41c1ebee825.png  |  Netherite Coin
+    about: One hundred thousand copper
+    draw:  The item: Hold a Netherite Coin
+ab6cd5af715f7127.png  |  Cobble Merchant
+    about: CobbleDollars shops
+    draw:  Chapter intro picture: CobbleDollars shops
+
+### HOBBIES AND GADGETS
+73c10fef2a1a7658.png  |  Say Cheese
+    about: Exposure: real photos in Minecraft
+    draw:  The item: Craft a Camera
+75a728c47112e495.png  |  A Moment in Time
+    about: Your first picture
+    draw:  Take a photo
+8cc285a6c4b501eb.png  |  Photo Album
+    about: Keep your memories
+    draw:  The item: Craft a Photo Album
+a4db2f08513c7f15.png  |  Wildlife Archivist
+    about: Nature photography
+    draw:  Photograph animals
+a835814ec840747c.png  |  First Notes
+    about: Immersive Melodies: play real songs
+    draw:  The item: Craft any instrument
+112723e7154dc0c3.png  |  The Band
+    about: Three instruments
+    draw:  The item: Craft 3 different instruments
+1a21ee8308d60efc.png  |  Ribbit Village
+    about: Frog folk in the swamps
+    draw:  The place: a Ribbit village
+a9ca34c8ba8abbd5.png  |  Maraca
+    about: Shake it
+    draw:  The item: Get a Maraca
+67e7e188b5715650.png  |  PokéNav
+    about: Where do Pokémon spawn?
+    draw:  The item: Craft a PokéNav
+69f24cab61b7c5fe.png  |  PokéFinder
+    about: Track a Pokémon
+    draw:  The item: Craft a PokéFinder
+c1951c39767f67cb.png  |  FishingNav
+    about: What bites here?
+    draw:  The item: Craft a FishingNav
+dc2e54c367157df0.png  |  Poké Staff
+    about: Fight or Flight: command your Pokémon outside battle
+    draw:  The item: Craft a Poké Staff
+
+### DUNGEONS AND RUINS
+1d218e524852e0b0.png  |  Ruins and Dungeons
+    about: Hundreds of structures to find and loot
+    draw:  Chapter intro picture: Hundreds of structures to find and loot
+6d07bb80509984d9.png  |  A Better Dungeon
+    about: Spawners, loot and traps
+    draw:  The place: a YUNG's dungeon (zombie, skeleton, spider or small)
+3cde9afdd1f00298.png  |  Better Mineshaft
+    about: Huge branching tunnels
+    draw:  The place: a Better Mineshaft
+b51b8ec7876d1582.png  |  Better Stronghold
+    about: Libraries, armories and the End portal
+    draw:  The place: a Better Stronghold
+642af4543147afe6.png  |  Better Jungle Temple
+    about: Traps and treasure in the jungle
+    draw:  The place: a Better Jungle Temple
+b9c8736acda3ca9a.png  |  Witch Hut
+    about: Swamp witches at home
+    draw:  The place: a Better Witch Hut
+92ea0ff7f4dfc28f.png  |  Dungeon Crawl
+    about: Floor after floor underground
+    draw:  The place: Descend into a Dungeon Crawl dungeon
+c41bdea8455347cb.png  |  Illager Fort
+    about: When Dungeons Arise
+    draw:  The place: Storm an Illager Fort
+ab8f9e51970b5123.png  |  Bandit Towers
+    about: Twin towers on a bridge
+    draw:  The place: the Bandit Towers
+c3fef3c8e68e984b.png  |  Keep Kayra
+    about: A castle in the forest
+    draw:  The place: Keep Kayra
+fd28c9885f68c62a.png  |  Monastery
+    about: A cliffside temple
+    draw:  The place: Visit a Monastery
+36964d83c389fbb3.png  |  Plague Asylum
+    about: Nobody checks out
+    draw:  The place: the Plague Asylum
+e11a5a6e223937ee.png  |  Palace of Shiraz
+    about: Desert gold
+    draw:  The place: the Shiraz Palace
+ea6514bd613604ac.png  |  Thornborn Towers
+    about: Overgrown towers in the jungle
+    draw:  The place: Climb the Thornborn Towers
+e0f2fe6fabc1dae8.png  |  Undead Pirate Ship
+    about: Ghost ship on the ocean
+    draw:  The place: Board an Undead Pirate Ship
+14aaa69d47044d66.png  |  Heavenly Challenger
+    about: An airship in the sky
+    draw:  The place: Reach a Heavenly Challenger airship
+fee90f06452f7d68.png  |  Mushroom Village
+    about: Houses made of mushrooms
+    draw:  The place: Visit a Mushroom Village
+a2ac651d78b26ce1.png  |  Towns and Towers
+    about: Villages for every biome
+    draw:  The place: Visit a Towns and Towers village
+33951d0945421624.png  |  Sky Village
+    about: A village on floating islands
+    draw:  The place: a Sky Village
+863a154f439ee046.png  |  Tidal Town
+    about: A village on the water
+    draw:  The place: a Tidal Town
+cb1fb48e1c3640ca.png  |  Underground Village
+    about: Villagers who went deep
+    draw:  The place: an Underground Village
+e7e92f89c26fb4f5.png  |  Witch Village
+    about: A whole town of witches
+    draw:  The place: a Witch Village
+3979fbbacf1d5b89.png  |  Watchtower
+    about: Explorify
+    draw:  The place: Climb a plains Watchtower
+539d708aa5b31af6.png  |  The Tavern
+    about: A warm place on the road
+    draw:  The place: a Tavern
+51469a258c1fcb12.png  |  Mausoleum
+    about: A tomb worth robbing
+    draw:  The place: a Mausoleum
+82ebe93de21f5c99.png  |  Badlands Pyramid
+    about: Terracotta temple
+    draw:  The place: a Badlands Pyramid
+5c9885c026ae8ec4.png  |  Abandoned Prairie House
+    about: Oh The Biomes We've Gone
+    draw:  The place: an abandoned Prairie House
+af5f5eeabecc7748.png  |  Aspen Manor
+    about: A mansion in the aspen woods
+    draw:  The place: an Aspen Manor
+76dbd64af19f3e29.png  |  Rugged Fossil
+    about: Bones of something huge
+    draw:  The place: a Rugged Fossil
+905b8dc3a404fb8d.png  |  Medieval Fort
+    about: Medieval Buildings
+    draw:  The place: a Medieval Fort
+603d2953eb103703.png  |  Boss Tower
+    about: Apotheosis
+    draw:  The place: an Apotheosis boss tower
+
+### BIOMES AND NATURE
+2f4ee84533b045d9.png  |  Wonders of the World
+    about: Biomes O' Plenty, Oh The Biomes We've Gone and Nature's Spirit
+    draw:  Chapter intro picture: Biomes O' Plenty, Oh The Biomes We've Gone and Nature's Spirit
+fcdeccf09c1a4060.png  |  Mystic Grove
+    about: Pink trees, glowing flowers
+    draw:  A tiny landscape of this biome: Pink trees, glowing flowers
+76fd9f219dd4a242.png  |  Lavender Field
+    about: Purple as far as you can see
+    draw:  A tiny landscape of this biome: Purple as far as you can see
+39cdf73d9b14e010.png  |  Redwood Forest
+    about: The tallest trees
+    draw:  A tiny landscape of this biome: The tallest trees
+9fc0a6446149c363.png  |  Origin Valley
+    about: Minecraft like it was in 2009
+    draw:  A tiny landscape of this biome: Minecraft like it was in 2009
+5280a029ddb11bb1.png  |  Volcano
+    about: Lava, ash and Fire-types
+    draw:  A tiny landscape of this biome: Lava, ash and Fire-types
+754af9f05c4536b9.png  |  Hot Springs
+    about: Warm pools in the mountains
+    draw:  A tiny landscape of this biome: Warm pools in the mountains
+e03050226f4bc3e0.png  |  Tropics
+    about: Palm trees and white sand
+    draw:  A tiny landscape of this biome: Palm trees and white sand
+5e5fca3140d2d1ac.png  |  Ominous Woods
+    about: Dark and dangerous
+    draw:  A tiny landscape of this biome: Dark and dangerous
+f3a59ee24be41fde.png  |  Wasteland
+    about: Nothing grows here
+    draw:  A tiny landscape of this biome: Nothing grows here
+2412be5209448c86.png  |  Sakura Grove
+    about: Cherry blossoms everywhere
+    draw:  A tiny landscape of this biome: Cherry blossoms everywhere
+29709bac3b4358d2.png  |  Skyris Vale
+    about: Blue trees and a village
+    draw:  A tiny landscape of this biome: Blue trees and a village
+70345dfc8c4aa6aa.png  |  Howling Peaks
+    about: Wind-blasted mountains
+    draw:  A tiny landscape of this biome: Wind-blasted mountains
+644cd59e2ab81a4d.png  |  Red Rock Valley
+    about: Canyons and arches
+    draw:  A tiny landscape of this biome: Canyons and arches
+58e44c448cad05b2.png  |  Weeping Witch Forest
+    about: Twisted trees, witches
+    draw:  A tiny landscape of this biome: Twisted trees, witches
+26ecda0f2be004b5.png  |  Forgotten Forest
+    about: Ancient and overgrown
+    draw:  A tiny landscape of this biome: Ancient and overgrown
+6f220a13a5562e32.png  |  Rainbow Beach
+    about: Sand in every color
+    draw:  A tiny landscape of this biome: Sand in every color
+2bdee0c216ff1411.png  |  Pumpkin Valley
+    about: Halloween all year
+    draw:  A tiny landscape of this biome: Halloween all year
+a4585a79c6bef9ef.png  |  Shattered Glacier
+    about: Ice spikes and crevasses
+    draw:  A tiny landscape of this biome: Ice spikes and crevasses
+ca84f9df29634682.png  |  Wisteria Forest
+    about: Hanging purple blossoms
+    draw:  A tiny landscape of this biome: Hanging purple blossoms
+eb3dda43fddb6259.png  |  Marigold Meadows
+    about: Golden flower fields
+    draw:  A tiny landscape of this biome: Golden flower fields
+a2c66af9179241e6.png  |  Sugi Forest
+    about: Tall Japanese cedars
+    draw:  A tiny landscape of this biome: Tall Japanese cedars
+6c35a548a338a5c4.png  |  White Cliffs
+    about: Chalk cliffs over the sea
+    draw:  A tiny landscape of this biome: Chalk cliffs over the sea
+86d8960614975a43.png  |  Bamboo Wetlands
+    about: Bamboo and still water
+    draw:  A tiny landscape of this biome: Bamboo and still water
+3acd8f3b7afd772e.png  |  Golden Wilds
+    about: Golden grass savanna
+    draw:  A tiny landscape of this biome: Golden grass savanna
+32a2198c83c858b1.png  |  Lavender Fields
+    about: Nature's Spirit's purple fields
+    draw:  A tiny landscape of this biome: Nature's Spirit's purple fields
+8c04475a186a1361.png  |  Aspen Forest
+    about: White trunks, yellow leaves
+    draw:  A tiny landscape of this biome: White trunks, yellow leaves
+686091275a7c9d5b.png  |  Red Peaks
+    about: Red mountains
+    draw:  A tiny landscape of this biome: Red mountains
+96c62b1eb6f4a042.png  |  Globetrotter
+    about: All 27 biomes visited
+    draw:  Chapter intro picture: All 27 biomes visited
+
+### POKÉDEX ADVENTURES
+b605f536326d2383.png  |  Pokédex: 10% Caught
+    about: Have 10% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 10% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+be5ab16c58610bc4.png  |  Pokédex: 20% Caught
+    about: Have 20% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 20% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+224591b33e7eee8b.png  |  Pokédex: 30% Caught
+    about: Have 30% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 30% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+64d6813ca853e032.png  |  Pokédex: 40% Caught
+    about: Have 40% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 40% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+c7a668a993a34db6.png  |  Pokédex: 50% Caught
+    about: Have 50% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 50% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+73a93e9df2b9d8e8.png  |  Pokédex: 60% Caught
+    about: Have 60% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 60% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+1b115a7a9bfed77b.png  |  Pokédex: 70% Caught
+    about: Have 70% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 70% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+4b56d275187d038e.png  |  Pokédex: 80% Caught
+    about: Have 80% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 80% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+e8ebb55ff1d1a979.png  |  Pokédex: 90% Caught
+    about: Have 90% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 90% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+99aca1cbf54d48ec.png  |  Pokédex: 100% Caught
+    about: Have 100% Caught of all Pokémon caught
+    draw:  A Pokédex with a progress bar / glowing screen, 100% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%
+
+### MEDICINE AND RECOVERY
+be7aab2c2b9dde41.png  |  Every Potion
+    draw:  All five potion bottles in a row (purple, blue, yellow, red, green)
+e82fbee59e4384ce.png  |  Every Status Cure
+    draw:  Spray bottles with a little poison / zzz / flame / snowflake / lightning icon
+c533be7a12e1da24.png  |  Back from the Brink
+    draw:  A yellow Revive crystal with a sparkle
+cee5d0b2a01def39.png  |  Every PP Item
+    draw:  A blue Ether bottle with a yellow PP Up next to it
+94e70c0398e3c189.png  |  Healing Berries
+    draw:  A pile of Oran and Sitrus berries
+5074a4b3dcd6bc5d.png  |  Pinch Berries
+    draw:  A Liechi berry with a sweat drop
+4491802458ce0079.png  |  EV-Reset Berries
+    draw:  A Pomeg berry with a down-arrow
+cd8e12ed347d30e4.png  |  Type-Resist Berries
+    draw:  An Occa berry inside a shield
+78e18cfebde36365.png  |  Garden Berries
+    draw:  A berry bush with mixed berries
+7844e95ed9e3b5e1.png  |  ★ The Complete Pharmacy
+    draw:  A medicine cabinet full of bottles, pink cross on the door
