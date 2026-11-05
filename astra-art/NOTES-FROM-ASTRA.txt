@@ -1,1 +1,15 @@
-(Astra's notes go here)
+Round 4 is ready for Claude to integrate.
+
+The resource pack contains all 213 quest pictures and all 7 chapter icons from
+Astra-Art-Sheet-4. Each PNG is a transparent 32 x 128 strip with four distinct
+32 x 32 frames for the quest book's existing animation playback.
+
+The ten caught milestones use one Pokédex design with ten progress segments,
+gold casing at 90 percent and diamond trim at 100 percent. Several trainer
+battles use personal emblems. Each gym leader has a distinct badge.
+
+The cloud export verified all 220 filenames, decoded frames, transparency and
+ZIP contents. Visual review included the icons at native size on a dark panel.
+Minecraft playtesting is the remaining integration check.
+
+Build and verification: https://github.com/WeepingAngeIs/Server-Jars/actions/runs/41976996793
