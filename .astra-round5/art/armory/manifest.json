@@ -719,6 +719,246 @@
           "subject": "Magispear, a single slim dark staff with a strong forked cyan crystal SPEARHEAD encased in two dark prongs; cyan heart of spearhead shines."
         }
       ]
+    },
+    {
+      "file": "armory-25.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Magiscythe — Magiscythe, long angular black scythe haft supporting one curved cyan crystal blade cut with a gold-and-teal echo channel; lit section runs toward hook.\nROW 2, The Watcher — The Watcher, a broad menacing gray-purple two-handed claymore with a conspicuous open gold-and-red eye between bat-wing quillons; iris glints.\nROW 3, Stormscale — Stormscale, a blue-green curved glaive blade on a dark long shaft, three overlapping silver dragon scales around a yellow lightning-rod tip; charge travels up scale ridge.\nROW 4, Brimstone Claymore — Brimstone Claymore, oversize soot-black straight greatsword with a squared lava-cleft tip and bright red-orange mineral seams; orange fissure brightens in steps.",
+      "rows": [
+        {
+          "id": "4ba6b9119c560b4a.png",
+          "title": "Magiscythe",
+          "row": 0,
+          "subject": "Magiscythe, long angular black scythe haft supporting one curved cyan crystal blade cut with a gold-and-teal echo channel; lit section runs toward hook."
+        },
+        {
+          "id": "6b7ec1a8f446cdbf.png",
+          "title": "The Watcher",
+          "row": 1,
+          "subject": "The Watcher, a broad menacing gray-purple two-handed claymore with a conspicuous open gold-and-red eye between bat-wing quillons; iris glints."
+        },
+        {
+          "id": "29da5c9f6b369b48.png",
+          "title": "Stormscale",
+          "row": 2,
+          "subject": "Stormscale, a blue-green curved glaive blade on a dark long shaft, three overlapping silver dragon scales around a yellow lightning-rod tip; charge travels up scale ridge."
+        },
+        {
+          "id": "2ed60875704e4d71.png",
+          "title": "Brimstone Claymore",
+          "row": 3,
+          "subject": "Brimstone Claymore, oversize soot-black straight greatsword with a squared lava-cleft tip and bright red-orange mineral seams; orange fissure brightens in steps."
+        }
+      ]
+    },
+    {
+      "file": "armory-26.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Emberblade — Emberblade, agile steel longsword with a bright red-orange blade shaped like a flame tongue and a dark hilt; crescent yellow ember flickers within the edge.\nROW 2, Emberlash — Emberlash, small broad curved black-and-hot-red DAGGER with flame-shaped knuckle guard and one trailing ember-colored lanyard at the pommel; central ember pulses.\nROW 3, Molten Edge — Molten Edge, heavyweight bearded GREATAxe with a charcoal volcanic head and an orange pool glowing at the base of the red-hot cutting edge, diagonal long haft; lava line boils.\nROW 4, Forge and Firestorm — Flamewind, long glaive with sweeping red feather-like blade atop a dark shaft with copper fittings, three distinct yellow flame notches; flame seed spark travels.",
+      "rows": [
+        {
+          "id": "2ed6286b91bc2fe8.png",
+          "title": "Emberblade",
+          "row": 0,
+          "subject": "Emberblade, agile steel longsword with a bright red-orange blade shaped like a flame tongue and a dark hilt; crescent yellow ember flickers within the edge."
+        },
+        {
+          "id": "5b2a0a47b07ff3b3.png",
+          "title": "Emberlash",
+          "row": 1,
+          "subject": "Emberlash, small broad curved black-and-hot-red DAGGER with flame-shaped knuckle guard and one trailing ember-colored lanyard at the pommel; central ember pulses."
+        },
+        {
+          "id": "13f9f1eaf3806d6c.png",
+          "title": "Molten Edge",
+          "row": 2,
+          "subject": "Molten Edge, heavyweight bearded GREATAxe with a charcoal volcanic head and an orange pool glowing at the base of the red-hot cutting edge, diagonal long haft; lava line boils."
+        },
+        {
+          "id": "0630586914122a00.png",
+          "title": "Forge and Firestorm",
+          "row": 3,
+          "subject": "Flamewind, long glaive with sweeping red feather-like blade atop a dark shaft with copper fittings, three distinct yellow flame notches; flame seed spark travels."
+        }
+      ]
+    },
+    {
+      "file": "armory-27.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Mjolnir — Mjolnir, imposing squat square-headed SILVER HAMMER with a short brown leather grip and hanging wrist loop, blue lightning zigzag etched into hammer face; blue rune flashes.\nROW 2, Storm's Edge — Storm's Edge, double-ended TWINBLADE with two opposing electric-blue blade tips, a dark central grip, silver forked lightning motif across both ends; one voltage band advances.\nROW 3, Stormbringer — Stormbringer, individual straight silver LONGSWORD with dark cobalt fuller, angled gold lightning-bolt guard and bright diagonal spark caught on blade; blue charge travels.\nROW 4, The Living Storm — Tempest, storm CHAKRAM with open center, silver and teal ring broken into three sweeping curved vanes, a violet vortex accent in the rim; vortex glint advances.",
+      "rows": [
+        {
+          "id": "7580143aa2a2cc71.png",
+          "title": "Mjolnir",
+          "row": 0,
+          "subject": "Mjolnir, imposing squat square-headed SILVER HAMMER with a short brown leather grip and hanging wrist loop, blue lightning zigzag etched into hammer face; blue rune flashes."
+        },
+        {
+          "id": "1a0b43e16d923ff8.png",
+          "title": "Storm's Edge",
+          "row": 1,
+          "subject": "Storm's Edge, double-ended TWINBLADE with two opposing electric-blue blade tips, a dark central grip, silver forked lightning motif across both ends; one voltage band advances."
+        },
+        {
+          "id": "785c85dcfb4d9bb2.png",
+          "title": "Stormbringer",
+          "row": 2,
+          "subject": "Stormbringer, individual straight silver LONGSWORD with dark cobalt fuller, angled gold lightning-bolt guard and bright diagonal spark caught on blade; blue charge travels."
+        },
+        {
+          "id": "3913ea646ab911f5.png",
+          "title": "The Living Storm",
+          "row": 3,
+          "subject": "Tempest, storm CHAKRAM with open center, silver and teal ring broken into three sweeping curved vanes, a violet vortex accent in the rim; vortex glint advances."
+        }
+      ]
+    },
+    {
+      "file": "armory-28.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Frostfall — Frostfall, single-handed glacier HAMMER, broad faceted ice-blue square head with frosted cap and short winter-blue wrapped handle; ice facet glints.\nROW 2, Icewhisper — Icewhisper, tall frosted HALBERD with a narrow silver top spike, one big cyan crescent side axe and two icicles trailing below its axehead; glint crosses the ice.\nROW 3, Livyatan — Livyatan, broad hooked GREATAxe with a wave-shaped cobalt ice blade and whale-tail blue detail on the pommel, diagonal brown two-hand haft; white wave crest advances.\nROW 4, Soulrender — Soulrender, otherworldly SCYTHE with dark long shaft, teal wisplike reaping blade at a right angle and pale bone shoulder clasp; cyan soul bead moves along its inside curve.",
+      "rows": [
+        {
+          "id": "35cee133ebacdc43.png",
+          "title": "Frostfall",
+          "row": 0,
+          "subject": "Frostfall, single-handed glacier HAMMER, broad faceted ice-blue square head with frosted cap and short winter-blue wrapped handle; ice facet glints."
+        },
+        {
+          "id": "3b996485d29af54f.png",
+          "title": "Icewhisper",
+          "row": 1,
+          "subject": "Icewhisper, tall frosted HALBERD with a narrow silver top spike, one big cyan crescent side axe and two icicles trailing below its axehead; glint crosses the ice."
+        },
+        {
+          "id": "293316b17a3362e9.png",
+          "title": "Livyatan",
+          "row": 2,
+          "subject": "Livyatan, broad hooked GREATAxe with a wave-shaped cobalt ice blade and whale-tail blue detail on the pommel, diagonal brown two-hand haft; white wave crest advances."
+        },
+        {
+          "id": "00ac201d587d1dfb.png",
+          "title": "Soulrender",
+          "row": 3,
+          "subject": "Soulrender, otherworldly SCYTHE with dark long shaft, teal wisplike reaping blade at a right angle and pale bone shoulder clasp; cyan soul bead moves along its inside curve."
+        }
+      ]
+    },
+    {
+      "file": "armory-29.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Soulstalker — Soulstalker, corrupted SCYTHE with a heavy ragged indigo-black crescent blade, hooked toothlike red-violet tendrils and an eye-shaped smoky amethyst on the hinge; pupil pulses.\nROW 2, Soul Wardens — Soulkeeper, monumental GREATHAMMER, square dark metal hammerhead built as a teal soul-lantern cage with two brilliant windows, mounted on a long dark haft; lantern flames pulse.\nROW 3, Soulstealer — Soulstealer, compact hook-tipped midnight DAGGER with a hollow mint spirit-drop cutout and a silver knuckleguard; pale soul speck travels into the cutout.\nROW 4, Caelestis — Caelestis, extravagant celestial CLAYMORE of midnight-blue metal with a jagged violet dimensional rift down its broad center and a silver star guard; violet rift pulses.",
+      "rows": [
+        {
+          "id": "3b9b9e87d4f40ae2.png",
+          "title": "Soulstalker",
+          "row": 0,
+          "subject": "Soulstalker, corrupted SCYTHE with a heavy ragged indigo-black crescent blade, hooked toothlike red-violet tendrils and an eye-shaped smoky amethyst on the hinge; pupil pulses."
+        },
+        {
+          "id": "6dbc1f8fbac55654.png",
+          "title": "Soul Wardens",
+          "row": 1,
+          "subject": "Soulkeeper, monumental GREATHAMMER, square dark metal hammerhead built as a teal soul-lantern cage with two brilliant windows, mounted on a long dark haft; lantern flames pulse."
+        },
+        {
+          "id": "27f4531a178a7876.png",
+          "title": "Soulstealer",
+          "row": 2,
+          "subject": "Soulstealer, compact hook-tipped midnight DAGGER with a hollow mint spirit-drop cutout and a silver knuckleguard; pale soul speck travels into the cutout."
+        },
+        {
+          "id": "694060873b430fb9.png",
+          "title": "Caelestis",
+          "row": 3,
+          "subject": "Caelestis, extravagant celestial CLAYMORE of midnight-blue metal with a jagged violet dimensional rift down its broad center and a silver star guard; violet rift pulses."
+        }
+      ]
+    },
+    {
+      "file": "armory-30.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Star's Edge — Star's Edge, double-ended celestial TWINBLADE; one blade warm pale gold tipped around a sun notch, the opposite blade deep sapphire with a pale star, central blue-and-gold grip; star glints.\nROW 2, Shadowsting — Shadowsting, needlepoint violet RAPIER with a smoky shadow-double tracing the needle and a small dark-violet scorpion-tail loop guard; purple tip glints.\nROW 3, Shadow and Gloam — Gloampiercer, corrupted SPEAR; charcoal barbed spearhead with two offset purple phantom echoes fused to its tip, tall dark shaft and violet grip; ghost notch pulses.\nROW 4, Dreadwhisper — Dreadwhisper, lean black curved KATANA with crimson seam and magenta whisper of shadow clasped tight against the blade, small circular dark guard; red seam pulses.",
+      "rows": [
+        {
+          "id": "5593e15be3be6cbe.png",
+          "title": "Star's Edge",
+          "row": 0,
+          "subject": "Star's Edge, double-ended celestial TWINBLADE; one blade warm pale gold tipped around a sun notch, the opposite blade deep sapphire with a pale star, central blue-and-gold grip; star glints."
+        },
+        {
+          "id": "30d4914b9727add5.png",
+          "title": "Shadowsting",
+          "row": 1,
+          "subject": "Shadowsting, needlepoint violet RAPIER with a smoky shadow-double tracing the needle and a small dark-violet scorpion-tail loop guard; purple tip glints."
+        },
+        {
+          "id": "24ab05c1536fa9a7.png",
+          "title": "Shadow and Gloam",
+          "row": 2,
+          "subject": "Gloampiercer, corrupted SPEAR; charcoal barbed spearhead with two offset purple phantom echoes fused to its tip, tall dark shaft and violet grip; ghost notch pulses."
+        },
+        {
+          "id": "5148ef72a80f9fcf.png",
+          "title": "Dreadwhisper",
+          "row": 3,
+          "subject": "Dreadwhisper, lean black curved KATANA with crimson seam and magenta whisper of shadow clasped tight against the blade, small circular dark guard; red seam pulses."
+        }
+      ]
+    },
+    {
+      "file": "armory-31.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Bramblethorn — Bramblethorn, pointed forest-green RAPIER made from a thorn, tight vine-loop guard with one rosebud and small thorns at the guard; dew glint travels up needle.\nROW 2, Toxic Longsword — Longsword of the Plague, weathered green LONGSWORD with a lime toxic groove and small bronze bell-shaped pommel; acid-green bead pulses inside the groove.\nROW 3, Bloodwake — Bloodwake, crimson CUTLASS with a broad swept blade, guarded grip and a red wave-like notch along its single cutting edge; scarlet tide gleam sweeps up curve.\nROW 4, The Living Swarm — Hiveheart, amber honeycomb GREATHAMMER with bold hexagonal cells on its wide head, dark striped shaft and one small ivory bee-wing ornament at the joint; one honey cell lights.",
+      "rows": [
+        {
+          "id": "0d173e474e34977a.png",
+          "title": "Bramblethorn",
+          "row": 0,
+          "subject": "Bramblethorn, pointed forest-green RAPIER made from a thorn, tight vine-loop guard with one rosebud and small thorns at the guard; dew glint travels up needle."
+        },
+        {
+          "id": "09f7ee3d3c9f6256.png",
+          "title": "Toxic Longsword",
+          "row": 1,
+          "subject": "Longsword of the Plague, weathered green LONGSWORD with a lime toxic groove and small bronze bell-shaped pommel; acid-green bead pulses inside the groove."
+        },
+        {
+          "id": "393494dc7eef2ca2.png",
+          "title": "Bloodwake",
+          "row": 2,
+          "subject": "Bloodwake, crimson CUTLASS with a broad swept blade, guarded grip and a red wave-like notch along its single cutting edge; scarlet tide gleam sweeps up curve."
+        },
+        {
+          "id": "255b1f2ee573d24a.png",
+          "title": "The Living Swarm",
+          "row": 3,
+          "subject": "Hiveheart, amber honeycomb GREATHAMMER with bold hexagonal cells on its wide head, dark striped shaft and one small ivory bee-wing ornament at the joint; one honey cell lights."
+        }
+      ]
+    },
+    {
+      "file": "armory-32.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Ribboncleaver — Ribboncleaver, broad two-handed CLAYMORE with a rose-red cloth ribbon crossing a silver blade in a strong spiral and tied at its gold guard; ribbon highlight slides upward.\nROW 2, Rift and Zephyr — Riftmane, broad storm-gray CLAYMORE with a jagged cyan rift down its middle and wind-swept teal hairlike tassel pulled tight at the hilt; rift edge flashes.\nROW 3, Solar Artillery — Dawnquiver, solar CLAYMORE with a pale gold straight sunlit blade, deep-gold bow-shaped crossguard and a single arrow of light running along the blade's center; sunbeam advances.\nROW 4, Wraith Armaments — Wraithfang, ghostly CUTLASS with a curved spectral mint fang blade, midnight-blue basket guard and one violet wisp hugging its back edge; green fang highlight pulses.",
+      "rows": [
+        {
+          "id": "42b4dc9dc48227d3.png",
+          "title": "Ribboncleaver",
+          "row": 0,
+          "subject": "Ribboncleaver, broad two-handed CLAYMORE with a rose-red cloth ribbon crossing a silver blade in a strong spiral and tied at its gold guard; ribbon highlight slides upward."
+        },
+        {
+          "id": "4d89b73a9422af3a.png",
+          "title": "Rift and Zephyr",
+          "row": 1,
+          "subject": "Riftmane, broad storm-gray CLAYMORE with a jagged cyan rift down its middle and wind-swept teal hairlike tassel pulled tight at the hilt; rift edge flashes."
+        },
+        {
+          "id": "79fa27f5d05a4972.png",
+          "title": "Solar Artillery",
+          "row": 2,
+          "subject": "Dawnquiver, solar CLAYMORE with a pale gold straight sunlit blade, deep-gold bow-shaped crossguard and a single arrow of light running along the blade's center; sunbeam advances."
+        },
+        {
+          "id": "4f395f4c9fcb4315.png",
+          "title": "Wraith Armaments",
+          "row": 3,
+          "subject": "Wraithfang, ghostly CUTLASS with a curved spectral mint fang blade, midnight-blue basket guard and one violet wisp hugging its back edge; green fang highlight pulses."
+        }
+      ]
     }
   ]
 }

@@ -104,6 +104,10 @@ def encode(im,fmt,**kw):
 
 
 def export_one(meta,raw_frames):
+    if meta['id']=='56bde069e49cedf1.png':
+        # Give Zekrom's charcoal armor enough midtone contrast on the navy quest panel.
+        slate_curve=[round(255*(value/255)**0.66) for value in range(256)]
+        raw_frames=[f.point(slate_curve*3+list(range(256))) for f in raw_frames]
     frames=shared_palette(raw_frames)
     strip=Image.new("RGBA",(32,128))
     palette=set()
@@ -167,11 +171,11 @@ def previews(items):
             big=f.resize((72,72),Image.Resampling.NEAREST)
             base.paste(big,(x+20,y+4),big)
             base.paste(f,(x+131,y+40),f)
-            label=item["title"]
-            while d.textlength(label,font=title)>w-24:
-                label=label[:-2]+"…"
-            d.text((x+10,y+80),label,font=title,fill="#f4f4ff")
-            d.text((x+10,y+106),item["chapter"],font=small,fill="#b5c4de")
+            for label, font, offset, ink in [(item["title"],title,80,"#f4f4ff"),
+                                            (item["chapter"],small,106,"#b5c4de")]:
+                while d.textlength(label,font=font)>w-24:
+                    label=label[:-2]+"…"
+                d.text((x+10,y+offset),label,font=font,fill=ink)
         base.save(OUT/f"Review-{1+start//20:02}.png")
     cards=[]
     for item in items:

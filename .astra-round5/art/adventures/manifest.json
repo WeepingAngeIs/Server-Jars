@@ -208,7 +208,8 @@
           "row": 3,
           "subject": "Maledictus's cursed emerald eye ringed with lavender armor and cracked horns; pupil flickers."
         }
-      ]
+      ],
+      "edit_prompt": "Clean cutout edit of the attached RPG art sprite atlas. Remove all of the blurry gray and blue glow from around EVERY sprite. Set all exterior pixels and gutters to truly transparent alpha=0, including haze, wisps, halos and diffuse lightning. Keep the FOUR distinct boss-eye amulets in the same four rows with four animated phases across each row. Make all sixteen icons slightly smaller, centered in their own cells with ample clear margins to avoid touching adjacent cells; desirable 65 percent cell width. Preserve the sharp detailed art and their current identities, copper saurian skull with turquoise eye, sapphire finned eye, silver storm-eye with small flat gold lightning bolts and green eye bound in violet horned metal. Keep the subtle pupil or highlight animation of each. Do not add anything behind any of the badges. NO shadows and no colored aura, no checkerboard. Pure hard edged pixel sprites on actual empty transparency."
     },
     {
       "file": "adventures-08.png",
@@ -1257,6 +1258,60 @@
           "title": "Dragonsteel: The Supreme Alloy",
           "row": 3,
           "subject": "A massive fire dragonsteel ingot with vivid orange hot seams, broad silver top and bronze edges; hot seams pulse."
+        }
+      ]
+    },
+    {
+      "file": "adventures-43.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Long heavy fire dragonsteel sword in a diagonal pose, ivory-steel blade with crimson fuller and brass dragon-wing guard; fuller glows.\nROW 2 repeat across all FOUR columns: Fire dragonsteel breastplate with silver shoulders, vivid red chest panels and an orange diamond-shaped core; core pulses.\nROW 3 repeat across all FOUR columns: An icy blue dread key with a skull-shaped bow, pale frost tips and angular teeth; crown of frost glints.\nROW 4 repeat across all FOUR columns: A dark lich staff with large moonlit ivory skull at the top and an ice-blue gem between horns; gem flickers.",
+      "rows": [
+        {
+          "id": "36f77c65b1037604.png",
+          "title": "The Cataclysm Blade",
+          "row": 0,
+          "subject": "Long heavy fire dragonsteel sword in a diagonal pose, ivory-steel blade with crimson fuller and brass dragon-wing guard; fuller glows."
+        },
+        {
+          "id": "4b5619e058ac940f.png",
+          "title": "The Sovereign Aegis",
+          "row": 1,
+          "subject": "Fire dragonsteel breastplate with silver shoulders, vivid red chest panels and an orange diamond-shaped core; core pulses."
+        },
+        {
+          "id": "34285cb18af2317e.png",
+          "title": "The Frozen Tomb: Dread Mausoleum",
+          "row": 2,
+          "subject": "An icy blue dread key with a skull-shaped bow, pale frost tips and angular teeth; crown of frost glints."
+        },
+        {
+          "id": "7eb37b551f782988.png",
+          "title": "Staff of the Dread Lich",
+          "row": 3,
+          "subject": "A dark lich staff with large moonlit ivory skull at the top and an ice-blue gem between horns; gem flickers."
+        }
+      ]
+    },
+    {
+      "file": "adventures-44.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: A squat terracotta botany pot with dark soil and a cheerful two-leaf green sprout; top leaf lifts.\nROW 2 repeat across all FOUR columns: A terracotta planter on a chunky steel hopper with a bright orange carrot peeking from soil; carrot leaves sway.\nROW 3 repeat across all FOUR columns: A plump ruby leppa berry and a golden apricorn with green leaves, nestled together; red fruit catches a glint.\nROW 4 repeat across all FOUR columns: A plump ruby leppa berry and a golden apricorn with green leaves, nestled together; red fruit catches a glint.",
+      "rows": [
+        {
+          "id": "7975811b5cc73e69.png",
+          "title": "Your First Botany Pot",
+          "row": 0,
+          "subject": "A squat terracotta botany pot with dark soil and a cheerful two-leaf green sprout; top leaf lifts."
+        },
+        {
+          "id": "5b77e152004b28a8.png",
+          "title": "Collect the Harvest",
+          "row": 1,
+          "subject": "A terracotta planter on a chunky steel hopper with a bright orange carrot peeking from soil; carrot leaves sway."
+        },
+        {
+          "id": "0ad22a138885ad39.png",
+          "title": "Berries and Apricorns",
+          "row": 2,
+          "subject": "A plump ruby leppa berry and a golden apricorn with green leaves, nestled together; red fruit catches a glint."
         }
       ]
     }
