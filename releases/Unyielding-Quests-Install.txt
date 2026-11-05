@@ -1,0 +1,225 @@
+UNYIELDING QUESTS - ONE JAR  (v1.5.0)
+=====================================
+File: UnyieldingQuests-1.5.0.jar   (Minecraft 1.21.1, NeoForge 21.1.x)
+
+INSTALL (click by click)
+------------------------
+1. Open the pack's mods folder:  C:\Users\tolov\curseforge\minecraft\Instances\Cobblemon Unyielding\mods
+2. Delete UnyieldingQuests-1.4.0.jar (or any older UnyieldingQuests jar).
+3. Delete these two too (they are the "FTB" buttons you saw at the top left):
+     ftb-library-neoforge-2101.1.36.jar
+     ftb-teams-neoforge-2101.1.11.jar
+   In the CurseForge app also remove them from the pack's mod list (My Modpacks > Cobblemon
+   Unyielding > Mods > find "FTB Library" and "FTB Teams" > the "..." menu > Remove), or the
+   app puts them back on the next update. Your friend needs to leave them out of the next
+   server pack / export as well.
+4. Copy UnyieldingQuests-1.5.0.jar into mods/.
+5. Same on the server: delete the old quests jar + the two FTB jars, add 1.5.0, restart.
+Nothing else in the pack needs FTB: our jar does the quests, teams, homes/tpa/warps and
+vein mining. Open Parties and Claims stays for claims.
+
+WHAT'S NEW IN 1.5.0  (your team's updated quest book + the changes you asked for)
+--------------------------------------------------------------------------------
+The quest book in the jar is now built from ftbquests-server.zip (the team's updated pack),
+with these edits on top. Player progress carries over (same quest ids).
+
+ 1. Welcome and Pack Tools: every quest on the page gives 25 CobbleDollars (relic coin icon,
+    paid with /cobbledollars give, runs from the console). The "Reward references" quest keeps
+    its own 100 CobbleDollars and seasoned snack - it is the example I copied from.
+ 2. Every Poke Snack reward anywhere in the book is now the SEASONED one
+    (golden-apple bait effect / colour / ingredient, same as the reference).
+ 3. Legendary Expeditions (Kanto-Hoenn, Sinnoh-Kalos, Alola-Paldea): every quest gives
+    1000 xp and 100 CobbleDollars.
+ 4. Type Mastery Trials: every quest gives 1000 xp and 100 CobbleDollars.
+ 5. REMOVED pages: Type Field Guide, Provisions and Berries, Evolution Essentials.
+    Other quests that depended on quests from those pages no longer need them.
+ 6. Pokedex Adventures: rebuilt. The old quests and pictures are gone. Now:
+      - 10 goals in a row: "Pokedex: 10% Caught" ... "Pokedex: 100% Caught". Each counts the
+        Pokemon registered as CAUGHT against every Pokemon in the pack (addons included) and
+        shows a progress bar. Rewards grow each step: Ultra Balls and Rare Candies at 10%,
+        Ability Capsule at 30%, Master Ball + Ability Patch at 50%, up to 3 Master Balls,
+        32 Rare Candies, 3 Enchanted Golden Apples, a Relic Coin Sack, 1000 CobbleDollars and
+        2000 xp at 100%. (50% and 100% are the big hexagon quests.)
+      - Moved in from "Exploration, Fossils and Utilities": the Pokedex, PokeNav, PokeFinder
+        and FishingNav quests, all 4 Fossil Restoration quests and the 6 Fossil Collections
+        by Region quests. Their Track Arrow / Poke Bait rewards are now seasoned Poke Snacks.
+ 7. Medicine and Recovery: rebuilt. 9 collection quests + 1 final:
+      Every Potion (5), Every Status Cure (6), Back from the Brink (Revive + Max Revive),
+      Every PP Item (Ether, Max Ether, Elixir, Max Elixir, PP Up, PP Max),
+      Healing Berries (10), Pinch Berries (19), EV-Reset Berries (6), Type-Resist Berries (18),
+      Garden Berries (17)  = all 70 berries.
+      "The Complete Pharmacy" needs all nine and gives a Master Ball, 10 Rare Candies,
+      Ability Capsule, 10 Full Restores, 5 Max Elixirs, 300 CobbleDollars and 1000 xp.
+ 8. Held Items and Battle Gear: "The Art of Held Items" is gone. Every held item (99 of them)
+    is its own quest, packed close together in three columns under its old group name.
+    Each gives 100 xp + 10 CobbleDollars (the first item of a group also keeps the group's old
+    item reward). "Master Tactician" is the big gear at the bottom; it needs every held-item
+    quest and gives 1000 xp + 500 CobbleDollars (relic coin sack icon) on top of its rewards.
+ 9. Dropped from 1.4.0: my Twilight Forest, Boss Hunts and Ars Nouveau chapters, because the
+    team's updated book already has its own Twilight Forest, Cataclysm Boss Hunts, Bosses of
+    Mass Destruction and Ars Nouveau pages. The other 7 chapters from 1.4.0 stay
+    (Trainer Milestones, Raid Dens, Trainer League, Travel and Trade, Hobbies, Dungeons and
+    Ruins, Biomes and Nature). Total now: 38 chapters, 967 quests.
+10. The mod itself learned the FTB reward types the team's book uses: "command" rewards
+    (/cobbledollars etc., {p} = player name, console or as-player), "loot" rewards (reward
+    tables, weighted), "xp_levels", and a reward title (so command rewards show as
+    "25 CobbleDollars" with the coin icon instead of a command line).
+    Also new: Pokedex PERCENT goals for quests (dex_progress "caught_percent"/"seen_percent").
+11. Art: Astra's pictures still match 65 of the team's quests; 53 pictures belong to quests
+    that were removed (kept in the jar, harmless). New art request: Astra-Art-Sheet-4.xlsx.
+12. Small fixes: the team's page headings ("Fossil Restoration", "Kanto", ...) now show on the
+    pages (they were skipped before). A quest with lots of requirements says "finish A, B, C, D
+    and 95 more quests on this page first" instead of listing all 99.
+
+TESTED (dev client, singleplayer): 38 chapters / 967 quests load with no warnings; Welcome
+page shows "25 CobbleDollars" with the coin icon; Pokedex goals show the % progress bar;
+Medicine, Held Items (3 columns + gear) and Pokedex Adventures pages open and look right.
+
+WHAT'S NEW IN 1.4.0
+-------------------
+- Premier Ball button: a Premier Ball at the top-left of the inventory (survival AND creative)
+  opens the quest book. A red dot on it means rewards are waiting. The Teams button sits next
+  to it. Players can move or hide it: Mods > Unyielding Quests > Config > Client Settings >
+  Inventory Buttons (Top-left corner / Next to the inventory / Hidden, plus X/Y position).
+  EMI keeps its panels off the buttons.
+- "Welcome to Cobblemon Adventures" is now "Welcome to Cobblemon Unyielding".
+- LUCKY SPIN: every quest gives each player ONE bonus prize roll when they claim it
+  (a "Lucky Spin" row in the quest's rewards, also included in "Claim all"). A wheel spins
+  on screen and lands on the prize:
+      50%  Basic prize   (Poke Balls, candies, potions, berries, iron, emeralds...)
+      44%  Good prize    (golden apples, Master Ball (rare), netherite, evolution stones,
+                          vitamins, Ability Capsule, mints, held items, totem, elytra (rare)...)
+       3%  Paradox Pokemon
+       2%  Mythical Pokemon
+       1%  Legendary Pokemon
+  Pokemon prizes have random stats, natures and abilities, level 20-35, and go to your party
+  (PC if full). A Pokemon win is announced in chat to everyone.
+  NOTE: Cobblemon 1.8.4 only has 2 Paradox Pokemon with models (Iron Leaves, Walking Wake),
+  so the 3% always gives one of those two. Add more with extra_paradox if an addon adds them.
+- DAILY LOGIN REWARD: one free Lucky Spin a few seconds after a player logs in, once per real
+  day (Chicago time by default). Logging in 7 days in a row gives 2 extra spins that day.
+  Daily odds are separate: 40% basic, 50% good, 5% Paradox, 3% Mythical, 2% Legendary.
+  /daily shows a player's streak. Admins: /daily give <player>.
+- 289 NEW QUESTS in 10 new chapters (1140 quests total):
+    Twilight Forest (47)      - portal, every boss in order, side quests and loot
+    Trainer Milestones (35)   - catch 10/50/100/250/500, win battles, evolve, level 100,
+                                shinies, fishing, fossils, Pokedex counts, big achievements
+    Raid Dens (15)            - join a raid, tiers 1-7, cheers, mega/dynamax/tera raids, shiny
+    Trainer League (56)       - RCT trainers: Kanto, Sinnoh and Borrius badges, Elite Four,
+                                champions, villain teams, Red and Blue
+    Boss Hunts (21)           - Cataclysm overworld bosses, Night Lich, Void Blossom,
+                                Wilden Chimera, Weeping Angels, Elder Guardian, Warden
+    Ars Nouveau (28)          - spell books, machines, tamed helpers, rituals, gear
+    Travel and Trade (15)     - Waystones, Lightman's coins, shops, bank, Cobble Merchant
+    Hobbies and Gadgets (12)  - camera, instruments, Ribbit village, PokeNav, Poke Staff
+    Dungeons and Ruins (31)   - YUNG's, Dungeons Arise, Towns and Towers, Explorify, more
+    Biomes and Nature (29)    - 27 biomes from BOP, Biomes We've Gone and Nature's Spirit
+  A new chapter group "World Exploration" holds the last four.
+  Every item, boss, structure and biome id was checked against the exact mod versions in the
+  pack. Quests finish by themselves (advancements, kills, visits, items in inventory).
+
+CONFIG (server: config/unyieldingquests-common.toml, or Mods > Unyielding Quests > Config)
+------------------------------------------------------------------------------------------
+[lucky_spin]   enabled, chance_basic/good/paradox/mythical/legendary (weights; they are
+               percentages when they add up to 100), pokemon_level_min/max,
+               announce_pokemon_wins, basic_items / good_items (one per line:
+               "item_id amount" or "item_id min-max", add x<weight> to make it rarer/commoner,
+               e.g. "cobblemon:master_ball 1 x1"), legendary/mythical/paradox_labels,
+               extra_legendary/mythical/paradox (add species), never_give (block species).
+[daily_login]  enabled, the five chances, streak_bonus_every_days, streak_bonus_spins,
+               timezone (America/Chicago).
+Edits to the server file apply after /reload or a restart.
+
+TESTED (dev client, singleplayer, 1140 quests load): Premier Ball button in survival and
+creative, Lucky Spin row + wheel + "Claim all" with several spins + skip/summary,
+legendary win goes to the party, daily login toast + chat, all 10 chapters open.
+
+WHAT'S NEW IN 1.3.0
+-------------------
+- Astra's round 2 art is built in: 106 more quest pictures (chapter intros, the star quests,
+  boss quests, the guides and all 18 type guides) and a hand-drawn icon for all 29 chapters.
+  118 quests now have their own picture. No resource pack needed.
+- The new pictures move (4 frames each). By default a picture moves while you point at it,
+  on the open quest page, and in the "Quest complete!" popup.
+- New setting "Moving Pictures": Mods > Unyielding Quests > Config > Client Settings > Look
+  (or picture_motion in config/unyieldingquests-client.toml)
+    When pointed at = HOVER (default), Always = ALWAYS, Off = OFF.
+  Turning "Animations" off also makes the pictures still.
+  To make every picture move for everyone, put config/unyieldingquests-client.toml in the
+  modpack with:  picture_motion = "ALWAYS"
+- The settings screen shows normal names now, and the mods list shows the version number.
+
+FOR ASTRA (next art)
+--------------------
+To make a picture move, stack its frames top to bottom in ONE PNG at the normal path
+(32x128 = four 32x32 frames). The quest book plays them 1, 2, 3, 4, 3, 2 at 0.18 seconds each.
+A normal square PNG stays a still picture. Quest pictures go in textures/quest_art/,
+chapter icons in textures/chapter_icon/, same file names as before.
+
+WHAT'S NEW IN 1.2.2
+-------------------
+- No plain book icons anywhere: the last ones were replaced (EMI, Move Relearning, Codex of the Skies),
+  the Quest Book item has its own Poke Ball journal look, and task rows / fallbacks now use the
+  quest's own icon, the matching Pokemon, or a Poke Ball instead of a book.
+- Fixed 4 quests that asked for items players can't get: Track Arrow (now: track a Pokemon, then
+  press Check), Trainer's Showcase (just the Display Case), Open Ranch (just the Pasture Block),
+  Devon Radar (rewards 5 Poke Balls instead of a useless item).
+- Chapter icons can now be custom pixel art too (Astra kit 2).
+
+WHAT'S NEW IN 1.2.1
+-------------------
+- Astra's pixel art is built in: 12 quest pictures (chapter intro quests, Nether / Aether / End
+  entrances) and page art on the Nether (volcano), Aether (floating island) and Ice and Fire (dragon)
+  pages. No resource pack needed.
+
+WHAT'S NEW IN 1.2.0
+-------------------
+- New look: dark glass windows, nicer buttons and tabs, glowing quests, progress rings,
+  a red GOAL box on every quest page, player heads on the party screen, new popup.
+- Every quest has an icon that fits it. Pokemon quests show the real Pokemon.
+- Every quest says exactly what to do, how it completes, and how to get the items.
+- Hover any item in the quest book and press R (recipe) or U (uses) - works with EMI.
+- Players can change the look in Mods > Unyielding Quests > Config (or
+  config/unyieldingquests-client.toml): menu_opacity (see-through), blur, animations, hints, sounds.
+- Pixel art support: a resource pack can add a picture per quest and decorations on chapter pages
+  (this is what Astra is drawing).
+- IMPORTANT: the server now uses the quest book that ships in the jar (quest_book_source = builtin
+  in config/unyieldingquests-common.toml), so quest updates arrive just by updating the jar.
+  Progress is kept. If you edited quests yourself in FTB Quests, set it to "config_folder".
+- Fixed: "Wild Dominance" quest needed an item from a mod that isn't in the pack (Alphas mod);
+  it now asks you to catch an Alpha Pokemon (built into Cobblemon). The "FTB Ultimine" and
+  "Claims and Parties" quests now describe Vein Mine and Open Parties and Claims.
+
+WHAT YOU GET
+------------
+1) Quests + Teams (same as 1.0.0): J key, 851 quests built in, team screen in inventory.
+
+2) Essentials (replaces FTB Essentials). Commands:
+   Homes/warps: /home /sethome /delhome /listhomes /warp /setwarp /delwarp /listwarps
+   Teleport:    /spawn /playerspawn /back /tpa /tpahere /tpaccept /tpdeny /rtp /tpx /tpl /tp_offline /jump
+   Utility:     /nick /rec /near /hat /heal /feed /fly /god /speed /extinguish /kickme /mute
+   Workbenches: /anvil /crafting /smithing /stonecutter /enderchest /trashcan
+   Admin:       /invsee /kit (create, delete, give, list)
+   Config: config/unyieldingquests-essentials.toml
+     - disabled_commands: list any command name to turn it off
+     - cooldowns, home limits, /back limits, RTP range and blacklisted dimensions
+
+3) Vein Mine (replaces FTB Ultimine)
+   - HOLD the ` (backtick) key, then break a block. Matching blocks nearby break too.
+   - Scroll the mouse wheel while holding to change the shape. An outline shows what will break.
+   - Right-click with axe/hoe/shovel also works on neighbouring blocks.
+   - Change the key in Options > Controls (category Unyielding).
+   Config: config/unyieldingquests-ultimine.toml (max_blocks 64, hunger cost, tool rules)
+
+4) Ranks: built in (already in 1.0.0). FTB Ranks is not needed.
+
+NOT INCLUDED (compared with the FTB mods)
+-----------------------------------------
+  - Old FTB homes/warps are NOT copied over. Players set them again.
+  - Ultimine "crystals" and the crop-harvest feature.
+  - Teleport warm-up timers, and different home limits per rank.
+  - /rtp is centred on world spawn.
+  - /tpl and /tp_offline go to the player's last known spot.
+  - /tpx <dimension> keeps your x/z.
+  - Cross-dimension teleport was not confirmed in my test setup (same-dimension works).
+    If /warp or /home to another dimension misbehaves on your server, tell me.
