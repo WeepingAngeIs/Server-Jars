@@ -1,11 +1,11 @@
-UNYIELDING QUESTS - ONE JAR  (v1.5.0)
+UNYIELDING QUESTS - ONE JAR  (v1.5.1)
 =====================================
-File: UnyieldingQuests-1.5.0.jar   (Minecraft 1.21.1, NeoForge 21.1.x)
+File: UnyieldingQuests-1.5.1.jar   (Minecraft 1.21.1, NeoForge 21.1.x)
 
 INSTALL (click by click)
 ------------------------
 1. Open the pack's mods folder:  C:\Users\tolov\curseforge\minecraft\Instances\Cobblemon Unyielding\mods
-2. Delete UnyieldingQuests-1.4.0.jar (or any older UnyieldingQuests jar).
+2. Delete UnyieldingQuests-1.5.0.jar (or any older UnyieldingQuests jar).
 3. Delete these two too (they are the "FTB" buttons you saw at the top left):
      ftb-library-neoforge-2101.1.36.jar
      ftb-teams-neoforge-2101.1.11.jar
@@ -13,10 +13,17 @@ INSTALL (click by click)
    Unyielding > Mods > find "FTB Library" and "FTB Teams" > the "..." menu > Remove), or the
    app puts them back on the next update. Your friend needs to leave them out of the next
    server pack / export as well.
-4. Copy UnyieldingQuests-1.5.0.jar into mods/.
-5. Same on the server: delete the old quests jar + the two FTB jars, add 1.5.0, restart.
+4. Copy UnyieldingQuests-1.5.1.jar into mods/.
+5. Same on the server: delete the old quests jar + the two FTB jars, add 1.5.1, restart.
 Nothing else in the pack needs FTB: our jar does the quests, teams, homes/tpa/warps and
 vein mining. Open Parties and Claims stays for claims.
+
+WHAT'S NEW IN 1.5.1
+-------------------
+- Astra's round 4 art is built in: all 213 quest pictures for the new chapters, the 10 Pokedex
+  goals and the Medicine page, plus 7 new chapter icons - every one a 4-frame moving picture.
+  337 quests now have their own picture. No resource pack needed.
+  (Her upload is in the repo under astra-art/; the jar already contains it.)
 
 WHAT'S NEW IN 1.5.0  (your team's updated quest book + the changes you asked for)
 --------------------------------------------------------------------------------
@@ -73,7 +80,7 @@ with these edits on top. Player progress carries over (same quest ids).
 
 GITHUB: the mod's source, the quest book files and this jar now live in your private repo
 https://github.com/WeepingAngeIs/Server-Jars  (folder unyielding-quests/, jar in releases/).
-Your friend can download the jar from there: open releases/UnyieldingQuests-1.5.0.jar on
+Your friend can download the jar from there: open releases/UnyieldingQuests-1.5.1.jar on
 GitHub and press the download button.
 
 TESTED (dev client, singleplayer): 38 chapters / 967 quests load with no warnings; Welcome
