@@ -76,6 +76,55 @@ public class QuestScreen extends Screen {
     private long lastFrame;
     private float dt;
 
+    // ---- in-game editor state
+    public static boolean editMode;
+    private Quest dragQuest;
+    private double dragFromX, dragFromY;
+    private int dragLabel = -1, hoveredLabel = -1;
+    private Quest linkFrom;
+    private List<MenuItem> menu;
+    private int menuX, menuY;
+    private final List<ChapterHit> chapterHits = new ArrayList<>();
+
+    private record MenuItem(String label, Runnable action, boolean danger) {
+    }
+
+    private record ChapterHit(int y0, int y1, Chapter chapter) {
+    }
+
+    private static boolean canEdit() {
+        Minecraft mc = Minecraft.getInstance();
+        return mc.player != null && mc.player.hasPermissions(2);
+    }
+
+    private boolean editing() {
+        return editMode && canEdit();
+    }
+
+    private static void send(net.minecraft.nbt.CompoundTag op) {
+        Net.sendToServer(new Net.EditRequest(op));
+    }
+
+    /** The server applied an edit (ours or somebody else's): re-resolve everything we point at. */
+    public void onBookChanged() {
+        QuestFile f = ClientData.file;
+        if (f == null) return;
+        if (chapter != null) {
+            Chapter c = f.chapterMap.get(chapter.id);
+            if (c == null) {
+                chapter = null;
+                if (!f.chapters.isEmpty()) selectChapter(f.chapters.get(0));
+            } else chapter = c;
+        }
+        if (selected != null) selected = f.quests.get(selected.id);
+        if (shown != null) shown = f.quests.get(shown.id);
+        if (selected == null) shown = null;
+        if (linkFrom != null) linkFrom = f.quests.get(linkFrom.id);
+        if (dragQuest != null) dragQuest = f.quests.get(dragQuest.id);
+        hovered = null;
+        menu = null;
+    }
+
     public QuestScreen() {
         super(Component.literal("Quests"));
     }
@@ -535,6 +584,7 @@ public class QuestScreen extends Screen {
         if (shown != null) renderDetail(g, f, tp, spinning ? -1000 : mx, spinning ? -1000 : my);
         if (spinning) renderSpin(g, mx, my);
         if (pendingTip != null) g.renderComponentTooltip(font, pendingTip, mx, my);
+        if (menu != null) renderMenu(g, mx, my);
         if (!ClientData.notice.isEmpty() && System.currentTimeMillis() - ClientData.noticeTime < 4000) {
             int w = font.width(ClientData.notice) + 16;
             int x = width / 2 - w / 2, y = height - 30;
@@ -562,6 +612,17 @@ public class QuestScreen extends Screen {
         int tw = font.width("Teams") + 22;
         button(g, bx - tw, 5, tw, 18, "Teams", Ui.ICON_TEAM, Ui.Style.NORMAL, true, mx, my, () -> Minecraft.getInstance().setScreen(new TeamScreen()));
         bx -= tw + 4;
+        if (canEdit()) {
+            int ew = font.width("Edit") + 22;
+            button(g, bx - ew, 5, ew, 18, "Edit", Ui.ICON_GEAR, editMode ? Ui.Style.ACCENT : Ui.Style.NORMAL, true, mx, my, () -> {
+                editMode = !editMode;
+                linkFrom = null;
+                menu = null;
+                ClientData.notice = editMode ? "Edit mode: drag quests to move them, right-click for options." : "";
+                ClientData.noticeTime = System.currentTimeMillis();
+            });
+            bx -= ew + 4;
+        }
         int unclaimed = unclaimedTotal(f, tp);
         String cl = unclaimed > 0 ? "Claim all (" + unclaimed + ")" : "Claim all";
         int cw = font.width(cl) + 22;
@@ -598,7 +659,14 @@ public class QuestScreen extends Screen {
         Ui.bar(g, 8, 21, side - 16, 4, total == 0 ? 0 : done / (double) total, Theme.accent);
         int listTop = 30;
         g.fill(8, listTop - 2, side - 8, listTop - 1, 0x22FFFFFF);
-        g.enableScissor(2, listTop, side - 2, height - 4);
+        chapterHits.clear();
+        int listBottom = height - 4;
+        if (editing()) {
+            listBottom -= 24;
+            button(g, 6, height - 24, side - 12, 18, "+ New chapter", null, Ui.Style.ACCENT, true, mx, my,
+                    () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.EditChapterScreen(this, null, chapter == null ? 0 : chapter.group)));
+        }
+        g.enableScissor(2, listTop, side - 2, listBottom);
         int y = listTop + 2 - sideScroll;
         long lastGroup = Long.MIN_VALUE;
         int start = y;
@@ -641,16 +709,17 @@ public class QuestScreen extends Screen {
             g.drawString(font, title, textX, y + 3, sel ? 0xFFFFFFFF : Theme.text, sel);
             int bw = side - 10 - textX - 6;
             Ui.bar(g, textX, y + 13, bw, 3, cnt[1] == 0 ? 0 : cnt[0] / (double) cnt[1], complete ? Theme.done : Theme.available);
-            if (my >= listTop) {
+            if (my >= listTop && my < listBottom) {
                 final Chapter target = c;
                 int yy = y;
-                hits.add(new Hit(4, Math.max(yy, listTop), side - 4, yy + ROW, () -> selectChapter(target)));
+                hits.add(new Hit(4, Math.max(yy, listTop), side - 4, Math.min(yy + ROW, listBottom), () -> selectChapter(target)));
+                chapterHits.add(new ChapterHit(Math.max(yy, listTop), Math.min(yy + ROW, listBottom), c));
             }
             y += ROW + 1;
         }
         sideContentHeight = y - start + 6;
         g.disableScissor();
-        int view = height - 4 - listTop;
+        int view = listBottom - listTop;
         if (sideContentHeight > view) {
             int th = Math.max(16, view * view / sideContentHeight);
             int ty = listTop + (int) ((view - th) * (sideScroll / (float) Math.max(1, sideContentHeight - view)));
@@ -671,7 +740,9 @@ public class QuestScreen extends Screen {
                 for (float y = startY; y < height; y += step)
                     if (x >= x0 && y >= y0) g.fill(Math.round(x), Math.round(y), Math.round(x) + dot, Math.round(y) + dot, Theme.gridDot);
         }
-        for (QuestFile.ChapterImage im : chapter.images) {
+        hoveredLabel = -1;
+        for (int li = 0; li < chapter.images.size(); li++) {
+            QuestFile.ChapterImage im = chapter.images.get(li);
             if (im.image.isEmpty()) {
                 if (im.text.isEmpty()) continue;
                 float icx = sx(im.x), icy = sy(im.y);
@@ -680,6 +751,12 @@ public class QuestScreen extends Screen {
                 int tw = font.width(txt);
                 float sc = Math.max(0.8f, Math.min(2.2f, (float) im.height * UNIT * zoom / 11f));
                 if (im.width > 0 && tw > 0) sc = Math.min(sc, Math.max(0.45f, (float) im.width * UNIT * zoom / (tw + 6f)));
+                if (editing()) {
+                    float hw = tw * sc / 2 + 4, hh = 5 * sc + 3;
+                    boolean ov = mx >= x0 && my >= y0 && mx >= icx - hw && mx <= icx + hw && my >= icy - hh && my <= icy + hh;
+                    if (ov) hoveredLabel = li;
+                    g.fill(Math.round(icx - hw), Math.round(icy - hh), Math.round(icx + hw), Math.round(icy + hh), ov ? 0x40FFFFFF : 0x18FFFFFF);
+                }
                 g.pose().pushPose();
                 g.pose().translate(icx, icy, 0);
                 g.pose().scale(sc, sc, 1f);
@@ -701,6 +778,9 @@ public class QuestScreen extends Screen {
             g.pose().popPose();
         }
         float time = Ui.time();
+        if (linkFrom != null && linkFrom.chapter == chapter.id && mx > 0) {
+            Gfx.line(g, sx(linkFrom.x), sy(linkFrom.y), mx, my, 2f, Ui.alpha(Theme.accent, 0.8f));
+        }
         // dependency lines
         for (Quest q : chapter.quests) {
             if (!visible(q, tp) || q.hideDepLines) continue;
@@ -770,6 +850,14 @@ public class QuestScreen extends Screen {
             }
             g.pose().popPose();
         }
+        if (editing()) {
+            String hint = linkFrom != null ? "Click the quest that must be finished FIRST (Esc to cancel)"
+                    : "EDIT MODE  ·  drag to move  ·  right-click a quest, a heading, empty space or a chapter for options";
+            int hw = font.width(hint) + 14;
+            int hx = x0 + (width - x0) / 2 - hw / 2, hy = height - 18;
+            Ui.blit(g, Ui.CHIP, hx, hy, hw, 14, linkFrom != null ? 0xE0A03020 : 0xE0303848);
+            g.drawString(font, hint, hx + 7, hy + 3, linkFrom != null ? 0xFFFFFFFF : Theme.textDim, false);
+        }
         g.disableScissor();
     }
 
@@ -795,7 +883,8 @@ public class QuestScreen extends Screen {
             case CLAIM -> tip.add(Component.literal("Rewards ready to claim!").withStyle(s -> s.withColor(Theme.claim)));
             case DONE -> tip.add(Component.literal("Completed").withStyle(s -> s.withColor(Theme.good)));
         }
-        tip.add(Component.literal("Click to open").withStyle(s -> s.withColor(Theme.textMuted).withItalic(true)));
+        if (editing()) tip.add(Component.literal(linkFrom != null ? "Click: " + Gfx.strip(Gfx.codes(linkFrom.displayTitle())) + " will need this" : "Drag to move · right-click for options").withStyle(s -> s.withColor(Theme.accentText).withItalic(true)));
+        else tip.add(Component.literal("Click to open").withStyle(s -> s.withColor(Theme.textMuted).withItalic(true)));
         g.renderComponentTooltip(font, tip, mx, my);
     }
 
@@ -838,7 +927,7 @@ public class QuestScreen extends Screen {
         } else {
             g.renderItem(questIcon(q), px + 11, py + 12);
         }
-        int titleW = pw - 44 - 30;
+        int titleW = pw - 44 - 30 - (editing() ? font.width("Edit") + 26 : 0);
         g.drawString(font, Component.literal(font.plainSubstrByWidth(Gfx.readable(q.displayTitle()), titleW)).withStyle(ChatFormatting.BOLD), px + 36, py + 9, Theme.text, true);
         String sub = q.subtitle.isEmpty() ? "" : Gfx.codes(q.subtitle.get(0));
         String chipText = switch (st) {
@@ -851,6 +940,12 @@ public class QuestScreen extends Screen {
         int cw = Ui.chip(g, font, px + 36, py + 21, chipText, color(st), st == Status.CLAIM || st == Status.STARTED ? 0xFF2A1C00 : 0xFFFFFFFF);
         if (!sub.isEmpty()) g.drawString(font, font.plainSubstrByWidth(sub, pw - 36 - cw - 34), px + 40 + cw, py + 23, Theme.textDim, false);
         button(g, px + pw - 24, py + 9, 16, 16, null, Ui.ICON_CLOSE, Ui.Style.NORMAL, interactive, mx, my, () -> selected = null);
+        if (editing()) {
+            int ew = font.width("Edit") + 22;
+            final Quest eq = q;
+            button(g, px + pw - 28 - ew, py + 9, ew, 16, "Edit", Ui.ICON_GEAR, Ui.Style.ACCENT, interactive, mx, my,
+                    () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.EditQuestScreen(this, eq)));
+        }
 
         boolean done = tp.questDone(q.id);
         boolean avail = QuestManager.available(f, q, tp);
@@ -1289,6 +1384,152 @@ public class QuestScreen extends Screen {
         spinButton(g, px + pw / 2 - 40, py + ph - 24, 80, 18, "Nice!", Ui.ICON_CHECK, Ui.Style.GOLD, mx, my, this::closeSpins);
     }
 
+    // ---- editor: context menus ------------------------------------------------
+
+    private void openMenu(int x, int y, List<MenuItem> items) {
+        menu = items;
+        int w = menuWidth(items);
+        int h = items.size() * 14 + 6;
+        menuX = Math.min(x, width - w - 2);
+        menuY = Math.min(y, height - h - 2);
+        Ui.play(SoundEvents.UI_BUTTON_CLICK, 1.1f, 0.25f);
+    }
+
+    private int menuWidth(List<MenuItem> items) {
+        int w = 80;
+        for (MenuItem m : items) w = Math.max(w, font.width(m.label()) + 18);
+        return w;
+    }
+
+    private void renderMenu(GuiGraphics g, int mx, int my) {
+        int w = menuWidth(menu), h = menu.size() * 14 + 6;
+        g.pose().pushPose();
+        g.pose().translate(0, 0, 500);
+        Ui.panel(g, menuX, menuY, w, h);
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem m = menu.get(i);
+            int y = menuY + 3 + i * 14;
+            boolean ov = over(mx, my, menuX + 2, y, w - 4, 14);
+            if (ov) Ui.blit(g, Ui.ROW_HOVER, menuX + 2, y, w - 4, 14);
+            g.drawString(font, m.label(), menuX + 9, y + 3, m.danger() ? Theme.bad : ov ? 0xFFFFFFFF : Theme.text, false);
+        }
+        g.pose().popPose();
+    }
+
+    private boolean menuClick(double mx, double my, int button) {
+        if (menu == null) return false;
+        int w = menuWidth(menu), h = menu.size() * 14 + 6;
+        List<MenuItem> items = menu;
+        menu = null;
+        if (button != 0 || !over((int) mx, (int) my, menuX, menuY, w, h)) return true;
+        int i = (int) ((my - menuY - 3) / 14);
+        if (i >= 0 && i < items.size()) {
+            items.get(i).action().run();
+            Ui.play(SoundEvents.UI_BUTTON_CLICK, 1f, 0.25f);
+        }
+        return true;
+    }
+
+    /** The quest drawn under the given screen point (does not depend on where the real mouse is). */
+    private Quest questAt(double mx, double my) {
+        if (chapter == null || mx < side || my < TOP) return null;
+        TeamProgress tp = ClientData.progress;
+        Quest best = null;
+        for (Quest q : chapter.quests) {
+            if (!visible(q, tp)) continue;
+            float cx = sx(q.x), cy = sy(q.y);
+            float base = (float) q.size * UNIT * zoom * 0.5f * 0.9f;
+            double dx = mx - cx, dy = my - cy;
+            if (dx * dx + dy * dy <= base * base) best = q;
+        }
+        return best;
+    }
+
+    private int labelAt(double mx, double my) {
+        if (chapter == null || mx < side || my < TOP) return -1;
+        for (int li = 0; li < chapter.images.size(); li++) {
+            QuestFile.ChapterImage im = chapter.images.get(li);
+            if (!im.image.isEmpty() || im.text.isEmpty()) continue;
+            float icx = sx(im.x), icy = sy(im.y);
+            Component txt = Component.literal(Gfx.readable(im.text)).withStyle(ChatFormatting.BOLD);
+            int tw = font.width(txt);
+            float sc = Math.max(0.8f, Math.min(2.2f, (float) im.height * UNIT * zoom / 11f));
+            if (im.width > 0 && tw > 0) sc = Math.min(sc, Math.max(0.45f, (float) im.width * UNIT * zoom / (tw + 6f)));
+            float hw = tw * sc / 2 + 4, hh = 5 * sc + 3;
+            if (mx >= icx - hw && mx <= icx + hw && my >= icy - hh && my <= icy + hh) return li;
+        }
+        return -1;
+    }
+
+    private double canvasX(double mx) {
+        return viewX + (mx - (side + (width - side) / 2.0)) / (UNIT * zoom);
+    }
+
+    private double canvasY(double my) {
+        return viewY + (my - (TOP + (height - TOP) / 2.0)) / (UNIT * zoom);
+    }
+
+    private static double snap(double v) {
+        return Math.round(v * 2) / 2.0;
+    }
+
+    private void questMenu(Quest q, int mx, int my) {
+        List<MenuItem> items = new ArrayList<>();
+        final Quest fq = q;
+        items.add(new MenuItem("Edit quest…", () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.EditQuestScreen(this, fq)), false));
+        items.add(new MenuItem("Open", () -> open(fq), false));
+        items.add(new MenuItem("Add requirement (pick a quest)", () -> linkFrom = fq, false));
+        if (q.deps.length > 0) {
+            QuestFile f = ClientData.file;
+            for (long d : q.deps) {
+                Quest dq = f.quests.get(d);
+                if (dq == null) continue;
+                String n = font.plainSubstrByWidth(Gfx.strip(Gfx.codes(dq.displayTitle())), 120);
+                items.add(new MenuItem("Remove requirement: " + n, () -> send(dev.unyielding.quests.quest.QuestEdit.depRemove(fq.id, dq.id)), false));
+                if (items.size() > 9) break;
+            }
+            if (q.deps.length > 1) items.add(new MenuItem("Remove all requirements", () -> send(dev.unyielding.quests.quest.QuestEdit.depClear(fq.id)), false));
+        }
+        items.add(new MenuItem("Duplicate", () -> send(dev.unyielding.quests.quest.QuestEdit.questDuplicate(fq.id, dev.unyielding.quests.quest.QuestEdit.newId(), fq.x + 1.5, fq.y)), false));
+        items.add(new MenuItem("Delete quest", () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.ConfirmDialog(this, "Delete quest",
+                "Delete \"" + Gfx.strip(Gfx.codes(fq.displayTitle())) + "\"? Quests that needed it will no longer need it. This cannot be undone.", "Delete",
+                () -> send(dev.unyielding.quests.quest.QuestEdit.questDelete(fq.id)))), true));
+        openMenu(mx, my, items);
+    }
+
+    private void canvasMenu(int mx, int my) {
+        final double qx = snap(canvasX(mx)), qy = snap(canvasY(my));
+        final long ch = chapter.id;
+        List<MenuItem> items = new ArrayList<>();
+        items.add(new MenuItem("New quest here", () -> send(dev.unyielding.quests.quest.QuestEdit.questAdd(ch, dev.unyielding.quests.quest.QuestEdit.newId(), qx, qy, dev.unyielding.quests.quest.QuestEdit.newId())), false));
+        items.add(new MenuItem("New heading here…", () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.PromptScreen(this, "New heading", "Text", "Heading text", "",
+                t -> { if (!t.isBlank()) send(dev.unyielding.quests.quest.QuestEdit.labelAdd(ch, t, qx, qy)); })), false));
+        items.add(new MenuItem("Edit this chapter…", () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.EditChapterScreen(this, chapter, chapter.group)), false));
+        openMenu(mx, my, items);
+    }
+
+    private void labelMenu(int index, int mx, int my) {
+        final QuestFile.ChapterImage im = chapter.images.get(index);
+        final long ch = chapter.id;
+        List<MenuItem> items = new ArrayList<>();
+        items.add(new MenuItem("Edit heading…", () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.PromptScreen(this, "Edit heading", "Text", "Heading text", im.text,
+                t -> { if (!t.isBlank()) send(dev.unyielding.quests.quest.QuestEdit.labelSet(ch, index, t, im.x, im.y)); })), false));
+        items.add(new MenuItem("Delete heading", () -> send(dev.unyielding.quests.quest.QuestEdit.labelDelete(ch, index)), true));
+        openMenu(mx, my, items);
+    }
+
+    private void chapterMenu(Chapter c, int mx, int my) {
+        final Chapter fc = c;
+        List<MenuItem> items = new ArrayList<>();
+        items.add(new MenuItem("Edit chapter…", () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.EditChapterScreen(this, fc, fc.group)), false));
+        items.add(new MenuItem("Move up", () -> send(dev.unyielding.quests.quest.QuestEdit.chapterMove(fc.id, -1)), false));
+        items.add(new MenuItem("Move down", () -> send(dev.unyielding.quests.quest.QuestEdit.chapterMove(fc.id, 1)), false));
+        items.add(new MenuItem("Delete chapter", () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.ConfirmDialog(this, "Delete chapter",
+                "Delete \"" + Gfx.readable(fc.title) + "\" and all " + fc.quests.size() + " quests in it? This cannot be undone.", "Delete",
+                () -> send(dev.unyielding.quests.quest.QuestEdit.chapterDelete(fc.id)))), true));
+        openMenu(mx, my, items);
+    }
+
     // ---- input ------------------------------------------------------------
 
     /** For EMI: the item under the mouse, if any. */
@@ -1311,10 +1552,19 @@ public class QuestScreen extends Screen {
             }
             return true;
         }
+        if (menuClick(mx, my, button)) return true;
+        boolean edit = editing() && selected == null;
+        if (edit && button == 1 && mx < side) {
+            for (ChapterHit ch : chapterHits) if (my >= ch.y0() && my < ch.y1()) {
+                chapterMenu(ch.chapter(), (int) mx, (int) my);
+                return true;
+            }
+        }
         if (button == 0 || button == 1) {
             for (int i = hits.size() - 1; i >= 0; i--) {
                 Hit h = hits.get(i);
                 if (h.in(mx, my)) {
+                    if (button == 1 && edit && mx >= side && my >= TOP) break;
                     h.action().run();
                     Ui.play(SoundEvents.UI_BUTTON_CLICK, 1f, 0.25f);
                     return true;
@@ -1328,6 +1578,34 @@ public class QuestScreen extends Screen {
             return true;
         }
         if (mx >= side && my >= TOP) {
+            Quest under = edit ? questAt(mx, my) : null;
+            int labelUnder = edit && under == null ? labelAt(mx, my) : -1;
+            if (edit && button == 1) {
+                if (under != null) questMenu(under, (int) mx, (int) my);
+                else if (labelUnder >= 0) labelMenu(labelUnder, (int) mx, (int) my);
+                else canvasMenu((int) mx, (int) my);
+                return true;
+            }
+            if (edit && button == 0 && linkFrom != null) {
+                if (under != null && under != linkFrom) send(dev.unyielding.quests.quest.QuestEdit.depAdd(linkFrom.id, under.id));
+                linkFrom = null;
+                return true;
+            }
+            if (edit && button == 0 && under != null) {
+                dragQuest = under;
+                dragFromX = under.x;
+                dragFromY = under.y;
+                dragMoved = 0;
+                return true;
+            }
+            if (edit && button == 0 && labelUnder >= 0) {
+                dragLabel = labelUnder;
+                QuestFile.ChapterImage im = chapter.images.get(dragLabel);
+                dragFromX = im.x;
+                dragFromY = im.y;
+                dragMoved = 0;
+                return true;
+            }
             dragging = true;
             dragMoved = 0;
             return true;
@@ -1337,6 +1615,19 @@ public class QuestScreen extends Screen {
 
     @Override
     public boolean mouseDragged(double mx, double my, int button, double dx, double dy) {
+        if (dragQuest != null) {
+            dragMoved += Math.abs(dx) + Math.abs(dy);
+            dragQuest.x += dx / (UNIT * zoom);
+            dragQuest.y += dy / (UNIT * zoom);
+            return true;
+        }
+        if (dragLabel >= 0 && dragLabel < chapter.images.size()) {
+            dragMoved += Math.abs(dx) + Math.abs(dy);
+            QuestFile.ChapterImage im = chapter.images.get(dragLabel);
+            im.x += dx / (UNIT * zoom);
+            im.y += dy / (UNIT * zoom);
+            return true;
+        }
         if (dragging && selected == null) {
             dragMoved += Math.abs(dx) + Math.abs(dy);
             viewX -= (float) (dx / (UNIT * zoom));
@@ -1349,9 +1640,42 @@ public class QuestScreen extends Screen {
     @Override
     public boolean mouseReleased(double mx, double my, int button) {
         if (spinVisible()) return true;
+        if (dragQuest != null) {
+            Quest q = dragQuest;
+            dragQuest = null;
+            if (dragMoved < 4) {
+                q.x = dragFromX;
+                q.y = dragFromY;
+                open(q);
+            } else {
+                q.x = snap(q.x);
+                q.y = snap(q.y);
+                if (q.x != dragFromX || q.y != dragFromY) send(dev.unyielding.quests.quest.QuestEdit.move(q.id, q.x, q.y));
+            }
+            return true;
+        }
+        if (dragLabel >= 0) {
+            int li = dragLabel;
+            dragLabel = -1;
+            if (li < chapter.images.size()) {
+                QuestFile.ChapterImage im = chapter.images.get(li);
+                if (dragMoved < 4) {
+                    im.x = dragFromX;
+                    im.y = dragFromY;
+                } else {
+                    im.x = snap(im.x * 2) / 2;
+                    im.y = snap(im.y * 2) / 2;
+                    send(dev.unyielding.quests.quest.QuestEdit.labelSet(chapter.id, li, im.text, im.x, im.y));
+                }
+            }
+            return true;
+        }
         if (dragging) {
             dragging = false;
-            if (dragMoved < 4 && hovered != null) open(hovered);
+            if (dragMoved < 4) {
+                Quest q = hovered != null ? hovered : questAt(mx, my);
+                if (q != null) open(q);
+            }
             return true;
         }
         return super.mouseReleased(mx, my, button);
@@ -1391,8 +1715,22 @@ public class QuestScreen extends Screen {
             }
             return true;
         }
+        if (key == GLFW.GLFW_KEY_ESCAPE && (menu != null || linkFrom != null)) {
+            menu = null;
+            linkFrom = null;
+            return true;
+        }
         if (key == GLFW.GLFW_KEY_ESCAPE && selected != null) {
             selected = null;
+            return true;
+        }
+        if (editing() && selected == null && hovered != null && key == GLFW.GLFW_KEY_DELETE) {
+            questMenu(hovered, (int) 0, 0);
+            menu = null;
+            final Quest fq = hovered;
+            Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.ConfirmDialog(this, "Delete quest",
+                    "Delete \"" + Gfx.strip(Gfx.codes(fq.displayTitle())) + "\"? This cannot be undone.", "Delete",
+                    () -> send(dev.unyielding.quests.quest.QuestEdit.questDelete(fq.id))));
             return true;
         }
         if (ClientInit.OPEN_QUESTS.matches(key, scan) && selected == null) {

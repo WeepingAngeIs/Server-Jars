@@ -45,6 +45,14 @@ public final class ClientHandlers {
         }
     }
 
+    public static void onEditApply(Net.EditApply p) {
+        if (ClientData.file == null) return;
+        String err = dev.unyielding.quests.quest.QuestEdit.apply(ClientData.file, p.tag());
+        if (err != null) UnyieldingQuests.LOGGER.warn("[quests] edit not applied on client: {}", err);
+        ClientData.fileVersion++;
+        if (net.minecraft.client.Minecraft.getInstance().screen instanceof QuestScreen qs) qs.onBookChanged();
+    }
+
     public static void onProgress(Net.ProgressSync p) {
         CompoundTag t = p.tag();
         ClientData.progressTeam = t.getUUID("team");

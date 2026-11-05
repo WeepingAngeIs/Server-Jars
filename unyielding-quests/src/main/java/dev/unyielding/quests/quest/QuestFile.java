@@ -483,6 +483,8 @@ public final class QuestFile {
 
     /** A picture placed on a chapter page (FTB-style "images"), in quest-grid units. */
     public static final class ChapterImage {
+        /** FTB image id (lang key for text labels). */
+        public String id = "";
         public String image = "";
         /** Text label (FTB "text_on_image" images with no picture): drawn as a heading on the page. */
         public String text = "";
@@ -491,6 +493,7 @@ public final class QuestFile {
         CompoundTag toTag() {
             CompoundTag t = new CompoundTag();
             t.putString("img", image);
+            if (!id.isEmpty()) t.putString("iid", id);
             if (!text.isEmpty()) t.putString("txt", text);
             t.putDouble("x", x);
             t.putDouble("y", y);
@@ -503,6 +506,7 @@ public final class QuestFile {
         static ChapterImage fromTag(CompoundTag t) {
             ChapterImage i = new ChapterImage();
             i.image = t.getString("img");
+            i.id = t.getString("iid");
             i.text = t.getString("txt");
             i.x = t.getDouble("x");
             i.y = t.getDouble("y");
@@ -581,6 +585,11 @@ public final class QuestFile {
         Chapter c = chapterOf(q);
         String mode = c != null && !c.progressionMode.isEmpty() ? c.progressionMode : progressionMode;
         return mode.equalsIgnoreCase("flexible");
+    }
+
+    /** Rebuilds the id lookups after the book changed (editing). */
+    public void reindex() {
+        index();
     }
 
     private void index() {
@@ -779,6 +788,7 @@ public final class QuestFile {
             if (!(io instanceof Map<?, ?> imm)) continue;
             @SuppressWarnings("unchecked") Map<String, Object> im = (Map<String, Object>) imm;
             ChapterImage ci = new ChapterImage();
+            ci.id = Snbt.str(im, "id", "");
             ci.image = Snbt.str(im, "image", "");
             ci.x = Snbt.dbl(im, "x", 0);
             ci.y = Snbt.dbl(im, "y", 0);

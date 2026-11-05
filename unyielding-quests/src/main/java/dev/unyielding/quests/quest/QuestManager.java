@@ -89,6 +89,7 @@ public final class QuestManager {
     }
 
     public static void onServerStop() {
+        saveIfDue(true);
         server = null;
         data = null;
         dirtyTeams.clear();
@@ -210,7 +211,77 @@ public final class QuestManager {
     }
 
     static void sendFile(ServerPlayer p) {
+        if (chunksDirty) rebuildChunks();
         for (int i = 0; i < chunks.length; i++) Net.sendTo(p, new Net.QuestFileChunk(i, chunks.length, chunks[i]));
+    }
+
+    // =====================================================================
+    // In-game editing
+    // =====================================================================
+
+    private static boolean chunksDirty;
+    private static long saveAt;
+
+    private static void rebuildChunks() {
+        try {
+            CompoundTag tag = file.toTag();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            NbtIo.writeCompressed(tag, out);
+            byte[] all = out.toByteArray();
+            int n = Math.max(1, (all.length + CHUNK - 1) / CHUNK);
+            chunks = new byte[n][];
+            for (int i = 0; i < n; i++) chunks[i] = Arrays.copyOfRange(all, i * CHUNK, Math.min(all.length, (i + 1) * CHUNK));
+            chunksDirty = false;
+        } catch (IOException e) {
+            UnyieldingQuests.LOGGER.error("[quests] could not pack the quest book", e);
+        }
+    }
+
+    public static boolean canEdit(ServerPlayer p) {
+        return p.hasPermissions(2);
+    }
+
+    public static void onEdit(ServerPlayer p, Net.EditRequest req) {
+        if (!canEdit(p)) {
+            Net.sendTo(p, new Net.Notify(1, 0, "Only operators can edit the quest book."));
+            return;
+        }
+        try {
+            // the first edit moves the book out of the jar into the config folder, so edits survive updates
+            if ("builtin".equals(Config.QUEST_BOOK_SOURCE.get())) {
+                Path dir = questDir();
+                deleteDir(dir);
+                extractDefaults(dir);
+                Config.QUEST_BOOK_SOURCE.set("config_folder");
+                Config.SPEC.save();
+                UnyieldingQuests.LOGGER.info("[quests] Editing started: quest book copied to {} and quest_book_source set to config_folder", dir);
+            }
+        } catch (IOException e) {
+            UnyieldingQuests.LOGGER.error("[quests] could not copy the quest book to the config folder", e);
+            Net.sendTo(p, new Net.Notify(1, 0, "Could not copy the quest book to the config folder (see log)."));
+            return;
+        }
+        String err = QuestEdit.apply(file, req.tag());
+        if (err != null) {
+            Net.sendTo(p, new Net.Notify(1, 0, err));
+            return;
+        }
+        ItemFilter.clearCache();
+        chunksDirty = true;
+        saveAt = server.getTickCount() + 40;
+        for (ServerPlayer o : server.getPlayerList().getPlayers()) Net.sendTo(o, new Net.EditApply(req.tag()));
+    }
+
+    private static void saveIfDue(boolean force) {
+        if (saveAt == 0) return;
+        if (!force && server != null && server.getTickCount() < saveAt) return;
+        saveAt = 0;
+        try {
+            QuestWriter.write(file, questDir());
+            UnyieldingQuests.LOGGER.info("[quests] Quest book saved to {}", questDir());
+        } catch (IOException e) {
+            UnyieldingQuests.LOGGER.error("[quests] could not save the quest book", e);
+        }
     }
 
     public static void sendProgress(ServerPlayer p) {
@@ -290,6 +361,7 @@ public final class QuestManager {
             idx++;
         }
         flushDirty();
+        saveIfDue(false);
     }
 
     public static void detect(ServerPlayer p) {

@@ -155,7 +155,31 @@ public final class Net {
         }
     }
 
+    /** One applied quest-book edit (server -> every client). */
+    public record EditApply(CompoundTag tag) implements CustomPacketPayload {
+        public static final Type<EditApply> TYPE = mkType("edit_apply");
+        public static final StreamCodec<RegistryFriendlyByteBuf, EditApply> CODEC = StreamCodec.composite(
+                ByteBufCodecs.COMPOUND_TAG, EditApply::tag, EditApply::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     // ---- client -> server ------------------------------------------------
+
+    /** A quest-book edit request from an operator's in-game editor. */
+    public record EditRequest(CompoundTag tag) implements CustomPacketPayload {
+        public static final Type<EditRequest> TYPE = mkType("edit_request");
+        public static final StreamCodec<RegistryFriendlyByteBuf, EditRequest> CODEC = StreamCodec.composite(
+                ByteBufCodecs.COMPOUND_TAG, EditRequest::tag, EditRequest::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
 
     /** action 0 = tick a checkmark task, 1 = submit items to a task. */
     public record TaskAction(long taskId, int action) implements CustomPacketPayload {
@@ -223,6 +247,8 @@ public final class Net {
         r.playToClient(OpenScreen.TYPE, OpenScreen.CODEC, (p, c) -> ClientHandlers.onOpen(p));
         r.playToClient(SpinInfo.TYPE, SpinInfo.CODEC, (p, c) -> ClientHandlers.onSpinInfo(p));
         r.playToClient(SpinResult.TYPE, SpinResult.CODEC, (p, c) -> ClientHandlers.onSpinResult(p));
+        r.playToClient(EditApply.TYPE, EditApply.CODEC, (p, c) -> ClientHandlers.onEditApply(p));
+        r.playToServer(EditRequest.TYPE, EditRequest.CODEC, (p, c) -> QuestManager.onEdit((ServerPlayer) c.player(), p));
         r.playToServer(TaskAction.TYPE, TaskAction.CODEC, (p, c) -> QuestManager.onTaskAction((ServerPlayer) c.player(), p));
         r.playToServer(Claim.TYPE, Claim.CODEC, (p, c) -> QuestManager.onClaim((ServerPlayer) c.player(), p));
         r.playToServer(UltimineState.TYPE, UltimineState.CODEC, (p, c) -> dev.unyielding.quests.ultimine.Ultimine.onState((ServerPlayer) c.player(), p));

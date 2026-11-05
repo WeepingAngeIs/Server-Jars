@@ -1,11 +1,11 @@
-UNYIELDING QUESTS - ONE JAR  (v1.5.2)
+UNYIELDING QUESTS - ONE JAR  (v1.6.0)
 =====================================
-File: UnyieldingQuests-1.5.2.jar   (Minecraft 1.21.1, NeoForge 21.1.x)
+File: UnyieldingQuests-1.6.0.jar   (Minecraft 1.21.1, NeoForge 21.1.x)
 
 INSTALL (click by click)
 ------------------------
 1. Open the pack's mods folder:  C:\Users\tolov\curseforge\minecraft\Instances\Cobblemon Unyielding\mods
-2. Delete UnyieldingQuests-1.5.1.jar (or any older UnyieldingQuests jar).
+2. Delete UnyieldingQuests-1.5.2.jar (or any older UnyieldingQuests jar).
 3. Delete these two too (they are the "FTB" buttons you saw at the top left):
      ftb-library-neoforge-2101.1.36.jar
      ftb-teams-neoforge-2101.1.11.jar
@@ -13,10 +13,61 @@ INSTALL (click by click)
    Unyielding > Mods > find "FTB Library" and "FTB Teams" > the "..." menu > Remove), or the
    app puts them back on the next update. Your friend needs to leave them out of the next
    server pack / export as well.
-4. Copy UnyieldingQuests-1.5.2.jar into mods/.
-5. Same on the server: delete the old quests jar + the two FTB jars, add 1.5.2, restart.
+4. Copy UnyieldingQuests-1.6.0.jar into mods/.
+5. Same on the server: delete the old quests jar + the two FTB jars, add 1.6.0, restart.
 Nothing else in the pack needs FTB: our jar does the quests, teams, homes/tpa/warps and
 vein mining. Open Parties and Claims stays for claims.
+
+WHAT'S NEW IN 1.6.0  -  EDIT THE QUEST BOOK IN GAME (no more FTB Quests needed)
+--------------------------------------------------------------------------------
+HOW TO TURN IT ON
+  You must be an operator ("cheats"). Singleplayer: when you create the world turn on
+  "Allow Cheats", or on an existing world press Esc > Open to LAN > Allow Cheats: ON > Start.
+  (On a server: /op YourName in the console.)
+  Open the quest book (J or the Premier Ball) and press the new "Edit" button at the top right.
+  A grey strip at the bottom says EDIT MODE while it is on. Press Edit again to stop.
+
+WHAT YOU CAN DO IN EDIT MODE
+  - Drag a quest to move it (snaps to the half-grid).
+  - Right-click a quest:   Edit quest...  /  Open  /  Add requirement  /  Remove requirement
+                           /  Duplicate  /  Delete quest
+      "Add requirement": then click the quest that must be finished FIRST. A line appears.
+  - Right-click empty space:   New quest here  /  New heading here...  /  Edit this chapter...
+  - Right-click a heading (the text labels on a page):  Edit heading...  /  Delete heading.
+      Headings can be dragged too.
+  - Right-click a chapter in the list on the left:  Edit chapter...  /  Move up  /  Move down
+                                                   /  Delete chapter
+  - "+ New chapter" button at the bottom of the chapter list.
+  - Click a quest to open it; the open panel has an "Edit" button too.
+
+THE "EDIT QUEST" WINDOW
+  Text:    Title, Subtitle, Description (use \n in the text for a new line; & for colours,
+           e.g. &6Gold &bAqua &lBold).
+  Look:    Icon (item id, or press "Held item" to use what you are holding), Shape, Size,
+           Optional, Hidden until unlocked, Hide lines.
+  Tasks:   click the type button to change it: Check box, Item (count, "Hand in" = items are
+           taken), Pokemon (catch / defeat / evolve / level_up_to / scan / fishing /
+           revive_fossil / have_registered, species, amount, type, shiny, Pokedex %),
+           Kill mobs, Advancement, Structure, Biome, Dimension.  "+ Add task", x to remove.
+  Rewards: Item, CobbleDollars (just type the amount), XP, XP levels, Command ({p} = the
+           player's name), Loot table.  "+ Add reward", x to remove.
+  Save at the bottom right. Everyone online sees the change at once.
+
+WHERE IT IS SAVED (important)
+  Your first edit copies the book out of the jar into
+      config/unyieldingquests/quests/      (same .snbt files as FTB Quests)
+  and sets  quest_book_source = "config_folder"  in config/unyieldingquests-common.toml.
+  From then on THAT folder is your quest book - a new jar will not replace it. Saves happen
+  2 seconds after each edit and when the world closes.
+  To put your edited book into the next jar (so a fresh install has it), send me that folder
+  (zip it) or push it to the repo; I build it in.
+  To go back to the book inside the jar: set quest_book_source = "builtin" again (your edits
+  stay in the folder, just unused).
+  You can also edit the .snbt files by hand and run  /quests reload  in game.
+
+NOT IN THE EDITOR (tell me if you want them): reward tables editing, chapter groups (new
+  group names), quest-specific images, moving quests between chapters, undo (make a backup of
+  the config folder before big changes).
 
 WHAT'S NEW IN 1.5.2
 -------------------
@@ -86,8 +137,13 @@ with these edits on top. Player progress carries over (same quest ids).
 
 GITHUB: the mod's source, the quest book files and this jar now live in your private repo
 https://github.com/WeepingAngeIs/Server-Jars  (folder unyielding-quests/, jar in releases/).
-Your friend can download the jar from there: open releases/UnyieldingQuests-1.5.2.jar on
+Your friend can download the jar from there: open releases/UnyieldingQuests-1.6.0.jar on
 GitHub and press the download button.
+
+TESTED 1.6.0 (dev client): move / new quest / edit quest (title, item + Pokemon + kill tasks,
+CobbleDollars + XP rewards) / add requirement / duplicate / delete quest / new heading + drag /
+new chapter / delete chapter - all applied live and saved; the saved folder reloads with no
+warnings.
 
 TESTED (dev client, singleplayer): 38 chapters / 967 quests load with no warnings; Welcome
 page shows "25 CobbleDollars" with the coin icon; Pokedex goals show the % progress bar;

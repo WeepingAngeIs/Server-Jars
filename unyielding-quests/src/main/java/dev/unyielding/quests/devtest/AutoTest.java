@@ -22,6 +22,7 @@ import java.util.Deque;
 public final class AutoTest {
     private static final Deque<String> queue = new ArrayDeque<>();
     private static int wait;
+    public static double hoverX = -1, hoverY = -1;
 
     private AutoTest() {
     }
@@ -82,6 +83,44 @@ public final class AutoTest {
             }
             case "key" -> {
                 if (mc.screen != null) mc.screen.keyPressed(Integer.parseInt(a[1]), 0, 0);
+            }
+            case "edit" -> {
+                var srv = mc.getSingleplayerServer();
+                if (srv != null && mc.player != null) srv.getPlayerList().op(mc.player.getGameProfile());
+                QuestScreen.editMode = !QuestScreen.editMode;
+            }
+            case "click" -> {
+                String[] v = a[1].trim().split("\\s+");
+                double x = Double.parseDouble(v[0]), y = Double.parseDouble(v[1]);
+                int b = v.length > 2 ? Integer.parseInt(v[2]) : 0;
+                if (mc.screen != null) {
+                    mc.screen.mouseMoved(x, y);
+                    mc.screen.mouseClicked(x, y, b);
+                    mc.screen.mouseReleased(x, y, b);
+                }
+            }
+            case "press" -> {
+                String[] v = a[1].trim().split("\\s+");
+                if (mc.screen != null) mc.screen.mouseClicked(Double.parseDouble(v[0]), Double.parseDouble(v[1]), 0);
+            }
+            case "dragto" -> {
+                String[] v = a[1].trim().split("\\s+");
+                if (mc.screen != null) mc.screen.mouseDragged(Double.parseDouble(v[0]), Double.parseDouble(v[1]), 0, Double.parseDouble(v[2]), Double.parseDouble(v[3]));
+            }
+            case "release" -> {
+                String[] v = a[1].trim().split("\\s+");
+                if (mc.screen != null) mc.screen.mouseReleased(Double.parseDouble(v[0]), Double.parseDouble(v[1]), 0);
+            }
+            case "type" -> {
+                if (mc.screen != null) for (char ch : a[1].toCharArray()) mc.screen.charTyped(ch, 0);
+            }
+            case "hover" -> {
+                String[] v = a[1].trim().split("\\s+");
+                hoverX = Double.parseDouble(v[0]);
+                hoverY = Double.parseDouble(v[1]);
+                double sc = mc.getWindow().getWidth() / (double) mc.getWindow().getGuiScaledWidth();
+                org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), hoverX * sc, hoverY * sc);
+                if (mc.screen != null) mc.screen.mouseMoved(hoverX, hoverY);
             }
             case "scroll" -> {
                 if (mc.screen != null) mc.screen.mouseScrolled(mc.getWindow().getGuiScaledWidth() / 2.0, mc.getWindow().getGuiScaledHeight() / 2.0, 0, Double.parseDouble(a[1]));
