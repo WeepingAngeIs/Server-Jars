@@ -1,0 +1,47 @@
+HI ASTRA - QUEST BOOK ART, ROUND 3  (this folder is yours)
+==========================================================
+Everything you need is in this folder. You only draw pictures; no code.
+
+1. WHAT TO DRAW
+   Open Astra-Art-Sheet-4.xlsx.
+   - Tab "Quest pictures": 213 quests. Columns: what the quest is about, what to draw, and the
+     exact file name to use. Do them in any order; any quest you skip just keeps its normal icon.
+   - Tab "Chapter icons": 7 chapter icons (file name = chapter name, e.g. 32_raid_dens.png).
+   - Tab "How to": the rules (also below).
+
+2. RULES
+   - 32x32 pixels, transparent background, pixel art, PNG.
+   - Moving picture (optional): 4 frames stacked top to bottom in ONE file = 32 wide x 128 tall.
+     Keep the main shape the same and only move small parts (eyes, flames, water, sparkles).
+     The game plays 1-2-3-4-3-2-1. A plain 32x32 file is a still picture (also fine).
+   - File name EXACTLY as in the sheet, all lower case, .png.
+   - No plain book icons please.
+
+3. WHERE TO PUT THE FILES
+   The folder  UwU-Quest-Art-Pack  is a ready Minecraft resource pack. Put your PNGs in it:
+     quest pictures  -> UwU-Quest-Art-Pack/assets/unyieldingquests/textures/quest_art/
+     chapter icons   -> UwU-Quest-Art-Pack/assets/unyieldingquests/textures/chapter_icon/
+   That same folder is what you upload to GitHub (step 5), so there is nothing else to send.
+
+4. TEST IT YOURSELF (optional but nice)
+   a. Copy the whole  UwU-Quest-Art-Pack  folder into your Minecraft instance's  resourcepacks  folder
+      (CurseForge: My Modpacks > Cobblemon Unyielding > the "..." menu > Open Folder > resourcepacks).
+   b. In game: Options > Resource Packs > move "UwU Quest Art Pack" to the right side > Done.
+   c. Press J (or click the Premier Ball at the top-left of your inventory) to open the quest book
+      and find the quest. Changed a file? Press F3+T in game to reload the pack.
+
+5. UPLOAD TO GITHUB (no git program needed)
+   a. Open https://github.com/WeepingAngeIs/Server-Jars in your browser (you need to be invited and
+      logged in).
+   b. Click into  astra-art  >  UwU-Quest-Art-Pack  >  assets  >  unyieldingquests  >  textures  >
+      quest_art   (or chapter_icon for chapter icons).
+   c. Click the green "Add file" button (top right) > "Upload files".
+   d. Drag your PNGs onto the page (you can drop many at once, up to about 100 per upload).
+   e. Scroll down, press the green "Commit changes" button. Done - Claude picks them up from here.
+   Uploading a file with the same name again replaces the old one, so fixes are easy.
+
+6. QUESTIONS / IDEAS
+   Write them in  astra-art/NOTES-FROM-ASTRA.txt  (edit it on GitHub with the pencil icon, then
+   "Commit changes"). For example: "quest X - I drew a badge instead of the item".
+
+The  screenshots  folder shows how the quest book looks now, so your art matches the style.
