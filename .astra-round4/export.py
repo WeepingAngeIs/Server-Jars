@@ -82,12 +82,37 @@ def normalize(cells):
     return frames
 
 
-def shared_palette(frames):
+# These small color-coded objects use accent colors that occupy only a few pixels.
+# Reserve representative source colors so the median cut cannot discard their meaning.
+ACCENTS = {
+    "be7aab2c2b9dde41.png": ["9d38d8","2888cf","f6c329","ce353a","55b627"],
+    "e82fbee59e4384ce.png": ["2e6eca","dd3c38","65d6ef","ffce42","9c54c7"],
+    "5074a4b3dcd6bc5d.png": ["50cbf8","f13960","7fbb3b"],
+    "7844e95ed9e3b5e1.png": ["db3286","3182cb","61b64d","edd653"],
+    "31_trainer_milestones.png": ["e74147","ffecb5","efa62e"],
+    "32_raid_dens.png": ["ea3aa3","ffacd9","697597"],
+    "33_trainer_league.png": ["e02c87","ffd368","bfc9d2","35807a"],
+    "58e44c448cad05b2.png": ["ce7cf3","a0ae57","d8c486"],
+    "5e5fca3140d2d1ac.png": ["c7ea3c","a583da","c042e0"],
+}
+
+
+def shared_palette(frames, key):
     visible = [p[:3] for f in frames for p in f.getdata() if p[3] == 255]
     check(len(visible) >= 64,"too few visible pixels")
     samples=Image.new("RGB",(len(visible),1))
     samples.putdata(visible)
-    pal=samples.quantize(colors=16,method=Image.Quantize.MEDIANCUT,dither=Image.Dither.NONE)
+    swatches=[]
+    for color in ACCENTS.get(key,[]):
+        target=tuple(bytes.fromhex(color))
+        nearest=min(set(visible),key=lambda p:sum((a-b)**2 for a,b in zip(p,target)))
+        if nearest not in swatches:
+            swatches.append(nearest)
+    common_count=16-len(swatches)
+    pal=samples.quantize(colors=common_count,method=Image.Quantize.MEDIANCUT,dither=Image.Dither.NONE)
+    if swatches:
+        colors=pal.getpalette()[:3*common_count]+[v for rgb in swatches for v in rgb]
+        pal.putpalette(colors+colors[:3]*((768-len(colors))//3))
     result=[]
     for f in frames:
         flat=f.convert("RGB").quantize(palette=pal,dither=Image.Dither.NONE).convert("RGBA")
@@ -104,7 +129,7 @@ def encode(im,fmt,**kw):
 
 
 def export_one(meta,raw_frames):
-    frames=shared_palette(raw_frames)
+    frames=shared_palette(raw_frames,meta["id"])
     strip=Image.new("RGBA",(32,128))
     palette=set()
     bounds=[]

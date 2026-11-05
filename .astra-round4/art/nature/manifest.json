@@ -65,12 +65,6 @@
       "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: crooked indigo forest trees with chartreuse eyes in hollow trunk and violet undergrowth; eyes blink. Row 2: bleached stump with one bent dry branch on fractured ochre clay, no vegetation; a tiny dust mote drifts. Row 3: rounded pink cherry tree with tiered dark branch and petal-covered turf; one pink petal falls. Row 4 bottom: two ice-blue trees framing a tiny timber cottage with a warm amber window; window glints. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
       "rows": [
         {
-          "id": "5e5fca3140d2d1ac.png",
-          "title": "Ominous Woods",
-          "subject": "crooked indigo forest trees with chartreuse eyes in hollow trunk and violet undergrowth; eyes blink",
-          "row": 0
-        },
-        {
           "id": "f3a59ee24be41fde.png",
           "title": "Wasteland",
           "subject": "bleached stump with one bent dry branch on fractured ochre clay, no vegetation; a tiny dust mote drifts",
@@ -228,12 +222,6 @@
           "row": 1
         },
         {
-          "id": "e82fbee59e4384ce.png",
-          "title": "Every Status Cure",
-          "subject": "cluster of status spray bottles with distinct horizontal nozzles and ice, fire and poison symbols; nozzle glints",
-          "row": 2
-        },
-        {
           "id": "c533be7a12e1da24.png",
           "title": "Back from the Brink",
           "subject": "angular yellow revive crystal with a bold faceted diamond face; a four-point ivory sparkle travels across one facet",
@@ -346,6 +334,34 @@
           "title": "Biomes and Nature",
           "subject": "pink cherry blossom tree with dark arcing branch on a green hill; small petal falls",
           "row": 1
+        }
+      ]
+    },
+    {
+      "file": "ominous-woods-bright.png",
+      "prompt": "Use case: stylized-concept. Draw a new four-frame mini-boss quest icon, Ominous Woods, for a dark navy pixel-game panel. Output one WIDE horizontal sprite strip. FOUR cells from left to right, exactly FOUR sprites total, one ROW only. All four views show exactly the SAME haunted hollow tree, at same scale, base position, and center. Arrange centers at 12.5%, 37.5%, 62.5%, 87.5% of full canvas width, midway down the canvas. Each tree has plenty of fully transparent space all around, even at the edges. Draw an expressive, squat gnarled stump, with two short, hooked bare limbs like horns; broad moonlit SILVER LAVENDER bark faces and lilac highlights are most of the tree, interior hollow is a black purple oval, a pair of VERY LARGE vivid LIME GREEN almond eyes in the hollow, each at least four logical pixels wide. Three chunky bright magenta-violet curling roots anchor the bottom. One simple, clearly defined ghost-tree silhouette, few strong planes, detailed enough to be charming. Emphasize bright pale lavender silhouette at small size. Frame 1 both lime eyes wide open; frame 2 eyes half-lidded; frame 3 eyes closed to two vivid yellow-green dashes; frame 4 eyes opening back up with green glints. Same body, only the blink animates. Traditional sharp SNES inventory pixel art, each frame drawn on an apparent 28x28 grid and enlarged as square blocks, 1 logical pixel deep-indigo ink outline, no shading gradients or glow, only 9 bold opaque flat colors. Real RGBA transparent background, empty alpha gutters, no texture, no fog, no cast shadow, no backdrop, no checker pattern, no text, no grid. Portrait of the tree only: no sky, night disc, forest scene, rectangle, panel, platform or surrounding scenery. Center each entire tree in its cell, inside 65 percent of cell width. Same image plane in all four, do not rotate, no second row.",
+      "columns": 4,
+      "row_count": 1,
+      "rows": [
+        {
+          "id": "5e5fca3140d2d1ac.png",
+          "title": "Ominous Woods",
+          "row": 0,
+          "subject": "Moonlit lavender hollow tree with bright violet roots and large blinking lime eyes"
+        }
+      ]
+    },
+    {
+      "row_count": 1,
+      "columns": 4,
+      "file": "status-cures.png",
+      "prompt": "Use case: stylized-concept. Create an original transparent pixel-art sprite strip for a 32×32 monster-trainer inventory quest, Every Status Cure. Four equal-width frame columns in a SINGLE horizontal row. Exact same square-shaped cluster repeats four times across the wide landscape canvas, fully centered on x=12.5%, 37.5%, 62.5%, 87.5%; centered vertically with a generous transparent gutter around every cluster. Each frame is the same five distinctive pocket-sized SPRAY BOTTLES, in a tidy compact, almost square 3-over-2 arrangement: back row left PLUM with a large ivory poison SKULL, back center deep BLUE with a large ivory sleep CRESCENT, back right SCARLET with a large yellow FLAME. Front lower row left icy CYAN with a single dark navy SNOWFLAKE, front lower row right GOLDEN YELLOW with a single dark navy LIGHTNING BOLT. Each symbol printed directly on the body and fully visible. Make all five separate bold silhouettes with recognizable stubby L-shaped pumps, maximal simple pictograms; do not hide top-row symbols behind bottom-row pumps. No container, holder or plate. Crisp large square pixel clusters as hand-placed game art: each complete cluster fits a 28×28 pixel grid, one-pixel dark-navy contour, flat high-contrast colors, minimal shading. No lettering, text, numerals, grid lines, ground, haze, backdrop or casting shadow. Background and all interstitial gaps are genuine zero-alpha. For the four animation frames, all bottles and symbols are absolutely anchored to the same coordinates within their cells; the ONLY changing element is a visibly contrasting 2-pixel nozzle glint traveling across the set from leftmost pump in frame 1 to the center back pump in frame 2, rightmost pump in frame 3, and lower gold pump in frame 4. Maintain consistent anchor, sizes and composition throughout; exactly twenty bottles in total, five per frame.",
+      "rows": [
+        {
+          "subject": "Five spray bottles marked with a poison skull, sleep crescent, flame, snowflake and lightning bolt, with one traveling nozzle glint.",
+          "row": 0,
+          "id": "e82fbee59e4384ce.png",
+          "title": "Every Status Cure"
         }
       ]
     }
