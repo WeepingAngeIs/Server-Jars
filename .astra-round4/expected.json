@@ -1,0 +1,1755 @@
+[
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Ten Friends",
+    "about": "Catch 10 Pokémon in total",
+    "draw": "Pokémon theme: Catch 10 Pokémon",
+    "id": "76c1c404963e797e.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Fifty Strong",
+    "about": "Catch 50 Pokémon in total",
+    "draw": "Pokémon theme: Catch 50 Pokémon",
+    "id": "f26149e45fbbca73.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "The Hundred Club",
+    "about": "Catch 100 Pokémon in total",
+    "draw": "Pokémon theme: Catch 100 Pokémon",
+    "id": "48d72223e6bad663.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Collector",
+    "about": "Catch 250 Pokémon in total",
+    "draw": "Pokémon theme: Catch 250 Pokémon",
+    "id": "3e0462e3e877716d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Living Pokédex Hunter",
+    "about": "Catch 500 Pokémon in total",
+    "draw": "Pokémon theme: Catch 500 Pokémon",
+    "id": "69c34042fe701db2.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Ten Victories",
+    "about": "Win 10 battles against wild Pokémon, trainers or players",
+    "draw": "Pokémon theme: Win 10 Pokémon battles",
+    "id": "5014c39ad9155ca3.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Battle Hardened",
+    "about": "Win 50 battles against wild Pokémon, trainers or players",
+    "draw": "Pokémon theme: Win 50 Pokémon battles",
+    "id": "7a19f67ff1fc5227.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Arena Legend",
+    "about": "Win 200 battles against wild Pokémon, trainers or players",
+    "draw": "Pokémon theme: Win 200 Pokémon battles",
+    "id": "3892c233f2f04582.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Five Evolutions",
+    "about": "Grow your team",
+    "draw": "Pokémon theme: Evolve 5 Pokémon",
+    "id": "a2d75bb949900b3d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Evolution Expert",
+    "about": "Twenty-five evolutions",
+    "draw": "Pokémon theme: Evolve 25 Pokémon",
+    "id": "37401aa565276e01.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Level 50",
+    "about": "Halfway to the top",
+    "draw": "Pokémon theme: Raise a Pokémon to level 50",
+    "id": "ea07e270cfde7463.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Level 100",
+    "about": "The maximum level",
+    "draw": "Pokémon theme: Raise a Pokémon to level 100",
+    "id": "f8e477086ea65524.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Darwin? Who's That?",
+    "about": "Level 100 without ever evolving",
+    "draw": "Take an unevolved Pokémon to level 100",
+    "id": "6be668d48a5b3027.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "A Shiny Friend",
+    "about": "Sparkles on sight",
+    "draw": "Pokémon theme: Catch a shiny Pokémon",
+    "id": "96918b27e8d00208.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Shiny Hunter",
+    "about": "Five shinies caught",
+    "draw": "Pokémon theme: Catch 5 shiny Pokémon",
+    "id": "def369e1a30be665.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Angler",
+    "about": "Pokémon on the line",
+    "draw": "Pokémon theme: Fish up 10 Pokémon with a Poké Rod",
+    "id": "c39c7c14ba277cef.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Master Rod",
+    "about": "Fishing with the best ball",
+    "draw": "Craft a Poké Rod with a Master Ball",
+    "id": "60738b8b6e20d8c0.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Fossil Reviver",
+    "about": "Bring the past back to life",
+    "draw": "Pokémon theme: Revive 3 fossil Pokémon",
+    "id": "27151c620fa4fe5d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Didn't Stop to Think",
+    "about": "Dracovish, Dracozolt, Arctovish or Arctozolt",
+    "draw": "Revive a Galar fossil combination",
+    "id": "52af2d9ef2417f8e.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Field Researcher",
+    "about": "Point, scan, learn",
+    "draw": "Pokémon theme: Scan 50 wild Pokémon with your Pokédex",
+    "id": "81856bd0a2633ea6.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Seen: 100",
+    "about": "100 species seen",
+    "draw": "Pokémon theme: Register 100 Pokémon as seen in the Pokédex",
+    "id": "221ce237ed58a054.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Seen: 300",
+    "about": "300 species seen",
+    "draw": "Pokémon theme: Register 300 Pokémon as seen in the Pokédex",
+    "id": "b08368c7902d3c29.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Caught: 100",
+    "about": "100 species caught",
+    "draw": "Pokémon theme: Register 100 Pokémon as caught in the Pokédex",
+    "id": "c61e03ad430402d9.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Caught: 300",
+    "about": "300 species caught",
+    "draw": "Pokémon theme: Register 300 Pokémon as caught in the Pokédex",
+    "id": "96b535d05ce9117f.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Caught: 500",
+    "about": "500 species caught",
+    "draw": "Pokémon theme: Register 500 Pokémon as caught in the Pokédex",
+    "id": "24168b4fac57c4fa.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Full House",
+    "about": "Six Pokémon in your party",
+    "draw": "Fill all six party slots",
+    "id": "6e75585a054bc3c6.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Take Good Care!",
+    "about": "Trade with a friend",
+    "draw": "Trade a Pokémon with another player",
+    "id": "70837f7d924b6119.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Pokémon Jockey",
+    "about": "Hop on",
+    "draw": "Ride a Pokémon",
+    "id": "e4881e0fef6e6c18.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Free Roam",
+    "about": "Let them out",
+    "draw": "Put a Pokémon in a Pasture block",
+    "id": "1995ba4e08f1ca5f.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Call Me Ishmael!",
+    "about": "The biggest catch of all",
+    "draw": "Reel in an Alpha Wailord",
+    "id": "c7307743cb9012aa.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Poké Ball Maniac",
+    "about": "Every ball in the game",
+    "draw": "Craft one of every Poké Ball",
+    "id": "fb918efda55ce997.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Oops, All Berries!",
+    "about": "A full berry collection",
+    "draw": "Obtain one of every berry",
+    "id": "96d2616b0a435224.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Collector's Discography",
+    "about": "Every TM registered",
+    "draw": "Register every move in a TM Machine",
+    "id": "f708d898b09bcd5d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Vivillionaire",
+    "about": "Every wing pattern",
+    "draw": "Collect every Vivillon pattern",
+    "id": "e263d6f8152c626c.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer Milestones",
+    "title": "Ghost in the Shell",
+    "about": "One Nincada, two Pokémon",
+    "draw": "Get a Shedinja",
+    "id": "3afb466a7ac53389.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Your First Raid",
+    "about": "Giant Pokémon in glowing dens",
+    "draw": "Join a raid battle",
+    "id": "6a28015798011cba.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Tier 1: First Steps",
+    "about": "Beat a tier 1 raid boss",
+    "draw": "Win a tier 1 raid",
+    "id": "103cfc56f55d7c27.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Tier 2: Raid Buddy",
+    "about": "Beat a tier 2 raid boss",
+    "draw": "Win a tier 2 raid",
+    "id": "6f9875fc1eff5649.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Tier 3: A Formidable Foe",
+    "about": "Beat a tier 3 raid boss",
+    "draw": "Win a tier 3 raid",
+    "id": "4f152910073cfe71.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Tier 4: Raid Veteran",
+    "about": "Beat a tier 4 raid boss",
+    "draw": "Win a tier 4 raid",
+    "id": "8b9608cba3bf2600.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Tier 5: Raid Master",
+    "about": "Beat a tier 5 raid boss",
+    "draw": "Win a tier 5 raid",
+    "id": "65a0006d8364e5fc.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Tier 6: Even Further Beyond",
+    "about": "Beat a tier 6 raid boss",
+    "draw": "Win a tier 6 raid",
+    "id": "d4dccd7f11aa2eca.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Tier 7: The Mightiest",
+    "about": "Beat a tier 7 raid boss",
+    "draw": "Win a tier 7 raid",
+    "id": "253ca2b565a22867.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "The Great Friend",
+    "about": "Support your raid team",
+    "draw": "Use an Attack, Defense and Heal Cheer in raids",
+    "id": "502d5eefb35687e4.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Raid Energy",
+    "about": "Start your own raids",
+    "draw": "Fully charge a Raid Shard",
+    "id": "ca39c6e217f763fc.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Catching Charm",
+    "about": "Better odds on raid bosses",
+    "draw": "The item: Get a Catching Charm",
+    "id": "1a06da1ba2c7aa16.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "Overflowing With Power",
+    "about": "A Mega-Evolved raid boss",
+    "draw": "Win a Mega raid",
+    "id": "f0a3e8dc4a41e695.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "A Dynamax Adventure",
+    "about": "A Dynamaxed raid boss",
+    "draw": "Win a Dynamax raid",
+    "id": "871f606e0e2e9550.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "The Treasure of Area Zero",
+    "about": "A Terastallized raid boss",
+    "draw": "Win a Tera raid",
+    "id": "60af9a0f77e61914.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Raid Dens",
+    "title": "A Sparkling Success",
+    "about": "Lucky raid catch",
+    "draw": "Get a shiny Pokémon from a raid",
+    "id": "100fbb717712af5e.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "The Trainer League",
+    "about": "NPC trainers, gym leaders, the Elite Four and champions",
+    "draw": "Chapter intro picture: NPC trainers, gym leaders, the Elite Four and champions",
+    "id": "d241f3df3a963772.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Radical Trainers",
+    "about": "Your first trainer battle",
+    "draw": "Defeat any trainer",
+    "id": "d2638c594107798d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Boulder Badge",
+    "about": "Kanto gym leader: Rock",
+    "draw": "The gym badge: Boulder Badge (Kanto Rock)",
+    "id": "5414efcac4c44e3f.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Cascade Badge",
+    "about": "Kanto gym leader: Water",
+    "draw": "The gym badge: Cascade Badge (Kanto Water)",
+    "id": "d369618f31902a84.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Thunder Badge",
+    "about": "Kanto gym leader: Electric",
+    "draw": "The gym badge: Thunder Badge (Kanto Electric)",
+    "id": "1d0e40674ffca741.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Rainbow Badge",
+    "about": "Kanto gym leader: Grass",
+    "draw": "The gym badge: Rainbow Badge (Kanto Grass)",
+    "id": "426be2e86f631627.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Soul Badge",
+    "about": "Kanto gym leader: Poison",
+    "draw": "The gym badge: Soul Badge (Kanto Poison)",
+    "id": "40a56b29d792d5ef.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Marsh Badge",
+    "about": "Kanto gym leader: Psychic",
+    "draw": "The gym badge: Marsh Badge (Kanto Psychic)",
+    "id": "16caa0826df7d24d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Volcano Badge",
+    "about": "Kanto gym leader: Fire",
+    "draw": "The gym badge: Volcano Badge (Kanto Fire)",
+    "id": "571c2e7cb529810b.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Earth Badge",
+    "about": "Kanto gym leader: Ground",
+    "draw": "The gym badge: Earth Badge (Kanto Ground)",
+    "id": "c06a382e0cddaf94.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Lorelei",
+    "about": "Kanto Elite Four: Ice",
+    "draw": "Defeat Elite Four Lorelei",
+    "id": "89e1f322356d01ee.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Bruno",
+    "about": "Kanto Elite Four: Fighting",
+    "draw": "Defeat Elite Four Bruno",
+    "id": "dba5b681d9137e1b.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Agatha",
+    "about": "Kanto Elite Four: Ghost",
+    "draw": "Defeat Elite Four Agatha",
+    "id": "3835281ae0a17d61.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Lance",
+    "about": "Kanto Elite Four: Dragon",
+    "draw": "Defeat Elite Four Lance",
+    "id": "c0b2f339e551c6e6.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Kanto Champion",
+    "about": "The top of the Kanto series",
+    "draw": "Defeat Champion Terry",
+    "id": "26b4bc6e071a2e29.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Rival Wayne",
+    "about": "He keeps coming back",
+    "draw": "Defeat your rival Wayne",
+    "id": "662a08e2f544771e.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Team Rocket",
+    "about": "Admins of the villain team",
+    "draw": "Defeat Rocket Admin Archer",
+    "id": "bc7fc8efaff6124f.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Behind the Scenes",
+    "about": "The head of Team Rocket",
+    "draw": "Defeat Boss Giovanni",
+    "id": "dbc3484400ac51c7.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Trainer Red",
+    "about": "The silent legend",
+    "draw": "Defeat Trainer Red",
+    "id": "b2d205b21bb4b889.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Trainer Blue",
+    "about": "Smell ya later",
+    "draw": "Defeat Trainer Blue",
+    "id": "3875adf5c5e929c8.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Coal Badge",
+    "about": "Sinnoh gym leader: Rock",
+    "draw": "The gym badge: Coal Badge (Sinnoh Rock)",
+    "id": "412c1a3cd03f302f.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Forest Badge",
+    "about": "Sinnoh gym leader: Grass",
+    "draw": "The gym badge: Forest Badge (Sinnoh Grass)",
+    "id": "c065fb1413047889.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Cobble Badge",
+    "about": "Sinnoh gym leader: Fighting",
+    "draw": "The gym badge: Cobble Badge (Sinnoh Fighting)",
+    "id": "1ce09ee648139982.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Fen Badge",
+    "about": "Sinnoh gym leader: Water",
+    "draw": "The gym badge: Fen Badge (Sinnoh Water)",
+    "id": "543efd31791bd0fa.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Relic Badge",
+    "about": "Sinnoh gym leader: Ghost",
+    "draw": "The gym badge: Relic Badge (Sinnoh Ghost)",
+    "id": "5699e09021a4a245.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Mine Badge",
+    "about": "Sinnoh gym leader: Steel",
+    "draw": "The gym badge: Mine Badge (Sinnoh Steel)",
+    "id": "9123f14460b86adb.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Icicle Badge",
+    "about": "Sinnoh gym leader: Ice",
+    "draw": "The gym badge: Icicle Badge (Sinnoh Ice)",
+    "id": "5880ebbc1c6fde2f.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Beacon Badge",
+    "about": "Sinnoh gym leader: Electric",
+    "draw": "The gym badge: Beacon Badge (Sinnoh Electric)",
+    "id": "f03586f68354a96e.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Aaron",
+    "about": "Sinnoh Elite Four: Bug",
+    "draw": "Defeat Elite Four Aaron",
+    "id": "e0403722dd0a4f1b.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Bertha",
+    "about": "Sinnoh Elite Four: Ground",
+    "draw": "Defeat Elite Four Bertha",
+    "id": "6246f0153eb576ab.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Flint",
+    "about": "Sinnoh Elite Four: Fire",
+    "draw": "Defeat Elite Four Flint",
+    "id": "90eac63f22eaa1b8.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Lucian",
+    "about": "Sinnoh Elite Four: Psychic",
+    "draw": "Defeat Elite Four Lucian",
+    "id": "80df01725d2e2412.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Sinnoh Champion",
+    "about": "Cynthia and her Garchomp",
+    "draw": "Defeat Champion Cynthia",
+    "id": "7878aa4366e59967.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Sinnoh Legend",
+    "about": "Beat her twice more",
+    "draw": "Defeat Cynthia in the final rematch",
+    "id": "2dd27d9ef96e9915.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Team Galactic",
+    "about": "Commanders of Team Galactic",
+    "draw": "Defeat Commander Mars",
+    "id": "adc14fcfb146e718.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Commander Saturn",
+    "about": "Another Galactic commander",
+    "draw": "Defeat Commander Saturn",
+    "id": "cea5aba30d092911.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Commander Jupiter",
+    "about": "The third commander",
+    "draw": "Defeat Commander Jupiter",
+    "id": "e053a261885a2bce.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Red Dwarf",
+    "about": "The boss of Team Galactic",
+    "draw": "Defeat Galactic Boss Cyrus",
+    "id": "f81c3f185d52dc1d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Wings Badge",
+    "about": "Borrius gym leader: Flying",
+    "draw": "The gym badge: Wings Badge (Borrius Flying)",
+    "id": "786114c4b6099067.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Time Badge",
+    "about": "Borrius gym leader: Psychic",
+    "draw": "The gym badge: Time Badge (Borrius Psychic)",
+    "id": "4c2ad0b6ea2dcf86.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Ring Badge",
+    "about": "Borrius gym leader: Fighting",
+    "draw": "The gym badge: Ring Badge (Borrius Fighting)",
+    "id": "23aa34c4c4a19470.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Battery Badge",
+    "about": "Borrius gym leader: Electric",
+    "draw": "The gym badge: Battery Badge (Borrius Electric)",
+    "id": "f70baf5d240068b1.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Fall Badge",
+    "about": "Borrius gym leader: Fire",
+    "draw": "The gym badge: Fall Badge (Borrius Fire)",
+    "id": "9a2f75ae6a8a9a22.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Leaf Badge",
+    "about": "Borrius gym leader: Grass",
+    "draw": "The gym badge: Leaf Badge (Borrius Grass)",
+    "id": "51fb6ba6d487c9b3.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Swamp Badge",
+    "about": "Borrius gym leader: Poison",
+    "draw": "The gym badge: Swamp Badge (Borrius Poison)",
+    "id": "432b247a1d0fcffd.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Vision Badge",
+    "about": "Borrius gym leader: Mixed",
+    "draw": "The gym badge: Vision Badge (Borrius Mixed)",
+    "id": "c18c73cd60660229.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Arabella",
+    "about": "Borrius Elite Four",
+    "draw": "Defeat Elite Four Arabella",
+    "id": "2cf6a8700e67e83a.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Elias",
+    "about": "Borrius Elite Four",
+    "draw": "Defeat Elite Four Elias",
+    "id": "8f67907516b62713.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Moleman",
+    "about": "Borrius Elite Four",
+    "draw": "Defeat Elite Four Moleman",
+    "id": "b5fff93c0585523b.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Four: Penny",
+    "about": "Borrius Elite Four",
+    "draw": "Defeat Elite Four Penny",
+    "id": "714f82f8ff07afbb.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Borrius Champion",
+    "about": "The top of the Borrius series",
+    "draw": "Defeat Champion Jax",
+    "id": "99b6231bca21c863.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "The Shadows",
+    "about": "Borrius' villain team",
+    "draw": "Defeat Shadow Admin Ivory",
+    "id": "d252aa93d8c1ceb8.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Shadow Admin Marlon",
+    "about": "Another Shadow admin",
+    "draw": "Defeat Shadow Admin Marlon",
+    "id": "3f7ef59d7b36e6d5.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Dark Omen",
+    "about": "The boss of The Shadows",
+    "draw": "Defeat Shadow Boss Zeph",
+    "id": "454c19e059a77bc0.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "Elite Trainer",
+    "about": "All twelve Elite Four trainers beaten",
+    "draw": "Defeat every Elite Four member",
+    "id": "195e7ad114e6b022.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Trainer League",
+    "title": "True Champ",
+    "about": "Champion of all three regions",
+    "draw": "Defeat every champion",
+    "id": "deb2736ed1649bf5.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Your First Waystone",
+    "about": "Fast travel between the places you have been",
+    "draw": "The item: Craft a Waystone",
+    "id": "7ac327fafc215d4a.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Warp Stone",
+    "about": "A reusable teleport item",
+    "draw": "The item: Craft a Warp Stone",
+    "id": "be64b17c8b1926eb.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Warp Scrolls",
+    "about": "One-use teleports",
+    "draw": "The item: Craft a Warp, Return or Bound Scroll",
+    "id": "db4fc0c631557382.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Sharestones",
+    "about": "A network only your color can see",
+    "draw": "The item: Craft a Sharestone of any color",
+    "id": "e7476a8a4293bcd6.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Warp Plate",
+    "about": "Step on it and go",
+    "draw": "The item: Craft a Warp Plate",
+    "id": "ad588bde1dfaea52.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Portstone",
+    "about": "A public departure point",
+    "draw": "The item: Craft a Portstone",
+    "id": "5b7996f014abfafd.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Your First Coins",
+    "about": "Lightman's Currency: the server economy",
+    "draw": "The item: Get a Copper Coin",
+    "id": "1035371ded21b6da.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Coin Mint",
+    "about": "Turn ingots into coins",
+    "draw": "Craft a Coin Mint",
+    "id": "9b285306f9b22fd4.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "A Wallet",
+    "about": "Keep your coins in one place",
+    "draw": "The item: Craft any wallet",
+    "id": "2c85c0e959b0cb00.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "The Bank",
+    "about": "Deposit, withdraw, exchange",
+    "draw": "Use an ATM",
+    "id": "e50596eb04401037.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Open a Shop",
+    "about": "Sell to other players while you are away",
+    "draw": "Set up a trader",
+    "id": "ffbaa4f8201116dc.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Trading Terminal",
+    "about": "Shop from anywhere",
+    "draw": "Use a Trading Terminal",
+    "id": "758208c0a1370f2d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Diamond Coin",
+    "about": "Ten thousand copper in one coin",
+    "draw": "The item: Hold a Diamond Coin (10,000 copper)",
+    "id": "c5ecd91fba5a4e1c.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Netherite Coin",
+    "about": "One hundred thousand copper",
+    "draw": "The item: Hold a Netherite Coin",
+    "id": "66d5f41c1ebee825.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Travel and Trade",
+    "title": "Cobble Merchant",
+    "about": "CobbleDollars shops",
+    "draw": "Chapter intro picture: CobbleDollars shops",
+    "id": "ab6cd5af715f7127.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "Say Cheese",
+    "about": "Exposure: real photos in Minecraft",
+    "draw": "The item: Craft a Camera",
+    "id": "73c10fef2a1a7658.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "A Moment in Time",
+    "about": "Your first picture",
+    "draw": "Take a photo",
+    "id": "75a728c47112e495.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "Photo Album",
+    "about": "Keep your memories",
+    "draw": "The item: Craft a Photo Album",
+    "id": "8cc285a6c4b501eb.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "Wildlife Archivist",
+    "about": "Nature photography",
+    "draw": "Photograph animals",
+    "id": "a4db2f08513c7f15.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "First Notes",
+    "about": "Immersive Melodies: play real songs",
+    "draw": "The item: Craft any instrument",
+    "id": "a835814ec840747c.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "The Band",
+    "about": "Three instruments",
+    "draw": "The item: Craft 3 different instruments",
+    "id": "112723e7154dc0c3.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "Ribbit Village",
+    "about": "Frog folk in the swamps",
+    "draw": "The place: a Ribbit village",
+    "id": "1a21ee8308d60efc.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "Maraca",
+    "about": "Shake it",
+    "draw": "The item: Get a Maraca",
+    "id": "a9ca34c8ba8abbd5.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "PokéNav",
+    "about": "Where do Pokémon spawn?",
+    "draw": "The item: Craft a PokéNav",
+    "id": "67e7e188b5715650.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "PokéFinder",
+    "about": "Track a Pokémon",
+    "draw": "The item: Craft a PokéFinder",
+    "id": "69f24cab61b7c5fe.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "FishingNav",
+    "about": "What bites here?",
+    "draw": "The item: Craft a FishingNav",
+    "id": "c1951c39767f67cb.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Hobbies and Gadgets",
+    "title": "Poké Staff",
+    "about": "Fight or Flight: command your Pokémon outside battle",
+    "draw": "The item: Craft a Poké Staff",
+    "id": "dc2e54c367157df0.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Ruins and Dungeons",
+    "about": "Hundreds of structures to find and loot",
+    "draw": "Chapter intro picture: Hundreds of structures to find and loot",
+    "id": "1d218e524852e0b0.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "A Better Dungeon",
+    "about": "Spawners, loot and traps",
+    "draw": "The place: a YUNG's dungeon (zombie, skeleton, spider or small)",
+    "id": "6d07bb80509984d9.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Better Mineshaft",
+    "about": "Huge branching tunnels",
+    "draw": "The place: a Better Mineshaft",
+    "id": "3cde9afdd1f00298.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Better Stronghold",
+    "about": "Libraries, armories and the End portal",
+    "draw": "The place: a Better Stronghold",
+    "id": "b51b8ec7876d1582.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Better Jungle Temple",
+    "about": "Traps and treasure in the jungle",
+    "draw": "The place: a Better Jungle Temple",
+    "id": "642af4543147afe6.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Witch Hut",
+    "about": "Swamp witches at home",
+    "draw": "The place: a Better Witch Hut",
+    "id": "b9c8736acda3ca9a.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Dungeon Crawl",
+    "about": "Floor after floor underground",
+    "draw": "The place: Descend into a Dungeon Crawl dungeon",
+    "id": "92ea0ff7f4dfc28f.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Illager Fort",
+    "about": "When Dungeons Arise",
+    "draw": "The place: Storm an Illager Fort",
+    "id": "c41bdea8455347cb.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Bandit Towers",
+    "about": "Twin towers on a bridge",
+    "draw": "The place: the Bandit Towers",
+    "id": "ab8f9e51970b5123.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Keep Kayra",
+    "about": "A castle in the forest",
+    "draw": "The place: Keep Kayra",
+    "id": "c3fef3c8e68e984b.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Monastery",
+    "about": "A cliffside temple",
+    "draw": "The place: Visit a Monastery",
+    "id": "fd28c9885f68c62a.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Plague Asylum",
+    "about": "Nobody checks out",
+    "draw": "The place: the Plague Asylum",
+    "id": "36964d83c389fbb3.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Palace of Shiraz",
+    "about": "Desert gold",
+    "draw": "The place: the Shiraz Palace",
+    "id": "e11a5a6e223937ee.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Thornborn Towers",
+    "about": "Overgrown towers in the jungle",
+    "draw": "The place: Climb the Thornborn Towers",
+    "id": "ea6514bd613604ac.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Undead Pirate Ship",
+    "about": "Ghost ship on the ocean",
+    "draw": "The place: Board an Undead Pirate Ship",
+    "id": "e0f2fe6fabc1dae8.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Heavenly Challenger",
+    "about": "An airship in the sky",
+    "draw": "The place: Reach a Heavenly Challenger airship",
+    "id": "14aaa69d47044d66.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Mushroom Village",
+    "about": "Houses made of mushrooms",
+    "draw": "The place: Visit a Mushroom Village",
+    "id": "fee90f06452f7d68.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Towns and Towers",
+    "about": "Villages for every biome",
+    "draw": "The place: Visit a Towns and Towers village",
+    "id": "a2ac651d78b26ce1.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Sky Village",
+    "about": "A village on floating islands",
+    "draw": "The place: a Sky Village",
+    "id": "33951d0945421624.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Tidal Town",
+    "about": "A village on the water",
+    "draw": "The place: a Tidal Town",
+    "id": "863a154f439ee046.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Underground Village",
+    "about": "Villagers who went deep",
+    "draw": "The place: an Underground Village",
+    "id": "cb1fb48e1c3640ca.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Witch Village",
+    "about": "A whole town of witches",
+    "draw": "The place: a Witch Village",
+    "id": "e7e92f89c26fb4f5.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Watchtower",
+    "about": "Explorify",
+    "draw": "The place: Climb a plains Watchtower",
+    "id": "3979fbbacf1d5b89.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "The Tavern",
+    "about": "A warm place on the road",
+    "draw": "The place: a Tavern",
+    "id": "539d708aa5b31af6.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Mausoleum",
+    "about": "A tomb worth robbing",
+    "draw": "The place: a Mausoleum",
+    "id": "51469a258c1fcb12.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Badlands Pyramid",
+    "about": "Terracotta temple",
+    "draw": "The place: a Badlands Pyramid",
+    "id": "82ebe93de21f5c99.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Abandoned Prairie House",
+    "about": "Oh The Biomes We've Gone",
+    "draw": "The place: an abandoned Prairie House",
+    "id": "5c9885c026ae8ec4.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Aspen Manor",
+    "about": "A mansion in the aspen woods",
+    "draw": "The place: an Aspen Manor",
+    "id": "af5f5eeabecc7748.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Rugged Fossil",
+    "about": "Bones of something huge",
+    "draw": "The place: a Rugged Fossil",
+    "id": "76dbd64af19f3e29.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Medieval Fort",
+    "about": "Medieval Buildings",
+    "draw": "The place: a Medieval Fort",
+    "id": "905b8dc3a404fb8d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Dungeons and Ruins",
+    "title": "Boss Tower",
+    "about": "Apotheosis",
+    "draw": "The place: an Apotheosis boss tower",
+    "id": "603d2953eb103703.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Wonders of the World",
+    "about": "Biomes O' Plenty, Oh The Biomes We've Gone and Nature's Spirit",
+    "draw": "Chapter intro picture: Biomes O' Plenty, Oh The Biomes We've Gone and Nature's Spirit",
+    "id": "2f4ee84533b045d9.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Mystic Grove",
+    "about": "Pink trees, glowing flowers",
+    "draw": "A tiny landscape of this biome: Pink trees, glowing flowers",
+    "id": "fcdeccf09c1a4060.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Lavender Field",
+    "about": "Purple as far as you can see",
+    "draw": "A tiny landscape of this biome: Purple as far as you can see",
+    "id": "76fd9f219dd4a242.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Redwood Forest",
+    "about": "The tallest trees",
+    "draw": "A tiny landscape of this biome: The tallest trees",
+    "id": "39cdf73d9b14e010.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Origin Valley",
+    "about": "Minecraft like it was in 2009",
+    "draw": "A tiny landscape of this biome: Minecraft like it was in 2009",
+    "id": "9fc0a6446149c363.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Volcano",
+    "about": "Lava, ash and Fire-types",
+    "draw": "A tiny landscape of this biome: Lava, ash and Fire-types",
+    "id": "5280a029ddb11bb1.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Hot Springs",
+    "about": "Warm pools in the mountains",
+    "draw": "A tiny landscape of this biome: Warm pools in the mountains",
+    "id": "754af9f05c4536b9.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Tropics",
+    "about": "Palm trees and white sand",
+    "draw": "A tiny landscape of this biome: Palm trees and white sand",
+    "id": "e03050226f4bc3e0.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Ominous Woods",
+    "about": "Dark and dangerous",
+    "draw": "A tiny landscape of this biome: Dark and dangerous",
+    "id": "5e5fca3140d2d1ac.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Wasteland",
+    "about": "Nothing grows here",
+    "draw": "A tiny landscape of this biome: Nothing grows here",
+    "id": "f3a59ee24be41fde.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Sakura Grove",
+    "about": "Cherry blossoms everywhere",
+    "draw": "A tiny landscape of this biome: Cherry blossoms everywhere",
+    "id": "2412be5209448c86.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Skyris Vale",
+    "about": "Blue trees and a village",
+    "draw": "A tiny landscape of this biome: Blue trees and a village",
+    "id": "29709bac3b4358d2.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Howling Peaks",
+    "about": "Wind-blasted mountains",
+    "draw": "A tiny landscape of this biome: Wind-blasted mountains",
+    "id": "70345dfc8c4aa6aa.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Red Rock Valley",
+    "about": "Canyons and arches",
+    "draw": "A tiny landscape of this biome: Canyons and arches",
+    "id": "644cd59e2ab81a4d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Weeping Witch Forest",
+    "about": "Twisted trees, witches",
+    "draw": "A tiny landscape of this biome: Twisted trees, witches",
+    "id": "58e44c448cad05b2.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Forgotten Forest",
+    "about": "Ancient and overgrown",
+    "draw": "A tiny landscape of this biome: Ancient and overgrown",
+    "id": "26ecda0f2be004b5.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Rainbow Beach",
+    "about": "Sand in every color",
+    "draw": "A tiny landscape of this biome: Sand in every color",
+    "id": "6f220a13a5562e32.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Pumpkin Valley",
+    "about": "Halloween all year",
+    "draw": "A tiny landscape of this biome: Halloween all year",
+    "id": "2bdee0c216ff1411.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Shattered Glacier",
+    "about": "Ice spikes and crevasses",
+    "draw": "A tiny landscape of this biome: Ice spikes and crevasses",
+    "id": "a4585a79c6bef9ef.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Wisteria Forest",
+    "about": "Hanging purple blossoms",
+    "draw": "A tiny landscape of this biome: Hanging purple blossoms",
+    "id": "ca84f9df29634682.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Marigold Meadows",
+    "about": "Golden flower fields",
+    "draw": "A tiny landscape of this biome: Golden flower fields",
+    "id": "eb3dda43fddb6259.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Sugi Forest",
+    "about": "Tall Japanese cedars",
+    "draw": "A tiny landscape of this biome: Tall Japanese cedars",
+    "id": "a2c66af9179241e6.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "White Cliffs",
+    "about": "Chalk cliffs over the sea",
+    "draw": "A tiny landscape of this biome: Chalk cliffs over the sea",
+    "id": "6c35a548a338a5c4.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Bamboo Wetlands",
+    "about": "Bamboo and still water",
+    "draw": "A tiny landscape of this biome: Bamboo and still water",
+    "id": "86d8960614975a43.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Golden Wilds",
+    "about": "Golden grass savanna",
+    "draw": "A tiny landscape of this biome: Golden grass savanna",
+    "id": "3acd8f3b7afd772e.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Lavender Fields",
+    "about": "Nature's Spirit's purple fields",
+    "draw": "A tiny landscape of this biome: Nature's Spirit's purple fields",
+    "id": "32a2198c83c858b1.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Aspen Forest",
+    "about": "White trunks, yellow leaves",
+    "draw": "A tiny landscape of this biome: White trunks, yellow leaves",
+    "id": "8c04475a186a1361.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Red Peaks",
+    "about": "Red mountains",
+    "draw": "A tiny landscape of this biome: Red mountains",
+    "id": "686091275a7c9d5b.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Biomes and Nature",
+    "title": "Globetrotter",
+    "about": "All 27 biomes visited",
+    "draw": "Chapter intro picture: All 27 biomes visited",
+    "id": "96c62b1eb6f4a042.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 10% Caught",
+    "about": "Have 10% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 10% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "b605f536326d2383.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 20% Caught",
+    "about": "Have 20% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 20% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "be5ab16c58610bc4.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 30% Caught",
+    "about": "Have 30% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 30% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "224591b33e7eee8b.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 40% Caught",
+    "about": "Have 40% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 40% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "64d6813ca853e032.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 50% Caught",
+    "about": "Have 50% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 50% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "c7a668a993a34db6.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 60% Caught",
+    "about": "Have 60% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 60% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "73a93e9df2b9d8e8.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 70% Caught",
+    "about": "Have 70% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 70% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "1b115a7a9bfed77b.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 80% Caught",
+    "about": "Have 80% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 80% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "4b56d275187d038e.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 90% Caught",
+    "about": "Have 90% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 90% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "e8ebb55ff1d1a979.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Pokédex Adventures",
+    "title": "Pokédex: 100% Caught",
+    "about": "Have 100% Caught of all Pokémon caught",
+    "draw": "A Pokédex with a progress bar / glowing screen, 100% Caught filled. Make the 10 of them look like a set that gets fancier: red plastic at 10%, gold at 90%, rainbow/diamond at 100%",
+    "id": "99aca1cbf54d48ec.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "Every Potion",
+    "about": null,
+    "draw": "All five potion bottles in a row (purple, blue, yellow, red, green)",
+    "id": "be7aab2c2b9dde41.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "Every Status Cure",
+    "about": null,
+    "draw": "Spray bottles with a little poison / zzz / flame / snowflake / lightning icon",
+    "id": "e82fbee59e4384ce.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "Back from the Brink",
+    "about": null,
+    "draw": "A yellow Revive crystal with a sparkle",
+    "id": "c533be7a12e1da24.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "Every PP Item",
+    "about": null,
+    "draw": "A blue Ether bottle with a yellow PP Up next to it",
+    "id": "cee5d0b2a01def39.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "Healing Berries",
+    "about": null,
+    "draw": "A pile of Oran and Sitrus berries",
+    "id": "94e70c0398e3c189.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "Pinch Berries",
+    "about": null,
+    "draw": "A Liechi berry with a sweat drop",
+    "id": "5074a4b3dcd6bc5d.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "EV-Reset Berries",
+    "about": null,
+    "draw": "A Pomeg berry with a down-arrow",
+    "id": "4491802458ce0079.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "Type-Resist Berries",
+    "about": null,
+    "draw": "An Occa berry inside a shield",
+    "id": "cd8e12ed347d30e4.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "Garden Berries",
+    "about": null,
+    "draw": "A berry bush with mixed berries",
+    "id": "78e18cfebde36365.png"
+  },
+  {
+    "kind": "quest_art",
+    "chapter": "Medicine and Recovery",
+    "title": "★ The Complete Pharmacy",
+    "about": null,
+    "draw": "A medicine cabinet full of bottles, pink cross on the door",
+    "id": "7844e95ed9e3b5e1.png"
+  },
+  {
+    "kind": "chapter_icon",
+    "chapter": "Trainer Milestones",
+    "title": "Trainer Milestones",
+    "draw": "A gold trophy with a Poké Ball on it",
+    "id": "31_trainer_milestones.png"
+  },
+  {
+    "kind": "chapter_icon",
+    "chapter": "Raid Dens",
+    "title": "Raid Dens",
+    "draw": "A glowing pink raid den rock with a beam of light",
+    "id": "32_raid_dens.png"
+  },
+  {
+    "kind": "chapter_icon",
+    "chapter": "Trainer League",
+    "title": "Trainer League",
+    "draw": "A gym badge case / a row of three badges",
+    "id": "33_trainer_league.png"
+  },
+  {
+    "kind": "chapter_icon",
+    "chapter": "Travel and Trade",
+    "title": "Travel and Trade",
+    "draw": "A waystone with a gold coin in front",
+    "id": "36_travel_and_trade.png"
+  },
+  {
+    "kind": "chapter_icon",
+    "chapter": "Hobbies and Gadgets",
+    "title": "Hobbies and Gadgets",
+    "draw": "An old camera and a flute",
+    "id": "37_hobbies.png"
+  },
+  {
+    "kind": "chapter_icon",
+    "chapter": "Dungeons and Ruins",
+    "title": "Dungeons and Ruins",
+    "draw": "A rolled treasure map with an X and a small castle",
+    "id": "38_dungeons_and_ruins.png"
+  },
+  {
+    "kind": "chapter_icon",
+    "chapter": "Biomes and Nature",
+    "title": "Biomes and Nature",
+    "draw": "A cherry blossom tree on a hill",
+    "id": "39_biomes_and_nature.png"
+  }
+]

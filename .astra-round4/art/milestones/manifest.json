@@ -1,0 +1,124 @@
+{
+  "sheets": [
+    {
+      "file": "milestone-atlas-04.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — An unbroken cream egg with a single tiny leaf and a tall gold champion crown above it, maximum level while unevolved. In all four columns keep this same motif. Four successive motion states: An ivory glint rolls across the unbroken eggshell while the crown stays fixed.\nROW 2 — One bright cyan four-point shiny sparkle above a red-and-ivory capture ball, a first shiny catch. In all four columns keep this same motif. Four successive motion states: The small centered sparkle opens from a cross to a four-point star and closes.\nROW 3 — A violet capture ball surrounded by a crown of five gold star-shaped sparkles, five shiny catches. In all four columns keep this same motif. Four successive motion states: The gold glint moves between the stars while the ball stays fixed.\nROW 4 — A compact curved red fishing rod with a red-and-white ball bobber and one blue fish breaking a cyan ripple. In all four columns keep this same motif. Four successive motion states: The round bobber bobs one logical pixel, then the fish's blue tail flicks and settles.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "6be668d48a5b3027.png",
+          "title": "Darwin? Who's That?",
+          "row": 0,
+          "subject": "An unbroken cream egg with a single tiny leaf and a tall gold champion crown above it, maximum level while unevolved."
+        },
+        {
+          "id": "96918b27e8d00208.png",
+          "title": "A Shiny Friend",
+          "row": 1,
+          "subject": "One bright cyan four-point shiny sparkle above a red-and-ivory capture ball, a first shiny catch."
+        },
+        {
+          "id": "def369e1a30be665.png",
+          "title": "Shiny Hunter",
+          "row": 2,
+          "subject": "A violet capture ball surrounded by a crown of five gold star-shaped sparkles, five shiny catches."
+        },
+        {
+          "id": "c39c7c14ba277cef.png",
+          "title": "Angler",
+          "row": 3,
+          "subject": "A compact curved red fishing rod with a red-and-white ball bobber and one blue fish breaking a cyan ripple."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-05.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — A gold-tipped purple fishing rod with a round purple high-tier ball bobber with two magenta patches, no lettering. In all four columns keep this same motif. Four successive motion states: A two-pixel highlight sweeps across the purple bobber and the gold reel clicks.\nROW 2 — A copper-based mint revival cylinder enclosing three tiny tan fossil shapes, with one clear spiral shell at center. In all four columns keep this same motif. Four successive motion states: Two square mint bubbles rise beside the shell in four steps.\nROW 3 — A fossil-revival machine holding two distinct interlocking fossils, one blue fin skeleton above one orange reptile-tail fossil, a Galar combination. In all four columns keep this same motif. Four successive motion states: Two amber connection pixels at the join light in succession.\nROW 4 — A small red handheld field scanner with a large cyan lens and a green leaf silhouette inside it. In all four columns keep this same motif. Four successive motion states: A single pale cyan scan line crosses the leaf in four steps.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "60738b8b6e20d8c0.png",
+          "title": "Master Rod",
+          "row": 0,
+          "subject": "A gold-tipped purple fishing rod with a round purple high-tier ball bobber with two magenta patches, no lettering."
+        },
+        {
+          "id": "27151c620fa4fe5d.png",
+          "title": "Fossil Reviver",
+          "row": 1,
+          "subject": "A copper-based mint revival cylinder enclosing three tiny tan fossil shapes, with one clear spiral shell at center."
+        },
+        {
+          "id": "52af2d9ef2417f8e.png",
+          "title": "Didn't Stop to Think",
+          "row": 2,
+          "subject": "A fossil-revival machine holding two distinct interlocking fossils, one blue fin skeleton above one orange reptile-tail fossil, a Galar combination."
+        },
+        {
+          "id": "81856bd0a2633ea6.png",
+          "title": "Field Researcher",
+          "row": 3,
+          "subject": "A small red handheld field scanner with a large cyan lens and a green leaf silhouette inside it."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-06.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — A red field scanner with a large pale-blue eye symbol on dark screen and a bronze corner pin, one hundred species seen. In all four columns keep this same motif. Four successive motion states: One bright highlight travels across the blue iris.\nROW 2 — A silver-trimmed teal field scanner with a golden eye symbol on screen and two amber tabs, three hundred species seen. In all four columns keep this same motif. Four successive motion states: The golden iris highlight expands and contracts by one pixel.\nROW 3 — A red field scanner showing one red-and-cream capture ball on screen, with a bronze catch seal, one hundred species caught. In all four columns keep this same motif. Four successive motion states: The ball's bright central button pulses in four flat-color steps.\nROW 4 — A cobalt field scanner with silver twin side fins and a black-and-yellow capture ball on screen, three hundred species caught. In all four columns keep this same motif. Four successive motion states: A crisp pale glint moves across the screen ball's yellow dome.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "221ce237ed58a054.png",
+          "title": "Seen: 100",
+          "row": 0,
+          "subject": "A red field scanner with a large pale-blue eye symbol on dark screen and a bronze corner pin, one hundred species seen."
+        },
+        {
+          "id": "b08368c7902d3c29.png",
+          "title": "Seen: 300",
+          "row": 1,
+          "subject": "A silver-trimmed teal field scanner with a golden eye symbol on screen and two amber tabs, three hundred species seen."
+        },
+        {
+          "id": "c61e03ad430402d9.png",
+          "title": "Caught: 100",
+          "row": 2,
+          "subject": "A red field scanner showing one red-and-cream capture ball on screen, with a bronze catch seal, one hundred species caught."
+        },
+        {
+          "id": "96b535d05ce9117f.png",
+          "title": "Caught: 300",
+          "row": 3,
+          "subject": "A cobalt field scanner with silver twin side fins and a black-and-yellow capture ball on screen, three hundred species caught."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-07.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — A purple-and-gold field scanner with a crown crest and prismatic capture-ball screen seal, five hundred species caught. In all four columns keep this same motif. Four successive motion states: The seal's highlight passes through cyan, cream, and pink facets.\nROW 2 — A compact navy party tray with exactly six little red-and-ivory capture balls arranged as two rows of three. In all four columns keep this same motif. Four successive motion states: One large cream glint steps from one ball to another while all six stay seated.\nROW 3 — Two compact capture balls, red and teal, facing each other with opposing short gold trade arrows between them. In all four columns keep this same motif. Four successive motion states: The two arrowheads brighten alternately and the ball buttons wink.\nROW 4 — A tan riding saddle with a russet strap fitted to a small blue-and-cream mount silhouette in side view, one stirrup visible. In all four columns keep this same motif. Four successive motion states: The buckle catches light and the visible stirrup swings one logical pixel.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "24168b4fac57c4fa.png",
+          "title": "Caught: 500",
+          "row": 0,
+          "subject": "A purple-and-gold field scanner with a crown crest and prismatic capture-ball screen seal, five hundred species caught."
+        },
+        {
+          "id": "6e75585a054bc3c6.png",
+          "title": "Full House",
+          "row": 1,
+          "subject": "A compact navy party tray with exactly six little red-and-ivory capture balls arranged as two rows of three."
+        },
+        {
+          "id": "70837f7d924b6119.png",
+          "title": "Take Good Care!",
+          "row": 2,
+          "subject": "Two compact capture balls, red and teal, facing each other with opposing short gold trade arrows between them."
+        },
+        {
+          "id": "e4881e0fef6e6c18.png",
+          "title": "Pokémon Jockey",
+          "row": 3,
+          "subject": "A tan riding saddle with a russet strap fitted to a small blue-and-cream mount silhouette in side view, one stirrup visible."
+        }
+      ]
+    }
+  ]
+}
