@@ -1,0 +1,724 @@
+{
+  "sheets": [
+    {
+      "file": "armory-01.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Greater Relic of Rejuvenation — Gold healing relic shaped like an unfurling mint herb inside a cream heart clasp; central coral healing spark swells.\nROW 2, Greater Perk: Fortress Stance — Gold-and-steel relic of a squat castle tower shield, two battlements and square cyan slit; slit lights up.\nROW 3, Greater Perk: Riposte — Gold swept guard, thin silver fencing point catching the incoming nick of another blade; one sharp gold contact glint travels.\nROW 4, Greater Perk: Purifying Wave — Golden scallop charm spilling two clean aqua healing waves; white crest alternates bright pixels.",
+      "rows": [
+        {
+          "id": "1a3d1fa7bc8960a9.png",
+          "title": "Greater Relic of Rejuvenation",
+          "row": 0,
+          "subject": "Gold healing relic shaped like an unfurling mint herb inside a cream heart clasp; central coral healing spark swells."
+        },
+        {
+          "id": "65c02d7f8f1b8c20.png",
+          "title": "Greater Perk: Fortress Stance",
+          "row": 1,
+          "subject": "Gold-and-steel relic of a squat castle tower shield, two battlements and square cyan slit; slit lights up."
+        },
+        {
+          "id": "3b8faa1837f8a88b.png",
+          "title": "Greater Perk: Riposte",
+          "row": 2,
+          "subject": "Gold swept guard, thin silver fencing point catching the incoming nick of another blade; one sharp gold contact glint travels."
+        },
+        {
+          "id": "14b4668efe1908c6.png",
+          "title": "Greater Perk: Purifying Wave",
+          "row": 3,
+          "subject": "Golden scallop charm spilling two clean aqua healing waves; white crest alternates bright pixels."
+        }
+      ]
+    },
+    {
+      "file": "armory-02.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Greater Perk: Lifebuoy — Scarlet-and-ivory lifebuoy rescue ring with gold clasps and a mint healing bead; small bead pulses.\nROW 2, Greater Perk: Skull Crusher — Gold-capped squat war mallet over a pale stone skull token with a zigzag crack; the crack flashes amber.\nROW 3, Greater Perk: Anti-Gravity Shot — Broad gold upward-pointing arrowhead hovering above two small lilac levitation bars; only the bars ripple.\nROW 4, Greater Perk: Shadow Strike — Shadowy violet dagger with gold hilt over a single curved purple dodge afterimage; cutting edge pulses.",
+      "rows": [
+        {
+          "id": "72ff5d2a386ecbe0.png",
+          "title": "Greater Perk: Lifebuoy",
+          "row": 0,
+          "subject": "Scarlet-and-ivory lifebuoy rescue ring with gold clasps and a mint healing bead; small bead pulses."
+        },
+        {
+          "id": "54b3aacd5b649891.png",
+          "title": "Greater Perk: Skull Crusher",
+          "row": 1,
+          "subject": "Gold-capped squat war mallet over a pale stone skull token with a zigzag crack; the crack flashes amber."
+        },
+        {
+          "id": "47229389571aa876.png",
+          "title": "Greater Perk: Anti-Gravity Shot",
+          "row": 2,
+          "subject": "Broad gold upward-pointing arrowhead hovering above two small lilac levitation bars; only the bars ripple."
+        },
+        {
+          "id": "1a2a73ed562b0f79.png",
+          "title": "Greater Perk: Shadow Strike",
+          "row": 3,
+          "subject": "Shadowy violet dagger with gold hilt over a single curved purple dodge afterimage; cutting edge pulses."
+        }
+      ]
+    },
+    {
+      "file": "armory-03.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Greater Perk: Shield Rebound — Small gold-framed blue shield circled by a thick copper hook-shaped return arrow; moving glint on the arrow.\nROW 2, Greater Perk: Mind Shatter — Violet faceted mind crystal split down its center with two tiny gold lightning teeth; split lights up.\nROW 3, Greater Bulwark of Desperation — Thick battered blue-gold shield with one red heart gem protected at its base; heart brightens.\nROW 4, Greater Bloodlust Relic — Scarlet blood-drop jewel pierced by a short gold fang with two forward red notches; internal crimson gleam pulses.",
+      "rows": [
+        {
+          "id": "580d7b71d8f56413.png",
+          "title": "Greater Perk: Shield Rebound",
+          "row": 0,
+          "subject": "Small gold-framed blue shield circled by a thick copper hook-shaped return arrow; moving glint on the arrow."
+        },
+        {
+          "id": "759cde66bacfb3d0.png",
+          "title": "Greater Perk: Mind Shatter",
+          "row": 1,
+          "subject": "Violet faceted mind crystal split down its center with two tiny gold lightning teeth; split lights up."
+        },
+        {
+          "id": "142c3fe860e7a113.png",
+          "title": "Greater Bulwark of Desperation",
+          "row": 2,
+          "subject": "Thick battered blue-gold shield with one red heart gem protected at its base; heart brightens."
+        },
+        {
+          "id": "4ce4aa2259d20e14.png",
+          "title": "Greater Bloodlust Relic",
+          "row": 3,
+          "subject": "Scarlet blood-drop jewel pierced by a short gold fang with two forward red notches; internal crimson gleam pulses."
+        }
+      ]
+    },
+    {
+      "file": "armory-04.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Greater Arcane Trance Relic — Violet crystal spiral suspended between two small opposing gold crescent prongs; one pale violet highlight circles.\nROW 2, Citrine Jewel Figurine — Hand-carved honey-yellow CITRINE statuette of a seated fox with pointed ears and a faceted tail; amber cut flashes.\nROW 3, Jade Jewel Figurine — Hand-carved leaf-green JADE statuette of a squat turtle with a stepped gemstone shell; shell facet flashes.\nROW 4, Ruby Jewel Figurine — Hand-carved deep-red RUBY statuette of a coiled ram with short curled horns; ruby horn flashes.",
+      "rows": [
+        {
+          "id": "11ce5dd2b45ed1f0.png",
+          "title": "Greater Arcane Trance Relic",
+          "row": 0,
+          "subject": "Violet crystal spiral suspended between two small opposing gold crescent prongs; one pale violet highlight circles."
+        },
+        {
+          "id": "482a4a00f13cac13.png",
+          "title": "Citrine Jewel Figurine",
+          "row": 1,
+          "subject": "Hand-carved honey-yellow CITRINE statuette of a seated fox with pointed ears and a faceted tail; amber cut flashes."
+        },
+        {
+          "id": "614ff3d719db3ad0.png",
+          "title": "Jade Jewel Figurine",
+          "row": 2,
+          "subject": "Hand-carved leaf-green JADE statuette of a squat turtle with a stepped gemstone shell; shell facet flashes."
+        },
+        {
+          "id": "29a3b2e95d65a441.png",
+          "title": "Ruby Jewel Figurine",
+          "row": 3,
+          "subject": "Hand-carved deep-red RUBY statuette of a coiled ram with short curled horns; ruby horn flashes."
+        }
+      ]
+    },
+    {
+      "file": "armory-05.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Sapphire Jewel Figurine — Hand-carved royal-blue SAPPHIRE statuette of a small perched owl with squared wings; wing facet flashes.\nROW 2, Tanzanite Jewel Figurine — Hand-carved violet-blue TANZANITE statuette of a rabbit with long upright ears; ear facet flashes.\nROW 3, Topaz Jewel Figurine — Hand-carved warm-orange TOPAZ statuette of a little lion with a blocky amber mane; mane facet flashes.\nROW 4, Lesser Evasion — Simple worn COPPER lesser charm in the shape of a boot stepping between two teal dodge arcs; rear teal accent pulses.",
+      "rows": [
+        {
+          "id": "718239c89f99b9d7.png",
+          "title": "Sapphire Jewel Figurine",
+          "row": 0,
+          "subject": "Hand-carved royal-blue SAPPHIRE statuette of a small perched owl with squared wings; wing facet flashes."
+        },
+        {
+          "id": "449b22795c6012b2.png",
+          "title": "Tanzanite Jewel Figurine",
+          "row": 1,
+          "subject": "Hand-carved violet-blue TANZANITE statuette of a rabbit with long upright ears; ear facet flashes."
+        },
+        {
+          "id": "7656af7229d4beef.png",
+          "title": "Topaz Jewel Figurine",
+          "row": 2,
+          "subject": "Hand-carved warm-orange TOPAZ statuette of a little lion with a blocky amber mane; mane facet flashes."
+        },
+        {
+          "id": "53f548179ea1c601.png",
+          "title": "Lesser Evasion",
+          "row": 3,
+          "subject": "Simple worn COPPER lesser charm in the shape of a boot stepping between two teal dodge arcs; rear teal accent pulses."
+        }
+      ]
+    },
+    {
+      "file": "armory-06.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Lesser Melee Critical Chance — Simple COPPER lesser charm, short notched blade crossing a small brass bullseye; glowing dot steps into the center.\nROW 2, Lesser Melee Critical Damage — Simple COPPER lesser charm depicting a chunky broken anvil under a striking iron blade; orange impact notch flares.\nROW 3, Lesser Spellweaver's Catalyst — Simple COPPER lesser catalyst, entwined violet and orange flames sprouting from a bronze bead; flame cores pulse.\nROW 4, Lesser Executioner's Sigil — Simple COPPER lesser execution sigil shaped like a broad bearded axe blade with a red notch; red edge glints.",
+      "rows": [
+        {
+          "id": "207b6045d661eca7.png",
+          "title": "Lesser Melee Critical Chance",
+          "row": 0,
+          "subject": "Simple COPPER lesser charm, short notched blade crossing a small brass bullseye; glowing dot steps into the center."
+        },
+        {
+          "id": "0bb8f013d772059e.png",
+          "title": "Lesser Melee Critical Damage",
+          "row": 1,
+          "subject": "Simple COPPER lesser charm depicting a chunky broken anvil under a striking iron blade; orange impact notch flares."
+        },
+        {
+          "id": "3e8f7ff7b7e21f67.png",
+          "title": "Lesser Spellweaver's Catalyst",
+          "row": 2,
+          "subject": "Simple COPPER lesser catalyst, entwined violet and orange flames sprouting from a bronze bead; flame cores pulse."
+        },
+        {
+          "id": "366eb16f508ebad7.png",
+          "title": "Lesser Executioner's Sigil",
+          "row": 3,
+          "subject": "Simple COPPER lesser execution sigil shaped like a broad bearded axe blade with a red notch; red edge glints."
+        }
+      ]
+    },
+    {
+      "file": "armory-07.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Lesser Frostguard Amulet — Simple COPPER frostguard necklace, squat ice-blue snowflake pendant inside a bronze crescent frame; center twinkles.\nROW 2, Lesser Spellcrit Sigil — Simple COPPER spellcrit token, pointed purple spell star etched into a bronze diamond; one star point flares.\nROW 3, Lesser Combat Roll — Simple COPPER combat-roll badge, a curled brown leather boot inside a single aqua circular arrow; arrow tip gleams.\nROW 4, Lesser Relic of Force — Simple COPPER force relic, clenched red gauntlet gripping a copper wedge with bold forward impact accent; ridge gleams.",
+      "rows": [
+        {
+          "id": "4e3e618c61afa181.png",
+          "title": "Lesser Frostguard Amulet",
+          "row": 0,
+          "subject": "Simple COPPER frostguard necklace, squat ice-blue snowflake pendant inside a bronze crescent frame; center twinkles."
+        },
+        {
+          "id": "1657f87087476bb8.png",
+          "title": "Lesser Spellcrit Sigil",
+          "row": 1,
+          "subject": "Simple COPPER spellcrit token, pointed purple spell star etched into a bronze diamond; one star point flares."
+        },
+        {
+          "id": "6dadd6c795a76d79.png",
+          "title": "Lesser Combat Roll",
+          "row": 2,
+          "subject": "Simple COPPER combat-roll badge, a curled brown leather boot inside a single aqua circular arrow; arrow tip gleams."
+        },
+        {
+          "id": "38469ee5648a2bfa.png",
+          "title": "Lesser Relic of Force",
+          "row": 3,
+          "subject": "Simple COPPER force relic, clenched red gauntlet gripping a copper wedge with bold forward impact accent; ridge gleams."
+        }
+      ]
+    },
+    {
+      "file": "armory-08.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Lesser Relic of Dexterity — Simple COPPER dexterity charm, narrow green feather tied to a tiny bronze boot clasp; green feather tip flickers.\nROW 2, Lesser Relic of Vitality — Simple COPPER vitality token, plump red heart stone with a short bronze clasp and one leaf; heart highlight pulses.\nROW 3, Lesser Relic of the Marksman — Simple COPPER marksman token, green-fletched arrow set into a bronze sight ring; center flashes.\nROW 4, Lesser Relic of Quickening — Simple COPPER quickening relic shaped like a tiny bronze hourglass with violet speed fins; sand bead advances.",
+      "rows": [
+        {
+          "id": "587f302c1a04e533.png",
+          "title": "Lesser Relic of Dexterity",
+          "row": 0,
+          "subject": "Simple COPPER dexterity charm, narrow green feather tied to a tiny bronze boot clasp; green feather tip flickers."
+        },
+        {
+          "id": "28f49481a0a04dc4.png",
+          "title": "Lesser Relic of Vitality",
+          "row": 1,
+          "subject": "Simple COPPER vitality token, plump red heart stone with a short bronze clasp and one leaf; heart highlight pulses."
+        },
+        {
+          "id": "62801c4510435a10.png",
+          "title": "Lesser Relic of the Marksman",
+          "row": 2,
+          "subject": "Simple COPPER marksman token, green-fletched arrow set into a bronze sight ring; center flashes."
+        },
+        {
+          "id": "405cacec877409a9.png",
+          "title": "Lesser Relic of Quickening",
+          "row": 3,
+          "subject": "Simple COPPER quickening relic shaped like a tiny bronze hourglass with violet speed fins; sand bead advances."
+        }
+      ]
+    },
+    {
+      "file": "armory-09.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Lesser Relic of Sorcery — Simple COPPER lesser sorcery charm, violet teardrop crystal held by the curled fingers of a tiny bronze wand; crystal tip glints.\nROW 2, Medium Arcane Surge Relic — Medium SILVER arcane surge talisman, violet lightning bolt captured inside an upright oval silver ring; charge moves down the bolt.\nROW 3, Medium Heavy Strike Relic — Medium SILVER heavy-strike talisman, a short broad gray hammerhead breaking a red slash mark; hammer face gleams.\nROW 4, Medium Flurry Relic — Medium SILVER flurry talisman, three small sweeping blades fanned into a pinwheel with amber speeds; one bright edge travels across the fan.",
+      "rows": [
+        {
+          "id": "76609945e3c80ee8.png",
+          "title": "Lesser Relic of Sorcery",
+          "row": 0,
+          "subject": "Simple COPPER lesser sorcery charm, violet teardrop crystal held by the curled fingers of a tiny bronze wand; crystal tip glints."
+        },
+        {
+          "id": "392c34c6d335d789.png",
+          "title": "Medium Arcane Surge Relic",
+          "row": 1,
+          "subject": "Medium SILVER arcane surge talisman, violet lightning bolt captured inside an upright oval silver ring; charge moves down the bolt."
+        },
+        {
+          "id": "4b22d3081c8eaee9.png",
+          "title": "Medium Heavy Strike Relic",
+          "row": 2,
+          "subject": "Medium SILVER heavy-strike talisman, a short broad gray hammerhead breaking a red slash mark; hammer face gleams."
+        },
+        {
+          "id": "76ae35fff64a6b48.png",
+          "title": "Medium Flurry Relic",
+          "row": 3,
+          "subject": "Medium SILVER flurry talisman, three small sweeping blades fanned into a pinwheel with amber speeds; one bright edge travels across the fan."
+        }
+      ]
+    },
+    {
+      "file": "armory-10.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Medium Aegis Relic — Medium SILVER aegis, sturdy silver kite shield with cobalt quartering and a broad crossbrace; shield boss flashes.\nROW 2, Medium Phantom Relic — Medium SILVER phantom token, pale turquoise ghost mask with trailing violet hem; one eye slit pulses.\nROW 3, Medium Pyromancer's Relic — Medium SILVER pyromancer relic, vivid orange flame in a three-pronged silver brazier cup; yellow inner flame flickers.\nROW 4, Medium Glacial Relic — Medium SILVER glacial relic, blue icicle crown of three heights over a silver clasp; ice facet flashes.",
+      "rows": [
+        {
+          "id": "3ee1115397604e19.png",
+          "title": "Medium Aegis Relic",
+          "row": 0,
+          "subject": "Medium SILVER aegis, sturdy silver kite shield with cobalt quartering and a broad crossbrace; shield boss flashes."
+        },
+        {
+          "id": "64c378d35cf0991c.png",
+          "title": "Medium Phantom Relic",
+          "row": 1,
+          "subject": "Medium SILVER phantom token, pale turquoise ghost mask with trailing violet hem; one eye slit pulses."
+        },
+        {
+          "id": "32ebd6899be578c7.png",
+          "title": "Medium Pyromancer's Relic",
+          "row": 2,
+          "subject": "Medium SILVER pyromancer relic, vivid orange flame in a three-pronged silver brazier cup; yellow inner flame flickers."
+        },
+        {
+          "id": "49ad4bfb420660f1.png",
+          "title": "Medium Glacial Relic",
+          "row": 3,
+          "subject": "Medium SILVER glacial relic, blue icicle crown of three heights over a silver clasp; ice facet flashes."
+        }
+      ]
+    },
+    {
+      "file": "armory-11.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Medium Mender's Relic — Medium SILVER mender relic, paired mint leaves opening around an upright coral healing cross and silver clasp; cross glows.\nROW 2, Medium Sniper's Relic — Medium SILVER sniper token, a long amber arrow through a compact silver sight ring; amber arrow point shines.\nROW 3, Medium Channeller's Relic — Medium SILVER channeller token, two silver arcs guiding tiny blue square beads through a violet hourglass waist; bead steps.\nROW 4, Medium Archmage's Relic — Medium SILVER archmage talisman, a silver forked wand ending in a large purple star jewel; star-cut facet glimmers.",
+      "rows": [
+        {
+          "id": "0822c7df09d3ef31.png",
+          "title": "Medium Mender's Relic",
+          "row": 0,
+          "subject": "Medium SILVER mender relic, paired mint leaves opening around an upright coral healing cross and silver clasp; cross glows."
+        },
+        {
+          "id": "5cec4eb5edd96831.png",
+          "title": "Medium Sniper's Relic",
+          "row": 1,
+          "subject": "Medium SILVER sniper token, a long amber arrow through a compact silver sight ring; amber arrow point shines."
+        },
+        {
+          "id": "3d4cbf374eb93eff.png",
+          "title": "Medium Channeller's Relic",
+          "row": 2,
+          "subject": "Medium SILVER channeller token, two silver arcs guiding tiny blue square beads through a violet hourglass waist; bead steps."
+        },
+        {
+          "id": "14296c07f26b4776.png",
+          "title": "Medium Archmage's Relic",
+          "row": 3,
+          "subject": "Medium SILVER archmage talisman, a silver forked wand ending in a large purple star jewel; star-cut facet glimmers."
+        }
+      ]
+    },
+    {
+      "file": "armory-12.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Superior War Banner — SUPERIOR gold-tipped red forked war banner on a stout diagonal staff, embroidered bold crossed-blade mark; gold notch travels on fabric.\nROW 2, Superior Bastion Standard — SUPERIOR cobalt square fortress standard with a gold tower-and-shield emblem underneath a gold spear finial; central blue crest gleams.\nROW 3, Superior Consecrated Zone — SUPERIOR ring of four warm gold rune tiles, angled top view, mint healing cross rising clearly in its center; cross core pulses.\nROW 4, Superior Leyline Nexus — SUPERIOR leyline nexus, golden triangular setting holding three linked violet nodes with a large central amethyst; pale lilac connection pulses.",
+      "rows": [
+        {
+          "id": "6764065f71ecca6b.png",
+          "title": "Superior War Banner",
+          "row": 0,
+          "subject": "SUPERIOR gold-tipped red forked war banner on a stout diagonal staff, embroidered bold crossed-blade mark; gold notch travels on fabric."
+        },
+        {
+          "id": "0aed153e105f2773.png",
+          "title": "Superior Bastion Standard",
+          "row": 1,
+          "subject": "SUPERIOR cobalt square fortress standard with a gold tower-and-shield emblem underneath a gold spear finial; central blue crest gleams."
+        },
+        {
+          "id": "269fb4c22095b0ea.png",
+          "title": "Superior Consecrated Zone",
+          "row": 2,
+          "subject": "SUPERIOR ring of four warm gold rune tiles, angled top view, mint healing cross rising clearly in its center; cross core pulses."
+        },
+        {
+          "id": "731ea26134adb44c.png",
+          "title": "Superior Leyline Nexus",
+          "row": 3,
+          "subject": "SUPERIOR leyline nexus, golden triangular setting holding three linked violet nodes with a large central amethyst; pale lilac connection pulses."
+        }
+      ]
+    },
+    {
+      "file": "armory-13.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Beyond Simply Swords — Ornate diamond GREAT KATANA in sweeping diagonal profile, oversized single curved cyan blade, dark wrapped two-handed hilt, small disk guard and gold tassel; white edge stripe runs to tip.\nROW 2, Forge an Additional Style — Forging a new style: squat dark iron anvil with short cyan GREAT KATANA resting diagonally on top and a tiny gold forge hammer; orange-white strike glint.\nROW 3, A Runic Addon Weapon — RUNIC GREAT KATANA, long curved charcoal blade with three bright violet angular runes, gold collar and violet wrapped long grip; rune sequence pulses.\nROW 4, A Rare Find — A rare black pearl with a strong midnight-violet body and a sharp pearl-white crescent reflection nestled in a pale aqua open shell; reflection moves.",
+      "rows": [
+        {
+          "id": "7e259c18de7a6829.png",
+          "title": "Beyond Simply Swords",
+          "row": 0,
+          "subject": "Ornate diamond GREAT KATANA in sweeping diagonal profile, oversized single curved cyan blade, dark wrapped two-handed hilt, small disk guard and gold tassel; white edge stripe runs to tip."
+        },
+        {
+          "id": "698e17f49802cac4.png",
+          "title": "Forge an Additional Style",
+          "row": 1,
+          "subject": "Forging a new style: squat dark iron anvil with short cyan GREAT KATANA resting diagonally on top and a tiny gold forge hammer; orange-white strike glint."
+        },
+        {
+          "id": "522127129b06ac31.png",
+          "title": "A Runic Addon Weapon",
+          "row": 2,
+          "subject": "RUNIC GREAT KATANA, long curved charcoal blade with three bright violet angular runes, gold collar and violet wrapped long grip; rune sequence pulses."
+        },
+        {
+          "id": "65c990b4219d8be8.png",
+          "title": "A Rare Find",
+          "row": 3,
+          "subject": "A rare black pearl with a strong midnight-violet body and a sharp pearl-white crescent reflection nestled in a pale aqua open shell; reflection moves."
+        }
+      ]
+    },
+    {
+      "file": "armory-14.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Iron Tempering — Plain tempered IRON LONGSWORD angled bottom-left hilt to top-right tip, symmetrical silver double-edged blade, straight short iron crossguard and brown grip; white edge gleam moves.\nROW 2, Gilded Edge — Fine GOLD LONGSWORD on diagonal, symmetrical rich gold blade, squared golden crossguard, brown handle with red gem pommel; pale gold blade glint.\nROW 3, Diamond Standard — Fine DIAMOND LONGSWORD on diagonal, symmetrical aqua-cyan blade with darker teal spine, square teal guard and dark leather handle; ivory tip glints.\nROW 4, Netherite Reinforcement — Stout NETHERITE LONGSWORD on diagonal, broad double edge in graphite and dark plum, slate edge ridge, black metal cross guard and burgundy grip; pale lavender glint.",
+      "rows": [
+        {
+          "id": "3a26d28c67bc754e.png",
+          "title": "Iron Tempering",
+          "row": 0,
+          "subject": "Plain tempered IRON LONGSWORD angled bottom-left hilt to top-right tip, symmetrical silver double-edged blade, straight short iron crossguard and brown grip; white edge gleam moves."
+        },
+        {
+          "id": "70c6be6030f55b6f.png",
+          "title": "Gilded Edge",
+          "row": 1,
+          "subject": "Fine GOLD LONGSWORD on diagonal, symmetrical rich gold blade, squared golden crossguard, brown handle with red gem pommel; pale gold blade glint."
+        },
+        {
+          "id": "0b5db05680190520.png",
+          "title": "Diamond Standard",
+          "row": 2,
+          "subject": "Fine DIAMOND LONGSWORD on diagonal, symmetrical aqua-cyan blade with darker teal spine, square teal guard and dark leather handle; ivory tip glints."
+        },
+        {
+          "id": "6c0f1acffb125c26.png",
+          "title": "Netherite Reinforcement",
+          "row": 3,
+          "subject": "Stout NETHERITE LONGSWORD on diagonal, broad double edge in graphite and dark plum, slate edge ridge, black metal cross guard and burgundy grip; pale lavender glint."
+        }
+      ]
+    },
+    {
+      "file": "armory-15.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Runic Imbuing — RUNIC LONGSWORD on diagonal, straight charcoal double blade with three violet geometric rune marks and a small gold crossguard; lit rune moves along blade.\nROW 2, Empowered Remnants — Empowered remnant, irregular chunk of dark metal torn open to show a bright magenta magical core with two cyan nicks; core pulses.\nROW 3, Runefused Gem — Runefused gem, violet faceted lozenge cut with a large cyan fork rune in a silver setting; the V-shaped engraving pulses.\nROW 4, Netherfused Gem — Netherfused gem, angular dark-red garnet held by black lava-rock prongs, bright orange molten central rune; center glows.",
+      "rows": [
+        {
+          "id": "0493eb4a4ef38fce.png",
+          "title": "Runic Imbuing",
+          "row": 0,
+          "subject": "RUNIC LONGSWORD on diagonal, straight charcoal double blade with three violet geometric rune marks and a small gold crossguard; lit rune moves along blade."
+        },
+        {
+          "id": "1665ddc0097da4b7.png",
+          "title": "Empowered Remnants",
+          "row": 1,
+          "subject": "Empowered remnant, irregular chunk of dark metal torn open to show a bright magenta magical core with two cyan nicks; core pulses."
+        },
+        {
+          "id": "3f4d20241b0ff398.png",
+          "title": "Runefused Gem",
+          "row": 2,
+          "subject": "Runefused gem, violet faceted lozenge cut with a large cyan fork rune in a silver setting; the V-shaped engraving pulses."
+        },
+        {
+          "id": "35df9fe05b86f77b.png",
+          "title": "Netherfused Gem",
+          "row": 3,
+          "subject": "Netherfused gem, angular dark-red garnet held by black lava-rock prongs, bright orange molten central rune; center glows."
+        }
+      ]
+    },
+    {
+      "file": "armory-16.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Diamond Claymore — DIAMOND CLAYMORE, huge straight broad cyan double-edged blade, wide flared tip, low sweeping crossguard and long brown grip, diagonally upright; white blade gleam.\nROW 2, Diamond Greathammer — DIAMOND GREATHAMMER, giant rectangular cyan two-faced hammerhead with faceted teal sides and long diagonal brown haft; head edge gleams.\nROW 3, Diamond Greataxe — DIAMOND GREATAXE, two opposing crescent aqua blades making a very broad butterfly-axe silhouette around a diagonally set long brown haft; bright bevel glints.\nROW 4, Diamond Spear — DIAMOND SPEAR, narrow straight brown pole with a single distinctly pointed cyan diamond-shaped spearhead and a small teal collar; speartip gleam.",
+      "rows": [
+        {
+          "id": "5fffefd9f5ca6764.png",
+          "title": "Diamond Claymore",
+          "row": 0,
+          "subject": "DIAMOND CLAYMORE, huge straight broad cyan double-edged blade, wide flared tip, low sweeping crossguard and long brown grip, diagonally upright; white blade gleam."
+        },
+        {
+          "id": "2cdde2bf366cefdf.png",
+          "title": "Diamond Greathammer",
+          "row": 1,
+          "subject": "DIAMOND GREATHAMMER, giant rectangular cyan two-faced hammerhead with faceted teal sides and long diagonal brown haft; head edge gleams."
+        },
+        {
+          "id": "27685af09c590e38.png",
+          "title": "Diamond Greataxe",
+          "row": 2,
+          "subject": "DIAMOND GREATAXE, two opposing crescent aqua blades making a very broad butterfly-axe silhouette around a diagonally set long brown haft; bright bevel glints."
+        },
+        {
+          "id": "0f27f2296dc2c9d0.png",
+          "title": "Diamond Spear",
+          "row": 3,
+          "subject": "DIAMOND SPEAR, narrow straight brown pole with a single distinctly pointed cyan diamond-shaped spearhead and a small teal collar; speartip gleam."
+        }
+      ]
+    },
+    {
+      "file": "armory-17.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Diamond Halberd — DIAMOND HALBERD, recognizable long brown pole with single crescent cyan side axe, a straight top spike and short rear hook; glint on axe beard.\nROW 2, Diamond Glaive — DIAMOND GLAIVE, a single broad curved aqua blade on top of a long slim brown staff, like a hooked leaf with no side axe or spike; moving tip glint.\nROW 3, Diamond Rapier — DIAMOND RAPIER, very slim tapering aqua thrusting blade with an unmistakable sweeping loop guard protecting the grip; glint on long needle.\nROW 4, Diamond Katana — DIAMOND KATANA, sleek gently curved single-edged cyan blade, small round guard and short dark-wrapped grip; traveling blade glint.",
+      "rows": [
+        {
+          "id": "3e98ddc80562d539.png",
+          "title": "Diamond Halberd",
+          "row": 0,
+          "subject": "DIAMOND HALBERD, recognizable long brown pole with single crescent cyan side axe, a straight top spike and short rear hook; glint on axe beard."
+        },
+        {
+          "id": "79a5ee72dc48c079.png",
+          "title": "Diamond Glaive",
+          "row": 1,
+          "subject": "DIAMOND GLAIVE, a single broad curved aqua blade on top of a long slim brown staff, like a hooked leaf with no side axe or spike; moving tip glint."
+        },
+        {
+          "id": "1ee861a7c5b0ae75.png",
+          "title": "Diamond Rapier",
+          "row": 2,
+          "subject": "DIAMOND RAPIER, very slim tapering aqua thrusting blade with an unmistakable sweeping loop guard protecting the grip; glint on long needle."
+        },
+        {
+          "id": "277d3a6286dbf26d.png",
+          "title": "Diamond Katana",
+          "row": 3,
+          "subject": "DIAMOND KATANA, sleek gently curved single-edged cyan blade, small round guard and short dark-wrapped grip; traveling blade glint."
+        }
+      ]
+    },
+    {
+      "file": "armory-18.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Diamond Cutlass — DIAMOND CUTLASS, short broad curved sea-blue blade with an upswept point and complete curved knuckle guard over brown grip; bevel glints.\nROW 2, Diamond Sai — DIAMOND SAI dagger, a straight aqua center spike flanked by TWO shorter curved aqua prongs unlike a trident on a staff, stubby dark grip; center glints.\nROW 3, Diamond Twinblade — DIAMOND TWINBLADE, a slender double-ended pole-sword, two straight cyan blades pointing opposite directions from a central wrapped grip on the same diagonal axis; one blade shines.\nROW 4, Diamond Warglaive — DIAMOND WARGLAIVE, a wide flattened crescent with two big swept curved cyan wings and a small CENTRAL grip spanning its inner notch; crescent rim glints.",
+      "rows": [
+        {
+          "id": "3b8731113575b5df.png",
+          "title": "Diamond Cutlass",
+          "row": 0,
+          "subject": "DIAMOND CUTLASS, short broad curved sea-blue blade with an upswept point and complete curved knuckle guard over brown grip; bevel glints."
+        },
+        {
+          "id": "1fd581e6df447814.png",
+          "title": "Diamond Sai",
+          "row": 1,
+          "subject": "DIAMOND SAI dagger, a straight aqua center spike flanked by TWO shorter curved aqua prongs unlike a trident on a staff, stubby dark grip; center glints."
+        },
+        {
+          "id": "2a36b046603f2d40.png",
+          "title": "Diamond Twinblade",
+          "row": 2,
+          "subject": "DIAMOND TWINBLADE, a slender double-ended pole-sword, two straight cyan blades pointing opposite directions from a central wrapped grip on the same diagonal axis; one blade shines."
+        },
+        {
+          "id": "6be60037307cd9ae.png",
+          "title": "Diamond Warglaive",
+          "row": 3,
+          "subject": "DIAMOND WARGLAIVE, a wide flattened crescent with two big swept curved cyan wings and a small CENTRAL grip spanning its inner notch; crescent rim glints."
+        }
+      ]
+    },
+    {
+      "file": "armory-19.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Diamond Scythe — DIAMOND SCYTHE, a single long sharply curved aqua mowing blade angled perpendicular to the long brown wooden staff; silver tip glints.\nROW 2, Diamond Chakram — DIAMOND CHAKRAM, thrown open circular blade, thick complete round aqua rim with three angular bevels, hollow center, no handle; white glint moves around ring.\nROW 3, Runic Claymore — RUNIC CLAYMORE, broad straight dark iron two-handed greatsword, antique gold crossguard, vivid violet three-notch inlay; lit rune moves outward.\nROW 4, Runic Greathammer — RUNIC GREATHAMMER, giant blocky charcoal double-faced hammerhead with gold mounting and purple geometric engraving above a long haft; engraving pulses.",
+      "rows": [
+        {
+          "id": "456b738eb8220023.png",
+          "title": "Diamond Scythe",
+          "row": 0,
+          "subject": "DIAMOND SCYTHE, a single long sharply curved aqua mowing blade angled perpendicular to the long brown wooden staff; silver tip glints."
+        },
+        {
+          "id": "667ac17afbfdb828.png",
+          "title": "Diamond Chakram",
+          "row": 1,
+          "subject": "DIAMOND CHAKRAM, thrown open circular blade, thick complete round aqua rim with three angular bevels, hollow center, no handle; white glint moves around ring."
+        },
+        {
+          "id": "1ec8e1c9251842ac.png",
+          "title": "Runic Claymore",
+          "row": 2,
+          "subject": "RUNIC CLAYMORE, broad straight dark iron two-handed greatsword, antique gold crossguard, vivid violet three-notch inlay; lit rune moves outward."
+        },
+        {
+          "id": "375001c6dbbe8a37.png",
+          "title": "Runic Greathammer",
+          "row": 3,
+          "subject": "RUNIC GREATHAMMER, giant blocky charcoal double-faced hammerhead with gold mounting and purple geometric engraving above a long haft; engraving pulses."
+        }
+      ]
+    },
+    {
+      "file": "armory-20.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Runic Greataxe — RUNIC GREATAXE, TWO wide dark-metal crescent axe heads with bright violet inscribed edge bands on long wrapped diagonal haft, small gold wedges; rune pulses.\nROW 2, Runic Spear — RUNIC SPEAR, long slim dark-brown pole with one narrow charcoal diamond-shaped point etched with a large violet chevron, gold socket; chevron glints.\nROW 3, Runic Glaive — RUNIC GLAIVE, broad curved single scimitar-like charcoal blade on a long shaft with gold collar, violet slash engraving; engraved slash glows.\nROW 4, Runic Halberd — RUNIC HALBERD, readable poleaxe with a large charcoal side blade, pointed spear tip and little rear hook; gold collar and purple inlay flashes.",
+      "rows": [
+        {
+          "id": "542385150d328c60.png",
+          "title": "Runic Greataxe",
+          "row": 0,
+          "subject": "RUNIC GREATAXE, TWO wide dark-metal crescent axe heads with bright violet inscribed edge bands on long wrapped diagonal haft, small gold wedges; rune pulses."
+        },
+        {
+          "id": "37d2deee14f75458.png",
+          "title": "Runic Spear",
+          "row": 1,
+          "subject": "RUNIC SPEAR, long slim dark-brown pole with one narrow charcoal diamond-shaped point etched with a large violet chevron, gold socket; chevron glints."
+        },
+        {
+          "id": "6f5868b52e849731.png",
+          "title": "Runic Glaive",
+          "row": 2,
+          "subject": "RUNIC GLAIVE, broad curved single scimitar-like charcoal blade on a long shaft with gold collar, violet slash engraving; engraved slash glows."
+        },
+        {
+          "id": "4fe5776c54a78ca1.png",
+          "title": "Runic Halberd",
+          "row": 3,
+          "subject": "RUNIC HALBERD, readable poleaxe with a large charcoal side blade, pointed spear tip and little rear hook; gold collar and purple inlay flashes."
+        }
+      ]
+    },
+    {
+      "file": "armory-21.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Runic Katana — RUNIC KATANA, gently curved single dark edge, small round guard, dark double-handed grip with violet wrapping and a glowing lilac rune; glint travels.\nROW 2, Runic Rapier — RUNIC RAPIER, needle-thin pointed charcoal blade with open horseshoe guard of antique gold and a violet gem; purple gleam runs along slender point.\nROW 3, Runic Twinblade — RUNIC TWINBLADE, long dark blade at either end of one central gold-wrapped grip, two straight opposing blades bearing purple runes; light runs along a rune.\nROW 4, Runic Warglaive — RUNIC WARGLAIVE, a broad black-metal crescent with two curved wings and an inner central grip, gold mounting, purple engraved rim; rim gleams.",
+      "rows": [
+        {
+          "id": "5b2de40728bfdde5.png",
+          "title": "Runic Katana",
+          "row": 0,
+          "subject": "RUNIC KATANA, gently curved single dark edge, small round guard, dark double-handed grip with violet wrapping and a glowing lilac rune; glint travels."
+        },
+        {
+          "id": "35914107de7a9a3d.png",
+          "title": "Runic Rapier",
+          "row": 1,
+          "subject": "RUNIC RAPIER, needle-thin pointed charcoal blade with open horseshoe guard of antique gold and a violet gem; purple gleam runs along slender point."
+        },
+        {
+          "id": "57b652e2dee7d7a8.png",
+          "title": "Runic Twinblade",
+          "row": 2,
+          "subject": "RUNIC TWINBLADE, long dark blade at either end of one central gold-wrapped grip, two straight opposing blades bearing purple runes; light runs along a rune."
+        },
+        {
+          "id": "5a0acfaab594af44.png",
+          "title": "Runic Warglaive",
+          "row": 3,
+          "subject": "RUNIC WARGLAIVE, a broad black-metal crescent with two curved wings and an inner central grip, gold mounting, purple engraved rim; rim gleams."
+        }
+      ]
+    },
+    {
+      "file": "armory-22.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Runic Scythe — RUNIC SCYTHE, charcoal crescent reaping blade perpendicular to long dark haft, gold hinge and violet cutout rune; lavender gleam on the inner curve.\nROW 2, Runic Chakram — RUNIC CHAKRAM, thick round ring-shaped charcoal throwing blade with open center, gold banding and violet triangular inlays; one inlay glows at a time.\nROW 3, Contained Remnant — Contained remnant, a brilliant teal magical fragment held tightly inside a stout CLOSED blue-gray metal cage with gold rivets; contained core pulses.\nROW 4, Tampered Remnant — Tampered remnant, a cracked black-purple cage with a bent gold bar and escaped magenta light coming from the fissure; fissure pulses.",
+      "rows": [
+        {
+          "id": "5f00e880b660706b.png",
+          "title": "Runic Scythe",
+          "row": 0,
+          "subject": "RUNIC SCYTHE, charcoal crescent reaping blade perpendicular to long dark haft, gold hinge and violet cutout rune; lavender gleam on the inner curve."
+        },
+        {
+          "id": "75390709424b49ee.png",
+          "title": "Runic Chakram",
+          "row": 1,
+          "subject": "RUNIC CHAKRAM, thick round ring-shaped charcoal throwing blade with open center, gold banding and violet triangular inlays; one inlay glows at a time."
+        },
+        {
+          "id": "16c1dcb8ca968f17.png",
+          "title": "Contained Remnant",
+          "row": 2,
+          "subject": "Contained remnant, a brilliant teal magical fragment held tightly inside a stout CLOSED blue-gray metal cage with gold rivets; contained core pulses."
+        },
+        {
+          "id": "6be6393962638848.png",
+          "title": "Tampered Remnant",
+          "row": 3,
+          "subject": "Tampered remnant, a cracked black-purple cage with a bent gold bar and escaped magenta light coming from the fissure; fissure pulses."
+        }
+      ]
+    },
+    {
+      "file": "armory-23.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Slumbering Lichblade — Slumbering Lichblade, somber iron-gray CLAYMORE with long two-handed hilt, closed skeletal eye set in its crossguard and a faint cyan soul notch; notch glints very faintly.\nROW 2, Waking Lichblade — Waking Lichblade, same large iron-gray two-handed CLAYMORE family but awakened: open bright spectral CYAN eye set into horned bone guard, cyan soul channel flowing up blade; pupil lights.\nROW 3, Dormant Relic — Dormant relic, unawakened old silver straight longsword with a brown leather grip, inactive round gray-stone socket and dusty steel ridge; cool edge glint.\nROW 4, Righteous Relic — Righteous relic, noble ivory and gold straight longsword with angel-wing crossguard and a sunny yellow eye-shaped stone; sunstone flares.",
+      "rows": [
+        {
+          "id": "4ccae3e7fb8e1492.png",
+          "title": "Slumbering Lichblade",
+          "row": 0,
+          "subject": "Slumbering Lichblade, somber iron-gray CLAYMORE with long two-handed hilt, closed skeletal eye set in its crossguard and a faint cyan soul notch; notch glints very faintly."
+        },
+        {
+          "id": "6df401211de6b87b.png",
+          "title": "Waking Lichblade",
+          "row": 1,
+          "subject": "Waking Lichblade, same large iron-gray two-handed CLAYMORE family but awakened: open bright spectral CYAN eye set into horned bone guard, cyan soul channel flowing up blade; pupil lights."
+        },
+        {
+          "id": "6148a146fbe43d0b.png",
+          "title": "Dormant Relic",
+          "row": 2,
+          "subject": "Dormant relic, unawakened old silver straight longsword with a brown leather grip, inactive round gray-stone socket and dusty steel ridge; cool edge glint."
+        },
+        {
+          "id": "444407b640a0f672.png",
+          "title": "Righteous Relic",
+          "row": 3,
+          "subject": "Righteous relic, noble ivory and gold straight longsword with angel-wing crossguard and a sunny yellow eye-shaped stone; sunstone flares."
+        }
+      ]
+    },
+    {
+      "file": "armory-24.png",
+      "prompt": "Use case: stylized-concept. An original quest inventory pixel-art atlas, square canvas with a rigid invisible 4 columns × 4 rows grid of equal square cells, producing exactly SIXTEEN separated sprites. Each horizontal ROW is a different named item. Its four COLUMNS are four anchored animation phases of that SAME item, facing the same direction, identical shape size and placement. Draw crisp hand-placed square pixels as a handheld RPG item would look in 24×24 native pixels, chunky readable conservative silhouettes, one-pixel deep navy or plum outline, strong flat midtone, highlight and shadow. No smooth gradients, painting, small lettering or copied game assets. Each sprite centered within the middle 65–70% of its cell with TRANSPARENT gutters all around. All empty canvas must be genuine alpha transparency. No canvas color, grid lines, card backgrounds, plaques, text, numbers, shadows or stray sparks. Fit every complete silhouette into its individual cell, all framing identical by column. Four subtly different yet clearly readable glint phases: each frame changes the small lit region on the named feature from one place to the next, in flat 2–3 native pixel clusters. Keep main outlines fixed, no large movement or orbiting particle. Ordered content from TOP ROW to BOTTOM ROW:\nROW 1, Tainted Relic — Tainted relic, curse-touched plum longsword with thornlike dark crossguard and an open crimson eye-shaped stone; red pupil pulses.\nROW 2, Decaying Relic — Decaying relic, unformed jagged blackened metal fragment featuring worn half-hilt and just a stub of blade caught in a dark-teal mineral shell; cyan fissure pulses.\nROW 3, Magiblade — Magiblade, distinctive double-ended TWINBLADE, two opposing straight blades with turquoise sculk-like channels from a gold-gray center grip; cyan streak travels.\nROW 4, Magispear — Magispear, a single slim dark staff with a strong forked cyan crystal SPEARHEAD encased in two dark prongs; cyan heart of spearhead shines.",
+      "rows": [
+        {
+          "id": "4fe54c91901c1eb1.png",
+          "title": "Tainted Relic",
+          "row": 0,
+          "subject": "Tainted relic, curse-touched plum longsword with thornlike dark crossguard and an open crimson eye-shaped stone; red pupil pulses."
+        },
+        {
+          "id": "6a31a6f59416d7d2.png",
+          "title": "Decaying Relic",
+          "row": 1,
+          "subject": "Decaying relic, unformed jagged blackened metal fragment featuring worn half-hilt and just a stub of blade caught in a dark-teal mineral shell; cyan fissure pulses."
+        },
+        {
+          "id": "41ef28b842f50ce8.png",
+          "title": "Magiblade",
+          "row": 2,
+          "subject": "Magiblade, distinctive double-ended TWINBLADE, two opposing straight blades with turquoise sculk-like channels from a gold-gray center grip; cyan streak travels."
+        },
+        {
+          "id": "2726c637c64ca9d1.png",
+          "title": "Magispear",
+          "row": 3,
+          "subject": "Magispear, a single slim dark staff with a strong forked cyan crystal SPEARHEAD encased in two dark prongs; cyan heart of spearhead shines."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1264 @@
+{
+  "sheets": [
+    {
+      "file": "adventures-01.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Honey-oak carpenter's workbench with a large blue saw and a curled wood shaving; shaving unfurls a pixel.\nROW 2 repeat across all FOUR columns: Grey mason's bench supporting a partly chiseled white stone block and brass chisel; a pale chip pops loose.\nROW 3 repeat across all FOUR columns: Glassblower's kiln and long blowpipe with one molten cyan glass bulb at its tip; bulb swells slightly.\nROW 4 repeat across all FOUR columns: Botanist's bench with leaf specimen, bright yellow flower and green shears; flower opens.",
+      "rows": [
+        {
+          "id": "0893281244b7cfa7.png",
+          "title": "The Woodshop",
+          "row": 0,
+          "subject": "Honey-oak carpenter's workbench with a large blue saw and a curled wood shaving; shaving unfurls a pixel."
+        },
+        {
+          "id": "6fd6079c84025112.png",
+          "title": "Masonry Masterclass",
+          "row": 1,
+          "subject": "Grey mason's bench supporting a partly chiseled white stone block and brass chisel; a pale chip pops loose."
+        },
+        {
+          "id": "1f66912b1c7bd4a1.png",
+          "title": "Vitreous Art",
+          "row": 2,
+          "subject": "Glassblower's kiln and long blowpipe with one molten cyan glass bulb at its tip; bulb swells slightly."
+        },
+        {
+          "id": "23e831d64f47162a.png",
+          "title": "Naturalist's Detail",
+          "row": 3,
+          "subject": "Botanist's bench with leaf specimen, bright yellow flower and green shears; flower opens."
+        }
+      ]
+    },
+    {
+      "file": "adventures-02.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Indigo wooden weaving loom with bright cream warp and coral woven swatch; amber shuttle slides sideways.\nROW 2 repeat across all FOUR columns: Copper roofing hammer with a broad bright steel face and notched claw, diagonal; steel face glints.\nROW 3 repeat across all FOUR columns: Miniature red pitched roof section displaying distinct ochre ridge cap and oak rafters; ridge highlight travels.\nROW 4 repeat across all FOUR columns: Arched honey-oak log footbridge with two thick ends and teal water beneath; water glints.",
+      "rows": [
+        {
+          "id": "65ecc5e000658fb3.png",
+          "title": "The Weaver's Loom",
+          "row": 0,
+          "subject": "Indigo wooden weaving loom with bright cream warp and coral woven swatch; amber shuttle slides sideways."
+        },
+        {
+          "id": "0c11edec44d240c1.png",
+          "title": "The Engineer's Tools",
+          "row": 1,
+          "subject": "Copper roofing hammer with a broad bright steel face and notched claw, diagonal; steel face glints."
+        },
+        {
+          "id": "1a1088b822793120.png",
+          "title": "Raising the Roof",
+          "row": 2,
+          "subject": "Miniature red pitched roof section displaying distinct ochre ridge cap and oak rafters; ridge highlight travels."
+        },
+        {
+          "id": "07171b589e7df3d1.png",
+          "title": "Crossing the Gap",
+          "row": 3,
+          "subject": "Arched honey-oak log footbridge with two thick ends and teal water beneath; water glints."
+        }
+      ]
+    },
+    {
+      "file": "adventures-03.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Oak casement window with open cyan glass shutter and a flax curtain; curtain lifts a pixel.\nROW 2 repeat across all FOUR columns: Cozy oak writing desk with a teal lamp and drawer; small amber lamp glows.\nROW 3 repeat across all FOUR columns: Worn magenta mage's notebook tied with twine, a silver crescent on the cover; page corner lifts.\nROW 4 repeat across all FOUR columns: Open novice spellbook with a big lavender rune floating above creamy pages; rune pulses.",
+      "rows": [
+        {
+          "id": "66b96cf20790222f.png",
+          "title": "Sight and Shade",
+          "row": 0,
+          "subject": "Oak casement window with open cyan glass shutter and a flax curtain; curtain lifts a pixel."
+        },
+        {
+          "id": "7bd8e2df0925b7ca.png",
+          "title": "Atmospheric Interiors",
+          "row": 1,
+          "subject": "Cozy oak writing desk with a teal lamp and drawer; small amber lamp glows."
+        },
+        {
+          "id": "5f178e66fd3c2873.png",
+          "title": "The Mage's Notebook",
+          "row": 2,
+          "subject": "Worn magenta mage's notebook tied with twine, a silver crescent on the cover; page corner lifts."
+        },
+        {
+          "id": "7fcf65e05946a7b2.png",
+          "title": "Build Your Spellbook",
+          "row": 3,
+          "subject": "Open novice spellbook with a big lavender rune floating above creamy pages; rune pulses."
+        }
+      ]
+    },
+    {
+      "file": "adventures-04.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Grand blue-and-brass apprentice grimoire with two red bookmarks and a violet stone; stone sparkles.\nROW 2 repeat across all FOUR columns: Glass imbuement chamber on a bronze pedestal holding a huge amethyst source gem; gem brightens.\nROW 3 repeat across all FOUR columns: Golden agronomic source collector with a ripe wheat sprout, green gem, and bronze rings; sprout sways.\nROW 4 repeat across all FOUR columns: Enchanting apparatus with a suspended lavender gem over a gold-ringed altar; gem hovers a pixel.",
+      "rows": [
+        {
+          "id": "770f318f03d29d64.png",
+          "title": "A Larger Spellbook",
+          "row": 0,
+          "subject": "Grand blue-and-brass apprentice grimoire with two red bookmarks and a violet stone; stone sparkles."
+        },
+        {
+          "id": "36826ca9d17f379e.png",
+          "title": "Make Source Gems",
+          "row": 1,
+          "subject": "Glass imbuement chamber on a bronze pedestal holding a huge amethyst source gem; gem brightens."
+        },
+        {
+          "id": "0c0124a5249e9d39.png",
+          "title": "Source from Your Garden",
+          "row": 2,
+          "subject": "Golden agronomic source collector with a ripe wheat sprout, green gem, and bronze rings; sprout sways."
+        },
+        {
+          "id": "79f48133c937f5a3.png",
+          "title": "The Enchanting Apparatus",
+          "row": 3,
+          "subject": "Enchanting apparatus with a suspended lavender gem over a gold-ringed altar; gem hovers a pixel."
+        }
+      ]
+    },
+    {
+      "file": "adventures-05.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Tiny amber squirrel familiar with large ears and a curled star-tipped tail, emerald eyes; eyes blink.\nROW 2 repeat across all FOUR columns: Pale turquoise air focus talisman with a curved feather and ivory spiral; feather tip turns.\nROW 3 repeat across all FOUR columns: Bronze wayfinder compass with green glass center and a bold arrow; needle ticks.\nROW 4 repeat across all FOUR columns: Four-point silver-blue soul star with four small jewel colors inset in its points; center sparks.",
+      "rows": [
+        {
+          "id": "7529a7734dc5015e.png",
+          "title": "A Starbuncle Helper",
+          "row": 0,
+          "subject": "Tiny amber squirrel familiar with large ears and a curled star-tipped tail, emerald eyes; eyes blink."
+        },
+        {
+          "id": "19b1fc8ddf14322b.png",
+          "title": "Choose an Element",
+          "row": 1,
+          "subject": "Pale turquoise air focus talisman with a curved feather and ivory spiral; feather tip turns."
+        },
+        {
+          "id": "2670e31f1b8fd5df.png",
+          "title": "Find a Structure",
+          "row": 2,
+          "subject": "Bronze wayfinder compass with green glass center and a bold arrow; needle ticks."
+        },
+        {
+          "id": "44e68f0292b94881.png",
+          "title": "Four Dangerous Discoveries",
+          "row": 3,
+          "subject": "Four-point silver-blue soul star with four small jewel colors inset in its points; center sparks."
+        }
+      ]
+    },
+    {
+      "file": "adventures-06.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Night lich's moonlit icy-violet skull in blue hood with a blue soul star in its brow; eyes blink.\nROW 2 repeat across all FOUR columns: Giant violet void blossom with coral petals, lime core and thorny stalk; petals slightly open.\nROW 3 repeat across all FOUR columns: Void eye amulet tucked into a leather hunter's pouch; its violet slit pupil opens.\nROW 4 repeat across all FOUR columns: Harbinger's angular gunmetal mechanical eye with bright red lens and ivory plating; iris contracts.",
+      "rows": [
+        {
+          "id": "7e373fde11c902fa.png",
+          "title": "The Night Lich",
+          "row": 0,
+          "subject": "Night lich's moonlit icy-violet skull in blue hood with a blue soul star in its brow; eyes blink."
+        },
+        {
+          "id": "7e81cad2b48e7125.png",
+          "title": "The Void Blossom",
+          "row": 1,
+          "subject": "Giant violet void blossom with coral petals, lime core and thorny stalk; petals slightly open."
+        },
+        {
+          "id": "435b22d803e6a51a.png",
+          "title": "Before the Hunt",
+          "row": 2,
+          "subject": "Void eye amulet tucked into a leather hunter's pouch; its violet slit pupil opens."
+        },
+        {
+          "id": "19ac5f807c33115b.png",
+          "title": "The Harbinger",
+          "row": 3,
+          "subject": "Harbinger's angular gunmetal mechanical eye with bright red lens and ivory plating; iris contracts."
+        }
+      ]
+    },
+    {
+      "file": "adventures-07.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Ancient Remnant sandstone saurian skull with gold brow and bright turquoise desert eye; eye flashes.\nROW 2 repeat across all FOUR columns: Leviathan's aquamarine eye set among deep-blue fin spines; pupil narrows.\nROW 3 repeat across all FOUR columns: Scylla's storm eye talisman in a silver thunderbolt setting, bright sky-blue iris; lightning flashes.\nROW 4 repeat across all FOUR columns: Maledictus's cursed emerald eye ringed with lavender armor and cracked horns; pupil flickers.",
+      "rows": [
+        {
+          "id": "24077c47b78c4543.png",
+          "title": "Ancient Remnant",
+          "row": 0,
+          "subject": "Ancient Remnant sandstone saurian skull with gold brow and bright turquoise desert eye; eye flashes."
+        },
+        {
+          "id": "788741f04c5b7dcb.png",
+          "title": "The Leviathan",
+          "row": 1,
+          "subject": "Leviathan's aquamarine eye set among deep-blue fin spines; pupil narrows."
+        },
+        {
+          "id": "7a863144c8cdcd8e.png",
+          "title": "Scylla",
+          "row": 2,
+          "subject": "Scylla's storm eye talisman in a silver thunderbolt setting, bright sky-blue iris; lightning flashes."
+        },
+        {
+          "id": "30f083e4a9527b88.png",
+          "title": "Maledictus",
+          "row": 3,
+          "subject": "Maledictus's cursed emerald eye ringed with lavender armor and cracked horns; pupil flickers."
+        }
+      ]
+    },
+    {
+      "file": "adventures-08.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Master hunt trophy, a netherite ingot on a golden laurel crown with two ivory fangs; clasp gleams.\nROW 2 repeat across all FOUR columns: A blue quick-capture ball with yellow lightning bands, silver button and dark lower seam; button flashes.\nROW 3 repeat across all FOUR columns: Teaching-machine kiosk with a purple disc entering a teal disc slot; disc slides slightly.\nROW 4 repeat across all FOUR columns: A bright adamant mint sprig with four serrated red-orange leaves; leaves wiggle.",
+      "rows": [
+        {
+          "id": "3cf05b98e615cac8.png",
+          "title": "Master of the Hunts",
+          "row": 0,
+          "subject": "Master hunt trophy, a netherite ingot on a golden laurel crown with two ivory fangs; clasp gleams."
+        },
+        {
+          "id": "3e8a0000000bd325.png",
+          "title": "Specialized Poké Balls",
+          "row": 1,
+          "subject": "A blue quick-capture ball with yellow lightning bands, silver button and dark lower seam; button flashes."
+        },
+        {
+          "id": "3e8a0000001c702b.png",
+          "title": "TMs",
+          "row": 2,
+          "subject": "Teaching-machine kiosk with a purple disc entering a teal disc slot; disc slides slightly."
+        },
+        {
+          "id": "3e8a00000014c51a.png",
+          "title": "Natures",
+          "row": 3,
+          "subject": "A bright adamant mint sprig with four serrated red-orange leaves; leaves wiggle."
+        }
+      ]
+    },
+    {
+      "file": "adventures-09.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Broad red-orange training power bracer with brass studs and a wide pale stripe; studs sparkle.\nROW 2 repeat across all FOUR columns: Two-tone yellow and blue ability capsule with pale center band; highlight moves.\nROW 3 repeat across all FOUR columns: Classic red and white capture ball slightly open; center button blinks.\nROW 4 repeat across all FOUR columns: Small wrapped cyan experience candy with a pale star in the center; candy shines.",
+      "rows": [
+        {
+          "id": "3e8a00000015ba45.png",
+          "title": "EVs",
+          "row": 0,
+          "subject": "Broad red-orange training power bracer with brass studs and a wide pale stripe; studs sparkle."
+        },
+        {
+          "id": "3e8a00000017f80d.png",
+          "title": "Abilities",
+          "row": 1,
+          "subject": "Two-tone yellow and blue ability capsule with pale center band; highlight moves."
+        },
+        {
+          "id": "05aaeb7b168bfd49.png",
+          "title": "Poke balls",
+          "row": 2,
+          "subject": "Classic red and white capture ball slightly open; center button blinks."
+        },
+        {
+          "id": "49a4aa72407d550f.png",
+          "title": "Exp candy",
+          "row": 3,
+          "subject": "Small wrapped cyan experience candy with a pale star in the center; candy shines."
+        }
+      ]
+    },
+    {
+      "file": "adventures-10.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Heart-shaped coral health candy with magenta wrapper twists; heart center pulses.\nROW 2 repeat across all FOUR columns: Mossy olive safari capture ball with big tan camouflage patches; button lights.\nROW 3 repeat across all FOUR columns: Ancient wooden capture ball with terracotta top and brass latch; tiny wisp at latch.\nROW 4 repeat across all FOUR columns: A squat HP vitamin bottle with ruby liquid, white lid, heart pictogram; liquid glints.",
+      "rows": [
+        {
+          "id": "6bea397dfcda7261.png",
+          "title": "IV Candy",
+          "row": 0,
+          "subject": "Heart-shaped coral health candy with magenta wrapper twists; heart center pulses."
+        },
+        {
+          "id": "6be5e68f55edde2d.png",
+          "title": "Unique Poke balls",
+          "row": 1,
+          "subject": "Mossy olive safari capture ball with big tan camouflage patches; button lights."
+        },
+        {
+          "id": "29b6f62de601495a.png",
+          "title": "Ancient Poke balls",
+          "row": 2,
+          "subject": "Ancient wooden capture ball with terracotta top and brass latch; tiny wisp at latch."
+        },
+        {
+          "id": "654a0d01fa03457e.png",
+          "title": "Vitamins",
+          "row": 3,
+          "subject": "A squat HP vitamin bottle with ruby liquid, white lid, heart pictogram; liquid glints."
+        }
+      ]
+    },
+    {
+      "file": "adventures-11.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Trio of tiny apricorn juice vials, raspberry-pink, lime and orange; straw tilts in one.\nROW 2 repeat across all FOUR columns: Cozy open cookbook with a large carrot illustration and a red ribbon; page edge lifts.\nROW 3 repeat across all FOUR columns: Oak cutting board with diagonal steel knife and two bright diced carrot slices; knife edge glints.\nROW 4 repeat across all FOUR columns: Plump round green cabbage head with broad overlapping lime leaves; outer leaf curls.",
+      "rows": [
+        {
+          "id": "51a9bf99aa2d0f19.png",
+          "title": "Aprijuice Flavors",
+          "row": 0,
+          "subject": "Trio of tiny apricorn juice vials, raspberry-pink, lime and orange; straw tilts in one."
+        },
+        {
+          "id": "56f7204419cbfbf9.png",
+          "title": "Why Cook? The Food Book",
+          "row": 1,
+          "subject": "Cozy open cookbook with a large carrot illustration and a red ribbon; page edge lifts."
+        },
+        {
+          "id": "54fb498f46a95407.png",
+          "title": "Kitchen Prep: Cutting Board and Knife",
+          "row": 2,
+          "subject": "Oak cutting board with diagonal steel knife and two bright diced carrot slices; knife edge glints."
+        },
+        {
+          "id": "27e4b384f973d966.png",
+          "title": "Agricultural Foundations",
+          "row": 3,
+          "subject": "Plump round green cabbage head with broad overlapping lime leaves; outer leaf curls."
+        }
+      ]
+    },
+    {
+      "file": "adventures-12.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Earthy brown compost cube with a pale worm and paired lime seedling leaves; one leaf tips up.\nROW 2 repeat across all FOUR columns: Cup of piping hot cocoa with whipped cream, red ceramic mug and a small golden recovery sparkle in foam; steam curls.\nROW 3 repeat across all FOUR columns: Black cast-iron cooking pot on brick stove showing orange fire in its open front; flames flicker.\nROW 4 repeat across all FOUR columns: Broad dark iron skillet with bright silver rim and sunny fried egg, handle angled up; yolk glints.",
+      "rows": [
+        {
+          "id": "048d4f2d0874f3fd.png",
+          "title": "Enriching the Soil",
+          "row": 0,
+          "subject": "Earthy brown compost cube with a pale worm and paired lime seedling leaves; one leaf tips up."
+        },
+        {
+          "id": "6400597a2a59a10b.png",
+          "title": "Kitchen Apothecary: Recovery Tonics",
+          "row": 1,
+          "subject": "Cup of piping hot cocoa with whipped cream, red ceramic mug and a small golden recovery sparkle in foam; steam curls."
+        },
+        {
+          "id": "57cf370c61903495.png",
+          "title": "The Hearth: Stove and Cooking Pot",
+          "row": 2,
+          "subject": "Black cast-iron cooking pot on brick stove showing orange fire in its open front; flames flicker."
+        },
+        {
+          "id": "43bce73f938d8e47.png",
+          "title": "Field Cooking: The Skillet",
+          "row": 3,
+          "subject": "Broad dark iron skillet with bright silver rim and sunny fried egg, handle angled up; yolk glints."
+        }
+      ]
+    },
+    {
+      "file": "adventures-13.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Plated steak beside two golden potato wedges and a green sprig; tiny steam puff rises.\nROW 2 repeat across all FOUR columns: Whole golden roast chicken on oval platter with carrot garnish and visible white leg tips; steam dances.\nROW 3 repeat across all FOUR columns: Cluster of vivid red bullet peppers sprouting from a dark red volcanic soil clod; ember at stem pulses.\nROW 4 repeat across all FOUR columns: Bowl of red strider stew with coral strips and orange surface bubbles; one bubble grows and pops.",
+      "rows": [
+        {
+          "id": "7b6b1aef318c51b5.png",
+          "title": "Sustained Stamina: Nourishment",
+          "row": 0,
+          "subject": "Plated steak beside two golden potato wedges and a green sprig; tiny steam puff rises."
+        },
+        {
+          "id": "27fb03a3c59190f0.png",
+          "title": "A Grand Feast: Roast Chicken",
+          "row": 1,
+          "subject": "Whole golden roast chicken on oval platter with carrot garnish and visible white leg tips; steam dances."
+        },
+        {
+          "id": "494cdad1a129e44c.png",
+          "title": "Nether Agriculture: Resurgent Soil",
+          "row": 2,
+          "subject": "Cluster of vivid red bullet peppers sprouting from a dark red volcanic soil clod; ember at stem pulses."
+        },
+        {
+          "id": "0b2e15bfbeb6eb67.png",
+          "title": "Volcanic Stews: Strider Stew",
+          "row": 3,
+          "subject": "Bowl of red strider stew with coral strips and orange surface bubbles; one bubble grows and pops."
+        }
+      ]
+    },
+    {
+      "file": "adventures-14.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Violet chorus-flower tea in a clear handled cup with a lavender star blossom; purple steam rises.\nROW 2 repeat across all FOUR columns: Curvy glass soda bottle with bright magenta dragon-breath fizz and a gold lid; bubbles ascend.\nROW 3 repeat across all FOUR columns: Stuffed violet squid mantle on a cream platter with gold stuffing and curled purple tentacles; saucy highlight shifts.\nROW 4 repeat across all FOUR columns: Blue-rimmed bowl of turquoise guardian chowder with a conspicuous orange fish spine garnish; steam curls.",
+      "rows": [
+        {
+          "id": "27771b7fb818da9f.png",
+          "title": "Void Confections: Chorus Flower Tea",
+          "row": 0,
+          "subject": "Violet chorus-flower tea in a clear handled cup with a lavender star blossom; purple steam rises."
+        },
+        {
+          "id": "6c3843153950edee.png",
+          "title": "Draconic Effervescence: Dragon Breath Soda",
+          "row": 1,
+          "subject": "Curvy glass soda bottle with bright magenta dragon-breath fizz and a gold lid; bubbles ascend."
+        },
+        {
+          "id": "08789ccc97f22dec.png",
+          "title": "Catch of the Deep: Stuffed Squid",
+          "row": 2,
+          "subject": "Stuffed violet squid mantle on a cream platter with gold stuffing and curled purple tentacles; saucy highlight shifts."
+        },
+        {
+          "id": "7a910220e2d6eac1.png",
+          "title": "Guardian Feast: The Apex Chowder",
+          "row": 3,
+          "subject": "Blue-rimmed bowl of turquoise guardian chowder with a conspicuous orange fish spine garnish; steam curls."
+        }
+      ]
+    },
+    {
+      "file": "adventures-15.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Black-red cauldron with fiery orange seams and two gold handles; seams brighten.\nROW 2 repeat across all FOUR columns: Icy blue tea glass with chunky glacier cubes and crisp mint sprig; single ice facet shines.\nROW 3 repeat across all FOUR columns: Deep indigo noodle bowl with pale gold noodles and one brilliant star-shaped topping; star twinkles.\nROW 4 repeat across all FOUR columns: A wide amber culinary strap with a red starfire-flower clasp and brass buckle; petals brighten.",
+      "rows": [
+        {
+          "id": "4620bb58a4fe738c.png",
+          "title": "Twilight Metallurgy: Fiery Cookware",
+          "row": 0,
+          "subject": "Black-red cauldron with fiery orange seams and two gold handles; seams brighten."
+        },
+        {
+          "id": "2504bd72cc89f438.png",
+          "title": "Aura Infusions: Choose Your Element",
+          "row": 1,
+          "subject": "Icy blue tea glass with chunky glacier cubes and crisp mint sprig; single ice facet shines."
+        },
+        {
+          "id": "2a35b3a7a6febc05.png",
+          "title": "Starlight Sustenance and Numbness",
+          "row": 2,
+          "subject": "Deep indigo noodle bowl with pale gold noodles and one brilliant star-shaped topping; star twinkles."
+        },
+        {
+          "id": "47f50e803e8c8d08.png",
+          "title": "Culinary Straps and Modifications",
+          "row": 3,
+          "subject": "A wide amber culinary strap with a red starfire-flower clasp and brass buckle; petals brighten."
+        }
+      ]
+    },
+    {
+      "file": "adventures-16.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Broad ancient charcoal vase with geometric cyan inlays and flared lip, slate-grey facets brighten silhouette; rune pulses.\nROW 2 repeat across all FOUR columns: Curved blue-black Warden carapace plate with pale turquoise ribs and ivory edge; ribs glimmer.\nROW 3 repeat across all FOUR columns: A deep-aqua heart relic with bright teal concentric rib forms and warm golden core; core beats.\nROW 4 repeat across all FOUR columns: Ancient slate gateway with blocky arch and a glowing teal rift perfectly enclosed in the opening; rift ripples.",
+      "rows": [
+        {
+          "id": "5f35be8ac580fd01.png",
+          "title": "Relics of the Fallen City",
+          "row": 0,
+          "subject": "Broad ancient charcoal vase with geometric cyan inlays and flared lip, slate-grey facets brighten silhouette; rune pulses."
+        },
+        {
+          "id": "3cabc511b07f9290.png",
+          "title": "Warden Carapace",
+          "row": 1,
+          "subject": "Curved blue-black Warden carapace plate with pale turquoise ribs and ivory edge; ribs glimmer."
+        },
+        {
+          "id": "04f33f021a6f94ea.png",
+          "title": "Heart of the Deep",
+          "row": 2,
+          "subject": "A deep-aqua heart relic with bright teal concentric rib forms and warm golden core; core beats."
+        },
+        {
+          "id": "1dc9d08d28793332.png",
+          "title": "The Gateway Beneath Bedrock",
+          "row": 3,
+          "subject": "Ancient slate gateway with blocky arch and a glowing teal rift perfectly enclosed in the opening; rift ripples."
+        }
+      ]
+    },
+    {
+      "file": "adventures-17.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Single rough faceted sculk-stone cube with cobalt grey planes and a few cyan flecks; fleck twinkles.\nROW 2 repeat across all FOUR columns: Deep-blue ore rock split by broad bright cyan diamond veins, faceted diamond at front; vein shines.\nROW 3 repeat across all FOUR columns: A clump of glossy teal sculk slime over a grey clay mound; droplet stretches and retracts.\nROW 4 repeat across all FOUR columns: Glowing golden amber nugget encasing a tiny dark curled insect silhouette; amber corner shines.",
+      "rows": [
+        {
+          "id": "44985097c9fb67a6.png",
+          "title": "Foundation of Shadows",
+          "row": 0,
+          "subject": "Single rough faceted sculk-stone cube with cobalt grey planes and a few cyan flecks; fleck twinkles."
+        },
+        {
+          "id": "782e268bab152cf9.png",
+          "title": "Veins of the Abyss",
+          "row": 1,
+          "subject": "Deep-blue ore rock split by broad bright cyan diamond veins, faceted diamond at front; vein shines."
+        },
+        {
+          "id": "08e85d1f88caa384.png",
+          "title": "Viscous Sediment",
+          "row": 2,
+          "subject": "A clump of glossy teal sculk slime over a grey clay mound; droplet stretches and retracts."
+        },
+        {
+          "id": "022125ecea5e6b4d.png",
+          "title": "Preserved in Time",
+          "row": 3,
+          "subject": "Glowing golden amber nugget encasing a tiny dark curled insect silhouette; amber corner shines."
+        }
+      ]
+    },
+    {
+      "file": "adventures-18.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Cut log from an echo tree with deep navy bark, turquoise rings and pale lilac leaves; inner ring pulses.\nROW 2 repeat across all FOUR columns: Porous teal sculk sponge with three bright mint dew beads; bead wobbles on the rim.\nROW 3 repeat across all FOUR columns: Purple flowering cavern stalk with two broad turquoise leaves and a lilac bloom; bloom opens slightly.\nROW 4 repeat across all FOUR columns: Cluster of round magenta bloom berries on a teal-black stem; one berry catches light.",
+      "rows": [
+        {
+          "id": "78ee23b6191d77a3.png",
+          "title": "Echoing Forest",
+          "row": 0,
+          "subject": "Cut log from an echo tree with deep navy bark, turquoise rings and pale lilac leaves; inner ring pulses."
+        },
+        {
+          "id": "53133daecd6eaa13.png",
+          "title": "Bioluminescent Dew",
+          "row": 1,
+          "subject": "Porous teal sculk sponge with three bright mint dew beads; bead wobbles on the rim."
+        },
+        {
+          "id": "6a94efc875131f5b.png",
+          "title": "Blooming Caverns",
+          "row": 2,
+          "subject": "Purple flowering cavern stalk with two broad turquoise leaves and a lilac bloom; bloom opens slightly."
+        },
+        {
+          "id": "62bffefe1a43de6f.png",
+          "title": "Nourishment of the Abyss",
+          "row": 3,
+          "subject": "Cluster of round magenta bloom berries on a teal-black stem; one berry catches light."
+        }
+      ]
+    },
+    {
+      "file": "adventures-19.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: A pale-blue icy lily flower on a flat cyan pad, sharp crystalline petals; petal glints.\nROW 2 repeat across all FOUR columns: Small ivory soul-shaped wisp rising from a pile of cyan dust; wisp bobs.\nROW 3 repeat across all FOUR columns: Tiny bright turquoise sculk beetle with six visible legs and pale blue soul markings; antennae twitch.\nROW 4 repeat across all FOUR columns: Open angular monster mandibles of dark teal chitin with big ivory teeth, viewed head on; jaws close slightly.",
+      "rows": [
+        {
+          "id": "2710d5d8491842f4.png",
+          "title": "Ice Lilies",
+          "row": 0,
+          "subject": "A pale-blue icy lily flower on a flat cyan pad, sharp crystalline petals; petal glints."
+        },
+        {
+          "id": "77d75aa2bad12c9c.png",
+          "title": "Shattered Souls",
+          "row": 1,
+          "subject": "Small ivory soul-shaped wisp rising from a pile of cyan dust; wisp bobs."
+        },
+        {
+          "id": "205461898477fd1a.png",
+          "title": "Sculk Pests",
+          "row": 2,
+          "subject": "Tiny bright turquoise sculk beetle with six visible legs and pale blue soul markings; antennae twitch."
+        },
+        {
+          "id": "673ce8e2e6d92d04.png",
+          "title": "Subsurface Mandibles",
+          "row": 3,
+          "subject": "Open angular monster mandibles of dark teal chitin with big ivory teeth, viewed head on; jaws close slightly."
+        }
+      ]
+    },
+    {
+      "file": "adventures-20.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Chunky deep-blue angler fish with broad lavender flank and a bright yellow lure; lure bobs.\nROW 2 repeat across all FOUR columns: Moonlit teal profile of a sculk hound with prominent pale bone held in jaws; ear flicks.\nROW 3 repeat across all FOUR columns: A split blue ceramic pottery sherd with luminous cyan spiral and pale fracture edges; spiral glints.\nROW 4 repeat across all FOUR columns: Rebuilt round gloomslate pot, cobalt and pale silver panels, prominent cyan motif; neck jewel flashes.",
+      "rows": [
+        {
+          "id": "2b872422e4238bce.png",
+          "title": "Lurkers of the Stygian Lakes",
+          "row": 0,
+          "subject": "Chunky deep-blue angler fish with broad lavender flank and a bright yellow lure; lure bobs."
+        },
+        {
+          "id": "6ffbf5ccaa934e36.png",
+          "title": "The Hound of the Deeplands",
+          "row": 1,
+          "subject": "Moonlit teal profile of a sculk hound with prominent pale bone held in jaws; ear flicks."
+        },
+        {
+          "id": "573c23c1959b21d2.png",
+          "title": "Gloomsherds",
+          "row": 2,
+          "subject": "A split blue ceramic pottery sherd with luminous cyan spiral and pale fracture edges; spiral glints."
+        },
+        {
+          "id": "7f2e4c4ae9b33b1b.png",
+          "title": "Abyssal Archaeology",
+          "row": 3,
+          "subject": "Rebuilt round gloomslate pot, cobalt and pale silver panels, prominent cyan motif; neck jewel flashes."
+        }
+      ]
+    },
+    {
+      "file": "adventures-21.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: One raw resonarium crystal cluster with broad mint and sapphire planes and gold basal rock; top facet shines.\nROW 2 repeat across all FOUR columns: Two stacked resonarium sheet-metal plates with turquoise grooves and pale steel corners; top bevel glints.\nROW 3 repeat across all FOUR columns: A slate smithing template with turquoise tuning-fork pattern and a gold corner rivet; pattern lights.\nROW 4 repeat across all FOUR columns: Rounded steel-blue resonarium helmet with bright turquoise brow plates and ivory vents; visor lights pulse.",
+      "rows": [
+        {
+          "id": "3bd896016246c264.png",
+          "title": "Resonarium",
+          "row": 0,
+          "subject": "One raw resonarium crystal cluster with broad mint and sapphire planes and gold basal rock; top facet shines."
+        },
+        {
+          "id": "1f1304d936bf3ae7.png",
+          "title": "Resonarium Plates",
+          "row": 1,
+          "subject": "Two stacked resonarium sheet-metal plates with turquoise grooves and pale steel corners; top bevel glints."
+        },
+        {
+          "id": "58856ce004662212.png",
+          "title": "Resonarium Upgrade",
+          "row": 2,
+          "subject": "A slate smithing template with turquoise tuning-fork pattern and a gold corner rivet; pattern lights."
+        },
+        {
+          "id": "3fa86a17c313e0f1.png",
+          "title": "Resonarium Armor",
+          "row": 3,
+          "subject": "Rounded steel-blue resonarium helmet with bright turquoise brow plates and ivory vents; visor lights pulse."
+        }
+      ]
+    },
+    {
+      "file": "adventures-22.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Broad resonarium sword with a forked turquoise guard and silver-blue blade, diagonal; blade glints.\nROW 2 repeat across all FOUR columns: Handheld sculk transmitter, twin cyan antennae rising from broad indigo base with green center button; signals blink.\nROW 3 repeat across all FOUR columns: Thick translucent cyan glass slab with visible bevel and a small muted sound-wave pictogram; bevel glints.\nROW 4 repeat across all FOUR columns: Luminous cream and aqua cube with a teal lattice rim and bright pale inner face; inner light pulses.",
+      "rows": [
+        {
+          "id": "28edd8412606bd47.png",
+          "title": "Acoustic Implements",
+          "row": 0,
+          "subject": "Broad resonarium sword with a forked turquoise guard and silver-blue blade, diagonal; blade glints."
+        },
+        {
+          "id": "2c4af38f53bc8210.png",
+          "title": "Wireless Sub-Space Storage",
+          "row": 1,
+          "subject": "Handheld sculk transmitter, twin cyan antennae rising from broad indigo base with green center button; signals blink."
+        },
+        {
+          "id": "736567d36566fad6.png",
+          "title": "Acoustic Dampening",
+          "row": 2,
+          "subject": "Thick translucent cyan glass slab with visible bevel and a small muted sound-wave pictogram; bevel glints."
+        },
+        {
+          "id": "0a424aae253fab67.png",
+          "title": "Lite Blocks",
+          "row": 3,
+          "subject": "Luminous cream and aqua cube with a teal lattice rim and bright pale inner face; inner light pulses."
+        }
+      ]
+    },
+    {
+      "file": "adventures-23.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Ancient tarnished compass in a bronze octagonal case with broad turquoise needle and ivory dial; needle ticks.\nROW 2 repeat across all FOUR columns: Large pale-cyan soul crystal in a silver claw mount with a tiny blue wisp inside; core brightens.\nROW 3 repeat across all FOUR columns: Golden-edged dark smithing template with an ivory Warden horn motif and teal center; motif pulses.\nROW 4 repeat across all FOUR columns: A bundle of three jagged cyan echo shards secured by silver reinforcement bands; sharp tip glints.",
+      "rows": [
+        {
+          "id": "6095b667ec4559ea.png",
+          "title": "Ancient Compass",
+          "row": 0,
+          "subject": "Ancient tarnished compass in a bronze octagonal case with broad turquoise needle and ivory dial; needle ticks."
+        },
+        {
+          "id": "6c2f2d5e8533a654.png",
+          "title": "Soul Crystal",
+          "row": 1,
+          "subject": "Large pale-cyan soul crystal in a silver claw mount with a tiny blue wisp inside; core brightens."
+        },
+        {
+          "id": "0d3b74540dc83417.png",
+          "title": "The Monarch's Blueprint",
+          "row": 2,
+          "subject": "Golden-edged dark smithing template with an ivory Warden horn motif and teal center; motif pulses."
+        },
+        {
+          "id": "11e4e583b04304d1.png",
+          "title": "Reinforced Echo Shards",
+          "row": 3,
+          "subject": "A bundle of three jagged cyan echo shards secured by silver reinforcement bands; sharp tip glints."
+        }
+      ]
+    },
+    {
+      "file": "adventures-24.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Deep Monarch's regal blue-green Warden helmet with huge ivory outward horns and a bright gold forehead plate; inset gem shines.\nROW 2 repeat across all FOUR columns: Monarch's enormous turquoise-edged indigo greatsword with crown-like golden hilt, diagonal; edge lights.\nROW 3 repeat across all FOUR columns: A carved staff with broad ivory tuning-fork head enclosing a teal pearl and blue bindings; pearl pulses.\nROW 4 repeat across all FOUR columns: Paired soul elytra wings spread in a shallow V, large pale turquoise wing membranes over lavender spars; tips lift.",
+      "rows": [
+        {
+          "id": "7ab83cc58fde7220.png",
+          "title": "The Armor of the Deep Monarch",
+          "row": 0,
+          "subject": "Deep Monarch's regal blue-green Warden helmet with huge ivory outward horns and a bright gold forehead plate; inset gem shines."
+        },
+        {
+          "id": "4282843ffc05f885.png",
+          "title": "The Monarch's Arsenal",
+          "row": 1,
+          "subject": "Monarch's enormous turquoise-edged indigo greatsword with crown-like golden hilt, diagonal; edge lights."
+        },
+        {
+          "id": "589c4375cddf235d.png",
+          "title": "Sonorous Staff",
+          "row": 2,
+          "subject": "A carved staff with broad ivory tuning-fork head enclosing a teal pearl and blue bindings; pearl pulses."
+        },
+        {
+          "id": "46165db0c6a28661.png",
+          "title": "Soul Elytra",
+          "row": 3,
+          "subject": "Paired soul elytra wings spread in a shallow V, large pale turquoise wing membranes over lavender spars; tips lift."
+        }
+      ]
+    },
+    {
+      "file": "adventures-25.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Crystalline orb of prophecy on an ivory ruin guardian's stone hand; lavender eye within the orb opens.\nROW 2 repeat across all FOUR columns: Carved violet voidstone gateway block with an amber flame sparking in its central notch; fire flickers.\nROW 3 repeat across all FOUR columns: Cozy torreya campfire built on a small violet stone ring, pale lilac fire with golden core; flame curls.\nROW 4 repeat across all FOUR columns: A silver seeking-eye astrolabe containing a vivid purple tracking iris plus three linked gold star dots; iris moves a pixel.",
+      "rows": [
+        {
+          "id": "04f759d9cfe44b45.png",
+          "title": "The Guardian of Ruins",
+          "row": 0,
+          "subject": "Crystalline orb of prophecy on an ivory ruin guardian's stone hand; lavender eye within the orb opens."
+        },
+        {
+          "id": "46911d0a86cd73e9.png",
+          "title": "Igniting the Gateway",
+          "row": 1,
+          "subject": "Carved violet voidstone gateway block with an amber flame sparking in its central notch; fire flickers."
+        },
+        {
+          "id": "374846cf30213b4e.png",
+          "title": "Twilight Sanctuary",
+          "row": 2,
+          "subject": "Cozy torreya campfire built on a small violet stone ring, pale lilac fire with golden core; flame curls."
+        },
+        {
+          "id": "44249da3f558da42.png",
+          "title": "Chart the Constellations",
+          "row": 3,
+          "subject": "A silver seeking-eye astrolabe containing a vivid purple tracking iris plus three linked gold star dots; iris moves a pixel."
+        }
+      ]
+    },
+    {
+      "file": "adventures-26.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: One rough raw silver nugget, cool white facets with teal-blue swamp stains; upper facet glints.\nROW 2 repeat across all FOUR columns: A cut malachite-green malarite geode showing scalloped green crystal layers in reddish rock; band glints.\nROW 3 repeat across all FOUR columns: Golden pointed starcore with warm coral edges and brilliant cream center; center twinkles.\nROW 4 repeat across all FOUR columns: Sky-blue starlit diamond with broad pale silver planes and a small embedded four-point star; star blinks.",
+      "rows": [
+        {
+          "id": "6835fb48e5531b94.png",
+          "title": "Silver of the Dark Swamp",
+          "row": 0,
+          "subject": "One rough raw silver nugget, cool white facets with teal-blue swamp stains; upper facet glints."
+        },
+        {
+          "id": "0fded4decacee987.png",
+          "title": "Malarite Strata",
+          "row": 1,
+          "subject": "A cut malachite-green malarite geode showing scalloped green crystal layers in reddish rock; band glints."
+        },
+        {
+          "id": "6df490e7a23e3ec0.png",
+          "title": "Celestial Radiance: Starcore",
+          "row": 2,
+          "subject": "Golden pointed starcore with warm coral edges and brilliant cream center; center twinkles."
+        },
+        {
+          "id": "6cd61f0338ae3bdc.png",
+          "title": "Gems of the Firmament",
+          "row": 3,
+          "subject": "Sky-blue starlit diamond with broad pale silver planes and a small embedded four-point star; star blinks."
+        }
+      ]
+    },
+    {
+      "file": "adventures-27.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Honey-gold amaramber resin bead hanging from a short evergreen torreya twig; resin quivers.\nROW 2 repeat across all FOUR columns: A broad rose-gold thermal springstone ingot next to a tiny turquoise mineral ripple; one steam pixel rises.\nROW 3 repeat across all FOUR columns: Tall icy-blue glacite shard with white angular facets and a bright silver rim; tiny frost sparkle.\nROW 4 repeat across all FOUR columns: Silver pail filled with opalescent violet liquid ether under a curved brass handle; a rippling star reflection.",
+      "rows": [
+        {
+          "id": "6ac8fe33ab9eec94.png",
+          "title": "Resin of the Torreya",
+          "row": 0,
+          "subject": "Honey-gold amaramber resin bead hanging from a short evergreen torreya twig; resin quivers."
+        },
+        {
+          "id": "5c07b83843cad277.png",
+          "title": "Scalding Mineral Springs",
+          "row": 1,
+          "subject": "A broad rose-gold thermal springstone ingot next to a tiny turquoise mineral ripple; one steam pixel rises."
+        },
+        {
+          "id": "793d6281d6605669.png",
+          "title": "Subzero Glacite",
+          "row": 2,
+          "subject": "Tall icy-blue glacite shard with white angular facets and a bright silver rim; tiny frost sparkle."
+        },
+        {
+          "id": "59fb229e4f60d0a5.png",
+          "title": "Rivers of Pure Ether",
+          "row": 3,
+          "subject": "Silver pail filled with opalescent violet liquid ether under a curved brass handle; a rippling star reflection."
+        }
+      ]
+    },
+    {
+      "file": "adventures-28.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Crinoa harvest sheaf of indigo leaves with plump golden star grains, bound with magenta twine; grain nods.\nROW 2 repeat across all FOUR columns: A turquoise starfire bird egg covered with broad orange flame markings nestled on a little straw base; crack glows.\nROW 3 repeat across all FOUR columns: A heavy silver golem-steel ingot with a gold gear stamp leaning on a warm orange coal; bevel glints.\nROW 4 repeat across all FOUR columns: A squat brass alloy furnace with two copper chimneys and bright amber molten mouth; furnace fire flickers.",
+      "rows": [
+        {
+          "id": "7f6ebd213cad0348.png",
+          "title": "Harvest of the Night Sky",
+          "row": 0,
+          "subject": "Crinoa harvest sheaf of indigo leaves with plump golden star grains, bound with magenta twine; grain nods."
+        },
+        {
+          "id": "573c350df46d835f.png",
+          "title": "The Starfire Bird",
+          "row": 1,
+          "subject": "A turquoise starfire bird egg covered with broad orange flame markings nestled on a little straw base; crack glows."
+        },
+        {
+          "id": "283f41940e408544.png",
+          "title": "The Golem Forge",
+          "row": 2,
+          "subject": "A heavy silver golem-steel ingot with a gold gear stamp leaning on a warm orange coal; bevel glints."
+        },
+        {
+          "id": "24d3e35d8a388d56.png",
+          "title": "The Master Foundry",
+          "row": 3,
+          "subject": "A squat brass alloy furnace with two copper chimneys and bright amber molten mouth; furnace fire flickers."
+        }
+      ]
+    },
+    {
+      "file": "adventures-29.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Mechanical greatsword of light steel, oversized bronze gear guard and dark blue grip; gear turns a notch.\nROW 2 repeat across all FOUR columns: Tenacious purple flower with a curved barbed green stem framing one large coral petal; petal twitches.\nROW 3 repeat across all FOUR columns: Lunar greatsword with crescent-shaped silver guard circling a dark violet eclipse gem and pale blade; gem pulses.\nROW 4 repeat across all FOUR columns: A frosted pale-blue hollow tube with amethyst interior, shards of frost at its base; icy rim sparkles.",
+      "rows": [
+        {
+          "id": "5dc3513a2bf77500.png",
+          "title": "Machined Metallurgy",
+          "row": 0,
+          "subject": "Mechanical greatsword of light steel, oversized bronze gear guard and dark blue grip; gear turns a notch."
+        },
+        {
+          "id": "277a8291ba8504b6.png",
+          "title": "The Cursed Garden",
+          "row": 1,
+          "subject": "Tenacious purple flower with a curved barbed green stem framing one large coral petal; petal twitches."
+        },
+        {
+          "id": "159df9475ef5bb55.png",
+          "title": "Arsenal of the Eclipse",
+          "row": 2,
+          "subject": "Lunar greatsword with crescent-shaped silver guard circling a dark violet eclipse gem and pale blade; gem pulses."
+        },
+        {
+          "id": "59e63cfab048a6a9.png",
+          "title": "The Chilled Deep",
+          "row": 3,
+          "subject": "A frosted pale-blue hollow tube with amethyst interior, shards of frost at its base; icy rim sparkles."
+        }
+      ]
+    },
+    {
+      "file": "adventures-30.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Chunky blue meteor ore shard with embedded bright gold falling star and long silvery strike; star gleams.\nROW 2 repeat across all FOUR columns: A folded celestial cape with broad lavender body, midnight trim and bright gold star clasp; hem lifts.\nROW 3 repeat across all FOUR columns: A curved indigo seeker tentacle with three big contrasting rose suction cups and a pale violet edge; tip curls.\nROW 4 repeat across all FOUR columns: Spiked teal lash whip coiled in a compact spiral around a single ivory barbed tip; tip flicks.",
+      "rows": [
+        {
+          "id": "09bc70328f30bd0f.png",
+          "title": "Shower of Falling Stars",
+          "row": 0,
+          "subject": "Chunky blue meteor ore shard with embedded bright gold falling star and long silvery strike; star gleams."
+        },
+        {
+          "id": "19c9fb8b8f89a5eb.png",
+          "title": "The Astral Ward",
+          "row": 1,
+          "subject": "A folded celestial cape with broad lavender body, midnight trim and bright gold star clasp; hem lifts."
+        },
+        {
+          "id": "44445ce4dfb6ce7f.png",
+          "title": "Terrors of the Deep Void",
+          "row": 2,
+          "subject": "A curved indigo seeker tentacle with three big contrasting rose suction cups and a pale violet edge; tip curls."
+        },
+        {
+          "id": "04ea46e634fe7a4d.png",
+          "title": "The Abyssal Lash",
+          "row": 3,
+          "subject": "Spiked teal lash whip coiled in a compact spiral around a single ivory barbed tip; tip flicks."
+        }
+      ]
+    },
+    {
+      "file": "adventures-31.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Clear blue teardrop containing a little white soul silhouette; inner soul floats up one pixel.\nROW 2 repeat across all FOUR columns: A single unrealium metal ingot with four crisp cyan, gold, rose and violet facets, broad silvery top; facets pulse in sequence.\nROW 3 repeat across all FOUR columns: Unrealium sword with white central blade flanked by bold prismatic facets and a gold star guard; jewel flashes.\nROW 4 repeat across all FOUR columns: Floating etheric eye in a violet orbital ring, wide turquoise iris and golden brass shell; iris blinks.",
+      "rows": [
+        {
+          "id": "3e1b95b309a4644a.png",
+          "title": "Trapped Souls: Soul Dew",
+          "row": 0,
+          "subject": "Clear blue teardrop containing a little white soul silhouette; inner soul floats up one pixel."
+        },
+        {
+          "id": "4ba4f6184e332e92.png",
+          "title": "The Fourfold Fusion: Unrealium",
+          "row": 1,
+          "subject": "A single unrealium metal ingot with four crisp cyan, gold, rose and violet facets, broad silvery top; facets pulse in sequence."
+        },
+        {
+          "id": "17579892204f63cd.png",
+          "title": "Master of the Stars",
+          "row": 2,
+          "subject": "Unrealium sword with white central blade flanked by bold prismatic facets and a gold star guard; jewel flashes."
+        },
+        {
+          "id": "3fd54c6d176262fa.png",
+          "title": "Relics of Translocation",
+          "row": 3,
+          "subject": "Floating etheric eye in a violet orbital ring, wide turquoise iris and golden brass shell; iris blinks."
+        }
+      ]
+    },
+    {
+      "file": "adventures-32.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Crystalborn catalyst, a golden alchemy clamp cradling a bright magenta prism over a blue base; prism lights.\nROW 2 repeat across all FOUR columns: A pink berry bait cake with a green leaf and apricot chunks on a bamboo skewer; leaf bobs.\nROW 3 repeat across all FOUR columns: Pocket box-link device with bold orange case, cyan screen picturing a box and small radio antenna; indicator blinks.\nROW 4 repeat across all FOUR columns: Compact teal healing and PC station together with red-and-ivory healing tray clearly in front of blue screen; screen flashes.",
+      "rows": [
+        {
+          "id": "39fe9d1261e5fd0d.png",
+          "title": "Catalysts and Transmutations",
+          "row": 0,
+          "subject": "Crystalborn catalyst, a golden alchemy clamp cradling a bright magenta prism over a blue base; prism lights."
+        },
+        {
+          "id": "0385ef57acab8be9.png",
+          "title": "Wild Etiquette: Baits and Snacks",
+          "row": 1,
+          "subject": "A pink berry bait cake with a green leaf and apricot chunks on a bamboo skewer; leaf bobs."
+        },
+        {
+          "id": "7b2df4d19e2b5ae4.png",
+          "title": "Pocket Storage: Box Link",
+          "row": 2,
+          "subject": "Pocket box-link device with bold orange case, cyan screen picturing a box and small radio antenna; indicator blinks."
+        },
+        {
+          "id": "6d49581e29acfa55.png",
+          "title": "Base Infrastructure: PC and Healing Unit",
+          "row": 3,
+          "subject": "Compact teal healing and PC station together with red-and-ivory healing tray clearly in front of blue screen; screen flashes."
+        }
+      ]
+    },
+    {
+      "file": "adventures-33.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Pasture block of grassy earth with short oak fence corner and small red-and-white marker; green grass blade sways.\nROW 2 repeat across all FOUR columns: Clear glass display dome with navy plinth displaying a bright red capture ball; white glint runs across dome.\nROW 3 repeat across all FOUR columns: An imposing teal beast pawprint stamped in a large gold badge with a small crimson alpha crown; crown gem flashes.\nROW 4 repeat across all FOUR columns: A red-and-cream starter capture ball nestled atop a young lime sprout with blue ribbon; ball gently cracks open.",
+      "rows": [
+        {
+          "id": "19d2b4e63f3b4c58.png",
+          "title": "Pasture blocks",
+          "row": 0,
+          "subject": "Pasture block of grassy earth with short oak fence corner and small red-and-white marker; green grass blade sways."
+        },
+        {
+          "id": "5d14e53b1cd670f6.png",
+          "title": "Trainer's Showcase: Display Cases",
+          "row": 1,
+          "subject": "Clear glass display dome with navy plinth displaying a bright red capture ball; white glint runs across dome."
+        },
+        {
+          "id": "4b19dbfffa7f1fe2.png",
+          "title": "Wild Dominance: Cobblemon Alphas",
+          "row": 2,
+          "subject": "An imposing teal beast pawprint stamped in a large gold badge with a small crimson alpha crown; crown gem flashes."
+        },
+        {
+          "id": "55c0e66be9a3dc83.png",
+          "title": "Choose Your First Partner",
+          "row": 3,
+          "subject": "A red-and-cream starter capture ball nestled atop a young lime sprout with blue ribbon; ball gently cracks open."
+        }
+      ]
+    },
+    {
+      "file": "adventures-34.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Victory medal with a red-and-ivory capture ball at the center and two short gold crossed swords behind; one sword tip shines.\nROW 2 repeat across all FOUR columns: Blue great capture ball with bold red bands hanging open above two golden catch stars; front button glints.\nROW 3 repeat across all FOUR columns: Compact coral-red healing machine with white rounded tray and three small capture-ball slots; green status lamp blinks.\nROW 4 repeat across all FOUR columns: Chunky blue computer terminal with large aqua monitor displaying a simple box pictogram and small keyboard; cursor pulses.",
+      "rows": [
+        {
+          "id": "2d026a79b5f2a6ba.png",
+          "title": "Win Your First Battle",
+          "row": 0,
+          "subject": "Victory medal with a red-and-ivory capture ball at the center and two short gold crossed swords behind; one sword tip shines."
+        },
+        {
+          "id": "1ecea271020f4c13.png",
+          "title": "Make Your First Catch",
+          "row": 1,
+          "subject": "Blue great capture ball with bold red bands hanging open above two golden catch stars; front button glints."
+        },
+        {
+          "id": "08eb8d026a5eb5f1.png",
+          "title": "Build a Healing Machine",
+          "row": 2,
+          "subject": "Compact coral-red healing machine with white rounded tray and three small capture-ball slots; green status lamp blinks."
+        },
+        {
+          "id": "27419a96a0a9c168.png",
+          "title": "Build a PC",
+          "row": 3,
+          "subject": "Chunky blue computer terminal with large aqua monitor displaying a simple box pictogram and small keyboard; cursor pulses."
+        }
+      ]
+    },
+    {
+      "file": "adventures-35.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Large wrapped blue rare candy on a purple upward-arrow badge with silver accents; pale center gleams.\nROW 2 repeat across all FOUR columns: Weathered teal bestiary bound with copper dragon-claw corners and ivory feather bookmark; bookmark flutters.\nROW 3 repeat across all FOUR columns: Shining pale silver ingot with a lavender bevel and crescent hallmark; glint runs across its face.\nROW 4 repeat across all FOUR columns: Mason jar with a bright pink pixie figure inside and bronze perforated lid; tiny wings flutter.",
+      "rows": [
+        {
+          "id": "1cb98bf97e078968.png",
+          "title": "Optional: Train to Level 20",
+          "row": 0,
+          "subject": "Large wrapped blue rare candy on a purple upward-arrow badge with silver accents; pale center gleams."
+        },
+        {
+          "id": "501f2b5e9bc9a6e3.png",
+          "title": "The Scholar's Bestiary",
+          "row": 1,
+          "subject": "Weathered teal bestiary bound with copper dragon-claw corners and ivory feather bookmark; bookmark flutters."
+        },
+        {
+          "id": "7d229d2a2365e3c0.png",
+          "title": "Sacred Metallurgy: Silver",
+          "row": 2,
+          "subject": "Shining pale silver ingot with a lavender bevel and crescent hallmark; glint runs across its face."
+        },
+        {
+          "id": "338870a212e52f6b.png",
+          "title": "Faerie Glades and Pixie Jars",
+          "row": 3,
+          "subject": "Mason jar with a bright pink pixie figure inside and bronze perforated lid; tiny wings flutter."
+        }
+      ]
+    },
+    {
+      "file": "adventures-36.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: A proud tawny hippogryph head in profile with ivory beak, pale feathers and a large curled gold talon at its base; eyes blink.\nROW 2 repeat across all FOUR columns: A long tropical feather with turquoise, emerald and orange planes, curled like a winged serpent; tip flicks.\nROW 3 repeat across all FOUR columns: Golden cockatrice eye with a black slit framed by red comb and pale green reptile scales; pupil narrows.\nROW 4 repeat across all FOUR columns: Broad bronze Stymphalian feather with blade-like copper vanes and ivory spine; a glint travels along edge.",
+      "rows": [
+        {
+          "id": "6e473ccf2a6d1fa8.png",
+          "title": "Pride of the Skies: Hippogryph",
+          "row": 0,
+          "subject": "A proud tawny hippogryph head in profile with ivory beak, pale feathers and a large curled gold talon at its base; eyes blink."
+        },
+        {
+          "id": "6ed374465b47b8f9.png",
+          "title": "Canopy Gliders: Amphithere",
+          "row": 1,
+          "subject": "A long tropical feather with turquoise, emerald and orange planes, curled like a winged serpent; tip flicks."
+        },
+        {
+          "id": "7aef0f135b3097fe.png",
+          "title": "The Withering Stare: Cockatrice",
+          "row": 2,
+          "subject": "Golden cockatrice eye with a black slit framed by red comb and pale green reptile scales; pupil narrows."
+        },
+        {
+          "id": "21d5e7976145db0e.png",
+          "title": "Bronze Wings: Stymphalian Birds",
+          "row": 3,
+          "subject": "Broad bronze Stymphalian feather with blade-like copper vanes and ivory spine; a glint travels along edge."
+        }
+      ]
+    },
+    {
+      "file": "adventures-37.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: A mint-green ghost rising from a brown graveyard clod, dripping ectoplasm forming its arms; one ectoplasm bead drifts.\nROW 2 repeat across all FOUR columns: A pair of golden earplugs tied with bright marine-blue cord and a rose siren-shell bead; bead shines.\nROW 3 repeat across all FOUR columns: A giant cyclops eye encircled by weathered ochre eyelids, broad white sclera and violet iris; eye blinks.\nROW 4 repeat across all FOUR columns: Jade gorgon head with three thick snake locks and an ivory blindfold over the eyes; central snake tongue flicks.",
+      "rows": [
+        {
+          "id": "727139b409e0f110.png",
+          "title": "Restless Wraiths and Graveyard Soil",
+          "row": 0,
+          "subject": "A mint-green ghost rising from a brown graveyard clod, dripping ectoplasm forming its arms; one ectoplasm bead drifts."
+        },
+        {
+          "id": "60533be364dfe409.png",
+          "title": "The Lure of the Deep: Sirens",
+          "row": 1,
+          "subject": "A pair of golden earplugs tied with bright marine-blue cord and a rose siren-shell bead; bead shines."
+        },
+        {
+          "id": "5842c8d77908c670.png",
+          "title": "The One-Eyed Colossus",
+          "row": 2,
+          "subject": "A giant cyclops eye encircled by weathered ochre eyelids, broad white sclera and violet iris; eye blinks."
+        },
+        {
+          "id": "77faab8c21c0f560.png",
+          "title": "Stone Stare: The Gorgon",
+          "row": 3,
+          "subject": "Jade gorgon head with three thick snake locks and an ivory blindfold over the eyes; central snake tongue flicks."
+        }
+      ]
+    },
+    {
+      "file": "adventures-38.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: A small ochre armored death worm bursting from a compact sand mound with ivory triangular teeth; jaw opens.\nROW 2 repeat across all FOUR columns: A stocky forest troll bust in mossy green hide with one shoulder petrified in pale grey stone; eyes blink.\nROW 3 repeat across all FOUR columns: A coiled bright cobalt sea serpent with two broad aqua fins and a patch of blue scales; fin tips move.\nROW 4 repeat across all FOUR columns: Azure tide trident with three bright ivory prongs and an aqua gemstone tied with gold cord; central gem flashes.",
+      "rows": [
+        {
+          "id": "468f55c3e20b880c.png",
+          "title": "Dunes of Terror: Death Worm",
+          "row": 0,
+          "subject": "A small ochre armored death worm bursting from a compact sand mound with ivory triangular teeth; jaw opens."
+        },
+        {
+          "id": "3037620426aa71eb.png",
+          "title": "Sunlight Petrification: Trolls",
+          "row": 1,
+          "subject": "A stocky forest troll bust in mossy green hide with one shoulder petrified in pale grey stone; eyes blink."
+        },
+        {
+          "id": "6d74185981d07294.png",
+          "title": "Terror of the Oceans: Sea Serpent",
+          "row": 2,
+          "subject": "A coiled bright cobalt sea serpent with two broad aqua fins and a patch of blue scales; fin tips move."
+        },
+        {
+          "id": "2d8b33b918ac19dc.png",
+          "title": "Weapon of the Abyssal Depths",
+          "row": 3,
+          "subject": "Azure tide trident with three bright ivory prongs and an aqua gemstone tied with gold cord; central gem flashes."
+        }
+      ]
+    },
+    {
+      "file": "adventures-39.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: Three little green hydra heads surrounding one enormous pearl-white fang trophy; middle head blinks.\nROW 2 repeat across all FOUR columns: An ivory dragon skull in profile with small horns atop one broad dragonbone trophy; ivory brow glints.\nROW 3 repeat across all FOUR columns: A glass vial with ruby dragon blood, bronze cap shaped like a small flame and wide red label-free body; bubble rises.\nROW 4 repeat across all FOUR columns: A jagged ivory dragonbone sword with a tan vertebrae guard and leather grip; bone tip gleams.",
+      "rows": [
+        {
+          "id": "4703b6683f4cb946.png",
+          "title": "The Multi-Headed Nightmare",
+          "row": 0,
+          "subject": "Three little green hydra heads surrounding one enormous pearl-white fang trophy; middle head blinks."
+        },
+        {
+          "id": "3e7e8674fd12ee06.png",
+          "title": "Felling the Sky Beast",
+          "row": 1,
+          "subject": "An ivory dragon skull in profile with small horns atop one broad dragonbone trophy; ivory brow glints."
+        },
+        {
+          "id": "082a67fe075f15cd.png",
+          "title": "Extracting Dragon Blood",
+          "row": 2,
+          "subject": "A glass vial with ruby dragon blood, bronze cap shaped like a small flame and wide red label-free body; bubble rises."
+        },
+        {
+          "id": "6c36154378a693fe.png",
+          "title": "Dragonbone Armory",
+          "row": 3,
+          "subject": "A jagged ivory dragonbone sword with a tan vertebrae guard and leather grip; bone tip gleams."
+        }
+      ]
+    },
+    {
+      "file": "adventures-40.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: A flame-blooded dragonbone blade, broad ivory base and bright orange flowing core; fire lick travels upward.\nROW 2 repeat across all FOUR columns: Broad red dragonscale chestplate with overlapping coral plates, gold clasps and pale shoulder edge; one scale catches light.\nROW 3 repeat across all FOUR columns: A circular bronze dragon-seeking tracker with a red dragon silhouette needle and pale turquoise dial; needle turns one notch.\nROW 4 repeat across all FOUR columns: A red dragon egg with gold scale tips nestled in curved straw, with a large highlight; tiny crack glows.",
+      "rows": [
+        {
+          "id": "7e298ac1ac821dc7.png",
+          "title": "Blood-Forged Edges",
+          "row": 0,
+          "subject": "A flame-blooded dragonbone blade, broad ivory base and bright orange flowing core; fire lick travels upward."
+        },
+        {
+          "id": "084f8ba7b3ff879d.png",
+          "title": "Impenetrable Dragonscales",
+          "row": 1,
+          "subject": "Broad red dragonscale chestplate with overlapping coral plates, gold clasps and pale shoulder edge; one scale catches light."
+        },
+        {
+          "id": "272aefa5c4fbda29.png",
+          "title": "The Dragon Seeker",
+          "row": 2,
+          "subject": "A circular bronze dragon-seeking tracker with a red dragon silhouette needle and pale turquoise dial; needle turns one notch."
+        },
+        {
+          "id": "7554521798381fd6.png",
+          "title": "Stealing the Mother's Egg",
+          "row": 3,
+          "subject": "A red dragon egg with gold scale tips nestled in curved straw, with a large highlight; tiny crack glows."
+        }
+      ]
+    },
+    {
+      "file": "adventures-41.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: A pale hatching egg with a tiny red dragon nose peeking out and a short crooked incubation wand at the side; snout rises.\nROW 2 repeat across all FOUR columns: A heap of golden dragon feed in a coral bowl with a single bone and bright green herb; herb bobs.\nROW 3 repeat across all FOUR columns: A diagonal turquoise dragon flute with ivory mouthpiece, brass bands and three large finger holes; one little music dot moves.\nROW 4 repeat across all FOUR columns: A curved ivory pocket dragon horn tied with red cord and brass tip, a tiny gem socket glows; gem sparkles.",
+      "rows": [
+        {
+          "id": "084fbe217e663557.png",
+          "title": "The Primordial Incubation",
+          "row": 0,
+          "subject": "A pale hatching egg with a tiny red dragon nose peeking out and a short crooked incubation wand at the side; snout rises."
+        },
+        {
+          "id": "6faa334538037984.png",
+          "title": "Nutrition and Growth Control",
+          "row": 1,
+          "subject": "A heap of golden dragon feed in a coral bowl with a single bone and bright green herb; herb bobs."
+        },
+        {
+          "id": "6f4c67bc00f35604.png",
+          "title": "Commands of the Sky: The Flute",
+          "row": 2,
+          "subject": "A diagonal turquoise dragon flute with ivory mouthpiece, brass bands and three large finger holes; one little music dot moves."
+        },
+        {
+          "id": "722d0befa389964f.png",
+          "title": "The Pocket Dragon: Dragon Horn",
+          "row": 3,
+          "subject": "A curved ivory pocket dragon horn tied with red cord and brass tip, a tiny gem socket glows; gem sparkles."
+        }
+      ]
+    },
+    {
+      "file": "adventures-42.png",
+      "prompt": "Use case: stylized-concept. Original hand-pixeled quest-menu animation sprite atlas. SQUARE canvas, EXACTLY 4 equal columns x 4 equal rows. 16 separate sprites. Each row is one different subject, repeated four times horizontally in sequential subtly different poses. Preserve its proportions, anchor and scale. Column phases are rest / start moving / peak / returning. Make the specified feature noticeably change across frames; keep the body still. Draw each within the CENTRAL 64% of its cell with generous fully transparent gutters all around each sprite. True transparent alpha canvas. NO white, rectangle, sky, fake checker, letters, numbers, frame, shadow, boxes, lines, labels, borders or panels. Style: cohesive hand-crafted SNES inventory pixel art at logical 26x26 resolution with clean square chunky pixel clusters, dark ink outlines, big bright colored midtones and cream edge highlights, 8 to 14 flat colors, recognizable at 24 pixels on a very dark navy game menu. NO gradients, blur, glow haze or dithering. Silhouette MUST include a bright broad colored plane even for a dark subject. No background scenery. Four rows, reading from top to bottom, are:\nROW 1 repeat across all FOUR columns: A dragon's head armored in wide brilliant aqua diamond plates with ivory horns and an amber eye; eye blinks.\nROW 2 repeat across all FOUR columns: A fiery summoning crystal with a red dragon silhouette locked inside a faceted orange gem and silver claw setting; silhouette lights.\nROW 3 repeat across all FOUR columns: Miniature dragon forge with an angular red dragon-head stone opening above a glowing furnace core; fire flickers.\nROW 4 repeat across all FOUR columns: A massive fire dragonsteel ingot with vivid orange hot seams, broad silver top and bronze edges; hot seams pulse.",
+      "rows": [
+        {
+          "id": "418f05270c45f9b5.png",
+          "title": "Armor for an Emperor",
+          "row": 0,
+          "subject": "A dragon's head armored in wide brilliant aqua diamond plates with ivory horns and an amber eye; eye blinks."
+        },
+        {
+          "id": "402291ac55774bac.png",
+          "title": "Bound Across Realities: Summoning Crystal",
+          "row": 1,
+          "subject": "A fiery summoning crystal with a red dragon silhouette locked inside a faceted orange gem and silver claw setting; silhouette lights."
+        },
+        {
+          "id": "7b3e4e8ead07c026.png",
+          "title": "The Ancient Art: The Dragon Forge",
+          "row": 2,
+          "subject": "Miniature dragon forge with an angular red dragon-head stone opening above a glowing furnace core; fire flickers."
+        },
+        {
+          "id": "715a543f5a8d6404.png",
+          "title": "Dragonsteel: The Supreme Alloy",
+          "row": 3,
+          "subject": "A massive fire dragonsteel ingot with vivid orange hot seams, broad silver top and bronze edges; hot seams pulse."
+        }
+      ]
+    }
+  ]
+}

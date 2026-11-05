@@ -1,0 +1,394 @@
+{
+  "sheets": [
+    {
+      "file": "legend-02.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Mew — Rounded bubblegum-pink catlike face, high triangular ears, enormous blue eyes and the curl of its long pink tail beside the cheek. A blue eye glints, lids lower, blink and reopen.\n2. Raikou — Yellow sabertooth cat face with black lightning stripes, two cream fangs, pale-blue muzzle and purple thundercloud mane. A ripple of light slides through the mane.\n3. Entei — Brown volcanic lion face in a red and yellow forehead mask, broad white cheek tufts and gray smoke mane. An amber glint slides across the mask.\n4. Suicune — Cobalt-blue water beast head, white muzzle, tall angular aquamarine crown and purple flowing mane. Cyan highlight moves up and across the crown.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "75b7247eeb2618e8.png",
+          "title": "Mew",
+          "row": 0,
+          "subject": "Rounded bubblegum-pink catlike face, high triangular ears, enormous blue eyes and the curl of its long pink tail beside the cheek. A blue eye glints, lids lower, blink and reopen."
+        },
+        {
+          "id": "20f15cc12dfdca97.png",
+          "title": "Raikou",
+          "row": 1,
+          "subject": "Yellow sabertooth cat face with black lightning stripes, two cream fangs, pale-blue muzzle and purple thundercloud mane. A ripple of light slides through the mane."
+        },
+        {
+          "id": "58478b8510fabe83.png",
+          "title": "Entei",
+          "row": 2,
+          "subject": "Brown volcanic lion face in a red and yellow forehead mask, broad white cheek tufts and gray smoke mane. An amber glint slides across the mask."
+        },
+        {
+          "id": "4cba26db7c9215c6.png",
+          "title": "Suicune",
+          "row": 3,
+          "subject": "Cobalt-blue water beast head, white muzzle, tall angular aquamarine crown and purple flowing mane. Cyan highlight moves up and across the crown."
+        }
+      ]
+    },
+    {
+      "file": "legend-04.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Groudon — Red continental armor-plated reptile head, ivory blade teeth, gold eye and crisp dark groove patterns. Hot yellow eye and red plate edge brighten in sequence.\n2. Rayquaza — Emerald serpentine sky dragon head with long swept fins, black jaw and golden ring marks. Gold reaches and fades down a ring beside its eye.\n3. Regirock — Orange-and-beige blocky rock golem bust, seven bold orange face lights set into stone. Face lights pulse in a traveling sequence.\n4. Regice — Faceted icy blue golem bust with pointed crystalline shoulders and seven bright yellow face dots. White glimmer travels between facets.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "5fbf3e26caf1fff2.png",
+          "title": "Groudon",
+          "row": 0,
+          "subject": "Red continental armor-plated reptile head, ivory blade teeth, gold eye and crisp dark groove patterns. Hot yellow eye and red plate edge brighten in sequence."
+        },
+        {
+          "id": "214ffcc0ddf22fce.png",
+          "title": "Rayquaza",
+          "row": 1,
+          "subject": "Emerald serpentine sky dragon head with long swept fins, black jaw and golden ring marks. Gold reaches and fades down a ring beside its eye."
+        },
+        {
+          "id": "0406591847628e21.png",
+          "title": "Regirock",
+          "row": 2,
+          "subject": "Orange-and-beige blocky rock golem bust, seven bold orange face lights set into stone. Face lights pulse in a traveling sequence."
+        },
+        {
+          "id": "7573d293fe474615.png",
+          "title": "Regice",
+          "row": 3,
+          "subject": "Faceted icy blue golem bust with pointed crystalline shoulders and seven bright yellow face dots. White glimmer travels between facets."
+        }
+      ]
+    },
+    {
+      "file": "legend-05.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Registeel — Smooth round silver steel golem bust, dark face panel holding seven pink-red dots, a hint of black collar. Red face lights wake in sequence.\n2. Latias — White-faced streamlined red-and-white jet dragon portrait with pointed ears, amber eyes, red eye patch and its red wing peeking at shoulder. White wingtip flashes in four steps.\n3. Latios — White-faced streamlined blue-and-white jet dragon portrait with red eyes, blue eye patch and its swept cobalt triangular wing alongside. A blue wing edge flashes in four steps.\n4. Jirachi — Golden five-pointed star-shaped head, tiny white face, two teal paper wish tags hanging near cheeks. One tag tips down, flexes left, lifts and settles.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "19f77da6a834bb94.png",
+          "title": "Registeel",
+          "row": 0,
+          "subject": "Smooth round silver steel golem bust, dark face panel holding seven pink-red dots, a hint of black collar. Red face lights wake in sequence."
+        },
+        {
+          "id": "602664eb0a217c86.png",
+          "title": "Latias",
+          "row": 1,
+          "subject": "White-faced streamlined red-and-white jet dragon portrait with pointed ears, amber eyes, red eye patch and its red wing peeking at shoulder. White wingtip flashes in four steps."
+        },
+        {
+          "id": "374b8a3511dba63a.png",
+          "title": "Latios",
+          "row": 2,
+          "subject": "White-faced streamlined blue-and-white jet dragon portrait with red eyes, blue eye patch and its swept cobalt triangular wing alongside. A blue wing edge flashes in four steps."
+        },
+        {
+          "id": "54863af1072e5e59.png",
+          "title": "Jirachi",
+          "row": 3,
+          "subject": "Golden five-pointed star-shaped head, tiny white face, two teal paper wish tags hanging near cheeks. One tag tips down, flexes left, lifts and settles."
+        }
+      ]
+    },
+    {
+      "file": "legend-06.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Deoxys — Orange and teal alien head, horizontal ear spikes, dark-purple face stripe with white eyes and magenta crystalline chest core below. Core pulses with four glints.\n2. Uxie — Butter-yellow mushroom-dome head with centered red forehead jewel, peaceful closed eyes, pastel blue cheeks. Jewel glints left to right.\n3. Mesprit — Rose-pink four-lobed headpiece on a pale blue small psychic sprite, red forehead jewel and amber eyes. One pink lobe lifts and dips gently.\n4. Azelf — Blue pointed cone-shaped forehead crest above pale blue face, centered red jewel and golden eyes. The jewel flashes along its upper edge.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "0d469558db184f25.png",
+          "title": "Deoxys",
+          "row": 0,
+          "subject": "Orange and teal alien head, horizontal ear spikes, dark-purple face stripe with white eyes and magenta crystalline chest core below. Core pulses with four glints."
+        },
+        {
+          "id": "4420b323b9ef1d40.png",
+          "title": "Uxie",
+          "row": 1,
+          "subject": "Butter-yellow mushroom-dome head with centered red forehead jewel, peaceful closed eyes, pastel blue cheeks. Jewel glints left to right."
+        },
+        {
+          "id": "760918156f99e5e8.png",
+          "title": "Mesprit",
+          "row": 2,
+          "subject": "Rose-pink four-lobed headpiece on a pale blue small psychic sprite, red forehead jewel and amber eyes. One pink lobe lifts and dips gently."
+        },
+        {
+          "id": "42dc2c9e77be225e.png",
+          "title": "Azelf",
+          "row": 3,
+          "subject": "Blue pointed cone-shaped forehead crest above pale blue face, centered red jewel and golden eyes. The jewel flashes along its upper edge."
+        }
+      ]
+    },
+    {
+      "file": "legend-10.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Thundurus — Blue storm genie bust, one projecting brow horn and curling white moustache, dark tail with blue spike. Electric spark steps along the tail.\n2. Landorus — Orange earth genie bust with brown spots, tied crest of white hair and white moustache, thick brown hammerlike tail segment. Amber glint crosses a spot.\n3. Reshiram — Ivory feathered dragon head with flowing white mane, bright blue eye and a small fiery orange reflection in its mane. Feather tips lift and settle.\n4. Zekrom — Charcoal angular electric dragon head with crested dark horn, red eye and an electric-blue highlight along its collar. A thin blue dash travels across the horn.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "4361dcd028612e8e.png",
+          "title": "Thundurus",
+          "row": 0,
+          "subject": "Blue storm genie bust, one projecting brow horn and curling white moustache, dark tail with blue spike. Electric spark steps along the tail."
+        },
+        {
+          "id": "31c98e76fbd5954a.png",
+          "title": "Landorus",
+          "row": 1,
+          "subject": "Orange earth genie bust with brown spots, tied crest of white hair and white moustache, thick brown hammerlike tail segment. Amber glint crosses a spot."
+        },
+        {
+          "id": "48b9fde4dba038f9.png",
+          "title": "Reshiram",
+          "row": 2,
+          "subject": "Ivory feathered dragon head with flowing white mane, bright blue eye and a small fiery orange reflection in its mane. Feather tips lift and settle."
+        },
+        {
+          "id": "56bde069e49cedf1.png",
+          "title": "Zekrom",
+          "row": 3,
+          "subject": "Charcoal angular electric dragon head with crested dark horn, red eye and an electric-blue highlight along its collar. A thin blue dash travels across the horn."
+        }
+      ]
+    },
+    {
+      "file": "legend-13.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Xerneas — Black and blue stag face with bright ivory jaw, elegant antler branches each holding red gold teal jewels. A single jewel twinkles in a descending sequence.\n2. Yveltal — Crimson and charcoal avian death-dragon bust with gray forked horn crest and black feathery collar, electric-blue eye. One red vein on collar catches light.\n3. Zygarde — 50-percent serpent form: emerald-and-black hooded cobra-like dragon bust with spread broad petal frill and bright green hexagonal cells. Three cells brighten in sequence.\n4. Diancie — Tiny gray jewel fairy face with pink crystal tiara, cheek gems and white dress collar. The main tiara crystal gives four stepped pink glints.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "6673dc63be7a04bc.png",
+          "title": "Xerneas",
+          "row": 0,
+          "subject": "Black and blue stag face with bright ivory jaw, elegant antler branches each holding red gold teal jewels. A single jewel twinkles in a descending sequence."
+        },
+        {
+          "id": "420a71c77a6115e7.png",
+          "title": "Yveltal",
+          "row": 1,
+          "subject": "Crimson and charcoal avian death-dragon bust with gray forked horn crest and black feathery collar, electric-blue eye. One red vein on collar catches light."
+        },
+        {
+          "id": "0c881e3e588a7098.png",
+          "title": "Zygarde",
+          "row": 2,
+          "subject": "50-percent serpent form: emerald-and-black hooded cobra-like dragon bust with spread broad petal frill and bright green hexagonal cells. Three cells brighten in sequence."
+        },
+        {
+          "id": "0c28f6772e276f16.png",
+          "title": "Diancie",
+          "row": 3,
+          "subject": "Tiny gray jewel fairy face with pink crystal tiara, cheek gems and white dress collar. The main tiara crystal gives four stepped pink glints."
+        }
+      ]
+    },
+    {
+      "file": "legend-14.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Hoopa — Confined form: small violet-gray genie face, magenta swept crest, yellow forehead ring motif and one large golden hoop beside an ear horn. Glint circles the hoop.\n2. Volcanion — Chunky burgundy steam beast face with cyan eyes, blue jaw, yellow markings and two thick red arched pipes forming a ring behind the head. White steam puff lifts from one nozzle.\n3. Tapu Koko — Black-and-orange guardian mask bust with a tall orange feather crest, bold yellow beak-shaped decorated shell halves framing it. A yellow cheek emblem flashes.\n4. Tapu Lele — Pink-shelled island guardian face with charcoal skin, large violet-blue eyes and curled pink hair, black shell markings. One ring of pink highlight shifts along the shell.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "5713296c1fbbd649.png",
+          "title": "Hoopa",
+          "row": 0,
+          "subject": "Confined form: small violet-gray genie face, magenta swept crest, yellow forehead ring motif and one large golden hoop beside an ear horn. Glint circles the hoop."
+        },
+        {
+          "id": "615c8ff12e1b08aa.png",
+          "title": "Volcanion",
+          "row": 1,
+          "subject": "Chunky burgundy steam beast face with cyan eyes, blue jaw, yellow markings and two thick red arched pipes forming a ring behind the head. White steam puff lifts from one nozzle."
+        },
+        {
+          "id": "3a918bfe0cbc8ac7.png",
+          "title": "Tapu Koko",
+          "row": 2,
+          "subject": "Black-and-orange guardian mask bust with a tall orange feather crest, bold yellow beak-shaped decorated shell halves framing it. A yellow cheek emblem flashes."
+        },
+        {
+          "id": "2add9d191b1517be.png",
+          "title": "Tapu Lele",
+          "row": 3,
+          "subject": "Pink-shelled island guardian face with charcoal skin, large violet-blue eyes and curled pink hair, black shell markings. One ring of pink highlight shifts along the shell."
+        }
+      ]
+    },
+    {
+      "file": "legend-15.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Tapu Bulu — Black bull guardian bust with cream bull horns and red black-and-yellow decorated wooden shell halves. White glint moves from left horn to a yellow band.\n2. Tapu Fini — Purple clam-shell guardian bust with a pointed indigo shell crown, powder-blue eyes and pale aqua curl against black face. Ripple passes along lower lavender shell rim.\n3. Cosmog — Little navy cloud face between two poofs of hot pink, violet and blue nebula, golden cheek rings. One bright four-pixel star within the cloud flickers.\n4. Cosmoem — Amber many-pointed compact star cocoon enclosing a dark blue-violet orb with a tiny sleeping face. A highlight crosses the gold rim like a sunrise.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "7b169eca503bb4df.png",
+          "title": "Tapu Bulu",
+          "row": 0,
+          "subject": "Black bull guardian bust with cream bull horns and red black-and-yellow decorated wooden shell halves. White glint moves from left horn to a yellow band."
+        },
+        {
+          "id": "4b4a1854eca6852b.png",
+          "title": "Tapu Fini",
+          "row": 1,
+          "subject": "Purple clam-shell guardian bust with a pointed indigo shell crown, powder-blue eyes and pale aqua curl against black face. Ripple passes along lower lavender shell rim."
+        },
+        {
+          "id": "406fc814c58c5aee.png",
+          "title": "Cosmog",
+          "row": 2,
+          "subject": "Little navy cloud face between two poofs of hot pink, violet and blue nebula, golden cheek rings. One bright four-pixel star within the cloud flickers."
+        },
+        {
+          "id": "471b1035a6eb6b26.png",
+          "title": "Cosmoem",
+          "row": 3,
+          "subject": "Amber many-pointed compact star cocoon enclosing a dark blue-violet orb with a tiny sleeping face. A highlight crosses the gold rim like a sunrise."
+        }
+      ]
+    },
+    {
+      "file": "legend-16.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Solgaleo — White lion face with golden sun-ray mane spikes, midnight-blue forehead panel and light blue eye. One ray lights in sequence followed by a turquoise forehead glint.\n2. Lunala — Midnight violet moon-bat bust head between raised crescent-gold wing edges, pink eye and pale bone details. Silver light travels over crescent wing edge.\n3. Necrozma — Obsidian prismatic creature head in profile, explicitly geometric black facets with colored triangle reflections on its face, bright outer facet accents. Its rainbow reflection shifts in stages.\n4. Type: Null — Gray quadruped chimera bust wearing the heavy riveted iron limiter helmet, green eye visible through slot, thick gold rivet disk at its side. Eye behind visor blinks.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "613cd422c6ba3a47.png",
+          "title": "Solgaleo",
+          "row": 0,
+          "subject": "White lion face with golden sun-ray mane spikes, midnight-blue forehead panel and light blue eye. One ray lights in sequence followed by a turquoise forehead glint."
+        },
+        {
+          "id": "2f1ff5cf7bb39c0d.png",
+          "title": "Lunala",
+          "row": 1,
+          "subject": "Midnight violet moon-bat bust head between raised crescent-gold wing edges, pink eye and pale bone details. Silver light travels over crescent wing edge."
+        },
+        {
+          "id": "2cdeed93ebd3fbe9.png",
+          "title": "Necrozma",
+          "row": 2,
+          "subject": "Obsidian prismatic creature head in profile, explicitly geometric black facets with colored triangle reflections on its face, bright outer facet accents. Its rainbow reflection shifts in stages."
+        },
+        {
+          "id": "3b78e292884efc50.png",
+          "title": "Type: Null",
+          "row": 3,
+          "subject": "Gray quadruped chimera bust wearing the heavy riveted iron limiter helmet, green eye visible through slot, thick gold rivet disk at its side. Eye behind visor blinks."
+        }
+      ]
+    },
+    {
+      "file": "legend-17.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Silvally — White-furred chimera face free of a helmet, black pointed crest, red cheek fins and long swept pale feathers. Red eye glints and crest tip flexes.\n2. Nihilego — Translucent pale blue jellyfish with broad bell resembling a floppy hat, one pale star pattern, short flowing white tentacles. A tentacle gently ripples around stable bell.\n3. Buzzwole — Muscular crimson mosquito bust with bulging red segmented arms, black triangular head, long sharp proboscis, one tiny white wing. Wing flickers light and dark.\n4. Pheromosa — Pale graceful cockroach bust with fine long curved antennae, narrow indigo eyelids and white fan of translucent wing panels. Two antenna tips gently tilt.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "266cc0c0f634de27.png",
+          "title": "Silvally",
+          "row": 0,
+          "subject": "White-furred chimera face free of a helmet, black pointed crest, red cheek fins and long swept pale feathers. Red eye glints and crest tip flexes."
+        },
+        {
+          "id": "696614d67c9f5032.png",
+          "title": "Nihilego",
+          "row": 1,
+          "subject": "Translucent pale blue jellyfish with broad bell resembling a floppy hat, one pale star pattern, short flowing white tentacles. A tentacle gently ripples around stable bell."
+        },
+        {
+          "id": "6932ca6cfd95ef03.png",
+          "title": "Buzzwole",
+          "row": 2,
+          "subject": "Muscular crimson mosquito bust with bulging red segmented arms, black triangular head, long sharp proboscis, one tiny white wing. Wing flickers light and dark."
+        },
+        {
+          "id": "04c8284ed0930be5.png",
+          "title": "Pheromosa",
+          "row": 3,
+          "subject": "Pale graceful cockroach bust with fine long curved antennae, narrow indigo eyelids and white fan of translucent wing panels. Two antenna tips gently tilt."
+        }
+      ]
+    },
+    {
+      "file": "legend-18.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Xurkitree — Coiled black electric cable humanoid bust with white starburst plug head and bright cable ties, one short wire fork. A small yellow current runs down the cable.\n2. Celesteela — Bamboo rocket spirit, conical steel head and jade green rocket boosters as shoulders, broad pale sleeve extending from one arm. White exhaust flickers INSIDE booster tip.\n3. Kartana — White origami swordsman, folded angular diamond-paper head with small orange four-point face cutout, golden paper sword arms. Fold-edge glint crosses its blade.\n4. Guzzlord — Stocky night-black beast head dominated by enormous yellow-toothed open mouth and bright blue interior, two tiny yellow horns. One thick blue tongue tip lifts and lowers.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "09228f22135492fc.png",
+          "title": "Xurkitree",
+          "row": 0,
+          "subject": "Coiled black electric cable humanoid bust with white starburst plug head and bright cable ties, one short wire fork. A small yellow current runs down the cable."
+        },
+        {
+          "id": "3442a5dbf9ec3366.png",
+          "title": "Celesteela",
+          "row": 1,
+          "subject": "Bamboo rocket spirit, conical steel head and jade green rocket boosters as shoulders, broad pale sleeve extending from one arm. White exhaust flickers INSIDE booster tip."
+        },
+        {
+          "id": "0eac67ba382d4eb4.png",
+          "title": "Kartana",
+          "row": 2,
+          "subject": "White origami swordsman, folded angular diamond-paper head with small orange four-point face cutout, golden paper sword arms. Fold-edge glint crosses its blade."
+        },
+        {
+          "id": "1e26d18b43db83ce.png",
+          "title": "Guzzlord",
+          "row": 3,
+          "subject": "Stocky night-black beast head dominated by enormous yellow-toothed open mouth and bright blue interior, two tiny yellow horns. One thick blue tongue tip lifts and lowers."
+        }
+      ]
+    },
+    {
+      "file": "legend-19.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Poipole — Cute violet alien bust with oversized head, three upright dark purple stingers and luminous cyan eyes, lavender lower face. Cyan eyes narrow into a blink.\n2. Naganadel — Purple wasp dragon bust with wing membrane, steel stinger and a luminous cyan eye, purple needle-like crest. Cyan light creeps toward the stinger.\n3. Stakataka — Blue-gray stacked-stone tower-shaped creature bust built of chunky bricks. Multiple single blue eyes show in a few stone windows and blink out of phase.\n4. Blacephalon — White spherical performer head covered in polka dots of pink blue and yellow, thin striped pointed collar. Colored dots light one after another.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "00cbe38fb3360e49.png",
+          "title": "Poipole",
+          "row": 0,
+          "subject": "Cute violet alien bust with oversized head, three upright dark purple stingers and luminous cyan eyes, lavender lower face. Cyan eyes narrow into a blink."
+        },
+        {
+          "id": "77d5a60cd2ab4d60.png",
+          "title": "Naganadel",
+          "row": 1,
+          "subject": "Purple wasp dragon bust with wing membrane, steel stinger and a luminous cyan eye, purple needle-like crest. Cyan light creeps toward the stinger."
+        },
+        {
+          "id": "4c0f5e1a20322500.png",
+          "title": "Stakataka",
+          "row": 2,
+          "subject": "Blue-gray stacked-stone tower-shaped creature bust built of chunky bricks. Multiple single blue eyes show in a few stone windows and blink out of phase."
+        },
+        {
+          "id": "77ebcbdd9fa1cd0a.png",
+          "title": "Blacephalon",
+          "row": 3,
+          "subject": "White spherical performer head covered in polka dots of pink blue and yellow, thin striped pointed collar. Colored dots light one after another."
+        }
+      ]
+    },
+    {
+      "file": "legend-21.png",
+      "prompt": "Use case: stylized-concept. Original transparent PNG sprite atlas for a Minecraft Cobblemon quest book. ONE square perfectly regular invisible 4x4 grid, exactly 16 isolated equidistant sprites. Each horizontal ROW has ONE different subject repeated as four coherent animation frames. Read left to right, next row below. Four columns and four rows all equally spaced; centers x and y 12.5%,37.5%,62.5%,87.5%. Draw ORIGINAL expressive tiny pixel art of the recognizable species described, never tracing an existing official sprite. Each depicted subject lives entirely within the middle 70% of its own equal square cell, fully visible tips, broad transparent gutters all around. Individual portraits or compact busts with clean deliberately simplified shapes, bright highlights for a dark inventory screen, scaled-up chunky 1px navy outline and 2-4px important color clusters on a conceptual 32px grid. Selective light edges, sharp squared pixels, vibrant flat 8-12 color palettes per creature. Transparent background in every cell, absolutely no tiles, labels, words, numbers, borders, stands, shadows, glow clouds or scattered detail. Same size, direction, pose, body shape and anchor across each row; change only a subtle LOCAL detail and keep four perceptibly different frames. Use the following distinct subjects top to bottom:\n1. Melmetal: Availability Note — Massive bulky silver golem head and shoulders, large bronze hexagonal nut head with one round eye and more nut shapes on heavy metallic shoulders. Metal shine travels across bronze rim.\n2. Zacian — Cobalt and cream wolf face with flowing rose braids and ceremonial sword held sideways in its jaws. Gold sword guard twinkles as blade gets a narrow sweeping highlight.\n3. Zamazenta — Crimson-and-navy wolf head almost encircled by a bright gold shield-shaped mane with red plates and a blue central crown. One shield plate flashes.\n4. Eternatus — Skeletal dark-indigo space dragon head in sharp profile, fierce pale eye, luminous magenta crests and ribs behind skull. Bright magenta spark travels along a rib.\nCreate the specified four rows, four animation frames per row. Make each row visually distinct and each changing detail obvious at small size.",
+      "rows": [
+        {
+          "id": "2f637d0d87cde090.png",
+          "title": "Melmetal: Availability Note",
+          "row": 0,
+          "subject": "Massive bulky silver golem head and shoulders, large bronze hexagonal nut head with one round eye and more nut shapes on heavy metallic shoulders. Metal shine travels across bronze rim."
+        },
+        {
+          "id": "315d99c9d47629ca.png",
+          "title": "Zacian",
+          "row": 1,
+          "subject": "Cobalt and cream wolf face with flowing rose braids and ceremonial sword held sideways in its jaws. Gold sword guard twinkles as blade gets a narrow sweeping highlight."
+        },
+        {
+          "id": "728b87c11cb577af.png",
+          "title": "Zamazenta",
+          "row": 2,
+          "subject": "Crimson-and-navy wolf head almost encircled by a bright gold shield-shaped mane with red plates and a blue central crown. One shield plate flashes."
+        },
+        {
+          "id": "12e10b9d5aee3eb5.png",
+          "title": "Eternatus",
+          "row": 3,
+          "subject": "Skeletal dark-indigo space dragon head in sharp profile, fierce pale eye, luminous magenta crests and ribs behind skull. Bright magenta spark travels along a rib."
+        }
+      ]
+    }
+  ]
+}
