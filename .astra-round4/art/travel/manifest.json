@@ -1,0 +1,442 @@
+{
+  "sheets": [
+    {
+      "file": "travel-01.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Rune-cut standing waystone. Tall weathered grey pointed stone obelisk atop two mossy plinth steps, with ONE cyan vertical rune pulsing softly.\nRow 2 across ALL four columns: Handheld warp stone. Smooth purple faceted oval pebble with a luminous aqua spiral curling across its face; cyan glint travels one pixel around the spiral.\nRow 3 across ALL four columns: Warp scroll. Cream parchment half-unrolled with rolled corners, a violet ribbon and a teal spiral seal; loose paper tip lifts slightly.\nRow 4 across ALL four columns: Sharestone. Stout twin rose-pink crystal points linked by a single red ribbon set in a small slate pedestal; color signal pulses inside the crystals.",
+      "rows": [
+        {
+          "id": "7ac327fafc215d4a.png",
+          "title": "Your First Waystone",
+          "row": 0,
+          "subject": "Rune-cut standing waystone"
+        },
+        {
+          "id": "be64b17c8b1926eb.png",
+          "title": "Warp Stone",
+          "row": 1,
+          "subject": "Handheld warp stone"
+        },
+        {
+          "id": "db4fc0c631557382.png",
+          "title": "Warp Scrolls",
+          "row": 2,
+          "subject": "Warp scroll"
+        },
+        {
+          "id": "e7476a8a4293bcd6.png",
+          "title": "Sharestones",
+          "row": 3,
+          "subject": "Sharestone"
+        }
+      ]
+    },
+    {
+      "file": "travel-02.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Warp plate. Low diamond-shaped silver teleport floor pad in isometric view with conspicuous concentric lavender insets; lavender center lights sequentially.\nRow 2 across ALL four columns: Portstone. Wide sea-blue departure monolith with winglike gold directional arrow at its top, raised from stout grey blocks; beacon flickers.\nRow 3 across ALL four columns: Copper coin. A single rich orange hammered round coin in three-quarter view with a bold embossed hexagon and a warm brass rim; highlight sweeps its upper edge.\nRow 4 across ALL four columns: Coin mint. Compact iron screw press with copper wheel handle and a shining penny in its open jaw; piston dips a pixel then rises.",
+      "rows": [
+        {
+          "id": "ad588bde1dfaea52.png",
+          "title": "Warp Plate",
+          "row": 0,
+          "subject": "Warp plate"
+        },
+        {
+          "id": "5b7996f014abfafd.png",
+          "title": "Portstone",
+          "row": 1,
+          "subject": "Portstone"
+        },
+        {
+          "id": "1035371ded21b6da.png",
+          "title": "Your First Coins",
+          "row": 2,
+          "subject": "Copper coin"
+        },
+        {
+          "id": "9b285306f9b22fd4.png",
+          "title": "Coin Mint",
+          "row": 3,
+          "subject": "Coin mint"
+        }
+      ]
+    },
+    {
+      "file": "travel-03.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Wallet. Buttoned caramel leather bifold with brass clasp and a copper coin peeking out; brass clasp catches the light.\nRow 2 across ALL four columns: Bank ATM. Self-contained turquoise and charcoal cash machine, chunky upper display and bright green bill halfway out of the lower slot. Bill pokes out a little then retracts.\nRow 3 across ALL four columns: Player trader shop. Tiny timber merchant stall with a striped red and cream awning and golden coin display; a tiny pennant twitches.\nRow 4 across ALL four columns: Trading terminal. Purple angled tabletop terminal with thick bezel, dark stand and amber display depicting a coin and arrow in chunky pixels; indicator blinks.",
+      "rows": [
+        {
+          "id": "2c85c0e959b0cb00.png",
+          "title": "A Wallet",
+          "row": 0,
+          "subject": "Wallet"
+        },
+        {
+          "id": "e50596eb04401037.png",
+          "title": "The Bank",
+          "row": 1,
+          "subject": "Bank ATM"
+        },
+        {
+          "id": "ffbaa4f8201116dc.png",
+          "title": "Open a Shop",
+          "row": 2,
+          "subject": "Player trader shop"
+        },
+        {
+          "id": "758208c0a1370f2d.png",
+          "title": "Trading Terminal",
+          "row": 3,
+          "subject": "Trading terminal"
+        }
+      ]
+    },
+    {
+      "file": "travel-04.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Diamond coin. Shiny gem-blue round coin seen three-quarter, thick silver rim, bold cyan diamond stamp; a sparkle passes across one edge.\nRow 2 across ALL four columns: Netherite coin. A single weighty charcoal coin with bronze trim and pale lavender hexagonal ingot stamp in relief; pale glint moves along the bevel.\nRow 3 across ALL four columns: Cobble merchant. Friendly ruddy-faced blocky traveling trader in teal hood, with one gold coin held out; coin glints and eyes blink.\nRow 4 across ALL four columns: Vintage photo camera. Obsidian rectangular camera with chunky silver lens and red shutter button in three-quarter view; shutter flashes inside lens.",
+      "rows": [
+        {
+          "id": "c5ecd91fba5a4e1c.png",
+          "title": "Diamond Coin",
+          "row": 0,
+          "subject": "Diamond coin"
+        },
+        {
+          "id": "66d5f41c1ebee825.png",
+          "title": "Netherite Coin",
+          "row": 1,
+          "subject": "Netherite coin"
+        },
+        {
+          "id": "ab6cd5af715f7127.png",
+          "title": "Cobble Merchant",
+          "row": 2,
+          "subject": "Cobble merchant"
+        },
+        {
+          "id": "73c10fef2a1a7658.png",
+          "title": "Say Cheese",
+          "row": 3,
+          "subject": "Vintage photo camera"
+        }
+      ]
+    },
+    {
+      "file": "travel-05.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: First photograph. One white instant-photo print developing a bold little orange sunset over two teal hills; the sun's glint slowly appears.\nRow 2 across ALL four columns: Photo album. Thick burgundy scrapbook viewed in three-quarter with a small turquoise landscape photo mounted under ivory corner tabs; gold latch gleams.\nRow 3 across ALL four columns: Wildlife photograph. Khaki instant-photo print framing a fox head with orange ears against a pine-green patch; fox blinks once.\nRow 4 across ALL four columns: First musical notes. Short warm mahogany lute with oversized bright amber soundboard and strings, diagonally held; strings vibrate a pixel near the bridge.",
+      "rows": [
+        {
+          "id": "75a728c47112e495.png",
+          "title": "A Moment in Time",
+          "row": 0,
+          "subject": "First photograph"
+        },
+        {
+          "id": "8cc285a6c4b501eb.png",
+          "title": "Photo Album",
+          "row": 1,
+          "subject": "Photo album"
+        },
+        {
+          "id": "a4db2f08513c7f15.png",
+          "title": "Wildlife Archivist",
+          "row": 2,
+          "subject": "Wildlife photograph"
+        },
+        {
+          "id": "a835814ec840747c.png",
+          "title": "First Notes",
+          "row": 3,
+          "subject": "First musical notes"
+        }
+      ]
+    },
+    {
+      "file": "travel-06.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Three instruments. Compact heraldic cluster: azure drum as central body flanked by gold trumpet bell and short brown lute neck. Drum skin ripples subtly.\nRow 2 across ALL four columns: Ribbit village. Little swamp reed-roof dwelling on a lily pad with two unmistakable frog-eye dormers above the door; one eye dormer blinks.\nRow 3 across ALL four columns: Maraca. One diagonal bright pumpkin-orange gourd shaker with turquoise zigzag, cream dots and a short wooden handle; gourd tips by one pixel.\nRow 4 across ALL four columns: PokéNav. Orange-yellow pocket navigator shaped like a rugged clamshell GPS, green map screen with a bold directional arrow, red side button; arrow blinks.",
+      "rows": [
+        {
+          "id": "112723e7154dc0c3.png",
+          "title": "The Band",
+          "row": 0,
+          "subject": "Three instruments"
+        },
+        {
+          "id": "1a21ee8308d60efc.png",
+          "title": "Ribbit Village",
+          "row": 1,
+          "subject": "Ribbit village"
+        },
+        {
+          "id": "a9ca34c8ba8abbd5.png",
+          "title": "Maraca",
+          "row": 2,
+          "subject": "Maraca"
+        },
+        {
+          "id": "67e7e188b5715650.png",
+          "title": "PokéNav",
+          "row": 3,
+          "subject": "PokéNav"
+        }
+      ]
+    },
+    {
+      "file": "travel-07.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: PokéFinder. Purple tracking scanner with extended gold antenna, a circular emerald radar screen centered on an animal paw. Radar dot blinks in place.\nRow 2 across ALL four columns: Fishing navigator. Cyan fishfinder handset with small antenna and dark screen showing a bright gold fish over blue sonar lines; sonar line pulses upward.\nRow 3 across ALL four columns: Poké Staff. Diagonal dark wooden command staff topped with bright segmented red/ivory capture orb in a brass crescent cradle; orb button glints.\nRow 4 across ALL four columns: Ruined dungeon entrance. Split stone arch with a few vines and little ochre treasure chest visible deep in its doorway; chest clasp glows once.",
+      "rows": [
+        {
+          "id": "69f24cab61b7c5fe.png",
+          "title": "PokéFinder",
+          "row": 0,
+          "subject": "PokéFinder"
+        },
+        {
+          "id": "c1951c39767f67cb.png",
+          "title": "FishingNav",
+          "row": 1,
+          "subject": "Fishing navigator"
+        },
+        {
+          "id": "dc2e54c367157df0.png",
+          "title": "Poké Staff",
+          "row": 2,
+          "subject": "Poké Staff"
+        },
+        {
+          "id": "1d218e524852e0b0.png",
+          "title": "Ruins and Dungeons",
+          "row": 3,
+          "subject": "Ruined dungeon entrance"
+        }
+      ]
+    },
+    {
+      "file": "travel-08.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Dungeon spawner. A short underground brick gateway opening onto a conspicuous black iron spawner cage with an orange glow inside; caged ember flickers.\nRow 2 across ALL four columns: Mineshaft. Chunky square timber pithead with diagonal supports, bronze rails pointing out of the black tunnel, one tiny lantern; lantern flickers.\nRow 3 across ALL four columns: Stronghold. Distinctive square jade-green End portal frame on charcoal brick floor, with black-violet starry portal opening, one short stone arch behind; aperture twinkles.\nRow 4 across ALL four columns: Jungle temple. Squat mossy stepped pyramid, gold square door, bold leaf frond flanking one side; single vine tip sways.",
+      "rows": [
+        {
+          "id": "6d07bb80509984d9.png",
+          "title": "A Better Dungeon",
+          "row": 0,
+          "subject": "Dungeon spawner"
+        },
+        {
+          "id": "3cde9afdd1f00298.png",
+          "title": "Better Mineshaft",
+          "row": 1,
+          "subject": "Mineshaft"
+        },
+        {
+          "id": "b51b8ec7876d1582.png",
+          "title": "Better Stronghold",
+          "row": 2,
+          "subject": "Stronghold"
+        },
+        {
+          "id": "642af4543147afe6.png",
+          "title": "Better Jungle Temple",
+          "row": 3,
+          "subject": "Jungle temple"
+        }
+      ]
+    },
+    {
+      "file": "travel-09.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Witch hut. Crooked dark plum-roof cabin on prominent stilts with a bubbling green cauldron in the porch gap; single lime bubble grows and pops.\nRow 2 across ALL four columns: Dungeon crawl. Cutaway of a grey spiral stone stair curling in three distinct levels downward into a deep violet shaft; torch flickers midway.\nRow 3 across ALL four columns: Illager fort. Blocky dark timber palisade gate under crimson banner, two pointed stakes on either side; banner corner flutters.\nRow 4 across ALL four columns: Bandit towers. Two narrow rust-red crenellated towers joined by an unmistakable high wooden bridge with open gap beneath; small blue flag waves.",
+      "rows": [
+        {
+          "id": "b9c8736acda3ca9a.png",
+          "title": "Witch Hut",
+          "row": 0,
+          "subject": "Witch hut"
+        },
+        {
+          "id": "92ea0ff7f4dfc28f.png",
+          "title": "Dungeon Crawl",
+          "row": 1,
+          "subject": "Dungeon crawl"
+        },
+        {
+          "id": "c41bdea8455347cb.png",
+          "title": "Illager Fort",
+          "row": 2,
+          "subject": "Illager fort"
+        },
+        {
+          "id": "ab8f9e51970b5123.png",
+          "title": "Bandit Towers",
+          "row": 3,
+          "subject": "Bandit towers"
+        }
+      ]
+    },
+    {
+      "file": "travel-10.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Keep Kayra. Warm grey forest castle with TWO blue conical turrets nestled against one tall evergreen; little yellow window gleams.\nRow 2 across ALL four columns: Monastery. An ivory-walled red-roof cloister on an angular honey-colored cliff ledge, one bell visible under an arch; bell swings slightly.\nRow 3 across ALL four columns: Plague asylum. Grim tall green-grey asylum facade with boarded door, steep black central roof and two sickly green windows; one window flickers.\nRow 4 across ALL four columns: Palace of Shiraz. Golden desert palace with a large turquoise onion dome and two small ivory minarets surrounding a deep arched doorway; finial glints.",
+      "rows": [
+        {
+          "id": "c3fef3c8e68e984b.png",
+          "title": "Keep Kayra",
+          "row": 0,
+          "subject": "Keep Kayra"
+        },
+        {
+          "id": "fd28c9885f68c62a.png",
+          "title": "Monastery",
+          "row": 1,
+          "subject": "Monastery"
+        },
+        {
+          "id": "36964d83c389fbb3.png",
+          "title": "Plague Asylum",
+          "row": 2,
+          "subject": "Plague asylum"
+        },
+        {
+          "id": "e11a5a6e223937ee.png",
+          "title": "Palace of Shiraz",
+          "row": 3,
+          "subject": "Palace of Shiraz"
+        }
+      ]
+    },
+    {
+      "file": "travel-11.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Thornborn towers. One tall dark ruined tower with one smaller broken side tower tangled in thick vivid green thorn vines; red thorn flower opens.\nRow 2 across ALL four columns: Undead pirate ship. Side silhouette of haunted wooden galleon with one large ragged bone-white sail, purple spectral portholes and blue wave underneath; sail hem flutters.\nRow 3 across ALL four columns: Heavenly Challenger. Brass-and-wood gondola suspended beneath an elongated magenta and ivory dirigible envelope, small propeller tail. Propeller rotates in place.\nRow 4 across ALL four columns: Mushroom village. Bright red cap cottage with bold white spots, cream stalk door and a tiny neighboring orange cap hut; a golden window pulses.",
+      "rows": [
+        {
+          "id": "ea6514bd613604ac.png",
+          "title": "Thornborn Towers",
+          "row": 0,
+          "subject": "Thornborn towers"
+        },
+        {
+          "id": "e0f2fe6fabc1dae8.png",
+          "title": "Undead Pirate Ship",
+          "row": 1,
+          "subject": "Undead pirate ship"
+        },
+        {
+          "id": "14aaa69d47044d66.png",
+          "title": "Heavenly Challenger",
+          "row": 2,
+          "subject": "Heavenly Challenger"
+        },
+        {
+          "id": "fee90f06452f7d68.png",
+          "title": "Mushroom Village",
+          "row": 3,
+          "subject": "Mushroom village"
+        }
+      ]
+    },
+    {
+      "file": "travel-12.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Towns and Towers village. Compact ochre-roof timbered cottage next to a taller bell tower, red pennant crowning it; pennant waves.\nRow 2 across ALL four columns: Sky village. Two tiny teal roof huts on a clearly floating green island with dangling rock points and a little cloud hugging one edge; cloud shifts one pixel.\nRow 3 across ALL four columns: Tidal town. Blue-roof stilt cottages joined by a small dock above a bright cyan wave, one tied red buoy; buoy bobs.\nRow 4 across ALL four columns: Underground village. Tiny warmly-lit yellow doorway and stone cottage embedded within a dark rocky cave cross-section, with lavender crystal and stalactite; window glows.",
+      "rows": [
+        {
+          "id": "a2ac651d78b26ce1.png",
+          "title": "Towns and Towers",
+          "row": 0,
+          "subject": "Towns and Towers village"
+        },
+        {
+          "id": "33951d0945421624.png",
+          "title": "Sky Village",
+          "row": 1,
+          "subject": "Sky village"
+        },
+        {
+          "id": "863a154f439ee046.png",
+          "title": "Tidal Town",
+          "row": 2,
+          "subject": "Tidal town"
+        },
+        {
+          "id": "cb1fb48e1c3640ca.png",
+          "title": "Underground Village",
+          "row": 3,
+          "subject": "Underground village"
+        }
+      ]
+    },
+    {
+      "file": "travel-13.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Witch village. A trio of pointed violet rooflines, one central orange window and green potion smoke; smoke curls by one pixel.\nRow 2 across ALL four columns: Watchtower. Tall narrow timber lookout with a single open wooden platform, gold roof, ladder on one side and a teal pennant. Pennant flutters.\nRow 3 across ALL four columns: Tavern. Welcoming amber half-timbered inn with a projecting sign shaped like a frothy copper mug, red tile roof; lit window flickers.\nRow 4 across ALL four columns: Mausoleum. Low blue-grey stone tomb facade, triangular pediment, ivory pillars and a deep purple sealed door displaying a silver skull relief; door jewel glimmers.",
+      "rows": [
+        {
+          "id": "e7e92f89c26fb4f5.png",
+          "title": "Witch Village",
+          "row": 0,
+          "subject": "Witch village"
+        },
+        {
+          "id": "3979fbbacf1d5b89.png",
+          "title": "Watchtower",
+          "row": 1,
+          "subject": "Watchtower"
+        },
+        {
+          "id": "539d708aa5b31af6.png",
+          "title": "The Tavern",
+          "row": 2,
+          "subject": "Tavern"
+        },
+        {
+          "id": "51469a258c1fcb12.png",
+          "title": "Mausoleum",
+          "row": 3,
+          "subject": "Mausoleum"
+        }
+      ]
+    },
+    {
+      "file": "travel-14.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Badlands pyramid. Terracotta stepped pyramid in clear alternating bands of orange, pale sand and russet, dark central entry with turquoise inlay; inlay glints.\nRow 2 across ALL four columns: Abandoned prairie house. Sagging sun-baked clapboard cottage with one missing roof tile, crooked porch and a scrub-gold tuft of grass; tuft bends in breeze.\nRow 3 across ALL four columns: Aspen manor. Stately dark blue multi-gabled mansion framed by one unmistakable white-barked golden aspen; yellow leaves rustle.\nRow 4 across ALL four columns: Rugged fossil. Ivory curled rib cage and angular giant reptile skull half embedded in chunky rust-brown outcrop. One tiny ochre dust mote shifts along its base.",
+      "rows": [
+        {
+          "id": "82ebe93de21f5c99.png",
+          "title": "Badlands Pyramid",
+          "row": 0,
+          "subject": "Badlands pyramid"
+        },
+        {
+          "id": "5c9885c026ae8ec4.png",
+          "title": "Abandoned Prairie House",
+          "row": 1,
+          "subject": "Abandoned prairie house"
+        },
+        {
+          "id": "af5f5eeabecc7748.png",
+          "title": "Aspen Manor",
+          "row": 2,
+          "subject": "Aspen manor"
+        },
+        {
+          "id": "76dbd64af19f3e29.png",
+          "title": "Rugged Fossil",
+          "row": 3,
+          "subject": "Rugged fossil"
+        }
+      ]
+    },
+    {
+      "file": "travel-15.png",
+      "prompt": "Use case: stylized-concept. Create a single square transparent animation atlas of original hand-pixeled 1990s RPG inventory and quest sprites. REGULAR 4-COLUMN × 4-ROW GRID: precisely sixteen isolated sprites, four horizontal rows, FOUR copies of the same icon across EACH row. Four columns are consecutive subtle animation poses; each row is a different icon as specified. Use a truly clear alpha background everywhere else. No written text, letters, numbers, captions, borders, grid lines, blocks, extra floating ornaments, backdrop, ground shadow or checker pattern. Each identical square cell has its sprite centered on its exact middle and filling at most 65–70% of cell width and height. Equal spacing and wide clear gutters on all four sides, including image edges. Anchor the main silhouette and scale identically throughout each row. Frame 1 resting pose, frame 2 slight change, frame 3 fullest movement, frame 4 returning. Keep movement small, intentional, centered on the named detail. Bright clean original art exactly like a 24–32 pixel SNES inventory icon enlarged nearest neighbor, chunky aligned square pixels, one dark ink navy pixel outline, focused ivory highlights, 7–12 solid local colors, clear shapes on a dark quest menu at 24 px, no gradients, no soft edges, no painterly or 3D shading. Make miniature structures read as iconic storybook building silhouettes, never full scenes. No giant spread between frames.\nRow 1 across ALL four columns: Medieval fort. Broad squat stone gatehouse with silver battlements, two square bastions, central oak portcullis and a royal blue banner; banner tip flaps.\nRow 2 across ALL four columns: Apotheosis boss tower. Ominous black slender crenellated tower with vivid purple boss crystal glowing above an arch and two tiny red side windows; purple crystal pulses.\nRow 3 across ALL four columns: Apotheosis boss tower. Ominous black slender crenellated tower with vivid purple boss crystal glowing above an arch and two tiny red side windows; purple crystal pulses.\nRow 4 across ALL four columns: Apotheosis boss tower. Ominous black slender crenellated tower with vivid purple boss crystal glowing above an arch and two tiny red side windows; purple crystal pulses.",
+      "rows": [
+        {
+          "id": "905b8dc3a404fb8d.png",
+          "title": "Medieval Fort",
+          "row": 0,
+          "subject": "Medieval fort"
+        },
+        {
+          "id": "603d2953eb103703.png",
+          "title": "Boss Tower",
+          "row": 1,
+          "subject": "Apotheosis boss tower"
+        }
+      ]
+    }
+  ]
+}

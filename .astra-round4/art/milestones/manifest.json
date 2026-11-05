@@ -1,14 +1,104 @@
 {
   "sheets": [
     {
+      "file": "milestone-atlas-01.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — A copper capture-ball pin resting on one bright green sprout, the first ten catches. In all four columns keep this same motif. Four successive motion states: One cream pixel travels across the red ball dome.\nROW 2 — A silver pin holding a blue-and-red capture ball above two short leaf sprigs, fifty catches. In all four columns keep this same motif. Four successive motion states: A moving cyan highlight crosses the silver rim.\nROW 3 — A gold circular medal with one centered black-and-yellow capture ball and three top notches, one hundred catches. In all four columns keep this same motif. Four successive motion states: Three gold rim notches light one after another.\nROW 4 — A faceted emerald shield with a dark blue capture ball inset and gold corner clasps, two hundred fifty catches. In all four columns keep this same motif. Four successive motion states: A cream glint progresses across the green shield facets.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "76c1c404963e797e.png",
+          "title": "Ten Friends",
+          "row": 0,
+          "subject": "A copper capture-ball pin resting on one bright green sprout, the first ten catches."
+        },
+        {
+          "id": "f26149e45fbbca73.png",
+          "title": "Fifty Strong",
+          "row": 1,
+          "subject": "A silver pin holding a blue-and-red capture ball above two short leaf sprigs, fifty catches."
+        },
+        {
+          "id": "48d72223e6bad663.png",
+          "title": "The Hundred Club",
+          "row": 2,
+          "subject": "A gold circular medal with one centered black-and-yellow capture ball and three top notches, one hundred catches."
+        },
+        {
+          "id": "3e0462e3e877716d.png",
+          "title": "Collector",
+          "row": 3,
+          "subject": "A faceted emerald shield with a dark blue capture ball inset and gold corner clasps, two hundred fifty catches."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-02.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — An ornate gold trophy cup holding a purple capture ball, with two broad green laurels and a lilac jewel, five hundred catches. In all four columns keep this same motif. Four successive motion states: The jewel changes from purple to lilac to cream, then back to lilac.\nROW 2 — A single red training glove with a bronze victory pin, ten battle wins. In all four columns keep this same motif. Four successive motion states: A warm two-pixel glint crawls across the bronze pin.\nROW 3 — Two red and blue padded training gloves touching over a silver victory chevron, fifty battle wins. In all four columns keep this same motif. Four successive motion states: The fixed silver chevron flashes from its left arm to its right.\nROW 4 — A gold arena champion's crown above a red-and-indigo victory banner with a central star, two hundred battle wins. In all four columns keep this same motif. Four successive motion states: The star's large cream highlight crosses three facets.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "69c34042fe701db2.png",
+          "title": "Living Pokédex Hunter",
+          "row": 0,
+          "subject": "An ornate gold trophy cup holding a purple capture ball, with two broad green laurels and a lilac jewel, five hundred catches."
+        },
+        {
+          "id": "5014c39ad9155ca3.png",
+          "title": "Ten Victories",
+          "row": 1,
+          "subject": "A single red training glove with a bronze victory pin, ten battle wins."
+        },
+        {
+          "id": "7a19f67ff1fc5227.png",
+          "title": "Battle Hardened",
+          "row": 2,
+          "subject": "Two red and blue padded training gloves touching over a silver victory chevron, fifty battle wins."
+        },
+        {
+          "id": "3892c233f2f04582.png",
+          "title": "Arena Legend",
+          "row": 3,
+          "subject": "A gold arena champion's crown above a red-and-indigo victory banner with a central star, two hundred battle wins."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-03.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — A pale green evolution stone cradled by a sprout with two broad leaves, five evolutions. In all four columns keep this same motif. Four successive motion states: A pale glint travels up the green stone and the top leaf tip nods one pixel.\nROW 2 — A gold-rimmed wheel carrying three evolution stones in green blue and orange, twenty-five evolutions. In all four columns keep this same motif. Four successive motion states: One cream glint cycles from the green stone to blue to orange.\nROW 3 — A sturdy blue ascending double-chevron level badge set into a silver shield, halfway milestone. In all four columns keep this same motif. Four successive motion states: The lower chevron lights, then the upper chevron lights, then both briefly brighten.\nROW 4 — A three-chevron gold mastery badge beneath a violet crown gem and small gold crown, maximum level. In all four columns keep this same motif. Four successive motion states: A cream highlight moves from the lowest gold chevron to the crown gem.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "a2d75bb949900b3d.png",
+          "title": "Five Evolutions",
+          "row": 0,
+          "subject": "A pale green evolution stone cradled by a sprout with two broad leaves, five evolutions."
+        },
+        {
+          "id": "37401aa565276e01.png",
+          "title": "Evolution Expert",
+          "row": 1,
+          "subject": "A gold-rimmed wheel carrying three evolution stones in green blue and orange, twenty-five evolutions."
+        },
+        {
+          "id": "ea07e270cfde7463.png",
+          "title": "Level 50",
+          "row": 2,
+          "subject": "A sturdy blue ascending double-chevron level badge set into a silver shield, halfway milestone."
+        },
+        {
+          "id": "f8e477086ea65524.png",
+          "title": "Level 100",
+          "row": 3,
+          "subject": "A three-chevron gold mastery badge beneath a violet crown gem and small gold crown, maximum level."
+        }
+      ]
+    },
+    {
       "file": "milestone-atlas-04.png",
-      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — An unbroken cream egg with a single tiny leaf and a tall gold champion crown above it, maximum level while unevolved. In all four columns keep this same motif. Four successive motion states: An ivory glint rolls across the unbroken eggshell while the crown stays fixed.\nROW 2 — One bright cyan four-point shiny sparkle above a red-and-ivory capture ball, a first shiny catch. In all four columns keep this same motif. Four successive motion states: The small centered sparkle opens from a cross to a four-point star and closes.\nROW 3 — A violet capture ball surrounded by a crown of five gold star-shaped sparkles, five shiny catches. In all four columns keep this same motif. Four successive motion states: The gold glint moves between the stars while the ball stays fixed.\nROW 4 — A compact curved red fishing rod with a red-and-white ball bobber and one blue fish breaking a cyan ripple. In all four columns keep this same motif. Four successive motion states: The round bobber bobs one logical pixel, then the fish's blue tail flicks and settles.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target: a square 4x4 game sprite animation atlas on a genuinely transparent background. Correct the four icons in TOP ROW ONLY for the quest 'Darwin? Who's That?' (raise an unevolved Pokémon to maximum level). Replace the crowned egg with an original pixel-art, small crowned Bulbasaur: low squat teal four-legged body, recognizable dark green spots, broad head and a closed green plant bulb on its back. The small gold crown marks level mastery. Draw the same simple character and crown in all four top-row cells with the same pose, scale, alignment, silhouette and baseline, keeping each icon fully inside its own cell with generous transparent margins. Animate only a small high-contrast cream glint moving from left crown point in column1 to center in column2 to right point in column3 and top leaf in column4. Hand-placed chunky logical 32x32 pixel artwork, thick navy outline, up to twelve bright flat colors, hard nearest edges, no blur. Preserve the source's other THREE ROWS and their left-to-right frame differences exactly: red capture ball with cyan shiny sparkle, purple capture ball with five gold stars, red rod plus tiny blue fish. Keep original natural alpha in all empty spaces. Exactly four rows, four columns, sixteen icons; no labels or grid lines. No external sprites or copied official Pokémon artwork.",
       "rows": [
         {
           "id": "6be668d48a5b3027.png",
           "title": "Darwin? Who's That?",
           "row": 0,
-          "subject": "An unbroken cream egg with a single tiny leaf and a tall gold champion crown above it, maximum level while unevolved."
+          "subject": "A crowned, unevolved Bulbasaur with a closed green bulb and a glint moving across its gold crown, maximum level without evolving."
         },
         {
           "id": "96918b27e8d00208.png",
@@ -117,6 +207,186 @@
           "title": "Pokémon Jockey",
           "row": 3,
           "subject": "A tan riding saddle with a russet strap fitted to a small blue-and-cream mount silhouette in side view, one stirrup visible."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-08.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — A little green fenced pasture block with one round creature grazing and one tiny gold flower, pastoral silhouette. In all four columns keep this same motif. Four successive motion states: The grazing head dips slightly while the fence and flower stay still.\nROW 2 — A huge rounded blue Wailord-like whale with a cream striped belly, a tiny curved fishing line just above its blowhole and a cyan water spout. In all four columns keep this same motif. Four successive motion states: The square water spout rises in four small steps above the steady whale.\nROW 3 — A gold workbench rack displaying three clearly different capture balls: red-and-ivory, blue-and-red, black-and-yellow. In all four columns keep this same motif. Four successive motion states: A small square highlight steps from one ball to the next.\nROW 4 — A woven green basket heaped with one blue round berry, one red pointed berry and one yellow pear-shaped berry. In all four columns keep this same motif. Four successive motion states: The red berry and blue berry receive alternating crisp glints.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "1995ba4e08f1ca5f.png",
+          "title": "Free Roam",
+          "row": 0,
+          "subject": "A little green fenced pasture block with one round creature grazing and one tiny gold flower, pastoral silhouette."
+        },
+        {
+          "id": "c7307743cb9012aa.png",
+          "title": "Call Me Ishmael!",
+          "row": 1,
+          "subject": "A huge rounded blue Wailord-like whale with a cream striped belly, a tiny curved fishing line just above its blowhole and a cyan water spout."
+        },
+        {
+          "id": "fb918efda55ce997.png",
+          "title": "Poké Ball Maniac",
+          "row": 2,
+          "subject": "A gold workbench rack displaying three clearly different capture balls: red-and-ivory, blue-and-red, black-and-yellow."
+        },
+        {
+          "id": "96d2616b0a435224.png",
+          "title": "Oops, All Berries!",
+          "row": 3,
+          "subject": "A woven green basket heaped with one blue round berry, one red pointed berry and one yellow pear-shaped berry."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-09.png",
+      "prompt": "Use case: precise-object-edit and background-extraction. Image 1 is a four-row, four-column pixel-art animation atlas of sixteen icons. Remove every trace of colored or gray haze, speckle, halo, noise, gradient and shadow OUTSIDE each icon's hard midnight-navy outline. All space between and around the sixteen icons must be genuinely completely transparent alpha zero. Clean sharp pixel-perfect cutout edges with no fringe. Preserve the proper 4x4 layout and the four distinct row subjects: top row teal technical-machine registration machine with gold, blue, purple discs; second row mosaic butterfly with pink, cyan, orange, violet wing panels; third row tan hollow cicada shell and white wings with a gold halo floating ONLY immediately above that shell head; bottom row dark stone raid den with magenta center beam. Give each object generous transparent padding within its own equal-size cell. Set each subject slightly smaller if necessary so it uses no more than 70% of its cell. Keep the exact same anchor, scale and outline across each row's four columns. Preserve the intended clear left-to-right motion states of the upper machine's scan bar, third row gold-ring glint, and bottom raid beam. Improve ONLY the motion of row2 butterfly: column1 a pale pink two-logical-pixel diamond on its upper left wing, column2 this patch is bright cream, column3 upper left returns pink while a bright cream two-pixel diamond appears on upper right cyan wing, column4 the glint moves to the lower right violet wing. Four easy-to-distinguish states at 32px. Original chunky opaque 32x32 pixel-art forms, bold flat color, hard square corners, no soft edges, no background color, no floating particles, no writing or outlines of grid cells. Maintain all 16 icons and their exact row order.",
+      "rows": [
+        {
+          "id": "f708d898b09bcd5d.png",
+          "title": "Collector's Discography",
+          "row": 0,
+          "subject": "Three overlapping gold, cyan and violet technical-machine discs at the mouth of a compact teal registration machine."
+        },
+        {
+          "id": "e263d6f8152c626c.png",
+          "title": "Vivillionaire",
+          "row": 1,
+          "subject": "A compact butterfly with four large mosaic wing panels in pink, cyan, orange and violet, a collection of Vivillon wing patterns."
+        },
+        {
+          "id": "3afb466a7ac53389.png",
+          "title": "Ghost in the Shell",
+          "row": 2,
+          "subject": "A floating tan hollow cicada shell with two split white wings, a black central opening and a small gold halo above, Shedinja-inspired."
+        },
+        {
+          "id": "6a28015798011cba.png",
+          "title": "Your First Raid",
+          "row": 3,
+          "subject": "A low dark stone raid den with a single upright magenta beam and two glowing square shards at its base, first raid entrance."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-10.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — A simple rough charcoal raid-den shard on a round copper base, one large pink crystal spike, tier one. In all four columns keep this same motif. Four successive motion states: The single pink spike pulses between deep rose and pale pink.\nROW 2 — A twin-peaked rose raid crystal on a silver-edged circular base, two clear short crystal points, tier two. In all four columns keep this same motif. Four successive motion states: A bright highlight alternates between the two points.\nROW 3 — A triangular cluster of three crimson raid crystals with a gold-rimmed triangular base, tier three. In all four columns keep this same motif. Four successive motion states: An ivory glint steps left point, center point, right point.\nROW 4 — A dark-blue four-point shield inset with a hot-pink raid crystal and four steel corner rivets, tier four. In all four columns keep this same motif. Four successive motion states: The four corner rivets illuminate clockwise around the crystal.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "103cfc56f55d7c27.png",
+          "title": "Tier 1: First Steps",
+          "row": 0,
+          "subject": "A simple rough charcoal raid-den shard on a round copper base, one large pink crystal spike, tier one."
+        },
+        {
+          "id": "6f9875fc1eff5649.png",
+          "title": "Tier 2: Raid Buddy",
+          "row": 1,
+          "subject": "A twin-peaked rose raid crystal on a silver-edged circular base, two clear short crystal points, tier two."
+        },
+        {
+          "id": "4f152910073cfe71.png",
+          "title": "Tier 3: A Formidable Foe",
+          "row": 2,
+          "subject": "A triangular cluster of three crimson raid crystals with a gold-rimmed triangular base, tier three."
+        },
+        {
+          "id": "8b9608cba3bf2600.png",
+          "title": "Tier 4: Raid Veteran",
+          "row": 3,
+          "subject": "A dark-blue four-point shield inset with a hot-pink raid crystal and four steel corner rivets, tier four."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-11.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — A five-point gold star medal framing a bright magenta raid crystal, one broad purple ribbon under it, tier five. In all four columns keep this same motif. Four successive motion states: One pale highlight travels around three star tips and across the crystal.\nROW 2 — A hexagonal silver-and-violet raid crest with six dark facets and a vivid crimson crystal at center, tier six. In all four columns keep this same motif. Four successive motion states: Three adjacent silver facets catch a moving cyan highlight.\nROW 3 — A majestic black-and-gold seven-point crown crest encircling a tall prismatic magenta raid crystal, tier seven. In all four columns keep this same motif. Four successive motion states: Crystal highlight sweeps cyan, ivory and pink while two gold crown tips glint.\nROW 4 — A green healing heart, small red attack spark and blue defense shield clustered as three distinct raid-cheer tokens. In all four columns keep this same motif. Four successive motion states: The red spark brightens, then the blue shield, then the green heart.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "65a0006d8364e5fc.png",
+          "title": "Tier 5: Raid Master",
+          "row": 0,
+          "subject": "A five-point gold star medal framing a bright magenta raid crystal, one broad purple ribbon under it, tier five."
+        },
+        {
+          "id": "d4dccd7f11aa2eca.png",
+          "title": "Tier 6: Even Further Beyond",
+          "row": 1,
+          "subject": "A hexagonal silver-and-violet raid crest with six dark facets and a vivid crimson crystal at center, tier six."
+        },
+        {
+          "id": "253ca2b565a22867.png",
+          "title": "Tier 7: The Mightiest",
+          "row": 2,
+          "subject": "A majestic black-and-gold seven-point crown crest encircling a tall prismatic magenta raid crystal, tier seven."
+        },
+        {
+          "id": "502d5eefb35687e4.png",
+          "title": "The Great Friend",
+          "row": 3,
+          "subject": "A green healing heart, small red attack spark and blue defense shield clustered as three distinct raid-cheer tokens."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-12.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — One large angular magenta raid shard held in a charcoal charging cradle with a vertical row of three gold charge pixels. In all four columns keep this same motif. Four successive motion states: Gold pixels light from bottom to top as the shard interior brightens.\nROW 2 — A gold catching-charm pendant shaped like a small capture ball, a red cord loop and two teal luck beads. In all four columns keep this same motif. Four successive motion states: The ball clasp and the nearest luck bead glint in sequence.\nROW 3 — A prismatic rainbow mega stone seated in a black raid den base with two bold pink crystal spikes. In all four columns keep this same motif. Four successive motion states: The energy spiral inside the rainbow stone advances one facet per frame.\nROW 4 — An oversized red capture ball under three purple storm wisps, with a dark pink raid den crystal base. In all four columns keep this same motif. Four successive motion states: One magenta wisp brightens after another, then the ball dome glints.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "ca39c6e217f763fc.png",
+          "title": "Raid Energy",
+          "row": 0,
+          "subject": "One large angular magenta raid shard held in a charcoal charging cradle with a vertical row of three gold charge pixels."
+        },
+        {
+          "id": "1a06da1ba2c7aa16.png",
+          "title": "Catching Charm",
+          "row": 1,
+          "subject": "A gold catching-charm pendant shaped like a small capture ball, a red cord loop and two teal luck beads."
+        },
+        {
+          "id": "f0a3e8dc4a41e695.png",
+          "title": "Overflowing With Power",
+          "row": 2,
+          "subject": "A prismatic rainbow mega stone seated in a black raid den base with two bold pink crystal spikes."
+        },
+        {
+          "id": "871f606e0e2e9550.png",
+          "title": "A Dynamax Adventure",
+          "row": 3,
+          "subject": "An oversized red capture ball under three purple storm wisps, with a dark pink raid den crystal base."
+        }
+      ]
+    },
+    {
+      "file": "milestone-atlas-13.png",
+      "prompt": "Use case: stylized-concept. Generate a production animation atlas for a bright Minecraft-style monster-collecting quest book. One SQUARE transparent image containing EXACTLY SIXTEEN sprites arranged in a perfectly regular FOUR-COLUMN by FOUR-ROW grid. Every row is a DIFFERENT quest item design; within that row the four cells are the SAME design in four consecutive restrained animation frames. Read each row left to right (A, B, C, D), then the next row below. Equal invisible cells. Centers at coordinates 12.5%, 37.5%, 62.5%, 87.5% on both axes. Render each subject only once per cell, centered and complete, within the middle 65–70% of that cell. Leave clear transparent space on ALL FOUR sides of EVERY sprite. Do not draw grid lines, panel edges, sheets of paper, captions, text, numbers, labels, floating background dots, glow haze, or a checkerboard. No other art anywhere. GENUINE transparent alpha. Pixel style: each icon reads like an original hand-placed 32x32 low-resolution game sprite with chunky logical pixel stair steps, thick crisp midnight-navy outlines, simple clear silhouettes and a shared small set of 8–12 flat opaque colors for all 4 frames of a row. Rendered enlarged with square nearest-neighbor hard edges, zero antialias, no gradients or diffuse light. Fixed scale, angle, shape, centered baseline and placement in each row. Each row must show at least two unmistakably different animation states even at 24 pixels. Move only the described bright internal clusters or very small parts. Do not change designs between columns, do not exchange rows and columns. Original art from scratch. No official sprites, other artists' work or generic book icons.\n\nFOUR ROWS, from TOP to BOTTOM:\nROW 1 — A faceted cyan crystalline crown rising from a charcoal raid den with bright pink side crystals, Tera raid. In all four columns keep this same motif. Four successive motion states: Ivory highlights travel from left crown point through the center to right point.\nROW 2 — A gold shiny star glint above a violet capture ball nested in a small hot-pink raid crystal bed. In all four columns keep this same motif. Four successive motion states: The shiny star opens and closes while the ball center flickers pale gold.\nROW 3 — An open navy gym badge case displaying three large original league badges in green, red and gold. In all four columns keep this same motif. Four successive motion states: A sharp cream glint moves across the three badge faces.\nROW 4 — A red trainer cap with a white round capture-ball patch and a slate-blue first-battle ticket behind the cap. In all four columns keep this same motif. Four successive motion states: A crisp moving glint crosses the ticket corner and the cap patch button.\n\nFinal check: 4 columns and 4 rows, exactly 16 complete cutout icons; each row repeats its own item through four subtly different frames; uniform transparent margins and no writing.",
+      "rows": [
+        {
+          "id": "60af9a0f77e61914.png",
+          "title": "The Treasure of Area Zero",
+          "row": 0,
+          "subject": "A faceted cyan crystalline crown rising from a charcoal raid den with bright pink side crystals, Tera raid."
+        },
+        {
+          "id": "100fbb717712af5e.png",
+          "title": "A Sparkling Success",
+          "row": 1,
+          "subject": "A gold shiny star glint above a violet capture ball nested in a small hot-pink raid crystal bed."
+        },
+        {
+          "id": "d241f3df3a963772.png",
+          "title": "The Trainer League",
+          "row": 2,
+          "subject": "An open navy gym badge case displaying three large original league badges in green, red and gold."
+        },
+        {
+          "id": "d2638c594107798d.png",
+          "title": "Radical Trainers",
+          "row": 3,
+          "subject": "A red trainer cap with a white round capture-ball patch and a slate-blue first-battle ticket behind the cap."
         }
       ]
     }

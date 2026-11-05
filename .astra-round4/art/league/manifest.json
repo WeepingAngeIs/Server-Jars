@@ -1,0 +1,304 @@
+{
+  "sheets": [
+    {
+      "file": "league-01.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Gunmetal octagonal Boulder pin, pale faceted stone ridge across its broad silver face. Animation left to right: one broad ridge facet catches light, finishing near the starting pose.\nROW 2 from top, all four cells: Single cobalt-blue Cascade water drop with pale cyan inset crescent. Animation left to right: cyan ripple slips around the lower inside curve, finishing near the starting pose.\nROW 3 from top, all four cells: Amber sunburst Thunder badge with a bright white central lightning spike. Animation left to right: one outer ray flashes at a time, finishing near the starting pose.\nROW 4 from top, all four cells: Rainbow flower pin, eight chunky differently colored petals around a gold disk. Animation left to right: a small shine travels across the petals, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "5414efcac4c44e3f.png",
+          "title": "Boulder Badge",
+          "row": 0,
+          "subject": "Gunmetal octagonal Boulder pin, pale faceted stone ridge across its broad silver face"
+        },
+        {
+          "id": "d369618f31902a84.png",
+          "title": "Cascade Badge",
+          "row": 1,
+          "subject": "Single cobalt-blue Cascade water drop with pale cyan inset crescent"
+        },
+        {
+          "id": "1d0e40674ffca741.png",
+          "title": "Thunder Badge",
+          "row": 2,
+          "subject": "Amber sunburst Thunder badge with a bright white central lightning spike"
+        },
+        {
+          "id": "426be2e86f631627.png",
+          "title": "Rainbow Badge",
+          "row": 3,
+          "subject": "Rainbow flower pin, eight chunky differently colored petals around a gold disk"
+        }
+      ]
+    },
+    {
+      "file": "league-02.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Pink heart Soul badge on a silver enamel rim with tiny violet poison droplet in center. Animation left to right: violet drop pulses, finishing near the starting pose.\nROW 2 from top, all four cells: Polished circular gold Marsh psychic pin with concentric amber center. Animation left to right: ring highlight travels clockwise, finishing near the starting pose.\nROW 3 from top, all four cells: Rich red flame-shaped Volcano badge with a gold flame cutout in its belly. Animation left to right: small gold inner flame flickers, finishing near the starting pose.\nROW 4 from top, all four cells: Emerald leaf Earth badge with three notched edges and gold diagonal vein. Animation left to right: vein lights from stem to tip, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "40a56b29d792d5ef.png",
+          "title": "Soul Badge",
+          "row": 0,
+          "subject": "Pink heart Soul badge on a silver enamel rim with tiny violet poison droplet in center"
+        },
+        {
+          "id": "16caa0826df7d24d.png",
+          "title": "Marsh Badge",
+          "row": 1,
+          "subject": "Polished circular gold Marsh psychic pin with concentric amber center"
+        },
+        {
+          "id": "571c2e7cb529810b.png",
+          "title": "Volcano Badge",
+          "row": 2,
+          "subject": "Rich red flame-shaped Volcano badge with a gold flame cutout in its belly"
+        },
+        {
+          "id": "c06a382e0cddaf94.png",
+          "title": "Earth Badge",
+          "row": 3,
+          "subject": "Emerald leaf Earth badge with three notched edges and gold diagonal vein"
+        }
+      ]
+    },
+    {
+      "file": "league-03.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Lorelei's personal ice crest: burgundy-red oval glasses resting on a bright faceted blue ice shard. Animation left to right: ice facet catches a shifting white glint, finishing near the starting pose.\nROW 2 from top, all four cells: Bruno's personal fighting crest: tan clenched fist wrapped in white training tape with a red belt tail. Animation left to right: short red belt end flicks once, finishing near the starting pose.\nROW 3 from top, all four cells: Agatha's personal ghost crest: a crooked honey-colored walking cane with a wide lilac ghost-wisp curled around its foot. Animation left to right: ghost-wisp blinks then opens its eyes, finishing near the starting pose.\nROW 4 from top, all four cells: Lance's personal dragon crest: scarlet swept cape folded around an indigo dragon-wing brooch, gold fastening. Animation left to right: scarlet cape corner flutters a single pixel, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "89e1f322356d01ee.png",
+          "title": "Elite Four: Lorelei",
+          "row": 0,
+          "subject": "Lorelei's personal ice crest: burgundy-red oval glasses resting on a bright faceted blue ice shard"
+        },
+        {
+          "id": "dba5b681d9137e1b.png",
+          "title": "Elite Four: Bruno",
+          "row": 1,
+          "subject": "Bruno's personal fighting crest: tan clenched fist wrapped in white training tape with a red belt tail"
+        },
+        {
+          "id": "3835281ae0a17d61.png",
+          "title": "Elite Four: Agatha",
+          "row": 2,
+          "subject": "Agatha's personal ghost crest: a crooked honey-colored walking cane with a wide lilac ghost-wisp curled around its foot"
+        },
+        {
+          "id": "c0b2f339e551c6e6.png",
+          "title": "Elite Four: Lance",
+          "row": 3,
+          "subject": "Lance's personal dragon crest: scarlet swept cape folded around an indigo dragon-wing brooch, gold fastening"
+        }
+      ]
+    },
+    {
+      "file": "league-04.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Terry's Kanto Champion insignia: an original gold trophy crowned with a clearly carved capital T on a red enamel plate. Animation left to right: one narrow reflection crosses trophy bowl, finishing near the starting pose.\nROW 2 from top, all four cells: Wayne's rival challenge insignia: two orange boomerang-shaped arrows curling around a teal trainer token stamped with W. Animation left to right: teal token's bright notch travels around the arrows, finishing near the starting pose.\nROW 3 from top, all four cells: Archer's Rocket-admin crest: original compact bust with angular cyan hair and white high collar over black uniform, scarlet pin. Animation left to right: one cyan fringe highlight moves and pin flashes, finishing near the starting pose.\nROW 4 from top, all four cells: Giovanni's boss crest: original compact head-and-collar icon, severe slick black hair and angular eyebrows, burnt-orange suit lapels. Animation left to right: one sharp eye briefly narrows, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "26b4bc6e071a2e29.png",
+          "title": "Kanto Champion",
+          "row": 0,
+          "subject": "Terry's Kanto Champion insignia: an original gold trophy crowned with a clearly carved capital T on a red enamel plate"
+        },
+        {
+          "id": "662a08e2f544771e.png",
+          "title": "Rival Wayne",
+          "row": 1,
+          "subject": "Wayne's rival challenge insignia: two orange boomerang-shaped arrows curling around a teal trainer token stamped with W"
+        },
+        {
+          "id": "bc7fc8efaff6124f.png",
+          "title": "Team Rocket",
+          "row": 2,
+          "subject": "Archer's Rocket-admin crest: original compact bust with angular cyan hair and white high collar over black uniform, scarlet pin"
+        },
+        {
+          "id": "dbc3484400ac51c7.png",
+          "title": "Behind the Scenes",
+          "row": 3,
+          "subject": "Giovanni's boss crest: original compact head-and-collar icon, severe slick black hair and angular eyebrows, burnt-orange suit lapels"
+        }
+      ]
+    },
+    {
+      "file": "league-05.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Trainer Red icon: red and ivory peaked cap with dark underside and warm black hair under brim, no face needed. Animation left to right: cap pin gleams then fades, finishing near the starting pose.\nROW 2 from top, all four cells: Trainer Blue icon: original compact bust with spiky orange hair, violet shirt collar and small gold pendant. Animation left to right: pendant glints while hair tips hold, finishing near the starting pose.\nROW 3 from top, all four cells: Coal badge: burnt-orange diamond-shaped carbon crystal cut into four facets in a charcoal-black frame, bright silver bevel. Animation left to right: one coal facet glints amber, finishing near the starting pose.\nROW 4 from top, all four cells: Forest badge: three broad evergreen treetops stepping upward inside a forest-green triangular brooch, pale green highlights. Animation left to right: small leaf glint moves between treetops, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "b2d205b21bb4b889.png",
+          "title": "Trainer Red",
+          "row": 0,
+          "subject": "Trainer Red icon: red and ivory peaked cap with dark underside and warm black hair under brim, no face needed"
+        },
+        {
+          "id": "3875adf5c5e929c8.png",
+          "title": "Trainer Blue",
+          "row": 1,
+          "subject": "Trainer Blue icon: original compact bust with spiky orange hair, violet shirt collar and small gold pendant"
+        },
+        {
+          "id": "412c1a3cd03f302f.png",
+          "title": "Coal Badge",
+          "row": 2,
+          "subject": "Coal badge: burnt-orange diamond-shaped carbon crystal cut into four facets in a charcoal-black frame, bright silver bevel"
+        },
+        {
+          "id": "c065fb1413047889.png",
+          "title": "Forest Badge",
+          "row": 3,
+          "subject": "Forest badge: three broad evergreen treetops stepping upward inside a forest-green triangular brooch, pale green highlights"
+        }
+      ]
+    },
+    {
+      "file": "league-06.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Cobble badge: angular rust-orange clenched knuckle made of three cobblestones bound by a gray steel rim. Animation left to right: warm highlight runs across knuckles, finishing near the starting pose.\nROW 2 from top, all four cells: Fen badge: blue water pool shaped like a shallow bowl between two bright silver reeds, cyan surface. Animation left to right: a one-pixel ripple moves across the pool, finishing near the starting pose.\nROW 3 from top, all four cells: Relic badge: purple and gold ghost-mask brooch with two bright eye slots and a trailing wispy edge. Animation left to right: eye slots glow then dim, finishing near the starting pose.\nROW 4 from top, all four cells: Mine badge: heavy steel-gray hexagonal ingot pin with a pale chrome seam, bronze rivets and a pick-shaped notch. Animation left to right: cool highlight travels over middle seam, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "1ce09ee648139982.png",
+          "title": "Cobble Badge",
+          "row": 0,
+          "subject": "Cobble badge: angular rust-orange clenched knuckle made of three cobblestones bound by a gray steel rim"
+        },
+        {
+          "id": "543efd31791bd0fa.png",
+          "title": "Fen Badge",
+          "row": 1,
+          "subject": "Fen badge: blue water pool shaped like a shallow bowl between two bright silver reeds, cyan surface"
+        },
+        {
+          "id": "5699e09021a4a245.png",
+          "title": "Relic Badge",
+          "row": 2,
+          "subject": "Relic badge: purple and gold ghost-mask brooch with two bright eye slots and a trailing wispy edge"
+        },
+        {
+          "id": "9123f14460b86adb.png",
+          "title": "Mine Badge",
+          "row": 3,
+          "subject": "Mine badge: heavy steel-gray hexagonal ingot pin with a pale chrome seam, bronze rivets and a pick-shaped notch"
+        }
+      ]
+    },
+    {
+      "file": "league-07.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Icicle badge: asymmetric triple point of translucent sky-blue ice with an ivory edge on a silver clasp. Animation left to right: single central ice tip flashes, finishing near the starting pose.\nROW 2 from top, all four cells: Beacon badge: bold golden lighthouse-shaped electric lamp pin with cyan beam and two small yellow sparks. Animation left to right: beam travels left to right, limited to the badge silhouette, finishing near the starting pose.\nROW 3 from top, all four cells: Aaron's Bug trainer crest: bright lime pointed hair tuft with raised forelock over a forest-green bug-eye visor, tiny amber beetle pin. Animation left to right: beetle's gold wings glint, finishing near the starting pose.\nROW 4 from top, all four cells: Bertha's Ground trainer crest: silver curled hair, teal scarf and an ochre earth gem on a small elderly trainer bust. Animation left to right: ochre pendant glimmers, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "5880ebbc1c6fde2f.png",
+          "title": "Icicle Badge",
+          "row": 0,
+          "subject": "Icicle badge: asymmetric triple point of translucent sky-blue ice with an ivory edge on a silver clasp"
+        },
+        {
+          "id": "f03586f68354a96e.png",
+          "title": "Beacon Badge",
+          "row": 1,
+          "subject": "Beacon badge: bold golden lighthouse-shaped electric lamp pin with cyan beam and two small yellow sparks"
+        },
+        {
+          "id": "e0403722dd0a4f1b.png",
+          "title": "Elite Four: Aaron",
+          "row": 2,
+          "subject": "Aaron's Bug trainer crest: bright lime pointed hair tuft with raised forelock over a forest-green bug-eye visor, tiny amber beetle pin"
+        },
+        {
+          "id": "6246f0153eb576ab.png",
+          "title": "Elite Four: Bertha",
+          "row": 3,
+          "subject": "Bertha's Ground trainer crest: silver curled hair, teal scarf and an ochre earth gem on a small elderly trainer bust"
+        }
+      ]
+    },
+    {
+      "file": "league-08.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Flint's Fire trainer crest: bold round red-orange curly afro over a simple confident face with amber collar. Animation left to right: warm sparkle shifts through curls, finishing near the starting pose.\nROW 2 from top, all four cells: Lucian's Psychic trainer crest: purple hair and rimless glasses over small open burgundy book. Animation left to right: one lens catches a bright reflection, finishing near the starting pose.\nROW 3 from top, all four cells: Cynthia champion crest: long pale-gold hair sweep framed by black-and-gold hair ornaments and fur collar, compact bust. Animation left to right: gold ornament glints, finishing near the starting pose.\nROW 4 from top, all four cells: Cynthia final rematch crest: dark blue Garchomp fin silhouette behind two small gold rematch stars and Cynthia's black-and-gold hair ornament. Animation left to right: the two stars glimmer in sequence, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "90eac63f22eaa1b8.png",
+          "title": "Elite Four: Flint",
+          "row": 0,
+          "subject": "Flint's Fire trainer crest: bold round red-orange curly afro over a simple confident face with amber collar"
+        },
+        {
+          "id": "80df01725d2e2412.png",
+          "title": "Elite Four: Lucian",
+          "row": 1,
+          "subject": "Lucian's Psychic trainer crest: purple hair and rimless glasses over small open burgundy book"
+        },
+        {
+          "id": "7878aa4366e59967.png",
+          "title": "Sinnoh Champion",
+          "row": 2,
+          "subject": "Cynthia champion crest: long pale-gold hair sweep framed by black-and-gold hair ornaments and fur collar, compact bust"
+        },
+        {
+          "id": "2dd27d9ef96e9915.png",
+          "title": "Sinnoh Legend",
+          "row": 3,
+          "subject": "Cynthia final rematch crest: dark blue Garchomp fin silhouette behind two small gold rematch stars and Cynthia's black-and-gold hair ornament"
+        }
+      ]
+    },
+    {
+      "file": "league-09.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Commander Mars insignia: original red bob-cut hair silhouette over white high collar with a ruby-red planet pin. Animation left to right: ruby planet pin pulses, finishing near the starting pose.\nROW 2 from top, all four cells: Commander Saturn insignia: dark teal double-pointed hair silhouette, white high collar, small pale-blue ringed-planet pin. Animation left to right: ringed planet's glint travels around rim, finishing near the starting pose.\nROW 3 from top, all four cells: Commander Jupiter insignia: magenta-purple swept high ponytail profile and white high collar, violet large striped planet pin. Animation left to right: short ponytail flick, planet band glints, finishing near the starting pose.\nROW 4 from top, all four cells: Cyrus boss crest: stern angular teal-blue hair over a dark gray high collar and a scarlet star in an open silver orbit. Animation left to right: scarlet center star gently brightens, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "adc14fcfb146e718.png",
+          "title": "Team Galactic",
+          "row": 0,
+          "subject": "Commander Mars insignia: original red bob-cut hair silhouette over white high collar with a ruby-red planet pin"
+        },
+        {
+          "id": "cea5aba30d092911.png",
+          "title": "Commander Saturn",
+          "row": 1,
+          "subject": "Commander Saturn insignia: dark teal double-pointed hair silhouette, white high collar, small pale-blue ringed-planet pin"
+        },
+        {
+          "id": "e053a261885a2bce.png",
+          "title": "Commander Jupiter",
+          "row": 2,
+          "subject": "Commander Jupiter insignia: magenta-purple swept high ponytail profile and white high collar, violet large striped planet pin"
+        },
+        {
+          "id": "f81c3f185d52dc1d.png",
+          "title": "Red Dwarf",
+          "row": 3,
+          "subject": "Cyrus boss crest: stern angular teal-blue hair over a dark gray high collar and a scarlet star in an open silver orbit"
+        }
+      ]
+    },
+    {
+      "file": "league-10.png",
+      "prompt": "Draw one production pixel-art ANIMATION SPRITE ATLAS on transparent square canvas. EXACTLY 16 icon drawings in a perfectly regular 4-COLUMN by 4-ROW evenly spaced array. Four distinct designs from top to bottom, each one repeated across its own horizontal row as four subtly different animation keyframes from left to right. Each icon must stay entirely inside the central 65% of its equal square cell. Centers at 12.5%, 37.5%, 62.5%, 87.5% of width and height. All gutters transparent and equal. Invisible grid. No text captions, numbers, grid lines, background tiles or opaque shadows. Each frame designed as a true tiny 28x28 pixel sprite enlarged nearest-neighbor. Large square pixel clusters, chunky navy contour and a few bright ivory edge lights for visibility on dark glass, clean flat limited 8-12 colors per sprite, no antialiasing, gradients, or glow. Make original hand-drawn game art for a Cobblemon trainer quest book. Use a different strong silhouette for each row. No copying existing sprite artwork. EXACT row specifications, 4 columns share one fixed shape and anchor, only the specified small moving details vary:\nROW 1 from top, all four cells: Wings badge: one broad cream-and-sky-blue sweeping wing with three bold feather notches and a silver clasp. Animation left to right: white glint travels along top feather, finishing near the starting pose.\nROW 2 from top, all four cells: Time badge: golden hourglass filled with violet sand, lavender psychic gem at center. Animation left to right: violet sand descends one pixel at a time, finishing near the starting pose.\nROW 3 from top, all four cells: Ring badge: thick red and white boxing-rope square with a small gold fist at its middle, unmistakable boxing ring. Animation left to right: gold fist catches light, finishing near the starting pose.\nROW 4 from top, all four cells: Battery badge: horizontal green battery with a bronze terminal and a bright yellow charge bar. Animation left to right: charge pulses along three flat segments, finishing near the starting pose.\nCheck before final: sixteen centered isolated pixel sprites total, four horizontal rows of four, no labels, genuine transparent empty space between every icon on all sides.",
+      "rows": [
+        {
+          "id": "786114c4b6099067.png",
+          "title": "Wings Badge",
+          "row": 0,
+          "subject": "Wings badge: one broad cream-and-sky-blue sweeping wing with three bold feather notches and a silver clasp"
+        },
+        {
+          "id": "4c2ad0b6ea2dcf86.png",
+          "title": "Time Badge",
+          "row": 1,
+          "subject": "Time badge: golden hourglass filled with violet sand, lavender psychic gem at center"
+        },
+        {
+          "id": "23aa34c4c4a19470.png",
+          "title": "Ring Badge",
+          "row": 2,
+          "subject": "Ring badge: thick red and white boxing-rope square with a small gold fist at its middle, unmistakable boxing ring"
+        },
+        {
+          "id": "f70baf5d240068b1.png",
+          "title": "Battery Badge",
+          "row": 3,
+          "subject": "Battery badge: horizontal green battery with a bronze terminal and a bright yellow charge bar"
+        }
+      ]
+    }
+  ]
+}

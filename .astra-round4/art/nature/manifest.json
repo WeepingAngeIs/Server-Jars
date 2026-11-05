@@ -1,0 +1,353 @@
+{
+  "sheets": [
+    {
+      "file": "nature-01.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: miniature globe split into evergreen grove, golden meadow and snowy peak around a cyan pond; single leaf flutters. Row 2: two candy-pink canopy trees over luminous cyan flowers on an emerald turf island; one flower pulses. Row 3: three purple lavender sprigs in diagonal planted furrows on a sage-green field; tips sway. Row 4 bottom: towering redwood with cinnamon trunk and stacked emerald boughs above two small saplings; one golden sap fleck glints. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "2f4ee84533b045d9.png",
+          "title": "Wonders of the World",
+          "subject": "miniature globe split into evergreen grove, golden meadow and snowy peak around a cyan pond; single leaf flutters",
+          "row": 0
+        },
+        {
+          "id": "fcdeccf09c1a4060.png",
+          "title": "Mystic Grove",
+          "subject": "two candy-pink canopy trees over luminous cyan flowers on an emerald turf island; one flower pulses",
+          "row": 1
+        },
+        {
+          "id": "76fd9f219dd4a242.png",
+          "title": "Lavender Field",
+          "subject": "three purple lavender sprigs in diagonal planted furrows on a sage-green field; tips sway",
+          "row": 2
+        },
+        {
+          "id": "39cdf73d9b14e010.png",
+          "title": "Redwood Forest",
+          "subject": "towering redwood with cinnamon trunk and stacked emerald boughs above two small saplings; one golden sap fleck glints",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-02.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: simple classic block valley of vivid lime grass, dark dirt sides and a single cubic oak beside a cobalt stream; stream ripples. Row 2: black basalt volcano with a broad vermilion lava seam and a glowing yellow crater; lava bubbles. Row 3: layered grey mountain bowl framing two steaming aqua hot-spring pools; one wisp curls. Row 4 bottom: two leaning coconut palms above ivory sand and a curved turquoise wave; fronds sway. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "9fc0a6446149c363.png",
+          "title": "Origin Valley",
+          "subject": "simple classic block valley of vivid lime grass, dark dirt sides and a single cubic oak beside a cobalt stream; stream ripples",
+          "row": 0
+        },
+        {
+          "id": "5280a029ddb11bb1.png",
+          "title": "Volcano",
+          "subject": "black basalt volcano with a broad vermilion lava seam and a glowing yellow crater; lava bubbles",
+          "row": 1
+        },
+        {
+          "id": "754af9f05c4536b9.png",
+          "title": "Hot Springs",
+          "subject": "layered grey mountain bowl framing two steaming aqua hot-spring pools; one wisp curls",
+          "row": 2
+        },
+        {
+          "id": "e03050226f4bc3e0.png",
+          "title": "Tropics",
+          "subject": "two leaning coconut palms above ivory sand and a curved turquoise wave; fronds sway",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-03.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: crooked indigo forest trees with chartreuse eyes in hollow trunk and violet undergrowth; eyes blink. Row 2: bleached stump with one bent dry branch on fractured ochre clay, no vegetation; a tiny dust mote drifts. Row 3: rounded pink cherry tree with tiered dark branch and petal-covered turf; one pink petal falls. Row 4 bottom: two ice-blue trees framing a tiny timber cottage with a warm amber window; window glints. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "5e5fca3140d2d1ac.png",
+          "title": "Ominous Woods",
+          "subject": "crooked indigo forest trees with chartreuse eyes in hollow trunk and violet undergrowth; eyes blink",
+          "row": 0
+        },
+        {
+          "id": "f3a59ee24be41fde.png",
+          "title": "Wasteland",
+          "subject": "bleached stump with one bent dry branch on fractured ochre clay, no vegetation; a tiny dust mote drifts",
+          "row": 1
+        },
+        {
+          "id": "2412be5209448c86.png",
+          "title": "Sakura Grove",
+          "subject": "rounded pink cherry tree with tiered dark branch and petal-covered turf; one pink petal falls",
+          "row": 2
+        },
+        {
+          "id": "29709bac3b4358d2.png",
+          "title": "Skyris Vale",
+          "subject": "two ice-blue trees framing a tiny timber cottage with a warm amber window; window glints",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-04.png",
+      "edit_prompt": "PRECISE BACKGROUND EXTRACTION, the supplied image is the edit target. Return an actual transparent RGBA PNG containing all sixteen existing pixel art sprites on zero-alpha clear pixels ONLY. DELETE every trace of the original opaque white and faint gray checkerboard including through the interior openings of the canyon arch, branches and ruined arch. Fully transparent exterior, no drawn white or grey, no checkerboard, no haze, no drop shadows, no field. Preserve the creamy SNOWCAP and wind-streak pixels belonging to the first row and colored interior features belonging to all artwork. Clean crisp pixel silhouettes without halo, unchanged four equal columns × four equal rows, same canvas, same positions and scale. Preserve the exact existing identities and subtle left-to-right poses in each row: snowy paired mountains with curving white wind streak; terracotta rock arch with teal pool; arched willow with flickering purple witch lantern; mossy roots over ruined stone arch with glowing mushrooms. All sixteen individually isolated in existing cell gutters. Background removal only, preserve the sprites and their anchors.",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: pair of rugged slate alpine peaks, snow caps and a curved ivory wind trail; snow fleck moves. Row 2: distinct terracotta arch with a sunlit orange canyon pillar over a teal wash; small water glint. Row 3: arched crooked willow with hanging moss and a violet witch lantern; lantern flickers. Row 4 bottom: great mossy gnarled roots over a ruined stone arch, small ferns and amber mushrooms; mushroom gleams. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "70345dfc8c4aa6aa.png",
+          "title": "Howling Peaks",
+          "subject": "pair of rugged slate alpine peaks, snow caps and a curved ivory wind trail; snow fleck moves",
+          "row": 0
+        },
+        {
+          "id": "644cd59e2ab81a4d.png",
+          "title": "Red Rock Valley",
+          "subject": "distinct terracotta arch with a sunlit orange canyon pillar over a teal wash; small water glint",
+          "row": 1
+        },
+        {
+          "id": "58e44c448cad05b2.png",
+          "title": "Weeping Witch Forest",
+          "subject": "arched crooked willow with hanging moss and a violet witch lantern; lantern flickers",
+          "row": 2
+        },
+        {
+          "id": "26ecda0f2be004b5.png",
+          "title": "Forgotten Forest",
+          "subject": "great mossy gnarled roots over a ruined stone arch, small ferns and amber mushrooms; mushroom gleams",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-05.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: stacked shoreline bands of rose orange yellow green blue sand next to one white wave; wave glints. Row 2: large orange pumpkin and two smaller pumpkins with crooked green vine on autumn turf; firefly flickers. Row 3: sharp turquoise glacial ice spires straddling a dark blue fissure; icy edge sparkles. Row 4 bottom: wisteria canopy with long drooping violet and lilac blossom clusters over curved dark wood; petal drops. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "6f220a13a5562e32.png",
+          "title": "Rainbow Beach",
+          "subject": "stacked shoreline bands of rose orange yellow green blue sand next to one white wave; wave glints",
+          "row": 0
+        },
+        {
+          "id": "2bdee0c216ff1411.png",
+          "title": "Pumpkin Valley",
+          "subject": "large orange pumpkin and two smaller pumpkins with crooked green vine on autumn turf; firefly flickers",
+          "row": 1
+        },
+        {
+          "id": "a4585a79c6bef9ef.png",
+          "title": "Shattered Glacier",
+          "subject": "sharp turquoise glacial ice spires straddling a dark blue fissure; icy edge sparkles",
+          "row": 2
+        },
+        {
+          "id": "ca84f9df29634682.png",
+          "title": "Wisteria Forest",
+          "subject": "wisteria canopy with long drooping violet and lilac blossom clusters over curved dark wood; petal drops",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-06.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: three prominent marigold blooms in warm gold-orange over an emerald meadow; tallest flower nods. Row 2: slender orderly conical Japanese cedar trees on mossy hill, rust bark and forest teal needles; one branch sways. Row 3: bold white chalk sea cliffs topped by bright green grass above cerulean waves; wave foams. Row 4 bottom: three tall jointed bright green bamboo stalks in a dark turquoise marsh with a lily pad; ripple expands. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "eb3dda43fddb6259.png",
+          "title": "Marigold Meadows",
+          "subject": "three prominent marigold blooms in warm gold-orange over an emerald meadow; tallest flower nods",
+          "row": 0
+        },
+        {
+          "id": "a2c66af9179241e6.png",
+          "title": "Sugi Forest",
+          "subject": "slender orderly conical Japanese cedar trees on mossy hill, rust bark and forest teal needles; one branch sways",
+          "row": 1
+        },
+        {
+          "id": "6c35a548a338a5c4.png",
+          "title": "White Cliffs",
+          "subject": "bold white chalk sea cliffs topped by bright green grass above cerulean waves; wave foams",
+          "row": 2
+        },
+        {
+          "id": "86d8960614975a43.png",
+          "title": "Bamboo Wetlands",
+          "subject": "three tall jointed bright green bamboo stalks in a dark turquoise marsh with a lily pad; ripple expands",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-07.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: flat-topped savanna acacia on golden grasses beneath a tiny warm sun; grass sways. Row 2: natural lavender hill with rounded purple flower clumps, pale sage leaves and a single cream butterfly; butterfly flutters. Row 3: two ivory aspen trunks marked with charcoal dashes under brilliant yellow round canopies; leaf falls. Row 4 bottom: triangular red sandstone mountain peaks with brick-red shadows and bright salmon ridgelines; sun glint shifts. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "3acd8f3b7afd772e.png",
+          "title": "Golden Wilds",
+          "subject": "flat-topped savanna acacia on golden grasses beneath a tiny warm sun; grass sways",
+          "row": 0
+        },
+        {
+          "id": "32a2198c83c858b1.png",
+          "title": "Lavender Fields",
+          "subject": "natural lavender hill with rounded purple flower clumps, pale sage leaves and a single cream butterfly; butterfly flutters",
+          "row": 1
+        },
+        {
+          "id": "8c04475a186a1361.png",
+          "title": "Aspen Forest",
+          "subject": "two ivory aspen trunks marked with charcoal dashes under brilliant yellow round canopies; leaf falls",
+          "row": 2
+        },
+        {
+          "id": "686091275a7c9d5b.png",
+          "title": "Red Peaks",
+          "subject": "triangular red sandstone mountain peaks with brick-red shadows and bright salmon ridgelines; sun glint shifts",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-08.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: brass compass pinned on a little blue-green globe with tiny travel pennant; compass glint travels. Row 2: five squat potion vials in one compact rising row, in exact order purple blue yellow red green; bottle highlights twinkle. Row 3: cluster of status spray bottles with distinct horizontal nozzles and ice, fire and poison symbols; nozzle glints. Row 4 bottom: angular yellow revive crystal with a bold faceted diamond face; a four-point ivory sparkle travels across one facet. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "96c62b1eb6f4a042.png",
+          "title": "Globetrotter",
+          "subject": "brass compass pinned on a little blue-green globe with tiny travel pennant; compass glint travels",
+          "row": 0
+        },
+        {
+          "id": "be7aab2c2b9dde41.png",
+          "title": "Every Potion",
+          "subject": "five squat potion vials in one compact rising row, in exact order purple blue yellow red green; bottle highlights twinkle",
+          "row": 1
+        },
+        {
+          "id": "e82fbee59e4384ce.png",
+          "title": "Every Status Cure",
+          "subject": "cluster of status spray bottles with distinct horizontal nozzles and ice, fire and poison symbols; nozzle glints",
+          "row": 2
+        },
+        {
+          "id": "c533be7a12e1da24.png",
+          "title": "Back from the Brink",
+          "subject": "angular yellow revive crystal with a bold faceted diamond face; a four-point ivory sparkle travels across one facet",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-09.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: round blue Ether flask beside a smaller yellow PP Up bottle, distinct caps; blue liquid bubbles. Row 2: indigo-blue Oran berry and bright golden pear-shaped Sitrus berries, fresh green leaves; leaf twitches. Row 3: scarlet spiky Liechi berry with green top and one large pale blue sweat drop; drop bobs. Row 4 bottom: rich pink-red Pomeg berry with round lobes, green crown and bold blue DOWN ARROW attached to its side; arrow dips. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "cee5d0b2a01def39.png",
+          "title": "Every PP Item",
+          "subject": "round blue Ether flask beside a smaller yellow PP Up bottle, distinct caps; blue liquid bubbles",
+          "row": 0
+        },
+        {
+          "id": "94e70c0398e3c189.png",
+          "title": "Healing Berries",
+          "subject": "indigo-blue Oran berry and bright golden pear-shaped Sitrus berries, fresh green leaves; leaf twitches",
+          "row": 1
+        },
+        {
+          "id": "5074a4b3dcd6bc5d.png",
+          "title": "Pinch Berries",
+          "subject": "scarlet spiky Liechi berry with green top and one large pale blue sweat drop; drop bobs",
+          "row": 2
+        },
+        {
+          "id": "4491802458ce0079.png",
+          "title": "EV-Reset Berries",
+          "subject": "rich pink-red Pomeg berry with round lobes, green crown and bold blue DOWN ARROW attached to its side; arrow dips",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-10.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: striped red-orange Occa berry centered inside a steel and gold protective shield; metal rim catches a glint. Row 2: small leafy garden bush laden with blue, rose, orange and yellow berries; one leaf sways. Row 3: open ivory medicine cabinet with rows of colored vials and a broad PINK CROSS on hinged door; bottle gleams. Row 4 bottom: gold two-handled trophy with bright red-and-white capture ball on its front; gold glint. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "cd8e12ed347d30e4.png",
+          "title": "Type-Resist Berries",
+          "subject": "striped red-orange Occa berry centered inside a steel and gold protective shield; metal rim catches a glint",
+          "row": 0
+        },
+        {
+          "id": "78e18cfebde36365.png",
+          "title": "Garden Berries",
+          "subject": "small leafy garden bush laden with blue, rose, orange and yellow berries; one leaf sways",
+          "row": 1
+        },
+        {
+          "id": "7844e95ed9e3b5e1.png",
+          "title": "★ The Complete Pharmacy",
+          "subject": "open ivory medicine cabinet with rows of colored vials and a broad PINK CROSS on hinged door; bottle gleams",
+          "row": 2
+        },
+        {
+          "id": "31_trainer_milestones.png",
+          "title": "Trainer Milestones",
+          "subject": "gold two-handled trophy with bright red-and-white capture ball on its front; gold glint",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-11.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: jagged navy raid-den rock with a magenta fissure and contained upright rose beam; beam pulses. Row 2: open dark teal gym badge case displaying three distinct silver, ruby and gold badges; third badge sparkles. Row 3: standing rune-marked grey waystone with a single bright gold coin in front; rune glows. Row 4 bottom: vintage brown leather box camera with glass lens and diagonal maple flute beside it; lens glints. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "32_raid_dens.png",
+          "title": "Raid Dens",
+          "subject": "jagged navy raid-den rock with a magenta fissure and contained upright rose beam; beam pulses",
+          "row": 0
+        },
+        {
+          "id": "33_trainer_league.png",
+          "title": "Trainer League",
+          "subject": "open dark teal gym badge case displaying three distinct silver, ruby and gold badges; third badge sparkles",
+          "row": 1
+        },
+        {
+          "id": "36_travel_and_trade.png",
+          "title": "Travel and Trade",
+          "subject": "standing rune-marked grey waystone with a single bright gold coin in front; rune glows",
+          "row": 2
+        },
+        {
+          "id": "37_hobbies.png",
+          "title": "Hobbies and Gadgets",
+          "subject": "vintage brown leather box camera with glass lens and diagonal maple flute beside it; lens glints",
+          "row": 3
+        }
+      ]
+    },
+    {
+      "file": "nature-12.png",
+      "prompt": "Create a production-quality pixel-art animation atlas on a truly transparent SQUARE canvas. Exactly FOUR UNLABELED horizontal ROWS and FOUR COLUMNS of equal-size cells (16 isolated sprites total). Each row is ONE icon repeated four times left-to-right in phases of the specified tiny motion. Row 1 top: rolled tan treasure map with a red X and tiny crenellated castle at the edge; red marker glints. Row 2: pink cherry blossom tree with dark arcing branch on a green hill; small petal falls. Row 3: pink cherry blossom tree with dark arcing branch on a green hill; small petal falls. Row 4 bottom: pink cherry blossom tree with dark arcing branch on a green hill; small petal falls. Each column is a new phase (rest, beginning, peak, return), never rotate or redesign the object. All four positions in a row have matching scale, proportions, fixed base and framing. At each of the 16 cell centers, draw a tiny complete 24-pixel-wide RPG inventory sprite enlarged as hard chunky pixels. Each sprite only occupies the central 65% of its own cell in WIDTH AND HEIGHT. Keep very wide fully transparent gutters. High-contrast silhouettes for a dark navy game interface, medium-bright shadow planes, selective cream highlights, 8–14 flat shades per subject. Miniature terrain vignettes must have isolated irregular island silhouettes, no sky or full tile backgrounds. No lettering, words, captions, row numbers, borders, grids, checkerboards, soft shadows or backdrop. Check there are 4 rows of 4 and each row is a consistent animation, not 16 unrelated subjects.",
+      "rows": [
+        {
+          "id": "38_dungeons_and_ruins.png",
+          "title": "Dungeons and Ruins",
+          "subject": "rolled tan treasure map with a red X and tiny crenellated castle at the edge; red marker glints",
+          "row": 0
+        },
+        {
+          "id": "39_biomes_and_nature.png",
+          "title": "Biomes and Nature",
+          "subject": "pink cherry blossom tree with dark arcing branch on a green hill; small petal falls",
+          "row": 1
+        }
+      ]
+    }
+  ]
+}

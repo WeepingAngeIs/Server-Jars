@@ -54,7 +54,7 @@ def read_atlas(path, columns=4, row_count=4):
     for y0,y1 in zip(ycuts,ycuts[1:]):
         band = sheet.crop((0,y0,sheet.width,y1))
         xcuts = split_axis(band.getchannel("A"),columns)
-        cells.append([band.crop((x,y0-y0,x1,band.height)) for x,x1 in zip(xcuts,xcuts[1:])])
+        cells.append([band.crop((x,0,x1,band.height)) for x,x1 in zip(xcuts,xcuts[1:])])
     return cells
 
 
@@ -62,6 +62,12 @@ def normalize(cells):
     bounds = [c.getchannel("A").getbbox() for c in cells]
     check(all(bounds), "empty quadrant")
     crops = [c.crop(b) for c,b in zip(cells,bounds)]
+    for cell in cells:
+        alpha=cell.getchannel('A')
+        filled=alpha.histogram()[255]/(cell.width*cell.height)
+        check(filled < 0.89, 'cell looks like an opaque background')
+        corners=[alpha.getpixel((x,y)) for x in (0,cell.width-1) for y in (0,cell.height-1)]
+        check(sum(v==255 for v in corners)<=1,'opaque outer corners or adjoining sprite')
     for crop in crops:
         check(min(crop.size) >= 10, "tiny or empty source sprite")
     # Scale equally across the four poses to retain the designed movement.
@@ -183,8 +189,15 @@ def main():
         sheets=json.loads(manifest.read_text(encoding="utf-8-sig"))["sheets"]
         for sheet in sheets:
             file=manifest.parent/sheet["file"]
-            cells=read_atlas(file,sheet.get("columns",4),sheet.get("row_count",4))
+            try:
+                cells=read_atlas(file,sheet.get("columns",4),sheet.get("row_count",4))
+            except Exception as exc:
+                for row in sheet['rows']:
+                    attempted.add(row['id'])
+                    failures.append({'id':row['id'],'reason':str(exc)})
+                continue
             for row in sheet["rows"]:
+                check(row['title']==catalog[row['id']]['title'], 'title/filename mapping mismatch: '+row['id'])
                 add(row["id"],lambda:normalize(cells[row["row"]]))
     missing=sorted(set(catalog)-attempted)
     check(len(set(a["sha256"] for a in made.values()))==len(made),"duplicate shipped artwork")
