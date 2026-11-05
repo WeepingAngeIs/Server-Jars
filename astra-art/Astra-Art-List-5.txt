@@ -1,0 +1,1242 @@
+ASTRA ART LIST 5 - THE REST OF THE QUEST BOOK
+==============================================
+
+Same rules as list 4: 32x32 PNG, transparent, pixel art; moving = 4 frames stacked = 32x128.
+File name EXACTLY as written, lower case. Upload to astra-art/UwU-Quest-Art-Pack/assets/unyieldingquests/textures/quest_art/
+on GitHub (Add file > Upload files > Commit changes). Any quest you skip just keeps its item icon.
+These quests currently show a plain item icon; the "shows now" line tells you what, so you can either
+draw a nicer version of that item or something that fits the quest better.
+
+TOTAL: 586 quests without a picture, in 29 chapters. (The Held Items page is left out on purpose - its 100 quests are single items and the item icons are right for them.)
+This is a big list: do it in chunks and upload as you go; every upload gets built into the next jar. Do the chapters in any order.
+
+### MEGA EVOLUTION   (15)
+0b5706115b7efa01.png  |  Keystone
+    shows now: mega_showdown:keystone
+770320237aa1c2b3.png  |  Mega Bracelet
+    shows now: mega_showdown:mega_bracelet
+76fab2f14dee0b48.png  |  Raw Mega Power
+    shows now: mega_showdown:mega_stone_crystal
+6911fafdaf7dcf82.png  |  Mega Stone
+    shows now: mega_showdown:mega_stone
+080f3afce5562a92.png  |  Mega Accessory Styles
+    shows now: mega_showdown:mega_ring
+2756e905ee2fb66c.png  |  Trainer Mega Accessories
+    shows now: mega_showdown:korrina_glove
+094086209a925680.png  |  Mega Geology
+    shows now: mega_showdown:keystone_ore
+7c741b1fddad0137.png  |  Meteoroid Masonry
+    shows now: mega_showdown:mega_meteorid_block
+7e88fa5fccf59100.png  |  Kanto Mega Stones
+    shows now: mega_showdown:aerodactylite
+088e7a40cd462e29.png  |  Johto Mega Stones
+    shows now: mega_showdown:ampharosite
+08dd03721b905401.png  |  Hoenn Mega Stones
+    shows now: mega_showdown:absolite
+15f368d4bad00a31.png  |  Sinnoh and Unova Mega Stones
+    shows now: mega_showdown:abomasite
+2f696b9791e096db.png  |  Kalos Mega Stones
+    shows now: mega_showdown:barbaracite
+1fe8544b23b4d004.png  |  Modern Mega Stones
+    shows now: mega_showdown:baxcalibrite
+7adbb4c75c020f62.png  |  ZA Mega Expansion
+    shows now: zamega:ange
+
+### Z-MOVES   (11)
+62510432b978745b.png  |  Sparkling Stone
+    shows now: mega_showdown:sparkling_stone_light
+44d19ff8528a1430.png  |  Blank-Z
+    shows now: mega_showdown:blank_z
+4e2ffe1bd160b524.png  |  Z-Ring
+    shows now: mega_showdown:z_ring
+2ee738ca1fc821ab.png  |  A Z-Crystal
+    shows now: mega_showdown:normalium_z
+129b4413e9edd432.png  |  Z-Power Foundations
+    shows now: mega_showdown:blank_z
+4a6cd6e673195717.png  |  Z-Ring Styles
+    shows now: mega_showdown:z_ring_blue
+68a31992fdde9c44.png  |  Trainer Z-Power Rings
+    shows now: mega_showdown:gladion_z_power_ring
+00b0294f99e1022f.png  |  Type Z-Crystals I
+    shows now: mega_showdown:buginium_z
+09d2d4d56eefc3b5.png  |  Type Z-Crystals II
+    shows now: mega_showdown:grassium_z
+1f41238044280ee6.png  |  Signature Z-Crystals I
+    shows now: mega_showdown:aloraichium_z
+5fcfb653aec59e55.png  |  Signature Z-Crystals II
+    shows now: mega_showdown:mimikium_z
+
+### DYNAMAX AND GIGANTAMAX   (8)
+2e1310613d3b46ee.png  |  Wishing Star
+    shows now: mega_showdown:wishing_star
+489fd318a06192e0.png  |  Dynamax Band
+    shows now: mega_showdown:dynamax_band
+0a96725cef7660ab.png  |  Power Spot
+    shows now: mega_showdown:power_spot
+74dc2ff2c0533023.png  |  Dynamax Candy
+    shows now: mega_showdown:dynamax_candy
+0445eac212ec2baa.png  |  Maxed Dynamax Level
+    shows now: mega_showdown:dynamax_candy
+397c4acb3ba3d384.png  |  Max Mushrooms
+    shows now: mega_showdown:max_mushroom
+3b878cbdbe369e99.png  |  Max Soup
+    shows now: mega_showdown:max_soup
+50bf22c6846cdc63.png  |  Max Cuisine Variants
+    shows now: mega_showdown:max_honey
+
+### WELCOME AND PACK TOOLS   (4)
+27ffe0e0f21d66ad.png  |  FREE ORIGIN CHANGE [beta only]
+    shows now: neoorigins:orb_of_origin
+72d7b491d10cd227.png  |  Choose your origin
+    shows now: neoorigins:orb_of_origin
+5df44ec527b70000.png  |  Read all information quests.
+    shows now: checkmark
+1625ff5cbf3fbec0.png  |  Reward references
+    shows now: kill
+
+### TERASTALLIZATION   (6)
+46520224c935fd77.png  |  Tera Orb
+    shows now: mega_showdown:tera_orb
+2252f9c43bf99927.png  |  Change the Tera Type
+    shows now: mega_showdown:normal_tera_shard
+21f9e6f229b85ae1.png  |  Stellar Tera Shard
+    shows now: mega_showdown:stellar_tera_shard
+0e941d56199e5726.png  |  Tera Shards I
+    shows now: mega_showdown:bug_tera_shard
+266e094fed1a6d9e.png  |  Tera Shards II
+    shows now: mega_showdown:grass_tera_shard
+4e68bf8f64cd644c.png  |  Tera Pouch Palette
+    shows now: mega_showdown:tera_pouch_cyan
+
+### TYPE MASTERY TRIALS   (18)
+5c545d7f81e9eb5c.png  |  Flying Mastery
+    shows now: cobblemon:flying_gem
+1aad7f31b7d111d6.png  |  Normal Mastery
+    shows now: cobblemon:normal_gem
+7d7632d13dfbdb16.png  |  Rock Mastery
+    shows now: cobblemon:rock_gem
+6f9703face4649bd.png  |  Water Mastery
+    shows now: cobblemon:water_gem
+34f1e67edf4cd09e.png  |  Fire Mastery
+    shows now: cobblemon:fire_gem
+7f40f3523e7db7c3.png  |  Bug Mastery
+    shows now: cobblemon:bug_gem
+721b628a2c2d854f.png  |  Ice Mastery
+    shows now: cobblemon:ice_gem
+1801dcf4d12712b5.png  |  Electric Mastery
+    shows now: cobblemon:electric_gem
+55dc01f1bf2df384.png  |  Grass Mastery
+    shows now: cobblemon:grass_gem
+789267c7aeac3508.png  |  Steel Mastery
+    shows now: cobblemon:steel_gem
+5d98dc1370e79c0b.png  |  Fairy Mastery
+    shows now: cobblemon:fairy_gem
+4844eed3532cb9fa.png  |  Ground Mastery
+    shows now: cobblemon:ground_gem
+599cbd8d3dbbe0ef.png  |  Poison Mastery
+    shows now: cobblemon:poison_gem
+0862088b6d24901f.png  |  Dark Mastery
+    shows now: cobblemon:dark_gem
+556d0617cd7fcf13.png  |  Fighting Mastery
+    shows now: cobblemon:fighting_gem
+123237d6f35400b2.png  |  Dragon Mastery
+    shows now: cobblemon:dragon_gem
+2991553802b50642.png  |  Psychic Mastery
+    shows now: cobblemon:psychic_gem
+518ec2c8ad93112b.png  |  Ghost Mastery
+    shows now: cobblemon:ghost_gem
+
+### POKÉDEX ADVENTURES   (11)
+507518777c14eb2b.png  |  Devon Radar: The PokéNav
+    shows now: cobblenav:pokenav_item_base
+751f2f2cff0f8ef2.png  |  Targeted Acquisition: PokéFinder
+    shows now: cobblenav:pokefinder_item_black
+622867d85c28f95c.png  |  Angler's Sonar: FishingNav
+    shows now: cobblenav:fishingnav_item
+3e1e90e95c3c00a1.png  |  Prehistoric Glazes: Ancient Pottery Sherds
+    shows now: cobblemon:bygone_sherd
+5b760f0c10dfe721.png  |  Fossil Analyzer
+    shows now: cobblemon:fossil_analyzer
+560461a3f608a747.png  |  Kanto Pioneers: The Sea and Sky
+    shows now: cobblemon:helix_fossil
+6c51bee295979c3b.png  |  Hoenn Primevals: The Cradle of the Deep
+    shows now: cobblemon:root_fossil
+3e106d44040f5f68.png  |  Sinnoh Titans: The Ram and Shield
+    shows now: cobblemon:skull_fossil
+2ce8de01fa1bc458.png  |  Unova Relics: Sea Shell and Feather
+    shows now: cobblemon:cover_fossil
+05a1345c164645d7.png  |  Kalos Prehistorics: Tyrant and Aurora
+    shows now: cobblemon:jaw_fossil
+4b2cb1500216ae27.png  |  Galar Mismatches: The Four Chimera Halves
+    shows now: cobblemon:fossilized_bird
+
+### LEGENDARY EXPEDITIONS: KANTO-HOENN   (21)
+76ea63e69ec611f5.png  |  Articuno
+    shows now: cobblemon:ice_gem
+2689d6ef3930b24b.png  |  Zapdos
+    shows now: cobblemon:electric_gem
+7e3132d31165b9ec.png  |  Moltres
+    shows now: cobblemon:fire_gem
+4f5e0e16cb39278e.png  |  Mewtwo
+    shows now: cobblemon:choice_specs
+75b7247eeb2618e8.png  |  Mew
+    shows now: cobblemon:psychic_gem
+20f15cc12dfdca97.png  |  Raikou
+    shows now: cobblemon:electric_gem
+58478b8510fabe83.png  |  Entei
+    shows now: cobblemon:fire_gem
+4cba26db7c9215c6.png  |  Suicune
+    shows now: cobblemon:water_gem
+0ff6564d2dd6ed73.png  |  Lugia
+    shows now: cobblemon:deep_sea_scale
+4025ee4781ed7965.png  |  Ho-Oh
+    shows now: cobblemon:charcoal_stick
+57ac1e33fae63428.png  |  Celebi
+    shows now: cobblemon:psychic_gem
+45a8d358b0904818.png  |  Kyogre
+    shows now: cobblemon:mystic_water
+5fbf3e26caf1fff2.png  |  Groudon
+    shows now: cobblemon:red_card
+214ffcc0ddf22fce.png  |  Rayquaza
+    shows now: cobblemon:float_stone
+0406591847628e21.png  |  Regirock
+    shows now: cobblemon:hard_stone
+7573d293fe474615.png  |  Regice
+    shows now: cobblemon:icy_rock
+19f77da6a834bb94.png  |  Registeel
+    shows now: cobblemon:metal_coat
+602664eb0a217c86.png  |  Latias
+    shows now: cobblemon:luminous_moss
+374b8a3511dba63a.png  |  Latios
+    shows now: cobblemon:luminous_moss
+54863af1072e5e59.png  |  Jirachi
+    shows now: cobblemon:steel_gem
+0d469558db184f25.png  |  Deoxys
+    shows now: cobblemon:psychic_gem
+
+### LEGENDARY EXPEDITIONS: SINNOH-KALOS   (33)
+4420b323b9ef1d40.png  |  Uxie
+    shows now: cobblemon:wide_lens
+760918156f99e5e8.png  |  Mesprit
+    shows now: cobblemon:clever_feather
+42dc2c9e77be225e.png  |  Azelf
+    shows now: cobblemon:psychic_gem
+40ffed4044ce7c93.png  |  Dialga
+    shows now: cobblemon:adamant_mint
+0dd320459d623036.png  |  Palkia
+    shows now: cobblemon:light_clay
+1a5f65b1942f6efc.png  |  Giratina
+    shows now: cobblemon:spell_tag
+5d41e75f17258903.png  |  Arceus
+    shows now: cobblemon:normal_gem
+4805af5b5a60f9ad.png  |  Heatran
+    shows now: cobblemon:magmarizer
+764d449e0c711fa6.png  |  Cresselia
+    shows now: cobblemon:moon_ball
+4ddb96fd3421ee53.png  |  Regigigas
+    shows now: cobblemon:normal_gem
+53ea61e8b8eb6e1b.png  |  Phione
+    shows now: cobblemon:water_gem
+4ecddf34f0750317.png  |  Manaphy
+    shows now: cobblemon:water_gem
+63427c724fd4c4ad.png  |  Darkrai
+    shows now: cobblemon:dark_gem
+134833b34e0d8fab.png  |  Shaymin
+    shows now: cobblemon:grass_gem
+4b06d351390ed20e.png  |  Tornadus
+    shows now: cobblemon:air_balloon
+4361dcd028612e8e.png  |  Thundurus
+    shows now: cobblemon:electric_gem
+31c98e76fbd5954a.png  |  Landorus
+    shows now: cobblemon:soft_sand
+48b9fde4dba038f9.png  |  Reshiram
+    shows now: cobblemon:magmarizer
+56bde069e49cedf1.png  |  Zekrom
+    shows now: cobblemon:electirizer
+53b1fca83f6cae89.png  |  Kyurem
+    shows now: cobblemon:ice_gem
+25ae07a032c6311e.png  |  Cobalion
+    shows now: cobblemon:metal_coat
+0e8844d9420aa2a7.png  |  Terrakion
+    shows now: cobblemon:rocky_helmet
+3aed514a08c392d2.png  |  Virizion
+    shows now: cobblemon:muscle_band
+7a338894ccaeda2c.png  |  Keldeo
+    shows now: cobblemon:water_gem
+297d850a6eee879a.png  |  Victini
+    shows now: cobblemon:psychic_gem
+31301d847dbfb626.png  |  Meloetta
+    shows now: cobblemon:normal_gem
+0ab96cf3fa9ee843.png  |  Genesect
+    shows now: cobblemon:bug_gem
+6673dc63be7a04bc.png  |  Xerneas
+    shows now: cobblemon:fairy_feather
+420a71c77a6115e7.png  |  Yveltal
+    shows now: cobblemon:dark_gem
+0c881e3e588a7098.png  |  Zygarde
+    shows now: cobblemon:dragon_gem
+0c28f6772e276f16.png  |  Diancie
+    shows now: cobblemon:rock_gem
+5713296c1fbbd649.png  |  Hoopa
+    shows now: cobblemon:psychic_gem
+615c8ff12e1b08aa.png  |  Volcanion
+    shows now: cobblemon:fire_gem
+
+### LEGENDARY EXPEDITIONS: ALOLA-PALDEA   (58)
+3a918bfe0cbc8ac7.png  |  Tapu Koko
+    shows now: cobblemon:cell_battery
+2add9d191b1517be.png  |  Tapu Lele
+    shows now: cobblemon:choice_specs
+7b169eca503bb4df.png  |  Tapu Bulu
+    shows now: cobblemon:grassy_seed
+4b4a1854eca6852b.png  |  Tapu Fini
+    shows now: cobblemon:mystic_water
+406fc814c58c5aee.png  |  Cosmog
+    shows now: cobblemon:exp_candy_xs
+471b1035a6eb6b26.png  |  Cosmoem
+    shows now: cobblemon:psychic_gem
+613cd422c6ba3a47.png  |  Solgaleo
+    shows now: cobblemon:sun_stone
+2f1ff5cf7bb39c0d.png  |  Lunala
+    shows now: cobblemon:moon_stone
+2cdeed93ebd3fbe9.png  |  Necrozma
+    shows now: cobblemon:prism_scale
+3b78e292884efc50.png  |  Type: Null
+    shows now: cobblemon:eviolite
+266cc0c0f634de27.png  |  Silvally
+    shows now: cobblemon:normal_gem
+696614d67c9f5032.png  |  Nihilego
+    shows now: cobblemon:rock_gem
+6932ca6cfd95ef03.png  |  Buzzwole
+    shows now: cobblemon:bug_gem
+04c8284ed0930be5.png  |  Pheromosa
+    shows now: cobblemon:bug_gem
+09228f22135492fc.png  |  Xurkitree
+    shows now: cobblemon:electric_gem
+3442a5dbf9ec3366.png  |  Celesteela
+    shows now: cobblemon:steel_gem
+0eac67ba382d4eb4.png  |  Kartana
+    shows now: cobblemon:grass_gem
+1e26d18b43db83ce.png  |  Guzzlord
+    shows now: cobblemon:dark_gem
+00cbe38fb3360e49.png  |  Poipole
+    shows now: cobblemon:poison_gem
+77d5a60cd2ab4d60.png  |  Naganadel
+    shows now: cobblemon:poison_gem
+4c0f5e1a20322500.png  |  Stakataka
+    shows now: cobblemon:rock_gem
+77ebcbdd9fa1cd0a.png  |  Blacephalon
+    shows now: cobblemon:fire_gem
+4dd68f43b2e1204d.png  |  Magearna
+    shows now: cobblemon:steel_gem
+30c33937ab1a1857.png  |  Marshadow
+    shows now: cobblemon:fighting_gem
+7e91d08725b18463.png  |  Zeraora
+    shows now: cobblemon:electric_gem
+64dd39543d9a50f9.png  |  Meltan
+    shows now: cobblemon:steel_gem
+2f637d0d87cde090.png  |  Melmetal: Availability Note
+    shows now: cobblemon:steel_gem
+315d99c9d47629ca.png  |  Zacian
+    shows now: cobblemon:choice_band
+728b87c11cb577af.png  |  Zamazenta
+    shows now: cobblemon:clear_amulet
+12e10b9d5aee3eb5.png  |  Eternatus
+    shows now: cobblemon:toxic_orb
+1cd381801239ce49.png  |  Kubfu
+    shows now: cobblemon:focus_band
+6e103f8c95a830ca.png  |  Urshifu
+    shows now: cobblemon:fighting_gem
+466fd9a99b9395d9.png  |  Regieleki
+    shows now: cobblemon:electric_seed
+186ab527793c5ff1.png  |  Regidrago
+    shows now: cobblemon:dragon_fang
+29089a6900844d62.png  |  Calyrex
+    shows now: cobblemon:kings_rock
+77c9cd32c9d99348.png  |  Glastrier
+    shows now: cobblemon:icy_rock
+19413bc39592104b.png  |  Spectrier
+    shows now: cobblemon:black_sludge
+208e181680a25ba0.png  |  Zarude
+    shows now: cobblemon:dark_gem
+5cd5014136db2924.png  |  Enamorus
+    shows now: cobblemon:love_ball
+0d7b1e99cf2ab524.png  |  Koraidon
+    shows now: cobblemon:fossilized_drake
+4d3eee04200a1d51.png  |  Miraidon
+    shows now: cobblemon:electric_seed
+4d8199e99a79850f.png  |  Terapagos
+    shows now: cobblemon:prism_scale
+24ee6a6bd23e4346.png  |  Ogerpon
+    shows now: cobblemon:focus_sash
+772b23af2d802329.png  |  Wo-Chien
+    shows now: cobblemon:coarse_mulch
+7c46fccc2348d0e3.png  |  Chien-Pao
+    shows now: cobblemon:choice_scarf
+705f1aaf9e37a6ac.png  |  Ting-Lu
+    shows now: cobblemon:heavy_ball
+5ddb9f07a1d27052.png  |  Chi-Yu
+    shows now: cobblemon:red_card
+46eef3fd7ca12039.png  |  Okidogi
+    shows now: cobblemon:poison_gem
+1173c5880a6eb8c5.png  |  Munkidori
+    shows now: cobblemon:poison_gem
+6e3249140d1a4afa.png  |  Fezandipiti
+    shows now: cobblemon:poison_gem
+308c7634defae10a.png  |  Pecharunt
+    shows now: cobblemon:poison_gem
+04ab2e12457e52bd.png  |  Walking Wake
+    shows now: cobblemon:water_gem
+7bd6c3327976fc6d.png  |  Gouging Fire
+    shows now: cobblemon:fire_gem
+2cee71321d3d77c5.png  |  Raging Bolt
+    shows now: cobblemon:electric_gem
+227de54a4ff6497c.png  |  Iron Leaves
+    shows now: cobblemon:grass_gem
+31146fca3c52fda6.png  |  Iron Boulder
+    shows now: cobblemon:rock_gem
+70e9897aa5d89ddf.png  |  Iron Crown
+    shows now: cobblemon:steel_gem
+2669d82702a5bcb0.png  |  Legendary Field Record: 20
+    shows now: cobblemon:master_ball
+
+### BUILDING AND DECORATION   (10)
+0893281244b7cfa7.png  |  The Woodshop
+    shows now: chipped:carpenters_table
+6fd6079c84025112.png  |  Masonry Masterclass
+    shows now: chipped:mason_table
+1f66912b1c7bd4a1.png  |  Vitreous Art
+    shows now: chipped:glassblower
+23e831d64f47162a.png  |  Naturalist's Detail
+    shows now: chipped:botanist_workbench
+65ecc5e000658fb3.png  |  The Weaver's Loom
+    shows now: chipped:loom_table
+0c11edec44d240c1.png  |  The Engineer's Tools
+    shows now: mcwroofs:roofing_hammer
+1a1088b822793120.png  |  Raising the Roof
+    shows now: mcwroofs:base_roof
+07171b589e7df3d1.png  |  Crossing the Gap
+    shows now: mcwbridges:oak_log_bridge_middle
+66b96cf20790222f.png  |  Sight and Shade
+    shows now: mcwwindows:oak_window
+7bd8e2df0925b7ca.png  |  Atmospheric Interiors
+    shows now: mcwfurnitures:oak_desk
+
+### ARS NOUVEAU: PRACTICAL MAGIC   (9)
+5f178e66fd3c2873.png  |  The Mage's Notebook
+    shows now: ars_nouveau:worn_notebook
+7fcf65e05946a7b2.png  |  Build Your Spellbook
+    shows now: ars_nouveau:novice_spell_book
+770f318f03d29d64.png  |  A Larger Spellbook
+    shows now: ars_nouveau:apprentice_spell_book
+36826ca9d17f379e.png  |  Make Source Gems
+    shows now: ars_nouveau:imbuement_chamber
+0c0124a5249e9d39.png  |  Source from Your Garden
+    shows now: ars_nouveau:agronomic_sourcelink
+79f48133c937f5a3.png  |  The Enchanting Apparatus
+    shows now: ars_nouveau:enchanting_apparatus
+7529a7734dc5015e.png  |  A Starbuncle Helper
+    shows now: ars_nouveau:starbuncle_charm
+19b1fc8ddf14322b.png  |  Choose an Element
+    shows now: ars_elemental:lesser_air_focus
+2670e31f1b8fd5df.png  |  Find a Structure
+    shows now: ars_additions:wayfinder
+
+### BOSSES OF MASS DESTRUCTION   (3)
+44e68f0292b94881.png  |  Four Dangerous Discoveries
+    shows now: bosses_of_mass_destruction:soul_star
+7e373fde11c902fa.png  |  The Night Lich
+    shows now: bosses_of_mass_destruction:soul_star
+7e81cad2b48e7125.png  |  The Void Blossom
+    shows now: bosses_of_mass_destruction:void_thorn
+
+### CATACLYSM: BOSS HUNTS   (7)
+435b22d803e6a51a.png  |  Before the Hunt
+    shows now: cataclysm:void_eye
+19ac5f807c33115b.png  |  The Harbinger
+    shows now: cataclysm:mech_eye
+24077c47b78c4543.png  |  Ancient Remnant
+    shows now: cataclysm:desert_eye
+788741f04c5b7dcb.png  |  The Leviathan
+    shows now: cataclysm:abyss_eye
+7a863144c8cdcd8e.png  |  Scylla
+    shows now: cataclysm:storm_eye
+30f083e4a9527b88.png  |  Maledictus
+    shows now: cataclysm:cursed_eye
+3cf05b98e615cac8.png  |  Master of the Hunts
+    shows now: minecraft:netherite_ingot
+
+### CATCHING AND TEAM TRAINING   (12)
+3e8a0000000bd325.png  |  Specialized Poké Balls
+    shows now: cobblemon:quick_ball
+3e8a0000001c702b.png  |  TMs
+    shows now: cobblemon:tm_machine
+3e8a00000014c51a.png  |  Natures
+    shows now: cobblemon:adamant_mint
+3e8a00000015ba45.png  |  EVs
+    shows now: cobblemon:power_bracer
+3e8a00000017f80d.png  |  Abilities
+    shows now: cobblemon:ability_capsule
+05aaeb7b168bfd49.png  |  Poke balls
+    shows now: cobblemon:poke_ball
+49a4aa72407d550f.png  |  Exp candy
+    shows now: cobblemon:exp_candy_xs
+6bea397dfcda7261.png  |  IV Candy
+    shows now: cobblemon:health_candy
+6be5e68f55edde2d.png  |  Unique Poke balls
+    shows now: cobblemon:safari_ball
+29b6f62de601495a.png  |  Ancient Poke balls
+    shows now: cobblemon:ancient_poke_ball
+654a0d01fa03457e.png  |  Vitamins
+    shows now: cobblemon:hp_up
+51a9bf99aa2d0f19.png  |  Aprijuice Flavors
+    shows now: ftbfiltersystem:smart_filter
+
+### CULINARY DELIGHTS   (19)
+56f7204419cbfbf9.png  |  Why Cook? The Food Book
+    shows now: checkmark
+54fb498f46a95407.png  |  Kitchen Prep: Cutting Board and Knife
+    shows now: farmersdelight:cutting_board
+27e4b384f973d966.png  |  Agricultural Foundations
+    shows now: farmersdelight:cabbage
+048d4f2d0874f3fd.png  |  Enriching the Soil
+    shows now: farmersdelight:organic_compost
+6400597a2a59a10b.png  |  Kitchen Apothecary: Recovery Tonics
+    shows now: farmersdelight:hot_cocoa
+57cf370c61903495.png  |  The Hearth: Stove and Cooking Pot
+    shows now: farmersdelight:stove
+43bce73f938d8e47.png  |  Field Cooking: The Skillet
+    shows now: farmersdelight:skillet
+7b6b1aef318c51b5.png  |  Sustained Stamina: Nourishment
+    shows now: farmersdelight:steak_and_potatoes
+27fb03a3c59190f0.png  |  A Grand Feast: Roast Chicken
+    shows now: farmersdelight:roast_chicken_block
+494cdad1a129e44c.png  |  Nether Agriculture: Resurgent Soil
+    shows now: mynethersdelight:bullet_pepper
+0b2e15bfbeb6eb67.png  |  Volcanic Stews: Strider Stew
+    shows now: mynethersdelight:strider_stew
+27771b7fb818da9f.png  |  Void Confections: Chorus Flower Tea
+    shows now: ends_delight:chorus_flower_tea
+6c3843153950edee.png  |  Draconic Effervescence: Dragon Breath Soda
+    shows now: ends_delight:dragon_breath_soda
+08789ccc97f22dec.png  |  Catch of the Deep: Stuffed Squid
+    shows now: oceansdelight:cooked_stuffed_squid
+7a910220e2d6eac1.png  |  Guardian Feast: The Apex Chowder
+    shows now: oceansdelight:bowl_of_guardian_soup
+4620bb58a4fe738c.png  |  Twilight Metallurgy: Fiery Cookware
+    shows now: twilightdelight:fiery_cooking_pot
+2504bd72cc89f438.png  |  Aura Infusions: Choose Your Element
+    shows now: twilightdelight:glacier_ice_tea
+2a35b3a7a6febc05.png  |  Starlight Sustenance and Numbness
+    shows now: eternal_starlight_delight:starmina_noodle_soup
+47f50e803e8c8d08.png  |  Culinary Straps and Modifications
+    shows now: eternal_starlight_delight:starfire_flower_strap
+
+### DEEPER AND DARKER   (36)
+5f35be8ac580fd01.png  |  Relics of the Fallen City
+    shows now: deeperdarker:ancient_vase
+3cabc511b07f9290.png  |  Warden Carapace
+    shows now: deeperdarker:warden_carapace
+04f33f021a6f94ea.png  |  Heart of the Deep
+    shows now: deeperdarker:heart_of_the_deep
+1dc9d08d28793332.png  |  The Gateway Beneath Bedrock
+    shows now: dimension
+44985097c9fb67a6.png  |  Foundation of Shadows
+    shows now: deeperdarker:sculk_stone
+782e268bab152cf9.png  |  Veins of the Abyss
+    shows now: deeperdarker:sculk_stone_diamond_ore
+08e85d1f88caa384.png  |  Viscous Sediment
+    shows now: deeperdarker:sculk_grime
+022125ecea5e6b4d.png  |  Preserved in Time
+    shows now: deeperdarker:crystallized_amber
+78ee23b6191d77a3.png  |  Echoing Forest
+    shows now: deeperdarker:echo_log
+53133daecd6eaa13.png  |  Bioluminescent Dew
+    shows now: deeperdarker:porous_sculk_gleam
+6a94efc875131f5b.png  |  Blooming Caverns
+    shows now: deeperdarker:blooming_stem
+62bffefe1a43de6f.png  |  Nourishment of the Abyss
+    shows now: deeperdarker:bloom_berries
+2710d5d8491842f4.png  |  Ice Lilies
+    shows now: deeperdarker:ice_lily
+77d75aa2bad12c9c.png  |  Shattered Souls
+    shows now: deeperdarker:soul_dust
+205461898477fd1a.png  |  Sculk Pests
+    shows now: deeperdarker:soul_dust
+673ce8e2e6d92d04.png  |  Subsurface Mandibles
+    shows now: deeperdarker:sculk_jaw
+2b872422e4238bce.png  |  Lurkers of the Stygian Lakes
+    shows now: deeperdarker:angler_fish
+6ffbf5ccaa934e36.png  |  The Hound of the Deeplands
+    shows now: deeperdarker:sculk_bone
+573c23c1959b21d2.png  |  Gloomsherds
+    shows now: deeperdarker:gloomsherd
+7f2e4c4ae9b33b1b.png  |  Abyssal Archaeology
+    shows now: deeperdarker:gloomslate_pot
+3bd896016246c264.png  |  Resonarium
+    shows now: deeperdarker:resonarium
+1f1304d936bf3ae7.png  |  Resonarium Plates
+    shows now: deeperdarker:resonarium_plate
+58856ce004662212.png  |  Resonarium Upgrade
+    shows now: deeperdarker:resonarium_upgrade_smithing_template
+3fa86a17c313e0f1.png  |  Resonarium Armor
+    shows now: deeperdarker:resonarium_helmet
+28edd8412606bd47.png  |  Acoustic Implements
+    shows now: deeperdarker:resonarium_sword
+2c4af38f53bc8210.png  |  Wireless Sub-Space Storage
+    shows now: deeperdarker:sculk_transmitter
+736567d36566fad6.png  |  Acoustic Dampening
+    shows now: deeperdarker:soundproof_glass
+0a424aae253fab67.png  |  Lite Blocks
+    shows now: deeperdarker:lite
+6095b667ec4559ea.png  |  Ancient Compass
+    shows now: deeperdarker:ancient_compass
+6c2f2d5e8533a654.png  |  Soul Crystal
+    shows now: deeperdarker:soul_crystal
+0d3b74540dc83417.png  |  The Monarch's Blueprint
+    shows now: deeperdarker:warden_upgrade_smithing_template
+11e4e583b04304d1.png  |  Reinforced Echo Shards
+    shows now: deeperdarker:reinforced_echo_shard
+7ab83cc58fde7220.png  |  The Armor of the Deep Monarch
+    shows now: deeperdarker:warden_helmet
+4282843ffc05f885.png  |  The Monarch's Arsenal
+    shows now: deeperdarker:warden_sword
+589c4375cddf235d.png  |  Sonorous Staff
+    shows now: deeperdarker:sonorous_staff
+46165db0c6a28661.png  |  Soul Elytra
+    shows now: deeperdarker:soul_elytra
+
+### ETERNAL STARLIGHT   (29)
+04f759d9cfe44b45.png  |  The Guardian of Ruins
+    shows now: eternal_starlight:orb_of_prophecy
+46911d0a86cd73e9.png  |  Igniting the Gateway
+    shows now: eternal_starlight:chiseled_voidstone
+374846cf30213b4e.png  |  Twilight Sanctuary
+    shows now: eternal_starlight:torreya_campfire
+44249da3f558da42.png  |  Chart the Constellations
+    shows now: eternal_starlight:seeking_eye
+6835fb48e5531b94.png  |  Silver of the Dark Swamp
+    shows now: eternal_starlight:raw_deepsilver
+0fded4decacee987.png  |  Malarite Strata
+    shows now: eternal_starlight:malarite
+6df490e7a23e3ec0.png  |  Celestial Radiance: Starcore
+    shows now: eternal_starlight:starcore
+6cd61f0338ae3bdc.png  |  Gems of the Firmament
+    shows now: eternal_starlight:starlit_diamond
+6ac8fe33ab9eec94.png  |  Resin of the Torreya
+    shows now: eternal_starlight:raw_amaramber
+5c07b83843cad277.png  |  Scalding Mineral Springs
+    shows now: eternal_starlight:thermal_springstone_ingot
+793d6281d6605669.png  |  Subzero Glacite
+    shows now: eternal_starlight:glacite_shard
+59fb229e4f60d0a5.png  |  Rivers of Pure Ether
+    shows now: eternal_starlight:ether_bucket
+7f6ebd213cad0348.png  |  Harvest of the Night Sky
+    shows now: eternal_starlight:crinoa
+573c350df46d835f.png  |  The Starfire Bird
+    shows now: eternal_starlight:starfire_bird_egg
+283f41940e408544.png  |  The Golem Forge
+    shows now: eternal_starlight:golem_steel_ingot
+24d3e35d8a388d56.png  |  The Master Foundry
+    shows now: eternal_starlight:alloy_furnace
+5dc3513a2bf77500.png  |  Machined Metallurgy
+    shows now: eternal_starlight:golem_steel_greatsword
+277a8291ba8504b6.png  |  The Cursed Garden
+    shows now: eternal_starlight:tenacious_petal
+159df9475ef5bb55.png  |  Arsenal of the Eclipse
+    shows now: eternal_starlight:moonring_greatsword
+59e63cfab048a6a9.png  |  The Chilled Deep
+    shows now: eternal_starlight:frozen_tube
+09bc70328f30bd0f.png  |  Shower of Falling Stars
+    shows now: eternal_starlight:raw_aethersent
+19c9fb8b8f89a5eb.png  |  The Astral Ward
+    shows now: eternal_starlight:aethersent_cape
+44445ce4dfb6ce7f.png  |  Terrors of the Deep Void
+    shows now: eternal_starlight:seeker_tentacle
+04ea46e634fe7a4d.png  |  The Abyssal Lash
+    shows now: eternal_starlight:tentacle_spike
+3e1b95b309a4644a.png  |  Trapped Souls: Soul Dew
+    shows now: eternal_starlight:soul_dew
+4ba4f6184e332e92.png  |  The Fourfold Fusion: Unrealium
+    shows now: eternal_starlight:unrealium_ingot
+17579892204f63cd.png  |  Master of the Stars
+    shows now: eternal_starlight:unrealium_sword
+3fd54c6d176262fa.png  |  Relics of Translocation
+    shows now: eternal_starlight:etheric_eye
+39fe9d1261e5fd0d.png  |  Catalysts and Transmutations
+    shows now: eternal_starlight:crystalborn_catalyst
+
+### EXPLORATION, FOSSILS AND UTILITIES   (6)
+0385ef57acab8be9.png  |  Wild Etiquette: Baits and Snacks
+    shows now: cobblemon:poke_bait
+7b2df4d19e2b5ae4.png  |  Pocket Storage: Box Link
+    shows now: cobblemonboxlink:box_link
+6d49581e29acfa55.png  |  Base Infrastructure: PC and Healing Unit
+    shows now: cobblemon:pc
+19d2b4e63f3b4c58.png  |  Pasture blocks
+    shows now: cobblemon:pasture
+5d14e53b1cd670f6.png  |  Trainer's Showcase: Display Cases
+    shows now: cobblemon:display_case
+4b19dbfffa7f1fe2.png  |  Wild Dominance: Cobblemon Alphas
+    shows now: cobblemon_tasks:cobblemon_task
+
+### COBBLEMON: FIRST STEPS   (6)
+55c0e66be9a3dc83.png  |  Choose Your First Partner
+    shows now: cobblemon:poke_ball
+2d026a79b5f2a6ba.png  |  Win Your First Battle
+    shows now: cobblemon:poke_ball
+1ecea271020f4c13.png  |  Make Your First Catch
+    shows now: cobblemon:great_ball
+08eb8d026a5eb5f1.png  |  Build a Healing Machine
+    shows now: cobblemon:healing_machine
+27419a96a0a9c168.png  |  Build a PC
+    shows now: cobblemon:pc
+1cb98bf97e078968.png  |  Optional: Train to Level 20
+    shows now: cobblemon:rare_candy
+
+### ICE AND FIRE: DRAGONS   (35)
+501f2b5e9bc9a6e3.png  |  The Scholar's Bestiary
+    shows now: iceandfire:bestiary
+7d229d2a2365e3c0.png  |  Sacred Metallurgy: Silver
+    shows now: iceandfire:silver_ingot
+338870a212e52f6b.png  |  Faerie Glades and Pixie Jars
+    shows now: iceandfire:pixie_jar_empty
+6e473ccf2a6d1fa8.png  |  Pride of the Skies: Hippogryph
+    shows now: iceandfire:hippogryph_talon
+6ed374465b47b8f9.png  |  Canopy Gliders: Amphithere
+    shows now: iceandfire:amphithere_feather
+7aef0f135b3097fe.png  |  The Withering Stare: Cockatrice
+    shows now: iceandfire:cockatrice_eye
+21d5e7976145db0e.png  |  Bronze Wings: Stymphalian Birds
+    shows now: iceandfire:stymphalian_bird_feather
+727139b409e0f110.png  |  Restless Wraiths and Graveyard Soil
+    shows now: iceandfire:ectoplasm
+60533be364dfe409.png  |  The Lure of the Deep: Sirens
+    shows now: iceandfire:earplugs
+5842c8d77908c670.png  |  The One-Eyed Colossus
+    shows now: iceandfire:cyclops_eye
+77faab8c21c0f560.png  |  Stone Stare: The Gorgon
+    shows now: iceandfire:blindfold
+468f55c3e20b880c.png  |  Dunes of Terror: Death Worm
+    shows now: iceandfire:deathworm_chitin_yellow
+3037620426aa71eb.png  |  Sunlight Petrification: Trolls
+    shows now: iceandfire:troll_leather_forest
+6d74185981d07294.png  |  Terror of the Oceans: Sea Serpent
+    shows now: iceandfire:sea_serpent_scales_blue
+2d8b33b918ac19dc.png  |  Weapon of the Abyssal Depths
+    shows now: iceandfire:tide_trident
+4703b6683f4cb946.png  |  The Multi-Headed Nightmare
+    shows now: iceandfire:hydra_fang
+3e7e8674fd12ee06.png  |  Felling the Sky Beast
+    shows now: iceandfire:dragonbone
+082a67fe075f15cd.png  |  Extracting Dragon Blood
+    shows now: iceandfire:fire_dragon_blood
+6c36154378a693fe.png  |  Dragonbone Armory
+    shows now: iceandfire:dragonbone_sword
+7e298ac1ac821dc7.png  |  Blood-Forged Edges
+    shows now: iceandfire:dragonbone_sword_fire
+084f8ba7b3ff879d.png  |  Impenetrable Dragonscales
+    shows now: iceandfire:armor_red_chestplate
+272aefa5c4fbda29.png  |  The Dragon Seeker
+    shows now: iceandfire:dragon_seeker
+7554521798381fd6.png  |  Stealing the Mother's Egg
+    shows now: iceandfire:dragonegg_red
+084fbe217e663557.png  |  The Primordial Incubation
+    shows now: iceandfire:dragon_stick
+6faa334538037984.png  |  Nutrition and Growth Control
+    shows now: iceandfire:dragon_meal
+6f4c67bc00f35604.png  |  Commands of the Sky: The Flute
+    shows now: iceandfire:dragon_flute
+722d0befa389964f.png  |  The Pocket Dragon: Dragon Horn
+    shows now: iceandfire:dragon_horn
+418f05270c45f9b5.png  |  Armor for an Emperor
+    shows now: iceandfire:dragonarmor_diamond_head
+402291ac55774bac.png  |  Bound Across Realities: Summoning Crystal
+    shows now: iceandfire:summoning_crystal_fire
+7b3e4e8ead07c026.png  |  The Ancient Art: The Dragon Forge
+    shows now: iceandfire:dragonforge_fire_core_disabled
+715a543f5a8d6404.png  |  Dragonsteel: The Supreme Alloy
+    shows now: iceandfire:dragonsteel_fire_ingot
+36f77c65b1037604.png  |  The Cataclysm Blade
+    shows now: iceandfire:dragonsteel_fire_sword
+4b5619e058ac940f.png  |  The Sovereign Aegis
+    shows now: iceandfire:dragonsteel_fire_chestplate
+34285cb18af2317e.png  |  The Frozen Tomb: Dread Mausoleum
+    shows now: iceandfire:dread_key
+7eb37b551f782988.png  |  Staff of the Dread Lich
+    shows now: iceandfire:lich_staff
+
+### POT FARMING AND BERRY GARDENS   (3)
+7975811b5cc73e69.png  |  Your First Botany Pot
+    shows now: botanypots:terracotta_botany_pot
+5b77e152004b28a8.png  |  Collect the Harvest
+    shows now: botanypots:terracotta_hopper_botany_pot
+0ad22a138885ad39.png  |  Berries and Apricorns
+    shows now: cobblemon:leppa_berry
+
+### RELICS: RPGS   (48)
+1a3d1fa7bc8960a9.png  |  Greater Relic of Rejuvenation
+    shows now: relics_rpgs:greater_healing_taken
+65c02d7f8f1b8c20.png  |  Greater Perk: Fortress Stance
+    shows now: relics_rpgs:greater_perk_defense_block
+3b8faa1837f8a88b.png  |  Greater Perk: Riposte
+    shows now: relics_rpgs:greater_perk_evasion_attack
+14b4668efe1908c6.png  |  Greater Perk: Purifying Wave
+    shows now: relics_rpgs:greater_perk_heal_cleanse
+72ff5d2a386ecbe0.png  |  Greater Perk: Lifebuoy
+    shows now: relics_rpgs:greater_perk_heal_danger
+54b3aacd5b649891.png  |  Greater Perk: Skull Crusher
+    shows now: relics_rpgs:greater_perk_melee_stun
+47229389571aa876.png  |  Greater Perk: Anti-Gravity Shot
+    shows now: relics_rpgs:greater_perk_ranged_levitate
+1a2a73ed562b0f79.png  |  Greater Perk: Shadow Strike
+    shows now: relics_rpgs:greater_perk_roll_damage
+580d7b71d8f56413.png  |  Greater Perk: Shield Rebound
+    shows now: relics_rpgs:greater_perk_shield_reset
+759cde66bacfb3d0.png  |  Greater Perk: Mind Shatter
+    shows now: relics_rpgs:greater_perk_spell_stun
+142c3fe860e7a113.png  |  Greater Bulwark of Desperation
+    shows now: relics_rpgs:greater_proc_defense_danger
+4ce4aa2259d20e14.png  |  Greater Bloodlust Relic
+    shows now: relics_rpgs:greater_proc_physical_trance
+11ce5dd2b45ed1f0.png  |  Greater Arcane Trance Relic
+    shows now: relics_rpgs:greater_proc_spell_trance
+482a4a00f13cac13.png  |  Citrine Jewel Figurine
+    shows now: relics_rpgs:jewel_figurine_citrine
+614ff3d719db3ad0.png  |  Jade Jewel Figurine
+    shows now: relics_rpgs:jewel_figurine_jade
+29a3b2e95d65a441.png  |  Ruby Jewel Figurine
+    shows now: relics_rpgs:jewel_figurine_ruby
+718239c89f99b9d7.png  |  Sapphire Jewel Figurine
+    shows now: relics_rpgs:jewel_figurine_sapphire
+449b22795c6012b2.png  |  Tanzanite Jewel Figurine
+    shows now: relics_rpgs:jewel_figurine_tanzanite
+7656af7229d4beef.png  |  Topaz Jewel Figurine
+    shows now: relics_rpgs:jewel_figurine_topaz
+53f548179ea1c601.png  |  Lesser Evasion
+    shows now: relics_rpgs:lesser_evasion
+207b6045d661eca7.png  |  Lesser Melee Critical Chance
+    shows now: relics_rpgs:lesser_melee_crit_chance
+0bb8f013d772059e.png  |  Lesser Melee Critical Damage
+    shows now: relics_rpgs:lesser_melee_crit_damage
+3e8f7ff7b7e21f67.png  |  Lesser Spellweaver's Catalyst
+    shows now: relics_rpgs:lesser_proc_arcane_fire
+366eb16f508ebad7.png  |  Lesser Executioner's Sigil
+    shows now: relics_rpgs:lesser_proc_crit_damage
+4e3e618c61afa181.png  |  Lesser Frostguard Amulet
+    shows now: relics_rpgs:lesser_proc_frost_healing
+1657f87087476bb8.png  |  Lesser Spellcrit Sigil
+    shows now: relics_rpgs:lesser_proc_spell_crit
+6dadd6c795a76d79.png  |  Lesser Combat Roll
+    shows now: relics_rpgs:lesser_roll
+38469ee5648a2bfa.png  |  Lesser Relic of Force
+    shows now: relics_rpgs:lesser_use_damage
+587f302c1a04e533.png  |  Lesser Relic of Dexterity
+    shows now: relics_rpgs:lesser_use_dex
+28f49481a0a04dc4.png  |  Lesser Relic of Vitality
+    shows now: relics_rpgs:lesser_use_health
+62801c4510435a10.png  |  Lesser Relic of the Marksman
+    shows now: relics_rpgs:lesser_use_ranged
+405cacec877409a9.png  |  Lesser Relic of Quickening
+    shows now: relics_rpgs:lesser_use_spell_haste
+76609945e3c80ee8.png  |  Lesser Relic of Sorcery
+    shows now: relics_rpgs:lesser_use_spell_power
+392c34c6d335d789.png  |  Medium Arcane Surge Relic
+    shows now: relics_rpgs:medium_proc_arcane_power
+4b22d3081c8eaee9.png  |  Medium Heavy Strike Relic
+    shows now: relics_rpgs:medium_proc_attack_damage
+76ae35fff64a6b48.png  |  Medium Flurry Relic
+    shows now: relics_rpgs:medium_proc_attack_speed
+3ee1115397604e19.png  |  Medium Aegis Relic
+    shows now: relics_rpgs:medium_proc_defense
+64c378d35cf0991c.png  |  Medium Phantom Relic
+    shows now: relics_rpgs:medium_proc_evasion
+32ebd6899be578c7.png  |  Medium Pyromancer's Relic
+    shows now: relics_rpgs:medium_proc_fire_power
+49ad4bfb420660f1.png  |  Medium Glacial Relic
+    shows now: relics_rpgs:medium_proc_frost_power
+0822c7df09d3ef31.png  |  Medium Mender's Relic
+    shows now: relics_rpgs:medium_proc_healing_power
+5cec4eb5edd96831.png  |  Medium Sniper's Relic
+    shows now: relics_rpgs:medium_proc_ranged_damage
+3d4cbf374eb93eff.png  |  Medium Channeller's Relic
+    shows now: relics_rpgs:medium_proc_spell_haste
+14296c07f26b4776.png  |  Medium Archmage's Relic
+    shows now: relics_rpgs:medium_proc_spell_power
+6764065f71ecca6b.png  |  Superior War Banner
+    shows now: relics_rpgs:superior_use_area_attack_damage
+0aed153e105f2773.png  |  Superior Bastion Standard
+    shows now: relics_rpgs:superior_use_area_defense_health
+269fb4c22095b0ea.png  |  Superior Consecrated Zone
+    shows now: relics_rpgs:superior_use_zone_healing_taken
+731ea26134adb44c.png  |  Superior Leyline Nexus
+    shows now: relics_rpgs:superior_use_zone_spell_power
+
+### SIMPLY MORE: WEAPON CHOICES   (4)
+7e259c18de7a6829.png  |  Beyond Simply Swords
+    shows now: simplymore:diamond_great_katana
+698e17f49802cac4.png  |  Forge an Additional Style
+    shows now: simplymore:diamond_great_katana
+522127129b06ac31.png  |  A Runic Addon Weapon
+    shows now: simplymore:runic_great_katana
+65c990b4219d8be8.png  |  A Rare Find
+    shows now: simplymore:black_pearl
+
+### SIMPLY SWORDS   (76)
+3a26d28c67bc754e.png  |  Iron Tempering
+    shows now: simplyswords:iron_longsword
+70c6be6030f55b6f.png  |  Gilded Edge
+    shows now: simplyswords:gold_longsword
+0b5db05680190520.png  |  Diamond Standard
+    shows now: simplyswords:diamond_longsword
+6c0f1acffb125c26.png  |  Netherite Reinforcement
+    shows now: simplyswords:netherite_longsword
+0493eb4a4ef38fce.png  |  Runic Imbuing
+    shows now: simplyswords:runic_longsword
+1665ddc0097da4b7.png  |  Empowered Remnants
+    shows now: simplyswords:empowered_remnant
+3f4d20241b0ff398.png  |  Runefused Gem
+    shows now: simplyswords:runefused_gem
+35df9fe05b86f77b.png  |  Netherfused Gem
+    shows now: simplyswords:netherfused_gem
+5fffefd9f5ca6764.png  |  Diamond Claymore
+    shows now: simplyswords:diamond_claymore
+2cdde2bf366cefdf.png  |  Diamond Greathammer
+    shows now: simplyswords:diamond_greathammer
+27685af09c590e38.png  |  Diamond Greataxe
+    shows now: simplyswords:diamond_greataxe
+0f27f2296dc2c9d0.png  |  Diamond Spear
+    shows now: simplyswords:diamond_spear
+3e98ddc80562d539.png  |  Diamond Halberd
+    shows now: simplyswords:diamond_halberd
+79a5ee72dc48c079.png  |  Diamond Glaive
+    shows now: simplyswords:diamond_glaive
+1ee861a7c5b0ae75.png  |  Diamond Rapier
+    shows now: simplyswords:diamond_rapier
+277d3a6286dbf26d.png  |  Diamond Katana
+    shows now: simplyswords:diamond_katana
+3b8731113575b5df.png  |  Diamond Cutlass
+    shows now: simplyswords:diamond_cutlass
+1fd581e6df447814.png  |  Diamond Sai
+    shows now: simplyswords:diamond_sai
+2a36b046603f2d40.png  |  Diamond Twinblade
+    shows now: simplyswords:diamond_twinblade
+6be60037307cd9ae.png  |  Diamond Warglaive
+    shows now: simplyswords:diamond_warglaive
+456b738eb8220023.png  |  Diamond Scythe
+    shows now: simplyswords:diamond_scythe
+667ac17afbfdb828.png  |  Diamond Chakram
+    shows now: simplyswords:diamond_chakram
+1ec8e1c9251842ac.png  |  Runic Claymore
+    shows now: simplyswords:runic_claymore
+375001c6dbbe8a37.png  |  Runic Greathammer
+    shows now: simplyswords:runic_greathammer
+542385150d328c60.png  |  Runic Greataxe
+    shows now: simplyswords:runic_greataxe
+37d2deee14f75458.png  |  Runic Spear
+    shows now: simplyswords:runic_spear
+6f5868b52e849731.png  |  Runic Glaive
+    shows now: simplyswords:runic_glaive
+4fe5776c54a78ca1.png  |  Runic Halberd
+    shows now: simplyswords:runic_halberd
+5b2de40728bfdde5.png  |  Runic Katana
+    shows now: simplyswords:runic_katana
+35914107de7a9a3d.png  |  Runic Rapier
+    shows now: simplyswords:runic_rapier
+57b652e2dee7d7a8.png  |  Runic Twinblade
+    shows now: simplyswords:runic_twinblade
+5a0acfaab594af44.png  |  Runic Warglaive
+    shows now: simplyswords:runic_warglaive
+5f00e880b660706b.png  |  Runic Scythe
+    shows now: simplyswords:runic_scythe
+75390709424b49ee.png  |  Runic Chakram
+    shows now: simplyswords:runic_chakram
+16c1dcb8ca968f17.png  |  Contained Remnant
+    shows now: simplyswords:contained_remnant
+6be6393962638848.png  |  Tampered Remnant
+    shows now: simplyswords:tampered_remnant
+4ccae3e7fb8e1492.png  |  Slumbering Lichblade
+    shows now: simplyswords:slumbering_lichblade
+6df401211de6b87b.png  |  Waking Lichblade
+    shows now: simplyswords:waking_lichblade
+6148a146fbe43d0b.png  |  Dormant Relic
+    shows now: simplyswords:dormant_relic
+444407b640a0f672.png  |  Righteous Relic
+    shows now: simplyswords:righteous_relic
+4fe54c91901c1eb1.png  |  Tainted Relic
+    shows now: simplyswords:tainted_relic
+6a31a6f59416d7d2.png  |  Decaying Relic
+    shows now: simplyswords:decaying_relic
+41ef28b842f50ce8.png  |  Magiblade
+    shows now: simplyswords:magiblade
+2726c637c64ca9d1.png  |  Magispear
+    shows now: simplyswords:magispear
+4ba6b9119c560b4a.png  |  Magiscythe
+    shows now: simplyswords:magiscythe
+6b7ec1a8f446cdbf.png  |  The Watcher
+    shows now: simplyswords:watcher_claymore
+29da5c9f6b369b48.png  |  Stormscale
+    shows now: simplyswords:stormscale
+2ed60875704e4d71.png  |  Brimstone Claymore
+    shows now: simplyswords:brimstone_claymore
+2ed6286b91bc2fe8.png  |  Emberblade
+    shows now: simplyswords:emberblade
+5b2a0a47b07ff3b3.png  |  Emberlash
+    shows now: simplyswords:emberlash
+13f9f1eaf3806d6c.png  |  Molten Edge
+    shows now: simplyswords:molten_edge
+0630586914122a00.png  |  Forge and Firestorm
+    shows now: simplyswords:flamewind
+7580143aa2a2cc71.png  |  Mjolnir
+    shows now: simplyswords:mjolnir
+1a0b43e16d923ff8.png  |  Storm's Edge
+    shows now: simplyswords:storms_edge
+785c85dcfb4d9bb2.png  |  Stormbringer
+    shows now: simplyswords:stormbringer
+3913ea646ab911f5.png  |  The Living Storm
+    shows now: simplyswords:tempest
+35cee133ebacdc43.png  |  Frostfall
+    shows now: simplyswords:frostfall
+3b996485d29af54f.png  |  Icewhisper
+    shows now: simplyswords:icewhisper
+293316b17a3362e9.png  |  Livyatan
+    shows now: simplyswords:livyatan
+00ac201d587d1dfb.png  |  Soulrender
+    shows now: simplyswords:soulrender
+3b9b9e87d4f40ae2.png  |  Soulstalker
+    shows now: simplyswords:soulstalker
+6dbc1f8fbac55654.png  |  Soul Wardens
+    shows now: simplyswords:soulkeeper
+27f4531a178a7876.png  |  Soulstealer
+    shows now: simplyswords:soulstealer
+694060873b430fb9.png  |  Caelestis
+    shows now: simplyswords:caelestis
+5593e15be3be6cbe.png  |  Star's Edge
+    shows now: simplyswords:stars_edge
+30d4914b9727add5.png  |  Shadowsting
+    shows now: simplyswords:shadowsting
+24ab05c1536fa9a7.png  |  Shadow and Gloam
+    shows now: simplyswords:gloampiercer
+5148ef72a80f9fcf.png  |  Dreadwhisper
+    shows now: simplyswords:dreadwhisper
+0d173e474e34977a.png  |  Bramblethorn
+    shows now: simplyswords:bramblethorn
+09f7ee3d3c9f6256.png  |  Toxic Longsword
+    shows now: simplyswords:toxic_longsword
+393494dc7eef2ca2.png  |  Bloodwake
+    shows now: simplyswords:bloodwake
+255b1f2ee573d24a.png  |  The Living Swarm
+    shows now: simplyswords:hiveheart
+42b4dc9dc48227d3.png  |  Ribboncleaver
+    shows now: simplyswords:ribboncleaver
+4d89b73a9422af3a.png  |  Rift and Zephyr
+    shows now: simplyswords:riftmane
+79fa27f5d05a4972.png  |  Solar Artillery
+    shows now: simplyswords:dawnquiver
+4f395f4c9fcb4315.png  |  Wraith Armaments
+    shows now: simplyswords:wraithfang
+
+### STORAGE SOLUTIONS   (28)
+47bc0b64716ccdb0.png  |  The Wanderer's Rucksack
+    shows now: sophisticatedbackpacks:backpack
+105c7f4792f28aae.png  |  Expanding Horizons
+    shows now: sophisticatedbackpacks:iron_backpack
+27a9b9481dfd9e37.png  |  The Netherite Strongbox
+    shows now: sophisticatedbackpacks:netherite_backpack
+0b56a2b3d55a2d2b.png  |  Bound Beyond Death
+    shows now: sophisticatedbackpacks:everlasting_upgrade
+6140505a1259a418.png  |  Deep Pockets
+    shows now: sophisticatedbackpacks:stack_upgrade_starter_tier
+28bb50e4b22870f5.png  |  Modular Customization
+    shows now: sophisticatedbackpacks:upgrade_base
+74594bfc7afff662.png  |  Magnetic Attraction
+    shows now: sophisticatedbackpacks:pickup_upgrade
+66a8b4836a7f0ae5.png  |  Field Workshop
+    shows now: sophisticatedbackpacks:crafting_upgrade
+2ed0a8bebae2a346.png  |  Expedition Caretaker
+    shows now: sophisticatedbackpacks:feeding_upgrade
+2b8ed2e16f71a6ce.png  |  Instant Offload
+    shows now: sophisticatedbackpacks:deposit_upgrade
+7178f61f961a7648.png  |  Portable Reservoirs
+    shows now: sophisticatedbackpacks:tank_upgrade
+761d42022c71f228.png  |  Wisdom on Tap
+    shows now: sophisticatedbackpacks:xp_pump_upgrade
+4675b6328328b627.png  |  Next-Generation Crates
+    shows now: sophisticatedstorage:barrel
+2203edea4b6d8709.png  |  Bulk Drawers: Limited Barrels
+    shows now: sophisticatedstorage:limited_barrel_1
+77f1db6723226760.png  |  Multiplying the Stacks
+    shows now: sophisticatedstorage:stack_upgrade_tier_1
+50c4d11d4fae97fa.png  |  The Warehouse Foreman
+    shows now: sophisticatedstorage:packing_tape
+084ef4bffb9cdaf1.png  |  Live Refitting
+    shows now: sophisticatedstorage:basic_to_iron_tier_upgrade
+5eaa67de6fb00e75.png  |  Impervious Vaults
+    shows now: sophisticatedstorage:diamond_chest
+63df8e1a46f47f22.png  |  Compression Matrix
+    shows now: sophisticatedstorage:compacting_upgrade
+40d6f3a05b2c75e3.png  |  The Storage Controller
+    shows now: sophisticatedstorage:controller
+27c5a9f9b51ceeb1.png  |  Wireless Ties and I/O Ports
+    shows now: sophisticatedstorage:storage_link
+61b4f4002952ff50.png  |  Unified Logistics
+    shows now: toms_storage:inventory_connector
+19120bbb35270624.png  |  Conduits and Architecture
+    shows now: toms_storage:inventory_cable
+71609210f4edc82e.png  |  The Master Index
+    shows now: toms_storage:storage_terminal
+27be43ae2374eed9.png  |  Integrated Workshop
+    shows now: toms_storage:crafting_terminal
+627ba4a9684ec842.png  |  Automated Gateways
+    shows now: toms_storage:inventory_proxy
+19de2ce7db41868d.png  |  Stock Sentry
+    shows now: toms_storage:level_emitter
+499596b20fb04724.png  |  Airborne Signals
+    shows now: toms_storage:wireless_terminal
+
+### THE AETHER   (38)
+1380412c3f2a31fb.png  |  Codex of the Skies
+    shows now: aether:book_of_lore
+27e436ba7c55e0da.png  |  The Skyroot Harvest
+    shows now: aether:skyroot_log
+2aebd6e7da23c8dc.png  |  Tools of the Canopy
+    shows now: aether:skyroot_pickaxe
+30e77cd587673030.png  |  Liquid of the Heavens
+    shows now: aether:skyroot_bucket
+7d0b9efc6b7a130f.png  |  Solid Foundations
+    shows now: aether:holystone
+2c5be7b3c35c158f.png  |  Heavenly Glow
+    shows now: aether:ambrosium_shard
+0eacea20e8ce63c1.png  |  Divine Infusion
+    shows now: aether:altar
+6d4df8934c75bf90.png  |  Purple Luster
+    shows now: aether:zanite_gemstone
+2e9a445ce98356da.png  |  Brittle Brilliance
+    shows now: aether:zanite_pickaxe
+0e0be7b65178ff48.png  |  Glacial Preservation
+    shows now: aether:freezer
+118dff2016357228.png  |  Frostwalker Relics
+    shows now: aether:ice_ring
+468f6c87c11855bf.png  |  Defying Gravity
+    shows now: aether:gravitite_ore
+62a409513e20e848.png  |  Levitating Metallurgy
+    shows now: aether:enchanted_gravitite
+467ffb8b41d8866e.png  |  Gravitational Mastery
+    shows now: aether:gravitite_pickaxe
+6d8ca5857b7893c2.png  |  Walking on Air
+    shows now: aether:cold_aercloud
+3e1dbf46d0804473.png  |  Descent Insurance
+    shows now: aether:cold_parachute
+3c7bcacc111acead.png  |  Sap of the Golden Tree
+    shows now: aether:golden_oak_log
+45993bd3633e4f2c.png  |  Bounties of the Bush
+    shows now: aether:blue_berry
+7d927cdaa723c4e9.png  |  Gelatinous Swets
+    shows now: aether:swet_ball
+447c1c4cd5594bf5.png  |  Aether Sniping
+    shows now: aether:golden_dart_shooter
+30ac266e5cffa130.png  |  Toxic Bloom
+    shows now: aether:aechor_petal
+084f575ae6e61118.png  |  Warming the Clutch
+    shows now: aether:incubator
+2725be8a50ee98ab.png  |  Wings of Companionship
+    shows now: aether:blue_moa_egg
+3e1a639b0ed6fd45.png  |  Heavenly Gloves
+    shows now: aether:iron_gloves
+327d28bf5c813e8d.png  |  Adornments of the Sky
+    shows now: aether:zanite_ring
+6cd044a180e7006f.png  |  Capes and Aerial Feathers
+    shows now: aether:agility_cape
+084ac8c3494d9fce.png  |  Labyrinth of the Depths
+    shows now: aether:carved_stone
+4038af3b605a0c69.png  |  Heavyweight Collision
+    shows now: aether:bronze_dungeon_key
+18d137d7a321a47c.png  |  Labyrinth Vault
+    shows now: aether:cloud_staff
+16c19717d5591af1.png  |  Palace of the Valkyries
+    shows now: aether:angelic_stone
+354df0b8808a5668.png  |  Ten Medals of Valor
+    shows now: aether:victory_medal
+24d59fd5fceb2fd0.png  |  Judgment from Above
+    shows now: aether:silver_dungeon_key
+491b761e621df5d5.png  |  Gifts of the Silver Vault
+    shows now: aether:regeneration_stone
+009dcacdeaa9d39e.png  |  The Blazing Sun Sphere
+    shows now: aether:hellfire_stone
+6835f53106d94d27.png  |  Confronting the Sun
+    shows now: aether:gold_dungeon_key
+30457f72b086edb3.png  |  Spoils of the Solar Core
+    shows now: aether:phoenix_chestplate
+3e2619df9c7df396.png  |  Harnessing the Dawn
+    shows now: aether:sun_altar
+487fbce49be1c48c.png  |  Heart of the Heavens
+    shows now: aether:life_shard
+
+### TRAINER ACTIVITIES   (6)
+44a8c4d8ea3022c1.png  |  Enter a Raid
+    shows now: cobblemonraiddens:raid_shard
+7186b9a47f3d7c20.png  |  Your First Raid Victory
+    shows now: cobblemonraiddens:catching_charm
+398404a249874e2e.png  |  A Stronger Raid Team
+    shows now: cobblemon:ultra_ball
+45dfc05d13751989.png  |  The Battle Tower
+    shows now: cobblemon_battle_tower:holo_battle_tower
+382c7217c7fdf203.png  |  Send an Expedition
+    shows now: cobblemon_expeditions:copper_expedition_board
+70a195d4f71cf95d.png  |  Challenge a Trainer
+    shows now: rctmod:trainer_card
+
+### THE TWILIGHT FOREST   (26)
+09a8815c101df5ac.png  |  The Twilight Realm
+    shows now: minecraft:diamond
+2768ac8df62c1265.png  |  Shared Spoils: Twilight Lootr
+    shows now: checkmark
+0fada38cb4f7aaa0.png  |  Cartography of the Canopy
+    shows now: twilightforest:magic_map_focus
+62ee43ae5b4e8496.png  |  Treasures of the Roots: Ironwood
+    shows now: twilightforest:ironwood_ingot
+27cf316b316a34f5.png  |  The Serpent of the Courtyard: Naga
+    shows now: twilightforest:naga_scale
+18e7f01ac09590e8.png  |  Serpent's Carapace
+    shows now: twilightforest:naga_chestplate
+207b5ee734c7a5ca.png  |  The Wizard of the Spire: Twilight Lich
+    shows now: twilightforest:lich_trophy
+14868fe456381e19.png  |  Sorcerous Staves of the Spire
+    shows now: twilightforest:twilight_scepter
+13b51a50e7129a4f.png  |  Subterranean Mazes of the Swamp
+    shows now: twilightforest:maze_wafer
+574b2f7e474f34a8.png  |  The Bull of the Depths: Minoshroom
+    shows now: twilightforest:meef_stroganoff
+71cb159544981999.png  |  The Multi-Headed Calamity: Hydra
+    shows now: twilightforest:fiery_blood
+1ae59537e999e743.png  |  Molten Armaments: Fiery Gear
+    shows now: twilightforest:fiery_ingot
+27f9a184af253d40.png  |  The Goblin Knight Stronghold
+    shows now: twilightforest:armor_shard
+42e042fe6ace3db3.png  |  Phantoms of the Round: Knight Phantom
+    shows now: twilightforest:knightmetal_ingot
+2b1d57c1197a1991.png  |  Ascent of the Dark Tower
+    shows now: twilightforest:tower_key
+51f2ca87028fd9f1.png  |  The Weeping Sky-Titan: Ur-Ghast
+    shows now: twilightforest:fiery_tears
+27de26c5fdf6be9e.png  |  The Frozen Depths: Yeti Cave
+    shows now: twilightforest:arctic_fur
+00a98426fe461d72.png  |  The Abominable Chieftain: Alpha Yeti
+    shows now: twilightforest:alpha_yeti_fur
+089bc7bdd97a8d7b.png  |  Palace of the Aurora
+    shows now: twilightforest:aurora_block
+35dfcef6e4c41d8b.png  |  Sovereign of the Sleet: Snow Queen
+    shows now: twilightforest:snow_queen_trophy
+0d95a59fd3783777.png  |  The Highlands: Path to the Summit
+    shows now: checkmark
+7a77e00c372d7aba.png  |  Troll Caves and The Magic Beans
+    shows now: twilightforest:magic_beans
+27c5ef8b72295ebc.png  |  Cloud Cottage of the Giants
+    shows now: twilightforest:giant_pickaxe
+036d7606e6ee538b.png  |  The Vault of Cinders
+    shows now: twilightforest:lamp_of_cinders
+27be6fdf4a31c2d9.png  |  Burning the Brambles: The Thornlands
+    shows now: biome
+6e50bd6b131ec425.png  |  ★ The Final Castle: Sovereign of Twilight
+    shows now: advancement
+
