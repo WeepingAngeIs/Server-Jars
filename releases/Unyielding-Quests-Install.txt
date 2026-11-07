@@ -1,11 +1,12 @@
-UNYIELDING QUESTS - ONE JAR  (v1.6.0)
+UNYIELDING QUESTS - ONE JAR  (v1.6.1)
 =====================================
-File: UnyieldingQuests-1.6.0.jar   (Minecraft 1.21.1, NeoForge 21.1.x)
+File: UnyieldingQuests-1.6.1.jar   (Minecraft 1.21.1, NeoForge 21.1.x)
 
 INSTALL (click by click)
 ------------------------
-1. Open the pack's mods folder:  C:\Users\tolov\curseforge\minecraft\Instances\Cobblemon Unyielding\mods
-2. Delete UnyieldingQuests-1.5.2.jar (or any older UnyieldingQuests jar).
+1. In CurseForge, open the intended modpack's menu and choose Open Folder, then mods.
+   Our local development instance is Cobblemon Unyielding TEST.
+2. Remove UnyieldingQuests-1.6.0.jar (or any older UnyieldingQuests jar).
 3. Delete these two too (they are the "FTB" buttons you saw at the top left):
      ftb-library-neoforge-2101.1.36.jar
      ftb-teams-neoforge-2101.1.11.jar
@@ -13,10 +14,25 @@ INSTALL (click by click)
    Unyielding > Mods > find "FTB Library" and "FTB Teams" > the "..." menu > Remove), or the
    app puts them back on the next update. Your friend needs to leave them out of the next
    server pack / export as well.
-4. Copy UnyieldingQuests-1.6.0.jar into mods/.
-5. Same on the server: delete the old quests jar + the two FTB jars, add 1.6.0, restart.
+4. Copy UnyieldingQuests-1.6.1.jar into mods/ while Minecraft is closed.
+5. Install the same 1.6.1 jar on the server and every client, then restart.
 Nothing else in the pack needs FTB: our jar does the quests, teams, homes/tpa/warps and
 vein mining. Open Parties and Claims stays for claims.
+
+WHAT'S NEW IN 1.6.1 - PLAYER TUTORIAL
+------------------------------------
+The tutorial opens on each join after all NeoOrigins selections are complete and the
+screen has been clear for a short interval. It yields to other menus and resumes at
+the same page. Later and Escape close it. /tutorial opens it again.
+
+The transparent guide includes command explanations and a searchable list generated
+from the server's permitted command tree. The final page explains starter selection
+using the player's actual Summary key, H in the TEST instance.
+
+For new command explanations, edit config/unyieldingquests/tutorial.json on the server,
+then run /tutorial reload as an operator. The default file is created on first startup.
+Players can reopen /tutorial to see the changes. Newly registered public commands also
+appear automatically in the command index.
 
 WHAT'S NEW IN 1.6.0  -  EDIT THE QUEST BOOK IN GAME (no more FTB Quests needed)
 --------------------------------------------------------------------------------
