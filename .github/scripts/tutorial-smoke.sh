@@ -4,7 +4,7 @@ set -euo pipefail
 repository=$(cd "$(dirname "$0")/../.." && pwd)
 project="$repository/unyielding-quests"
 results="$repository/tutorial-smoke"
-mkdir -p "$results" "$project/run-server" "$project/run"
+mkdir -p "$results" "$project/run-server" "$project/run" /tmp/uqshots
 
 cat > "$project/run-server/eula.txt" <<'EOF'
 eula=true
