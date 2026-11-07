@@ -10,6 +10,13 @@ The quest / teams / essentials / vein-mine mod for the Cobblemon Unyielding modp
 
 Build: `./gradlew build` -> `build/libs/UnyieldingQuests-<version>.jar`. Releases on this repo carry the built jar.
 
+## Combined Unyielding compatibility (1.6.3)
+
+`/quests daily` always shows quest login-reward status. When Unyielding Ranks (`curanks`)
+is installed, `/daily` remains its rank-kit command. Without Ranks, `/daily` is also kept
+as a quest login-reward alias. This avoids registration-order-dependent command replacement
+in the combined Unyielding JAR.
+
 ## In-game server settings (1.6.2)
 
 Operators (permission level 2) can use **Server settings** in the quest-book sidebar,

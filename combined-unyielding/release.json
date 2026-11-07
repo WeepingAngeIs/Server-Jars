@@ -1,0 +1,23 @@
+{
+  "name": "Unyielding",
+  "version": "1.1.0",
+  "minecraft": "1.21.1",
+  "tested_neoforge": "21.1.255",
+  "curseforge_project": "https://www.curseforge.com/minecraft/mc-mods/unyielding",
+  "curseforge_project_id": 1766517,
+  "output": "dist/combined/Unyielding-1.1.0.jar",
+  "base": {
+    "path": "combined-unyielding/inputs/Unyielding-Mawonna.jar",
+    "sha256": "8317d4ce5275df39dcf1d932f7ab6433c7310c0ff529e2c8d5b5fc3ae5c60ecc",
+    "provenance": "User-supplied Unyielding-Mawonna.jar, extending the explicitly approved Unyielding 1.0.8 base. Preserve its crafting restrictions and Mawonna module."
+  },
+  "quests": {
+    "path": "unyielding-quests/build/libs/UnyieldingQuests-1.6.3.jar",
+    "verification_report": "unyielding-quests/build/verification/package-verification.json",
+    "version": "1.6.3",
+    "previous_release_sha256": "92d7a76f7974db64c4e1f4ffa7d257394bd3d1cf140ba83e87c4c9ee662b4d1b",
+    "previous_verified_run": "https://github.com/WeepingAngeIs/Server-Jars/actions/runs/42355250299",
+    "change": "Preserves 1.6.2 features; exposes /quests daily and reserves /daily for Unyielding Ranks when installed."
+  },
+  "mod_ids": ["cusoultome", "curanks", "cugiant", "culeaderboard", "cuportal", "cubalance", "mawonna", "unyieldingquests"]
+}

@@ -1,0 +1,81 @@
+name: Build and verify combined Unyielding
+
+on:
+  push:
+    branches: [feature/combined-unyielding]
+    paths:
+      - 'combined-unyielding/**'
+      - 'unyielding-quests/**'
+      - '.github/workflows/build-combined-unyielding.yml'
+      - '.github/scripts/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: combined-unyielding-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - name: Check out release inputs and test harness
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout: |
+            combined-unyielding
+            unyielding-quests
+            .github
+      - name: Set up Java 21 on GitHub
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            unyielding-quests/*.gradle
+            unyielding-quests/gradle.properties
+            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
+            combined-unyielding/smoke-harness/*.gradle
+      - name: Fetch verified quest compile dependencies
+        run: python3 .github/scripts/fetch-build-dependencies.py
+      - name: Build quest component and run unit tests
+        working-directory: unyielding-quests
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon --console=plain -Dorg.gradle.jvmargs=-Xmx3G build
+      - name: Verify quest component
+        run: python3 .github/scripts/verify-mod-jar.py
+      - name: Assemble and audit combined release
+        run: python3 combined-unyielding/build_bundle.py
+      - name: Prepare isolated final-JAR test environment
+        run: python3 combined-unyielding/prepare_smoke.py
+      - name: Install cloud display dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Exercise final release in a real server and client
+        run: bash combined-unyielding/run_smoke.sh
+      - name: Upload verified combined release
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: Unyielding-1.1.0-verified
+          path: dist/combined/
+          if-no-files-found: error
+          retention-days: 90
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: Unyielding-1.1.0-test-evidence
+          path: |
+            dist/combined-smoke/
+            dist/combined/assembly-report.json
+            unyielding-quests/build/reports/tests/
+            unyielding-quests/build/test-results/
+            unyielding-quests/build/verification/
+          if-no-files-found: warn
+          retention-days: 90

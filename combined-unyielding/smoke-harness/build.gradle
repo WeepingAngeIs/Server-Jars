@@ -1,0 +1,33 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+if (System.getenv('GITHUB_ACTIONS') != 'true' || System.getenv('RUNNER_ENVIRONMENT') != 'github-hosted') {
+    throw new GradleException('Combined game checks run only on GitHub-hosted runners.')
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+neoForge {
+    version = '21.1.255'
+    runs {
+        server {
+            server()
+            gameDirectory = file('run-server')
+            programArgument '--nogui'
+            jvmArgument '-Xmx2304m'
+            systemProperty 'uq.adminSmoke', 'true'
+        }
+        client {
+            client()
+            gameDirectory = file('run')
+            jvmArgument '-Xmx3072m'
+            programArguments.addAll('--quickPlayMultiplayer', '127.0.0.1:25565', '--username', 'Dev', '--width', '1280', '--height', '800')
+            systemProperty 'uq.autotest', '1'
+        }
+    }
+    mods { uq_bundle_smoke { sourceSet(sourceSets.main) } }
+}
+// All production code comes from the final distributable JAR, never source sets.
+dependencies { implementation fileTree(dir: 'libs', include: ['*.jar']) }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }

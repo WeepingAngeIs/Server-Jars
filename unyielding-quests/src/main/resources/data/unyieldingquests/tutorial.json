@@ -16,6 +16,11 @@
           "description": "See how many quests your team has completed."
         },
         {
+          "command": "quests daily",
+          "usage": "/quests daily",
+          "description": "Check your daily login reward status."
+        },
+        {
           "command": "daily",
           "usage": "/daily",
           "description": "Check your daily login reward status."

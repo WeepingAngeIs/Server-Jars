@@ -1,0 +1,23 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="uq_bundle_smoke"
+version="1.0.0"
+displayName="Unyielding Combined Cloud Checks"
+description="Separate cloud-only test harness. Never included in release files."
+
+[[dependencies.uq_bundle_smoke]]
+modId="unyieldingquests"
+type="required"
+versionRange="[1.6.3,1.7)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.uq_bundle_smoke]]
+modId="mawonna"
+type="required"
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"

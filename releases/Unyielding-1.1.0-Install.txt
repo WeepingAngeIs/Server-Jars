@@ -1,0 +1,36 @@
+UNYIELDING 1.1.0 - COMBINED MOD UPDATE
+=====================================
+Upload file: Unyielding-1.1.0.jar
+Existing CurseForge project: https://www.curseforge.com/minecraft/mc-mods/unyielding
+File display name: Unyielding 1.1.0 - Quests, Admin Settings & Mawonna
+Minecraft version: 1.21.1
+Mod loader: NeoForge
+Environment: Client and server
+Required related project: Cobblemon (1.8.4; versions below 1.9)
+Java: 21
+NeoForge: 21.1.248 or newer; cloud checks use 21.1.255.
+
+INSTALL
+-------
+1. Close Minecraft or stop the server.
+2. Remove the previous Unyielding JAR and the separate UnyieldingQuests JAR from mods.
+   Also remove a separate Mawonna companion JAR if one was installed.
+3. Put Unyielding-1.1.0.jar in mods on the server and every client.
+4. Keep the matching Mawonna.zip in server datapacks and client resourcepacks.
+5. Restart. Do not keep duplicate JARs containing the same modules.
+
+Existing config names, mod IDs and quest IDs are preserved. The supplied Unyielding
+1.0.8 crafting restrictions are retained exactly.
+
+CHANGELOG FOR CURSEFORGE
+-----------------------
+- Combined Unyielding's existing features, Mawonna gameplay and the quest system into one JAR.
+- Added the quest book, in-game quest editing, command tutorial and admin settings.
+- Quest sharing defaults to OFF: players can form parties without inheriting completed quests.
+- Preserved player progress and reward claim history across party and sharing-mode changes.
+- Added live switches for party creation, tutorials, quest Lucky Spins, daily rewards and announcements.
+- Preserved the approved 1.0.8 crafting restrictions and existing Mawonna evolution rules.
+- Kept /daily for rank kits. Use /quests daily for quest login-reward status.
+
+The same combined JAR is required on the server and every client. Mawonna.zip remains
+a separate datapack/resourcepack. Cobblemon 1.8.4 is required for the bundled Mawonna module.

@@ -1,0 +1,6 @@
+.gradle/
+build/
+libs/
+run/
+run-server/
+src/main/java/dev/unyielding/quests/devtest/

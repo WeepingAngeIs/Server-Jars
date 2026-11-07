@@ -151,9 +151,15 @@ public final class ModCommands {
             c.getSource().sendSuccess(() -> Component.literal("Completed " + done + " / " + QuestManager.file.quests.size() + " quests."), false);
             return 1;
         }));
+        quests.then(dailyCommand("daily"));
         d.register(quests);
 
-        LiteralArgumentBuilder<CommandSourceStack> daily = Commands.literal("daily");
+        // Unyielding Ranks owns /daily for rank kits. Always expose quest rewards below /quests.
+        if (!net.neoforged.fml.ModList.get().isLoaded("curanks")) d.register(dailyCommand("daily"));
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> dailyCommand(String name) {
+        LiteralArgumentBuilder<CommandSourceStack> daily = Commands.literal(name);
         daily.executes(c -> {
             ServerPlayer p = player(c);
             c.getSource().sendSuccess(() -> Component.literal(dev.unyielding.quests.spin.DailyLogin.status(p)).withStyle(ChatFormatting.GOLD), false);
@@ -164,7 +170,7 @@ public final class ModCommands {
                     boolean ok = dev.unyielding.quests.spin.DailyLogin.give(EntityArgument.getPlayer(c, "player"));
                     return result(c, ok ? null : "That player already got today's reward.", "Daily reward given.");
                 })));
-        d.register(daily);
+        return daily;
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> memberAction(String name, Function<CommandContext<CommandSourceStack>, String> f) {
