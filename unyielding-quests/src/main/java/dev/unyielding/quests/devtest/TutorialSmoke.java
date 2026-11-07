@@ -35,6 +35,8 @@ public final class TutorialSmoke {
     public static boolean tick() throws Exception {
         if (!running) return false;
         Minecraft mc = Minecraft.getInstance();
+        mc.getToasts().clear();
+        mc.gui.getChat().clearMessages(true);
         ticks++;
         try {
             switch (stage) {

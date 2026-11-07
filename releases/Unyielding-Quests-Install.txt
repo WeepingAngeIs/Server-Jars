@@ -1,12 +1,12 @@
-UNYIELDING QUESTS - ONE JAR  (v1.6.1)
+UNYIELDING QUESTS - ONE JAR  (v1.6.2)
 =====================================
-File: UnyieldingQuests-1.6.1.jar   (Minecraft 1.21.1, NeoForge 21.1.x)
+File: UnyieldingQuests-1.6.2.jar   (Minecraft 1.21.1, NeoForge 21.1.x)
 
 INSTALL (click by click)
 ------------------------
 1. In CurseForge, open the intended modpack's menu and choose Open Folder, then mods.
    Our local development instance is Cobblemon Unyielding TEST.
-2. Remove UnyieldingQuests-1.6.0.jar (or any older UnyieldingQuests jar).
+2. Remove UnyieldingQuests-1.6.1.jar (or any older UnyieldingQuests jar).
 3. Delete these two too (they are the "FTB" buttons you saw at the top left):
      ftb-library-neoforge-2101.1.36.jar
      ftb-teams-neoforge-2101.1.11.jar
@@ -14,10 +14,25 @@ INSTALL (click by click)
    Unyielding > Mods > find "FTB Library" and "FTB Teams" > the "..." menu > Remove), or the
    app puts them back on the next update. Your friend needs to leave them out of the next
    server pack / export as well.
-4. Copy UnyieldingQuests-1.6.1.jar into mods/ while Minecraft is closed.
-5. Install the same 1.6.1 jar on the server and every client, then restart.
+4. Copy UnyieldingQuests-1.6.2.jar into mods/ while Minecraft is closed.
+5. Install the same 1.6.2 jar on the server and every client, then restart.
 Nothing else in the pack needs FTB: our jar does the quests, teams, homes/tpa/warps and
 vein mining. Open Parties and Claims stays for claims.
+
+WHAT'S NEW IN 1.6.2 - ADMIN SETTINGS AND PERSONAL QUEST PROGRESS
+-------------------------------------------------------------
+As an operator, open Server settings in the quest book, Admin in the Teams window,
+or type /quests settings. Changes save immediately on the server and need no restart.
+
+Share quest progress starts OFF. Players may still form parties, but joining a party
+does not grant its completed quests. Existing players keep their current progress;
+future members must earn their own. Reward and Lucky Spin claim history follows each
+player across parties and mode changes so the same prizes cannot be claimed again.
+
+The menu also has switches for new parties, the automatic join tutorial, completion
+messages, quest Lucky Spins, daily rewards and Pokemon-prize announcements.
+The automatic tutorial switch does not disable the manual /tutorial command.
+These settings are stored in config/unyieldingquests-common.toml on the server.
 
 WHAT'S NEW IN 1.6.1 - PLAYER TUTORIAL
 ------------------------------------

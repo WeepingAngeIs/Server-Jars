@@ -661,9 +661,14 @@ public class QuestScreen extends Screen {
         g.fill(8, listTop - 2, side - 8, listTop - 1, 0x22FFFFFF);
         chapterHits.clear();
         int listBottom = height - 4;
+        if (canEdit()) {
+            listBottom -= 24;
+            button(g, 6, height - 24, side - 12, 18, "Server settings", Ui.ICON_GEAR, Ui.Style.NORMAL, true, mx, my,
+                    AdminSettingsScreen::requestOpen);
+        }
         if (editing()) {
             listBottom -= 24;
-            button(g, 6, height - 24, side - 12, 18, "+ New chapter", null, Ui.Style.ACCENT, true, mx, my,
+            button(g, 6, height - 48, side - 12, 18, "+ New chapter", null, Ui.Style.ACCENT, true, mx, my,
                     () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.EditChapterScreen(this, null, chapter == null ? 0 : chapter.group)));
         }
         g.enableScissor(2, listTop, side - 2, listBottom);
@@ -1690,7 +1695,8 @@ public class QuestScreen extends Screen {
             return true;
         }
         if (mx < side) {
-            int max = Math.max(0, sideContentHeight - (height - 34));
+            int controlsHeight = (canEdit() ? 24 : 0) + (editing() ? 24 : 0);
+            int max = Math.max(0, sideContentHeight - (height - 34 - controlsHeight));
             sideScroll = (int) Math.max(0, Math.min(max, sideScroll - sy * 18));
             return true;
         }

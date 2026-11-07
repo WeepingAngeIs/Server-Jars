@@ -23,6 +23,11 @@ with zipfile.ZipFile(jar) as archive:
         "dev/unyielding/quests/tutorial/TutorialManager.class",
         "dev/unyielding/quests/client/tutorial/TutorialClient.class",
         "dev/unyielding/quests/client/tutorial/TutorialScreen.class",
+        "dev/unyielding/quests/settings/AdminSettings.class",
+        "dev/unyielding/quests/client/AdminSettingsScreen.class",
+        "dev/unyielding/quests/quest/ProgressSharing.class",
+        "dev/unyielding/quests/net/Net$AdminSettingsAction.class",
+        "dev/unyielding/quests/net/Net$AdminSettingsSync.class",
     ):
         assert name in names, f"Missing compiled tutorial entry {name}"
     count = 0

@@ -2,7 +2,7 @@ name: Build and exercise Unyielding Quests
 
 on:
   push:
-    branches: [main, feature/player-tutorial]
+    branches: [main, feature/player-tutorial, feature/admin-settings]
     paths:
       - 'unyielding-quests/**'
       - '.github/workflows/build-unyielding.yml'

@@ -112,6 +112,10 @@ public final class ModCommands {
         d.register(team);
 
         LiteralArgumentBuilder<CommandSourceStack> quests = Commands.literal("quests");
+        quests.then(Commands.literal("settings").requires(s -> s.hasPermission(2)).executes(c -> {
+            dev.unyielding.quests.settings.AdminSettings.open(player(c));
+            return 1;
+        }));
         quests.executes(c -> {
             Net.sendTo(player(c), new Net.OpenScreen(0));
             return 1;

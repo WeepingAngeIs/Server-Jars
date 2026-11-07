@@ -7,6 +7,8 @@ import java.util.List;
 public final class Config {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ALLOW_PARTIES;
+    public static final ModConfigSpec.BooleanValue SHARE_QUEST_PROGRESS;
+    public static final ModConfigSpec.BooleanValue TUTORIAL_ON_JOIN;
     public static final ModConfigSpec.IntValue MAX_PARTY_SIZE;
     public static final ModConfigSpec.IntValue MAX_NAME_LENGTH;
     public static final ModConfigSpec.BooleanValue ANNOUNCE_COMPLETION;
@@ -48,12 +50,19 @@ public final class Config {
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("teams");
-        ALLOW_PARTIES = b.comment("Can players create party teams? When false everybody stays on their own personal team (quests stay solo). Admins can still create server teams.")
+        ALLOW_PARTIES = b.comment("Can players create new party teams? Existing parties remain available. Quest progress sharing is controlled separately.")
                 .define("allow_party_creation", true);
+        SHARE_QUEST_PROGRESS = b.comment("Share quest completion and task progress between team members. False keeps progress personal even while in a party.",
+                        "Existing progress is preserved when changing modes. Each player's reward claims persist across teams and modes.")
+                .define("share_quest_progress", false);
         MAX_PARTY_SIZE = b.comment("Maximum players in a party (0 = unlimited).")
                 .defineInRange("max_party_size", 0, 0, 1000);
         MAX_NAME_LENGTH = b.comment("Maximum length of a party name.")
                 .defineInRange("max_name_length", 32, 3, 64);
+        b.pop();
+        b.push("tutorial");
+        TUTORIAL_ON_JOIN = b.comment("Automatically open the player tutorial after origin selection on each join. /tutorial remains available when this is false.")
+                .define("show_on_join", true);
         b.pop();
         b.push("quests");
         ANNOUNCE_COMPLETION = b.comment("Send a chat message to the whole team when a quest is completed.")

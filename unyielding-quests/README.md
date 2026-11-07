@@ -10,9 +10,32 @@ The quest / teams / essentials / vein-mine mod for the Cobblemon Unyielding modp
 
 Build: `./gradlew build` -> `build/libs/UnyieldingQuests-<version>.jar`. Releases on this repo carry the built jar.
 
+## In-game server settings (1.6.2)
+
+Operators (permission level 2) can use **Server settings** in the quest-book sidebar,
+**Admin** in the Teams window, or `/quests settings`. Changes apply live and save to
+`config/unyieldingquests-common.toml`; the server checks permission on every request.
+
+**Share quest progress** defaults to **OFF**. Parties still support membership, invitations
+and chat, but each player earns their own tasks, completions and rewards. Joining, leaving,
+being kicked or moving to another party cannot grant that party's quest progress while OFF.
+The Teams screen and tutorial reflect the active sharing mode.
+
+On upgrade, current party members keep the progress they already had, including offline
+members. Turning sharing OFF also preserves current members' existing progress; future
+joiners do not inherit it. Turning it ON intentionally combines current members' progress.
+Per-player reward and Lucky Spin claims persist across parties, mode changes and restarts.
+Only explicit admin quest resets clear the corresponding claim history.
+
+The menu also controls new-party creation, the automatic join tutorial, quest completion
+messages, quest Lucky Spins, daily login rewards and Pokemon-prize announcements. Turning
+off the automatic tutorial leaves `/tutorial` available. These switches can also be edited
+in the server's normal TOML config. Open Parties and Claims is a separate mod and is not
+controlled by these switches.
+
 ## Player tutorial (1.6.1)
 
-The guide opens on each join after NeoOrigins reports that all origin choices are complete,
+When enabled, the guide opens on each join after NeoOrigins reports that all origin choices are complete,
 followed by a short interval with no other menu open. It yields to other screens and resumes
 at the same page after they close. Players can close it with Later or Escape and reopen it
 with `/tutorial`. The last page reads Cobblemon's live Summary key binding to explain starter selection.

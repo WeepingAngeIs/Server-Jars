@@ -1,6 +1,7 @@
 package dev.unyielding.quests.tutorial;
 
 import com.mojang.brigadier.tree.CommandNode;
+import dev.unyielding.quests.Config;
 import dev.unyielding.quests.UnyieldingQuests;
 import dev.unyielding.quests.net.Net;
 import net.minecraft.commands.CommandSourceStack;
@@ -85,7 +86,11 @@ public final class TutorialManager {
     }
 
     public static void onLogin(ServerPlayer player) {
-        PENDING.put(player.getUUID(), true);
+        if (Config.TUTORIAL_ON_JOIN.get()) PENDING.put(player.getUUID(), true);
+    }
+
+    public static void onAutomaticChanged() {
+        if (!Config.TUTORIAL_ON_JOIN.get()) PENDING.entrySet().removeIf(Map.Entry::getValue);
     }
 
     public static void onLogout(ServerPlayer player) {
@@ -107,6 +112,10 @@ public final class TutorialManager {
         Iterator<Map.Entry<UUID, Boolean>> waiting = PENDING.entrySet().iterator();
         while (waiting.hasNext()) {
             Map.Entry<UUID, Boolean> entry = waiting.next();
+            if (entry.getValue() && !Config.TUTORIAL_ON_JOIN.get()) {
+                waiting.remove();
+                continue;
+            }
             ServerPlayer player = server.getPlayerList().getPlayer(entry.getKey());
             if (player == null) {
                 waiting.remove();
@@ -157,14 +166,18 @@ public final class TutorialManager {
             ListTag entries = new ListTag();
             for (TutorialContent.Entry entry : page.entries()) {
                 if (TutorialContent.available(root, source, entry.command())) {
-                    entries.add(entryTag(entry.usage(), entry.description()));
+                    entries.add(entryTag(entry.usage(), commandDescription(entry.usage(), entry.description())));
                 }
             }
             if (entries.isEmpty()) continue;
             CompoundTag item = new CompoundTag();
             item.putString("id", page.id());
             item.putString("title", page.title());
-            item.putString("description", page.description());
+            String description = page.description();
+            if ("friends".equals(page.id()) && !Config.SHARE_QUEST_PROGRESS.get()) {
+                description = "Send a teleport request before visiting a friend. Parties support chat and invitations; quest progress stays personal on this server.";
+            }
+            item.putString("description", description);
             item.put("entries", entries);
             pages.add(item);
         }
@@ -175,7 +188,7 @@ public final class TutorialManager {
         int directoryBytes = 0;
         boolean truncated = catalog.truncated();
         for (String usage : catalog.usages()) {
-            String description = content.describe(usage);
+            String description = commandDescription(usage, content.describe(usage));
             int cost = usage.getBytes(StandardCharsets.UTF_8).length
                     + description.getBytes(StandardCharsets.UTF_8).length + 64;
             if (directoryBytes + cost > 320_000) {
@@ -188,6 +201,10 @@ public final class TutorialManager {
         result.put("directory", directory);
         result.putBoolean("directory_truncated", truncated);
         return result;
+    }
+
+    private static String commandDescription(String usage, String description) {
+        return "/quests stats".equals(usage) ? "See your completed quest count." : description;
     }
 
     private static CompoundTag entryTag(String usage, String description) {

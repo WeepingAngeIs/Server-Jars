@@ -178,6 +178,7 @@ public final class TeamManager {
         }
         t.put("players", players);
         t.putBoolean("canCreate", Config.ALLOW_PARTIES.get());
+        t.putBoolean("shareProgress", Config.SHARE_QUEST_PROGRESS.get());
         t.putInt("maxSize", Config.MAX_PARTY_SIZE.get());
         Net.sendTo(p, new Net.TeamSync(t));
     }

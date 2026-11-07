@@ -20,6 +20,7 @@ public class ServerEvents {
         QuestManager.onServerStart(e.getServer());
         dev.unyielding.quests.spin.DailyLogin.onServerStart(e.getServer());
         TutorialManager.onServerStart();
+        dev.unyielding.quests.settings.AdminSettings.onServerStart(e.getServer());
     }
 
     @SubscribeEvent
@@ -28,12 +29,14 @@ public class ServerEvents {
         dev.unyielding.quests.spin.DailyLogin.onServerStop();
         TeamManager.onServerStop();
         TutorialManager.onServerStop();
+        dev.unyielding.quests.settings.AdminSettings.onServerStop();
     }
 
     @SubscribeEvent
     public void onLogin(PlayerEvent.PlayerLoggedInEvent e) {
         if (e.getEntity() instanceof ServerPlayer p) {
             TeamManager.onLogin(p);
+            dev.unyielding.quests.settings.AdminSettings.sync(p, false, "", false);
             QuestManager.onLogin(p);
             dev.unyielding.quests.spin.DailyLogin.onLogin(p);
             TutorialManager.onLogin(p);
@@ -51,6 +54,7 @@ public class ServerEvents {
 
     @SubscribeEvent
     public void onTick(ServerTickEvent.Post e) {
+        dev.unyielding.quests.settings.AdminSettings.onTick(e.getServer());
         QuestManager.onServerTick();
         dev.unyielding.quests.spin.DailyLogin.onTick(e.getServer());
         TutorialManager.onTick(e.getServer());

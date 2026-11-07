@@ -11,17 +11,32 @@ public final class TutorialClient {
     private static TutorialScreen active;
     private static int originPoll;
     private static boolean originReady;
+    private static boolean automaticEnabled = true;
+    private static boolean automaticRequest;
 
     private TutorialClient() {
     }
 
     public static void receive(CompoundTag tag, boolean automatic) {
+        if (automatic && !automaticEnabled) return;
+        automaticRequest = automatic;
         pending = tag.copy();
         resume = null;
         active = null;
         originPoll = 0;
         originReady = false;
         DELAY.request(automatic);
+    }
+
+    public static void setAutomaticEnabled(boolean enabled) {
+        automaticEnabled = enabled;
+        if (enabled || !automaticRequest) return;
+        pending = null;
+        resume = null;
+        DELAY.clear();
+        TutorialScreen screen = active;
+        active = null;
+        if (screen != null && Minecraft.getInstance().screen == screen) screen.onClose();
     }
 
     public static void tick() {
@@ -57,6 +72,8 @@ public final class TutorialClient {
         active = null;
         originPoll = 0;
         originReady = false;
+        automaticEnabled = true;
+        automaticRequest = false;
         DELAY.clear();
         OriginGate.reset();
     }

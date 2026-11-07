@@ -37,6 +37,7 @@ public final class AutoTest {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || ClientData.file == null) return;
         if (TutorialSmoke.tick()) return;
+        if (AdminSettingsSmoke.tick()) return;
         Path cmd = Path.of("/tmp/uq-cmd.txt");
         if (Files.exists(cmd)) {
             for (String l : Files.readAllLines(cmd)) if (!l.isBlank()) queue.add(l.trim());
@@ -52,6 +53,7 @@ public final class AutoTest {
         QuestFile f = ClientData.file;
         switch (a[0]) {
             case "tutorialtest" -> TutorialSmoke.begin();
+            case "admintest" -> AdminSettingsSmoke.begin();
             case "quests" -> mc.setScreen(new QuestScreen());
             case "chapter" -> {
                 if (mc.screen instanceof QuestScreen s) s.debugChapter(Integer.parseInt(a[1]));

@@ -32,9 +32,10 @@ maxFps:30
 enableVsync:false
 onboardAccessibility:false
 soundCategory_master:0.0
+tutorialStep:none
 EOF
-printf 'tutorialtest\n' > /tmp/uq-cmd.txt
-rm -f /tmp/uq-tutorial-test-done
+printf 'tutorialtest\nadmintest\n' > /tmp/uq-cmd.txt
+rm -f /tmp/uq-tutorial-test-done /tmp/uq-admin-test-done /tmp/uq-admin-server-cmd /tmp/uq-admin-server-result
 
 server_pid=
 client_pid=
@@ -43,6 +44,8 @@ cleanup() {
     if [[ -n "$server_pid" ]]; then kill -- -"$server_pid" 2>/dev/null || true; fi
     cp -a /tmp/uqshots "$results/screenshots" 2>/dev/null || true
     cp /tmp/uq-tutorial-test-done "$results/" 2>/dev/null || true
+    cp /tmp/uq-admin-test-done /tmp/uq-admin-server-result "$results/" 2>/dev/null || true
+    cp "$project/run-server/config/unyieldingquests-common.toml" "$results/final-server-config.toml" 2>/dev/null || true
     cp "$project/run/logs/latest.log" "$results/client-latest.log" 2>/dev/null || true
     cp "$project/run-server/logs/latest.log" "$results/server-latest.log" 2>/dev/null || true
     cp -a "$project/run/crash-reports" "$results/client-crashes" 2>/dev/null || true
@@ -90,12 +93,18 @@ for ((attempt=0; attempt<360; attempt++)); do
             cat /tmp/uq-tutorial-test-done
             exit 1
         fi
-        if [[ $(find /tmp/uqshots -type f -name '*.png' | wc -l) -lt 3 ]]; then
-            echo 'Tutorial smoke completed without the expected screenshots' >&2
-            exit 1
+        if [[ -f /tmp/uq-admin-test-done ]]; then
+            if ! grep -qi '^passed' /tmp/uq-admin-test-done; then
+                cat /tmp/uq-admin-test-done
+                exit 1
+            fi
+            if [[ $(find /tmp/uqshots -type f -name '*.png' | wc -l) -lt 8 ]]; then
+                echo 'Game smoke completed without the expected screenshots' >&2
+                exit 1
+            fi
+            cat /tmp/uq-tutorial-test-done /tmp/uq-admin-test-done
+            exit 0
         fi
-        cat /tmp/uq-tutorial-test-done
-        exit 0
     fi
     if ! kill -0 "$client_pid" 2>/dev/null; then
         tail -100 "$results/client-console.log"

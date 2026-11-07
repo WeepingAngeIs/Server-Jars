@@ -31,6 +31,17 @@ public final class Net {
 
     // ---- server -> client ------------------------------------------------
 
+    /** Server-authoritative settings; only operators receive the editable list. */
+    public record AdminSettingsSync(CompoundTag tag, boolean open) implements CustomPacketPayload {
+        public static final Type<AdminSettingsSync> TYPE = mkType("admin_settings");
+        public static final StreamCodec<RegistryFriendlyByteBuf, AdminSettingsSync> CODEC = StreamCodec.composite(
+                ByteBufCodecs.COMPOUND_TAG, AdminSettingsSync::tag,
+                ByteBufCodecs.BOOL, AdminSettingsSync::open, AdminSettingsSync::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
     /** Permission-filtered onboarding pages and the server's current public commands. */
     public record TutorialSync(CompoundTag tag, boolean automatic) implements CustomPacketPayload {
         public static final Type<TutorialSync> TYPE = mkType("tutorial");
@@ -183,6 +194,17 @@ public final class Net {
 
     // ---- client -> server ------------------------------------------------
 
+    /** An allowlisted boolean change, or __open to request the operator menu. */
+    public record AdminSettingsAction(String key, boolean value) implements CustomPacketPayload {
+        public static final Type<AdminSettingsAction> TYPE = mkType("admin_settings_action");
+        public static final StreamCodec<RegistryFriendlyByteBuf, AdminSettingsAction> CODEC = StreamCodec.composite(
+                ByteBufCodecs.stringUtf8(64), AdminSettingsAction::key,
+                ByteBufCodecs.BOOL, AdminSettingsAction::value, AdminSettingsAction::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
     /** A quest-book edit request from an operator's in-game editor. */
     public record EditRequest(CompoundTag tag) implements CustomPacketPayload {
         public static final Type<EditRequest> TYPE = mkType("edit_request");
@@ -254,6 +276,9 @@ public final class Net {
 
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar r = event.registrar("1");
+        r.playToClient(AdminSettingsSync.TYPE, AdminSettingsSync.CODEC, (p, c) -> ClientHandlers.onAdminSettings(p));
+        r.playToServer(AdminSettingsAction.TYPE, AdminSettingsAction.CODEC,
+                (p, c) -> dev.unyielding.quests.settings.AdminSettings.onAction((ServerPlayer) c.player(), p));
         r.playToClient(TutorialSync.TYPE, TutorialSync.CODEC,
                 (p, c) -> dev.unyielding.quests.client.tutorial.TutorialClient.receive(p.tag(), p.automatic()));
         r.playToClient(QuestFileChunk.TYPE, QuestFileChunk.CODEC, (p, c) -> ClientHandlers.onQuestFile(p));

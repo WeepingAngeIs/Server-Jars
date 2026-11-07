@@ -3,6 +3,7 @@ package dev.unyielding.quests.client;
 import dev.unyielding.quests.quest.QuestFile;
 import dev.unyielding.quests.quest.TeamProgress;
 import dev.unyielding.quests.team.Team;
+import net.minecraft.nbt.CompoundTag;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,6 +28,11 @@ public final class ClientData {
     public static boolean canCreateParty = true;
     public static int maxPartySize;
     public static int teamVersion;
+    public static boolean shareQuestProgress;
+
+    /** Operator-only settings and authoritative save acknowledgements from the server. */
+    public static CompoundTag adminSettings = new CompoundTag();
+    public static int adminSettingsVersion;
 
     public static String notice = "";
     public static long noticeTime;
@@ -88,6 +94,9 @@ public final class ClientData {
         pending = null;
         pendingCount = 0;
         spinEnabled = false;
+        shareQuestProgress = false;
+        adminSettings = new CompoundTag();
+        adminSettingsVersion++;
         unclaimedCache = -1;
         fileVersion++;
         progressVersion++;

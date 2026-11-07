@@ -35,6 +35,7 @@ public class TeamScreen extends Screen {
 
     private int px, py, pw, ph, top;
     private int seenVersion = -1;
+    private boolean seenAdminPermission;
     private EditBox nameBox, inviteBox, chatBox, descBox, colorBox, renameBox;
     private String nameDraft = "";
     private final List<Field> fields = new ArrayList<>();
@@ -63,6 +64,7 @@ public class TeamScreen extends Screen {
         py = (height - ph) / 2;
         top = py + 58;
         seenVersion = ClientData.teamVersion;
+        seenAdminPermission = AdminSettingsScreen.canManage();
         Team mine = ClientData.myTeam();
         boolean party = mine != null && mine.type != Team.Type.PLAYER;
         if (!party && (tab == Tab.SETTINGS || tab == Tab.CHAT)) tab = Tab.TEAM;
@@ -73,6 +75,12 @@ public class TeamScreen extends Screen {
         addRenderableWidget(new SpriteButton(px + pw - 30 - qw, py + 6, qw, 18, Component.literal("Quests"), Ui.ICON_QUESTS, Ui.Style.NORMAL, x -> {
             if (ClientData.file != null) Minecraft.getInstance().setScreen(new QuestScreen());
         }));
+        if (AdminSettingsScreen.canManage()) {
+            int aw = font.width("Admin") + 24;
+            SpriteButton admin = addRenderableWidget(new SpriteButton(px + pw - 34 - qw - aw, py + 6, aw, 18,
+                    Component.literal("Admin"), Ui.ICON_GEAR, Ui.Style.NORMAL, x -> AdminSettingsScreen.requestOpen()));
+            admin.setTooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal("Server settings")));
+        }
 
         // tabs
         int tx = px + 10;
@@ -237,7 +245,7 @@ public class TeamScreen extends Screen {
 
     @Override
     public void tick() {
-        if (seenVersion != ClientData.teamVersion) {
+        if (seenVersion != ClientData.teamVersion || seenAdminPermission != AdminSettingsScreen.canManage()) {
             saveDrafts();
             rebuildWidgets();
         }
@@ -275,8 +283,10 @@ public class TeamScreen extends Screen {
                 if (!party) {
                     Ui.blit(g, Ui.CARD, x0 - 4, y - 2, x1 - x0 + 8, 34);
                     g.drawString(font, Component.literal("You are playing solo.").withStyle(ChatFormatting.BOLD), x0 + 2, y + 4, Theme.text, false);
-                    g.drawString(font, ClientData.canCreateParty ? "Make a party to share quest progress with your friends."
-                            : "Making parties is turned off on this server.", x0 + 2, y + 17, Theme.textDim, false);
+                    String partyHelp = !ClientData.canCreateParty ? "Making parties is turned off on this server."
+                            : ClientData.shareQuestProgress ? "Parties share quest progress on this server."
+                            : "Parties keep your quest progress individual.";
+                    g.drawString(font, font.plainSubstrByWidth(partyHelp, pw - 32), x0 + 2, y + 17, Theme.textDim, false);
                     g.drawString(font, "Party name", x0, y + 38, Theme.textMuted, false);
                     if (!ClientData.invites.isEmpty()) {
                         String s = "You have " + ClientData.invites.size() + " invite(s). Open the Join tab to answer.";
@@ -322,6 +332,9 @@ public class TeamScreen extends Screen {
                         ry += 20;
                     }
                     g.drawString(font, "Invite a player", x0, py + ph - 42, Theme.textMuted, false);
+                    String progressMode = ClientData.shareQuestProgress ? "Quests: shared" : "Quests: individual";
+                    g.drawString(font, progressMode, x1 - font.width(progressMode), py + ph - 42,
+                            ClientData.shareQuestProgress ? Theme.gold : Theme.good, false);
                 }
             }
             case JOIN -> {

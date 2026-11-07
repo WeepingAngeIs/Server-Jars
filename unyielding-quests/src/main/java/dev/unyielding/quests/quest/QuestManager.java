@@ -75,6 +75,7 @@ public final class QuestManager {
         server = s;
         QuestFile.REGS = s.registryAccess();
         data = s.overworld().getDataStorage().computeIfAbsent(QuestData.factory(), QuestData.NAME);
+        data.prepareSharing(Config.SHARE_QUEST_PROGRESS.get(), TeamManager.data().playerTeam);
         List<String> warnings = reload(false);
         for (String w : warnings) UnyieldingQuests.LOGGER.warn("[quests] {}", w);
         if (!cobblemonHooked && ModList.get().isLoaded("cobblemon")) {
@@ -185,7 +186,23 @@ public final class QuestManager {
     }
 
     public static TeamProgress progressOf(ServerPlayer p) {
-        return data.get(TeamManager.teamIdOf(p.getUUID()));
+        return data.get(progressId(p.getUUID()));
+    }
+
+    private static UUID progressId(UUID player) {
+        return ProgressSharing.owner(player, TeamManager.teamIdOf(player), data.sharingEnabled);
+    }
+
+    /** Apply an administrator change immediately; the same reconciliation runs after offline config edits. */
+    public static void onSharingChanged() {
+        if (server == null || data == null || TeamManager.data() == null) return;
+        if (!data.prepareSharing(Config.SHARE_QUEST_PROGRESS.get(), TeamManager.data().playerTeam)) return;
+        dirtyTeams.clear();
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            autoClaim(player);
+            sendProgress(player);
+        }
+        TeamManager.syncAllPlayers();
     }
 
     private static void markDirty(UUID teamId) {
@@ -285,10 +302,12 @@ public final class QuestManager {
     }
 
     public static void sendProgress(ServerPlayer p) {
-        UUID tid = TeamManager.teamIdOf(p.getUUID());
+        UUID tid = progressId(p.getUUID());
         CompoundTag t = new CompoundTag();
         t.putUUID("team", tid);
-        t.put("p", data.get(tid).toTag(p.getUUID()));
+        TeamProgress progress = data.get(tid);
+        progress.claimed.put(p.getUUID(), new HashSet<>(data.claimedRewards.getOrDefault(p.getUUID(), Set.of())));
+        t.put("p", progress.toTag(p.getUUID()));
         Net.sendTo(p, new Net.ProgressSync(t));
     }
 
@@ -296,13 +315,8 @@ public final class QuestManager {
         if (dirtyTeams.isEmpty()) return;
         List<UUID> ids = new ArrayList<>(dirtyTeams);
         dirtyTeams.clear();
-        for (UUID tid : ids) {
-            Team t = TeamManager.get(tid);
-            if (t == null) continue;
-            for (UUID u : t.members.keySet()) {
-                ServerPlayer p = server.getPlayerList().getPlayer(u);
-                if (p != null) sendProgress(p);
-            }
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            if (ids.contains(progressId(player.getUUID()))) sendProgress(player);
         }
     }
 
@@ -312,10 +326,11 @@ public final class QuestManager {
 
     public static void onTeamChanged(UUID player, Team from, Team to) {
         if (data == null) return;
-        if (to != null && to.type != Team.Type.PLAYER) {
+        if (data.sharingEnabled) {
             TeamProgress mine = data.get(player);
-            TeamProgress target = data.get(to.id);
-            if (from == null || from.type == Team.Type.PLAYER) target.mergeFrom(mine);
+            // While sharing is enabled, preserve progress the player was already entitled to use.
+            if (from != null && from.type != Team.Type.PLAYER) mine.mergeFrom(data.get(from.id));
+            if (to != null && to.type != Team.Type.PLAYER) data.get(to.id).mergeFrom(mine);
         }
         if (from != null) markDirty(from.id);
         if (to != null) markDirty(to.id);
@@ -352,6 +367,7 @@ public final class QuestManager {
 
     public static void onServerTick() {
         if (server == null || data == null) return;
+        onSharingChanged();
         QuestFile f = file;
         int delay = Config.DETECTION_DELAY_OVERRIDE.get() > 0 ? Config.DETECTION_DELAY_OVERRIDE.get() : f.detectionDelay;
         long now = server.getTickCount();
@@ -366,7 +382,7 @@ public final class QuestManager {
 
     public static void detect(ServerPlayer p) {
         QuestFile f = file;
-        UUID tid = TeamManager.teamIdOf(p.getUUID());
+        UUID tid = progressId(p.getUUID());
         TeamProgress tp = data.get(tid);
         List<ItemStack> stacks = null;
         for (Quest q : f.quests.values()) {
@@ -489,19 +505,17 @@ public final class QuestManager {
         if (tp.questDone(q.id)) return;
         for (Task t : q.tasks) if (!tp.taskDone(t.id)) return;
         tp.completedQuests.add(q.id);
-        Team team = TeamManager.get(tid);
-        if (team == null) return;
         String title = q.displayTitle().replace('&', '§');
-        for (UUID u : team.members.keySet()) {
-            ServerPlayer m = server.getPlayerList().getPlayer(u);
-            if (m == null) continue;
+        for (ServerPlayer m : server.getPlayerList().getPlayers()) {
+            UUID u = m.getUUID();
+            if (!tid.equals(progressId(u))) continue;
             Net.sendTo(m, new Net.Notify(0, q.id, ""));
             if (Config.ANNOUNCE_COMPLETION.get()) {
                 m.sendSystemMessage(Component.literal("Quest completed: ").withStyle(ChatFormatting.GREEN)
                         .append(Component.literal(title)));
             }
             for (Reward r : q.rewards) {
-                if (r.auto && !tp.isClaimed(u, r.id)) claimReward(m, tp, tid, r, true);
+                if (r.auto && !data.isClaimed(u, r.id)) claimReward(m, tp, tid, r, true);
             }
         }
     }
@@ -527,7 +541,7 @@ public final class QuestManager {
     public static void onKill(ServerPlayer p, Entity victim) {
         if (data == null) return;
         ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(victim.getType());
-        UUID tid = TeamManager.teamIdOf(p.getUUID());
+        UUID tid = progressId(p.getUUID());
         TeamProgress tp = data.get(tid);
         QuestFile f = file;
         for (Quest q : f.quests.values()) {
@@ -551,7 +565,7 @@ public final class QuestManager {
     /** Generic Cobblemon style event: action name + species/type/shiny filters. */
     public static void cobblemonEvent(ServerPlayer p, String action, String species, Set<String> types, boolean shiny, long value, boolean absolute) {
         if (data == null || p == null) return;
-        UUID tid = TeamManager.teamIdOf(p.getUUID());
+        UUID tid = progressId(p.getUUID());
         TeamProgress tp = data.get(tid);
         QuestFile f = file;
         for (Quest q : f.quests.values()) {
@@ -579,7 +593,7 @@ public final class QuestManager {
         Task t = f.tasks.get(a.taskId());
         if (t == null) return;
         Quest q = f.quests.get(t.quest);
-        UUID tid = TeamManager.teamIdOf(p.getUUID());
+        UUID tid = progressId(p.getUUID());
         TeamProgress tp = data.get(tid);
         if (q == null || tp.questDone(q.id) || tp.taskDone(t.id) || !available(f, q, tp)) return;
         if (a.action() == 0 && t.type == QuestFile.TaskType.CHECKMARK) {
@@ -604,7 +618,7 @@ public final class QuestManager {
     public static void onClaim(ServerPlayer p, Net.Claim c) {
         if (data == null) return;
         QuestFile f = file;
-        UUID tid = TeamManager.teamIdOf(p.getUUID());
+        UUID tid = progressId(p.getUUID());
         TeamProgress tp = data.get(tid);
         List<LuckySpin.Spin> spins = new ArrayList<>();
         switch (c.mode()) {
@@ -641,22 +655,24 @@ public final class QuestManager {
     private static void spin(ServerPlayer p, TeamProgress tp, UUID tid, Quest q, List<LuckySpin.Spin> out) {
         if (!LuckySpin.enabled() || !tp.questDone(q.id)) return;
         long sid = LuckySpin.spinId(q.id);
-        if (tp.isClaimed(p.getUUID(), sid)) return;
+        if (data.isClaimed(p.getUUID(), sid)) return;
         Set<Long> mine = tp.claimed.computeIfAbsent(p.getUUID(), k -> new HashSet<>());
         mine.add(sid);
+        data.markClaimed(p.getUUID(), sid);
         tp.dirty = true;
         markDirty(tid);
         try {
             out.add(LuckySpin.roll(p, q.displayTitle().replaceAll("[&§][0-9a-fk-orA-FK-OR]", "")));
         } catch (RuntimeException e) {
             mine.remove(sid);
+            data.unclaim(p.getUUID(), sid);
             UnyieldingQuests.LOGGER.error("[spin] roll failed", e);
             p.sendSystemMessage(Component.literal("The Lucky Spin failed; please try again.").withStyle(ChatFormatting.RED));
         }
     }
 
     public static void autoClaim(ServerPlayer p) {
-        UUID tid = TeamManager.teamIdOf(p.getUUID());
+        UUID tid = progressId(p.getUUID());
         TeamProgress tp = data.get(tid);
         for (long qid : new ArrayList<>(tp.completedQuests)) {
             Quest q = file.quests.get(qid);
@@ -667,7 +683,7 @@ public final class QuestManager {
 
     private static boolean claimReward(ServerPlayer p, TeamProgress tp, UUID tid, Reward r, boolean silent) {
         Quest q = file.quests.get(r.quest);
-        if (q == null || !tp.questDone(q.id) || tp.isClaimed(p.getUUID(), r.id)) return false;
+        if (q == null || !tp.questDone(q.id) || data.isClaimed(p.getUUID(), r.id)) return false;
         switch (r.type) {
             case ITEM -> {
                 if (r.item == null || !r.item.exists() || r.item.isFilter()) {
@@ -688,7 +704,8 @@ public final class QuestManager {
             case XP_LEVELS -> p.giveExperienceLevels((int) Math.min(Integer.MAX_VALUE, r.amount));
             case KEY_VALUE -> tp.keys.merge(r.key, r.amount, Long::sum);
             case COMMAND -> {
-                String cmd = r.command.replace("{p}", p.getGameProfile().getName()).replace("{team}", TeamManager.get(tid) == null ? "" : TeamManager.get(tid).name);
+                Team membership = TeamManager.teamOf(p.getUUID());
+                String cmd = r.command.replace("{p}", p.getGameProfile().getName()).replace("{team}", membership == null ? "" : membership.name);
                 if (cmd.startsWith("/")) cmd = cmd.substring(1);
                 MinecraftServer srv = p.getServer();
                 if (srv == null) return false;
@@ -732,6 +749,7 @@ public final class QuestManager {
             }
         }
         tp.claimed.computeIfAbsent(p.getUUID(), k -> new HashSet<>()).add(r.id);
+        data.markClaimed(p.getUUID(), r.id);
         tp.dirty = true;
         markDirty(tid);
         return true;
@@ -744,7 +762,7 @@ public final class QuestManager {
     public static String adminComplete(ServerPlayer target, long questId) {
         Quest q = file.quests.get(questId);
         if (q == null) return "Unknown quest id.";
-        UUID tid = TeamManager.teamIdOf(target.getUUID());
+        UUID tid = progressId(target.getUUID());
         TeamProgress tp = data.get(tid);
         for (Task t : q.tasks) completeTask(tp, t);
         checkQuest(file, q, tid, tp);
@@ -753,23 +771,41 @@ public final class QuestManager {
     }
 
     public static String adminReset(ServerPlayer target, long questId) {
-        UUID tid = TeamManager.teamIdOf(target.getUUID());
+        UUID tid = progressId(target.getUUID());
         TeamProgress tp = data.get(tid);
+        Set<UUID> players = new HashSet<>();
+        players.add(target.getUUID());
+        if (data.sharingEnabled) {
+            TeamManager.data().playerTeam.forEach((player, team) -> {
+                if (team.equals(tid)) players.add(player);
+            });
+        }
+        Set<TeamProgress> records = new HashSet<>();
+        records.add(tp);
+        // Reset personal snapshots too, so an explicit reset is not undone by the next mode change.
+        for (UUID player : players) records.add(data.get(player));
         if (questId == 0) {
-            tp.completedQuests.clear();
-            tp.completedTasks.clear();
-            tp.taskProgress.clear();
-            tp.keys.clear();
-            tp.claimed.clear();
+            for (TeamProgress record : records) {
+                record.completedQuests.clear();
+                record.completedTasks.clear();
+                record.taskProgress.clear();
+                record.keys.clear();
+            }
+            data.forgetClaims(players, null);
         } else {
             Quest q = file.quests.get(questId);
             if (q == null) return "Unknown quest id.";
-            tp.completedQuests.remove(q.id);
-            for (Task t : q.tasks) {
-                tp.completedTasks.remove(t.id);
-                tp.taskProgress.remove(t.id);
+            for (TeamProgress record : records) {
+                record.completedQuests.remove(q.id);
+                for (Task t : q.tasks) {
+                    record.completedTasks.remove(t.id);
+                    record.taskProgress.remove(t.id);
+                }
             }
-            for (Reward r : q.rewards) for (Set<Long> s : tp.claimed.values()) s.remove(r.id);
+            Set<Long> rewards = new HashSet<>();
+            for (Reward r : q.rewards) rewards.add(r.id);
+            rewards.add(LuckySpin.spinId(q.id));
+            data.forgetClaims(players, rewards);
         }
         markDirty(tid);
         flushDirty();

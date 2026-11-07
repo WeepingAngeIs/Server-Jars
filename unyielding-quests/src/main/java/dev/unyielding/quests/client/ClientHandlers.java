@@ -60,6 +60,22 @@ public final class ClientHandlers {
         ClientData.progressVersion++;
     }
 
+    public static void onAdminSettings(Net.AdminSettingsSync packet) {
+        CompoundTag tag = packet.tag();
+        ClientData.adminSettings = tag.copy();
+        ClientData.adminSettingsVersion++;
+        ClientData.shareQuestProgress = tag.getBoolean("shareProgress");
+        ClientData.teamVersion++;
+        dev.unyielding.quests.client.tutorial.TutorialClient.setAutomaticEnabled(tag.getBoolean("tutorialOnJoin"));
+        Minecraft mc = Minecraft.getInstance();
+        if (packet.open() && tag.getBoolean("allowed")) {
+            mc.setScreen(new AdminSettingsScreen(mc.screen));
+        } else if (tag.getBoolean("error") && !(mc.screen instanceof AdminSettingsScreen) && mc.player != null) {
+            mc.player.displayClientMessage(net.minecraft.network.chat.Component.literal(tag.getString("message"))
+                    .withStyle(net.minecraft.ChatFormatting.RED), true);
+        }
+    }
+
     public static void onTeams(Net.TeamSync p) {
         CompoundTag t = p.tag();
         ClientData.myTeamId = t.getUUID("me");
@@ -76,6 +92,7 @@ public final class ClientHandlers {
             ClientData.online.put(c.getUUID("u"), c.getString("n"));
         }
         ClientData.canCreateParty = t.getBoolean("canCreate");
+        ClientData.shareQuestProgress = t.getBoolean("shareProgress");
         ClientData.maxPartySize = t.getInt("maxSize");
         ClientData.teamVersion++;
     }
