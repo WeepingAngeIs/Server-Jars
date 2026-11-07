@@ -51,8 +51,17 @@ cleanup() {
 trap cleanup EXIT
 
 cd "$project"
-setsid ./gradlew --no-daemon --console=plain -Dorg.gradle.jvmargs=-Xmx768m \
-    -I "$repository/.github/scripts/ci-runs.gradle" runServer > "$results/server-console.log" 2>&1 &
+./gradlew --no-daemon --console=plain -Dorg.gradle.jvmargs=-Xmx768m \
+    -I "$repository/.github/scripts/ci-runs.gradle" -Duq.autotest=1 \
+    createServerLaunchScript createClientLaunchScript > "$results/prepare-console.log" 2>&1
+server_script=$(find build -type f -name 'runServer.sh' -print -quit)
+client_script=$(find build -type f -name 'runClient.sh' -print -quit)
+if [[ ! -f "$server_script" || ! -f "$client_script" ]]; then
+    cat "$results/prepare-console.log"
+    echo 'ModDev standalone launch scripts were not generated' >&2
+    exit 1
+fi
+setsid bash "$server_script" > "$results/server-console.log" 2>&1 &
 server_pid=$!
 for ((attempt=0; attempt<240; attempt++)); do
     if grep -q 'Done (' "$results/server-console.log"; then break; fi
@@ -72,8 +81,7 @@ fi
 export LIBGL_ALWAYS_SOFTWARE=true
 export ALSOFT_DRIVERS=null
 setsid xvfb-run -a -s '-screen 0 1280x800x24' \
-    ./gradlew --no-daemon --console=plain -Dorg.gradle.jvmargs=-Xmx768m \
-    -I "$repository/.github/scripts/ci-runs.gradle" -Duq.autotest=1 runClient \
+    bash "$client_script" \
     > "$results/client-console.log" 2>&1 &
 client_pid=$!
 for ((attempt=0; attempt<360; attempt++)); do
