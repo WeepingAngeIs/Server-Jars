@@ -19,7 +19,7 @@ neoForge {
             client()
             gameDirectory = project.file('run')
             jvmArgument '-Xmx3500m'
-            if (System.getProperty('uq.autotest', '') == '1') { programArguments.addAll('--quickPlayMultiplayer', 'localhost:25565', '--username', 'Dev') }
+            if (System.getProperty('uq.autotest', '') == '1') { programArguments.addAll('--quickPlayMultiplayer', '127.0.0.1:25565', '--username', 'Dev') }
             if (System.getProperty('uq.autotest', '') == '2') { programArguments.addAll('--quickPlaySingleplayer', 'testworld', '--username', 'Dev', '--width', '1280', '--height', '800') }
             systemProperty 'uq.autotest', (System.getProperty('uq.autotest', '') == '2' ? '1' : System.getProperty('uq.autotest', ''))
         }

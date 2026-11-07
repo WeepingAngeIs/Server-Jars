@@ -102,8 +102,13 @@ for ((attempt=0; attempt<360; attempt++)); do
         echo 'Smoke client exited before completing tutorial assertions' >&2
         exit 1
     fi
-    if grep -q 'autotest failed' "$results/client-console.log"; then
+    if grep -Eq "autotest failed|Couldn't connect to server" "$results/client-console.log"; then
         tail -100 "$results/client-console.log"
+        exit 1
+    fi
+    if ! kill -0 "$server_pid" 2>/dev/null; then
+        tail -100 "$results/server-console.log"
+        echo 'Smoke server exited during the client exercise' >&2
         exit 1
     fi
     sleep 2
