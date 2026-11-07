@@ -179,7 +179,7 @@ public final class TutorialScreen extends Screen {
         long now = Util.getMillis();
         float delta = Math.min(0.1f, (now - lastFrame) / 1000f);
         lastFrame = now;
-        float fade = UiConfig.animations() ? Ui.easeOut((now - opened) / 220f) : 1f;
+        float fade = UiConfig.animations() ? 0.1f + 0.9f * Ui.easeOut((now - opened) / 220f) : 1f;
         float pageFade = UiConfig.animations() ? 0.3f + 0.7f * Ui.easeOut((now - pageOpened) / 180f) : 1f;
         scroll = Ui.approach(scroll, targetScroll, 16f, delta);
         float opacity = Math.min(0.88f, UiConfig.opacity());
