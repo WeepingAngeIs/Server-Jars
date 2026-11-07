@@ -54,8 +54,10 @@ public final class BundleSmoke {
             require(daily != null && daily.getCommand() != null, "Rank daily command is missing");
             String dailyOwner = daily.getCommand().getClass().getName();
             require(dailyOwner.startsWith("dev.unyielding.ranks."), "Quest command replaced the rank daily kit: " + dailyOwner);
-            require(daily.getChild("kit") != null, "Rank /daily kit route is missing");
+            require(daily.getChildren().isEmpty(), "Quest subcommands leaked into the standalone rank daily command");
             var kit = root.getChild("kit");
+            require(kit != null && kit.getCommand() != null, "Rank /kit root alias is missing");
+            require(kit.getCommand().getClass() == daily.getCommand().getClass(), "Rank /kit root alias no longer uses the rank daily executor");
             require(kit != null && kit.getChild("list") != null && kit.getChild("list").getCommand() != null,
                     "Essentials /kit list route is missing");
             String kitOwner = kit.getChild("list").getCommand().getClass().getName();
@@ -67,10 +69,12 @@ public final class BundleSmoke {
             require(questDaily.getCommand().getClass().getName().startsWith("dev.unyielding.quests."), "Quest daily command has the wrong owner");
             CommandSourceStack publicSource = server.createCommandSourceStack().withPermission(0);
             CommandSourceStack adminSource = server.createCommandSourceStack().withPermission(2);
+            require(daily.canUse(publicSource) && kit.canUse(publicSource), "Players cannot use the rank /daily and /kit aliases");
             require(questDaily.canUse(publicSource), "Players cannot use /quests daily");
             var give = questDaily.getChild("give");
             require(give != null && !give.canUse(publicSource) && give.canUse(adminSource), "Quest daily give is not restricted to administrators");
             report.put("rank_daily_executor", dailyOwner);
+            report.put("rank_kit_root_executor", kit.getCommand().getClass().getName());
             report.put("essentials_kit_executor", kitOwner);
             report.put("daily_routes_and_permissions", "passed");
 

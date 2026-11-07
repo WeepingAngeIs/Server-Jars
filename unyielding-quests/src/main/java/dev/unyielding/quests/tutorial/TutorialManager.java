@@ -205,7 +205,7 @@ public final class TutorialManager {
 
     private static String commandDescription(String usage, String description) {
         if ("/quests daily".equals(usage)) return "Check your daily login reward status.";
-        if ("/daily".equals(usage) && ModList.get().isLoaded("curanks")) {
+        if (("/daily".equals(usage) || "/kit".equals(usage)) && ModList.get().isLoaded("curanks")) {
             return "Claim the daily kit available to your rank.";
         }
         return "/quests stats".equals(usage) ? "See your completed quest count." : description;
