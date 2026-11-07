@@ -1,6 +1,7 @@
 package dev.unyielding.quests.devtest;
 
 import dev.unyielding.quests.client.tutorial.TutorialScreen;
+import dev.unyielding.quests.client.tutorial.TutorialClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -136,8 +137,21 @@ public final class TutorialSmoke {
                 }
                 case 10 -> {
                     if (ticks < 20) break;
+                    mc.getConnection().sendCommand("tutorial");
+                    advance();
+                }
+                case 11 -> {
+                    if (mc.screen instanceof TutorialScreen) {
+                        TutorialClient.reset();
+                        mc.setScreen(null);
+                        advance();
+                    } else require(ticks < 180, "Tutorial could not reopen for disconnect cleanup test");
+                }
+                case 12 -> {
+                    require(mc.screen == null, "Screen removal requeued tutorial after disconnect cleanup");
+                    if (ticks < 120) break;
                     Files.writeString(MARKER,
-                            "passed: real join, filtered command directory, search, final starter page, menu priority, resume, dismissal, /tutorial reopen and 320px layout\n");
+                            "passed: real join, filtered command directory, search, final starter page, menu priority, resume, dismissal, /tutorial reopen, disconnect cleanup and 320px layout\n");
                     running = false;
                 }
                 default -> throw new IllegalStateException("Unknown tutorial test step");

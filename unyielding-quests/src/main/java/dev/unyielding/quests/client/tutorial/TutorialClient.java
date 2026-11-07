@@ -8,6 +8,7 @@ public final class TutorialClient {
     private static final TutorialDelay DELAY = new TutorialDelay();
     private static CompoundTag pending;
     private static TutorialScreen resume;
+    private static TutorialScreen active;
     private static int originPoll;
     private static boolean originReady;
 
@@ -17,6 +18,7 @@ public final class TutorialClient {
     public static void receive(CompoundTag tag, boolean automatic) {
         pending = tag.copy();
         resume = null;
+        active = null;
         originPoll = 0;
         originReady = false;
         DELAY.request(automatic);
@@ -36,12 +38,14 @@ public final class TutorialClient {
         TutorialScreen screen = resume != null ? resume : new TutorialScreen(pending);
         pending = null;
         resume = null;
+        active = screen;
         mc.setScreen(screen);
     }
 
     static void interrupted(TutorialScreen screen) {
         // A late origin, starter, or other screen takes priority. Continue the same guide afterward.
-        if (pending == null && resume == null) {
+        if (screen == active && pending == null && resume == null) {
+            active = null;
             resume = screen;
             DELAY.request(false);
         }
@@ -50,6 +54,7 @@ public final class TutorialClient {
     public static void reset() {
         pending = null;
         resume = null;
+        active = null;
         originPoll = 0;
         originReady = false;
         DELAY.clear();

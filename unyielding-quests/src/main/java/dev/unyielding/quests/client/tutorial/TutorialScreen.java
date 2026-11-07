@@ -111,10 +111,10 @@ public final class TutorialScreen extends Screen {
         bodyTop = panelY + 58;
         bodyBottom = panelY + panelH - 49;
         opened = Util.getMillis();
-        rebuildWidgets();
+        buildControls();
     }
 
-    private void rebuildWidgets() {
+    private void buildControls() {
         clearWidgets();
         search = null;
         if (pages.get(page).directory()) {
@@ -152,7 +152,7 @@ public final class TutorialScreen extends Screen {
         scroll = 0;
         targetScroll = 0;
         query = "";
-        rebuildWidgets();
+        buildControls();
     }
 
     private List<Entry> visibleEntries() {
