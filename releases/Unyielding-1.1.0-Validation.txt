@@ -1,0 +1,18 @@
+UNYIELDING 1.1.0 - CLOUD VALIDATION
+
+Release SHA256: b8a9e4f5b526dd5d98107c1aa4436da11c22f51a812e28a407e08f83ed1cfe60
+Tested source: 565413152237dcc3eb39aba961bbc834f908f3eb
+Successful run: https://github.com/WeepingAngeIs/Server-Jars/actions/runs/42405617397
+
+- 17 unit tests passed.
+- The actual combined release loaded successfully in a dedicated server and client.
+- All eight production modules loaded from the same verified release file.
+- Existing gameplay files, five mixin definitions, access transformer and 923 quest pictures were preserved.
+- Rank /daily and /kit commands coexist with named kits and /quests daily.
+- Tutorial join timing, command search, starter guidance and compact layout passed.
+- Admin permissions, live switches and config persistence passed.
+- Personal quest progress, offline migration and reward/spin replay protection passed.
+
+Environment: Minecraft 1.21.1, NeoForge 21.1.255, Cobblemon 1.8.4, Java 21.
+All compilation and gameplay checks ran on GitHub-hosted computers.
+These checks used a focused compatibility environment; the full modpack and live server were not launched.

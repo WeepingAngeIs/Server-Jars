@@ -9,7 +9,7 @@
   "base": {
     "path": "combined-unyielding/inputs/Unyielding-Mawonna.jar",
     "sha256": "8317d4ce5275df39dcf1d932f7ab6433c7310c0ff529e2c8d5b5fc3ae5c60ecc",
-    "provenance": "User-supplied Unyielding-Mawonna.jar, extending the explicitly approved Unyielding 1.0.8 base. Preserve its crafting restrictions and Mawonna module."
+    "provenance": "User-supplied Unyielding JAR, extending the explicitly approved Unyielding 1.0.8 base. Preserve its crafting restrictions and existing modules."
   },
   "quests": {
     "path": "unyielding-quests/build/libs/UnyieldingQuests-1.6.3.jar",

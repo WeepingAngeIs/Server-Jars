@@ -2,7 +2,7 @@ UNYIELDING 1.1.0 - COMBINED MOD UPDATE
 =====================================
 Upload file: Unyielding-1.1.0.jar
 Existing CurseForge project: https://www.curseforge.com/minecraft/mc-mods/unyielding
-File display name: Unyielding 1.1.0 - Quests, Admin Settings & Mawonna
+File display name: Unyielding 1.1.0 - Quests, Tutorial & Admin Settings
 Minecraft version: 1.21.1
 Mod loader: NeoForge
 Environment: Client and server
@@ -14,9 +14,9 @@ INSTALL
 -------
 1. Close Minecraft or stop the server.
 2. Remove the previous Unyielding JAR and the separate UnyieldingQuests JAR from mods.
-   Also remove a separate Mawonna companion JAR if one was installed.
+   Also remove any separate companion module already included in the combined JAR.
 3. Put Unyielding-1.1.0.jar in mods on the server and every client.
-4. Keep the matching Mawonna.zip in server datapacks and client resourcepacks.
+4. Keep existing server datapacks and client resourcepacks.
 5. Restart. Do not keep duplicate JARs containing the same modules.
 
 Existing config names, mod IDs and quest IDs are preserved. The supplied Unyielding
@@ -24,13 +24,14 @@ Existing config names, mod IDs and quest IDs are preserved. The supplied Unyield
 
 CHANGELOG FOR CURSEFORGE
 -----------------------
-- Combined Unyielding's existing features, Mawonna gameplay and the quest system into one JAR.
+- Combined Unyielding's existing features and the quest system into one JAR.
 - Added the quest book, in-game quest editing, command tutorial and admin settings.
 - Quest sharing defaults to OFF: players can form parties without inheriting completed quests.
 - Preserved player progress and reward claim history across party and sharing-mode changes.
 - Added live switches for party creation, tutorials, quest Lucky Spins, daily rewards and announcements.
-- Preserved the approved 1.0.8 crafting restrictions and existing Mawonna evolution rules.
-- Kept /daily for rank kits. Use /quests daily for quest login-reward status.
+- Preserved the approved 1.0.8 crafting restrictions.
+- Kept /daily and /kit for rank kits, plus the existing named-kit commands.
+  Use /quests daily for quest login-reward status.
 
-The same combined JAR is required on the server and every client. Mawonna.zip remains
-a separate datapack/resourcepack. Cobblemon 1.8.4 is required for the bundled Mawonna module.
+The same combined JAR is required on the server and every client. Existing datapacks
+and resourcepacks remain separate. Cobblemon 1.8.4 is required.
