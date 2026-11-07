@@ -31,6 +31,20 @@ public final class Net {
 
     // ---- server -> client ------------------------------------------------
 
+    /** Permission-filtered onboarding pages and the server's current public commands. */
+    public record TutorialSync(CompoundTag tag, boolean automatic) implements CustomPacketPayload {
+        public static final Type<TutorialSync> TYPE = mkType("tutorial");
+        public static final StreamCodec<RegistryFriendlyByteBuf, TutorialSync> CODEC = StreamCodec.composite(
+                ByteBufCodecs.COMPOUND_TAG, TutorialSync::tag,
+                ByteBufCodecs.BOOL, TutorialSync::automatic,
+                TutorialSync::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     /** Part of the (compressed) quest book. */
     public record QuestFileChunk(int index, int total, byte[] data) implements CustomPacketPayload {
         public static final Type<QuestFileChunk> TYPE = mkType("quest_file");
@@ -240,6 +254,8 @@ public final class Net {
 
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar r = event.registrar("1");
+        r.playToClient(TutorialSync.TYPE, TutorialSync.CODEC,
+                (p, c) -> dev.unyielding.quests.client.tutorial.TutorialClient.receive(p.tag(), p.automatic()));
         r.playToClient(QuestFileChunk.TYPE, QuestFileChunk.CODEC, (p, c) -> ClientHandlers.onQuestFile(p));
         r.playToClient(ProgressSync.TYPE, ProgressSync.CODEC, (p, c) -> ClientHandlers.onProgress(p));
         r.playToClient(TeamSync.TYPE, TeamSync.CODEC, (p, c) -> ClientHandlers.onTeams(p));

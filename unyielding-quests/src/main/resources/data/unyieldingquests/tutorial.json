@@ -1,0 +1,296 @@
+{
+  "pages": [
+    {
+      "id": "quests",
+      "title": "Your quest book",
+      "description": "Follow the quest book at your own pace. J opens it, and the Premier Ball button in your inventory opens the same book.",
+      "entries": [
+        {
+          "command": "quests",
+          "usage": "/quests",
+          "description": "Open the quest book."
+        },
+        {
+          "command": "quests stats",
+          "usage": "/quests stats",
+          "description": "See how many quests your team has completed."
+        },
+        {
+          "command": "daily",
+          "usage": "/daily",
+          "description": "Check your daily login reward status."
+        },
+        {
+          "command": "daily kit",
+          "usage": "/daily kit",
+          "description": "Claim the daily kit available to your rank."
+        },
+        {
+          "command": "rank",
+          "usage": "/rank",
+          "description": "View your current rank and rewards."
+        },
+        {
+          "command": "gymleader list",
+          "usage": "/gymleader list",
+          "description": "See the current gym leaders."
+        },
+        {
+          "command": "tutorial",
+          "usage": "/tutorial",
+          "description": "Reopen this tutorial whenever you need it."
+        }
+      ]
+    },
+    {
+      "id": "homes",
+      "title": "Make yourself at home",
+      "description": "Save a home near your base. Home limits and teleport cooldowns follow the server's current settings.",
+      "entries": [
+        {
+          "command": "sethome",
+          "usage": "/sethome [name]",
+          "description": "Save your current position. Leave out the name to use your default home."
+        },
+        {
+          "command": "home",
+          "usage": "/home [name]",
+          "description": "Return to a saved home."
+        },
+        {
+          "command": "listhomes",
+          "usage": "/listhomes",
+          "description": "List your saved homes."
+        },
+        {
+          "command": "delhome name",
+          "usage": "/delhome <name>",
+          "description": "Delete a saved home."
+        },
+        {
+          "command": "spawn",
+          "usage": "/spawn",
+          "description": "Travel to the world's spawn point."
+        },
+        {
+          "command": "playerspawn",
+          "usage": "/playerspawn",
+          "description": "Travel to your saved bed or respawn anchor."
+        },
+        {
+          "command": "back",
+          "usage": "/back",
+          "description": "Return to your previous saved location."
+        },
+        {
+          "command": "rtp",
+          "usage": "/rtp",
+          "description": "Find a random safe location in an allowed dimension."
+        },
+        {
+          "command": "listwarps",
+          "usage": "/listwarps",
+          "description": "List the server's shared destinations."
+        },
+        {
+          "command": "warp name",
+          "usage": "/warp <name>",
+          "description": "Travel to a shared destination."
+        }
+      ]
+    },
+    {
+      "id": "friends",
+      "title": "Play together",
+      "description": "Send a teleport request before visiting a friend. A quest party can share quest progress and rewards.",
+      "entries": [
+        {
+          "command": "tpa player",
+          "usage": "/tpa <player>",
+          "description": "Ask to teleport to another player."
+        },
+        {
+          "command": "tpahere player",
+          "usage": "/tpahere <player>",
+          "description": "Ask another player to teleport to you."
+        },
+        {
+          "command": "tpaccept",
+          "usage": "/tpaccept [player]",
+          "description": "Accept a pending teleport request."
+        },
+        {
+          "command": "tpdeny",
+          "usage": "/tpdeny [player]",
+          "description": "Decline a pending teleport request."
+        },
+        {
+          "command": "team gui",
+          "usage": "/team gui",
+          "description": "Open your quest team's settings and invitations."
+        },
+        {
+          "command": "team create name",
+          "usage": "/team create <name>",
+          "description": "Create a quest party."
+        },
+        {
+          "command": "team invite player",
+          "usage": "/team invite <player>",
+          "description": "Invite someone to your quest party."
+        },
+        {
+          "command": "team join team",
+          "usage": "/team join <team>",
+          "description": "Join a quest party that invited you or accepts new members."
+        },
+        {
+          "command": "team info",
+          "usage": "/team info [team]",
+          "description": "View quest party information."
+        },
+        {
+          "command": "team msg text",
+          "usage": "/team msg <message>",
+          "description": "Send a message to your quest party."
+        },
+        {
+          "command": "team leave",
+          "usage": "/team leave",
+          "description": "Leave your quest party."
+        }
+      ]
+    },
+    {
+      "id": "claims",
+      "title": "Protect your base",
+      "description": "Open Parties and Claims manages protected land and its own party membership. Check your claim settings before letting other players build at your base.",
+      "entries": [
+        {
+          "command": "oclaims claim",
+          "usage": "/oclaims claim",
+          "description": "Claim the chunk you are standing in, within your claim allowance."
+        },
+        {
+          "command": "oclaims unclaim",
+          "usage": "/oclaims unclaim",
+          "description": "Remove your claim from the current chunk."
+        },
+        {
+          "command": "oparties create",
+          "usage": "/oparties create",
+          "description": "Create a party for Open Parties and Claims."
+        },
+        {
+          "command": "oparties about",
+          "usage": "/oparties about",
+          "description": "Read your claims party information."
+        },
+        {
+          "command": "oparties member invite player",
+          "usage": "/oparties member invite <player>",
+          "description": "Invite a player to your claims party."
+        },
+        {
+          "command": "oparties join",
+          "usage": "/oparties join",
+          "description": "Accept your most recent claims party invitation."
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "title": "Useful tools",
+      "description": "These commands open everyday tools and personal options. Command availability follows the server's configuration.",
+      "entries": [
+        {
+          "command": "crafting",
+          "usage": "/crafting",
+          "description": "Open a crafting table."
+        },
+        {
+          "command": "anvil",
+          "usage": "/anvil",
+          "description": "Open an anvil."
+        },
+        {
+          "command": "smithing",
+          "usage": "/smithing",
+          "description": "Open a smithing table."
+        },
+        {
+          "command": "stonecutter",
+          "usage": "/stonecutter",
+          "description": "Open a stonecutter."
+        },
+        {
+          "command": "enderchest",
+          "usage": "/enderchest",
+          "description": "Open your own Ender Chest."
+        },
+        {
+          "command": "trashcan",
+          "usage": "/trashcan",
+          "description": "Open a trash can. Items placed inside are destroyed."
+        },
+        {
+          "command": "kit list",
+          "usage": "/kit list",
+          "description": "List the kits currently offered by the server."
+        },
+        {
+          "command": "kit name",
+          "usage": "/kit <name>",
+          "description": "Claim an available kit. Claim limits and cooldowns may apply."
+        },
+        {
+          "command": "near",
+          "usage": "/near",
+          "description": "See nearby players."
+        },
+        {
+          "command": "hat",
+          "usage": "/hat",
+          "description": "Wear the item in your hand as a hat."
+        },
+        {
+          "command": "nick name",
+          "usage": "/nick <name>",
+          "description": "Set your display nickname."
+        },
+        {
+          "command": "rec",
+          "usage": "/rec",
+          "description": "Toggle your recording indicator."
+        }
+      ]
+    },
+    {
+      "id": "pokemon",
+      "title": "Your Pokemon",
+      "description": "Use the quest book for your next catching, training and exploration goals. These commands appear when your player permissions allow them.",
+      "entries": [
+        {
+          "command": "friendship slot",
+          "usage": "/friendship <slot>",
+          "description": "Check the friendship of a Pokemon in your party."
+        },
+        {
+          "command": "pc",
+          "usage": "/pc [box]",
+          "description": "Open your PC storage when this command is available."
+        },
+        {
+          "command": "checkspawn bucket",
+          "usage": "/checkspawn <bucket>",
+          "description": "Check eligible Pokemon spawns in the area. Use Tab to choose a bucket."
+        },
+        {
+          "command": "healpokemon",
+          "usage": "/healpokemon",
+          "description": "Heal your party when the server permits this command."
+        }
+      ]
+    }
+  ]
+}

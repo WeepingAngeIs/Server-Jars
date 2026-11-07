@@ -3,6 +3,7 @@ package dev.unyielding.quests;
 import dev.unyielding.quests.commands.ModCommands;
 import dev.unyielding.quests.quest.QuestManager;
 import dev.unyielding.quests.team.TeamManager;
+import dev.unyielding.quests.tutorial.TutorialManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -18,6 +19,7 @@ public class ServerEvents {
         TeamManager.onServerStart(e.getServer());
         QuestManager.onServerStart(e.getServer());
         dev.unyielding.quests.spin.DailyLogin.onServerStart(e.getServer());
+        TutorialManager.onServerStart();
     }
 
     @SubscribeEvent
@@ -25,6 +27,7 @@ public class ServerEvents {
         QuestManager.onServerStop();
         dev.unyielding.quests.spin.DailyLogin.onServerStop();
         TeamManager.onServerStop();
+        TutorialManager.onServerStop();
     }
 
     @SubscribeEvent
@@ -33,6 +36,7 @@ public class ServerEvents {
             TeamManager.onLogin(p);
             QuestManager.onLogin(p);
             dev.unyielding.quests.spin.DailyLogin.onLogin(p);
+            TutorialManager.onLogin(p);
         }
     }
 
@@ -41,6 +45,7 @@ public class ServerEvents {
         if (e.getEntity() instanceof ServerPlayer p) {
             TeamManager.onLogout(p);
             dev.unyielding.quests.spin.DailyLogin.onLogout(p);
+            TutorialManager.onLogout(p);
         }
     }
 
@@ -48,6 +53,7 @@ public class ServerEvents {
     public void onTick(ServerTickEvent.Post e) {
         QuestManager.onServerTick();
         dev.unyielding.quests.spin.DailyLogin.onTick(e.getServer());
+        TutorialManager.onTick(e.getServer());
     }
 
     @SubscribeEvent

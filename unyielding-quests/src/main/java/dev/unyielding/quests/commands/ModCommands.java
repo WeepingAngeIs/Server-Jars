@@ -10,6 +10,7 @@ import dev.unyielding.quests.quest.QuestFile;
 import dev.unyielding.quests.quest.QuestManager;
 import dev.unyielding.quests.team.Team;
 import dev.unyielding.quests.team.TeamManager;
+import dev.unyielding.quests.tutorial.TutorialManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -46,6 +47,16 @@ public final class ModCommands {
     }
 
     public static void register(CommandDispatcher<CommandSourceStack> d) {
+        d.register(Commands.literal("tutorial")
+                .executes(c -> {
+                    TutorialManager.open(player(c));
+                    return 1;
+                })
+                .then(Commands.literal("reload").requires(s -> s.hasPermission(2)).executes(c -> {
+                    boolean loaded = TutorialManager.reload();
+                    return result(c, loaded ? null : "Tutorial JSON could not load. Valid content is still active; see the server log.",
+                            "Tutorial content reloaded. Use /tutorial to view it.");
+                })));
         LiteralArgumentBuilder<CommandSourceStack> team = Commands.literal("team");
         team.then(teamAction("create", "name", c -> {
             try {

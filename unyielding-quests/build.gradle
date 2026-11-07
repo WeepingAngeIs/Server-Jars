@@ -27,9 +27,14 @@ neoForge {
     mods { "${mod_id}" { sourceSet(sourceSets.main) } }
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+repositories { mavenCentral() }
 dependencies {
     compileOnly files('libs/cobblemon.jar', 'libs/kotlin-stdlib.jar', 'libs/emi.jar')
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+tasks.withType(Test).configureEach { useJUnitPlatform() }
 jar {
     exclude 'dev/unyielding/quests/devtest/**'
     manifest { attributes('Implementation-Title': 'UnyieldingQuests', 'Implementation-Version': project.version) }

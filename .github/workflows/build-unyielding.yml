@@ -1,0 +1,75 @@
+name: Build and exercise Unyielding Quests
+
+on:
+  push:
+    branches: [main, feature/player-tutorial]
+    paths:
+      - 'unyielding-quests/**'
+      - '.github/workflows/build-unyielding.yml'
+      - '.github/scripts/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unyielding-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout: |
+            unyielding-quests
+            .github
+      - name: Set up Java 21
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            unyielding-quests/*.gradle
+            unyielding-quests/gradle.properties
+            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
+      - name: Fetch verified compile dependencies
+        run: python3 .github/scripts/fetch-build-dependencies.py
+      - name: Build and run unit tests
+        working-directory: unyielding-quests
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon --console=plain build
+      - name: Verify packaged tutorial and artwork
+        run: python3 .github/scripts/verify-mod-jar.py
+      - name: Install cloud display dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Exercise a real client and server
+        run: bash .github/scripts/tutorial-smoke.sh
+      - name: Upload verified release JAR
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: UnyieldingQuests-verified
+          path: |
+            unyielding-quests/build/libs/*.jar
+            unyielding-quests/build/verification/*
+          if-no-files-found: error
+          retention-days: 90
+      - name: Upload test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: UnyieldingQuests-test-evidence
+          path: |
+            unyielding-quests/build/reports/tests/
+            unyielding-quests/build/test-results/
+            unyielding-quests/build/verification/
+            tutorial-smoke/
+          if-no-files-found: warn
+          retention-days: 90

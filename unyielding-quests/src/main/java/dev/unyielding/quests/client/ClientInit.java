@@ -60,6 +60,7 @@ public final class ClientInit {
         @SubscribeEvent
         public void onTick(ClientTickEvent.Post e) {
             Minecraft mc = Minecraft.getInstance();
+            dev.unyielding.quests.client.tutorial.TutorialClient.tick();
             if (mc.player == null) return;
             if (AUTOTEST) {
                 try {
@@ -84,6 +85,7 @@ public final class ClientInit {
 
         @SubscribeEvent
         public void onLogout(ClientPlayerNetworkEvent.LoggingOut e) {
+            dev.unyielding.quests.client.tutorial.TutorialClient.reset();
             ClientData.clear();
         }
     }

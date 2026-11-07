@@ -1,0 +1,13 @@
+// Restrict the two cloud smoke-test game processes to the hosted runner's memory.
+allprojects {
+    afterEvaluate {
+        def loader = extensions.findByName('neoForge')
+        if (loader != null) {
+            loader.runs.named('server') { jvmArgument '-Xmx1536m' }
+            loader.runs.named('client') {
+                jvmArgument '-Xmx2048m'
+                programArguments.addAll('--width', '1280', '--height', '800')
+            }
+        }
+    }
+}
