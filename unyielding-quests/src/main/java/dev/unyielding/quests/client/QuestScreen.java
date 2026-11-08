@@ -899,6 +899,13 @@ public class QuestScreen extends Screen {
         return Math.min(340, width - 24);
     }
 
+    /** Collection tasks in Catching and Team Training share their instructions on the first card. */
+    private static boolean compactCollectionTasks(Quest q) {
+        return q.chapter == 0x5A9D2C7E4F100001L && q.tasks.size() > 1
+                && q.tasks.stream().allMatch(t -> t.type == QuestFile.TaskType.ITEM
+                        && t.consume == q.tasks.getFirst().consume);
+    }
+
     private void renderDetail(GuiGraphics g, QuestFile f, TeamProgress tp, int mx, int my) {
         Quest q = shown;
         float a = Ui.easeOut(detailAnim);
@@ -1032,13 +1039,15 @@ public class QuestScreen extends Screen {
         g.drawString(font, Component.literal("TASKS").withStyle(ChatFormatting.BOLD), cx0, y, Theme.heading, false);
         g.drawString(font, tdoneCount + "/" + q.tasks.size(), cx0 + font.width(Component.literal("TASKS").withStyle(ChatFormatting.BOLD)) + 6, y, Theme.textMuted, false);
         y += 13;
-        for (Task t : q.tasks) {
+        boolean compactTasks = compactCollectionTasks(q);
+        for (int taskIndex = 0; taskIndex < q.tasks.size(); taskIndex++) {
+            Task t = q.tasks.get(taskIndex);
             boolean tdone = tp.taskDone(t.id) || done;
             ItemStack icon = taskIcon(t);
             boolean hasButton = !tdone && avail && (t.type == QuestFile.TaskType.CHECKMARK || (t.type == QuestFile.TaskType.ITEM && t.consume));
             int textW = cw0 - 32 - (hasButton ? 58 : 6);
             List<FormattedCharSequence> hint = new ArrayList<>();
-            if (!tdone) {
+            if (!tdone && (!compactTasks || taskIndex == 0)) {
                 hint.addAll(font.split(FormattedText.of(completesHow(t), Style.EMPTY.withColor(Theme.textMuted)), cw0 - 34));
                 if (UiConfig.hints() && t.type == QuestFile.TaskType.ITEM && t.item != null) {
                     String how = Hints.howToGet(t.item.isFilter() ? icon : t.item.stack());
