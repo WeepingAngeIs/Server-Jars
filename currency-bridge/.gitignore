@@ -1,2 +1,5 @@
 smoke-harness/
 run_smoke.generated.sh
+patch/build/
+patch/libs/
+patch/.gradle/

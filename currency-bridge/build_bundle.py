@@ -15,6 +15,7 @@ release = json.loads((ROOT / 'currency-bridge/release.json').read_text())
 MODS = 'META-INF/neoforge.mods.toml'
 MANIFEST = 'META-INF/MANIFEST.MF'
 CHANGED = {MODS, MANIFEST}
+PARSER = 'com/uwustudio/cobblecurrency/CobbleDollarsValueParser.class'
 
 
 def read_input(info):
@@ -62,6 +63,11 @@ assert len({m['modId'] for m in merged_meta['mods']}) == 9
 assert '${' not in metadata
 
 entries = base | bridge
+patch_root = ROOT / 'currency-bridge/patch/build'
+patches = list(patch_root.rglob('*.class'))
+assert len(patches) == 1 and patches[0].relative_to(patch_root).as_posix() == PARSER, 'Expected only the corrected parser class'
+entries[PARSER] = patches[0].read_bytes()
+assert entries[PARSER][:4] == b'\xca\xfe\xba\xbe' and entries[PARSER] != bridge[PARSER]
 entries[MODS] = metadata.encode()
 entries[MANIFEST] = (
     'Manifest-Version: 1.0\r\n'
@@ -87,7 +93,7 @@ with zipfile.ZipFile(output) as archive:
     assert set(archive.namelist()) == set(entries)
     for source in (base, bridge):
         for name, data in source.items():
-            if name not in CHANGED:
+            if name not in CHANGED and name != PARSER:
                 assert archive.read(name) == data, f'Gameplay file changed: {name}'
 digest = hashlib.sha256(output.read_bytes()).hexdigest()
 report = {
@@ -96,8 +102,10 @@ report = {
     'cloud_run': f"https://github.com/{os.environ.get('GITHUB_REPOSITORY')}/actions/runs/{os.environ.get('GITHUB_RUN_ID')}",
     'inputs': {key: release[key] for key in ('base', 'bridge')},
     'production_module_count': len(merged_meta['mods']),
-    'preserved_base_entries': len(base) - 2, 'preserved_bridge_entries': len(bridge) - 2,
-    'modified_entries': sorted(CHANGED), 'bridge_classes': 12,
+    'preserved_base_entries': len(base) - 2, 'preserved_bridge_entries': len(bridge) - 3,
+    'modified_entries': sorted(CHANGED | {PARSER}), 'bridge_classes': 12,
+    'parser_correction': 'Decline foreign currency values with null, preserving Lightman coin/free/empty config serialization',
+    'parser_sha256': hashlib.sha256(entries[PARSER]).hexdigest(),
     'external_dependencies_bundled': False,
     'metadata_correction': "Lightman's dependency range uses its published 1.21-2.3.0.5 version format",
     'new_required_mods': bridge_meta['dependencies'][release['bridge']['mod_id']],

@@ -11,7 +11,11 @@ every optional feature described in the old plan.
 The combined metadata corrects the bridge's Lightman's dependency lower bound to
 `1.21-2.3.0.5`, matching the version reported by the actual mod. Its original `2.3.0.5`
 bound rejected that release. The accepted range stays within the 1.21 version line.
-All bridge classes remain unchanged.
+The currency parser also corrects one supplied bug: it returns `null` for foreign currency
+values, allowing Lightman's own parsers to serialize coin/free/empty settings. The original
+empty-string response incorrectly serialized those settings as `cd;` and broke client config
+sync. Only that parser class is rebuilt from the included source; the other eleven bridge
+classes remain unchanged.
 
 ## Installation
 
@@ -34,10 +38,11 @@ the same compatible currency mods. The finished JAR is for the existing
 ## Build and verification
 
 All assembly and Minecraft checks run on GitHub-hosted runners. Input SHA256 hashes are pinned
-in `release.json`. Only the combined mod metadata and outer manifest change; every other file
-from both source JARs is checked byte-for-byte. All nine mod IDs are retained, and test helpers
+in `release.json`. Apart from the combined mod metadata, outer manifest and corrected parser,
+every file from both source JARs is checked byte-for-byte. All nine mod IDs are retained, and test helpers
 and third-party mod code are excluded from the release.
 
 The cloud workflow loads the actual combined release and tests currency registration,
-currency-handler transfers, client integration, and the existing Unyielding tutorial/admin behavior.
+currency-handler transfers, foreign-currency configuration roundtrips, client integration,
+and the existing Unyielding tutorial/admin behavior. Configuration parsing errors fail the run.
 These focused checks do not replace an end-to-end multiplayer test of every trader or auction flow.
