@@ -10,8 +10,11 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.Map;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.SourceDataLine;
 import static dev.unyielding.bundlesmoke.BundleSmoke.require;
 
 final class MusicClientSmoke {
@@ -37,21 +40,43 @@ final class MusicClientSmoke {
     }
     private static void transformedReactiveMusic(Map<String,Object> report)throws Exception {
         Class<?> music=Class.forName("circuitlord.reactivemusic.ReactiveMusic"), thread=Class.forName("circuitlord.reactivemusic.PlayerThread");
-        Method handler=Arrays.stream(thread.getDeclaredMethods()).filter(m->m.getName().contains("unyielding$musicVolume")).findFirst().orElseThrow(()->new IllegalStateException("Reactive Music target did not receive the production mixin"));
+        Class<?> audio=Class.forName("rm_javazoom.jl.player.JavaSoundAudioDevice");
+        Method handler=Arrays.stream(audio.getDeclaredMethods()).filter(m->m.getName().contains("unyielding$musicVolume")).findFirst().orElseThrow(()->new IllegalStateException("Reactive Music audio device did not receive the production mixin"));
         require(handler.getParameterCount()==1&&handler.getParameterTypes()[0]==float.class,"Unexpected music injection signature");handler.setAccessible(true);
         var packField=music.getField("currentSongpack");var songField=thread.getField("currentSong");Object oldPack=packField.get(null),oldSong=songField.get(null);
         try {
             Object pack=allocate(packField.getType());var configField=pack.getClass().getField("config");Object config=allocate(configField.getType());
             var name=config.getClass().getField("name");name.set(config,"Cobblemon Unyielding");configField.set(pack,config);packField.set(null,pack);songField.set(null,"lavender");
-            MusicClient.apply(settings(50,50));Object playerThread=allocate(thread);
-            close(((Number)handler.invoke(playerThread,-6f)).doubleValue(),-6+20*Math.log10(.25),"Injected real Reactive Music gain handler");
-            name.set(config,"Another songpack");close(((Number)handler.invoke(playerThread,-6f)).doubleValue(),-6,"Unrelated songpack preserved");
-            report.put("real_reactive_music_1_3_5_class_transformation_and_injected_gain_handler","passed");
+            MusicClient.apply(settings(50,50));Object audioDevice=allocate(audio);
+            var source=audio.getDeclaredField("source");source.setAccessible(true);
+            var setGain=audio.getMethod("setGain",float.class);
+            ProbeGain gain=probe(source,audioDevice,-80,6);
+            setGain.invoke(audioDevice,-6f);close(gain.getValue(),-6+20*Math.log10(.25),"Actual transformed Reactive Music setGain");
+            name.set(config,"Another songpack");setGain.invoke(audioDevice,-6f);close(gain.getValue(),-6,"Unrelated songpack preserved");
+            name.set(config,"Cobblemon Unyielding");
+            gain=probe(source,audioDevice,-50,0);MusicClient.apply(settings(200,200));setGain.invoke(audioDevice,-6f);close(gain.getValue(),0,"Physical device upper gain limit");
+            MusicClient.apply(settings(0,100));setGain.invoke(audioDevice,-6f);close(gain.getValue(),-50,"Physical device mute limit");
+            report.put("real_reactive_music_1_3_5_transformed_set_gain_and_device_limits","passed");
         }finally{packField.set(null,oldPack);songField.set(null,oldSong);}
     }
     private static Object allocate(Class<?> type)throws Exception {
         Class<?> unsafe=Class.forName("sun.misc.Unsafe");var field=unsafe.getDeclaredField("theUnsafe");field.setAccessible(true);
         return unsafe.getMethod("allocateInstance",Class.class).invoke(field.get(null),type);
+    }
+    private static final class ProbeGain extends FloatControl {
+        ProbeGain(float min,float max){super(FloatControl.Type.MASTER_GAIN,min,max,.01f,0,0,"dB");}
+    }
+    private static ProbeGain probe(java.lang.reflect.Field field,Object audio,float min,float max)throws Exception {
+        ProbeGain gain=new ProbeGain(min,max);
+        Object line=Proxy.newProxyInstance(MusicClientSmoke.class.getClassLoader(),new Class<?>[]{SourceDataLine.class},(proxy,method,args)-> {
+            if(method.getName().equals("getControl"))return gain;
+            if(method.getName().equals("isControlSupported"))return true;
+            if(method.getReturnType()==boolean.class)return false;
+            if(method.getReturnType()==int.class)return 0;
+            if(method.getReturnType()==long.class)return 0L;
+            if(method.getReturnType()==float.class)return 0f;
+            return null;
+        });field.set(audio,line);return gain;
     }
     private static void ui(Minecraft mc,Map<String,Object> report)throws Exception {
         Screen previous=mc.screen;int permission=mc.player.getPermissionLevel();

@@ -49,6 +49,9 @@ final class BalanceEditorSmoke {
             }
             edit(player,"armor.mod_overrides",JSON.toJson(field("MOD_OVERRIDES").get()),"[\"minecraft=80\"]");
             edit(player,"armor.item_overrides",JSON.toJson(field("ITEM_OVERRIDES").get()),"[\"minecraft:netherite_chestplate=60\"]");
+            reject(player,"armor.mod_overrides",JSON.toJson(field("MOD_OVERRIDES").get()),"[\"minecraft=80\",\"minecraft=70\"]");
+            reject(player,"armor.item_overrides",JSON.toJson(field("ITEM_OVERRIDES").get()),"[\"minecraft:netherite_chestplate=60\",\"minecraft:netherite_chestplate=70\"]");
+            reject(player,"armor.item_overrides",JSON.toJson(field("ITEM_OVERRIDES").get()),"[\"minecraft:no_such_balance_item=60\"]");
             require(field("MOD_OVERRIDES").get().equals(List.of("minecraft=80")) && field("ITEM_OVERRIDES").get().equals(List.of("minecraft:netherite_chestplate=60")),"Armor overrides not accepted");
             require(disk().contains("minecraft:netherite_chestplate=60"),"Override not persisted");
             for(int t=1;t<=7;t++) {

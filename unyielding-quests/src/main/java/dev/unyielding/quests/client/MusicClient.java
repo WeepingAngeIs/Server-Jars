@@ -32,6 +32,7 @@ public final class MusicClient {
             Object pack = music.getField("currentSongpack").get(null);
             if (pack == null) return original;
             Object config = pack.getClass().getField("config").get(pack);
+            if (config == null) return original;
             if (!"Cobblemon Unyielding".equals(config.getClass().getField("name").get(config))) return original;
             String song = (String)Class.forName("circuitlord.reactivemusic.PlayerThread").getField("currentSong").get(null);
             return adjustGain(original, song);
