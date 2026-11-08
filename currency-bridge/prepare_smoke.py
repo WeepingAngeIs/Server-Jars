@@ -48,6 +48,12 @@ runner = runner.replace('&& -f /tmp/uq-bundle-client-passed.json ]]; then',
                         '&& -f /tmp/uq-bundle-client-passed.json && -f /tmp/uq-currency-server-passed.json && -f /tmp/uq-currency-client-passed.json ]]; then')
 runner = runner.replace('/tmp/uq-admin-server-result /tmp/uq-bundle-*; do',
                         '/tmp/uq-admin-server-result /tmp/uq-bundle-* /tmp/uq-currency-*; do')
+runner = runner.replace('        cat /tmp/uq-tutorial-test-done /tmp/uq-admin-test-done',
+                        '''        if grep -q 'ConfigParsingException' "$results/server-console.log" "$results/client-console.log"; then
+            echo 'Currency configuration failed to synchronize or parse' >&2
+            exit 1
+        fi
+        cat /tmp/uq-tutorial-test-done /tmp/uq-admin-test-done''')
 runner = runner.replace('Passed final-JAR server, client, commands, Mawonna, tutorial and admin settings checks.',
                         'Passed final-JAR server, client, currency, tutorial and admin settings checks.')
 assert '/tmp/uq-currency-server-passed.json' in runner

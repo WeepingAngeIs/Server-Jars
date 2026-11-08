@@ -23,6 +23,7 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static dev.unyielding.bundlesmoke.BundleSmoke.require;
@@ -57,6 +58,14 @@ public final class CurrencyServerSmoke {
             require(value.getCoreValue() == Long.MAX_VALUE, "Large value overflowed Lightman's core-value limit");
             amount(MoneyValueParser.parse(new StringReader("cd;2,500"), false), BigInteger.valueOf(2500));
             amount(MoneyValueParser.ParseConfigString(MoneyValueParser.writeParsable(value), MoneyValue::empty), huge);
+            MoneyValue coinFixture = CoinValue.fromNumber("main", 25);
+            require(!coinFixture.isEmpty(), "Coin serialization fixture is empty");
+            for (MoneyValue foreign : List.of(coinFixture, MoneyValue.free(), MoneyValue.empty())) {
+                String encoded = MoneyValueParser.writeParsable(foreign);
+                require(!encoded.startsWith("cd;"), "Bridge captured another currency's config serialization: " + encoded);
+                require(MoneyValueParser.parse(new StringReader(encoded), true).equals(foreign),
+                        "Foreign currency config roundtrip failed: " + encoded);
+            }
             amount(CobbleDollarsValue.of(BigInteger.valueOf(-10)), BigInteger.ZERO);
             amount(cd(101).percentageOfValue(10, true), BigInteger.valueOf(11));
             amount(cd(101).percentageOfValue(10, false), BigInteger.TEN);
@@ -70,6 +79,7 @@ public final class CurrencyServerSmoke {
             require(admin != null && !admin.canUse(event.getServer().createCommandSourceStack().withPermission(0))
                     && admin.canUse(event.getServer().createCommandSourceStack().withPermission(2)), "Currency debug command is not admin-only");
             report.put("registration_parser_and_nbt_json_network_roundtrips", "passed");
+            report.put("coin_free_and_empty_config_values_roundtrip_unchanged", "passed");
             report.put("large_amounts_arithmetic_rounding_and_admin_permissions", "passed");
         } catch (Throwable failure) {
             complete = true;
