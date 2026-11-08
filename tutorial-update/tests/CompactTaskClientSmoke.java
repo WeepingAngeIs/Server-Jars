@@ -1,12 +1,17 @@
 package dev.unyielding.bundlesmoke;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import dev.unyielding.quests.client.ClientData;
+import dev.unyielding.quests.client.ClientInit;
+import dev.unyielding.quests.client.InvButtons;
 import dev.unyielding.quests.client.QuestScreen;
+import dev.unyielding.quests.client.tutorial.TutorialScreen;
 import dev.unyielding.quests.quest.QuestFile;
 import dev.unyielding.quests.quest.TeamProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.FormattedCharSequence;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -19,6 +24,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.lwjgl.glfw.GLFW;
 
 import static dev.unyielding.bundlesmoke.BundleSmoke.require;
 
@@ -38,6 +44,7 @@ public final class CompactTaskClientSmoke {
         TeamProgress originalProgress = ClientData.progress;
         try {
             Map<String, Object> report = BundleSmoke.verifyProductionJar();
+            checkQuestKeyAndWelcome(report);
             ClientData.progress = new TeamProgress();
             var chapter = ClientData.file.chapterMap.get(TRAINING);
             require(chapter != null, "Catching and Team Training chapter is missing");
@@ -86,6 +93,35 @@ public final class CompactTaskClientSmoke {
             BundleSmoke.fail("/tmp/uq-compact-tasks-failed.txt", failure);
         } finally {
             ClientData.progress = originalProgress;
+        }
+    }
+
+    private static void checkQuestKeyAndWelcome(Map<String, Object> report) throws ReflectiveOperationException {
+        require(ClientInit.OPEN_QUESTS.getDefaultKey().getValue() == GLFW.GLFW_KEY_F12,
+                "Fresh quest key default must be F12");
+        var originalKey = ClientInit.OPEN_QUESTS.getKey();
+        try {
+            ClientInit.OPEN_QUESTS.setKey(InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_F9));
+            require(ClientInit.questKeyLabel().getString().equals("F9"), "Quest key label ignores the player's binding");
+            require(InvButtons.questButtonLabel().getString().contains("F9"), "Inventory button ignores the player's binding");
+            TutorialScreen tutorial = new TutorialScreen(new CompoundTag());
+            var pageField = TutorialScreen.class.getDeclaredField("pages");
+            pageField.setAccessible(true);
+            String welcome = ((List<?>)pageField.get(tutorial)).getFirst().toString();
+            require(welcome.toLowerCase(java.util.Locale.ROOT).contains("inventory")
+                            && welcome.toLowerCase(java.util.Locale.ROOT).contains("ball"),
+                    "Welcome page does not explain opening quests with the inventory Pokeball");
+            require(!welcome.contains("F9  ·") && !welcome.contains("J  ·"),
+                    "Welcome page still tells players to use a quest hotkey");
+            ClientInit.OPEN_QUESTS.setKey(InputConstants.UNKNOWN);
+            require(ClientInit.questKeyLabel().getString().equals("Set in Key Binds"),
+                    "Unbound quest key lacks a useful instruction");
+            require(InvButtons.questButtonLabel().getString().contains("Set in Key Binds"),
+                    "Unbound inventory button displays an unusable key name");
+            report.put("f12_default_remapped_and_unbound_key_labels", "passed");
+            report.put("welcome_uses_inventory_pokeball_instructions", "passed");
+        } finally {
+            ClientInit.OPEN_QUESTS.setKey(originalKey);
         }
     }
 
