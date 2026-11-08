@@ -24,13 +24,14 @@ checks = ROOT / "tutorial-update/smoke-harness/src/main/java/dev/unyielding/bund
 for source in (ROOT / "tutorial-update/tests").glob("*.java"):
     shutil.copy2(source, checks / source.name)
 
-assert (checks / "CompactTaskClientSmoke.java").is_file(), "Compact task runtime assertions are missing"
+for helper in ("CompactTaskClientSmoke.java", "TutorialAccessServerSmoke.java", "AdminFeatureSmoke.java", "AdminFeatureClientSmoke.java"):
+    assert (checks / helper).is_file(), f"Runtime assertions are missing: {helper}"
 runner_path = ROOT / "tutorial-update/run_smoke.generated.sh"
 runner = runner_path.read_text()
 runner_replacements = {
-    "/tmp/uq-currency-failed.txt; do": "/tmp/uq-currency-failed.txt /tmp/uq-compact-tasks-failed.txt; do",
-    "&& -f /tmp/uq-currency-client-passed.json ]]; then": "&& -f /tmp/uq-currency-client-passed.json && -f /tmp/uq-compact-tasks-passed.json ]]; then",
-    "/tmp/uq-currency-*; do": "/tmp/uq-currency-* /tmp/uq-compact-tasks-*; do",
+    "/tmp/uq-currency-failed.txt; do": "/tmp/uq-currency-failed.txt /tmp/uq-compact-tasks-failed.txt /tmp/uq-admin-features-failed.txt /tmp/uq-admin-features-client-failed.txt /tmp/uq-tutorial-access-failed.txt; do",
+    "&& -f /tmp/uq-currency-client-passed.json ]]; then": "&& -f /tmp/uq-currency-client-passed.json && -f /tmp/uq-compact-tasks-passed.json && -f /tmp/uq-admin-features-passed.json && -f /tmp/uq-admin-features-client-passed.json && -f /tmp/uq-tutorial-access-passed.json ]]; then",
+    "/tmp/uq-currency-*; do": "/tmp/uq-currency-* /tmp/uq-compact-tasks-* /tmp/uq-admin-features-* /tmp/uq-tutorial-access-*; do",
     "Passed final-JAR server, client, currency, tutorial and admin settings checks.": "Passed final-JAR server, client, currency, player guide, compact tasks and admin settings checks.",
 }
 for before, after in runner_replacements.items():
