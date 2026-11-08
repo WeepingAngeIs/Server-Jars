@@ -1,0 +1,31 @@
+Unyielding 1.1.6 - validation record
+
+Built and tested entirely on GitHub-hosted runners.
+Run: https://github.com/WeepingAngeIs/Server-Jars/actions/runs/42531217280
+Tested source: 3a217a580dc84d47024859c8cc11505c14669b3e
+JAR SHA256: e7e6de10dfd1d54cbb804698784ff5db0b65e3f1874798500d8ba8130c25b92a
+Minecraft 1.21.1, NeoForge 21.1.255, Java 21; quest component 1.6.8.
+
+Passed 26 unit tests, resource verification, and assembly audit. All nine combined
+modules remain present; non-quest module contents and currency compatibility fix
+are preserved from the verified 1.1.5 release.
+
+The actual distributable JAR passed dedicated-server and connected-client checks:
+- Permission, stale-edit, finite-number, range, list and total validation.
+- Live refresh of already-equipped armor, toughness and knockback resistance,
+  including synchronized client settings.
+- All seven raid tiers: exact roll boundaries, zero/100% chances, ordinary IV cap,
+  custom-roll switch and configuration persistence.
+- Portal, Soul Tome and leaderboard controls.
+- Music settings saved to disk and loaded back, permission and revision checks,
+  live client synchronization, mute, gain limits and disconnect reset.
+- Real Reactive Music 1.3.5 audio-device method with a simulated sound device,
+  including limited hardware gain ranges and preservation of unrelated songpacks.
+- Armor, raid and music menus at 640x400 and 320x240, including search, presets,
+  independent drafts and invalid-save handling.
+- Existing currency, spin odds, tutorial history, quest controls and loot editing
+  regression checks.
+
+This was a focused cloud environment. No full raid battle, listening test on a
+physical audio device, or complete public-server modpack walkthrough was performed.
+No local Minecraft instance or live server was changed during this release task.
