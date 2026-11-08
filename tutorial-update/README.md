@@ -1,6 +1,11 @@
-# Unyielding 1.1.4
+# Unyielding 1.1.5
 
-Adds a percentage editor for Lucky Spin rewards to `/quests settings` → **Spin odds**.
+Finishing or dismissing the tutorial now saves per-player history in the server world.
+It will not automatically replay on reconnect. Manual /tutorial remains available, and
+origin/menu interruptions do not count as dismissal. Existing players may see it once
+after upgrading because earlier releases did not record dismissal history.
+
+Includes a percentage editor for Lucky Spin rewards to `/quests settings` → **Spin odds**.
 Quest and daily spins have separate tabs. Edit all five percentages, make the total 100%,
 then save the selected tab. Changes apply to future spins immediately and persist in the
 server config. Existing configured chances are preserved until an admin saves a change.

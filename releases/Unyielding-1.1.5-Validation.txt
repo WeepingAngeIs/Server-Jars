@@ -1,0 +1,8 @@
+Unyielding 1.1.5 verification
+GitHub-hosted build and focused Minecraft client/server checks passed.
+Run: https://github.com/WeepingAngeIs/Server-Jars/actions/runs/42521561746
+Source: 59bc93346c948ab485217795c6a15fde7513881f
+SHA256: f25d004fe85693af44216e8d8a8c09e055c8ece0cb1b66d8d164670c930695da
+Tutorial history serialization, reconnect queue suppression, manager restart and manual delivery passed.
+Spin odds, admin controls, tutorials, currency and loot-table regression checks passed.
+No full-modpack playthrough or live-server installation was performed.

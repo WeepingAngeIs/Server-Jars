@@ -1,0 +1,22 @@
+Unyielding 1.1.5 - tutorial replay fix
+
+Replace the older combined Unyielding JAR with Unyielding-1.1.5.jar on both the
+server and clients. Stop the server and close Minecraft before replacing files.
+Keep only one combined Unyielding JAR. Existing quest progress and settings remain.
+
+The tutorial is remembered per player after they finish it or close it using
+Later or Escape. It will not automatically replay when they reconnect.
+The history is saved with the server world and survives normal server restarts.
+Other menus interrupting the tutorial do not mark it finished.
+Players can still open it manually using /tutorial.
+
+Older versions did not record tutorial history. Existing players may see it once
+after updating; closing it records their choice for future visits.
+The Tutorial on join admin switch remains available to disable it for everyone.
+
+This update also includes the 1.1.4 in-game wheel controls:
+/quests settings -> Spin odds -> Quest spins / Daily spins.
+Edit percentages or preview Very rare / Items only, then Save each tab.
+Existing odds do not change automatically when the JAR is updated.
+
+Source: https://github.com/WeepingAngeIs/Server-Jars
