@@ -1,0 +1,46 @@
+UNYIELDING 1.1.2 - VALIDATION RECORD
+
+File: Unyielding-1.1.2.jar
+Size: 6,128,457 bytes
+SHA256: a274e263cfb6d1de049574658a23feac6688ecbe3a067fadc002eae3d6da501a
+Source commit: 85a8ef264e98b7f414effa7db1636f271b850f6c
+Cloud run: https://github.com/WeepingAngeIs/Server-Jars/actions/runs/42438703331
+
+All compilation, packaging and Minecraft checks ran on GitHub-hosted runners.
+The delivered JAR matches the exact file loaded by all eight server/client proof records.
+All 20 unit tests passed, followed by package verification and focused runtime checks.
+
+CONTENTS
+- Quest component updated to 1.6.4; nine module IDs remain in the combined release.
+- All nonquest gameplay files from verified Unyielding 1.1.1 are preserved byte-for-byte.
+- All twelve currency bridge classes, including the earlier parser fix, are unchanged.
+- 923 quest pictures are included; one collection icon uses the supplied white-ball PNG.
+- The supplied PNG is unchanged: SHA256 f8de87db747d2eb9ede0ad359a29df4c384eeecce391ff64347e5eac69eb4c6b.
+- Four 543x543 frame regions are rendered from its original transparent 724x2172 strip.
+- External dependencies and development test helpers are not bundled.
+
+PASSED CHECKS
+- Operator and normal-player guide filtering using a small set of curated permission cases.
+- Specific live rank grants, expiry and removal; unknown/operator routes remain absent.
+- Safe operator preview and LAN fallback without changing the real player's privileges.
+- Existing tutorial config migration, party invitation entry and preservation of custom text.
+- Inventory Poke Ball instructions and editable F12/default, remapped and unbound key labels.
+- Compact collection-task rendering at normal and narrow widths; other chapters retain help.
+- Exact white-ball asset, four animation frames, frame crop and unchanged legacy animations.
+- Nine additional admin switches: operator checks, revoked-operator rejection, correct config
+  file persistence, relevant live behavior, client flags and restoration of test settings.
+- Existing tutorial, party progress, reward replay protection and currency compatibility checks.
+
+TEST ENVIRONMENT
+Minecraft 1.21.1; Java 21; NeoForge 21.1.255; Cobblemon 1.8.4;
+CobbleDollars 2.0.0+Beta-6.1; Lightman's Currency 1.21-2.3.0.5;
+plus the pinned runtime libraries recorded in the workflow evidence artifact.
+
+SCOPE
+These checks verify this update in an isolated environment. They do not execute every
+server command or audit the public server's entire permissions setup. No live server or
+installed Minecraft profile was modified. Full-modpack performance and multiplayer
+trader/auction walkthroughs are outside this check.
+
+Rank-specific guide entries remain hidden until exact allowed rank IDs are configured
+in tutorial.json. Guide visibility does not grant or revoke gameplay command permissions.
