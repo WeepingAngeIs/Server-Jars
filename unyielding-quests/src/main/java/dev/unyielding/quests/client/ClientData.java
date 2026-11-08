@@ -29,6 +29,10 @@ public final class ClientData {
     public static int maxPartySize;
     public static int teamVersion;
     public static boolean shareQuestProgress;
+    public static boolean inventoryButtonsEnabled = true;
+    public static boolean questToastsEnabled = true;
+    public static boolean ultimineEnabled = true;
+    public static boolean ultimineRequiresItem;
 
     /** Operator-only settings and authoritative save acknowledgements from the server. */
     public static CompoundTag adminSettings = new CompoundTag();
@@ -95,6 +99,10 @@ public final class ClientData {
         pendingCount = 0;
         spinEnabled = false;
         shareQuestProgress = false;
+        inventoryButtonsEnabled = true;
+        questToastsEnabled = true;
+        ultimineEnabled = true;
+        ultimineRequiresItem = false;
         adminSettings = new CompoundTag();
         adminSettingsVersion++;
         unclaimedCache = -1;

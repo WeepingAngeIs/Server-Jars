@@ -65,6 +65,10 @@ public final class ClientHandlers {
         ClientData.adminSettings = tag.copy();
         ClientData.adminSettingsVersion++;
         ClientData.shareQuestProgress = tag.getBoolean("shareProgress");
+        ClientData.inventoryButtonsEnabled = !tag.contains("inventoryButtons") || tag.getBoolean("inventoryButtons");
+        ClientData.questToastsEnabled = !tag.contains("questPopups") || tag.getBoolean("questPopups");
+        ClientData.ultimineEnabled = !tag.contains("veinMining") || tag.getBoolean("veinMining");
+        ClientData.ultimineRequiresItem = tag.getBoolean("veinMiningRequiresItem");
         ClientData.teamVersion++;
         dev.unyielding.quests.client.tutorial.TutorialClient.setAutomaticEnabled(tag.getBoolean("tutorialOnJoin"));
         Minecraft mc = Minecraft.getInstance();
@@ -100,6 +104,7 @@ public final class ClientHandlers {
     public static void onNotify(Net.Notify n) {
         Minecraft mc = Minecraft.getInstance();
         if (n.kind() == 0) {
+            if (!ClientData.questToastsEnabled) return;
             QuestFile f = ClientData.file;
             if (f != null && f.quests.containsKey(n.id())) mc.getToasts().addToast(new QuestToast(f.quests.get(n.id())));
         } else {

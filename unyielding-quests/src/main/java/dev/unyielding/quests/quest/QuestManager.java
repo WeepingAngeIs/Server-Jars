@@ -509,7 +509,7 @@ public final class QuestManager {
         for (ServerPlayer m : server.getPlayerList().getPlayers()) {
             UUID u = m.getUUID();
             if (!tid.equals(progressId(u))) continue;
-            Net.sendTo(m, new Net.Notify(0, q.id, ""));
+            if (Config.QUEST_TOASTS.get()) Net.sendTo(m, new Net.Notify(0, q.id, ""));
             if (Config.ANNOUNCE_COMPLETION.get()) {
                 m.sendSystemMessage(Component.literal("Quest completed: ").withStyle(ChatFormatting.GREEN)
                         .append(Component.literal(title)));

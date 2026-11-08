@@ -12,6 +12,7 @@ public final class Config {
     public static final ModConfigSpec.IntValue MAX_PARTY_SIZE;
     public static final ModConfigSpec.IntValue MAX_NAME_LENGTH;
     public static final ModConfigSpec.BooleanValue ANNOUNCE_COMPLETION;
+    public static final ModConfigSpec.BooleanValue QUEST_TOASTS;
     public static final ModConfigSpec.BooleanValue INVENTORY_BUTTONS;
     public static final ModConfigSpec.IntValue DETECTION_DELAY_OVERRIDE;
     public static final ModConfigSpec.ConfigValue<String> QUEST_BOOK_SOURCE;
@@ -67,6 +68,8 @@ public final class Config {
         b.push("quests");
         ANNOUNCE_COMPLETION = b.comment("Send a chat message to the whole team when a quest is completed.")
                 .define("announce_completion", true);
+        QUEST_TOASTS = b.comment("Show a small quest-completion popup to the players whose progress was completed.")
+                .define("completion_popups", true);
         INVENTORY_BUTTONS = b.comment("Show the Quest Book / Teams buttons on the inventory screen (players can move or hide them in their client settings).")
                 .define("inventory_buttons", true);
         DETECTION_DELAY_OVERRIDE = b.comment("Ticks between quest detection scans (item / location tasks). 0 = use the value from the quest book (detection_delay in data.snbt).")

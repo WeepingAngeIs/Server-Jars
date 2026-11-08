@@ -67,7 +67,9 @@ public final class UltimineClient {
         @SubscribeEvent
         public void onTick(ClientTickEvent.Post e) {
             Minecraft mc = Minecraft.getInstance();
-            boolean now = mc.player != null && mc.screen == null && KEY.isDown() && UltimineConfig.ENABLED.get();
+            boolean now = mc.player != null && mc.screen == null && KEY.isDown()
+                    && UltimineConfig.ENABLED.get() && ClientData.ultimineEnabled
+                    && (!ClientData.ultimineRequiresItem || !mc.player.getMainHandItem().isEmpty());
             if (now != held) {
                 held = now;
                 Net.sendToServer(new Net.UltimineState(held, shape));

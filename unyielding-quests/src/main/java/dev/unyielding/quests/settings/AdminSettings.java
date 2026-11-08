@@ -2,10 +2,12 @@ package dev.unyielding.quests.settings;
 
 import dev.unyielding.quests.Config;
 import dev.unyielding.quests.UnyieldingQuests;
+import dev.unyielding.quests.essentials.EssConfig;
 import dev.unyielding.quests.net.Net;
 import dev.unyielding.quests.quest.QuestManager;
 import dev.unyielding.quests.team.TeamManager;
 import dev.unyielding.quests.tutorial.TutorialManager;
+import dev.unyielding.quests.ultimine.UltimineConfig;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
@@ -16,7 +18,12 @@ import java.util.List;
 
 /** An allowlisted, operator-only editor for server-owned settings. */
 public final class AdminSettings {
-    private record Setting(String key, String title, String description, ModConfigSpec.BooleanValue value) { }
+    private record Setting(String key, String title, String description, ModConfigSpec.BooleanValue value,
+                           ModConfigSpec spec) {
+        private Setting(String key, String title, String description, ModConfigSpec.BooleanValue value) {
+            this(key, title, description, value, Config.SPEC);
+        }
+    }
 
     private static final List<Setting> SETTINGS = List.of(
             new Setting("share_quest_progress", "Share quest progress",
@@ -31,6 +38,12 @@ public final class AdminSettings {
             new Setting("announce_completion", "Quest completion messages",
                     "Show completion messages to the players whose quest progress was completed.",
                     Config.ANNOUNCE_COMPLETION),
+            new Setting("quest_popups", "Quest completion popups",
+                    "Show the small completion popup. Chat messages have their own switch; progress and rewards are unchanged.",
+                    Config.QUEST_TOASTS),
+            new Setting("inventory_buttons", "Inventory quest and team buttons",
+                    "Show the quest book and team shortcuts in player inventories. Players can still open both menus with their commands.",
+                    Config.INVENTORY_BUTTONS),
             new Setting("lucky_spin", "Quest Lucky Spins",
                     "Give each player one bonus prize roll per completed quest. Turning this off does not remove normal quest rewards.",
                     Config.SPIN_ENABLED),
@@ -39,7 +52,28 @@ public final class AdminSettings {
                     Config.DAILY_ENABLED),
             new Setting("announce_spin_wins", "Announce Pokemon prizes",
                     "Tell the server when somebody wins a Pokemon from a Lucky Spin.",
-                    Config.SPIN_ANNOUNCE));
+                    Config.SPIN_ANNOUNCE),
+            new Setting("vein_mining", "Vein mining",
+                    "Allow players to mine connected blocks with the vein-mining key. Turning it off also disables mass tool actions.",
+                    UltimineConfig.ENABLED, UltimineConfig.SPEC),
+            new Setting("vein_mining_require_item", "Require an item for vein mining",
+                    "Require something in the player's main hand before mining connected blocks. OFF also allows an empty hand.",
+                    UltimineConfig.REQUIRE_TOOL, UltimineConfig.SPEC),
+            new Setting("mass_log_stripping", "Mass log stripping",
+                    "Allow an axe to strip connected logs while the vein-mining key is held. Normal single-block use is unchanged.",
+                    UltimineConfig.RIGHT_CLICK_AXE, UltimineConfig.SPEC),
+            new Setting("mass_tilling", "Mass tilling",
+                    "Allow a hoe to till a connected patch while the vein-mining key is held. Normal single-block use is unchanged.",
+                    UltimineConfig.RIGHT_CLICK_HOE, UltimineConfig.SPEC),
+            new Setting("mass_path_making", "Mass path making",
+                    "Allow a shovel to make connected paths while the vein-mining key is held. Normal single-block use is unchanged.",
+                    UltimineConfig.RIGHT_CLICK_SHOVEL, UltimineConfig.SPEC),
+            new Setting("admin_teleport_cooldown_bypass", "Admins bypass teleport cooldowns",
+                    "Let operators skip Unyielding teleport cooldowns. OFF makes operators wait like other players.",
+                    EssConfig.ADMINS_EXEMPT_COOLDOWNS, EssConfig.SPEC),
+            new Setting("back_record_deaths_only", "/back: record deaths only",
+                    "Record only deaths as new /back destinations. OFF also records teleport departure points. Existing history is kept.",
+                    EssConfig.BACK_ONLY_ON_DEATH, EssConfig.SPEC));
 
     private static MinecraftServer server;
     private static List<Boolean> observed = List.of();
@@ -95,7 +129,7 @@ public final class AdminSettings {
         }
         try {
             setting.value().set(action.value());
-            Config.SPEC.save();
+            setting.spec().save();
         } catch (RuntimeException error) {
             setting.value().set(before);
             UnyieldingQuests.LOGGER.error("Could not save admin setting {}", action.key(), error);
@@ -126,6 +160,10 @@ public final class AdminSettings {
         tag.putBoolean("allowed", allowed);
         tag.putBoolean("shareProgress", Config.SHARE_QUEST_PROGRESS.get());
         tag.putBoolean("tutorialOnJoin", Config.TUTORIAL_ON_JOIN.get());
+        tag.putBoolean("inventoryButtons", Config.INVENTORY_BUTTONS.get());
+        tag.putBoolean("questPopups", Config.QUEST_TOASTS.get());
+        tag.putBoolean("veinMining", UltimineConfig.ENABLED.get());
+        tag.putBoolean("veinMiningRequiresItem", UltimineConfig.REQUIRE_TOOL.get());
         tag.putString("message", message);
         tag.putBoolean("error", error);
         ListTag settings = new ListTag();
