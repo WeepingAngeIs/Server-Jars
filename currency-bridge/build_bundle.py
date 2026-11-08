@@ -91,6 +91,7 @@ with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as arch
 with zipfile.ZipFile(output) as archive:
     assert archive.testzip() is None
     assert set(archive.namelist()) == set(entries)
+    assert archive.read(PARSER) == entries[PARSER], 'Compiled parser changed during packaging'
     for source in (base, bridge):
         for name, data in source.items():
             if name not in CHANGED and name != PARSER:
