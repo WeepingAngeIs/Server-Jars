@@ -23,6 +23,7 @@ INSTALL
 
 CHANGELOG FOR CURSEFORGE
 - Included Cobble Currency Bridge 1.0.0 in the combined Unyielding JAR.
+- Corrected its Lightman's Currency version check so the intended 1.21-2.3.0.5 release loads.
 - Added CobbleDollars as a currency option for Lightman's Currency trading and auctions.
 - Preserved existing Unyielding features and the quest system.
 - Kept existing module IDs, currency ID and configuration names.

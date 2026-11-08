@@ -43,6 +43,14 @@ assert len(bridge_meta['mods']) == 1
 assert bridge_meta['mods'][0]['modId'] == release['bridge']['mod_id']
 assert bridge_meta['mods'][0]['version'] == release['bridge']['version']
 assert release['bridge']['mod_id'] not in base_meta['dependencies']
+# Lightman's published mod version includes its Minecraft prefix. The supplied
+# bridge's unprefixed lower bound rejects the exact 2.3.0.5 release it targets.
+lightman = next(d for d in bridge_meta['dependencies'][release['bridge']['mod_id']]
+                if d['modId'] == 'lightmanscurrency')
+assert lightman['versionRange'] == '[2.3.0.5,)'
+assert bridge_text.count('versionRange="[2.3.0.5,)"') == 1
+lightman['versionRange'] = '[1.21-2.3.0.5,1.22)'
+bridge_text = bridge_text.replace('versionRange="[2.3.0.5,)"', 'versionRange="[1.21-2.3.0.5,1.22)"')
 metadata = base[MODS].decode().rstrip() + '\n\n# Currency bridge: preserve the supplied module and currency identifiers.\n' + bridge_text[bridge_text.index('[[mods]]'):]
 merged_meta = tomllib.loads(metadata)
 assert merged_meta['mods'] == base_meta['mods'] + bridge_meta['mods']
@@ -91,6 +99,7 @@ report = {
     'preserved_base_entries': len(base) - 2, 'preserved_bridge_entries': len(bridge) - 2,
     'modified_entries': sorted(CHANGED), 'bridge_classes': 12,
     'external_dependencies_bundled': False,
+    'metadata_correction': "Lightman's dependency range uses its published 1.21-2.3.0.5 version format",
     'new_required_mods': bridge_meta['dependencies'][release['bridge']['mod_id']],
 }
 (output.parent / 'assembly-report.json').write_text(json.dumps(report, indent=2) + '\n')

@@ -8,6 +8,11 @@ The supplied planning document is background only. This release preserves the ac
 implementation, its `uwucobblecurrency` mod ID, and its currency identifier; it does not implement
 every optional feature described in the old plan.
 
+The combined metadata corrects the bridge's Lightman's dependency lower bound to
+`1.21-2.3.0.5`, matching the version reported by the actual mod. Its original `2.3.0.5`
+bound rejected that release. The accepted range stays within the 1.21 version line.
+All bridge classes remain unchanged.
+
 ## Installation
 
 Install `Unyielding-1.1.1.jar` on the server and every client. Replace the previous Unyielding
