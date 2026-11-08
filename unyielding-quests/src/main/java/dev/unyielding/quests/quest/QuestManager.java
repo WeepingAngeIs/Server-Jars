@@ -719,6 +719,11 @@ public final class QuestManager {
                 }
             }
             case LOOT -> {
+                if (dev.unyielding.quests.loot.LootTables.hasOverride(r.amount)) {
+                    if (!dev.unyielding.quests.loot.LootTables.roll(p,
+                            dev.unyielding.quests.loot.LootTables.legacyId(r.amount))) return false;
+                    break;
+                }
                 QuestFile.LootTable lt = file.lootTables.get(r.amount);
                 if (lt == null || lt.entries.isEmpty()) {
                     if (!silent) p.sendSystemMessage(Component.literal("That reward table is missing.").withStyle(ChatFormatting.RED));

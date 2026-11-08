@@ -16,6 +16,8 @@ public final class Registration {
 
     public static final DeferredHolder<Item, QuestBookItem> QUEST_BOOK =
             ITEMS.register("quest_book", () -> new QuestBookItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, dev.unyielding.quests.loot.LootCrateItem> LOOT_CRATE =
+            ITEMS.register("loot_crate", () -> new dev.unyielding.quests.loot.LootCrateItem(new Item.Properties().stacksTo(64)));
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = TABS.register("main", () ->
             CreativeModeTab.builder()

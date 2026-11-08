@@ -31,6 +31,21 @@ public final class Net {
 
     // ---- server -> client ------------------------------------------------
 
+    public record LootTablesSync(CompoundTag tag, boolean open) implements CustomPacketPayload {
+        public static final Type<LootTablesSync> TYPE = mkType("loot_tables");
+        public static final StreamCodec<RegistryFriendlyByteBuf, LootTablesSync> CODEC = StreamCodec.composite(
+                ByteBufCodecs.COMPOUND_TAG, LootTablesSync::tag,
+                ByteBufCodecs.BOOL, LootTablesSync::open, LootTablesSync::new);
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    public record LootTablesAction(CompoundTag tag) implements CustomPacketPayload {
+        public static final Type<LootTablesAction> TYPE = mkType("loot_tables_action");
+        public static final StreamCodec<RegistryFriendlyByteBuf, LootTablesAction> CODEC = StreamCodec.composite(
+                ByteBufCodecs.COMPOUND_TAG, LootTablesAction::tag, LootTablesAction::new);
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
     /** Server-authoritative settings; only operators receive the editable list. */
     public record AdminSettingsSync(CompoundTag tag, boolean open) implements CustomPacketPayload {
         public static final Type<AdminSettingsSync> TYPE = mkType("admin_settings");
@@ -275,7 +290,12 @@ public final class Net {
     }
 
     public static void register(RegisterPayloadHandlersEvent event) {
+        dev.unyielding.quests.settings.ConfigEditor.register(event);
         PayloadRegistrar r = event.registrar("1");
+        r.playToClient(LootTablesSync.TYPE, LootTablesSync.CODEC,
+                (p, c) -> ClientHandlers.onLootTables(p.tag(), p.open()));
+        r.playToServer(LootTablesAction.TYPE, LootTablesAction.CODEC,
+                (p, c) -> dev.unyielding.quests.loot.LootTables.onAction((ServerPlayer)c.player(), p.tag()));
         r.playToClient(AdminSettingsSync.TYPE, AdminSettingsSync.CODEC, (p, c) -> ClientHandlers.onAdminSettings(p));
         r.playToServer(AdminSettingsAction.TYPE, AdminSettingsAction.CODEC,
                 (p, c) -> dev.unyielding.quests.settings.AdminSettings.onAction((ServerPlayer) c.player(), p));

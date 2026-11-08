@@ -37,6 +37,8 @@ public final class ClientData {
     /** Operator-only settings and authoritative save acknowledgements from the server. */
     public static CompoundTag adminSettings = new CompoundTag();
     public static int adminSettingsVersion;
+    public static CompoundTag lootTables = new CompoundTag();
+    public static int lootTablesVersion;
 
     public static String notice = "";
     public static long noticeTime;
@@ -105,6 +107,8 @@ public final class ClientData {
         ultimineRequiresItem = false;
         adminSettings = new CompoundTag();
         adminSettingsVersion++;
+        lootTables = new CompoundTag();
+        lootTablesVersion++;
         unclaimedCache = -1;
         fileVersion++;
         progressVersion++;

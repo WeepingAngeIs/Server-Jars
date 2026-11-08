@@ -60,5 +60,6 @@
   "unyieldingquests.configuration.daily_login": "Daily Login Reward",
   "unyieldingquests.configuration.streak_bonus_every_days": "Streak Bonus Every N Days",
   "unyieldingquests.configuration.streak_bonus_spins": "Streak Bonus: Extra Spins",
-  "unyieldingquests.configuration.timezone": "Time Zone for 'New Day'"
+  "unyieldingquests.configuration.timezone": "Time Zone for 'New Day'",
+  "item.unyieldingquests.loot_crate": "Loot Crate"
 }

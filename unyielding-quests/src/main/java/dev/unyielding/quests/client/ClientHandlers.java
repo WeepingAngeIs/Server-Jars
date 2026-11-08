@@ -101,6 +101,18 @@ public final class ClientHandlers {
         ClientData.teamVersion++;
     }
 
+    public static void onLootTables(CompoundTag tag, boolean open) {
+        ClientData.lootTables = tag.copy();
+        ClientData.lootTablesVersion++;
+        Minecraft mc = Minecraft.getInstance();
+        if (open && tag.getBoolean("allowed") && !(mc.screen instanceof dev.unyielding.quests.client.edit.LootTablesScreen)) {
+            mc.setScreen(new dev.unyielding.quests.client.edit.LootTablesScreen(mc.screen));
+        } else if (tag.getBoolean("error") && mc.player != null) {
+            mc.player.displayClientMessage(net.minecraft.network.chat.Component.literal(tag.getString("message"))
+                    .withStyle(net.minecraft.ChatFormatting.RED), true);
+        }
+    }
+
     public static void onNotify(Net.Notify n) {
         Minecraft mc = Minecraft.getInstance();
         if (n.kind() == 0) {

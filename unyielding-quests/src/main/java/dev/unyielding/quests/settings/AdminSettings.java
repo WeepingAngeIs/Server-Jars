@@ -141,7 +141,7 @@ public final class AdminSettings {
         sync(player, false, "Saved: " + setting.title() + " " + (action.value() ? "ON" : "OFF") + ".", false);
     }
 
-    private static void publishChanges() {
+    public static void publishChanges() {
         if (server == null) return;
         observed = values();
         QuestManager.onSharingChanged();

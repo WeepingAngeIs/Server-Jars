@@ -18,6 +18,7 @@ public class ServerEvents {
     public void onStarting(ServerStartingEvent e) {
         TeamManager.onServerStart(e.getServer());
         QuestManager.onServerStart(e.getServer());
+        dev.unyielding.quests.loot.LootTables.start(e.getServer());
         dev.unyielding.quests.spin.DailyLogin.onServerStart(e.getServer());
         TutorialManager.onServerStart();
         dev.unyielding.quests.settings.AdminSettings.onServerStart(e.getServer());
@@ -25,6 +26,7 @@ public class ServerEvents {
 
     @SubscribeEvent
     public void onStopped(ServerStoppedEvent e) {
+        dev.unyielding.quests.loot.LootTables.stop();
         QuestManager.onServerStop();
         dev.unyielding.quests.spin.DailyLogin.onServerStop();
         TeamManager.onServerStop();
@@ -70,5 +72,6 @@ public class ServerEvents {
     @SubscribeEvent
     public void onCommands(RegisterCommandsEvent e) {
         ModCommands.register(e.getDispatcher());
+        dev.unyielding.quests.loot.LootTables.registerCommands(e.getDispatcher());
     }
 }

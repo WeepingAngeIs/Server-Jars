@@ -32,7 +32,9 @@ public class EditQuestScreen extends FormScreen {
     private static final String[] TASK_TYPES = {"Check box", "Item", "Pokémon", "Kill mobs", "Advancement", "Structure", "Biome", "Dimension"};
     private static final String[] ACTIONS = {"catch", "defeat", "evolve", "level_up_to", "scan", "fishing", "revive_fossil", "have_registered", "select_starter"};
     private static final String[] DEX = {"-", "caught", "seen", "caught_percent", "seen_percent"};
-    private static final String[] REWARD_TYPES = {"Item", "CobbleDollars", "XP", "XP levels", "Command", "Loot table"};
+    private static final String[] REWARD_TYPES = {"Item", "CobbleDollars", "XP", "XP levels", "Command", "Loot table", "Loot crate", "Table roll"};
+    private static final Pattern CRATE = Pattern.compile("^/?questsloot give \\{p} ([a-z0-9_]{1,48}) (\\d+)$");
+    private static final Pattern TABLE_ROLL = Pattern.compile("^/?questsloot roll \\{p} ([a-z0-9_]{1,48})$");
     private static final Pattern CD = Pattern.compile("^/?cobbledollars give \\{p} (\\d+)$");
 
     public EditQuestScreen(Screen parent, Quest q) {
@@ -117,7 +119,9 @@ public class EditQuestScreen extends FormScreen {
             case ITEM -> "Item";
             case XP -> "XP";
             case XP_LEVELS -> "XP levels";
-            case COMMAND -> CD.matcher(r.command.trim()).matches() ? "CobbleDollars" : "Command";
+            case COMMAND -> CD.matcher(r.command.trim()).matches() ? "CobbleDollars"
+                    : CRATE.matcher(r.command.trim()).matches() ? "Loot crate"
+                    : TABLE_ROLL.matcher(r.command.trim()).matches() ? "Table roll" : "Command";
             case LOOT -> "Loot table";
             default -> "Command";
         };
@@ -158,6 +162,14 @@ public class EditQuestScreen extends FormScreen {
                 QuestFile f = ClientData.file;
                 r.amount = f != null && !f.lootTables.isEmpty() ? f.lootTables.keySet().iterator().next() : 0;
             }
+            case "Loot crate", "Table roll" -> {
+                r.type = RewardType.COMMAND;
+                r.rawType = "command";
+                r.console = true;
+                var tables = ClientData.lootTables.getList("tables", net.minecraft.nbt.Tag.TAG_COMPOUND);
+                String id = tables.isEmpty() ? "new_rewards" : tables.getCompound(0).getString("id");
+                setTableReward(r, kind, id, 1);
+            }
             default -> {
                 r.type = RewardType.COMMAND;
                 r.rawType = "command";
@@ -179,6 +191,25 @@ public class EditQuestScreen extends FormScreen {
     private static long cobbleDollars(Reward r) {
         Matcher m = CD.matcher(r.command.trim());
         return m.matches() ? Long.parseLong(m.group(1)) : 0;
+    }
+
+    private static void setTableReward(Reward reward, String kind, String id, int count) {
+        reward.console = true;
+        reward.amount = count;
+        reward.title = kind.equals("Loot crate") ? count + " × Loot crate: " + id : "Reward roll: " + id;
+        reward.icon = ItemRef.of("minecraft:chest");
+        reward.command = kind.equals("Loot crate") ? "/questsloot give {p} " + id + " " + count
+                : "/questsloot roll {p} " + id;
+    }
+
+    private static String tableRewardId(Reward reward, String kind) {
+        Matcher match = (kind.equals("Loot crate") ? CRATE : TABLE_ROLL).matcher(reward.command.trim());
+        return match.matches() ? match.group(1) : "";
+    }
+
+    private static int crateCount(Reward reward) {
+        Matcher match = CRATE.matcher(reward.command.trim());
+        return match.matches() ? Math.max(1, Math.min(64, parseInt(match.group(2), 1))) : 1;
     }
 
     // ---- form ------------------------------------------------------------------
@@ -323,7 +354,7 @@ public class EditQuestScreen extends FormScreen {
     private void rewardRow(int i, int w) {
         Reward r = draft.rewards.get(i);
         String kind = rewardKind(r);
-        int rows = kind.equals("Command") || kind.equals("Item") ? 2 : 1;
+        int rows = kind.equals("Command") || kind.equals("Item") || kind.equals("Loot crate") || kind.equals("Table roll") ? 2 : 1;
         card(rows * 24 + 6);
         int x0 = left() + 6;
         cy += 3;
@@ -338,6 +369,8 @@ public class EditQuestScreen extends FormScreen {
             case "XP" -> field("r" + i + "xp", fx, 80, String.valueOf(r.amount), "points", s -> r.amount = Math.max(1, parseInt(s, 100)));
             case "XP levels" -> field("r" + i + "xpl", fx, 80, String.valueOf(r.amount), "levels", s -> r.amount = Math.max(1, parseInt(s, 1)));
             case "CobbleDollars" -> field("r" + i + "cd", fx, 80, String.valueOf(cobbleDollars(r)), "amount", s -> setCobbleDollars(r, Math.max(1, parseInt(s, 25))));
+            case "Loot crate", "Table roll" -> field("r" + i + "table", fx, fw, tableRewardId(r, kind), "Table ID from Loot tables",
+                    text -> setTableReward(r, kind, text.trim(), crateCount(r)));
             case "Loot table" -> {
                 QuestFile f = ClientData.file;
                 List<String> names = new ArrayList<>();
@@ -368,6 +401,14 @@ public class EditQuestScreen extends FormScreen {
                 if (!h.isEmpty()) r.item.id = h;
                 relayout();
             });
+        } else if (kind.equals("Loot crate") || kind.equals("Table roll")) {
+            cy += 24;
+            if (kind.equals("Loot crate")) {
+                label("Count", fx, cy + 6);
+                field("r" + i + "crates", fx + 32, 45, String.valueOf(crateCount(r)), "1–64",
+                        text -> setTableReward(r, kind, tableRewardId(r, kind), Math.max(1, Math.min(64, parseInt(text, 1)))));
+            }
+            button(right() - 94, 88, "Loot tables", Ui.ICON_GIFT, Ui.Style.NORMAL, LootTablesScreen::requestOpen);
         } else if (kind.equals("Command")) {
             cy += 24;
             label("Shown as", fx, cy + 6);
