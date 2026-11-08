@@ -95,6 +95,7 @@ public final class LootEditorClientSmoke {
             draw(mc, value, 320);
             require(has(value, "Add entry") && has(value, "Save"), "List config editor missing controls");
             report.put("config_values_and_list_editor_small_screen", "passed");
+            SpinOddsClientSmoke.exercise(mc, report);
             BundleSmoke.write("/tmp/uq-loot-editor-client-passed.json", report);
         } catch (Throwable failure) {
             BundleSmoke.fail("/tmp/uq-loot-editor-client-failed.txt", failure);

@@ -24,7 +24,7 @@ final class SpinCobblemon {
     }
 
     private static final Object LOCK = new Object();
-    private static List<? extends String> keyL, keyM, keyP, keyX;
+    private static List<? extends String> keyL, keyM, keyP, keyX, keyExtraL, keyExtraM, keyExtraP;
     private static List<String> poolL = List.of(), poolM = List.of(), poolP = List.of();
     private static int speciesCount = -1;
 
@@ -35,16 +35,20 @@ final class SpinCobblemon {
     static List<String> pool(LuckySpin.Tier t) {
         synchronized (LOCK) {
             List<? extends String> l = Config.SPIN_LEGENDARY_LABELS.get(), m = Config.SPIN_MYTHICAL_LABELS.get(), p = Config.SPIN_PARADOX_LABELS.get(), x = Config.SPIN_EXCLUDE.get();
+            List<? extends String> extraL = Config.SPIN_EXTRA_LEGENDARY.get(), extraM = Config.SPIN_EXTRA_MYTHICAL.get(), extraP = Config.SPIN_EXTRA_PARADOX.get();
             int n = PokemonSpecies.getImplemented().size();
-            if (l != keyL || m != keyM || p != keyP || x != keyX || n != speciesCount) {
+            if (l != keyL || m != keyM || p != keyP || x != keyX || extraL != keyExtraL || extraM != keyExtraM || extraP != keyExtraP || n != speciesCount) {
                 keyL = l;
                 keyM = m;
                 keyP = p;
                 keyX = x;
+                keyExtraL = extraL;
+                keyExtraM = extraM;
+                keyExtraP = extraP;
                 speciesCount = n;
-                poolL = build(l, Config.SPIN_EXTRA_LEGENDARY.get(), x, true);
-                poolM = build(m, Config.SPIN_EXTRA_MYTHICAL.get(), x, false);
-                poolP = build(p, Config.SPIN_EXTRA_PARADOX.get(), x, false);
+                poolL = build(l, extraL, x, true);
+                poolM = build(m, extraM, x, false);
+                poolP = build(p, extraP, x, false);
                 UnyieldingQuests.LOGGER.info("[spin] Pokemon prize pools: {} legendary, {} mythical, {} paradox", poolL.size(), poolM.size(), poolP.size());
             }
             return switch (t) {

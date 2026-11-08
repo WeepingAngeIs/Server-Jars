@@ -22,18 +22,32 @@ public final class ConfigValuesScreen extends FormScreen {
     public static void requestOpen() {
         if (AdminSettingsScreen.canManage()) Net.sendToServer(new ConfigEditor.Action("__open", "", ""));
     }
+    static void openFiltered(Screen parent, CompoundTag data, String filter) {
+        ConfigValuesScreen screen = new ConfigValuesScreen(parent, data);
+        screen.filter = filter;
+        Minecraft.getInstance().setScreen(screen);
+    }
     public static void receive(ConfigEditor.Sync sync) {
         Minecraft mc = Minecraft.getInstance();
-        if (sync.open()) mc.setScreen(new ConfigValuesScreen(mc.screen, sync.data()));
+        if (sync.open() && sync.data().getBoolean("oddsOpen")) {
+            if (mc.screen instanceof SpinOddsScreen odds) odds.receive(sync.data(), true);
+            else mc.setScreen(new SpinOddsScreen(mc.screen, sync.data()));
+        } else if (mc.screen instanceof SpinOddsScreen odds && !sync.open()) odds.receive(sync.data(), false);
+        else if (sync.open()) mc.setScreen(new ConfigValuesScreen(mc.screen, sync.data()));
         else if (mc.screen instanceof ValueScreen value) {
             value.list.data = sync.data();
+            value.list.updateOddsParent();
             String reply = sync.data().getString("message");
             if (reply.startsWith("Saved.")) mc.setScreen(value.list);
             else value.failed(reply);
         } else if (mc.screen instanceof ConfigValuesScreen list) {
             list.data = sync.data();
+            list.updateOddsParent();
             list.relayout();
         }
+    }
+    private void updateOddsParent() {
+        if (parent instanceof SpinOddsScreen odds) odds.updateRelatedSettings(data);
     }
     @Override protected void build() {
         note(font.plainSubstrByWidth(data.getString("message"), innerWidth()));

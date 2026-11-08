@@ -1,7 +1,21 @@
-# Unyielding 1.1.2
+# Unyielding 1.1.4
 
-Updates the player guide, compact collection tasks and in-game admin switches. The currency
-bridge and all other modules are preserved from the verified 1.1.1 release.
+Adds a percentage editor for Lucky Spin rewards to `/quests settings` → **Spin odds**.
+Quest and daily spins have separate tabs. Edit all five percentages, make the total 100%,
+then save the selected tab. Changes apply to future spins immediately and persist in the
+server config. Existing configured chances are preserved until an admin saves a change.
+
+**Very rare** previews Basic 60%, Good 39.84%, Paradox 0.1%, Mythical 0.05%, Legendary 0.01%.
+**Items only** previews Basic 60%, Good 40%, and zero Pokemon prizes. Neither preset applies
+until Save. Prize item pools and other spin settings are linked from this screen; custom
+reward-table odds remain under **Loot tables**. Both reward types use the same item pools.
+
+Five chances save together, and stale edits cannot overwrite another admin's change. Drafts
+survive tab switches. More precise existing weights are retained unless explicitly changed.
+Pokemon pool additions and removals now refresh immediately without a restart.
+
+The currency bridge and other modules are preserved from verified 1.1.3. The player guide,
+compact collection tasks and admin controls from earlier updates remain included.
 
 ## Player guide
 

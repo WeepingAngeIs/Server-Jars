@@ -107,12 +107,16 @@ public final class AdminSettingsScreen extends Screen {
                 Ui.ICON_CLOSE, Component.literal("Close settings"), button -> onClose())));
         footer.add(addRenderableWidget(new SpriteButton(px + pw - 79, py + ph - 29, 65, 20,
                 Component.literal("Done"), Ui.ICON_CHECK, Ui.Style.NORMAL, button -> onClose())));
-        footer.add(addRenderableWidget(new SpriteButton(px + pw - 114, py + 32, 100, 18,
-                Component.literal("Loot tables"), Ui.ICON_GIFT, Ui.Style.NORMAL,
-                button -> dev.unyielding.quests.client.edit.LootTablesScreen.requestOpen())));
-        footer.add(addRenderableWidget(new SpriteButton(px + pw - 218, py + 32, 100, 18,
-                Component.literal("Config values"), Ui.ICON_GEAR, Ui.Style.NORMAL,
+        int shortcutWidth = (pw - 36) / 3;
+        footer.add(addRenderableWidget(new SpriteButton(px + 14, py + 32, shortcutWidth, 18,
+                Component.literal("Spin odds"), null, Ui.Style.ACCENT,
+                button -> SpinOddsScreen.requestOpen())));
+        footer.add(addRenderableWidget(new SpriteButton(px + 18 + shortcutWidth, py + 32, shortcutWidth, 18,
+                Component.literal("Config values"), null, Ui.Style.NORMAL,
                 button -> ConfigValuesScreen.requestOpen())));
+        footer.add(addRenderableWidget(new SpriteButton(px + 22 + shortcutWidth * 2, py + 32, shortcutWidth, 18,
+                Component.literal("Loot tables"), null, Ui.Style.NORMAL,
+                button -> dev.unyielding.quests.client.edit.LootTablesScreen.requestOpen())));
         updateControls();
     }
 
@@ -173,7 +177,6 @@ public final class AdminSettingsScreen extends Screen {
         Ui.panel(graphics, Ui.HEADER, px, py, pw, 30);
         Ui.icon(graphics, Ui.ICON_GEAR, px + 12, py + 11, Theme.accent);
         graphics.drawString(font, getTitle(), px + 26, py + 10, Theme.text, true);
-        if (pw >= 380) graphics.drawString(font, "ADMIN CONTROLS", px + 14, py + 36, Theme.heading, false);
         graphics.enableScissor(px + 7, top, px + pw - 7, bottom);
         for (Row row : rows) {
             int y = top + row.offset() - Math.round(scroll);

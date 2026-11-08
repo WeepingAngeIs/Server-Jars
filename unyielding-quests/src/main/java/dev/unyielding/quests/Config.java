@@ -83,11 +83,11 @@ public final class Config {
         b.comment("Lucky Spin: every quest gives one bonus prize roll per player when its rewards are claimed.",
                 "The five chances below are weights; when they add up to 100 they are percentages.").push("lucky_spin");
         SPIN_ENABLED = b.comment("Turn the Lucky Spin on or off.").define("enabled", true);
-        SPIN_BASIC = b.comment("Chance of a basic prize (Poke Balls, candies, potions...).").defineInRange("chance_basic", 50, 0, 1000);
-        SPIN_GOOD = b.comment("Chance of a good prize (golden apples, evolution stones, vitamins, rare held items...).").defineInRange("chance_good", 44, 0, 1000);
-        SPIN_PARADOX = b.comment("Chance of a random Paradox Pokemon.").defineInRange("chance_paradox", 3, 0, 1000);
-        SPIN_MYTHICAL = b.comment("Chance of a random Mythical Pokemon.").defineInRange("chance_mythical", 2, 0, 1000);
-        SPIN_LEGENDARY = b.comment("Chance of a random Legendary Pokemon.").defineInRange("chance_legendary", 1, 0, 1000);
+        SPIN_BASIC = b.comment("Chance of a basic prize (Poke Balls, candies, potions...).").defineInRange("chance_basic", 50, 0, 1_000_000);
+        SPIN_GOOD = b.comment("Chance of a good prize (golden apples, evolution stones, vitamins, rare held items...).").defineInRange("chance_good", 44, 0, 1_000_000);
+        SPIN_PARADOX = b.comment("Chance of a random Paradox Pokemon.").defineInRange("chance_paradox", 3, 0, 1_000_000);
+        SPIN_MYTHICAL = b.comment("Chance of a random Mythical Pokemon.").defineInRange("chance_mythical", 2, 0, 1_000_000);
+        SPIN_LEGENDARY = b.comment("Chance of a random Legendary Pokemon.").defineInRange("chance_legendary", 1, 0, 1_000_000);
         SPIN_LEVEL_MIN = b.comment("Lowest level of a prize Pokemon (its stats, nature and ability are random).").defineInRange("pokemon_level_min", 20, 1, 100);
         SPIN_LEVEL_MAX = b.comment("Highest level of a prize Pokemon.").defineInRange("pokemon_level_max", 35, 1, 100);
         SPIN_ANNOUNCE = b.comment("Tell the whole server in chat when somebody wins a Pokemon.").define("announce_pokemon_wins", true);
@@ -244,11 +244,11 @@ public final class Config {
 
         b.comment("Daily login reward: one free Lucky Spin per real-world day when a player logs in (uses the prize lists above).").push("daily_login");
         DAILY_ENABLED = b.comment("Turn daily login rewards on or off.").define("enabled", true);
-        DAILY_BASIC = b.comment("Daily spin: chance of a basic prize.").defineInRange("chance_basic", 40, 0, 1000);
-        DAILY_GOOD = b.comment("Daily spin: chance of a good prize.").defineInRange("chance_good", 50, 0, 1000);
-        DAILY_PARADOX = b.comment("Daily spin: chance of a Paradox Pokemon.").defineInRange("chance_paradox", 5, 0, 1000);
-        DAILY_MYTHICAL = b.comment("Daily spin: chance of a Mythical Pokemon.").defineInRange("chance_mythical", 3, 0, 1000);
-        DAILY_LEGENDARY = b.comment("Daily spin: chance of a Legendary Pokemon.").defineInRange("chance_legendary", 2, 0, 1000);
+        DAILY_BASIC = b.comment("Daily spin: chance of a basic prize.").defineInRange("chance_basic", 40, 0, 1_000_000);
+        DAILY_GOOD = b.comment("Daily spin: chance of a good prize.").defineInRange("chance_good", 50, 0, 1_000_000);
+        DAILY_PARADOX = b.comment("Daily spin: chance of a Paradox Pokemon.").defineInRange("chance_paradox", 5, 0, 1_000_000);
+        DAILY_MYTHICAL = b.comment("Daily spin: chance of a Mythical Pokemon.").defineInRange("chance_mythical", 3, 0, 1_000_000);
+        DAILY_LEGENDARY = b.comment("Daily spin: chance of a Legendary Pokemon.").defineInRange("chance_legendary", 2, 0, 1_000_000);
         DAILY_STREAK_EVERY = b.comment("Every this many days in a row the player gets bonus spins (0 = no streak bonus).").defineInRange("streak_bonus_every_days", 7, 0, 365);
         DAILY_STREAK_BONUS_SPINS = b.comment("How many extra spins the streak bonus gives.").defineInRange("streak_bonus_spins", 2, 1, 20);
         DAILY_TIMEZONE = b.comment("Time zone that decides when a new day starts, e.g. America/Chicago or UTC. Blank = the server's own clock.").define("timezone", "America/Chicago");

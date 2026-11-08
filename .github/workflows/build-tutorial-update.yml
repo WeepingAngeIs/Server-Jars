@@ -2,7 +2,7 @@ name: Build and verify Unyielding quest update
 
 on:
   push:
-    branches: [feature/tutorial-player-permissions]
+    branches: [feature/tutorial-player-permissions, feature/spin-odds-editor]
     paths:
       - 'tutorial-update/**'
       - 'unyielding-quests/**'
@@ -67,7 +67,7 @@ jobs:
       - name: Upload verified release
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: Unyielding-1.1.3-verified
+          name: Unyielding-1.1.4-verified
           path: dist/tutorial/
           if-no-files-found: error
           retention-days: 90
@@ -75,7 +75,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: Unyielding-1.1.3-test-evidence
+          name: Unyielding-1.1.4-test-evidence
           path: |
             dist/tutorial-smoke/
             dist/tutorial/assembly-report.json
