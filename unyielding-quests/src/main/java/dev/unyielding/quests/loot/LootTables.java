@@ -309,6 +309,7 @@ public final class LootTables {
             return false;
         }
         if (!PAYING.add(player.getUUID())) return false;
+        boolean payoutStarted = false;
         try {
             // Validate the whole table before consuming, so unavailable entries cannot silently waste a crate.
             validate(table, true);
@@ -319,6 +320,7 @@ public final class LootTables {
                 for (Entry entry : table.entries) { roll -= entry.weight; if (roll < 0) { picks.add(entry); break; } }
             }
             // Consume once before any grant. A failing command must never allow already-paid prizes to reroll.
+            payoutStarted = true;
             if (consume != null) consume.shrink(1);
             List<LuckySpin.Spin> spins = new ArrayList<>();
             for (Entry entry : picks) {
@@ -344,7 +346,9 @@ public final class LootTables {
         } catch (Exception failure) {
             UnyieldingQuests.LOGGER.error("Reward table {} failed for {}", id, player.getGameProfile().getName(), failure);
             player.sendSystemMessage(Component.literal("Reward table error: " + failure.getMessage() + ". Ask an admin to check the table."));
-            return false;
+            // Once payout starts, the opening/quest claim is committed, including partial failures.
+            // Retrying it could duplicate rewards already granted by earlier rolls or commands.
+            return payoutStarted;
         } finally { PAYING.remove(player.getUUID()); }
     }
 

@@ -75,6 +75,9 @@ public final class LootTableServerSmoke {
             require(!LootTables.openCrate(player, paused) && paused.getCount() == 1, "Disabled table consumed a crate");
             toggle = action("toggle"); toggle.putBoolean("enabled", true); LootTables.onAction(player, toggle);
             report.put("stale_edits_bad_items_and_disabled_crates_rejected", "passed");
+            checkQuestRewardSafety(player);
+            report.put("disabled_and_missing_table_rewards_remain_unclaimed", "passed");
+            report.put("partial_payout_is_committed_and_cannot_be_claimed_twice", "passed");
 
             long legacyId = 0x1122334455667788L;
             var old = new QuestFile.LootTable(); old.id = legacyId; old.title = "Legacy test";
@@ -103,6 +106,52 @@ public final class LootTableServerSmoke {
     }
 
     private static int revision() { return LootTables.snapshot(true, "", false).getInt("revision"); }
+
+    private static void checkQuestRewardSafety(ServerPlayer player) throws Exception {
+        long questId = 0x4211223344556677L;
+        var quest = new QuestFile.Quest(); quest.id = questId;
+        var progress = new dev.unyielding.quests.quest.TeamProgress();
+        progress.completedQuests.add(questId);
+        var claim = QuestManager.class.getDeclaredMethod("claimReward", ServerPlayer.class,
+                dev.unyielding.quests.quest.TeamProgress.class, java.util.UUID.class, QuestFile.Reward.class, boolean.class);
+        claim.setAccessible(true);
+        QuestManager.file.quests.put(questId, quest);
+        try {
+            CompoundTag off = action("toggle"); off.putBoolean("enabled", false); LootTables.onAction(player, off);
+            for (String mode : List.of("give", "roll")) {
+                var reward = new QuestFile.Reward(); reward.id = questId + (mode.equals("give") ? 1 : 2);
+                reward.quest = questId; reward.type = QuestFile.RewardType.COMMAND;
+                reward.command = "questsloot " + mode + " {p} cloud_test";
+                require(!(Boolean)claim.invoke(null, player, progress, player.getUUID(), reward, true),
+                        "Disabled table quest reward was consumed: " + mode);
+                require(!progress.isClaimed(player.getUUID(), reward.id), "Disabled reward was marked claimed");
+            }
+            CompoundTag on = action("toggle"); on.putBoolean("enabled", true); LootTables.onAction(player, on);
+            var missing = new QuestFile.Reward(); missing.id = questId + 3; missing.quest = questId;
+            missing.type = QuestFile.RewardType.COMMAND; missing.command = "questsloot give {p} cloud_missing";
+            require(!(Boolean)claim.invoke(null, player, progress, player.getUUID(), missing, true), "Missing table quest reward was consumed");
+
+            // Deterministic partial failure: the command grants one item and then fails.
+            player.server.getCommands().getDispatcher().register(net.minecraft.commands.Commands.literal("uq_cloud_partial")
+                    .requires(source -> source.hasPermission(2)).executes(context -> {
+                        net.neoforged.neoforge.items.ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Items.DIAMOND));
+                        throw new IllegalStateException("Intentional cloud partial-payout fixture");
+                    }));
+            save(player, new LootTables.Table("cloud_partial", "Partial test", true, true, 1,
+                    List.of(new LootTables.Entry("command", "uq_cloud_partial", 1, 1, 1, "Partial fixture"))));
+            var partial = new QuestFile.Reward(); partial.id = questId + 4; partial.quest = questId;
+            partial.type = QuestFile.RewardType.COMMAND; partial.command = "questsloot roll {p} cloud_partial";
+            int before = player.getInventory().countItem(Items.DIAMOND);
+            require((Boolean)claim.invoke(null, player, progress, player.getUUID(), partial, true), "Started payout was left retryable");
+            require(progress.isClaimed(player.getUUID(), partial.id), "Started payout was not marked claimed");
+            require(player.getInventory().countItem(Items.DIAMOND) == before + 1, "Partial fixture did not grant exactly one item");
+            require(!(Boolean)claim.invoke(null, player, progress, player.getUUID(), partial, true), "Partial payout could be claimed twice");
+            require(player.getInventory().countItem(Items.DIAMOND) == before + 1, "Partial payout duplicated an item");
+        } finally {
+            QuestManager.file.quests.remove(questId);
+            CompoundTag on = action("toggle"); on.putBoolean("enabled", true); LootTables.onAction(player, on);
+        }
+    }
     private static CompoundTag action(String operation) {
         CompoundTag tag = new CompoundTag(); tag.putString("action", operation); tag.putInt("revision", revision()); return tag;
     }

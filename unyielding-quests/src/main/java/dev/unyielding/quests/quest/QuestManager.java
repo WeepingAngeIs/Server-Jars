@@ -712,6 +712,19 @@ public final class QuestManager {
                 net.minecraft.commands.CommandSourceStack src = r.console
                         ? srv.createCommandSourceStack().withPosition(p.position()).withLevel(p.serverLevel()).withSuppressedOutput()
                         : p.createCommandSourceStack().withPermission(2).withSuppressedOutput();
+                String[] words = cmd.strip().split("\\s+", 3);
+                if (words.length >= 2 && words[0].equals("questsloot")
+                        && (words[1].equals("give") || words[1].equals("roll"))) {
+                    // Crate/table rewards use the command transport for config compatibility, but
+                    // unavailable tables must remain claimable once an admin enables/fixes them.
+                    try {
+                        if (srv.getCommands().getDispatcher().execute(cmd, src) <= 0) return false;
+                    } catch (Exception error) {
+                        UnyieldingQuests.LOGGER.error("[quests] loot reward was unavailable: {}", cmd, error);
+                        return false;
+                    }
+                    break;
+                }
                 try {
                     srv.getCommands().performPrefixedCommand(src, cmd);
                 } catch (RuntimeException e) {
