@@ -1,0 +1,50 @@
+UNYIELDING 1.1.3 - LOOT TABLES, CRATES AND IN-GAME CONFIG EDITING
+
+Upload file: Unyielding-1.1.3.jar
+Existing project: https://www.curseforge.com/minecraft/mc-mods/unyielding
+Minecraft 1.21.1 | NeoForge | Java 21 | Client and server
+
+INSTALL
+Stop Minecraft/the server and replace the previous combined Unyielding JAR on both
+server and clients. Keep the existing external dependencies and resource/datapacks.
+Do not add separate UnyieldingQuests or Cobble Currency Bridge JARs alongside it.
+EMI is optional; recipe shortcuts require EMI on the client.
+
+CREATE A LOOT CRATE IN GAME (ADMIN)
+1. Open the quest book's admin Settings, then Loot tables. /questsloot also opens it.
+2. Choose New loot table, give it a lowercase ID and name, and add weighted rewards.
+   Entries can give items, run a reward command, give a Pokemon, or award a Lucky Spin.
+   Set quantities/levels, weights, rolls, and whether the table can become a crate.
+3. Save, then Get crate. Players right-click the crate item to open it.
+   One crate is consumed per opening. One reward is drawn per roll; repeats are possible.
+4. In a quest's reward editor, choose Loot crate or Table roll and enter the table ID.
+
+Admin commands:
+  /questsloot give <player> <table_id> [count]
+  /questsloot roll <player> <table_id>
+Reward commands can use {p} for the recipient. Command rewards run with permission level 2.
+Crates reference the table ID, so edits apply to crates already distributed.
+Disabling a table/crate prevents opening without consuming the item.
+Deleting a custom table makes its outstanding crates unusable until that ID exists again.
+
+EDIT CONFIG VALUES IN GAME (ADMIN)
+Open Settings > Config values. Search for a setting, edit its value/list entries, and Save.
+This includes the quest module's settings, Lucky Spin weights and item/species pools,
+daily rewards, party limits, Essentials settings, and vein-mining values.
+The server validates values and saves them to the owning TOML file.
+Existing ON/OFF shortcuts and quest/chapter/task/reward editors remain available.
+
+CONFIG FILES
+New named loot tables: config/unyieldingquests/loot_tables.json (previous save backed up).
+Existing quest/Essentials/vein-mining settings: their existing unyieldingquests*.toml files.
+Quest content remains editable in game or in config/unyieldingquests/quests/ SNBT files.
+Simple existing quest loot tables appear in the editor and keep their reward IDs.
+Complex legacy tables with item components/filters or unsupported ranges remain in SNBT;
+they are not converted with information loss. This editor does not edit other mods' settings.
+
+OTHER FIXES
+- Recipe/uses keys and clicks on quest task/reward item icons now open EMI.
+- EMI key remapping is respected; Escape returns to the same quest and scroll position.
+- Every Potion, Every Status Cure, Back from the Brink and Every PP Item now keep help
+  on the first task only, with shorter cards for subsequent repeated tasks.
+- Earlier guide, white-ball art, keybind, admin-switch and currency fixes are retained.

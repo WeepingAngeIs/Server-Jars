@@ -1,0 +1,39 @@
+UNYIELDING 1.1.3 - VALIDATION RECORD
+
+File: Unyielding-1.1.3.jar
+Size: 6,182,350 bytes
+SHA256: 2d8fc02e1b4499325bc92ffffb811ec66e8b7f58f317aa38e38d4154097d2024
+Source: da86ba4ccdeec18a37c8099f39d21560c252ae1a
+Cloud run: https://github.com/WeepingAngeIs/Server-Jars/actions/runs/42444218727
+
+All compilation, assembly and game checks ran on GitHub-hosted runners.
+20 unit tests and all 12 final-JAR server/client proof records passed.
+Every runtime proof identifies the exact SHA256 above.
+Quest component: 1.6.5. The other eight module payloads remain unchanged from 1.1.2.
+Currency bridge fixes, existing quest IDs and the supplied white-ball art are preserved.
+
+CHECKS
+- Actual Pokeball recipe opens from the quest screen with R; Escape restores the quest.
+- U, left/right item clicks and remapped EMI recipe key work; empty/clipped/disabled input is ignored.
+- Four requested Medicine and Recovery collections retain first-task help and shorten later cards.
+- Loot table admin editing, JSON persistence/reload, stale/invalid/non-admin rejection.
+- One configured item payout per consumed crate, no reuse of empty crates, no consumption when disabled.
+- Legacy table overrides keep reward IDs; disabled/missing quest crate rewards remain claimable.
+- A deliberately failing command after a partial payout cannot be claimed again for duplicate items.
+- Typed config editor rejects invalid inputs, stale writes and unauthorized changes; values save to owning files.
+- Loot/create/edit/quest reward forms render at 640px and 320px widths; drafts do not mutate saved tables.
+- Config values and list editor render at narrow width.
+- Existing quest, guide, admin switches, animation and currency regression checks remain passing.
+
+TEST ENVIRONMENT
+Minecraft 1.21.1; Java 21; NeoForge 21.1.255; Cobblemon 1.8.4;
+EMI 1.1.24; CobbleDollars 2.0.0+Beta-6.1; Lightman's Currency 1.21-2.3.0.5;
+and the pinned runtime libraries recorded in the workflow evidence.
+
+SCOPE
+Focused isolated server/client checks, not a full public-server or full-modpack walkthrough.
+No existing Minecraft profile or live server was modified.
+The client editor test uses a temporary local admin display fixture; actual server authorization
+is checked separately. Only test fixtures use that display override; it is absent from the shipped JAR.
+Complex legacy tables with special item data/filters remain file-edited to preserve their contents.
+The editor covers this quest module's configs, not arbitrary settings from other mods.
