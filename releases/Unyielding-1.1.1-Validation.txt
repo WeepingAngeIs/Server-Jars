@@ -1,0 +1,39 @@
+UNYIELDING 1.1.1 - VALIDATION RECORD
+
+File: Unyielding-1.1.1.jar
+Size: 5,218,905 bytes
+SHA256: 6792f2a57ed0d897115cdadf45c94ec5e6c6ff2e1ab4e6e533bb81f7c405762f
+Source commit: d9c89a9b115ce769794c016538d76b73dc7302da
+Successful cloud run: https://github.com/WeepingAngeIs/Server-Jars/actions/runs/42434227545
+
+All compilation, assembly and Minecraft runtime checks ran on a GitHub-hosted runner.
+The delivered JAR hash matches the actual production JAR loaded by both cloud server and client.
+
+CONTENTS
+- Combines the verified Unyielding 1.1.0 JAR with the supplied Currency Bridge 1.0.0.
+- Preserves all nine module IDs, existing gameplay payloads and quest artwork.
+- Corrects the bridge's Lightman dependency version format.
+- Rebuilds one bridge parser class to preserve ordinary coin/free/empty currency settings.
+- The other eleven bridge classes remain byte-for-byte identical to the supplied JAR.
+- No test helpers or external dependency mods are bundled.
+
+PASSED CHECKS
+- All nine modules load from this exact JAR on both server and client.
+- Currency registration, command parsing, and NBT/JSON/network amount roundtrips.
+- Large amounts, rounding, nonnegative amounts and admin command permissions.
+- Coin, free and empty settings retain their own currency serialization.
+- Real connected-player simulated and actual debits/credits, overdraft handling and balance cap.
+- Lightman's combined money handler recognizes CobbleDollars and keeps coins separate.
+- Client currency selector/input/display and live server-to-client balance synchronization.
+- Existing combined-mod command, tutorial, admin-settings and quest-progress checks.
+- No currency configuration parsing exceptions during the run.
+
+TEST ENVIRONMENT
+Minecraft 1.21.1; Java 21.0.13; NeoForge 21.1.255; Cobblemon 1.8.4;
+CobbleDollars 2.0.0+Beta-6.1; Lightman's Currency 1.21-2.3.0.5;
+plus the pinned runtime libraries recorded in the workflow evidence artifact.
+
+SCOPE
+These are focused integration checks using the final release JAR and real currency mods.
+They are not a full modpack performance test or a complete multiplayer trader/auction walkthrough.
+This delivery does not install or remove files in any existing Minecraft profile or server.
