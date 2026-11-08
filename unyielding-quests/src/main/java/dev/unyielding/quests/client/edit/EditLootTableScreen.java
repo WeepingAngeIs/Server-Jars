@@ -131,6 +131,7 @@ public final class EditLootTableScreen extends FormScreen {
         int typeIndex = TYPES.indexOf(type);
         String kind = typeIndex < 0 ? KINDS[0] : KINDS[typeIndex];
         boolean quantity = type.equals("item") || type.equals("pokemon");
+        int rowBottom = cy + (quantity ? 136 : 112);
         card(quantity ? 136 : 112);
         cy += 5;
         int x = left() + 5;
@@ -180,7 +181,7 @@ public final class EditLootTableScreen extends FormScreen {
                 text -> entry.putString("label", text));
         gap(27);
         note(type.equals("item") ? "Count range: 1–64" : type.equals("pokemon") ? "Level range: 1–100" : "One action per selected reward.");
-        gap(12);
+        cy = Math.max(cy + 6, rowBottom + 6);
     }
 
     @Override protected void save() {

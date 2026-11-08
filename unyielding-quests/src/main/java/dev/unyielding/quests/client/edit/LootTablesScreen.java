@@ -103,7 +103,7 @@ public final class LootTablesScreen extends FormScreen {
             gap(25);
             note((table.getBoolean("enabled") ? "Table ON" : "Table OFF") + " · "
                     + (table.getBoolean("crateEnabled") ? "Crates ON" : "Crates OFF"));
-            gap(12);
+            gap(21);
         }
     }
 
