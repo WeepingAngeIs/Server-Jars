@@ -1,0 +1,86 @@
+name: Build and verify Unyielding player guide update
+
+on:
+  push:
+    branches: [feature/tutorial-player-permissions]
+    paths:
+      - 'tutorial-update/**'
+      - 'unyielding-quests/**'
+      - 'currency-bridge/**'
+      - 'combined-unyielding/**'
+      - '.github/workflows/build-tutorial-update.yml'
+      - '.github/scripts/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unyielding-tutorial-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - name: Check out pinned release and quest source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          sparse-checkout: |
+            tutorial-update
+            unyielding-quests
+            currency-bridge
+            combined-unyielding
+            releases
+            .github
+      - name: Set up Java 21 on GitHub
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            unyielding-quests/*.gradle
+            unyielding-quests/gradle.properties
+            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
+            combined-unyielding/smoke-harness/*.gradle
+      - name: Fetch verified quest compile dependencies
+        run: python3 .github/scripts/fetch-build-dependencies.py
+      - name: Build quest component and run unit tests
+        working-directory: unyielding-quests
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon --console=plain -Dorg.gradle.jvmargs=-Xmx3G build
+      - name: Verify quest component
+        run: python3 .github/scripts/verify-mod-jar.py
+      - name: Assemble and audit updated combined JAR
+        run: python3 tutorial-update/build_bundle.py
+      - name: Prepare isolated final-JAR checks
+        run: python3 tutorial-update/prepare_smoke.py
+      - name: Install cloud display dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Exercise final JAR in actual server and client
+        run: bash tutorial-update/run_smoke.generated.sh
+      - name: Upload verified release
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Unyielding-1.1.2-verified
+          path: dist/tutorial/
+          if-no-files-found: error
+          retention-days: 90
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Unyielding-1.1.2-test-evidence
+          path: |
+            dist/tutorial-smoke/
+            dist/tutorial/assembly-report.json
+            unyielding-quests/build/reports/tests/
+            unyielding-quests/build/test-results/
+            unyielding-quests/build/verification/
+          if-no-files-found: warn
+          retention-days: 90
