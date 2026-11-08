@@ -1,0 +1,15 @@
+{
+  "name": "Unyielding",
+  "version": "1.1.1",
+  "output": "dist/currency/Unyielding-1.1.1.jar",
+  "base": {
+    "path": "releases/Unyielding-1.1.0.jar",
+    "sha256": "b8a9e4f5b526dd5d98107c1aa4436da11c22f51a812e28a407e08f83ed1cfe60"
+  },
+  "bridge": {
+    "path": "currency-bridge/inputs/Cobble-Currency-Bridge-1.0.0.jar",
+    "sha256": "07ecc2628ddfe851145e4579e57a0992209431884fa856dd2b29ebf277905b76",
+    "mod_id": "uwucobblecurrency",
+    "version": "1.0.0"
+  }
+}

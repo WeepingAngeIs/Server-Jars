@@ -1,0 +1,31 @@
+UNYIELDING 1.1.1 - CURRENCY BRIDGE UPDATE
+
+Upload file: Unyielding-1.1.1.jar
+Existing project: https://www.curseforge.com/minecraft/mc-mods/unyielding
+File display name: Unyielding 1.1.1 - CobbleDollars Currency Bridge
+Minecraft: 1.21.1
+Loader: NeoForge
+Java: 21
+Environment: Client and server
+
+REQUIRED RELATED PROJECTS
+Cobblemon (1.8.4; below 1.9)
+CobbleDollars (2.x; tested with 2.0.0+Beta-6.1)
+Lightman's Currency (2.3.0.5 or newer)
+Keep each dependency's own required libraries installed, including Kotlin for Forge.
+
+INSTALL
+1. Stop Minecraft/the server before replacing files.
+2. Replace the previous Unyielding JAR with Unyielding-1.1.1.jar on server and clients.
+3. Remove any standalone Cobble Currency Bridge and UnyieldingQuests JARs: they are included.
+4. Keep CobbleDollars, Lightman's Currency, Cobblemon, their libraries and existing packs.
+5. Restart. Avoid duplicate copies of the combined modules.
+
+CHANGELOG FOR CURSEFORGE
+- Included Cobble Currency Bridge 1.0.0 in the combined Unyielding JAR.
+- Added CobbleDollars as a currency option for Lightman's Currency trading and auctions.
+- Preserved existing Unyielding features and the quest system.
+- Kept existing module IDs, currency ID and configuration names.
+- Requires compatible CobbleDollars and Lightman's Currency installations on server and clients.
+
+Lightman's coins remain available alongside CobbleDollars; this is not automatic coin conversion.
