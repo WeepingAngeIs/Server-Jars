@@ -34,6 +34,8 @@ final class MusicEditorSmoke {
             MusicSettings.handle(player,new MusicSettings.Action("lavender",stale,20));
             require(state.snapshot().equals(changed),"Stale music edit accepted");
             player.server.overworld().getDataStorage().save();
+            // NeoForge queues SavedData writes on its IO worker; wait for that queue before reading disk.
+            net.neoforged.neoforge.common.IOUtilities.waitUntilIOWorkerComplete();
             var path=player.server.getWorldPath(LevelResource.ROOT).resolve("data/unyielding_music.dat");
             require(Files.isRegularFile(path),"World music settings not saved to disk");
             var disk=NbtIo.readCompressed(path,NbtAccounter.unlimitedHeap()).getCompound("data");
