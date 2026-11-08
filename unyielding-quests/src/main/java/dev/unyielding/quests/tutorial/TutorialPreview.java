@@ -2,7 +2,9 @@ package dev.unyielding.quests.tutorial;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.common.util.FakePlayer;
@@ -24,7 +26,11 @@ public final class TutorialPreview {
         if (!players.isOp(player.getGameProfile()) && !player.hasPermissions(1)) return source;
         // LAN worlds can grant operator bypass to every identity. Do not loop trying random UUIDs,
         // and never let that global bypass turn the player guide into an operator command index.
-        if (players.isOp(PROFILE)) return source.withEntity(null);
+        if (players.isOp(PROFILE)) {
+            return new CommandSourceStack(CommandSource.NULL, source.getPosition(), source.getRotation(),
+                    player.serverLevel(), 0, "UQGuidePreview", Component.literal("UQGuidePreview"),
+                    player.getServer(), null);
+        }
         NeutralPlayer preview = PLAYERS.computeIfAbsent(player.serverLevel(), level -> new NeutralPlayer(level, PROFILE));
         preview.setPos(player.position());
         return source.withEntity(preview);

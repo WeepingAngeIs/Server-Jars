@@ -3,6 +3,7 @@ package dev.unyielding.bundlesmoke;
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.unyielding.quests.client.ClientData;
 import dev.unyielding.quests.client.ClientInit;
+import dev.unyielding.quests.client.ArtAnim;
 import dev.unyielding.quests.client.InvButtons;
 import dev.unyielding.quests.client.QuestScreen;
 import dev.unyielding.quests.client.tutorial.TutorialScreen;
@@ -12,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.security.MessageDigest;
+import java.util.HexFormat;
 import org.lwjgl.glfw.GLFW;
 
 import static dev.unyielding.bundlesmoke.BundleSmoke.require;
@@ -45,6 +49,7 @@ public final class CompactTaskClientSmoke {
         try {
             Map<String, Object> report = BundleSmoke.verifyProductionJar();
             checkQuestKeyAndWelcome(report);
+            checkSuppliedQuestArt(mc, report);
             ClientData.progress = new TeamProgress();
             var chapter = ClientData.file.chapterMap.get(TRAINING);
             require(chapter != null, "Catching and Team Training chapter is missing");
@@ -132,8 +137,45 @@ public final class CompactTaskClientSmoke {
         return graphics;
     }
 
+    private static void checkSuppliedQuestArt(Minecraft mc, Map<String, Object> report) throws Exception {
+        var texture = ResourceLocation.parse("unyieldingquests:textures/quest_art/05aaeb7b168bfd49.png");
+        byte[] png;
+        try (var input = mc.getResourceManager().getResource(texture).orElseThrow().open()) {
+            png = input.readAllBytes();
+        }
+        String hash = HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(png));
+        require(hash.equals("f8de87db747d2eb9ede0ad359a29df4c384eeecce391ff64347e5eac69eb4c6b"),
+                "User-supplied white Pokeball artwork changed");
+        var frames = ArtAnim.class.getDeclaredMethod("frames", ResourceLocation.class);
+        frames.setAccessible(true);
+        require((Integer)frames.invoke(null, texture) == 4, "Supplied artwork is not interpreted as four frames");
+        require((Integer)frames.invoke(null, ResourceLocation.parse(
+                        "unyieldingquests:textures/quest_art/009dcacdeaa9d39e.png")) == 4,
+                "Legacy 32x128 icon animation changed");
+        var pingPong = ArtAnim.class.getDeclaredMethod("pingPong", int.class, long.class);
+        pingPong.setAccessible(true);
+        int[] order = {0, 1, 2, 3, 2, 1, 0};
+        for (int i = 0; i < order.length; i++) {
+            require((Integer)pingPong.invoke(null, 4, i * 180L) == order[i], "Four-frame animation order changed");
+        }
+        RecordingGraphics graphics = new RecordingGraphics(mc);
+        ArtAnim.draw(graphics, texture, 8, 8, 32, "supplied-art-smoke", true);
+        graphics.flush();
+        Blit blit = graphics.blits.stream().filter(value -> value.texture().equals(texture)).findFirst().orElseThrow();
+        require(blit.u() == 90f && blit.v() >= 0f && blit.v() <= 1629f && blit.v() % 543f == 0f
+                        && blit.regionWidth() == 543 && blit.regionHeight() == 543
+                        && blit.textureWidth() == 724 && blit.textureHeight() == 2172,
+                "Native source crop does not match the provided four-frame strip");
+        report.put("supplied_white_pokeball_unchanged_sha256", hash);
+        report.put("supplied_art_four_frames_native_crop_and_legacy_animation", "passed");
+    }
+
+    private record Blit(ResourceLocation texture, float u, float v, int regionWidth, int regionHeight,
+                        int textureWidth, int textureHeight) { }
+
     private static final class RecordingGraphics extends GuiGraphics {
         private final List<String> lines = new ArrayList<>();
+        private final List<Blit> blits = new ArrayList<>();
 
         RecordingGraphics(Minecraft mc) {
             super(mc, mc.renderBuffers().bufferSource());
@@ -152,6 +194,13 @@ public final class CompactTaskClientSmoke {
 
         long count(String prefix) {
             return lines.stream().filter(line -> line.startsWith(prefix)).count();
+        }
+
+        @Override
+        public void blit(ResourceLocation texture, int x, int y, int width, int height, float u, float v,
+                         int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
+            blits.add(new Blit(texture, u, v, regionWidth, regionHeight, textureWidth, textureHeight));
+            super.blit(texture, x, y, width, height, u, v, regionWidth, regionHeight, textureWidth, textureHeight);
         }
     }
 }

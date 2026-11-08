@@ -1,6 +1,7 @@
 package dev.unyielding.quests.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.google.gson.JsonParser;
 import dev.unyielding.quests.client.ui.UiConfig;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -8,6 +9,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,13 +31,18 @@ public final class ArtAnim {
     private static final long STEP_MS = 180;
     private static final int MAX_FRAMES = 16;
     private static final Map<ResourceLocation, Integer> FRAMES = new HashMap<>();
+    private static final Map<ResourceLocation, FrameStrip> FRAME_STRIPS = new HashMap<>();
     private static final Map<Object, long[]> RUNS = new HashMap<>();
+
+    private record FrameStrip(int textureWidth, int textureHeight, int x, int y,
+                              int frameWidth, int frameHeight, int frames) { }
 
     private ArtAnim() {
     }
 
     static void clear() {
         FRAMES.clear();
+        FRAME_STRIPS.clear();
         RUNS.clear();
     }
 
@@ -49,6 +56,24 @@ public final class ArtAnim {
                 if (h.length < 24 || h[1] != 'P' || h[2] != 'N' || h[3] != 'G') return 1;
                 int w = ((h[16] & 0xFF) << 24) | ((h[17] & 0xFF) << 16) | ((h[18] & 0xFF) << 8) | (h[19] & 0xFF);
                 int ht = ((h[20] & 0xFF) << 24) | ((h[21] & 0xFF) << 16) | ((h[22] & 0xFF) << 8) | (h[23] & 0xFF);
+                var metadata = Minecraft.getInstance().getResourceManager()
+                        .getResource(k.withPath(path -> path + ".frames.json"));
+                if (metadata.isPresent()) {
+                    try (InputStream sidecar = metadata.get().open()) {
+                        byte[] bytes = sidecar.readNBytes(8193);
+                        if (bytes.length > 8192) throw new IllegalArgumentException("Frame metadata is too large");
+                        var json = JsonParser.parseString(new String(bytes, StandardCharsets.UTF_8)).getAsJsonObject();
+                        int x = json.get("x").getAsInt(), y = json.get("y").getAsInt();
+                        int fw = json.get("frame_width").getAsInt(), fh = json.get("frame_height").getAsInt();
+                        int count = json.get("frames").getAsInt();
+                        if (w <= 0 || ht <= 0 || x < 0 || y < 0 || fw <= 0 || fw != fh
+                                || count < 1 || count > MAX_FRAMES || (long)x + fw > w || (long)y + (long)fh * count > ht) {
+                            throw new IllegalArgumentException("Frame crop lies outside its PNG");
+                        }
+                        FRAME_STRIPS.put(k, new FrameStrip(w, ht, x, y, fw, fh, count));
+                        return count;
+                    }
+                }
                 if (w <= 0 || ht <= w || ht % w != 0) return 1;
                 return Math.min(ht / w, MAX_FRAMES);
             } catch (Exception e) {
@@ -92,7 +117,11 @@ public final class ArtAnim {
             }
         }
         RenderSystem.enableBlend();
-        if (n > 1) g.blit(rl, x, y, size, size, 0f, (float) (f * size), size, size, size, size * n);
+        FrameStrip strip = FRAME_STRIPS.get(rl);
+        if (strip != null) {
+            g.blit(rl, x, y, size, size, (float)strip.x(), (float)(strip.y() + f * strip.frameHeight()),
+                    strip.frameWidth(), strip.frameHeight(), strip.textureWidth(), strip.textureHeight());
+        } else if (n > 1) g.blit(rl, x, y, size, size, 0f, (float) (f * size), size, size, size, size * n);
         else g.blit(rl, x, y, 0, 0, size, size, size, size);
     }
 }
