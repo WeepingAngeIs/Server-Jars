@@ -29,7 +29,7 @@ public final class ConfigValuesScreen extends FormScreen {
             value.list.data = sync.data();
             String reply = sync.data().getString("message");
             if (reply.startsWith("Saved.")) mc.setScreen(value.list);
-            else { value.message = reply; value.pending = false; value.relayout(); }
+            else value.failed(reply);
         } else if (mc.screen instanceof ConfigValuesScreen list) {
             list.data = sync.data();
             list.relayout();
@@ -62,6 +62,11 @@ public final class ConfigValuesScreen extends FormScreen {
         private final List<String> entries = new ArrayList<>();
         private String text, message = "";
         private boolean flag, pending;
+        private void failed(String reply) {
+            message = reply;
+            pending = false;
+            relayout();
+        }
         ValueScreen(ConfigValuesScreen parent, CompoundTag row) {
             super(parent, "Edit setting");
             this.list = parent;
