@@ -106,6 +106,10 @@ public final class TutorialAccessServerSmoke {
                 CompoundTag rankedGuide = TutorialManager.payload(player);
                 require(allUsages(rankedGuide).equals(Set.of("/uqguide_public", "/uqguide_rank")), "Live rank grant did not reveal exactly its curated command");
                 assertPagesMatchDirectory(rankedGuide);
+                players.op(profile);
+                require(allUsages(TutorialManager.payload(player)).equals(Set.of("/uqguide_public", "/uqguide_rank")),
+                        "Operator preview lost the real player's rank grant or exposed operator-only entries");
+                players.deop(profile);
                 ranks.grant(System.currentTimeMillis() - 60_000L);
                 require(!TutorialRanks.activeRanks(player).contains(RANK), "Expired rank remains active");
                 require(allUsages(TutorialManager.payload(player)).equals(Set.of("/uqguide_public")), "Expired rank command remains visible");
