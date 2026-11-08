@@ -6,6 +6,7 @@ import com.uwustudio.cobblecurrency.BridgeConfig;
 import com.uwustudio.cobblecurrency.CobbleDollarsCurrencyType;
 import com.uwustudio.cobblecurrency.CobbleDollarsPlayerHandler;
 import com.uwustudio.cobblecurrency.CobbleDollarsValue;
+import com.uwustudio.cobblecurrency.CobbleDollarsValueParser;
 import io.github.lightman314.lightmanscurrency.api.money.MoneyAPI;
 import io.github.lightman314.lightmanscurrency.api.money.value.MoneyValue;
 import io.github.lightman314.lightmanscurrency.api.money.value.MoneyValueParser;
@@ -60,7 +61,11 @@ public final class CurrencyServerSmoke {
             amount(MoneyValueParser.ParseConfigString(MoneyValueParser.writeParsable(value), MoneyValue::empty), huge);
             MoneyValue coinFixture = CoinValue.fromNumber("main", 25);
             require(!coinFixture.isEmpty(), "Coin serialization fixture is empty");
+            var bridgeWriter = CobbleDollarsValueParser.class.getDeclaredMethod("writeValueArgument", MoneyValue.class);
+            bridgeWriter.setAccessible(true);
             for (MoneyValue foreign : List.of(coinFixture, MoneyValue.free(), MoneyValue.empty())) {
+                require(bridgeWriter.invoke(CobbleDollarsValueParser.INSTANCE, foreign) == null,
+                        "Bridge parser must decline foreign values independently of currency registration order");
                 String encoded = MoneyValueParser.writeParsable(foreign);
                 require(!encoded.startsWith("cd;"), "Bridge captured another currency's config serialization: " + encoded);
                 require(MoneyValueParser.parse(new StringReader(encoded), true).equals(foreign),

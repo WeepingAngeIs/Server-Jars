@@ -39,6 +39,8 @@ jobs:
           cache-dependency-path: |
             unyielding-quests/gradle/wrapper/gradle-wrapper.properties
             combined-unyielding/smoke-harness/*.gradle
+      - name: Compile the currency parser compatibility fix
+        run: python3 currency-bridge/compile_patch.py
       - name: Assemble and audit finished input JARs
         run: python3 currency-bridge/build_bundle.py
       - name: Prepare isolated final-JAR checks
