@@ -32,11 +32,16 @@ public final class LootEditorClientSmoke {
     public static void tick(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
         if (checked || mc.player == null || ClientData.file == null || mc.getOverlay() != null
-                || !Files.exists(Path.of("/tmp/uq-emi-quest-passed.json"))) return;
+                || !Files.exists(Path.of("/tmp/uq-emi-quest-passed.json"))
+                || !Files.exists(Path.of("/tmp/uq-loot-tables-passed.json"))) return;
         checked = true;
         Screen previous = mc.screen;
         CompoundTag original = ClientData.lootTables;
+        int originalPermission = mc.player.getPermissionLevel();
         try {
+            // Render-only fixture: earlier tests intentionally leave a normal-player client.
+            // Server authorization was exercised separately; do not send any edits here.
+            mc.player.setPermissionLevel(2);
             var report = BundleSmoke.verifyProductionJar();
             CompoundTag table = table();
             ListTag tables = new ListTag(); tables.add(table);
@@ -96,6 +101,7 @@ public final class LootEditorClientSmoke {
         } finally {
             ClientData.lootTables = original;
             ClientData.lootTablesVersion++;
+            mc.player.setPermissionLevel(originalPermission);
             mc.setScreen(previous);
         }
     }
