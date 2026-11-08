@@ -3,9 +3,11 @@ package dev.unyielding.bundlesmoke;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.tree.CommandNode;
 import dev.unyielding.quests.tutorial.TutorialManager;
+import dev.unyielding.quests.tutorial.TutorialPreview;
 import dev.unyielding.quests.tutorial.TutorialRanks;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -83,6 +85,9 @@ public final class TutorialAccessServerSmoke {
                 dispatcher.register(Commands.literal("uqguide_entity_operator").requires(source -> source.getPlayer() != null
                         && source.getPlayer().hasPermissions(2)).executes(context -> 0));
                 addedRoots.add("uqguide_entity_operator");
+                dispatcher.register(Commands.literal("uqguide_profile_operator").requires(source -> source.getPlayer() != null
+                        && source.getServer().getPlayerList().isOp(source.getPlayer().getGameProfile())).executes(context -> 0));
+                addedRoots.add("uqguide_profile_operator");
                 if (root.getChild("oparties") == null) {
                     dispatcher.register(Commands.literal("oparties").then(Commands.literal("member")
                             .then(Commands.literal("invite").then(Commands.argument("player", StringArgumentType.word()).executes(context -> 0)))));
@@ -95,6 +100,24 @@ public final class TutorialAccessServerSmoke {
                 CompoundTag operatorGuide = TutorialManager.payload(player);
                 require(allUsages(operatorGuide).equals(Set.of("/uqguide_public")), "Operator privileges bypass guide policy or unknown-root filtering");
                 assertPagesMatchDirectory(operatorGuide);
+                GameProfile neutralProfile = (GameProfile) field(TutorialPreview.class, "PROFILE").get(null);
+                var originalNeutralOp = players.getOps().get(neutralProfile);
+                try {
+                    // Force the same branch used when a LAN world treats every profile as an operator.
+                    players.op(neutralProfile);
+                    require(players.isOp(neutralProfile), "Neutral profile did not enter the global-privilege fallback fixture");
+                    CommandSourceStack fallback = TutorialPreview.source(player);
+                    require(fallback.getEntity() == null && fallback.hasPermission(0) && !fallback.hasPermission(1),
+                            "Globally privileged preview did not fall back to an entity-free permission-zero source");
+                    require(allUsages(TutorialManager.payload(player)).equals(Set.of("/uqguide_public")),
+                            "Global operator bypass leaked entity/profile-only commands into the guide");
+                    require(players.isOp(profile) && player.hasPermissions(2), "Guide preview changed the real player's privileges");
+                } finally {
+                    players.deop(neutralProfile);
+                    if (originalNeutralOp != null) players.getOps().add(originalNeutralOp);
+                    TutorialPreview.clear();
+                }
+                report.put("global_operator_fallback_has_no_entity_or_privilege_leak", "passed");
                 players.deop(profile);
                 require(!player.hasPermissions(2), "Nonoperator test player still has operator permission");
                 CompoundTag unrankedGuide = TutorialManager.payload(player);
@@ -168,6 +191,7 @@ public final class TutorialAccessServerSmoke {
         entries.add(entry("uqguide_hidden", List.of()));
         entries.add(entry("uqguide_operator", null));
         entries.add(entry("uqguide_entity_operator", null));
+        entries.add(entry("uqguide_profile_operator", null));
         page.add("entries", entries);
         pages.add(page);
         document.add("pages", pages);
