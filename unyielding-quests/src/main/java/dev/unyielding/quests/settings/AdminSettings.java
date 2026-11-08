@@ -33,7 +33,7 @@ public final class AdminSettings {
                     "Let players create parties for team chat and invitations. Existing parties remain available. Progress sharing has its own switch above.",
                     Config.ALLOW_PARTIES),
             new Setting("tutorial_on_join", "Tutorial on join",
-                    "Show the player guide after origin selection. Players can always use /tutorial to open it themselves.",
+                    "Show the player guide after origin selection until the player finishes or dismisses it. Players can always use /tutorial to open it themselves.",
                     Config.TUTORIAL_ON_JOIN),
             new Setting("announce_completion", "Quest completion messages",
                     "Show completion messages to the players whose quest progress was completed.",

@@ -57,6 +57,12 @@ public final class Net {
         public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
+    public record TutorialDismissed() implements CustomPacketPayload {
+        public static final Type<TutorialDismissed> TYPE = mkType("tutorial_dismissed");
+        public static final StreamCodec<RegistryFriendlyByteBuf, TutorialDismissed> CODEC = StreamCodec.unit(new TutorialDismissed());
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
     /** Permission-filtered onboarding pages and the server's current public commands. */
     public record TutorialSync(CompoundTag tag, boolean automatic) implements CustomPacketPayload {
         public static final Type<TutorialSync> TYPE = mkType("tutorial");
@@ -292,6 +298,8 @@ public final class Net {
     public static void register(RegisterPayloadHandlersEvent event) {
         dev.unyielding.quests.settings.ConfigEditor.register(event);
         PayloadRegistrar r = event.registrar("1");
+        r.playToServer(TutorialDismissed.TYPE, TutorialDismissed.CODEC,
+                (p, c) -> dev.unyielding.quests.tutorial.TutorialManager.dismissed((ServerPlayer)c.player()));
         r.playToClient(LootTablesSync.TYPE, LootTablesSync.CODEC,
                 (p, c) -> ClientHandlers.onLootTables(p.tag(), p.open()));
         r.playToServer(LootTablesAction.TYPE, LootTablesAction.CODEC,

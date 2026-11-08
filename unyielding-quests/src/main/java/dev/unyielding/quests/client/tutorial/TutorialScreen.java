@@ -290,6 +290,8 @@ public final class TutorialScreen extends Screen {
 
     @Override
     public void onClose() {
+        if (!dismissed && Minecraft.getInstance().getConnection() != null)
+            dev.unyielding.quests.net.Net.sendToServer(new dev.unyielding.quests.net.Net.TutorialDismissed());
         dismissed = true;
         Minecraft.getInstance().setScreen(null);
     }

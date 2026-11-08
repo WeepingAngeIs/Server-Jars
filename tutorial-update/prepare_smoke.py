@@ -11,7 +11,7 @@ template = (ROOT / "currency-bridge/prepare_smoke.py").read_text()
 replacements = {
     "currency-bridge/smoke-harness": "tutorial-update/smoke-harness",
     "dist/currency-smoke": "dist/tutorial-smoke",
-    "dist/currency/Unyielding-1.1.1.jar": "dist/tutorial/Unyielding-1.1.4.jar",
+    "dist/currency/Unyielding-1.1.1.jar": "dist/tutorial/Unyielding-1.1.5.jar",
     "currency-bridge/run_smoke.generated.sh": "tutorial-update/run_smoke.generated.sh",
 }
 for before, after in replacements.items():

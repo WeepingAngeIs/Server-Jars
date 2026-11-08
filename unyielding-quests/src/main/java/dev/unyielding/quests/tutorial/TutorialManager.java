@@ -34,6 +34,7 @@ public final class TutorialManager {
     private static final String DEFAULT_RESOURCE = "/data/unyieldingquests/tutorial.json";
     private static final Path CONFIG = FMLPaths.CONFIGDIR.get().resolve("unyieldingquests/tutorial.json");
     private static final Map<UUID, Boolean> PENDING = new LinkedHashMap<>();
+    private static final Set<UUID> DELIVERED = new java.util.HashSet<>();
     private static TutorialContent content = new TutorialContent(List.of());
     private static int ticks;
     private static Method originData;
@@ -44,6 +45,7 @@ public final class TutorialManager {
 
     public static void onServerStart() {
         PENDING.clear();
+        DELIVERED.clear();
         TutorialPreview.clear();
         ticks = 0;
         originData = null;
@@ -55,6 +57,7 @@ public final class TutorialManager {
 
     public static void onServerStop() {
         PENDING.clear();
+        DELIVERED.clear();
         TutorialPreview.clear();
         content = new TutorialContent(List.of());
     }
@@ -106,7 +109,8 @@ public final class TutorialManager {
     }
 
     public static void onLogin(ServerPlayer player) {
-        if (Config.TUTORIAL_ON_JOIN.get()) PENDING.put(player.getUUID(), true);
+        if (Config.TUTORIAL_ON_JOIN.get() && !TutorialHistory.get(player).contains(player.getUUID()))
+            PENDING.put(player.getUUID(), true);
     }
 
     public static void onAutomaticChanged() {
@@ -114,6 +118,13 @@ public final class TutorialManager {
     }
 
     public static void onLogout(ServerPlayer player) {
+        PENDING.remove(player.getUUID());
+        DELIVERED.remove(player.getUUID());
+    }
+
+    public static void dismissed(ServerPlayer player) {
+        if (!DELIVERED.remove(player.getUUID())) return;
+        TutorialHistory.get(player).mark(player.getUUID());
         PENDING.remove(player.getUUID());
     }
 
@@ -171,6 +182,7 @@ public final class TutorialManager {
     private static void send(ServerPlayer player, boolean automatic) {
         try {
             Net.sendTo(player, new Net.TutorialSync(payload(player), automatic));
+            DELIVERED.add(player.getUUID());
         } catch (RuntimeException e) {
             UnyieldingQuests.LOGGER.warn("Could not open tutorial for {}.", player.getGameProfile().getName(), e);
             player.sendSystemMessage(Component.literal("The tutorial could not open. Try /tutorial again."));

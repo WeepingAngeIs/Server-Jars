@@ -37,6 +37,7 @@ public final class ConfigEditorSmoke {
             Map<String, Object> report = BundleSmoke.verifyProductionJar();
             exercise(player, report);
             SpinOddsSmoke.exercise(player, report);
+            TutorialHistorySmoke.exercise(player, report);
             BundleSmoke.write("/tmp/uq-config-editor-passed.json", report);
         } catch (Throwable failure) {
             BundleSmoke.fail("/tmp/uq-config-editor-failed.txt", failure);

@@ -62,7 +62,7 @@ public final class Config {
                 .defineInRange("max_name_length", 32, 3, 64);
         b.pop();
         b.push("tutorial");
-        TUTORIAL_ON_JOIN = b.comment("Automatically open the player tutorial after origin selection on each join. /tutorial remains available when this is false.")
+        TUTORIAL_ON_JOIN = b.comment("Automatically open the player tutorial after origin selection until the player finishes or dismisses it. /tutorial remains available when this is false.")
                 .define("show_on_join", true);
         b.pop();
         b.push("quests");
