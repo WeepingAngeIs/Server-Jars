@@ -58,6 +58,7 @@ public class QuestScreen extends Screen {
 
     private final List<Hit> hits = new ArrayList<>();
     private final List<SlotHit> slots = new ArrayList<>();
+    private int recipeMouseX, recipeMouseY, recipeClipTop, recipeClipBottom;
     private final Map<Long, Float> hoverAnim = new HashMap<>();
 
     private int side = 160;
@@ -561,6 +562,8 @@ public class QuestScreen extends Screen {
         lastFrame = now;
         hits.clear();
         slots.clear();
+        recipeMouseX = mx;
+        recipeMouseY = my;
         hovered = null;
         renderBackground(g, mx, my, pt);
         QuestFile f = ClientData.file;
@@ -899,9 +902,13 @@ public class QuestScreen extends Screen {
         return Math.min(340, width - 24);
     }
 
-    /** Collection tasks in Catching and Team Training share their instructions on the first card. */
+    /** Repeated collection tasks share their instructions on the first card. */
     private static boolean compactCollectionTasks(Quest q) {
-        return q.chapter == 0x5A9D2C7E4F100001L && q.tasks.size() > 1
+        boolean collection = q.chapter == 0x5A9D2C7E4F100001L
+                || (q.chapter == 0x7F4D5402148E66FCL && (q.id == 0xBE7AAB2C2B9DDE41L
+                || q.id == 0xE82FBEE59E4384CEL || q.id == 0xC533BE7A12E1DA24L
+                || q.id == 0xCEE5D0B2A01DEF39L));
+        return collection && q.tasks.size() > 1
                 && q.tasks.stream().allMatch(t -> t.type == QuestFile.TaskType.ITEM
                         && t.consume == q.tasks.getFirst().consume);
     }
@@ -969,6 +976,8 @@ public class QuestScreen extends Screen {
 
         int cx0 = px + 10, cx1 = px + pw - 12, cw0 = cx1 - cx0;
         int top = py + 40, bottom = py + ph - 4 - footer;
+        recipeClipTop = top;
+        recipeClipBottom = bottom;
         g.enableScissor(px + 2, top, px + pw - 2, bottom);
         int y = top + 6 - detailScroll;
         int start = y;
@@ -1548,6 +1557,12 @@ public class QuestScreen extends Screen {
 
     /** For EMI: the item under the mouse, if any. */
     public ItemStack stackAt(double mx, double my) {
+        if (selected == null || shown == null || detailAnim <= 0.85f || spinVisible() || menu != null)
+            return ItemStack.EMPTY;
+        float a = Ui.easeOut(detailAnim), scale = 0.94f + 0.06f * a;
+        mx = (mx - width / 2f) / scale + width / 2f;
+        my = (my - height / 2f) / scale + height / 2f - (1 - a) * 10;
+        if (my < recipeClipTop || my >= recipeClipBottom) return ItemStack.EMPTY;
         for (SlotHit s : slots) if (s.in(mx, my)) return s.stack();
         return ItemStack.EMPTY;
     }
@@ -1567,6 +1582,9 @@ public class QuestScreen extends Screen {
             return true;
         }
         if (menuClick(mx, my, button)) return true;
+        if (net.neoforged.fml.ModList.get().isLoaded("emi")
+                && dev.unyielding.quests.client.compat.EmiCompat.mouseClicked(this, stackAt(mx, my), button))
+            return true;
         boolean edit = editing() && selected == null;
         if (edit && button == 1 && mx < side) {
             for (ChapterHit ch : chapterHits) if (my >= ch.y0() && my < ch.y1()) {
@@ -1752,6 +1770,9 @@ public class QuestScreen extends Screen {
             onClose();
             return true;
         }
+        if (net.neoforged.fml.ModList.get().isLoaded("emi")
+                && dev.unyielding.quests.client.compat.EmiCompat.keyPressed(this,
+                        stackAt(recipeMouseX, recipeMouseY), key, scan)) return true;
         return super.keyPressed(key, scan, mods);
     }
 

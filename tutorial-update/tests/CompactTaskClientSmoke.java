@@ -53,9 +53,16 @@ public final class CompactTaskClientSmoke {
             ClientData.progress = new TeamProgress();
             var chapter = ClientData.file.chapterMap.get(TRAINING);
             require(chapter != null, "Catching and Team Training chapter is missing");
-            var quests = chapter.quests.stream().filter(q -> q.tasks.size() > 1
+            var quests = new ArrayList<>(chapter.quests.stream().filter(q -> q.tasks.size() > 1
                     && q.tasks.stream().allMatch(t -> t.type == QuestFile.TaskType.ITEM
-                    && t.consume == q.tasks.getFirst().consume)).toList();
+                    && t.consume == q.tasks.getFirst().consume)).toList());
+            for (long id : new long[]{0xBE7AAB2C2B9DDE41L, 0xE82FBEE59E4384CEL,
+                    0xC533BE7A12E1DA24L, 0xCEE5D0B2A01DEF39L}) {
+                var medicine = ClientData.file.quests.get(id);
+                require(medicine != null && medicine.chapter == 0x7F4D5402148E66FCL,
+                        "Requested medicine collection quest is missing");
+                quests.add(medicine);
+            }
             require(quests.stream().anyMatch(q -> q.id == 0x05AAEB7B168BFD49L), "Pokeball collection fixture is missing");
             require(quests.stream().anyMatch(q -> q.id == 0x49A4AA72407D550FL), "EXP candy collection fixture is missing");
             require(quests.stream().anyMatch(q -> q.id == 0x6BEA397DFCDA7261L), "IV candy collection fixture is missing");
@@ -92,6 +99,7 @@ public final class CompactTaskClientSmoke {
             }
             report.put("first_task_help_retained_later_item_cards_compact", "passed");
             report.put("other_chapters_unchanged", "passed");
+            report.put("four_requested_medicine_collections_compact", "passed");
             report.put("normal_and_320px_panel_measurements", measurements);
             BundleSmoke.write("/tmp/uq-compact-tasks-passed.json", report);
         } catch (Throwable failure) {
