@@ -1,4 +1,18 @@
-# Unyielding 1.1.5
+# Unyielding 1.1.6
+
+The server settings menu now includes **Armor Balance**, **Raid IV odds**, and a
+**Music mixer**. Armor edits refresh equipped entities and connected clients. Raid
+edits save a complete tier together, validate the total, and apply to future rewards.
+Existing values are preserved until an administrator saves a change.
+
+The music mixer synchronizes overall and per-track volume multipliers (0–200%) for
+the Cobblemon Unyielding songpack through Reactive Music 1.3.5 NeoForge. Player sound
+sliders and mute still apply. Volume settings persist with the server world; no
+audio is uploaded or rewritten. New tracks and trigger changes remain songpack updates.
+
+Additional existing portal, Soul Tome and leaderboard settings have category shortcuts
+under **Config values**. Permission checks, input validation and stale-edit protection
+run on the server. The release retains all improvements below.
 
 Finishing or dismissing the tutorial now saves per-player history in the server world.
 It will not automatically replay on reconnect. Manual /tutorial remains available, and

@@ -1,0 +1,34 @@
+Unyielding 1.1.6 - live admin balance and music controls
+
+Replace the older combined Unyielding JAR with Unyielding-1.1.6.jar on both the
+server and clients. Stop the server and close Minecraft before replacing files.
+Keep only one combined Unyielding JAR. Keep your external mod dependencies and
+resource/song packs. Existing quest progress and configured settings are retained.
+
+Open /quests settings as an operator (permission level 2).
+
+Armor Balance: edit armor points, toughness and knockback percentages. Half and
+normal presets are previews until Save. Changes apply to already-equipped armor
+on loaded entities. Mod and item exceptions are editable too.
+
+Raid IV odds: edit each of the seven tiers separately. Set the chances for one,
+two or three guaranteed perfect IVs; the remainder gets none guaranteed. Edit
+the ordinary IV cap or turn custom rolls off. Changes affect future raid rewards.
+At an ordinary cap of 31, ordinary rolls may also produce perfect IVs.
+
+Music mixer: change overall or individual track volume from 0% to 200%, including
+Lavender Town. 100% preserves the existing audio level; 0% plays the track silently.
+Changes reach connected clients and are saved with the server world for later joins.
+Players retain their personal volume/mute controls. This integration targets
+Reactive Music 1.3.5 NeoForge and the Cobblemon Unyielding songpack (32 tracks).
+Everyone needs the updated Unyielding JAR and the matching songpack. New audio
+files or changed biome/time triggers still require a songpack update.
+
+Config values: shortcuts expose existing portal travel, Soul Tome and leaderboard
+settings. Help describes when changes take effect; some update on the next use or
+board refresh. Lowering capacity does not delete stored souls or active allies.
+
+Existing defaults remain unchanged until an admin saves. Invalid values and stale
+edits are rejected. Earlier spin editing and tutorial dismissal fixes are included.
+
+Source: https://github.com/WeepingAngeIs/Server-Jars

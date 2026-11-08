@@ -1,15 +1,15 @@
 {
   "name": "Unyielding",
-  "version": "1.1.5",
-  "output": "dist/tutorial/Unyielding-1.1.5.jar",
+  "version": "1.1.6",
+  "output": "dist/tutorial/Unyielding-1.1.6.jar",
   "base": {
-    "path": "releases/Unyielding-1.1.4.jar",
-    "sha256": "9b6865a01ef4baa0a24af914204fb9e2c74f332a3ec6305844df443b2c8e26f3"
+    "path": "releases/Unyielding-1.1.5.jar",
+    "sha256": "f25d004fe85693af44216e8d8a8c09e055c8ece0cb1b66d8d164670c930695da"
   },
   "quests": {
-    "path": "unyielding-quests/build/libs/UnyieldingQuests-1.6.7.jar",
+    "path": "unyielding-quests/build/libs/UnyieldingQuests-1.6.8.jar",
     "verification_report": "unyielding-quests/build/verification/package-verification.json",
-    "version": "1.6.7",
-    "previous_version": "1.6.6"
+    "version": "1.6.8",
+    "previous_version": "1.6.7"
   }
 }

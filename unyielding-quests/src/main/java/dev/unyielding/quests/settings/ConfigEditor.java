@@ -26,6 +26,7 @@ public final class ConfigEditor {
         add(result, "quests", Config.class);
         add(result, "essentials", EssConfig.class);
         add(result, "vein_mining", UltimineConfig.class);
+        BalanceSettings.addValues(result);
         return Collections.unmodifiableMap(result);
     }
     private static void add(Map<String, ModConfigSpec.ConfigValue<?>> result, String group, Class<?> owner) {
@@ -57,6 +58,22 @@ public final class ConfigEditor {
     public static void handle(ServerPlayer player, Action action) {
         if (!player.hasPermissions(2)) return;
         if (action.key().equals("__open")) { sync(player, true, "Select a setting to edit."); return; }
+        if (action.key().equals("__open_armor") || action.key().equals("__open_raid")) {
+            syncPage(player, action.key().equals("__open_armor") ? "armor" : "raid");
+            return;
+        }
+        if (action.key().equals("__armor") || action.key().startsWith("__raid_odds:")) {
+            try {
+                BalanceSettings.saveGroup(player, action, !action.key().equals("__armor"));
+                sync(player, false, "Saved. " + (action.key().equals("__armor")
+                        ? "Armor settings are active on the server and connected clients."
+                        : "IV chances apply to future raid rewards."));
+            } catch (RuntimeException error) {
+                String message = Objects.toString(error.getMessage(), "Invalid settings.");
+                sync(player, false, message.startsWith("Saved,") ? message : "Not saved: " + message);
+            }
+            return;
+        }
         if (action.key().equals("__open_odds")) {
             sync(player, true, "Changes apply to future spins and save on the server.", true);
             return;
@@ -72,6 +89,7 @@ public final class ConfigEditor {
             Object next = parse(value, action.value());
             if (!value.getSpec().test(next)) throw new IllegalArgumentException("Value is outside the allowed range.");
             validateOddsEdit(value, next);
+            BalanceSettings.validate(value, next, player.getServer());
             if (value == Config.DAILY_TIMEZONE) java.time.ZoneId.of((String)next);
             if (value == Config.SPIN_LEVEL_MIN && (Integer)next > Config.SPIN_LEVEL_MAX.get()
                     || value == Config.SPIN_LEVEL_MAX && (Integer)next < Config.SPIN_LEVEL_MIN.get())
@@ -79,9 +97,19 @@ public final class ConfigEditor {
             if (value == EssConfig.RTP_MIN && (Integer)next > EssConfig.RTP_MAX.get()
                     || value == EssConfig.RTP_MAX && (Integer)next < EssConfig.RTP_MIN.get())
                 throw new IllegalArgumentException("Minimum teleport radius must not exceed maximum radius.");
+            var equipment = BalanceSettings.captureEquipment(player.getServer(), List.of(value));
             set(value, next);
-            try { value.save(); } catch (RuntimeException failure) { set(value, before); throw failure; }
+            try { value.save(); } catch (RuntimeException failure) {
+                set(value, before);
+                try { value.save(); } catch (RuntimeException rollback) {
+                    failure.addSuppressed(rollback);
+                    UnyieldingQuests.LOGGER.error("Could not restore config setting {} on disk", action.key(), failure);
+                    throw new IllegalStateException("Previous value restored in memory; verify the server config before restarting.", failure);
+                }
+                throw failure;
+            }
             saved = true;
+            BalanceSettings.changed(player.getServer(), List.of(value), equipment);
             if (value == Config.QUEST_BOOK_SOURCE) QuestManager.reload(false);
             AdminSettings.publishChanges();
             sync(player, false, "Saved. " + (value.getSpec().restartType() == ModConfigSpec.RestartType.NONE
@@ -177,20 +205,33 @@ public final class ConfigEditor {
     public static void sync(ServerPlayer player, boolean open, String message) {
         sync(player, open, message, false);
     }
+    private static void syncPage(ServerPlayer player, String page) {
+        if (!BalanceSettings.available()) {
+            sync(player, true, "Armor and raid balance settings are unavailable on this server.");
+            return;
+        }
+        CompoundTag data = snapshot("Settings are saved on the server. Existing values stay unchanged until you save.", false);
+        data.putString("page", page);
+        Net.sendTo(player, new Sync(data, true));
+    }
     private static void sync(ServerPlayer player, boolean open, String message, boolean oddsOpen) {
         if (!player.hasPermissions(2)) return;
+        Net.sendTo(player, new Sync(snapshot(message, oddsOpen), open));
+    }
+    private static CompoundTag snapshot(String message, boolean oddsOpen) {
         CompoundTag data = new CompoundTag();
         ListTag rows = new ListTag();
         VALUES.forEach((key, value) -> {
             CompoundTag row = new CompoundTag();
             row.putString("key", key);
             row.putString("value", JSON.toJson(value.getRaw()));
-            row.putString("help", Objects.toString(value.getSpec().getComment(), ""));
+            row.putString("help", BalanceSettings.help(value, Objects.toString(value.getSpec().getComment(), "")));
             rows.add(row);
         });
         data.put("rows", rows);
         data.putString("message", message);
         data.putBoolean("oddsOpen", oddsOpen);
-        Net.sendTo(player, new Sync(data, open));
+        BalanceSettings.appendSnapshot(data);
+        return data;
     }
 }

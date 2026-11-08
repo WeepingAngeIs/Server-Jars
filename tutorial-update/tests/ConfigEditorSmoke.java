@@ -38,6 +38,8 @@ public final class ConfigEditorSmoke {
             exercise(player, report);
             SpinOddsSmoke.exercise(player, report);
             TutorialHistorySmoke.exercise(player, report);
+            BalanceEditorSmoke.exercise(player, report);
+            MusicEditorSmoke.exercise(player, report);
             BundleSmoke.write("/tmp/uq-config-editor-passed.json", report);
         } catch (Throwable failure) {
             BundleSmoke.fail("/tmp/uq-config-editor-failed.txt", failure);

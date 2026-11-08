@@ -2,6 +2,9 @@ modLoader = "javafml"
 loaderVersion = "[4,)"
 license = "MIT"
 
+[[mixins]]
+    config = "assets/unyieldingquests/music.mixins.json"
+
 [[mods]]
     modId = "unyieldingquests"
     version = "${file.jarVersion}"

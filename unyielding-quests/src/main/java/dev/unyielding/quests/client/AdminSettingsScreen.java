@@ -58,7 +58,7 @@ public final class AdminSettingsScreen extends Screen {
         ph = Math.min(360, height - 16);
         px = (width - pw) / 2;
         py = (height - ph) / 2;
-        top = py + 52;
+        top = py + 76;
         bottom = py + ph - 37;
         lastFrame = Util.getMillis();
         receiveChanges();
@@ -117,6 +117,15 @@ public final class AdminSettingsScreen extends Screen {
         footer.add(addRenderableWidget(new SpriteButton(px + 22 + shortcutWidth * 2, py + 32, shortcutWidth, 18,
                 Component.literal("Loot tables"), null, Ui.Style.NORMAL,
                 button -> dev.unyielding.quests.client.edit.LootTablesScreen.requestOpen())));
+        footer.add(addRenderableWidget(new SpriteButton(px + 14, py + 54, shortcutWidth, 18,
+                Component.literal("Armor Balance"), null, Ui.Style.ACCENT,
+                button -> BalanceSettingsScreen.requestArmor())));
+        footer.add(addRenderableWidget(new SpriteButton(px + 18 + shortcutWidth, py + 54, shortcutWidth, 18,
+                Component.literal("Raid IV odds"), null, Ui.Style.ACCENT,
+                button -> BalanceSettingsScreen.requestRaid())));
+        footer.add(addRenderableWidget(new SpriteButton(px + 22 + shortcutWidth * 2, py + 54, shortcutWidth, 18,
+                Component.literal("Music mixer"), null, Ui.Style.NORMAL,
+                button -> MusicAdminScreen.requestOpen())));
         updateControls();
     }
 

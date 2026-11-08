@@ -52,7 +52,8 @@ assert not [name for name in quests if name not in METADATA and not owned_by_que
 base_text = base[MODS].decode()
 base_meta = tomllib.loads(base_text)
 quest_meta = tomllib.loads(quests[MODS].decode().replace("${file.jarVersion}", release["quests"]["version"]))
-assert set(quest_meta) == {"modLoader", "loaderVersion", "license", "mods", "dependencies"}
+assert set(quest_meta) == {"modLoader", "loaderVersion", "license", "mods", "dependencies", "mixins"}
+assert quest_meta["mixins"] == [{"config": "assets/unyieldingquests/music.mixins.json"}], "Unexpected new mixin configuration"
 for field in ("modLoader", "loaderVersion", "license"):
     assert base_meta[field] == quest_meta[field], f"Incompatible metadata: {field}"
 assert len(base_meta["mods"]) == 9 and len(quest_meta["mods"]) == 1
@@ -70,8 +71,11 @@ replacement, count = re.subn(r'(\bversion\s*=\s*")' + re.escape(release["quests"
                              lambda match: match[1] + release["quests"]["version"] + match[2], block.group())
 assert count == 1
 metadata = base_text[:block.start()] + replacement + base_text[block.end():]
+assert "assets/unyieldingquests/music.mixins.json" not in base_text
+metadata += '\n[[mixins]]\nconfig="assets/unyieldingquests/music.mixins.json"\n'
 expected_meta = copy.deepcopy(base_meta)
 next(mod for mod in expected_meta["mods"] if mod["modId"] == "unyieldingquests")["version"] = release["quests"]["version"]
+expected_meta["mixins"] = base_meta["mixins"] + quest_meta["mixins"]
 assert tomllib.loads(metadata) == expected_meta, "Nonquest metadata changed"
 assert "${" not in metadata
 
@@ -120,7 +124,7 @@ report = {
     "rebuilt_quest_entries": len(updated), "preserved_currency_classes": len(bridge_names),
     "currency_parser_sha256": hashlib.sha256(entries[parser]).hexdigest(),
     "quest_pictures": 923, "external_dependencies_bundled": False,
-    "metadata_changes": ["Outer release manifest", "Quest component version only"],
+    "metadata_changes": ["Outer release manifest", "Quest component version", "Optional client music volume mixin"],
 }
 (output.parent / "assembly-report.json").write_text(json.dumps(report, indent=2) + "\n")
 (output.parent / "SHA256SUMS.txt").write_text(f"{digest}  {output.name}\n")

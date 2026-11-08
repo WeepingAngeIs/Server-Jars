@@ -29,7 +29,12 @@ public final class ConfigValuesScreen extends FormScreen {
     }
     public static void receive(ConfigEditor.Sync sync) {
         Minecraft mc = Minecraft.getInstance();
-        if (sync.open() && sync.data().getBoolean("oddsOpen")) {
+        String page = sync.data().getString("page");
+        if (sync.open() && (page.equals("armor") || page.equals("raid"))) {
+            if (mc.screen instanceof BalanceSettingsScreen balance) balance.receive(sync.data(), true);
+            else mc.setScreen(new BalanceSettingsScreen(mc.screen, sync.data(), page.equals("raid")));
+        } else if (mc.screen instanceof BalanceSettingsScreen balance && !sync.open()) balance.receive(sync.data(), false);
+        else if (sync.open() && sync.data().getBoolean("oddsOpen")) {
             if (mc.screen instanceof SpinOddsScreen odds) odds.receive(sync.data(), true);
             else mc.setScreen(new SpinOddsScreen(mc.screen, sync.data()));
         } else if (mc.screen instanceof SpinOddsScreen odds && !sync.open()) odds.receive(sync.data(), false);
@@ -48,6 +53,7 @@ public final class ConfigValuesScreen extends FormScreen {
     }
     private void updateOddsParent() {
         if (parent instanceof SpinOddsScreen odds) odds.updateRelatedSettings(data);
+        if (parent instanceof BalanceSettingsScreen balance) balance.updateRelatedSettings(data);
     }
     @Override protected void build() {
         note(font.plainSubstrByWidth(data.getString("message"), innerWidth()));
@@ -55,6 +61,15 @@ public final class ConfigValuesScreen extends FormScreen {
         field("filter", left(), innerWidth() - 65, filter, "Search settings", s -> filter = s);
         button(right() - 60, 60, "Search", null, Ui.Style.NORMAL, () -> { scroll = 0; relayout(); });
         gap(27);
+        int categoryWidth = (innerWidth() - 8) / 3;
+        String[] categories = {"portal", "soul_tome", "leaderboard"};
+        String[] labels = {"Portals", "Soul Tome", "Leaderboard"};
+        for (int i = 0; i < categories.length; i++) {
+            final String category = categories[i];
+            button(left() + i * (categoryWidth + 4), categoryWidth, labels[i], null, Ui.Style.NORMAL,
+                    () -> { filter = category + "."; scroll = 0; relayout(); });
+        }
+        gap(26);
         for (Tag raw : data.getList("rows", Tag.TAG_COMPOUND)) {
             CompoundTag row = (CompoundTag)raw;
             String key = row.getString("key");
