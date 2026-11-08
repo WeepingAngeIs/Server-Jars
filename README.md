@@ -4,7 +4,7 @@ Jar creations
 ## Folders
 
 * `unyielding-quests/` - the quest mod source (code + quest book). GitHub Actions builds and tests the jar in the cloud.
-* `releases/` - built jars + install notes. The combined `Unyielding-1.1.3.jar` includes Unyielding, quests and the currency bridge, with editable loot tables and crates, in-game config values, working EMI quest shortcuts, compact collection tasks and the earlier guide/art/admin improvements. Replace the older combined file and remove standalone copies of its modules; keep external dependencies and existing packs.
+* `releases/` - built jars + install notes. The combined `Unyielding-1.1.4.jar` includes Unyielding, quests and the currency bridge, with a dedicated in-game spin percentage editor, editable loot tables and crates, in-game config values, working EMI quest shortcuts, compact collection tasks and the earlier guide/art/admin improvements. Replace the older combined file and remove standalone copies of its modules; keep external dependencies and existing packs.
 * `tutorial-update/` - cloud build and checks for player-guide permissions, quest controls, collection-task layout and admin settings.
 * `currency-bridge/` - cloud assembly and compatibility checks for the CobbleDollars and Lightman's Currency integration.
 * `combined-unyielding/` - reproducible cloud assembly and checks for the single-file Unyielding and Quests update.

@@ -1,0 +1,21 @@
+Unyielding 1.1.4 - verification
+
+Built and tested on GitHub-hosted runners, not on the user's PC.
+https://github.com/WeepingAngeIs/Server-Jars/actions/runs/42517699348
+Source commit: 0ab28fcd2d7899c756e79f1efeca0ba173a3210d
+SHA256: 9b6865a01ef4baa0a24af914204fb9e2c74f332a3ec6305844df443b2c8e26f3
+
+26 unit tests passed. Final combined JAR loaded in a real Minecraft server and client.
+All five odds saved together; daily and quest settings remained separate.
+Non-operators, invalid percentages and stale edits were rejected.
+Settings were verified in the server config file.
+Exhaustive 10,000-roll boundary checks exactly matched configured probabilities.
+Zero-weight Pokemon tiers were never selected.
+Added/removed Pokemon pool entries refreshed without restarting.
+Editors rendered at 640x400 and 320x240; preset values, unsaved drafts,
+tab switching, unrelated updates and invalid totals were checked.
+Existing currency, tutorial, loot-table and admin-setting checks passed.
+
+Scope: pinned runtime dependencies and focused server/client checks.
+No full-modpack multiplayer playthrough was performed.
+No changes were made to the live server by this delivery.

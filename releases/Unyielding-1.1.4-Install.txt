@@ -1,0 +1,38 @@
+Unyielding 1.1.4 - in-game Lucky Spin odds
+
+INSTALL
+Stop the Minecraft server before replacing its old Unyielding JAR.
+Close Minecraft before replacing the old Unyielding JAR in the client mods folder.
+Use Unyielding-1.1.4.jar on the server and clients. Keep only one Unyielding JAR.
+This combined JAR already includes quests. Keep the pack's other dependencies.
+Existing quest progress, claimed rewards and saved configuration are retained.
+
+CHANGE THE ODDS IN GAME
+As an operator, run /quests settings and click Spin odds.
+Choose Quest spins or Daily spins.
+Edit the five percentages so they add up to 100%, then click Save.
+Repeat on the other tab if you want to change both.
+Changes apply to future rolls immediately and persist after a server restart.
+
+Very rare preset:
+Basic items 60%; Good items 39.84%; Paradox 0.1%; Mythical 0.05%; Legendary 0.01%.
+Total Pokemon chance: 0.16% per spin.
+
+Items only preset:
+Basic items 60%; Good items 40%; all Pokemon tiers 0%.
+
+Presets do not apply until Save. Installing this update does not automatically
+change a server's existing chances. The new menu displays the server's settings.
+
+Basic prize items / Good prize items open the editable item lists. In those lists,
+an entry such as "minecraft:diamond 1-2 x4" means 1-2 diamonds with weight 4.
+Item weights are relative within their tier. Their overall chance also depends
+on the Basic or Good tier percentage.
+More spin settings opens levels, lists and related settings.
+Custom crate/reward-table odds remain under /quests settings -> Loot tables.
+
+If a save conflicts with another admin's change, reload that tab before editing.
+Only server operators can save. Changing chances does not remove prizes already won.
+
+SOURCE
+https://github.com/WeepingAngeIs/Server-Jars/tree/feature/spin-odds-editor
