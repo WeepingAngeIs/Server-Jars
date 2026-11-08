@@ -18,6 +18,7 @@ CHANGELOG
 - Quest-book shortcut remains editable in Key Binds; default F12 for new settings.
 - Existing saved bindings are preserved and the inventory tooltip shows the current key.
 - Compressed repeated collection tasks throughout Catching and Team Training.
+- Replaced the first Poke Ball collection icon with the supplied animated white ball.
 - Added nine admin ON/OFF switches, bringing the existing settings menu to 16.
 - Preserved existing quest IDs, progress behavior and currency-bridge fixes.
 

@@ -35,6 +35,9 @@ The guide points to the inventory's top-left Poke Ball. The quest-book shortcut 
 under Controls > Key Binds; new installations default to F12. Existing saved key bindings
 are preserved, and the inventory tooltip displays the current key or how to bind it.
 
+The first Poke Ball collection quest uses the supplied transparent white-ball animation.
+Its original PNG is preserved; rendering metadata selects its four frame regions.
+
 Quest content can be edited separately from the JAR in `config/unyieldingquests/quests/`.
 Use `quest_book_source = "config_folder"` in `unyieldingquests-common.toml`, then `/quests reload`
 after editing the SNBT files. Keep existing quest/task IDs to retain progress. An in-game
