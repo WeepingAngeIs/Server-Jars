@@ -11,10 +11,56 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TutorialContentTest {
+    @Test
+    void rankVisibilityRequiresTheSpecificConfiguredRank() {
+        var publicEntry = new TutorialContent.Entry("quests", "/quests", "Open book.");
+        var unconfigured = new TutorialContent.Entry("pc", "/pc", "PC.", List.of());
+        var vip = new TutorialContent.Entry("crafting", "/crafting", "Craft.", List.of("vip"));
+        assertTrue(publicEntry.visibleTo(Set.of()));
+        assertFalse(unconfigured.visibleTo(Set.of("vip", "admin")));
+        assertFalse(vip.visibleTo(Set.of()));
+        assertFalse(vip.visibleTo(Set.of("vip_plus")));
+        assertTrue(vip.visibleTo(Set.of("vip")));
+        assertFalse(vip.visibleTo(Set.of())); // A later payload does not retain a removed rank.
+    }
+
+    @Test
+    void oldGuideMigrationPreservesCustomTextAndExplicitRankRules() {
+        String original = """
+                {"custom_note":"keep me","pages":[
+                  {"id":"claims","title":"My claims","description":"Custom description","entries":[
+                    {"command":"oparties about","usage":"/oparties about","description":"Old help"}]},
+                  {"id":"tools","title":"Tools","description":"My tools","entries":[
+                    {"command":"crafting","usage":"/crafting","description":"Custom crafting text"},
+                    {"command":"pc","usage":"/pc","description":"Custom PC text","required_ranks":["vip_plus"]}]}
+                ]}
+                """;
+        String upgraded = TutorialContent.migrateLegacy(original);
+        assertTrue(upgraded.contains("keep me"));
+        TutorialContent guide = TutorialContent.parse(upgraded);
+        assertEquals("My claims", guide.pages().getFirst().title());
+        assertEquals("Custom description", guide.pages().getFirst().description());
+        assertEquals("oparties member invite player", guide.pages().getFirst().entries().getFirst().command());
+        assertEquals("Custom crafting text", guide.pages().get(1).entries().getFirst().description());
+        assertEquals(List.of(), guide.pages().get(1).entries().getFirst().requiredRanks());
+        assertEquals(List.of("vip_plus"), guide.pages().get(1).entries().get(1).requiredRanks());
+        assertEquals(upgraded, TutorialContent.migrateLegacy(upgraded));
+    }
+
+    @Test
+    void parentWithoutAnyAllowedExecutableRouteIsNotAvailable() {
+        CommandDispatcher<Integer> dispatcher = new CommandDispatcher<>();
+        dispatcher.register(command("container")
+                .then(command("admin").requires(level -> level >= 2).executes(c -> 1)));
+        assertFalse(TutorialContent.available(dispatcher.getRoot(), 0, "container"));
+        assertTrue(TutorialContent.available(dispatcher.getRoot(), 2, "container"));
+    }
+
     private static LiteralArgumentBuilder<Integer> command(String name) {
         return LiteralArgumentBuilder.literal(name);
     }
@@ -116,6 +162,13 @@ class TutorialContentTest {
             assertTrue(content.pages().size() >= 5);
             assertTrue(content.pages().stream().flatMap(page -> page.entries().stream())
                     .anyMatch(entry -> entry.command().equals("tutorial") && entry.usage().equals("/tutorial")));
+            var entries = content.pages().stream().flatMap(page -> page.entries().stream()).toList();
+            assertFalse(entries.stream().anyMatch(entry -> entry.command().equals("oparties about")));
+            assertTrue(entries.stream().anyMatch(entry -> entry.command().equals("oparties member invite player")));
+            assertTrue(entries.stream().filter(entry -> Set.of("crafting", "pc", "healpokemon")
+                    .contains(entry.command())).allMatch(entry -> !entry.visibleTo(Set.of())));
+            assertTrue(content.pages().getFirst().description().contains("inventory"));
+            assertFalse(content.pages().getFirst().description().contains("J opens"));
         }
     }
 }

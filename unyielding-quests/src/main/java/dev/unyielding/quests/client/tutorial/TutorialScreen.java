@@ -1,6 +1,5 @@
 package dev.unyielding.quests.client.tutorial;
 
-import dev.unyielding.quests.client.ClientInit;
 import dev.unyielding.quests.client.ui.SpriteButton;
 import dev.unyielding.quests.client.ui.Theme;
 import dev.unyielding.quests.client.ui.Ui;
@@ -47,8 +46,8 @@ public final class TutorialScreen extends Screen {
         pages.add(new Page("Welcome to Unyielding",
                 "Your quick guide to the commands and controls available on this server.",
                 List.of(
-                        new Entry(questKey() + "  ·  Your quest book",
-                                "Follow chapters, track tasks and collect rewards. You can also type /quests."),
+                        new Entry("Inventory  ·  Your quest book",
+                                "Open your inventory and click the Poke Ball at the top-left. Follow chapters, track tasks and collect rewards. You can also type /quests."),
                         new Entry("/  ·  Commands",
                                 "Open chat with / and type a command. Press Tab for suggestions. Replace <name> with your own value."),
                         new Entry("/tutorial  ·  Come back anytime",
@@ -61,10 +60,10 @@ public final class TutorialScreen extends Screen {
                 pages.add(new Page(tag.getString("title"), tag.getString("description"), entries, false));
             }
         }
-        pages.add(new Page("All player commands",
+        pages.add(new Page("Your player commands",
                 data.getBoolean("directory_truncated")
                         ? "This server has a large command list. Search this index, and use /help or Tab in chat for additional commands."
-                        : "Search the commands this server makes available to players. Press Tab in chat to fill in names and other values.",
+                        : "Search the player commands available to you. Only commands available to your rank are listed. Press Tab in chat to fill in names and other values.",
                 entries(data, "directory"), true));
         pages.add(new Page("Choose your first Pokémon",
                 "Close this guide, then open starter selection when you are ready to begin.",
@@ -85,10 +84,6 @@ public final class TutorialScreen extends Screen {
             result.add(new Entry(entry.getString("usage"), entry.getString("description")));
         }
         return List.copyOf(result);
-    }
-
-    private static String questKey() {
-        return ClientInit.OPEN_QUESTS.getTranslatedKeyMessage().getString();
     }
 
     public static String starterKey() {

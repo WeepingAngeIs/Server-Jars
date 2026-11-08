@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 
 import java.nio.charset.StandardCharsets;
@@ -23,10 +24,62 @@ public record TutorialContent(List<Page> pages) {
     static final int MAX_DEPTH = 24;
     static final int MAX_DIRECTORY_BYTES = 240_000;
 
-    public record Entry(String command, String usage, String description) { }
+    public record Entry(String command, String usage, String description, List<String> requiredRanks) {
+        public Entry(String command, String usage, String description) { this(command, usage, description, null); }
+        public boolean visibleTo(Set<String> ranks) {
+            return requiredRanks == null || requiredRanks.stream().anyMatch(ranks::contains);
+        }
+    }
     public record Page(String id, String title, String description, List<Entry> entries) { }
     public record LoadResult(TutorialContent content, String error) { }
     public record Catalog(List<String> usages, boolean truncated) { }
+
+    private static final Set<String> RANK_COMMANDS = Set.of("crafting", "anvil", "smithing", "stonecutter",
+            "enderchest", "trashcan", "near", "hat", "nick", "pc", "healpokemon", "checkspawn");
+
+    /** Upgrade old generated help once, preserving custom pages, wording and explicit rank rules. */
+    public static String migrateLegacy(String json) {
+        JsonObject root = JsonParser.parseString(json).getAsJsonObject();
+        if (root.has("schema_version") && root.get("schema_version").getAsInt() >= 2) return json;
+        for (JsonElement value : array(root, "pages", 16)) {
+            JsonObject page = value.getAsJsonObject();
+            JsonArray entries = array(page, "entries", 32);
+            for (int i = entries.size() - 1; i >= 0; i--) {
+                JsonObject entry = entries.get(i).getAsJsonObject();
+                String command = string(entry, "command", 160);
+                if (command.equals("oparties about")) {
+                    entries.remove(i);
+                    continue;
+                }
+                if (command.equals("oparties member invite player") &&
+                        "Invite a player to your claims party.".equals(string(entry, "description", 600))) {
+                    entry.addProperty("description", "Invite a player to your claims party. You must be the party owner or a moderator.");
+                }
+                if (RANK_COMMANDS.contains(command.split(" ", 2)[0]) && !entry.has("required_ranks")) {
+                    entry.add("required_ranks", new JsonArray());
+                }
+            }
+            if ("claims".equals(string(page, "id", 40))) {
+                boolean found = false;
+                for (JsonElement entry : entries) {
+                    if ("oparties member invite player".equals(entry.getAsJsonObject().get("command").getAsString())) found = true;
+                }
+                if (!found) {
+                    JsonObject invite = new JsonObject();
+                    invite.addProperty("command", "oparties member invite player");
+                    invite.addProperty("usage", "/oparties member invite <player>");
+                    invite.addProperty("description", "Invite a player to your claims party. You must be the party owner or a moderator.");
+                    entries.add(invite);
+                }
+            }
+            String description = string(page, "description", 600);
+            page.addProperty("description", description.replace(
+                    "J opens it, and the Premier Ball button in your inventory opens the same book.",
+                    "Open your inventory and click the Poke Ball at the top-left to open it."));
+        }
+        root.addProperty("schema_version", 2);
+        return new GsonBuilder().setPrettyPrinting().create().toJson(root) + "\n";
+    }
 
     public String describe(String usage) {
         String normalized = usage.substring(1).replace("<", "").replace(">", "");
@@ -74,7 +127,19 @@ public record TutorialContent(List<Page> pages) {
                 if (!usage.equals("/" + commandRoot) && !usage.startsWith("/" + commandRoot + " ")) {
                     throw new IllegalArgumentException("Command usage must start with its registered command root.");
                 }
-                entries.add(new Entry(command, usage, string(entry, "description", 600)));
+                List<String> ranks = null;
+                if (entry.has("required_ranks")) {
+                    ranks = new ArrayList<>();
+                    for (JsonElement rank : array(entry, "required_ranks", 64)) {
+                        if (!rank.isJsonPrimitive() || !rank.getAsJsonPrimitive().isString()
+                                || !rank.getAsString().matches("[a-zA-Z0-9_.-]{1,64}")) {
+                            throw new IllegalArgumentException("Required ranks must be configured rank IDs.");
+                        }
+                        ranks.add(rank.getAsString().toLowerCase(java.util.Locale.ROOT));
+                    }
+                    ranks = List.copyOf(ranks);
+                }
+                entries.add(new Entry(command, usage, string(entry, "description", 600), ranks));
             }
             pages.add(new Page(id, string(page, "title", 80),
                     string(page, "description", 600), List.copyOf(entries)));
@@ -115,7 +180,27 @@ public record TutorialContent(List<Page> pages) {
             node = node.getRedirect();
             if (!permitted(node, source)) return false;
         }
-        return true;
+        return executable(node, source, Collections.newSetFromMap(new IdentityHashMap<>()), 0);
+    }
+
+    private static <S> boolean executable(CommandNode<S> node, S source, Set<CommandNode<S>> seen, int depth) {
+        if (depth > MAX_DEPTH || !seen.add(node) || !permitted(node, source)) return false;
+        if (node.getCommand() != null) return true;
+        if (node.getRedirect() != null && executable(node.getRedirect(), source, seen, depth + 1)) return true;
+        for (CommandNode<S> child : node.getChildren()) {
+            if (executable(child, source, seen, depth + 1)) return true;
+        }
+        return false;
+    }
+
+    /** A documented party-role prerequisite is explained in help, not treated as an operator permission. */
+    public static <S> boolean registeredExecutable(CommandNode<S> root, String path) {
+        CommandNode<S> node = root;
+        for (String segment : path.split(" ")) {
+            node = node.getChild(segment);
+            if (node == null) return false;
+        }
+        return node.getCommand() != null;
     }
 
     private static <S> boolean permitted(CommandNode<S> node, S source) {

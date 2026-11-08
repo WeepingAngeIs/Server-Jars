@@ -3,7 +3,7 @@
     {
       "id": "quests",
       "title": "Your quest book",
-      "description": "Follow the quest book at your own pace. J opens it, and the Premier Ball button in your inventory opens the same book.",
+      "description": "Follow the quest book at your own pace. Open your inventory and click the Poke Ball at the top-left to open it.",
       "entries": [
         {
           "command": "quests",
@@ -187,14 +187,9 @@
           "description": "Create a party for Open Parties and Claims."
         },
         {
-          "command": "oparties about",
-          "usage": "/oparties about",
-          "description": "Read your claims party information."
-        },
-        {
           "command": "oparties member invite player",
           "usage": "/oparties member invite <player>",
-          "description": "Invite a player to your claims party."
+          "description": "Invite a player to your claims party. You must be the party owner or a moderator."
         },
         {
           "command": "oparties join",
@@ -211,32 +206,38 @@
         {
           "command": "crafting",
           "usage": "/crafting",
-          "description": "Open a crafting table."
+          "description": "Open a crafting table.",
+          "required_ranks": []
         },
         {
           "command": "anvil",
           "usage": "/anvil",
-          "description": "Open an anvil."
+          "description": "Open an anvil.",
+          "required_ranks": []
         },
         {
           "command": "smithing",
           "usage": "/smithing",
-          "description": "Open a smithing table."
+          "description": "Open a smithing table.",
+          "required_ranks": []
         },
         {
           "command": "stonecutter",
           "usage": "/stonecutter",
-          "description": "Open a stonecutter."
+          "description": "Open a stonecutter.",
+          "required_ranks": []
         },
         {
           "command": "enderchest",
           "usage": "/enderchest",
-          "description": "Open your own Ender Chest."
+          "description": "Open your own Ender Chest.",
+          "required_ranks": []
         },
         {
           "command": "trashcan",
           "usage": "/trashcan",
-          "description": "Open a trash can. Items placed inside are destroyed."
+          "description": "Open a trash can. Items placed inside are destroyed.",
+          "required_ranks": []
         },
         {
           "command": "kit list",
@@ -251,17 +252,20 @@
         {
           "command": "near",
           "usage": "/near",
-          "description": "See nearby players."
+          "description": "See nearby players.",
+          "required_ranks": []
         },
         {
           "command": "hat",
           "usage": "/hat",
-          "description": "Wear the item in your hand as a hat."
+          "description": "Wear the item in your hand as a hat.",
+          "required_ranks": []
         },
         {
           "command": "nick name",
           "usage": "/nick <name>",
-          "description": "Set your display nickname."
+          "description": "Set your display nickname.",
+          "required_ranks": []
         },
         {
           "command": "rec",
@@ -283,19 +287,23 @@
         {
           "command": "pc",
           "usage": "/pc [box]",
-          "description": "Open your PC storage when this command is available."
+          "description": "Open your PC storage when this command is available.",
+          "required_ranks": []
         },
         {
           "command": "checkspawn bucket",
           "usage": "/checkspawn <bucket>",
-          "description": "Check eligible Pokemon spawns in the area. Use Tab to choose a bucket."
+          "description": "Check eligible Pokemon spawns in the area. Use Tab to choose a bucket.",
+          "required_ranks": []
         },
         {
           "command": "healpokemon",
           "usage": "/healpokemon",
-          "description": "Heal your party when the server permits this command."
+          "description": "Heal your party when the server permits this command.",
+          "required_ranks": []
         }
       ]
     }
-  ]
+  ],
+  "schema_version": 2
 }

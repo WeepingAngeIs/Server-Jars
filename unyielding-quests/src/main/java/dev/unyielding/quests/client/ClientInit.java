@@ -20,7 +20,7 @@ import org.lwjgl.glfw.GLFW;
 /** Client-only setup: key bindings, inventory buttons, cleanup on disconnect. */
 public final class ClientInit {
     public static final String CATEGORY = "key.categories.unyieldingquests";
-    public static final KeyMapping OPEN_QUESTS = new KeyMapping("key.unyieldingquests.quests", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, CATEGORY);
+    public static final KeyMapping OPEN_QUESTS = new KeyMapping("key.unyieldingquests.quests", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_F12, CATEGORY);
     public static final KeyMapping OPEN_TEAMS = new KeyMapping("key.unyieldingquests.teams", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
 
     private static boolean AUTOTEST = System.getProperty("uq.autotest", "").equals("1");
@@ -45,6 +45,10 @@ public final class ClientInit {
     private static void registerKeys(RegisterKeyMappingsEvent e) {
         e.register(OPEN_QUESTS);
         e.register(OPEN_TEAMS);
+    }
+
+    public static Component questKeyLabel() {
+        return OPEN_QUESTS.isUnbound() ? Component.literal("Set in Key Binds") : OPEN_QUESTS.getTranslatedKeyMessage();
     }
 
     public static void openQuests() {

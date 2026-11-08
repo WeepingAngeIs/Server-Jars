@@ -19,7 +19,7 @@
   "unyieldingquests.picture_motion.off": "Off",
   "unyieldingquests.configuration.inventory": "Inventory Buttons",
   "unyieldingquests.configuration.quest_book_button": "Quest Book Button",
-  "unyieldingquests.configuration.quest_book_button.tooltip": "The Premier Ball button that opens the quest book from your inventory.\nTop-left corner: at the top-left of the screen.\nNext to the inventory: just left of the inventory window.\nHidden: press J instead.",
+  "unyieldingquests.configuration.quest_book_button.tooltip": "The Premier Ball button that opens the quest book from your inventory.\nTop-left corner: at the top-left of the screen.\nNext to the inventory: just left of the inventory window.\nHidden: use the quest-book shortcut in Controls > Key Binds.",
   "unyieldingquests.configuration.button_x": "Button X Position",
   "unyieldingquests.configuration.button_x.tooltip": "Left edge of the button when it is in the top-left corner (pixels).",
   "unyieldingquests.configuration.button_y": "Button Y Position",

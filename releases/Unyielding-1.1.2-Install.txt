@@ -1,0 +1,37 @@
+UNYIELDING 1.1.2 - PLAYER GUIDE, COMPACT TASKS AND ADMIN SETTINGS
+
+Upload file: Unyielding-1.1.2.jar
+Existing project: https://www.curseforge.com/minecraft/mc-mods/unyielding
+Minecraft 1.21.1 | NeoForge | Java 21 | Client and server
+
+INSTALL
+Stop Minecraft/the server and replace the previous combined Unyielding JAR on server and clients.
+Keep Cobblemon 1.8.4, CobbleDollars 2.x, Lightman's Currency 2.3.0.5 for Minecraft 1.21,
+their required libraries and the existing resource/datapacks. Do not add separate
+UnyieldingQuests or Cobble Currency Bridge JARs alongside this combined file.
+
+CHANGELOG
+- Player guide and search exclude unknown/operator commands and hide unconfigured rank extras.
+- Guide visibility supports specific active Unyielding ranks, including expiry and removal.
+- Replaced party-about help with /oparties member invite <player>.
+- Tutorial now explains opening the inventory and clicking the top-left Poke Ball.
+- Quest-book shortcut remains editable in Key Binds; default F12 for new settings.
+- Existing saved bindings are preserved and the inventory tooltip shows the current key.
+- Compressed repeated collection tasks throughout Catching and Team Training.
+- Added nine admin ON/OFF switches, bringing the existing settings menu to 16.
+- Preserved existing quest IDs, progress behavior and currency-bridge fixes.
+
+GUIDE RANK SETTINGS
+Edit config/unyieldingquests/tutorial.json, then use /tutorial reload.
+For an entry: omitted required_ranks means public help; [] means hidden;
+["vip"] means help for active VIP members whose command is available.
+Rank IDs must match your actual rank configuration. This changes help visibility only,
+not command permissions. Existing Unyielding ranks do not define command unlocks,
+so this update does not invent a rank-to-command permission mapping.
+Old tutorial config is backed up to tutorial.json.before-1.1.2 when migrated.
+
+EDIT QUEST CONTENT WITHOUT REBUILDING
+Set quest_book_source = "config_folder" in config/unyieldingquests-common.toml.
+Edit the SNBT files in config/unyieldingquests/quests/, then run /quests reload.
+An in-game quest edit also exports the built-in book into that folder automatically.
+Keep quest/task IDs unchanged to preserve progress.

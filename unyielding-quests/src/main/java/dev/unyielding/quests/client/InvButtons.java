@@ -44,6 +44,7 @@ public final class InvButtons {
 
     static boolean wants(Screen s) {
         if (!(s instanceof InventoryScreen) && !(s instanceof CreativeModeInventoryScreen)) return false;
+        if (!ClientData.inventoryButtonsEnabled) return false;
         try {
             if (!Config.INVENTORY_BUTTONS.get()) return false;
         } catch (IllegalStateException ignored) {
@@ -60,8 +61,7 @@ public final class InvButtons {
         int y = topLeft ? UiConfig.invY() : c.getGuiTop() + 4;
         x = Math.max(0, Math.min(x, s.width - SIZE));
         y = Math.max(0, Math.min(y, s.height - SIZE));
-        String key = ClientInit.OPEN_QUESTS.getTranslatedKeyMessage().getString();
-        e.addListener(new BallButton(x, y, Component.literal("Quest Book (" + key + ")"), b -> ClientInit.openQuests()));
+        e.addListener(new BallButton(x, y, questButtonLabel(), b -> ClientInit.openQuests()));
         int w = SIZE, h = SIZE;
         if (UiConfig.teamsButton()) {
             int tx = topLeft ? x + SIZE + 2 : x;
@@ -78,6 +78,10 @@ public final class InvButtons {
         return AREAS.get(s);
     }
 
+    public static Component questButtonLabel() {
+        return Component.literal("Quest Book (" + ClientInit.questKeyLabel().getString() + ")");
+    }
+
     /** Round button showing the Premier Ball, with a red dot when rewards are waiting. */
     public static final class BallButton extends Button {
         BallButton(int x, int y, Component tooltip, OnPress onPress) {
@@ -87,6 +91,11 @@ public final class InvButtons {
 
         @Override
         protected void renderWidget(GuiGraphics g, int mx, int my, float pt) {
+            Component label = questButtonLabel();
+            if (!getMessage().equals(label)) {
+                setMessage(label);
+                setTooltip(Tooltip.create(label));
+            }
             boolean hov = isHoveredOrFocused();
             Ui.blit(g, hov ? Ui.Style.NORMAL.hover : Ui.Style.NORMAL.normal, getX(), getY(), width, height);
             g.pose().pushPose();

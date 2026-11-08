@@ -46,7 +46,7 @@ public final class UiConfig {
         b.pop();
         b.push("inventory");
         INV_BUTTONS = b.comment("The Premier Ball button that opens the quest book from your inventory.",
-                        "TOP_LEFT = top-left corner of the screen. BESIDE_INVENTORY = just left of the inventory window. OFF = hidden (press J instead).")
+                        "TOP_LEFT = top-left corner of the screen. BESIDE_INVENTORY = just left of the inventory window. OFF = hidden (use the shortcut in Controls > Key Binds instead).")
                 .defineEnum("quest_book_button", InvButtons.TOP_LEFT);
         INV_X = b.comment("Left edge of the button when it is in the top-left corner (pixels).").defineInRange("button_x", 2, 0, 4000);
         INV_Y = b.comment("Top edge of the button when it is in the top-left corner (pixels).").defineInRange("button_y", 2, 0, 4000);

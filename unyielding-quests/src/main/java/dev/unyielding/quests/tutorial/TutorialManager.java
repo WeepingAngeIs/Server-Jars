@@ -21,11 +21,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.StandardCopyOption;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Set;
 
 /** Owns server configuration, per-login delivery and live command discovery. */
 public final class TutorialManager {
@@ -42,6 +44,7 @@ public final class TutorialManager {
 
     public static void onServerStart() {
         PENDING.clear();
+        TutorialPreview.clear();
         ticks = 0;
         originData = null;
         originsComplete = null;
@@ -52,6 +55,7 @@ public final class TutorialManager {
 
     public static void onServerStop() {
         PENDING.clear();
+        TutorialPreview.clear();
         content = new TutorialContent(List.of());
     }
 
@@ -73,10 +77,26 @@ public final class TutorialManager {
             if (Files.size(CONFIG) > TutorialContent.MAX_JSON_BYTES) {
                 throw new IOException("Tutorial JSON exceeds 128 KB.");
             }
-            TutorialContent.LoadResult result = TutorialContent.parseOrFallback(
-                    Files.readString(CONFIG, StandardCharsets.UTF_8), content);
+            String saved = Files.readString(CONFIG, StandardCharsets.UTF_8);
+            String upgraded = TutorialContent.migrateLegacy(saved);
+            TutorialContent.LoadResult result = TutorialContent.parseOrFallback(upgraded, content);
             content = result.content();
             if (result.error() != null) throw new IOException(result.error());
+            if (!saved.equals(upgraded)) {
+                Path backup = CONFIG.resolveSibling("tutorial.json.before-1.1.2");
+                if (!Files.exists(backup)) Files.copy(CONFIG, backup);
+                Path temporary = Files.createTempFile(CONFIG.getParent(), "tutorial-upgrade-", ".json");
+                try {
+                    Files.writeString(temporary, upgraded, StandardCharsets.UTF_8);
+                    try {
+                        Files.move(temporary, CONFIG, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+                    } catch (java.nio.file.AtomicMoveNotSupportedException ignored) {
+                        Files.move(temporary, CONFIG, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                } finally {
+                    Files.deleteIfExists(temporary);
+                }
+            }
             return true;
         } catch (IOException | RuntimeException e) {
             UnyieldingQuests.LOGGER.warn("Could not reload tutorial from {}. Keeping valid content. {}",
@@ -158,15 +178,23 @@ public final class TutorialManager {
     }
 
     public static CompoundTag payload(ServerPlayer player) {
-        CommandSourceStack source = player.createCommandSourceStack().withPermission(0);
+        CommandSourceStack source = TutorialPreview.source(player);
         CommandNode<CommandSourceStack> root = player.getServer().getCommands().getDispatcher().getRoot();
+        Set<String> ranks = TutorialRanks.activeRanks(player);
+        Map<String, String> approved = new LinkedHashMap<>();
         CompoundTag result = new CompoundTag();
         ListTag pages = new ListTag();
         for (TutorialContent.Page page : content.pages()) {
             ListTag entries = new ListTag();
             for (TutorialContent.Entry entry : page.entries()) {
-                if (TutorialContent.available(root, source, entry.command())) {
-                    entries.add(entryTag(entry.usage(), commandDescription(entry.usage(), entry.description())));
+                boolean partyInvite = "oparties member invite player".equals(entry.command());
+                boolean accessible = partyInvite
+                        ? TutorialContent.registeredExecutable(root, entry.command())
+                        : TutorialContent.available(root, source, entry.command());
+                if (entry.visibleTo(ranks) && accessible) {
+                    String description = commandDescription(entry.usage(), entry.description());
+                    entries.add(entryTag(entry.usage(), description));
+                    approved.putIfAbsent(entry.usage(), description);
                 }
             }
             if (entries.isEmpty()) continue;
@@ -183,12 +211,14 @@ public final class TutorialManager {
         }
         result.put("pages", pages);
 
-        TutorialContent.Catalog catalog = TutorialContent.catalog(root, source);
         ListTag directory = new ListTag();
         int directoryBytes = 0;
-        boolean truncated = catalog.truncated();
-        for (String usage : catalog.usages()) {
-            String description = commandDescription(usage, content.describe(usage));
+        boolean truncated = false;
+        // Only documented player routes belong here. Discovering every registered mod command
+        // leaks operator-only and internally gated commands whose Brigadier roots look public.
+        for (Map.Entry<String, String> entry : approved.entrySet()) {
+            String usage = entry.getKey();
+            String description = entry.getValue();
             int cost = usage.getBytes(StandardCharsets.UTF_8).length
                     + description.getBytes(StandardCharsets.UTF_8).length + 64;
             if (directoryBytes + cost > 320_000) {
