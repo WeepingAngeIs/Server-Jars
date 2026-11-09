@@ -1,0 +1,23 @@
+{
+  "target": "cobblemon:mawonna",
+  "riding": {
+    "behaviours": {
+      "LAND": {
+        "key": "cobblemon:land/horse",
+        "rideSounds": [],
+        "stats": {
+          "ACCELERATION": "45-65",
+          "JUMP": "30-45",
+          "SKILL": "25-50",
+          "SPEED": "30-55",
+          "STAMINA": "40-65"
+        }
+      }
+    },
+    "seats": [
+      {
+        "locator": "middle"
+      }
+    ]
+  }
+}

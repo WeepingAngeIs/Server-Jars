@@ -1,0 +1,23 @@
+{
+  "target": "cobblemon:creepyeon",
+  "riding": {
+    "behaviours": {
+      "LAND": {
+        "key": "cobblemon:land/horse",
+        "rideSounds": [],
+        "stats": {
+          "ACCELERATION": "40-60",
+          "JUMP": "25-40",
+          "SKILL": "40-65",
+          "SPEED": "35-60",
+          "STAMINA": "50-75"
+        }
+      }
+    },
+    "seats": [
+      {
+        "locator": "middle"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Unyielding",
+  "version": "1.1.7",
+  "output": "dist/riding/Unyielding-1.1.7.jar",
+  "base": {
+    "path": "releases/Unyielding-1.1.6.jar",
+    "sha256": "e7e6de10dfd1d54cbb804698784ff5db0b65e3f1874798500d8ba8130c25b92a"
+  },
+  "reference": {
+    "file": "cu-rideable-1.3.0.jar",
+    "sha256": "d76ed9a85c5dd3c9c1e5cbe33b0f4706a27a8da3153aeb86195a6a75192368a5",
+    "use": "Behavior templates only. Native species additions and overrides are excluded."
+  },
+  "pack": {
+    "repository": "WeepingAngeIs/unyielding-mod",
+    "commit": "2965356a7af5bab11346210bb75dff00b9737123",
+    "blob": "851b01edd99cc60391a7e271e0a5ff16a87d025b"
+  }
+}

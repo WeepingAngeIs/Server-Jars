@@ -1,0 +1,23 @@
+{
+  "target": "cobblemon:lunavee",
+  "riding": {
+    "behaviours": {
+      "LAND": {
+        "key": "cobblemon:land/horse",
+        "rideSounds": [],
+        "stats": {
+          "ACCELERATION": "40-60",
+          "JUMP": "25-40",
+          "SKILL": "30-55",
+          "SPEED": "30-55",
+          "STAMINA": "30-55"
+        }
+      }
+    },
+    "seats": [
+      {
+        "locator": "middle"
+      }
+    ]
+  }
+}
