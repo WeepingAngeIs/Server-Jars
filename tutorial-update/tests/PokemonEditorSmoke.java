@@ -41,6 +41,9 @@ public final class PokemonEditorSmoke {
                 require(PokemonEditor.search("pikachu",0).getInt("total")>=1,"Species search failed");
                 originalSpecies=JsonParser.parseString(PokemonEditor.detail(ID).getString("species_json")).getAsJsonObject();
                 JsonObject edit=originalSpecies.deepCopy();edit.getAsJsonObject("baseStats").addProperty("hp",123);
+                edit.add("abilities",JsonParser.parseString("[\"pressure\"]"));
+                edit.add("moves",JsonParser.parseString("[\"1:tackle\"]"));
+                edit.add("evolutions",JsonParser.parseString("[{\"consumeHeldItem\":false,\"id\":\"uq_smoke_level\",\"learnableMoves\":[],\"requirements\":[{\"minLevel\":20,\"variant\":\"level\"}],\"result\":\"raichu\",\"variant\":\"level_up\"}]"));
                 p.server.getPlayerList().deop(p.getGameProfile());long r=PokemonEditor.revision();
                 action(p,"save_species",ID,r,edit.toString());require(PokemonEditor.revision()==r,"Non-operator changed Pokemon config");
                 p.server.getPlayerList().op(p.getGameProfile());
@@ -51,6 +54,11 @@ public final class PokemonEditorSmoke {
                 PokemonRuntime.validateSpecies(ID,edit);
                 action(p,"save_species",ID,r,edit.toString());
                 require(PokemonEditor.revision()==r+1,"Species edit did not save");
+                Pokemon probe=new Pokemon();probe.setSpecies(PokemonSpecies.getByName("pikachu"));probe.setLevel(19);
+                require(probe.rollAbility().getTemplate().equals(com.cobblemon.mod.common.api.abilities.Abilities.get("pressure")),"Edited ability pool is not active");
+                var evolution=probe.getForm().getEvolutions().stream().filter(e->e.getId().equals("uq_smoke_level")).findFirst().orElseThrow();
+                require(evolution.getRequirements().stream().anyMatch(requirement->!requirement.check(probe)),"Edited evolution allowed a level below its threshold");
+                probe.setLevel(20);require(evolution.getRequirements().stream().allMatch(requirement->requirement.check(probe)),"Edited evolution condition is not active");
                 require(PokemonEdits.read(PokemonEditor.configPath()).species().get(ID).getAsJsonObject("baseStats").get("hp").getAsInt()==123,"Species override missing on disk");
                 action(p,"save_species",ID,r,originalSpecies.toString());require(PokemonEditor.revision()==r+1,"Stale edit was accepted");
                 JsonArray files=new JsonArray();JsonObject wrapper=new JsonObject();wrapper.addProperty("id","unyieldingquests:editor/cobblemon/pikachu");
@@ -59,6 +67,8 @@ public final class PokemonEditorSmoke {
                 // Preserve the other active Pikachu files while adding one new rule.
                 JsonArray full=JsonParser.parseString(PokemonEditor.detail(ID).getString("spawns_json")).getAsJsonArray();full.add(wrapper);
                 r=PokemonEditor.revision();action(p,"save_spawns",ID,r,full.toString());require(PokemonEditor.revision()==r+1,"Spawn edit did not save");
+                require(com.cobblemon.mod.common.api.spawning.CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL().getDetails().stream()
+                        .anyMatch(detail->detail.getId().equals("uq-smoke-pikachu")&&detail.getWeight()==2.5f),"Spawn edit did not reach the active world pool");
                 require(PokemonEdits.read(PokemonEditor.configPath()).spawns().containsKey("unyieldingquests:editor/cobblemon/pikachu"),"Spawn override missing on disk");
                 file.getAsJsonArray("spawns").get(0).getAsJsonObject().addProperty("weight",-1);reject(p,"save_spawns",ID,files.toString());
                 // Recreate the editor service from the actual persisted configuration.
@@ -69,6 +79,7 @@ public final class PokemonEditorSmoke {
                 PokemonSpawnResetSmoke.exercise(p,report);
                 report.put("all_loaded_species_search_permissions_invalid_values_and_stale_edits","passed");
                 report.put("species_and_spawn_overrides_saved_and_reloaded_from_disk","passed");
+                report.put("edited_ability_pool_evolution_level_boundary_and_live_spawn_weight","passed");
                 Files.writeString(Path.of("/tmp/uq-pokemon-live-ready"),"123");phase=1;ticks=0;return;
             }
             if(phase==1) {

@@ -120,14 +120,23 @@ public final class PokemonRuntime {
         // Resolve lazy evolution sets now, before an edit can reach live data.
         parsed.getEvolutions().size();
         for (FormData form : parsed.getForms()) form.getEvolutions().size();
-        Set<String> oldForms = new HashSet<>();
-        for (FormData form : before.getForms()) if (form != before.getStandardForm()) oldForms.add(form.getName());
-        Set<String> newForms = new HashSet<>();
-        for (FormData form : parsed.getForms()) if (form != parsed.getStandardForm()) {
-            if (!newForms.add(form.getName())) throw new IllegalArgumentException("Duplicate form name.");
-        }
-        if (!newForms.containsAll(oldForms))
+        Map<String,Integer> oldForms=formCounts(before),newForms=formCounts(parsed);
+        for(var form:newForms.entrySet())if(form.getValue()>Math.max(1,oldForms.getOrDefault(form.getKey(),0)))
+            throw new IllegalArgumentException("An additional duplicate form name was introduced: "+form.getKey());
+        for(var form:oldForms.entrySet())if(newForms.getOrDefault(form.getKey(),0)<form.getValue())
             throw new IllegalArgumentException("Existing forms may be edited, but cannot be removed or renamed while the server is running.");
+    }
+
+    private static boolean standardForm(FormData form,Species species) {
+        FormData standard=species.getStandardForm();
+        // Decoded packets contain a distinct instance of the serialized standard form.
+        return form==standard||form.getName().equals(standard.getName())&&form.getAspects().isEmpty();
+    }
+
+    private static Map<String,Integer> formCounts(Species species) {
+        Map<String,Integer> counts=new HashMap<>();
+        for(FormData form:species.getForms())if(!standardForm(form,species))counts.merge(form.getName(),1,Integer::sum);
+        return counts;
     }
 
     private static Species parseSpecies(String id, JsonObject json) {
@@ -269,7 +278,12 @@ public final class PokemonRuntime {
     private static Map<ResourceLocation, SpawnSet> parseSpawns(Map<String, JsonObject> files) {
         Map<ResourceLocation, SpawnSet> result = new LinkedHashMap<>();
         var pool = CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL();
-        Set<String> ids = new HashSet<>();
+        Map<String,Integer> counts=new HashMap<>(),previousCounts=new HashMap<>();
+        Set<String> changedPokemonIds=new HashSet<>();
+        for(JsonObject file:currentSpawns.values())if(file.has("spawns"))for(JsonElement value:file.getAsJsonArray("spawns")) {
+            JsonObject spawn=value.getAsJsonObject();
+            if(spawn.has("id")&&!spawn.get("id").getAsString().isBlank())previousCounts.merge(spawn.get("id").getAsString(),1,Integer::sum);
+        }
         for (var entry : files.entrySet()) {
             JsonObject json = entry.getValue();
             boolean edited = !json.equals(currentSpawns.get(entry.getKey()));
@@ -277,12 +291,16 @@ public final class PokemonRuntime {
                 throw new IllegalArgumentException("A spawn file needs a spawns array.");
             for (JsonElement value : json.getAsJsonArray("spawns")) {
                 JsonObject spawn = value.getAsJsonObject();
-                if (!spawn.has("id") || spawn.get("id").getAsString().isBlank())
-                    throw new IllegalArgumentException("Every spawn needs an id.");
-                if (!ids.add(spawn.get("id").getAsString()) && edited)
-                    throw new IllegalArgumentException("Duplicate spawn id: " + spawn.get("id").getAsString());
-                if (edited && spawn.has("pokemon") && spawn.get("pokemon").isJsonPrimitive())
-                    validatePokemonProperties(spawn.get("pokemon").getAsString());
+                String id=spawn.has("id")?spawn.get("id").getAsString():"";
+                if(!id.isBlank())counts.merge(id,1,Integer::sum);
+                boolean changed=edited&&!originalSpawnUnchanged(entry.getKey(),spawn);
+                boolean pokemon=spawn.has("pokemon")&&spawn.get("pokemon").isJsonPrimitive()
+                        &&(!spawn.has("type")||!spawn.get("type").getAsString().equals("empty"));
+                if(!changed)continue;
+                if(pokemon) {
+                    if(id.isBlank())throw new IllegalArgumentException("Every Pokemon spawn needs an id.");
+                    changedPokemonIds.add(id);validatePokemonProperties(spawn.get("pokemon").getAsString());
+                }
                 if (spawn.has("weight") && (!Double.isFinite(spawn.get("weight").getAsDouble()) || spawn.get("weight").getAsDouble() < 0))
                     throw new IllegalArgumentException("Spawn weights must be finite and nonnegative.");
                 if (spawn.has("percentage") && (spawn.get("percentage").getAsDouble() < 0 || spawn.get("percentage").getAsDouble() > 100))
@@ -294,7 +312,7 @@ public final class PokemonRuntime {
             for (int index = 0; index < set.getSpawns().size(); index++) {
                 SpawnDetail detail = set.getSpawns().get(index);
                 detail.getSpawnablePositionType();
-                if (detail.getBucket().isBlank()) throw new IllegalArgumentException("Every spawn needs a bucket.");
+                if (edited&&detail.getBucket().isBlank()) throw new IllegalArgumentException("Every spawn needs a bucket.");
                 if (edited && detail.isModDependencySatisfied() && !detail.isValid() && set.isEnabled())
                     throw new IllegalArgumentException("Invalid enabled spawn: " + detail.getId());
                 if (edited) validateConditionFields(json.getAsJsonArray("spawns").get(index).getAsJsonObject(), detail,
@@ -302,7 +320,16 @@ public final class PokemonRuntime {
             }
             result.put(ResourceLocation.parse(entry.getKey()), set);
         }
+        for(String id:changedPokemonIds)if(counts.getOrDefault(id,0)>Math.max(1,previousCounts.getOrDefault(id,0)))
+            throw new IllegalArgumentException("Duplicate Pokemon spawn id: "+id);
         return result;
+    }
+
+    private static boolean originalSpawnUnchanged(String file,JsonObject spawn) {
+        JsonObject original=currentSpawns.get(file);
+        if(original==null||!original.has("spawns"))return false;
+        for(JsonElement value:original.getAsJsonArray("spawns"))if(spawn.equals(value))return true;
+        return false;
     }
 
     private static JsonObject originalSpawn(String file, String id) {
@@ -370,7 +397,8 @@ public final class PokemonRuntime {
         }
         if (!replacements.isEmpty() && hasActiveBattles())
             throw new IllegalStateException("Finish active Pokemon battles before applying species edits. Spawn-only edits remain available.");
-        Map<ResourceLocation, SpawnSet> spawns = parseSpawns(spawnFiles);
+        boolean spawnChanged=!spawnFiles.equals(currentSpawns);
+        Map<ResourceLocation, SpawnSet> spawns = spawnChanged?parseSpawns(spawnFiles):Map.of();
         var pool = CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL();
         List<SpawnDetail> oldSpawns = new ArrayList<>(pool.getDetails());
         Map<Set<MoveTemplate>, Set<MoveTemplate>> evolutionMoves = new IdentityHashMap<>();
@@ -393,8 +421,10 @@ public final class PokemonRuntime {
                 // Evolution move resolution must see all of the new species definitions together.
                 for (Species value : PokemonSpecies.getSpecies()) value.resolveEvolutionMoves$common();
             }
-            CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL().reload(spawns);
-            CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL().onServerLoad(server);
+            if(spawnChanged) {
+                CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL().reload(spawns);
+                CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL().onServerLoad(server);
+            }
             if (!replacements.isEmpty()) publishSpecies(server);
             currentSpecies = copy(species);
             currentSpawns = copy(spawnFiles);
@@ -441,13 +471,15 @@ public final class PokemonRuntime {
     }
 
     private static void replaceSpecies(Species target, Species source, List<Restore> rollback) throws ReflectiveOperationException {
-        Map<String, FormData> oldForms = new HashMap<>();
-        for (FormData form : target.getForms()) oldForms.put(form.getName(), form);
+        Map<String,Deque<FormData>> oldForms = new HashMap<>();
+        for(FormData form:target.getForms())if(!standardForm(form,target))oldForms.computeIfAbsent(form.getName(),key->new ArrayDeque<>()).add(form);
         FormData standard = target.getStandardForm();
         source.initialize();
+        copyFields(standard,source.getStandardForm(),FormData.class,Set.of(),rollback);
+        standard.setSpecies(target);
         List<FormData> forms = new ArrayList<>();
         for (FormData candidate : source.getForms()) {
-            FormData existing = candidate == source.getStandardForm() ? standard : oldForms.get(candidate.getName());
+            FormData existing=standardForm(candidate,source)?standard:takeForm(oldForms.get(candidate.getName()),candidate);
             if (existing == null) existing = candidate;
             else copyFields(existing, candidate, FormData.class, Set.of(), rollback);
             existing.setSpecies(target);
@@ -465,6 +497,15 @@ public final class PokemonRuntime {
         formsField.set(target, forms);
         target.initialize();
         standard.initialize(target);
+    }
+
+    private static FormData takeForm(Deque<FormData> candidates,FormData desired) {
+        if(candidates==null||candidates.isEmpty())return null;
+        for(Iterator<FormData> iterator=candidates.iterator();iterator.hasNext();) {
+            FormData form=iterator.next();
+            if(new HashSet<>(form.getAspects()).equals(new HashSet<>(desired.getAspects()))){iterator.remove();return form;}
+        }
+        return candidates.removeFirst();
     }
 
     private static void copyFields(Object destination, Object source, Class<?> type, Set<String> skip,
