@@ -42,6 +42,7 @@ public final class PokemonLiveClientSmoke {
             require(retained.getForm()==retainedForm,"Existing party Pokemon lost its form reference");
             require(retained.getForm().getBaseStats().entrySet().stream().anyMatch(e->e.getKey().getShowdownId().equals("hp")&&e.getValue()==123),
                     "Existing party Pokemon form did not receive edited HP");
+            PokemonProgressClientSmoke.exercise(mc,report);
             PokemonEditorClientSmoke.exercise(mc,report);
             report.put("real_connected_client_received_edited_species_stats","passed");
             report.put("existing_party_pokemon_species_and_form_references_updated_in_place","passed");

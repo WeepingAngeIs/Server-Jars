@@ -88,7 +88,9 @@ final class PokemonEmbeddedClientSmoke {
         context.put(RenderContext.Companion.getSPECIES(),id); context.put(RenderContext.Companion.getTEXTURE(),texture);
         context.put(RenderContext.Companion.getASPECTS(),aspects); context.put(RenderContext.Companion.getSCALE(),1f);
         context.put(RenderContext.Companion.getDO_QUIRKS(),false); context.put(RenderContext.Companion.getPOSABLE_STATE(),state);
-        var oldState = poser.getCurrentState(); var oldContext = poser.getContext();
+        var oldState = poser.getCurrentState(); RenderContext oldContext;
+        try { oldContext=poser.getContext(); }
+        catch(kotlin.UninitializedPropertyAccessException unused) { oldContext=new RenderContext(); }
         state.setCurrentModel(poser); poser.setCurrentState(state); poser.setContext(context); poser.setDefault();
         graphics.pose().pushPose();
         try {

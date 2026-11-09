@@ -4,5 +4,5 @@
   "package": "dev.unyielding.quests.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": ["PokemonCompanionProgressMixin", "PokemonProgressRequirementMixin"],
-  "client": ["PokemonSpeciesSyncMixin"]
+  "client": ["PokemonSpeciesSyncMixin", "PokemonCounterDisplayMixin"]
 }

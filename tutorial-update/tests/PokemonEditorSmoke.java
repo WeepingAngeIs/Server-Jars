@@ -77,6 +77,7 @@ public final class PokemonEditorSmoke {
                 require(JsonParser.parseString(PokemonEditor.detail(ID).getString("species_json")).getAsJsonObject().getAsJsonObject("baseStats").get("hp").getAsInt()==123,"Species edit did not survive service restart");
                 PokemonCounterSmoke.exercise(p,report);
                 PokemonSpawnResetSmoke.exercise(p,report);
+                PokemonProgressServerSmoke.exercise(p,report);
                 report.put("all_loaded_species_search_permissions_invalid_values_and_stale_edits","passed");
                 report.put("species_and_spawn_overrides_saved_and_reloaded_from_disk","passed");
                 report.put("edited_ability_pool_evolution_level_boundary_and_live_spawn_weight","passed");

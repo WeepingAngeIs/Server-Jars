@@ -45,6 +45,7 @@ public class ServerEvents {
         if (e.getEntity() instanceof ServerPlayer p) {
             TeamManager.onLogin(p);
             dev.unyielding.quests.settings.AdminSettings.sync(p, false, "", false);
+            if(net.neoforged.fml.ModList.get().isLoaded("cobblemon"))dev.unyielding.quests.settings.PokemonProgressSync.login(p);
             QuestManager.onLogin(p);
             dev.unyielding.quests.spin.DailyLogin.onLogin(p);
             TutorialManager.onLogin(p);

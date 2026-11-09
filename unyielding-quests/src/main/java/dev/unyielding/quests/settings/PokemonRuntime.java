@@ -528,6 +528,7 @@ public final class PokemonRuntime {
             return Unit.INSTANCE;
         });
         for (var player : server.getPlayerList().getPlayers()) PokemonSpecies.INSTANCE.sync(player);
+        PokemonProgressSync.publish(server);
     }
 
     private static Map<String, JsonObject> copy(Map<String, JsonObject> source) {
