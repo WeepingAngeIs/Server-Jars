@@ -1,0 +1,24 @@
+Unyielding 1.1.7: Fairy Sliggoo + Inkyeon visual fixes
+
+Replace the existing Unyielding-1.1.7.jar in the client mods folder with this
+file while Minecraft is closed. Do not install two copies of Unyielding.
+Use the same patched JAR on the server when synchronizing the pack.
+Keep the original as a backup outside the mods folder.
+
+Fairy Sliggoo: original Cobblemon 1.8.4 eyes and mouth restored, including
+normal/shiny face textures. Fairy decorations and all other pixels retained.
+Inkyeon: only the rear hip/knee/ankle/foot chains in standing and battle idle
+are stabilized. Walking, front legs, body, tail and ribbons are unchanged.
+
+No stats, evolutions, moves, riding definitions, quests, Java classes, version
+metadata, Mawonna, Corvislight or other species were changed.
+
+An old separate Mawonna/Fakemon resource pack can override the embedded
+assets. Disable an obsolete duplicate only when it supplies these assets.
+Leave unrelated resource packs and the Reactive Music songpack alone.
+
+Validation: structural and preservation checks passed. This patch has not
+been tested visually in a running Minecraft client.
+
+Source face assets: Cobblemon 1.8.4, Sliggoo normal/shiny. Existing bundled
+license and credit documents remain unchanged.

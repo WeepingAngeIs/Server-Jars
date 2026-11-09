@@ -1,0 +1,159 @@
+{
+  "input_sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b",
+  "runtime_tested": false,
+  "validation_scope": "Archive, JSON, exact stock face assets, rear-chain motion and preservation audit; no live game test.",
+  "fairy_sliggoo": {
+    "stock_version": "Cobblemon 1.8.4 NeoForge",
+    "restored_model_bones": [
+      "eye_left",
+      "eye_right",
+      "mouth"
+    ],
+    "face_uv_rectangles": [
+      [
+        0,
+        0,
+        2,
+        3
+      ],
+      [
+        0,
+        3,
+        2,
+        6
+      ],
+      [
+        0,
+        61,
+        7,
+        64
+      ],
+      [
+        2,
+        0,
+        4,
+        3
+      ],
+      [
+        2,
+        3,
+        4,
+        6
+      ],
+      [
+        7,
+        61,
+        14,
+        64
+      ],
+      [
+        14,
+        61,
+        21,
+        63
+      ],
+      [
+        20,
+        59,
+        22,
+        61
+      ],
+      [
+        21,
+        61,
+        28,
+        63
+      ],
+      [
+        22,
+        57,
+        27,
+        59
+      ],
+      [
+        22,
+        59,
+        27,
+        61
+      ],
+      [
+        27,
+        57,
+        32,
+        59
+      ],
+      [
+        27,
+        59,
+        29,
+        61
+      ],
+      [
+        29,
+        59,
+        34,
+        61
+      ]
+    ],
+    "non_face_bones_unchanged": true,
+    "textures": {
+      "normal": {
+        "face_pixels_changed": 1040,
+        "outside_face_pixels_changed": 0,
+        "reference_texture_sha256": "c8892b665f73a24360d192fe7b0a97753758e8c7f5ba42b1ce514df0972507a5"
+      },
+      "shiny": {
+        "face_pixels_changed": 1424,
+        "outside_face_pixels_changed": 0,
+        "reference_texture_sha256": "1c456328b252e8e5e4b3051cc298a8b99f4c2a1f949bd14c10491c877c64c97b"
+      }
+    },
+    "reference_model_sha256": "fc801580b3844c13e7e7ea62d5689079b91d38b24d262d4e84e8cba5ba0fb9f1"
+  },
+  "inkyeon": {
+    "changed_animations": [
+      "animation.inkyeon.playful_idle",
+      "animation.inkyeon.battle_idle"
+    ],
+    "stabilized_bones": [
+      "back_leg_left",
+      "knee_left",
+      "ankle_left",
+      "foot_left",
+      "back_leg_right",
+      "knee_right",
+      "ankle_right",
+      "foot_right"
+    ],
+    "standing_and_battle_rear_chains_time_independent": true,
+    "ground_idle_and_walking_unchanged": true,
+    "all_other_bones_and_animations_unchanged": true
+  },
+  "status": "passed",
+  "output": "Unyielding-1.1.7.jar",
+  "output_sha256": "ed4b52db543603e0d3153518a7555c281ff3dddad693ec6452f3e45f6b356f48",
+  "total_entries": 1523,
+  "unchanged_entries": 1519,
+  "changed_entries": [
+    {
+      "path": "assets/mawonna/bedrock/pokemon/animations/inkyeon/inkyeon.animation.json",
+      "before_sha256": "aec30f474e5d9be2802465f09ee8745242baa44ae75036a6af58bc68ec9a4f5b",
+      "after_sha256": "71359eae223422609bacdcc01601f1e8bbca6fcbdc82c9419ab55ab058fdc1f2"
+    },
+    {
+      "path": "assets/mawonna/bedrock/pokemon/models/fairy_sliggoo/fairy_sliggoo.geo.json",
+      "before_sha256": "d1b5fa83f43392560073f0a01305eb0c6555785b9ca417d7cc96d7e3436f631e",
+      "after_sha256": "27d446a54340cd3d653cb7811af440e2fc8c455c6a3d15d1d67642b7853a5ec0"
+    },
+    {
+      "path": "assets/mawonna/textures/pokemon/fairy_sliggoo/fairy_sliggoo.png",
+      "before_sha256": "e34acb8f8b5ac87dbbbad709e984109d611126f3da49596db655f91790b0da42",
+      "after_sha256": "a4fada61eb7ed5416298f3200800e750857207e7dc879d67c1ec84c6bfa8e2ab"
+    },
+    {
+      "path": "assets/mawonna/textures/pokemon/fairy_sliggoo/fairy_sliggoo_shiny.png",
+      "before_sha256": "e027ae6be2051905e588f190b22ff1a8889d6086cd8860ff08e736409a2e9554",
+      "after_sha256": "02fae2c630e81ebe25787780fbacf0c893c532f62074d929e137512e0128cb61"
+    }
+  ]
+}
