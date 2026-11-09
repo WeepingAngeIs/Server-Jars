@@ -132,7 +132,8 @@ public final class PokemonEditor {
             data.putLong("revision",state.revision());data.putString("id",action.id());
             String message=Objects.toString(failure.getMessage(),"Invalid Pokemon data.");
             data.putString("message","Not saved: "+message.substring(0,Math.min(400,message.length())));reply(p,data,false);
-            if(!(failure instanceof IllegalArgumentException))UnyieldingQuests.LOGGER.warn("Pokemon editor action failed",failure);
+            if(failure instanceof IllegalArgumentException)UnyieldingQuests.LOGGER.warn("Rejected Pokemon editor action {} for {}: {}",action.operation(),action.id(),message);
+            else UnyieldingQuests.LOGGER.warn("Pokemon editor action failed",failure);
         }
     }
     private static void part(ServerPlayer p,Action action) {

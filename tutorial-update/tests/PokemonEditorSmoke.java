@@ -2,6 +2,8 @@ package dev.unyielding.bundlesmoke;
 
 import com.google.gson.*;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
+import com.cobblemon.mod.common.Cobblemon;
+import com.cobblemon.mod.common.pokemon.Pokemon;
 import dev.unyielding.quests.settings.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,12 +20,20 @@ public final class PokemonEditorSmoke {
     private static int phase,ticks;private static boolean wasOp;
     private static final String ID="cobblemon:pikachu";
     private static String originalFile;private static JsonObject originalSpecies;
+    private static Pokemon fixture;
     private static final Map<String,Object> report=new LinkedHashMap<>();
     @SubscribeEvent public static void tick(ServerTickEvent.Post event) {
         if(phase==3||!Files.exists(Path.of("/tmp/uq-balance-live-passed.json")))return;
         ServerPlayer p=event.getServer().getPlayerList().getPlayerByName("Dev");if(p==null)return;
         try {
             if(phase==0) {
+                fixture=new Pokemon();fixture.setSpecies(PokemonSpecies.getByName("pikachu"));fixture.setLevel(10);
+                require(Cobblemon.INSTANCE.getStorage().getParty(p).add(fixture),"Party fixture needs a free slot");
+                Files.writeString(Path.of("/tmp/uq-pokemon-party-uuid"),fixture.getUuid().toString());phase=4;ticks=0;return;
+            }
+            if(phase==4) {
+                require(++ticks<900,"Client did not retain existing party fixture");
+                if(!Files.exists(Path.of("/tmp/uq-pokemon-party-retained")))return;
                 report.putAll(BundleSmoke.verifyProductionJar());
                 wasOp=p.server.getPlayerList().isOp(p.getGameProfile());
                 originalFile=Files.exists(PokemonEditor.configPath())?Files.readString(PokemonEditor.configPath()):null;
@@ -38,6 +48,7 @@ public final class PokemonEditorSmoke {
                 JsonObject bad=originalSpecies.deepCopy();bad.getAsJsonObject("baseStats").addProperty("hp",-1);reject(p,"save_species",ID,bad.toString());
                 bad=originalSpecies.deepCopy();JsonArray badAbilities=new JsonArray();badAbilities.add("not_a_real_ability");bad.add("abilities",badAbilities);reject(p,"save_species",ID,bad.toString());
                 bad=originalSpecies.deepCopy();bad.addProperty("primaryType","not_a_real_type");reject(p,"save_species",ID,bad.toString());
+                PokemonRuntime.validateSpecies(ID,edit);
                 action(p,"save_species",ID,r,edit.toString());
                 require(PokemonEditor.revision()==r+1,"Species edit did not save");
                 require(PokemonEdits.read(PokemonEditor.configPath()).species().get(ID).getAsJsonObject("baseStats").get("hp").getAsInt()==123,"Species override missing on disk");
@@ -79,5 +90,6 @@ public final class PokemonEditorSmoke {
         action(p,"reset_spawns",ID,PokemonEditor.revision(),"");
         if(originalFile==null)Files.deleteIfExists(PokemonEditor.configPath());else Files.writeString(PokemonEditor.configPath(),originalFile);
         if(!wasOp)p.server.getPlayerList().deop(p.getGameProfile());originalSpecies=null;
+        if(fixture!=null){Cobblemon.INSTANCE.getStorage().getParty(p).remove(fixture);fixture=null;}
     }
 }

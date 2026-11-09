@@ -3,5 +3,6 @@
   "minVersion": "0.8",
   "package": "dev.unyielding.quests.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["PokemonCompanionProgressMixin", "PokemonProgressRequirementMixin"]
+  "mixins": ["PokemonCompanionProgressMixin", "PokemonProgressRequirementMixin"],
+  "client": ["PokemonSpeciesSyncMixin"]
 }

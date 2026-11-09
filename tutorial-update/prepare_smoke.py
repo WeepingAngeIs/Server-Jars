@@ -21,6 +21,14 @@ for before, after in replacements.items():
     template = template.replace(before, after)
 # Include the exact EMI release used by the player's instance in the cloud runtime.
 template = template.replace('namespace["main"]()', 'namespace["DEPENDENCIES"]["EMI 1.1.24 NeoForge"] = "5sIPA1To"\nnamespace["main"]()')
+# Exercise only resources embedded in the production JAR. Keep older release harnesses unchanged.
+anchor = 'template = (ROOT / "combined-unyielding/prepare_smoke.py").read_text()'
+assert template.count(anchor) == 1
+template = template.replace(anchor, anchor + '''
+pack_start = template.index('    pack = HARNESS / "run/resourcepacks/Mawonna.zip"')
+pack_end = template.index('    # Copy the already-accepted EULA', pack_start)
+template = template[:pack_start] + template[pack_end:]
+''')
 namespace = {"__name__": "tutorial_test_preparation", "__file__": str(__file__)}
 exec(compile(template, "accepted_currency_harness_preparation", "exec"), namespace)
 
@@ -38,6 +46,16 @@ checks = ROOT / "tutorial-update/smoke-harness/src/main/java/dev/unyielding/bund
 for source in (ROOT / "tutorial-update/tests").glob("*.java"):
     shutil.copy2(source, checks / source.name)
 
+client = checks / "BundleClientSmoke.java"
+source = client.read_text()
+old = 'mc.getResourcePackRepository().getSelectedIds().contains("file/Mawonna.zip")'
+assert source.count(old) == 1
+source = source.replace(old, 'mc.getResourcePackRepository().getSelectedIds().stream().noneMatch(id -> id.startsWith("file/"))')
+source = source.replace('"Pinned Mawonna resource pack was not loaded"', '"A separate resource pack was unexpectedly loaded"')
+source = source.replace('report.put("mawonna_pack_retained", true);', 'report.put("embedded_custom_resources_loaded", true);')
+source = source.replace('report.put("species_textures", textures);', 'report.put("resolved_texture_variant_count", textures.size() * 2);')
+client.write_text(source)
+
 for helper in ("CompactTaskClientSmoke.java", "TutorialAccessServerSmoke.java", "AdminFeatureSmoke.java", "AdminFeatureClientSmoke.java", "EmiQuestClientSmoke.java", "ConfigEditorSmoke.java", "LootTableServerSmoke.java", "LootEditorClientSmoke.java", "BalanceEditorSmoke.java", "BalanceLiveSmoke.java", "BalanceClientSmoke.java", "BalanceUiSmoke.java", "MusicEditorSmoke.java", "MusicClientSmoke.java", "PokemonEditorSmoke.java", "PokemonLiveClientSmoke.java", "PokemonEditorClientSmoke.java", "PokemonCounterSmoke.java"):
     assert (checks / helper).is_file(), f"Runtime assertions are missing: {helper}"
 runner_path = ROOT / "tutorial-update/run_smoke.generated.sh"
@@ -54,4 +72,5 @@ for before, after in runner_replacements.items():
 runner = runner.replace("/tmp/uq-balance-client-failed.txt; do", "/tmp/uq-balance-client-failed.txt /tmp/uq-pokemon-server-failed.txt /tmp/uq-pokemon-client-failed.txt; do")
 runner = runner.replace("&& -f /tmp/uq-balance-client-passed.json ]]; then", "&& -f /tmp/uq-balance-client-passed.json && -f /tmp/uq-pokemon-server-passed.json && -f /tmp/uq-pokemon-client-passed.json ]]; then")
 runner = runner.replace("/tmp/uq-balance-*; do", "/tmp/uq-balance-* /tmp/uq-pokemon-*; do")
+runner = runner.replace('resourcePacks:["vanilla","file/Mawonna.zip"]', 'resourcePacks:["vanilla"]')
 runner_path.write_text(runner)

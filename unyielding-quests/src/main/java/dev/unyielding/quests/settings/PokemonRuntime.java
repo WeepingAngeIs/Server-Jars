@@ -382,6 +382,27 @@ public final class PokemonRuntime {
 
     private record Restore(Object owner, Field field, Object value) { }
 
+    /** Native species packets replace registry entries; retain objects used by existing client Pokemon. */
+    public static Collection<Species> preserveClientReferences(Collection<Species> incoming) {
+        List<Restore> rollback = new ArrayList<>();
+        List<Species> entries = new ArrayList<>(incoming.size());
+        try {
+            for (Species source : incoming) {
+                Species existing = PokemonSpecies.getByIdentifier(source.getResourceIdentifier());
+                if (existing != null && existing != source) {
+                    replaceSpecies(existing, source, rollback);
+                    entries.add(existing);
+                } else entries.add(source);
+            }
+            return entries;
+        } catch (RuntimeException | ReflectiveOperationException failure) {
+            Collections.reverse(rollback);
+            for (Restore restore : rollback) try { restore.field().set(restore.owner(), restore.value()); }
+            catch (ReflectiveOperationException e) { failure.addSuppressed(e); }
+            throw new IllegalStateException("Could not synchronize existing Pokemon species.", failure);
+        }
+    }
+
     private static void replaceSpecies(Species target, Species source, List<Restore> rollback) throws ReflectiveOperationException {
         Map<String, FormData> oldForms = new HashMap<>();
         for (FormData form : target.getForms()) oldForms.put(form.getName(), form);

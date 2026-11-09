@@ -52,7 +52,16 @@ final class PokemonEditorClientSmoke {
                 require(has(mc.screen,"Create a spawn rule"),"Command-only Pokemon need in-game spawn creation");
                 require(has(mc.screen,"Edit all spawn files and conditions"),"Full spawn/condition editor missing");
                 press(mc.screen,"editor-eevee-1 · 1.0");draw(mc,mc.screen,size);
-                require(fields(mc.screen).length >= 3,"Spawn weight, bucket and level controls missing");bounds(mc.screen,size);
+                Screen rule=mc.screen;require(fields(rule).length == 11,"Spawn weight, bucket, level, biome, dimension and area controls missing");bounds(rule,size);
+                press(rule,"Use my current dimension");require(fields(rule)[4].getValue().equals(mc.level.dimension().location().toString()),"Current dimension helper incorrect");
+                fields(rule)[5].setValue("100");fields(rule)[6].setValue("0");press(rule,"Review");
+                require(mc.screen==rule,"Inverted spawn area limits accepted");
+                fields(rule)[5].setValue("-16");fields(rule)[6].setValue("16");press(rule,"Review");draw(mc,mc.screen,size);
+                require(mc.screen instanceof PokemonEditorScreen.JsonScreen,"Spawn review did not open JSON editor");
+                MultiLineEditBox spawnReview=mc.screen.children().stream().filter(MultiLineEditBox.class::isInstance).map(MultiLineEditBox.class::cast).findFirst().orElseThrow();
+                var condition=com.google.gson.JsonParser.parseString(spawnReview.getValue()).getAsJsonArray().get(0).getAsJsonObject().getAsJsonObject("data").getAsJsonArray("spawns").get(0).getAsJsonObject().getAsJsonObject("condition");
+                require(condition.get("minX").getAsDouble()==-16&&condition.get("maxX").getAsDouble()==16,"Spawn area fields did not reach review draft");
+                require(condition.getAsJsonArray("dimensions").get(0).getAsString().equals(mc.level.dimension().location().toString()),"Spawn dimension field did not reach review draft");
                 AdminSettingsScreen admin=new AdminSettingsScreen(null);draw(mc,admin,size);
                 require(has(admin,"Pokemon editor"),"Admin menu lacks Pokemon editor");bounds(admin,size);
             }
