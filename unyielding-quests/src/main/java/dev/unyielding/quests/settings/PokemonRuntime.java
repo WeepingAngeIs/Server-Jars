@@ -112,7 +112,7 @@ public final class PokemonRuntime {
         Set<String> known = fieldNames(Species.class);
         for (String key : json.keySet()) if (!known.contains(key) && (original == null || !original.has(key)))
             throw new IllegalArgumentException("Unknown species setting: " + key);
-        validateData(json, false);
+        validateData(json, false, original);
         if (!json.has("baseStats") || !json.has("primaryType") || !json.has("abilities"))
             throw new IllegalArgumentException("Species need baseStats, primaryType and abilities.");
         Species parsed = parseSpecies(id, json);
@@ -137,31 +137,38 @@ public final class PokemonRuntime {
     }
 
     /** Validate registered names explicitly: some Cobblemon adapters silently discard unknown moves. */
-    private static void validateData(JsonElement element, boolean form) {
+    private static void validateData(JsonElement element, boolean form, JsonElement baseline) {
         if (element.isJsonArray()) {
-            for (JsonElement child : element.getAsJsonArray()) validateData(child, form);
+            JsonArray array = element.getAsJsonArray();
+            JsonArray old = baseline != null && baseline.isJsonArray() ? baseline.getAsJsonArray() : null;
+            for (int i = 0; i < array.size(); i++) validateData(array.get(i), form, old != null && i < old.size() ? old.get(i) : null);
             return;
         }
         if (!element.isJsonObject()) return;
         JsonObject object = element.getAsJsonObject();
+        JsonObject original = baseline != null && baseline.isJsonObject() ? baseline.getAsJsonObject() : null;
         if (object.has("baseStats")) {
             JsonObject stats = object.getAsJsonObject("baseStats");
             Set<String> names = Set.of("hp", "attack", "defence", "special_attack", "special_defence", "speed");
             if (!form && !stats.keySet().containsAll(names)) throw new IllegalArgumentException("All six base stats are required.");
             for (var stat : stats.entrySet()) {
                 if (!names.contains(stat.getKey())) throw new IllegalArgumentException("Unknown base stat: " + stat.getKey());
+                if (original != null && original.has("baseStats") && original.get("baseStats").isJsonObject()
+                        && stat.getValue().equals(original.getAsJsonObject("baseStats").get(stat.getKey()))) continue;
                 double value = stat.getValue().getAsDouble();
                 if (!Double.isFinite(value) || value != Math.rint(value) || value < 1 || value > 10000)
                     throw new IllegalArgumentException("Base stats must be whole numbers from 1 to 10000.");
             }
         }
-        numeric(object, "catchRate", 0, 255, true);
-        numeric(object, "baseFriendship", 0, 255, true);
-        numeric(object, "baseExperienceYield", 0, 1000000, true);
-        numeric(object, "eggCycles", 0, 1000000, true);
-        numeric(object, "maleRatio", -1, 1, false);
-        for (String name : List.of("baseScale", "height", "weight")) numeric(object, name, 0.0001, 10000, false);
-        for (String type : List.of("primaryType", "secondaryType")) if (object.has(type) && !object.get(type).isJsonNull()) {
+        changedNumeric(object, original, "catchRate", 0, 255, true);
+        changedNumeric(object, original, "baseFriendship", 0, 255, true);
+        changedNumeric(object, original, "baseExperienceYield", 0, 1000000, true);
+        changedNumeric(object, original, "eggCycles", 0, 1000000, true);
+        changedNumeric(object, original, "maleRatio", -1, 1, false);
+        for (String name : List.of("baseScale", "height")) changedNumeric(object, original, name, 0.0001, 10000, false);
+        // Gigantamax species intentionally use zero for their unspecified weight.
+        changedNumeric(object, original, "weight", 0, 10000, false);
+        for (String type : List.of("primaryType", "secondaryType")) if (object.has(type) && !object.get(type).isJsonNull() && !unchanged(object, original, type)) {
             String name = object.get(type).getAsString();
             if (ElementalTypes.get(name) == null) throw new IllegalArgumentException("Unknown elemental type: " + name);
         }
@@ -169,12 +176,14 @@ public final class PokemonRuntime {
             JsonArray array = object.getAsJsonArray("abilities");
             if (array.isEmpty()) throw new IllegalArgumentException("At least one ability is required.");
             for (JsonElement ability : array) if (ability.isJsonPrimitive()) {
+                if (contains(original, "abilities", ability)) continue;
                 String name = ability.getAsString();
                 if (name.startsWith("h:")) name = name.substring(2);
                 if (Abilities.get(name) == null) throw new IllegalArgumentException("Unknown ability: " + name);
             }
         }
         if (object.has("moves")) for (JsonElement move : object.getAsJsonArray("moves")) {
+            if (contains(original, "moves", move)) continue;
             if (!move.isJsonPrimitive()) throw new IllegalArgumentException("Use registered learnset entries such as 1:tackle.");
             String entry = move.getAsString();
             int colon = entry.indexOf(':');
@@ -193,13 +202,39 @@ public final class PokemonRuntime {
                 if (!evolution.has("id") || !ids.add(evolution.get("id").getAsString()))
                     throw new IllegalArgumentException("Every evolution needs a unique id.");
                 if (!evolution.has("variant")) throw new IllegalArgumentException("Every evolution needs a variant.");
-                if (evolution.has("result")) validatePokemonProperties(evolution.get("result").getAsString());
+                JsonObject old = namedEntry(original, "evolutions", "id", evolution.get("id").getAsString());
+                if (evolution.has("result") && !unchanged(evolution, old, "result"))
+                    validatePokemonProperties(evolution.get("result").getAsString());
                 if (evolution.has("learnableMoves")) for (JsonElement move : evolution.getAsJsonArray("learnableMoves"))
-                    if (Moves.getByName(move.getAsString()) == null) throw new IllegalArgumentException("Unknown evolution move: " + move.getAsString());
+                    if (!contains(old, "learnableMoves", move) && Moves.getByName(move.getAsString()) == null)
+                        throw new IllegalArgumentException("Unknown evolution move: " + move.getAsString());
             }
         }
         for (var child : object.entrySet()) if (!child.getKey().equals("moves") && !child.getKey().equals("abilities"))
-            validateData(child.getValue(), form || child.getKey().equals("forms"));
+            validateData(child.getValue(), form || child.getKey().equals("forms"), original == null ? null : original.get(child.getKey()));
+    }
+
+    private static boolean unchanged(JsonObject object, JsonObject baseline, String key) {
+        return baseline != null && object.get(key) != null && object.get(key).equals(baseline.get(key));
+    }
+
+    private static boolean contains(JsonObject object, String key, JsonElement value) {
+        if (object == null || !object.has(key) || !object.get(key).isJsonArray()) return false;
+        for (JsonElement before : object.getAsJsonArray(key)) if (before.equals(value)) return true;
+        return false;
+    }
+
+    private static JsonObject namedEntry(JsonObject object, String array, String key, String name) {
+        if (object == null || !object.has(array) || !object.get(array).isJsonArray()) return null;
+        for (JsonElement value : object.getAsJsonArray(array)) if (value.isJsonObject()) {
+            JsonObject candidate = value.getAsJsonObject();
+            if (candidate.has(key) && candidate.get(key).isJsonPrimitive() && candidate.get(key).getAsString().equals(name)) return candidate;
+        }
+        return null;
+    }
+
+    private static void changedNumeric(JsonObject object, JsonObject baseline, String name, double min, double max, boolean integer) {
+        if (!unchanged(object, baseline, name)) numeric(object, name, min, max, integer);
     }
 
     private static void numeric(JsonObject object, String name, double min, double max, boolean integer) {

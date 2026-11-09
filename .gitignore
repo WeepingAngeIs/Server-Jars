@@ -1,0 +1,7 @@
+**/.gradle/
+**/build/
+unyielding-quests/libs/
+dist/
+tutorial-update/smoke-harness/
+tutorial-update/run_smoke.generated.sh
+currency-bridge/run_smoke.generated.sh
