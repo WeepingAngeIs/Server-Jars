@@ -1,15 +1,23 @@
 {
   "name": "Unyielding",
-  "version": "1.1.6",
-  "output": "dist/tutorial/Unyielding-1.1.6.jar",
+  "version": "1.1.7",
+  "output": "dist/tutorial/Unyielding-1.1.7.jar",
   "base": {
-    "path": "releases/Unyielding-1.1.5.jar",
-    "sha256": "f25d004fe85693af44216e8d8a8c09e055c8ece0cb1b66d8d164670c930695da"
+    "path": "releases/Unyielding-1.1.6.jar",
+    "sha256": "e7e6de10dfd1d54cbb804698784ff5db0b65e3f1874798500d8ba8130c25b92a"
   },
   "quests": {
-    "path": "unyielding-quests/build/libs/UnyieldingQuests-1.6.8.jar",
+    "path": "unyielding-quests/build/libs/UnyieldingQuests-1.6.9.jar",
     "verification_report": "unyielding-quests/build/verification/package-verification.json",
-    "version": "1.6.8",
-    "previous_version": "1.6.7"
+    "version": "1.6.9",
+    "previous_version": "1.6.8"
+  },
+  "pokemon_pack": {
+    "path": "tutorial-update/pokemon/Mawonna.zip",
+    "sha256": "c1bb28caa672cb87ca6647720324bf0cba41a8169c0681f8c46fd27914082a32",
+    "repository": "WeepingAngeIs/unyielding-mod",
+    "commit": "2965356a7af5bab11346210bb75dff00b9737123",
+    "upstream_path": "Mawonna.zip",
+    "source_url": "https://raw.githubusercontent.com/WeepingAngeIs/unyielding-mod/2965356a7af5bab11346210bb75dff00b9737123/Mawonna.zip"
   }
 }

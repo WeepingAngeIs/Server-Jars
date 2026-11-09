@@ -28,6 +28,13 @@ with zipfile.ZipFile(jar) as archive:
         "dev/unyielding/quests/quest/ProgressSharing.class",
         "dev/unyielding/quests/net/Net$AdminSettingsAction.class",
         "dev/unyielding/quests/net/Net$AdminSettingsSync.class",
+        "dev/unyielding/quests/settings/PokemonEditor.class",
+        "dev/unyielding/quests/settings/PokemonRuntime.class",
+        "dev/unyielding/quests/settings/PokemonEdits.class",
+        "dev/unyielding/quests/settings/PokemonCounterRules.class",
+        "dev/unyielding/quests/client/PokemonEditorScreen.class",
+        "dev/unyielding/quests/mixin/PokemonCompanionProgressMixin.class",
+        "dev/unyielding/quests/mixin/PokemonProgressRequirementMixin.class",
     ):
         assert name in names, f"Missing compiled tutorial entry {name}"
     count = 0

@@ -1,4 +1,4 @@
-"""Replace only the quest component in the verified combined release, in the cloud."""
+"""Update the quest component and embed pinned custom content on GitHub only."""
 import copy
 import hashlib
 import json
@@ -48,12 +48,17 @@ def read_input(info):
 
 base = read_input(release["base"])
 quests = read_input(release["quests"])
+pokemon_pack = read_input(release["pokemon_pack"])
 assert not [name for name in quests if name not in METADATA and not owned_by_quests(name)], "Unexpected quest payload namespace"
 base_text = base[MODS].decode()
 base_meta = tomllib.loads(base_text)
 quest_meta = tomllib.loads(quests[MODS].decode().replace("${file.jarVersion}", release["quests"]["version"]))
 assert set(quest_meta) == {"modLoader", "loaderVersion", "license", "mods", "dependencies", "mixins"}
-assert quest_meta["mixins"] == [{"config": "assets/unyieldingquests/music.mixins.json"}], "Unexpected new mixin configuration"
+assert quest_meta["mixins"], "Missing quest mixin configuration"
+for mixin in quest_meta["mixins"]:
+    assert set(mixin) == {"config"}, "Unexpected mixin metadata"
+    assert mixin["config"].startswith("assets/unyieldingquests/") and mixin["config"] in quests, "Unexpected quest mixin namespace"
+assert len({mixin["config"] for mixin in quest_meta["mixins"]}) == len(quest_meta["mixins"]), "Duplicate quest mixin"
 for field in ("modLoader", "loaderVersion", "license"):
     assert base_meta[field] == quest_meta[field], f"Incompatible metadata: {field}"
 assert len(base_meta["mods"]) == 9 and len(quest_meta["mods"]) == 1
@@ -71,11 +76,17 @@ replacement, count = re.subn(r'(\bversion\s*=\s*")' + re.escape(release["quests"
                              lambda match: match[1] + release["quests"]["version"] + match[2], block.group())
 assert count == 1
 metadata = base_text[:block.start()] + replacement + base_text[block.end():]
-assert "assets/unyieldingquests/music.mixins.json" not in base_text
-metadata += '\n[[mixins]]\nconfig="assets/unyieldingquests/music.mixins.json"\n'
+existing_mixins = {mixin["config"]: mixin for mixin in base_meta.get("mixins", [])}
+new_mixins = []
+for mixin in quest_meta["mixins"]:
+    if mixin["config"] in existing_mixins:
+        assert existing_mixins[mixin["config"]] == mixin, "Conflicting existing mixin metadata"
+    else:
+        metadata += '\n[[mixins]]\nconfig=' + json.dumps(mixin["config"]) + '\n'
+        new_mixins.append(mixin)
 expected_meta = copy.deepcopy(base_meta)
 next(mod for mod in expected_meta["mods"] if mod["modId"] == "unyieldingquests")["version"] = release["quests"]["version"]
-expected_meta["mixins"] = base_meta["mixins"] + quest_meta["mixins"]
+expected_meta["mixins"] = base_meta["mixins"] + new_mixins
 assert tomllib.loads(metadata) == expected_meta, "Nonquest metadata changed"
 assert "${" not in metadata
 
@@ -83,6 +94,77 @@ preserved = {name: payload for name, payload in base.items() if name not in META
 updated = {name: payload for name, payload in quests.items() if name not in METADATA}
 assert not set(preserved).intersection(updated)
 entries = preserved | updated
+# Mod assets and data are always part of the JAR's built-in resource/data packs.
+# Do not include standalone installation notes, previews or build reports.
+embedded = {}
+for name, payload in pokemon_pack.items():
+    if name.startswith(("assets/", "data/")):
+        embedded[name] = payload
+    elif name.startswith("LICENSES/"):
+        embedded["LICENSES/unyielding-custom-content/" + name.removeprefix("LICENSES/")] = payload
+assert embedded, "Custom content input has no embeddable resources"
+species_names = {name for name in embedded if name.startswith("data/cobblemon/species/custom/") and name.endswith(".json")}
+assert len(species_names) == 9, "Pinned custom species set changed"
+assert not any("/spawn_pool_world/" in name for name in embedded), "Bundled input must preserve command-only spawn defaults"
+adjusted_resources = []
+# The original progress caps doubled as fixed evolution thresholds. Keep saved
+# feature IDs while allowing administrators to raise the corresponding gates.
+for feature, previous_maximum in {
+    "mawonna_verified_dark_defeats": 666,
+    "mawonna_verified_dark_defeats_1000": 1000,
+    "mawonna_distinct_meals": 49,
+}.items():
+    name = f"data/cobblemon/species_features/{feature}.json"
+    definition = json.loads(embedded[name])
+    assert definition["max"] == previous_maximum and definition["min"] == 0 and definition["default"] == 0
+    definition["max"] = 2_000_000_000
+    embedded[name] = (json.dumps(definition, indent=2) + "\n").encode()
+    adjusted_resources.append(name)
+merged_languages = []
+for name, payload in embedded.items():
+    if name in entries and entries[name] != payload:
+        assert name == "assets/mawonna/lang/en_us.json", "Unexpected custom content collision: " + name
+        original_language = json.loads(entries[name])
+        pack_language = json.loads(payload)
+        assert isinstance(original_language, dict) and isinstance(pack_language, dict)
+        for key in original_language.keys() & pack_language.keys():
+            assert original_language[key] == pack_language[key], "Conflicting translation: " + key
+        entries[name] = (json.dumps(original_language | pack_language, ensure_ascii=False, indent=2) + "\n").encode()
+        merged_languages.append(name)
+    else:
+        entries[name] = payload
+language_name = "assets/mawonna/lang/en_us.json"
+language = json.loads(entries[language_name])
+for key in (
+    "cobblemon.species.covislight.desc",
+    "cobblemon.species.corvislight.desc",
+    "cobblemon.species.corvisquire.mawonna_evolution.desc",
+    "cobblemon.species.mawile.mawonna_evolution.desc",
+    "cobblemon.species.mawonna.desc",
+    "cobblemon.species.mawonna_flower.desc",
+    "cobblemon.species.mawonnaflower.desc",
+    "cobblemon.species.fairysliggoo.desc",
+    "cobblemon.species.sliggoo.fairy_evolution.desc",
+    "cobblemon.species.inkyeon.desc",
+    "cobblemon.species.sylveon.inkyeon_evolution.desc",
+):
+    assert key in language
+    language[key] = "Evolution conditions and species settings are controlled by this server. Administrators can inspect current values in /quests settings."
+language.update({
+    "mawonna.message.repeat": "This dish is already remembered. Different qualifying meals: %s.",
+    "mawonna.message.meal": "A meal to remember! Different qualifying meals: %s. Verified Dark-type defeats: %s.",
+    "mawonna.message.requirements": "The current server evolution conditions are not met. Progress: %s different qualifying meals, %s verified Dark-type defeats.",
+    "mawonna.message.married": "Your vow is sealed. Check your Pokemon's evolution option for the current server conditions.",
+})
+entries[language_name] = (json.dumps(language, ensure_ascii=False, indent=2) + "\n").encode()
+adjusted_resources.append(language_name)
+assert "dev/mawonna/MawonnaCompanion.class" in entries, "Existing evolution module was lost"
+for name, payload in preserved.items():
+    if name not in merged_languages and name not in adjusted_resources:
+        assert entries[name] == payload, "Existing nonquest entry changed: " + name
+for name, payload in embedded.items():
+    if name not in merged_languages:
+        assert entries[name] == payload, "Embedded resource changed: " + name
 entries[MODS] = metadata.encode()
 entries[MANIFEST] = (
     "Manifest-Version: 1.0\r\n"
@@ -90,6 +172,7 @@ entries[MANIFEST] = (
     "Implementation-Title: Unyielding\r\n"
     f"Implementation-Version: {release['version']}\r\n"
     f"Unyielding-Quests-Version: {release['quests']['version']}\r\n"
+    f"Unyielding-Content-Revision: {release['pokemon_pack']['commit']}\r\n"
     "Unyielding-Currency-Bridge-Version: 1.0.0\r\n\r\n"
 ).encode()
 assert not any("/quests/devtest/" in name or "/bundlesmoke/" in name or "/currencysmoke/" in name for name in entries), "Test helper leaked into release"
@@ -104,7 +187,7 @@ output = ROOT / release["output"]
 output.parent.mkdir(parents=True, exist_ok=True)
 with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
     for name, payload in sorted(entries.items()):
-        entry = zipfile.ZipInfo(name, date_time=(2026, 11, 7, 0, 0, 0))
+        entry = zipfile.ZipInfo(name, date_time=(2026, 11, 8, 0, 0, 0))
         entry.compress_type = zipfile.ZIP_DEFLATED
         entry.external_attr = 0o644 << 16
         archive.writestr(entry, payload)
@@ -119,12 +202,17 @@ report = {
     "status": "passed", "version": release["version"], "quest_version": release["quests"]["version"],
     "sha256": digest, "source_commit": os.environ.get("GITHUB_SHA"),
     "cloud_run": f"https://github.com/{os.environ.get('GITHUB_REPOSITORY')}/actions/runs/{os.environ.get('GITHUB_RUN_ID')}",
-    "inputs": {key: release[key] for key in ("base", "quests")},
-    "production_module_count": 9, "preserved_nonquest_entries": len(preserved),
+    "inputs": {key: release[key] for key in ("base", "quests", "pokemon_pack")},
+    "production_module_count": 9, "preserved_nonquest_entries": len(preserved) - len(merged_languages),
     "rebuilt_quest_entries": len(updated), "preserved_currency_classes": len(bridge_names),
+    "embedded_custom_entries": len(embedded), "embedded_species_count": len(species_names),
+    "merged_language_resources": merged_languages, "standalone_pack_required": False,
+    "companion_module_preserved": True,
+    "audited_custom_resource_adjustments": adjusted_resources,
+    "custom_progress_maximum": 2_000_000_000,
     "currency_parser_sha256": hashlib.sha256(entries[parser]).hexdigest(),
     "quest_pictures": 923, "external_dependencies_bundled": False,
-    "metadata_changes": ["Outer release manifest", "Quest component version", "Optional client music volume mixin"],
+    "metadata_changes": ["Outer release manifest", "Quest component version", "New quest mixins if declared"],
 }
 (output.parent / "assembly-report.json").write_text(json.dumps(report, indent=2) + "\n")
 (output.parent / "SHA256SUMS.txt").write_text(f"{digest}  {output.name}\n")

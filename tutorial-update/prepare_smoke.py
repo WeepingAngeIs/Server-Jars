@@ -13,7 +13,7 @@ template = (ROOT / "currency-bridge/prepare_smoke.py").read_text()
 replacements = {
     "currency-bridge/smoke-harness": "tutorial-update/smoke-harness",
     "dist/currency-smoke": "dist/tutorial-smoke",
-    "dist/currency/Unyielding-1.1.1.jar": "dist/tutorial/Unyielding-1.1.6.jar",
+    "dist/currency/Unyielding-1.1.1.jar": "dist/tutorial/Unyielding-1.1.7.jar",
     "currency-bridge/run_smoke.generated.sh": "tutorial-update/run_smoke.generated.sh",
 }
 for before, after in replacements.items():
@@ -38,7 +38,7 @@ checks = ROOT / "tutorial-update/smoke-harness/src/main/java/dev/unyielding/bund
 for source in (ROOT / "tutorial-update/tests").glob("*.java"):
     shutil.copy2(source, checks / source.name)
 
-for helper in ("CompactTaskClientSmoke.java", "TutorialAccessServerSmoke.java", "AdminFeatureSmoke.java", "AdminFeatureClientSmoke.java", "EmiQuestClientSmoke.java", "ConfigEditorSmoke.java", "LootTableServerSmoke.java", "LootEditorClientSmoke.java", "BalanceEditorSmoke.java", "BalanceLiveSmoke.java", "BalanceClientSmoke.java", "BalanceUiSmoke.java", "MusicEditorSmoke.java", "MusicClientSmoke.java"):
+for helper in ("CompactTaskClientSmoke.java", "TutorialAccessServerSmoke.java", "AdminFeatureSmoke.java", "AdminFeatureClientSmoke.java", "EmiQuestClientSmoke.java", "ConfigEditorSmoke.java", "LootTableServerSmoke.java", "LootEditorClientSmoke.java", "BalanceEditorSmoke.java", "BalanceLiveSmoke.java", "BalanceClientSmoke.java", "BalanceUiSmoke.java", "MusicEditorSmoke.java", "MusicClientSmoke.java", "PokemonEditorSmoke.java", "PokemonLiveClientSmoke.java", "PokemonEditorClientSmoke.java", "PokemonCounterSmoke.java"):
     assert (checks / helper).is_file(), f"Runtime assertions are missing: {helper}"
 runner_path = ROOT / "tutorial-update/run_smoke.generated.sh"
 runner = runner_path.read_text()
@@ -51,4 +51,7 @@ runner_replacements = {
 for before, after in runner_replacements.items():
     assert runner.count(before) == 1, "Accepted runner changed; review regression proof handling"
     runner = runner.replace(before, after)
+runner = runner.replace("/tmp/uq-balance-client-failed.txt; do", "/tmp/uq-balance-client-failed.txt /tmp/uq-pokemon-server-failed.txt /tmp/uq-pokemon-client-failed.txt; do")
+runner = runner.replace("&& -f /tmp/uq-balance-client-passed.json ]]; then", "&& -f /tmp/uq-balance-client-passed.json && -f /tmp/uq-pokemon-server-passed.json && -f /tmp/uq-pokemon-client-passed.json ]]; then")
+runner = runner.replace("/tmp/uq-balance-*; do", "/tmp/uq-balance-* /tmp/uq-pokemon-*; do")
 runner_path.write_text(runner)

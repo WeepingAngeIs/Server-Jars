@@ -296,6 +296,7 @@ public final class Net {
     }
 
     public static void register(RegisterPayloadHandlersEvent event) {
+        dev.unyielding.quests.settings.PokemonEditor.register(event);
         dev.unyielding.quests.settings.MusicSettings.register(event);
         dev.unyielding.quests.settings.ConfigEditor.register(event);
         PayloadRegistrar r = event.registrar("1");
