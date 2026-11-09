@@ -18,6 +18,7 @@ import static dev.unyielding.bundlesmoke.BundleSmoke.require;
 /** Runs against the distributed editor on the connected cloud client. */
 final class PokemonEditorClientSmoke {
     static void exercise(Minecraft mc, Map<String,Object> report) throws Exception {
+        PokemonTransferSmoke.exercise(mc,report);
         Screen previous = mc.screen; int permission = mc.player.getPermissionLevel();
         try {
             mc.player.setPermissionLevel(2);
@@ -62,11 +63,28 @@ final class PokemonEditorClientSmoke {
                 var condition=com.google.gson.JsonParser.parseString(spawnReview.getValue()).getAsJsonArray().get(0).getAsJsonObject().getAsJsonObject("data").getAsJsonArray("spawns").get(0).getAsJsonObject().getAsJsonObject("condition");
                 require(condition.get("minX").getAsDouble()==-16&&condition.get("maxX").getAsDouble()==16,"Spawn area fields did not reach review draft");
                 require(condition.getAsJsonArray("dimensions").get(0).getAsString().equals(mc.level.dimension().location().toString()),"Spawn dimension field did not reach review draft");
+                CompoundTag complex=species();var complexJson=com.google.gson.JsonParser.parseString(complex.getString("species_json")).getAsJsonObject();
+                var complexPool=com.google.gson.JsonParser.parseString("[\"runaway\",{\"ability\":\"adaptability\",\"priority\":2}]");complexJson.add("abilities",complexPool);complex.putString("species_json",complexJson.toString());
+                var complexSpecies=new PokemonEditorScreen.SpeciesScreen(browser,complex);var abilityScreen=new PokemonEditorScreen.AbilitiesScreen(complexSpecies);mc.setScreen(abilityScreen);draw(mc,abilityScreen,size);
+                require(fields(abilityScreen).length==2,"Structured abilities must use preserving JSON controls");
+                fields(abilityScreen)[0].setValue("fire");
+                var draftMethod=abilityScreen.getClass().getDeclaredMethod("draft");draftMethod.setAccessible(true);
+                var retained=(com.google.gson.JsonObject)draftMethod.invoke(abilityScreen);
+                require(retained.get("abilities").equals(complexPool),"Type draft flattened structured ability entries");
+                press(abilityScreen,"Edit abilities JSON");draw(mc,mc.screen,size);
+                require(mc.screen instanceof PokemonEditorScreen.JsonScreen,"Structured ability JSON editor missing");
+                var abilityBox=mc.screen.children().stream().filter(MultiLineEditBox.class::isInstance).map(MultiLineEditBox.class::cast).findFirst().orElseThrow();
+                require(com.google.gson.JsonParser.parseString(abilityBox.getValue()).equals(complexPool),"Ability JSON editor changed structured entries");
+                var serializerField=mc.screen.getClass().getDeclaredField("serializer");serializerField.setAccessible(true);
+                @SuppressWarnings("unchecked") var serializer=(java.util.function.Function<String,String>)serializerField.get(mc.screen);
+                var serialized=com.google.gson.JsonParser.parseString(serializer.apply(abilityBox.getValue())).getAsJsonObject();
+                require(serialized.get("primaryType").getAsString().equals("fire")&&serialized.get("abilities").equals(complexPool),"Opening ability JSON lost unsaved type changes");
                 AdminSettingsScreen admin=new AdminSettingsScreen(null);draw(mc,admin,size);
                 require(has(admin,"Pokemon editor"),"Admin menu lacks Pokemon editor");bounds(admin,size);
             }
             report.put("pokemon_search_categories_stat_validation_evolution_json_and_spawn_controls","passed");
             report.put("pokemon_drafts_survive_errors_and_editor_renders_at_640x400_and_320x240","passed");
+            report.put("pokemon_structured_ability_rules_survive_type_edits_and_json_editor","passed");
         } finally { mc.player.setPermissionLevel(permission);mc.setScreen(previous); }
     }
     private static CompoundTag search(){

@@ -40,4 +40,8 @@ final class PokemonEditsTest {
         for(int i=0;i<55;i++){JsonObject next=new JsonObject();cursor.add("next",next);cursor=next;}
         assertThrows(IllegalArgumentException.class,()->PokemonEdits.validate(root));
     }
+    @Test void recognizesExplicitSpeciesAfterOtherProperties() {
+        assertEquals("pikachu",PokemonEdits.speciesToken("level=10 species=pikachu shiny"));
+        assertEquals("cobblemon:pikachu",PokemonEdits.speciesToken("cobblemon:pikachu level=10"));
+    }
 }

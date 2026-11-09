@@ -60,6 +60,12 @@ public final class PokemonEdits {
             throw new IllegalArgumentException("Use a valid namespaced identifier.");
         return id;
     }
+    /** Native property strings permit an explicit species= token anywhere in the list. */
+    public static String speciesToken(String properties) {
+        String[] tokens=properties.trim().split("\\s+");
+        for(String token:tokens)if(token.startsWith("species="))return token.substring(8).toLowerCase(Locale.ROOT);
+        return tokens.length==0?"":tokens[0].toLowerCase(Locale.ROOT);
+    }
     public static JsonElement parse(String text) {
         if (text == null || text.length() > MAX_DOCUMENT) throw new IllegalArgumentException("This document is too large.");
         JsonElement value = JsonParser.parseString(text);

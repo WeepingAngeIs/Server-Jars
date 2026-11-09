@@ -66,6 +66,7 @@ public final class PokemonEditorSmoke {
                 require(PokemonEditor.revision()==savedRevision,"Configuration revision did not survive reload");
                 require(JsonParser.parseString(PokemonEditor.detail(ID).getString("species_json")).getAsJsonObject().getAsJsonObject("baseStats").get("hp").getAsInt()==123,"Species edit did not survive service restart");
                 PokemonCounterSmoke.exercise(p,report);
+                PokemonSpawnResetSmoke.exercise(p,report);
                 report.put("all_loaded_species_search_permissions_invalid_values_and_stale_edits","passed");
                 report.put("species_and_spawn_overrides_saved_and_reloaded_from_disk","passed");
                 Files.writeString(Path.of("/tmp/uq-pokemon-live-ready"),"123");phase=1;ticks=0;return;

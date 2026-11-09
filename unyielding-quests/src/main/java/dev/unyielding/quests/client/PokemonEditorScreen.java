@@ -41,6 +41,7 @@ public final class PokemonEditorScreen extends FormScreen {
         if (AdminSettingsScreen.canManage()) PokemonEditor.send(new PokemonEditor.Action(operation, id, revision, json));
     }
     public static void receive(PokemonEditor.Sync sync) {
+        sync = PokemonTransfer.accept(sync); if (sync == null) return;
         Minecraft mc = Minecraft.getInstance();
         if (!AdminSettingsScreen.canManage()) return;
         CompoundTag data = sync.data();
@@ -148,8 +149,11 @@ public final class PokemonEditorScreen extends FormScreen {
             }));
         }
         private void reset(String operation, String title) {
+            String description = operation.equals("reset_spawns")
+                    ? "Restores this species' spawn rules from pack defaults. Other species' edits and shared file settings are retained."
+                    : "This removes the saved override and restores the currently loaded pack data.";
             minecraft.setScreen(new ConfirmScreen(confirmed -> { minecraft.setScreen(this); if (confirmed) send(operation, id(), revision(), ""); },
-                    Component.literal(title), Component.literal("This removes the saved override and restores the currently loaded pack data.")));
+                    Component.literal(title), Component.literal(description)));
         }
         @Override protected String saveLabel() { return "Done"; }
         @Override protected void save() { cancel(); }
@@ -195,8 +199,9 @@ public final class PokemonEditorScreen extends FormScreen {
         private static final String[] LABELS = {"HP", "Attack", "Defence", "Sp. attack", "Sp. defence", "Speed"};
         private final String[] values = new String[6];
         public StatsScreen(SpeciesScreen owner) {
-            super(owner, "Base stats"); JsonObject stats = original.getAsJsonObject("baseStats");
-            for (int i = 0; i < KEYS.length; i++) values[i] = stats != null && stats.has(KEYS[i]) ? stats.get(KEYS[i]).getAsString() : "1";
+            super(owner, "Base stats"); JsonElement element = original.get("baseStats");
+            JsonObject stats = element != null && element.isJsonObject() ? element.getAsJsonObject() : null;
+            for (int i = 0; i < KEYS.length; i++) values[i] = stats != null && stats.has(KEYS[i]) && stats.get(KEYS[i]).isJsonPrimitive() ? stats.get(KEYS[i]).getAsString() : "1";
         }
         @Override protected void build() {
             paragraph("Species base stats, before a Pokemon's level, IVs, EVs and nature are applied."); gap(8);
@@ -207,7 +212,7 @@ public final class PokemonEditorScreen extends FormScreen {
             gap(6); paragraph(message);
         }
         @Override JsonObject draft() {
-            JsonObject next = original.deepCopy(), stats = next.has("baseStats") ? next.getAsJsonObject("baseStats").deepCopy() : new JsonObject();
+            JsonObject next = original.deepCopy(), stats = next.has("baseStats") && next.get("baseStats").isJsonObject() ? next.getAsJsonObject("baseStats").deepCopy() : new JsonObject();
             for (int i = 0; i < KEYS.length; i++) {
                 int value; try { value = Integer.parseInt(values[i].trim()); } catch (NumberFormatException e) { throw new IllegalArgumentException(LABELS[i] + " must be a whole number."); }
                 if (value < 1 || value > 10000) throw new IllegalArgumentException(LABELS[i] + " must be between 1 and 10000."); stats.addProperty(KEYS[i], value);
@@ -218,25 +223,48 @@ public final class PokemonEditorScreen extends FormScreen {
 
     public static final class AbilitiesScreen extends DraftScreen {
         private String abilities, primary, secondary;
+        private final boolean simpleAbilities;
         public AbilitiesScreen(SpeciesScreen owner) {
             super(owner, "Abilities and types");
-            List<String> entries = new ArrayList<>(); if (original.has("abilities")) for (JsonElement a : original.getAsJsonArray("abilities")) entries.add(a.getAsString());
+            JsonElement pool = original.get("abilities");
+            simpleAbilities = pool != null && pool.isJsonArray() && java.util.stream.StreamSupport.stream(pool.getAsJsonArray().spliterator(), false)
+                    .allMatch(entry -> entry.isJsonPrimitive() && entry.getAsJsonPrimitive().isString());
+            List<String> entries = new ArrayList<>(); if (simpleAbilities) for (JsonElement a : pool.getAsJsonArray()) entries.add(a.getAsString());
             abilities = String.join(", ", entries); primary = string(original, "primaryType"); secondary = string(original, "secondaryType");
         }
         @Override protected void build() {
-            paragraph("Ability identifiers separated by commas. Prefix a hidden ability with h:."); gap(4);
-            field("abilities", left(), cy, innerWidth(), abilities, "ability, h:hiddenability", 4096, text -> abilities = text).active = !pending; gap(28);
+            if (simpleAbilities) {
+                paragraph("Ability identifiers separated by commas. Prefix a hidden ability with h:."); gap(4);
+                field("abilities", left(), cy, innerWidth(), abilities, "ability, h:hiddenability", 4096, text -> abilities = text).active = !pending; gap(28);
+            } else paragraph("This species uses structured ability rules. The JSON editor preserves their priorities and other options.");
+            row("Edit abilities JSON", this::editAbilitiesJson);
             paragraph("Primary type"); field("primary-type", left(), innerWidth(), primary, "Type identifier", text -> primary = text).active = !pending; gap(28);
             paragraph("Secondary type (leave empty for none)"); field("secondary-type", left(), innerWidth(), secondary, "Optional type identifier", text -> secondary = text).active = !pending; gap(28);
             paragraph("This changes the species' ability choices. Individual Pokemon keep their saved ability until changed through the game's Pokemon controls."); gap(6); paragraph(message);
         }
         @Override JsonObject draft() {
-            JsonObject next = original.deepCopy(); JsonArray entries = new JsonArray();
-            for (String value : abilities.split(",")) { value = value.trim().toLowerCase(Locale.ROOT); if (!value.isEmpty()) entries.add(value); }
-            if (entries.isEmpty()) throw new IllegalArgumentException("Enter at least one ability.");
+            JsonObject next = original.deepCopy();
+            if (simpleAbilities) {
+                JsonArray entries = new JsonArray();
+                for (String value : abilities.split(",")) { value = value.trim().toLowerCase(Locale.ROOT); if (!value.isEmpty()) entries.add(value); }
+                if (entries.isEmpty()) throw new IllegalArgumentException("Enter at least one ability.");
+                next.add("abilities", entries);
+            }
             if (primary.trim().isEmpty()) throw new IllegalArgumentException("Enter a primary type.");
-            next.add("abilities", entries); next.addProperty("primaryType", primary.trim().toLowerCase(Locale.ROOT));
+            next.addProperty("primaryType", primary.trim().toLowerCase(Locale.ROOT));
             if (secondary.trim().isEmpty()) next.remove("secondaryType"); else next.addProperty("secondaryType", secondary.trim().toLowerCase(Locale.ROOT)); return next;
+        }
+        private void editAbilitiesJson() {
+            if (pending) return;
+            try {
+                JsonObject next = draft(); JsonElement pool = next.get("abilities");
+                minecraft.setScreen(new JsonScreen(owner, "Ability rules", JSON.toJson(pool == null ? new JsonArray() : pool),
+                        "Edit the full ability array. This supports ordinary and hidden ability identifiers plus structured rules supplied by installed addons. Existing type edits stay in this draft.", false, edited -> {
+                            JsonElement value = JsonParser.parseString(edited);
+                            if (!value.isJsonArray()) throw new IllegalArgumentException("Abilities must be a JSON array.");
+                            JsonObject saved = next.deepCopy(); saved.add("abilities", value); return JSON.toJson(saved);
+                        }));
+            } catch (RuntimeException error) { message = Objects.toString(error.getMessage(), "Check your values."); relayout(); }
         }
     }
 
@@ -470,8 +498,7 @@ public final class PokemonEditorScreen extends FormScreen {
         if (array.isEmpty()) object.remove(key); else object.add(key, array);
     }
     private static boolean matchesSpecies(String properties, String id) {
-        String species = properties.trim().split("\\s+", 2)[0].toLowerCase(Locale.ROOT);
-        if (species.startsWith("species=")) species = species.substring(8);
+        String species = dev.unyielding.quests.settings.PokemonEdits.speciesToken(properties);
         return species.equals(id.toLowerCase(Locale.ROOT)) || id.startsWith("cobblemon:") && species.equals(id.substring(id.indexOf(':') + 1).toLowerCase(Locale.ROOT));
     }
 }

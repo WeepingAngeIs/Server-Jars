@@ -107,12 +107,7 @@ public final class PokemonEditor {
                 }
                 case "save_spawns" -> saveSpawnDraft(id,action.json(),nextSpawns);
                 case "reset_species" -> nextSpecies.remove(id);
-                case "reset_spawns" -> {
-                    Set<String> related=new TreeSet<>();
-                    spawns().forEach((key,value)->{if(contains(value,id))related.add(key);});
-                    baseSpawns.forEach((key,value)->{if(contains(value,id))related.add(key);});
-                    related.forEach(nextSpawns::remove);
-                }
+                case "reset_spawns" -> resetSpawnDraft(id,nextSpawns);
                 case "reload" -> {
                     var disk=PokemonEdits.read(configPath());
                     nextSpecies=PokemonEdits.copy(disk.species());nextSpawns=PokemonEdits.copy(disk.spawns());
@@ -182,8 +177,7 @@ public final class PokemonEditor {
     }
     private static boolean matches(JsonObject spawn,String id) {
         if(!spawn.has("pokemon")||!spawn.get("pokemon").isJsonPrimitive())return false;
-        String text=spawn.get("pokemon").getAsString().trim().split("\\s+",2)[0];
-        if(text.startsWith("species="))text=text.substring(8);
+        String text=PokemonEdits.speciesToken(spawn.get("pokemon").getAsString());
         return text.equals(id)||text.equals(id.substring(id.indexOf(':')+1))&&id.startsWith("cobblemon:");
     }
     private static void saveSpawnDraft(String id,String json,Map<String,JsonObject> target) {
@@ -205,6 +199,43 @@ public final class PokemonEditor {
         draft.forEach((key,value)->{if(value.equals(baseSpawns.get(key)))target.remove(key);else target.put(key,value);});
         PokemonRuntime.validateSpawns(target);
     }
+    /** Restore only this species' rows, retaining unrelated edits in shared files. */
+    private static void resetSpawnDraft(String id,Map<String,JsonObject> target) {
+        Map<String,JsonObject> effective=spawns();
+        Set<String> related=new TreeSet<>();
+        effective.forEach((key,value)->{if(contains(value,id))related.add(key);});
+        baseSpawns.forEach((key,value)->{if(contains(value,id))related.add(key);});
+        String generated="unyieldingquests:editor/"+id.replace(':','/');
+        if(target.containsKey(generated))related.add(generated);
+        for(String key:related) {
+            JsonObject current=effective.get(key),baseline=baseSpawns.get(key);
+            if(current==null){target.remove(key);continue;}
+            boolean shared=hasOtherSpawns(current,id)||hasOtherSpawns(baseline,id);
+            if(!shared){target.remove(key);continue;}
+            JsonObject restored=current.deepCopy();JsonArray rows=new JsonArray();
+            for(JsonElement row:current.getAsJsonArray("spawns"))
+                if(!matches(row.getAsJsonObject(),id))rows.add(row.deepCopy());
+            if(baseline!=null)for(JsonElement row:baseline.getAsJsonArray("spawns"))
+                if(matches(row.getAsJsonObject(),id))rows.add(row.deepCopy());
+            restored.add("spawns",rows);
+            if(baseline==null&&rows.isEmpty()||sameSpawnFile(restored,baseline))target.remove(key);
+            else target.put(key,restored);
+        }
+    }
+    private static boolean hasOtherSpawns(JsonObject file,String id) {
+        if(file==null||!file.has("spawns"))return false;
+        for(JsonElement row:file.getAsJsonArray("spawns"))if(!matches(row.getAsJsonObject(),id))return true;
+        return false;
+    }
+    private static boolean sameSpawnFile(JsonObject first,JsonObject second) {
+        if(second==null)return false;
+        JsonObject left=first.deepCopy(),right=second.deepCopy();
+        JsonArray leftRows=left.remove("spawns").getAsJsonArray(),rightRows=right.remove("spawns").getAsJsonArray();
+        if(!left.equals(right)||leftRows.size()!=rightRows.size())return false;
+        List<JsonElement> remaining=new ArrayList<>();rightRows.forEach(remaining::add);
+        for(JsonElement row:leftRows)if(!remaining.remove(row))return false;
+        return remaining.isEmpty();
+    }
     private static void commit(ServerPlayer p,Map<String,JsonObject> speciesOverrides,Map<String,JsonObject> spawnOverrides)throws Exception {
         PokemonEdits.State next=new PokemonEdits.State(Math.addExact(state.revision(),1),speciesOverrides,spawnOverrides);
         Map<String,JsonObject> species=PokemonEdits.copy(baseSpecies),spawns=PokemonEdits.copy(baseSpawns);
@@ -218,5 +249,60 @@ public final class PokemonEditor {
         }
         UnyieldingQuests.LOGGER.info("{} saved Pokemon data revision {}",p.getGameProfile().getName(),state.revision());
     }
-    private static void reply(ServerPlayer p,CompoundTag data,boolean open){Net.sendTo(p,new Sync(data,open));}
+    public static final int SNAPSHOT_MAX_BYTES = 8 * 1024 * 1024;
+    public static final int SNAPSHOT_PART_CHARS = 16_000;
+    public static final int SNAPSHOT_MAX_PARTS = 1024;
+
+    /** Bounded packets also avoid NBT's 65,535-byte modified-UTF limit for a single string. */
+    public static List<Sync> snapshotPackets(CompoundTag data,boolean open) {
+        String text=data.toString();
+        if(text.length()>SNAPSHOT_MAX_BYTES)return List.of(snapshotTooLarge(data));
+        int bytes=utf8Size(text);
+        if(bytes>SNAPSHOT_MAX_BYTES)return List.of(snapshotTooLarge(data));
+        if(bytes<200_000&&!largeString(data))return List.of(new Sync(data,open));
+        List<String> parts=new ArrayList<>();
+        for(int start=0;start<text.length();) {
+            int end=Math.min(start+SNAPSHOT_PART_CHARS,text.length());
+            if(end<text.length()&&Character.isHighSurrogate(text.charAt(end-1))&&Character.isLowSurrogate(text.charAt(end)))end--;
+            parts.add(text.substring(start,end));start=end;
+        }
+        String token=UUID.randomUUID().toString();
+        List<Sync> packets=new ArrayList<>(parts.size());
+        for(int i=0;i<parts.size();i++) {
+            CompoundTag part=new CompoundTag();part.putString("view","transfer");part.putString("token",token);
+            part.putInt("index",i);part.putInt("total",parts.size());part.putInt("bytes",bytes);
+            part.putString("id",data.getString("id"));part.putLong("revision",data.getLong("revision"));
+            part.putString("text",parts.get(i));packets.add(new Sync(part,open));
+        }
+        return packets;
+    }
+    private static Sync snapshotTooLarge(CompoundTag original) {
+        CompoundTag error=new CompoundTag();error.putString("view","error");error.putBoolean("error",true);
+        error.putString("id",original.getString("id"));error.putLong("revision",original.getLong("revision"));
+        error.putString("message","This Pokemon's data is too large to display. Edit its server configuration file.");
+        return new Sync(error,false);
+    }
+    private static boolean largeString(Tag value) {
+        if(value instanceof StringTag text)return text.getAsString().length()>SNAPSHOT_PART_CHARS;
+        if(value instanceof CompoundTag compound) {
+            for(String key:compound.getAllKeys())if(key.length()>SNAPSHOT_PART_CHARS||largeString(compound.get(key)))return true;
+        } else if(value instanceof ListTag list)for(Tag child:list)if(largeString(child))return true;
+        return false;
+    }
+    /** Conservative for unpaired surrogates; avoids allocating a second multi-megabyte byte array. */
+    public static int utf8Size(String text) {
+        int bytes=0;
+        for(int i=0;i<text.length();i++) {
+            char c=text.charAt(i);
+            if(c<0x80)bytes++;
+            else if(c<0x800)bytes+=2;
+            else if(Character.isHighSurrogate(c)&&i+1<text.length()&&Character.isLowSurrogate(text.charAt(i+1))){bytes+=4;i++;}
+            else bytes+=3;
+            if(bytes>SNAPSHOT_MAX_BYTES)return bytes;
+        }
+        return bytes;
+    }
+    private static void reply(ServerPlayer p,CompoundTag data,boolean open) {
+        for(Sync packet:snapshotPackets(data,open))Net.sendTo(p,packet);
+    }
 }

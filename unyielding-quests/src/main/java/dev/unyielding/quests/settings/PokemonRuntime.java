@@ -257,8 +257,7 @@ public final class PokemonRuntime {
     }
 
     private static void validatePokemonProperties(String value) {
-        String species = value.trim().split("\\s+")[0];
-        if (species.startsWith("species=")) species = species.substring(8);
+        String species = PokemonEdits.speciesToken(value);
         if (!species.equals("random") && PokemonSpecies.getByIdentifier(ResourceLocation.parse(canonical(species))) == null)
             throw new IllegalArgumentException("Unknown Pokemon in properties: " + species);
     }
@@ -364,12 +363,13 @@ public final class PokemonRuntime {
     }
 
     public static void apply(MinecraftServer server, Map<String, JsonObject> species, Map<String, JsonObject> spawnFiles) {
-        if (hasActiveBattles()) throw new IllegalStateException("Finish active Pokemon battles before applying Pokemon edits.");
         Map<String, Species> replacements = new LinkedHashMap<>();
         for (var entry : species.entrySet()) if (!entry.getValue().equals(currentSpecies.get(entry.getKey()))) {
             validateSpecies(entry.getKey(), entry.getValue());
             replacements.put(entry.getKey(), parseSpecies(entry.getKey(), entry.getValue()));
         }
+        if (!replacements.isEmpty() && hasActiveBattles())
+            throw new IllegalStateException("Finish active Pokemon battles before applying species edits. Spawn-only edits remain available.");
         Map<ResourceLocation, SpawnSet> spawns = parseSpawns(spawnFiles);
         var pool = CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL();
         List<SpawnDetail> oldSpawns = new ArrayList<>(pool.getDetails());
@@ -385,15 +385,17 @@ public final class PokemonRuntime {
                 replaceSpecies(target, entry.getValue(), rollback);
             }
             // Rebuild derived evolution learnsets, including targets of a removed evolution.
-            for (Species value : PokemonSpecies.getSpecies()) {
-                value.getMoves().getEvolutionMoves().clear();
-                for (FormData form : value.getForms()) form.getMoves().getEvolutionMoves().clear();
+            if (!replacements.isEmpty()) {
+                for (Species value : PokemonSpecies.getSpecies()) {
+                    value.getMoves().getEvolutionMoves().clear();
+                    for (FormData form : value.getForms()) form.getMoves().getEvolutionMoves().clear();
+                }
+                // Evolution move resolution must see all of the new species definitions together.
+                for (Species value : PokemonSpecies.getSpecies()) value.resolveEvolutionMoves$common();
             }
-            // Evolution move resolution must see all of the new species definitions together.
-            for (Species value : PokemonSpecies.getSpecies()) value.resolveEvolutionMoves$common();
             CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL().reload(spawns);
             CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL().onServerLoad(server);
-            publishSpecies(server);
+            if (!replacements.isEmpty()) publishSpecies(server);
             currentSpecies = copy(species);
             currentSpawns = copy(spawnFiles);
         } catch (RuntimeException | ReflectiveOperationException failure) {
@@ -405,7 +407,7 @@ public final class PokemonRuntime {
                 pool.getDetails().clear();
                 pool.getDetails().addAll(oldSpawns);
                 pool.onServerLoad(server);
-                publishSpecies(server);
+                if (!replacements.isEmpty()) publishSpecies(server);
             } catch (RuntimeException restoreFailure) { failure.addSuppressed(restoreFailure); }
             throw new IllegalStateException("Pokemon edit could not be applied; previous values restored. " + Objects.toString(failure.getMessage(), ""), failure);
         }

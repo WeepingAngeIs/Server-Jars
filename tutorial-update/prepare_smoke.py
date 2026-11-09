@@ -56,6 +56,10 @@ source = source.replace('report.put("mawonna_pack_retained", true);', 'report.pu
 source = source.replace('report.put("species_textures", textures);', 'report.put("resolved_texture_variant_count", textures.size() * 2);')
 client.write_text(source)
 
+# The runtime language mod carries Kotlin in nested JARs; javac needs its compile-only API directly.
+build = ROOT / "tutorial-update/smoke-harness/build.gradle"
+build.write_text(build.read_text() + '\ndependencies { compileOnly files("../../unyielding-quests/libs/kotlin-stdlib.jar") }\n')
+
 for helper in ("CompactTaskClientSmoke.java", "TutorialAccessServerSmoke.java", "AdminFeatureSmoke.java", "AdminFeatureClientSmoke.java", "EmiQuestClientSmoke.java", "ConfigEditorSmoke.java", "LootTableServerSmoke.java", "LootEditorClientSmoke.java", "BalanceEditorSmoke.java", "BalanceLiveSmoke.java", "BalanceClientSmoke.java", "BalanceUiSmoke.java", "MusicEditorSmoke.java", "MusicClientSmoke.java", "PokemonEditorSmoke.java", "PokemonLiveClientSmoke.java", "PokemonEditorClientSmoke.java", "PokemonCounterSmoke.java"):
     assert (checks / helper).is_file(), f"Runtime assertions are missing: {helper}"
 runner_path = ROOT / "tutorial-update/run_smoke.generated.sh"
