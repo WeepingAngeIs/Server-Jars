@@ -1,0 +1,207 @@
+{
+  "status": "passed",
+  "production_jar": "/home/runner/work/unyielding-mod/unyielding-mod/combined-release/riding-update/smoke-harness/libs/Unyielding-1.1.7.jar",
+  "production_sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b",
+  "production_mods": {
+    "cusoultome": "1.2.1",
+    "curanks": "1.3.1",
+    "cugiant": "1.0.0",
+    "culeaderboard": "1.2.0",
+    "cuportal": "1.0.2",
+    "cubalance": "1.1.0",
+    "mawonna": "1.0.0",
+    "unyieldingquests": "1.6.8",
+    "uwucobblecurrency": "1.0.0"
+  },
+  "f12_default_remapped_and_unbound_key_labels": "passed",
+  "welcome_uses_inventory_pokeball_instructions": "passed",
+  "supplied_white_pokeball_unchanged_sha256": "f8de87db747d2eb9ede0ad359a29df4c384eeecce391ff64347e5eac69eb4c6b",
+  "supplied_art_four_frames_native_crop_and_legacy_animation": "passed",
+  "first_task_help_retained_later_item_cards_compact": "passed",
+  "other_chapters_unchanged": "passed",
+  "four_requested_medicine_collections_compact": "passed",
+  "normal_and_320px_panel_measurements": [
+    {
+      "tasks": 6,
+      "quest": "3E8A00000014C51A",
+      "width": 640,
+      "full_height": 493,
+      "compact_height": 438
+    },
+    {
+      "tasks": 6,
+      "quest": "3E8A00000015BA45",
+      "width": 640,
+      "full_height": 561,
+      "compact_height": 416
+    },
+    {
+      "tasks": 2,
+      "quest": "3E8A00000017F80D",
+      "width": 640,
+      "full_height": 335,
+      "compact_height": 306
+    },
+    {
+      "tasks": 9,
+      "quest": "05AAEB7B168BFD49",
+      "width": 640,
+      "full_height": 787,
+      "compact_height": 555
+    },
+    {
+      "tasks": 5,
+      "quest": "49A4AA72407D550F",
+      "width": 640,
+      "full_height": 522,
+      "compact_height": 406
+    },
+    {
+      "tasks": 6,
+      "quest": "6BEA397DFCDA7261",
+      "width": 640,
+      "full_height": 601,
+      "compact_height": 456
+    },
+    {
+      "tasks": 20,
+      "quest": "6BE5E68F55EDDE2D",
+      "width": 640,
+      "full_height": 1546,
+      "compact_height": 995
+    },
+    {
+      "tasks": 16,
+      "quest": "29B6F62DE601495A",
+      "width": 640,
+      "full_height": 1270,
+      "compact_height": 835
+    },
+    {
+      "tasks": 6,
+      "quest": "654A0D01FA03457E",
+      "width": 640,
+      "full_height": 591,
+      "compact_height": 446
+    },
+    {
+      "tasks": 5,
+      "quest": "BE7AAB2C2B9DDE41",
+      "width": 640,
+      "full_height": 593,
+      "compact_height": 477
+    },
+    {
+      "tasks": 6,
+      "quest": "E82FBEE59E4384CE",
+      "width": 640,
+      "full_height": 652,
+      "compact_height": 507
+    },
+    {
+      "tasks": 2,
+      "quest": "C533BE7A12E1DA24",
+      "width": 640,
+      "full_height": 365,
+      "compact_height": 336
+    },
+    {
+      "tasks": 6,
+      "quest": "CEE5D0B2A01DEF39",
+      "width": 640,
+      "full_height": 681,
+      "compact_height": 536
+    },
+    {
+      "tasks": 6,
+      "quest": "3E8A00000014C51A",
+      "width": 320,
+      "full_height": 547,
+      "compact_height": 447
+    },
+    {
+      "tasks": 6,
+      "quest": "3E8A00000015BA45",
+      "width": 320,
+      "full_height": 615,
+      "compact_height": 425
+    },
+    {
+      "tasks": 2,
+      "quest": "3E8A00000017F80D",
+      "width": 320,
+      "full_height": 353,
+      "compact_height": 315
+    },
+    {
+      "tasks": 9,
+      "quest": "05AAEB7B168BFD49",
+      "width": 320,
+      "full_height": 868,
+      "compact_height": 564
+    },
+    {
+      "tasks": 5,
+      "quest": "49A4AA72407D550F",
+      "width": 320,
+      "full_height": 603,
+      "compact_height": 424
+    },
+    {
+      "tasks": 6,
+      "quest": "6BEA397DFCDA7261",
+      "width": 320,
+      "full_height": 655,
+      "compact_height": 465
+    },
+    {
+      "tasks": 20,
+      "quest": "6BE5E68F55EDDE2D",
+      "width": 320,
+      "full_height": 1726,
+      "compact_height": 1004
+    },
+    {
+      "tasks": 16,
+      "quest": "29B6F62DE601495A",
+      "width": 320,
+      "full_height": 1414,
+      "compact_height": 844
+    },
+    {
+      "tasks": 6,
+      "quest": "654A0D01FA03457E",
+      "width": 320,
+      "full_height": 645,
+      "compact_height": 455
+    },
+    {
+      "tasks": 5,
+      "quest": "BE7AAB2C2B9DDE41",
+      "width": 320,
+      "full_height": 665,
+      "compact_height": 495
+    },
+    {
+      "tasks": 6,
+      "quest": "E82FBEE59E4384CE",
+      "width": 320,
+      "full_height": 770,
+      "compact_height": 535
+    },
+    {
+      "tasks": 2,
+      "quest": "C533BE7A12E1DA24",
+      "width": 320,
+      "full_height": 383,
+      "compact_height": 345
+    },
+    {
+      "tasks": 6,
+      "quest": "CEE5D0B2A01DEF39",
+      "width": 320,
+      "full_height": 753,
+      "compact_height": 554
+    }
+  ]
+}

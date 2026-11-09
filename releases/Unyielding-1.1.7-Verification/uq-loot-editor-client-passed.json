@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "production_jar": "/home/runner/work/unyielding-mod/unyielding-mod/combined-release/riding-update/smoke-harness/libs/Unyielding-1.1.7.jar",
+  "production_sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b",
+  "production_mods": {
+    "cusoultome": "1.2.1",
+    "curanks": "1.3.1",
+    "cugiant": "1.0.0",
+    "culeaderboard": "1.2.0",
+    "cuportal": "1.0.2",
+    "cubalance": "1.1.0",
+    "mawonna": "1.0.0",
+    "unyieldingquests": "1.6.8",
+    "uwucobblecurrency": "1.0.0"
+  },
+  "loot_list_create_edit_draft_isolation_and_revision": "passed",
+  "editor_sizes": [
+    {
+      "width": 640,
+      "list_create_edit_quest_reward_forms": "rendered"
+    },
+    {
+      "width": 320,
+      "list_create_edit_quest_reward_forms": "rendered"
+    }
+  ],
+  "config_values_and_list_editor_small_screen": "passed",
+  "spin_odds_percentage_presets_separate_drafts_sync_safety_and_invalid_total": "passed",
+  "spin_odds_and_admin_shortcut_render_at_640x400_and_320x240": "passed"
+}

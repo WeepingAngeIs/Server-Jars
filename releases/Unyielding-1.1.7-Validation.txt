@@ -1,0 +1,55 @@
+Unyielding 1.1.7 - validation record
+
+Actual combined release SHA256:
+876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b
+
+Passing combined server/client run:
+https://github.com/WeepingAngeIs/unyielding-mod/actions/runs/42572733078
+Tested Server-Jars source: 3158fde09c69aa46189bfaa79635e1268e066d68
+Verification workflow source: 8df0c3c7a8eeb29ec18bfbabccd30b381d5426c5
+Verified release artifact: 13653684700
+Full evidence artifact: 13653634985
+
+The verification workflow runs in the companion pack repository to reuse its
+working Gradle distribution cache after repeated external download HTTP504s.
+It checks out the exact Server-Jars source above and tests the actual assembled
+JAR. No release was rebuilt locally. A focused local javac check also passed
+using the existing Minecraft/Cobblemon/Kotlin dependencies after the user
+authorized hybrid local/cloud work.
+
+Pinned embedded Mawonna pack source:
+2f3a60814a99bb0c4ed575e3c2d4e7741ba5cc93 (WeepingAngeIs/unyielding-mod)
+Pack SHA256: 7bd79d1a20a776a500dffc0e70b315778885608a16c0e3974eb62feaf0477e12
+Pack validation and visual checks:
+https://github.com/WeepingAngeIs/unyielding-mod/actions/runs/42571441194
+
+Minecraft 1.21.1, NeoForge 21.1.255, Cobblemon 1.8.4, Java 21.
+
+Passed assembly audit:
+- 1,387 original 1.1.6 entries preserved byte-for-byte.
+- Existing production classes and all nine module IDs/versions unchanged.
+- Only original changes: outer release-version manifest and merged language file;
+  every original language key/value is preserved.
+- 118 pinned pack entries embedded, nine custom riding definitions added, and
+  eight original imported asset license/credit documents included.
+- No native riding overrides from the supplied cu-rideable reference were added.
+
+Passed actual combined-JAR runtime checks, with external Mawonna.zip removed
+from both client resourcepacks and server datapacks before startup:
+- All nine species loaded; all nine client resolvers/posers and normal/shiny
+  textures loaded; the ring item, model and texture loaded.
+- All nine owned species mounted successfully in normal and shiny form:
+  18 cases, each retaining passenger and saddle state for 20 server ticks.
+- Native controller initialization and normal remount cooldown were respected.
+- Lunavee scale .5; the other three friends .4; all four had exactly four
+  level-one moves and additional moves at higher levels.
+- Existing Mawonna runtime self-test, rank/quest command routes and permissions,
+  currency, compact tasks, player guide, EMI, config editing, loot editing and
+  live balance client/server checks passed. Fifteen JSON reports are retained
+  in the sibling Unyielding-1.1.7-Verification folder.
+
+Scope: focused dedicated server plus connected client, not the full public
+modpack. No sustained player-controlled flight session or live-server installation
+was performed. The older Corvislight/Fairy Sliggoo lists still contain the two
+previously known skipped hiddenpowerflying/hiddenpowerdragon entries; the four
+friends' cleaned progression is separate. No local game profile was changed.

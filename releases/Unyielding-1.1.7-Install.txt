@@ -1,0 +1,54 @@
+Unyielding 1.1.7 - complete custom Pokemon and riding update
+
+Install the SAME Unyielding-1.1.7.jar on the server and every client, replacing
+the older combined Unyielding JAR. Stop the server and close Minecraft first.
+Keep only one combined Unyielding JAR; do not also load Unyielding-Mawonna.jar
+or standalone copies of modules already included in the combined JAR.
+
+All nine custom Pokemon definitions, models, textures, abilities, evolution data,
+ring assets and riding definitions are now embedded in this single JAR.
+A separate Mawonna.zip is no longer required. Remove/disable old Mawonna ZIPs
+from resourcepacks and world/datapacks, along with older individual Lunavee,
+Buzzeon, Ghost Jirachi and Creepyeon packs, so they cannot override the fixes.
+Keep external mod dependencies and unrelated resource/song packs.
+
+The supplied standalone cu-rideable-1.3.0.jar remains optional for riding native
+Pokemon. It has no target overlap with these nine custom additions. This update
+does not remove or replace its broader native-species riding coverage.
+
+Included fixes for the four friends:
+- Stable model size during movement and pose changes.
+- Lunavee at regular Eevee scale; reduced Buzzeon, Ghost Jirachi and Creepyeon size.
+- Corrected icon framing, Buzzeon ears/wing motion, Ghost Jirachi geometry/name,
+  and Lunavee animation parsing.
+- Four starting moves each at level 1, with further moves unlocked as they level.
+
+Manual spawn commands:
+/pokespawn mawonna
+/pokespawn mawonna_flower
+/pokespawn covislight
+/pokespawn fairy_sliggoo
+/pokespawn inkyeon
+/pokespawn lunavee
+/pokespawn buzzeon
+/pokespawn ghost_jirachi
+/pokespawn creepyeon
+
+Append shiny to spawn a shiny example. The four friends currently reuse their
+normal artwork for the shiny aspect; the original five retain distinct colors.
+The stored command spelling for Corvislight is covislight.
+
+Capture/own a Pokemon before using Cobblemon's normal riding action.
+Ground riding: Mawonna, Mawonna Flower, Inkyeon, Lunavee and Creepyeon.
+Flying and ground: Corvislight, Fairy Sliggoo and Buzzeon.
+Hovering: Ghost Jirachi.
+
+Existing Mawonna ring, 49-meal and 666-Dark-defeat progression is retained.
+All previous 1.1.6 components, quest progress support and configured settings
+remain intact, including armor, raid, music, currency and other admin controls.
+The nine production module IDs are unchanged:
+cusoultome, curanks, cugiant, culeaderboard, cuportal, cubalance, mawonna,
+unyieldingquests, uwucobblecurrency.
+
+No local Minecraft profile or live server was changed during this release task.
+Source: https://github.com/WeepingAngeIs/Server-Jars

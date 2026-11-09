@@ -1,0 +1,76 @@
+[
+  {
+    "label": "Actual combined release JAR",
+    "file": "Unyielding-1.1.7.jar",
+    "sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b"
+  },
+  {
+    "label": "Cobblemon 1.8.4 NeoForge",
+    "version_id": "xsVHrAsY",
+    "file": "Cobblemon-neoforge-1.8.4+1.21.1.jar",
+    "url": "https://cdn.modrinth.com/data/MdwFAVRL/versions/xsVHrAsY/Cobblemon-neoforge-1.8.4%2B1.21.1.jar",
+    "sha512": "060579fb8ac67ddd131c9cc9076ef512cda9e66e7a584c7c82326be9ef0cbb69ce6c99ff772aa78f990dc1b771bac02f3bbba68a9c7ff68c557009c64f733d04"
+  },
+  {
+    "label": "Kotlin for Forge 5.12.0",
+    "version_id": "uhJhCT7X",
+    "file": "kotlinforforge-5.12.0-all.jar",
+    "url": "https://cdn.modrinth.com/data/ordsPcFz/versions/uhJhCT7X/kotlinforforge-5.12.0-all.jar",
+    "sha512": "b8c3942f4d33179edf3f102f3d870b99dd436f8b8236dbbd31aa51b888162c692cfd88927295f24dc8b4375232f4c6c17360c5d6c4823f93cbcd7cf4bdc8bd14"
+  },
+  {
+    "label": "Mega Showdown 1.3.3",
+    "version_id": "TrpwiTL5",
+    "file": "mega_showdown-neoforge-1.3.3+1.8.4+1.21.1-release.jar",
+    "url": "https://cdn.modrinth.com/data/SszvX85I/versions/TrpwiTL5/mega_showdown-neoforge-1.3.3%2B1.8.4%2B1.21.1-release.jar",
+    "sha512": "880275d4a42ebd7986fc97a927b5117615473c93ab88e0f57ecede95e66f41a6ea3e4bbaf4a0dadd6fd076f00550cf66c3e6611630a1faabd556a818676beafc"
+  },
+  {
+    "label": "Accessories 1.1.0-beta.53",
+    "version_id": "Fb55Fgjz",
+    "file": "accessories-neoforge-1.1.0-beta.53+1.21.1.jar",
+    "url": "https://cdn.modrinth.com/data/jtmvUHXj/versions/Fb55Fgjz/accessories-neoforge-1.1.0-beta.53%2B1.21.1.jar",
+    "sha512": "baafa9a5e48c17c243d45b6260095ffef2ad00e4e970aafc5b1ca9ab5f4a542b18b0fb35d4584318791edbaf00a3c44806f62062513d991383192aca4df27a07"
+  },
+  {
+    "label": "owo-lib 0.12.15.5-beta.1",
+    "version_id": "NMCHU6DZ",
+    "file": "owo-lib-neoforge-0.12.15.5-beta.1+1.21.jar",
+    "url": "https://cdn.modrinth.com/data/ccKDOlHs/versions/NMCHU6DZ/owo-lib-neoforge-0.12.15.5-beta.1%2B1.21.jar",
+    "sha512": "4de5c5d52139244b8c5260d641087664d992624b822599a32e03c08eb133be854a2f413667dbca1e55772445b04a70210c17b3bc13e3c88e425e7d928104b9fa"
+  },
+  {
+    "label": "Architectury 13.0.11",
+    "version_id": "1IiqEQGl",
+    "file": "architectury-13.0.11-neoforge.jar",
+    "url": "https://cdn.modrinth.com/data/lhGA9TYQ/versions/1IiqEQGl/architectury-13.0.11-neoforge.jar",
+    "sha512": "d9f7c3bb8162577dfb461ffdf04bd6a3563c7586934a0e2a744c14421beffb8286f0d88d4c758317003f20f99fe8072a39b9d675af061e036970d36db36027f0"
+  },
+  {
+    "label": "CobbleDollars 2.0.0 Beta 6.1 NeoForge",
+    "version_id": "Iqiqjfsi",
+    "file": "CobbleDollars-neoforge-2.0.0+Beta-6.1+1.21.1.jar",
+    "url": "https://cdn.modrinth.com/data/s7N7AsqL/versions/Iqiqjfsi/CobbleDollars-neoforge-2.0.0%2BBeta-6.1%2B1.21.1.jar",
+    "sha512": "1e1b37de91b9aab4df3dcd92093ef2a35a4081841407d70725e0f455694558b39b9b84f3746509c04b3894c0d674d9ac723a0fe8c08b7bf5ea2501777ce0c219"
+  },
+  {
+    "label": "Lightman's Currency 2.3.0.5 NeoForge",
+    "version_id": "n2ynBeOK",
+    "file": "lightmanscurrency-1.21-2.3.0.5.jar",
+    "url": "https://cdn.modrinth.com/data/wvMc8AJt/versions/n2ynBeOK/lightmanscurrency-1.21-2.3.0.5.jar",
+    "sha512": "f9eaf1020fe77c36912f7eec1d7e6500d7465e6bdb829e737c4bdb8af6a1213d83771a9e84392d210e675c8e74294fa7f8c1f4f78386f2966896b6891019c451"
+  },
+  {
+    "label": "EMI 1.1.24 NeoForge",
+    "version_id": "5sIPA1To",
+    "file": "emi-1.1.24+1.21.1+neoforge.jar",
+    "url": "https://cdn.modrinth.com/data/fRiHVvU7/versions/5sIPA1To/emi-1.1.24%2B1.21.1%2Bneoforge.jar",
+    "sha512": "f4c45ed686fe617311d6debadcb6ace5963e66f8cfe0cfed398231f081f87407070efc7a73c8b695d158f1d87a97180737b9107a46771e77df2bc9a7dc715ebd"
+  },
+  {
+    "label": "Embedded Mawonna pack; external ZIP removed before server/client startup",
+    "commit": "2f3a60814a99bb0c4ed575e3c2d4e7741ba5cc93",
+    "git_blob_sha1": "1a8a18b18cf23197c3fef4d4d56b9b2fa322f7a2",
+    "sha256": "7bd79d1a20a776a500dffc0e70b315778885608a16c0e3974eb62feaf0477e12"
+  }
+]

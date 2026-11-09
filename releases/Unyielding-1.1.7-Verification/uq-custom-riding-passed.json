@@ -1,0 +1,182 @@
+{
+  "production_mods": {
+    "cusoultome": "1.2.1",
+    "curanks": "1.3.1",
+    "cugiant": "1.0.0",
+    "culeaderboard": "1.2.0",
+    "cuportal": "1.0.2",
+    "cubalance": "1.1.0",
+    "mawonna": "1.0.0",
+    "unyieldingquests": "1.6.8",
+    "uwucobblecurrency": "1.0.0"
+  },
+  "production_sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b",
+  "production_jar": "/home/runner/work/unyielding-mod/unyielding-mod/combined-release/riding-update/smoke-harness/libs/Unyielding-1.1.7.jar",
+  "status": "passed",
+  "custom_pokemon_riding": [
+    {
+      "saddle": "middle",
+      "base_scale": 0.75,
+      "shiny": false,
+      "level_one_moves": 141,
+      "movement_modes": "[LAND]",
+      "species": "mawonna",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.75,
+      "shiny": true,
+      "level_one_moves": 141,
+      "movement_modes": "[LAND]",
+      "species": "mawonna",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.75,
+      "shiny": false,
+      "level_one_moves": 929,
+      "movement_modes": "[LAND]",
+      "species": "mawonna_flower",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.75,
+      "shiny": true,
+      "level_one_moves": 929,
+      "movement_modes": "[LAND]",
+      "species": "mawonna_flower",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 1.0,
+      "shiny": false,
+      "level_one_moves": 68,
+      "movement_modes": "[AIR, LAND]",
+      "species": "covislight",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 1.0,
+      "shiny": true,
+      "level_one_moves": 68,
+      "movement_modes": "[AIR, LAND]",
+      "species": "covislight",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.65,
+      "shiny": false,
+      "level_one_moves": 80,
+      "movement_modes": "[AIR, LAND]",
+      "species": "fairy_sliggoo",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.65,
+      "shiny": true,
+      "level_one_moves": 80,
+      "movement_modes": "[AIR, LAND]",
+      "species": "fairy_sliggoo",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.8,
+      "shiny": false,
+      "level_one_moves": 204,
+      "movement_modes": "[LAND]",
+      "species": "inkyeon",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.8,
+      "shiny": true,
+      "level_one_moves": 204,
+      "movement_modes": "[LAND]",
+      "species": "inkyeon",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.5,
+      "shiny": false,
+      "level_one_moves": 4,
+      "movement_modes": "[LAND]",
+      "species": "lunavee",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.5,
+      "shiny": true,
+      "level_one_moves": 4,
+      "movement_modes": "[LAND]",
+      "species": "lunavee",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.4,
+      "shiny": false,
+      "level_one_moves": 4,
+      "movement_modes": "[AIR, LAND]",
+      "species": "buzzeon",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.4,
+      "shiny": true,
+      "level_one_moves": 4,
+      "movement_modes": "[AIR, LAND]",
+      "species": "buzzeon",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.4,
+      "shiny": false,
+      "level_one_moves": 4,
+      "movement_modes": "[AIR]",
+      "species": "ghost_jirachi",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.4,
+      "shiny": true,
+      "level_one_moves": 4,
+      "movement_modes": "[AIR]",
+      "species": "ghost_jirachi",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.4,
+      "shiny": false,
+      "level_one_moves": 4,
+      "movement_modes": "[LAND]",
+      "species": "creepyeon",
+      "mounted_for_ticks": 20
+    },
+    {
+      "saddle": "middle",
+      "base_scale": 0.4,
+      "shiny": true,
+      "level_one_moves": 4,
+      "movement_modes": "[LAND]",
+      "species": "creepyeon",
+      "mounted_for_ticks": 20
+    }
+  ],
+  "embedded_data_without_external_pack": true,
+  "scope": "Live owned-Pokemon mount, passenger and saddle state for nine species, normal and shiny, for twenty ticks each; no sustained player-controlled flight test"
+}

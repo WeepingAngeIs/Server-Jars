@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "production_jar": "/home/runner/work/unyielding-mod/unyielding-mod/combined-release/riding-update/smoke-harness/libs/Unyielding-1.1.7.jar",
+  "production_sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b",
+  "production_mods": {
+    "cusoultome": "1.2.1",
+    "curanks": "1.3.1",
+    "cugiant": "1.0.0",
+    "culeaderboard": "1.2.0",
+    "cuportal": "1.0.2",
+    "cubalance": "1.1.0",
+    "mawonna": "1.0.0",
+    "unyieldingquests": "1.6.8",
+    "uwucobblecurrency": "1.0.0"
+  },
+  "inventory_quest_popup_and_vein_mining_flags": "passed",
+  "non_operator_received_no_editable_settings": "passed"
+}

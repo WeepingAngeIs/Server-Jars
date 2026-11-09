@@ -1,0 +1,24 @@
+{
+  "production_mods": {
+    "cusoultome": "1.2.1",
+    "curanks": "1.3.1",
+    "cugiant": "1.0.0",
+    "culeaderboard": "1.2.0",
+    "cuportal": "1.0.2",
+    "cubalance": "1.1.0",
+    "mawonna": "1.0.0",
+    "unyieldingquests": "1.6.8",
+    "uwucobblecurrency": "1.0.0"
+  },
+  "production_sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b",
+  "production_jar": "/home/runner/work/unyielding-mod/unyielding-mod/combined-release/riding-update/smoke-harness/libs/Unyielding-1.1.7.jar",
+  "status": "passed",
+  "default_operator_guide_omits_admin_and_unconfigured_rank_commands": "passed",
+  "global_operator_fallback_has_no_entity_or_privilege_leak": "passed",
+  "curated_directory_matches_pages_and_ignores_unlisted_roots": "passed",
+  "nonoperator_and_operator_do_not_bypass_rank_rules": "passed",
+  "live_rank_grant_expiry_and_revocation": "passed",
+  "legacy_guide_migrates_invite_inventory_hint_and_rank_policy_once": "passed",
+  "custom_guide_wording_and_fields_survive_migration": "passed",
+  "scope": "Final-JAR real connected player, curated command fixtures and live bundled CuRanks data; not the complete server permission stack"
+}

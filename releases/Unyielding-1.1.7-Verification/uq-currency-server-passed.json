@@ -1,0 +1,23 @@
+{
+  "production_mods": {
+    "cusoultome": "1.2.1",
+    "curanks": "1.3.1",
+    "cugiant": "1.0.0",
+    "culeaderboard": "1.2.0",
+    "cuportal": "1.0.2",
+    "cubalance": "1.1.0",
+    "mawonna": "1.0.0",
+    "unyieldingquests": "1.6.8",
+    "uwucobblecurrency": "1.0.0"
+  },
+  "production_sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b",
+  "production_jar": "/home/runner/work/unyielding-mod/unyielding-mod/combined-release/riding-update/smoke-harness/libs/Unyielding-1.1.7.jar",
+  "status": "passed",
+  "registration_parser_and_nbt_json_network_roundtrips": "passed",
+  "coin_free_and_empty_config_values_roundtrip_unchanged": "passed",
+  "large_amounts_arithmetic_rounding_and_admin_permissions": "passed",
+  "real_player_simulation_debit_credit_no_overdraft_and_cap": "passed",
+  "coins_remain_separate_and_combined_money_handler": "passed",
+  "cobbledollars_network_sync_to_real_client": "passed",
+  "scope": "Actual final JAR with real currency mods; focused API and client integration, not a complete auction/trader gameplay walkthrough"
+}

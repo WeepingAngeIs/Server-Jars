@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "production_jar": "/home/runner/work/unyielding-mod/unyielding-mod/combined-release/riding-update/smoke-harness/libs/Unyielding-1.1.7.jar",
+  "production_sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b",
+  "production_mods": {
+    "cusoultome": "1.2.1",
+    "curanks": "1.3.1",
+    "cugiant": "1.0.0",
+    "culeaderboard": "1.2.0",
+    "cuportal": "1.0.2",
+    "cubalance": "1.1.0",
+    "mawonna": "1.0.0",
+    "unyieldingquests": "1.6.8",
+    "uwucobblecurrency": "1.0.0"
+  },
+  "server_armor_values_reached_existing_client": "passed",
+  "armor_raid_screens_presets_independent_drafts_invalid_save_and_server_routing": "passed",
+  "armor_raid_admin_controls_render_at_640x400_and_320x240": "passed",
+  "real_reactive_music_1_3_5_transformed_set_gain_and_device_limits": "passed",
+  "music_mixer_search_presets_validation_and_640x400_320x240_layout": "passed",
+  "music_live_server_sync_math_mute_fade_gain_clamp_and_disconnect_reset": "passed"
+}
