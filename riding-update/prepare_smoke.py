@@ -9,15 +9,6 @@ ROOT = Path(__file__).resolve().parents[1]
 if os.environ.get("GITHUB_ACTIONS") != "true" or os.environ.get("RUNNER_ENVIRONMENT") != "github-hosted":
     raise SystemExit("Preparation and game checks run only on GitHub-hosted runners.")
 config = json.loads((ROOT / "riding-update/release.json").read_text())
-# The services endpoint redirects to a GitHub release that returned repeated 504s.
-# Use Gradle's official direct mirror with its published checksum, only in this CI checkout.
-wrapper = ROOT / "unyielding-quests/gradle/wrapper/gradle-wrapper.properties"
-properties = wrapper.read_text().replace("services.gradle.org", "downloads.gradle.org")
-properties = properties.replace("networkTimeout=10000", "networkTimeout=60000")
-assert "gradle-8.14.3-bin.zip" in properties
-if "distributionSha256Sum=" not in properties:
-    properties += "\ndistributionSha256Sum=bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531\n"
-wrapper.write_text(properties)
 harness = ROOT / "riding-update/smoke-harness"
 shutil.copytree(ROOT / "combined-unyielding/smoke-harness", harness,
                 ignore=shutil.ignore_patterns(".gradle", "build", "libs", "run", "run-server"))
@@ -78,6 +69,8 @@ music = namespace["download"](
 assert hashlib.sha512(music).hexdigest() == "faae7a2bdc191f441d7cff8caa2d13d3acb9e0429ebce72b3e5e1b0344a2902f91a32b48b71818bad99df7ece812baaff443480b5712904cec0fefb5d45f80ff"
 
 runner = (ROOT / "combined-unyielding/run_smoke.sh").read_text()
+# Use the official setup-gradle action's verified installation, as the pack harness does.
+runner = runner.replace('"$repository/unyielding-quests/gradlew"', 'gradle')
 runner = runner.replace("combined-unyielding/smoke-harness", "riding-update/smoke-harness")
 runner = runner.replace("dist/combined-smoke", "dist/riding-smoke")
 runner = runner.replace('resourcePacks:["vanilla","file/Mawonna.zip"]', 'resourcePacks:["vanilla"]')

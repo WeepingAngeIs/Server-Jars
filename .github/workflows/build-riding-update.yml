@@ -36,12 +36,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-          cache: gradle
-          cache-dependency-path: |
-            unyielding-quests/*.gradle
-            unyielding-quests/gradle.properties
-            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
-            combined-unyielding/smoke-harness/*.gradle
+      - name: Set up verified Gradle distribution
+        uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a
+        with:
+          gradle-version: '8.14.3'
       - name: Assemble and audit combined JAR
         run: python3 riding-update/build_bundle.py
       - name: Prepare isolated final-JAR checks
