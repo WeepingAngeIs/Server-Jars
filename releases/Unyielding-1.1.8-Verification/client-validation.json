@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "minecraft": "1.21.1",
+  "cobblemon": "1.8.4",
+  "scope": "Actual Minecraft client resource reload; GUI profile and portrait screenshots of both sexes; Buzzeon flight cycle; Ghost Jirachi angles; Fairy Sliggoo normal/shiny standing face angles; Inkyeon normal/shiny WALK front/side/rear renders with nonzero stride and sampled leg rotations; runtime scale checks across pose transitions; malformed UV regression. Required dependencies only, without a world or complete user modpack."
+}

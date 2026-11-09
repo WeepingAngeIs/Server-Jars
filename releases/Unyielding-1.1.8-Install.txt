@@ -1,0 +1,30 @@
+Unyielding 1.1.8 - Fairy Sliggoo face and Inkyeon rear legs
+
+Install the SAME Unyielding-1.1.8.jar on the server and every client, replacing
+the previous combined Unyielding JAR. Stop the server and close Minecraft first.
+Keep only one combined Unyielding JAR installed.
+
+This release restores Fairy Sliggoo's original regular Sliggoo eyes and mouth,
+while retaining its colors, shell, four Cupid wings and other decorations.
+Inkyeon's walking and swimming rear legs now take a shorter forward/back
+stride, with the sideways splay removed. Front-leg motion and diagonal
+stepping rhythm remain unchanged.
+
+All species data, moves, abilities, evolution requirements, riding definitions,
+ring assets, other models and existing Unyielding modules are preserved.
+The complete custom Pokemon pack is embedded; no Mawonna.zip is needed.
+Remove/disable older Mawonna and individual custom Pokemon resource/data packs
+that could override the embedded fixes. Keep unrelated resource packs.
+
+Keep the existing external dependencies, including Cobblemon 1.8.4,
+CobbleDollars, Lightman's Currency and their required libraries.
+The separate cu-rideable mod can remain for its native Pokemon coverage.
+
+Manual spawn examples:
+/pokespawn fairy_sliggoo
+/pokespawn fairy_sliggoo shiny
+/pokespawn inkyeon
+/pokespawn inkyeon shiny
+
+All other spawn commands and gameplay settings remain as documented in 1.1.7.
+No existing local game profile or live server was changed by this release task.

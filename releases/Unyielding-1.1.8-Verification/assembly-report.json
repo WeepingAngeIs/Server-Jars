@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "version": "1.1.8",
+  "base_sha256": "876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b",
+  "jar_sha256": "d3d560525f810a340fe2c634a1bc3f4c7a14883dadba1926b1d7c29478bcbbcc",
+  "pack_sha256": "57753320704bb5649fb97ee540647108f771ce6c38fca44774975b37f600301b",
+  "changed_assets": [
+    "assets/mawonna/bedrock/pokemon/models/fairy_sliggoo/fairy_sliggoo.geo.json",
+    "assets/mawonna/bedrock/pokemon/animations/inkyeon/inkyeon.animation.json",
+    "assets/mawonna/bedrock/pokemon/posers/inkyeon.json"
+  ],
+  "preserved_entries": 1519,
+  "unchanged_gameplay_data": true,
+  "unchanged_java_classes": true
+}

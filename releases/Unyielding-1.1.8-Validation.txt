@@ -1,0 +1,57 @@
+Unyielding 1.1.8 - Fairy Sliggoo and Inkyeon validation
+
+Actual tested JAR SHA256:
+d3d560525f810a340fe2c634a1bc3f4c7a14883dadba1926b1d7c29478bcbbcc
+Matching standalone Mawonna.zip SHA256:
+57753320704bb5649fb97ee540647108f771ce6c38fca44774975b37f600301b
+
+Passed cloud run:
+https://github.com/WeepingAngeIs/unyielding-mod/actions/runs/42586037105
+Tested source: 660dd3a3d0c1e4240139fbade3e8c79984969963
+Verified release artifact: 13659232140
+Rendering evidence artifact: 13659232145
+
+The published JAR and ZIP are the exact downloaded cloud artifacts. A focused
+local Java compilation also passed. The local assembly's entry contents match
+the cloud JAR; ZIP compression can yield different archive bytes across systems.
+
+Minecraft 1.21.1, NeoForge 21.1.249, Cobblemon 1.8.4, Java 21.
+The client loaded the full combined JAR with its required dependencies and no
+external Mawonna resource/data pack. Minimal name/baseScale fixtures enable
+title-screen GUI renders; actual models, textures, poses and animations come
+from the shipped JAR. This task does not repeat full gameplay/server tests.
+
+Passed asset-preservation audit against verified Unyielding 1.1.7:
+- Exactly three asset entries changed: Fairy Sliggoo model, Inkyeon animations,
+  and Inkyeon poser. The outer release manifest changes to version 1.1.8.
+- The remaining 1,519 file entries are byte-identical, including every Java
+  class, gameplay definition, ability, evolution, move list and riding definition.
+- Original riding seat locators remain in the updated Fairy Sliggoo model.
+- Fairy Sliggoo eyes and mouth match native regular Sliggoo geometry. Its other
+  52 bones, four Cupid wings, decorative details, textures and 15 native clips
+  are retained. No generated face or texture repaint was used.
+- Inkyeon's existing animation clips, idle/battle behavior, geometry and
+  normal/shiny textures are retained. The new walking alignment cancels only
+  rear sideways angles. Native biped helpers halve only the rear stride while
+  preserving the front stride, movement frequency and diagonal stepping phase.
+
+Passed actual client checks:
+- Eight screenshots: prior friend profiles/portraits, Buzzeon wing cycle,
+  Ghost Jirachi angles, Fairy Sliggoo normal/shiny face angles, Inkyeon
+  normal/shiny walking phases, and normal/shiny idle/walk transition frames.
+- Eight sampled gait phases confirm rear yaw/roll are zero; rear hip swing
+  is exactly half native Sylveon's, with unchanged front stride and diagonal
+  phase. At stride amount 0.8, rear pitch range is 1.12 radians; front is 2.24.
+- 280 normal/shiny transitions at multiple animation phases cover standing
+  and battle-standing to/from walking at 0, 1, 2, 3, 5, 10 and 20 ticks.
+  Every rear ancestor/joint has finite position/rotation/scale within the
+  steady pose bounds; foot lateral positions stay within the expected envelope
+  plus a half-model-pixel tolerance. Whole eight-second idle cycles and native
+  Sylveon movement bounds are recorded for comparison.
+- 980 existing friend pose-transition scale checks also pass.
+- All custom models/posers and original-five distinct normal/shiny textures
+  load. The vow-ring item/model/texture and malformed-UV regression pass.
+
+Reports and screenshots are in Unyielding-1.1.8-Verification beside this file.
+Scope: focused actual client renderer, not a full modpack play session.
+No existing local game profile or live server was changed.
