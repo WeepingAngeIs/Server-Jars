@@ -527,7 +527,9 @@ public final class PokemonRuntime {
             service.indicateSpeciesInitialized();
             return Unit.INSTANCE;
         });
-        for (var player : server.getPlayerList().getPlayers()) PokemonSpecies.INSTANCE.sync(player);
+        // The integrated host shares these objects with its client. Native registry sync skips it too.
+        for (var player : server.getPlayerList().getPlayers())
+            if (!player.connection.getConnection().isMemoryConnection()) PokemonSpecies.INSTANCE.sync(player);
         PokemonProgressSync.publish(server);
     }
 
