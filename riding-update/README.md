@@ -17,6 +17,7 @@ The provided `cu-rideable-1.3.0.jar` is a source reference for riding behavior t
 | `creepyeon` | Ground | Sylveon |
 
 All custom seats use the model's `middle` locator. Normal and shiny versions share riding behavior.
+The four imported friends currently reuse their normal artwork for the shiny aspect; the original five custom Pokémon retain their distinct shiny textures.
 
 Original source licenses and credits for the four imported Pokémon are retained under `META-INF/licenses/imported-pokemon/` in the combined JAR, in addition to the Mawonna pack's own included license files.
 

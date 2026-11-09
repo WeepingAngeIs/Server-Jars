@@ -29,6 +29,12 @@ assert old in text
 text = text.replace(old, 'BundleSmoke.require(!mc.getResourcePackRepository().getSelectedIds().contains("file/Mawonna.zip"), "External pack masks embedded JAR assets");')
 text = text.replace('"fairy_sliggoo", "inkyeon", "covislight", "mawonna", "mawonna_flower"',
                     '"fairy_sliggoo", "inkyeon", "covislight", "mawonna", "mawonna_flower", "lunavee", "buzzeon", "ghost_jirachi", "creepyeon"')
+old = 'BundleSmoke.require(normal != null && shiny != null && !normal.equals(shiny), "Missing distinct normal/shiny texture: " + id);'
+assert text.count(old) == 1
+text = text.replace(old, '''BundleSmoke.require(normal != null && shiny != null, "Missing normal/shiny texture: " + id);
+                if (!List.of("lunavee", "buzzeon", "ghost_jirachi", "creepyeon").contains(id)) {
+                    BundleSmoke.require(!normal.equals(shiny), "Missing distinct normal/shiny texture: " + id);
+                }''')
 text = text.replace('report.put("mawonna_pack_retained", true);', 'report.put("embedded_mawonna_pack_without_external_zip", true);')
 client.write_text(text)
 
