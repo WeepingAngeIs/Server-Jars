@@ -109,7 +109,7 @@ def main() -> None:
         "base_entries_preserved": len(baseline) - len(changed),
         "changed_existing_entries": sorted(changed),
         "production_modules": {mod["modId"]: mod["version"] for mod in original_metadata["mods"]},
-        "riding_additions": additions, "native_species_overrides_added": 0,
+        "riding_additions": additions, "native_riding_overrides_added": 0,
         "reference": config["reference"], "embedded_model_pack": config["pack"],
         "embedded_pack_sha256": digest(pack_bytes), "embedded_pack_entries": pack_entries,
     }

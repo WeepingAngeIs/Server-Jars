@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.api.riding.RidingStyle;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.LevelResource;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -41,7 +42,8 @@ public final class CustomRidingSmoke {
         var position = player.position();
         var rows = new ArrayList<Map<String, Object>>();
         try {
-            require(!Files.exists(Path.of("run-server/world/datapacks/Mawonna.zip")), "External datapack masks bundled definitions");
+            require(!Files.exists(event.getServer().getWorldPath(LevelResource.DATAPACK_DIR).resolve("Mawonna.zip")),
+                    "External datapack masks bundled definitions");
             for (String id : SPECIES) {
                 var species = PokemonSpecies.getByIdentifier(ResourceLocation.parse("cobblemon:" + id));
                 require(species != null, "Bundled species failed to load: " + id);
