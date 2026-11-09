@@ -18,6 +18,8 @@ The provided `cu-rideable-1.3.0.jar` is a source reference for riding behavior t
 
 All custom seats use the model's `middle` locator. Normal and shiny versions share riding behavior.
 
+Original source licenses and credits for the four imported Pokémon are retained under `META-INF/licenses/imported-pokemon/` in the combined JAR, in addition to the Mawonna pack's own included license files.
+
 Install the same verified Unyielding 1.1.7 JAR on server and clients, replacing the previous combined Unyielding JAR. A separate Mawonna.zip and old individual custom Pokémon packs are no longer needed; remove/disable their older copies so they cannot override the embedded fixes. Existing external dependencies, including Cobblemon, remain required. The standalone cu-rideable mod is independent and optional for its broader native-species riding; this update does not replace its non-custom coverage.
 
 `build_bundle.py` pins the base and source pack hashes, rejects unexpected collisions, merges the shared language file without changing existing keys, and verifies unrelated original payload bytes remain unchanged. `prepare_smoke.py` reuses the accepted server/client/currency/admin harness. It removes the external model pack before startup, verifies all nine resolvers and normal/shiny textures from the combined JAR, and checks the four friends' size and level progression. `CustomRidingSmoke` uses the connected cloud player to mount each of the nine owned species in normal and shiny form and checks passenger and saddle state. It does not simulate a long player-controlled flight or a full-modpack multiplayer session.

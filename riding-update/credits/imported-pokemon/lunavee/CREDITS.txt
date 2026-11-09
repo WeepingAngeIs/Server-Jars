@@ -1,0 +1,4 @@
+Lunavee concept and branding: UwU.
+Eevee base model, texture, original poses and cry: Cobblemon contributors.
+Modified assets: galaxy recolour, moon marking, golden eyes, nose, tail, stars, idle and pitched cry.
+Derived Eevee assets retain the included source license.

@@ -52,6 +52,15 @@ namespace["DEPENDENCIES"].update({
     "EMI 1.1.24 NeoForge": "5sIPA1To",
 })
 namespace["main"]()
+# Kotlin-for-Forge supplies this at game runtime inside nested JARs. javac also
+# needs the API on its own compile classpath for direct Cobblemon storage calls.
+# Version/checksum match the existing accepted quest compile dependency.
+kotlin = namespace["download"](
+    "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.4.0/kotlin-stdlib-2.4.0.jar",
+    harness / "compile-libs/kotlin-stdlib.jar")
+assert hashlib.sha1(kotlin).hexdigest() == "4e9f4b531dce5c7dee58ed2de9a8b9a763c8dc6c"
+gradle = harness / "build.gradle"
+gradle.write_text(gradle.read_text() + "\ndependencies { compileOnly files('compile-libs/kotlin-stdlib.jar') }\n")
 # Deliberately remove the verified companion pack from this fresh cloud-only runtime:
 # all model assets and species data must load from the actual final release JAR.
 for path in (harness / "run/resourcepacks/Mawonna.zip", harness / "run-server/world/datapacks/Mawonna.zip"):

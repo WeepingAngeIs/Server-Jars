@@ -46,6 +46,7 @@ def main() -> None:
         pack_bytes = response.read()
     blob = hashlib.sha1(b"blob " + str(len(pack_bytes)).encode() + b"\0" + pack_bytes).hexdigest()
     assert blob == pack_config["blob"], "Pinned model pack changed"
+    assert digest(pack_bytes) == pack_config["sha256"], "Model pack SHA256 mismatch"
     pack_entries = {}
     merged_language = "assets/mawonna/lang/en_us.json"
     with zipfile.ZipFile(io.BytesIO(pack_bytes)) as archive:
@@ -66,6 +67,17 @@ def main() -> None:
             output[name] = value
             pack_entries[name] = digest(value)
     assert len(pack_entries) > 100 and merged_language in pack_entries
+    credits = {}
+    credit_root = ROOT / "riding-update/credits/imported-pokemon"
+    for source in sorted(credit_root.rglob("*")):
+        if not source.is_file():
+            continue
+        assert any(part in source.name.lower() for part in ("license", "credits"))
+        name = "META-INF/licenses/imported-pokemon/" + source.relative_to(credit_root).as_posix()
+        assert name not in output
+        output[name] = source.read_bytes()
+        credits[name] = digest(output[name])
+    assert {path.split("/")[3] for path in credits} == {"buzzeon", "creepyeon", "ghost_jirachi", "lunavee"}
     targets = set()
     additions = {}
     for source in sorted((ROOT / "riding-update/data").rglob("*.json")):
@@ -112,6 +124,7 @@ def main() -> None:
         "riding_additions": additions, "native_riding_overrides_added": 0,
         "reference": config["reference"], "embedded_model_pack": config["pack"],
         "embedded_pack_sha256": digest(pack_bytes), "embedded_pack_entries": pack_entries,
+        "imported_asset_credits": credits,
     }
     (destination.parent / "assembly-report.json").write_text(json.dumps(report, indent=2) + "\n")
     (destination.parent / "SHA256SUMS").write_text(report["sha256"] + "  " + destination.name + "\n")

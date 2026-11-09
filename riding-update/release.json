@@ -13,7 +13,9 @@
   },
   "pack": {
     "repository": "WeepingAngeIs/unyielding-mod",
-    "commit": "2965356a7af5bab11346210bb75dff00b9737123",
-    "blob": "851b01edd99cc60391a7e271e0a5ff16a87d025b"
+    "commit": "2f3a60814a99bb0c4ed575e3c2d4e7741ba5cc93",
+    "blob": "1a8a18b18cf23197c3fef4d4d56b9b2fa322f7a2",
+    "sha256": "7bd79d1a20a776a500dffc0e70b315778885608a16c0e3974eb62feaf0477e12",
+    "validation_run": "https://github.com/WeepingAngeIs/unyielding-mod/actions/runs/42571441194"
   }
 }
