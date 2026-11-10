@@ -154,7 +154,14 @@ public final class ModCommands {
         quests.then(dailyCommand("daily"));
         d.register(quests);
         d.register(Commands.literal("config").requires(source -> source.hasPermission(2)).executes(context -> {
-            dev.unyielding.quests.settings.AdminSettings.open(player(context));
+            // NeoForge already owns a public /config root. Brigadier merges nodes
+            // without replacing its requirement, so also authorize execution here.
+            ServerPlayer target = player(context);
+            if (!context.getSource().hasPermission(2) || !target.hasPermissions(2)) {
+                context.getSource().sendFailure(Component.literal("Only server admins can open these settings."));
+                return 0;
+            }
+            dev.unyielding.quests.settings.AdminSettings.open(target);
             return 1;
         }));
 
