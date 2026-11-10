@@ -1,0 +1,12 @@
+Unyielding 1.1.8
+Minecraft 1.21.1 • NeoForge • Java 21
+
+• Eevee can evolve into Creepyeon after personally defeating 1,000 Gastly, Buzzeon after 1,000 Bug types, or Lunavee after 500 Normal types. Lunavee evolves during Minecraft's midnight window, ticks 17,000–18,999. Progress carries over between nights.
+• Shortened the evolution progress label to “Defeat Dark Types.” Added hidden defeat milestones for Mawile, Corvisquire, Sliggoo and Sylveon, including “I love snails.” for Sliggoo.
+• Operators can use /darkdefeats add <party slot> <amount> or /darkdefeats complete <party slot> to test individual evolution progress. Other evolution conditions still apply.
+• Operators can spawn 1–100 Pokémon by species, for example /cobblemonspawn sableye 5.
+• Inventory Lucky Spin now saves earned spins until the player chooses their starter and manually spins the horizontal prize reel.
+• Updated custom map icons for Mawonna and Frilligoo and added a global icon size setting. Mawonna and Inkyeon map artwork comes bundled in the JAR.
+• Added compact sun, moon and rain-cloud inventory controls for admins, an optional global admin claim bypass, and server settings for utility commands.
+
+Install matching Unyielding JARs on the server and clients.
