@@ -23,7 +23,7 @@ public final class AdminInventoryButtons {
         boolean topLeft = occupied != null && UiConfig.invButtons() == UiConfig.InvButtons.TOP_LEFT;
         int x = topLeft ? occupied[0] : 4;
         int y = topLeft ? occupied[1] + occupied[3] + 3 : 4;
-        int width = Math.min(52, (screen.width - 12) / 3);
+        int width = Math.min(20, (screen.width - 12) / 3);
         x = Math.max(0, Math.min(x, screen.width - (width * 3 + 4)));
         y = Math.max(0, Math.min(y, screen.height - 20));
         String[] actions = {"day", "night", "weather"};
@@ -57,12 +57,14 @@ public final class AdminInventoryButtons {
 
     private static final class WorldButton extends Button {
         private final String action;
+        private final net.minecraft.resources.ResourceLocation icon;
         private String tip = "";
 
         private WorldButton(int x, int y, int width, String title, String action) {
             super(x, y, width, 20, Component.literal(title),
                     ignored -> Net.sendToServer(new Net.AdminWorldAction(action)), DEFAULT_NARRATION);
             this.action = action;
+            this.icon = dev.unyielding.quests.client.ui.Ui.sprite("icon_world_" + action);
             updateState();
         }
 
@@ -90,6 +92,12 @@ public final class AdminInventoryButtons {
             if (level == null || !level.dimensionType().hasSkyLight()) return "Weather is unavailable in this dimension";
             String next = level.isThundering() ? "clear" : level.getLevelData().isRaining() ? "thunder" : "rain";
             return "Next: " + next + " for ten minutes in this dimension";
+        }
+
+        @Override public void renderString(net.minecraft.client.gui.GuiGraphics graphics, net.minecraft.client.gui.Font font, int color) {
+            int size = Math.min(16, getWidth() - 2);
+            dev.unyielding.quests.client.ui.Ui.blit(graphics, icon, getX() + (getWidth() - size) / 2,
+                    getY() + (getHeight() - size) / 2, size, size);
         }
 
         @Override public void onPress() {
