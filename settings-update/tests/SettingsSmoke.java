@@ -166,14 +166,18 @@ public final class SettingsSmoke {
                     "/" + command + " opens populated admin settings");
             player.operator = false;
             player.payloads.clear();
+            var unprivileged = player.createCommandSourceStack().withPermission(0);
+            check(!unprivileged.hasPermission(2) && !player.hasPermissions(2), "non-operator fixture has no elevated permissions");
             boolean denied;
-            try { denied = dispatcher.execute(command, player.createCommandSourceStack().withPermission(0)) == 0; }
+            try { denied = dispatcher.execute(command, unprivileged) == 0; }
             catch (CommandSyntaxException expected) { denied = true; }
             check(denied, "non-operator cannot execute /" + command);
             check(player.payloads.stream().noneMatch(payload -> payload instanceof Net.AdminSettingsSync sync
                             && (sync.open() || !sync.tag().getList("settings", 10).isEmpty())),
                     "denied /" + command + " sends no editable settings");
         }
+        check(dispatcher.getRoot().getChild("config").getChild("showfile") != null,
+                "config alias preserves NeoForge's existing showfile subcommand");
         player.operator = true;
         completed.add("config command aliases and permissions");
     }
