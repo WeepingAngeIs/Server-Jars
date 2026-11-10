@@ -1,0 +1,61 @@
+Unyielding 1.1.9 — animated icons and approved custom Pokemon updates
+
+Close Minecraft and stop the server before replacing mods. Install the SAME
+Unyielding-1.1.9.jar on the server and clients. Keep only one combined Unyielding
+JAR. Remove older separate copies of its bundled modules, including the Mawonna
+companion, Unyielding Quests and Cobble Currency Bridge when present.
+
+The complete custom Pokemon assets and data are inside this JAR. Disable old
+Mawonna.zip and the separate friends' addon packs in resourcepacks/datapacks,
+including any copies auto-loaded from global_packs or delivered by a server.
+Back them up outside those loaded folders. Keep unrelated resource/music packs.
+E19 minimap icons can remain enabled; custom icon selection handles that pack.
+
+Keep the existing external dependencies: Cobblemon 1.8.4 for Minecraft 1.21.1,
+NeoForge, CobbleDollars, Lightman's Currency and their required libraries.
+Keep the food mods used by the marriage meals. The separate cu-rideable mod
+can remain for its native Pokemon coverage. Xaero Minimap is optional; the map
+integration was checked with version 26.5.0. A full game restart is required.
+
+Visual changes:
+- Mawonna and Mawonna Flower: animated face/upper-chest team portrait and
+  full-body map icon, from the supplied GIF.
+- Inkyeon: still, transparent face portrait from clean artwork; animated
+  right-facing map icon from the supplied GIF. No screenshot text/background.
+- Ghost Jirachi: original Jirachi model/animations in purple, purple native-style
+  map icon, belly eye opening strictly below 50% HP and closing when healed.
+- Frilligoo: restored native Sliggoo face, no extra painted smile, Dragon/Fairy.
+- Approved Mawonna hands/sleeves/loops/cries and Inkyeon vanilla Sylveon walking,
+  eye/tear and heart-bow fixes are included from the latest ZIP trial.
+- All nine custom species retain riding definitions and mounting locators.
+
+Moves and gameplay:
+- All four friends' listed moves are available at level one: Lunavee 102,
+  Buzzeon 55, Ghost Jirachi 119 and Creepyeon 269. Creepyeon includes all eligible
+  Ghost/Normal moves. One-PP and malformed/internal entries are excluded.
+- Mawonna Flower: command-only admin species, separate enhanced stats,
+  862 eligible level-one moves after Z/Max/G-Max/one-PP/internal cleanup.
+- Public Mawonna retains 141 moves and the ring + 49 distinct qualifying cooked
+  meals + 666 personal Dark-type defeats evolution requirements.
+- The normal four active move slots and each move's battle restrictions still
+  apply. Each Pokemon has only one active ability at a time.
+
+Manual spawn commands:
+/pokespawn mawonna
+/pokespawn mawonna_flower
+/pokespawn mawonna_flower ability=futakuchionna
+/pokespawn covislight
+/pokespawn fairy_sliggoo
+/pokespawn inkyeon
+/pokespawn lunavee
+/pokespawn buzzeon
+/pokespawn ghost_jirachi
+/pokespawn creepyeon
+
+Append shiny for shiny forms. Frilligoo keeps the saved ID fairy_sliggoo;
+Corvislight's stored command spelling is covislight. Existing nicknames are not
+rewritten. The new portrait artwork is shared by normal and shiny forms.
+
+Build and isolated client/server checks run locally. Full-modpack play, live
+minimap animation and player-controlled riding remain user testing steps.
+See Unyielding-1.1.9-Validation.txt for exact evidence and scope.

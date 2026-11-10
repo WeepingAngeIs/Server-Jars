@@ -1,0 +1,66 @@
+Unyielding 1.1.9 — local build and verification, 2026-11-09
+
+Tested and published JAR SHA256:
+7362eb76173c74a38f466c99d5fdfa9480040b1ca115f9a3d6f744779d048eb5
+Source commit:
+https://github.com/WeepingAngeIs/unyielding-mod/commit/5023e49028093c1fde5ca6c2384629bc8cfa652b
+Approved ZIP input SHA256:
+22d803acbd631696b5e7c71130610de86906651c532b11ab36890e910c8f7675
+Baseline Unyielding 1.1.8 SHA256:
+d3d560525f810a340fe2c634a1bc3f4c7a14883dadba1926b1d7c29478bcbbcc
+
+All compilation and game checks for this release ran on the user's PC.
+No GitHub-hosted build was launched. GitHub stores the source and final artifact.
+Environment: Java 21, Minecraft 1.21.1, NeoForge 21.1.249, Cobblemon 1.8.4.
+Xaero Minimap 26.5.0 loaded for optional map-hook compatibility checks.
+
+Assembly passed:
+- All nine existing mod IDs retained; unrelated module metadata unchanged.
+- 1489 unrelated baseline entries byte-preserved.
+- Latest approved ZIP embedded, plus new client code/assets and exact HP support.
+- No duplicate ZIP entries; valid JSON and TOML; archive integrity checked.
+- Missing middle mounting locators restored for Frilligoo, Corvislight and
+  native-scale Ghost Jirachi. Other custom riding definitions preserved.
+- Public/admin Mawonna remain separate species. Admin stats are
+  155/165/200/5/150/30 versus public 100/120/120/10/100/10.
+- Admin Flower has 862 eligible level-one moves; public Mawonna has 141.
+- Frilligoo name aliases and Dragon/Fairy type order verified.
+
+Dedicated-server checks passed on the exact final JAR:
+- Real server boot, embedded datapack load, normal and shiny spawning for all
+  nine custom species. Both public Mawonna and admin Mawonna Flower spawn.
+- MAWONNA_SELF_TEST_OK: defeat counting, qualifying meals, marriage/evolution
+  gates and persistence; real faint events with synthetic actors, not a full
+  human battle replay.
+- Exact Ghost Jirachi threshold: 13 integer/overflow cases, actual Pokemon
+  aspect changes below half, healing while recalled, unrelated aspects/shiny
+  preservation, and unaffected other species.
+
+Actual-client checks passed on the exact final JAR, without external Mawonna ZIP:
+- Nine screenshots of native loaded models, portraits, movement and map frames.
+- 2,340 pose-transition scale samples; 280 Inkyeon normal/shiny idle/walk
+  transitions and eight gait samples. All 99 rear-chain transform components
+  and both feet world/body-local positions match native Sylveon at each sampled
+  phase. Native diagonal timing and 2.24-radian hip range at stride 0.8 verified.
+  No custom knee/ankle motion; standing/battle remain calm through whole loops.
+- Frilligoo native face bones/UVs; original Ghost Jirachi 49-bone skeleton,
+  16 animation clips, and exact open/closed aspect menu poses.
+- Mawonna and Flower native portrait calls select 30 animated portrait frames.
+- Inkyeon native portrait calls select the single static transparent face image
+  from the clean supplied PNG. Its map remains 20 right-facing GIF frames.
+- Mawonna map/portrait timing: 2.4 seconds. Inkyeon map timing: 3.6 seconds.
+- All four friends' static map textures/cells and normalized Ghost Jirachi ID
+  verified. Custom map selection preserves unrelated Pokemon and bypasses E19
+  definition priority. Original supplied artwork and source hashes retained.
+- Ring item baking and malformed-UV regression checks pass.
+
+Evidence and limitations:
+The client harness uses title-screen GUI species fixtures for scale lookup;
+full species definitions/gameplay load in the server test. Map screenshots draw
+real atlas frames through the production selection helper, and Xaero's mixin
+loads, but no live in-world radar replay was run. Full user modpack play,
+player-controlled riding placement and multiplayer gameplay still need testing.
+The new eye trigger was checked in real Pokemon state and rendered aspect poses,
+not by completing a player-controlled battle. No claim of those unrun checks.
+
+See the adjacent Unyielding-1.1.9-Verification directory for reports/screenshots.

@@ -1,0 +1,19 @@
+{
+  "status": "asset_checks_passed",
+  "before_sha256": "22ca325a3402b0d61368c49852518ffdcc8d702ba5fb8207fea20988cc45766e",
+  "after_sha256": "22d803acbd631696b5e7c71130610de86906651c532b11ab36890e910c8f7675",
+  "changed_entries": [
+    "assets/mawonna/bedrock/pokemon/posers/inkyeon.json"
+  ],
+  "walking_controller": "q.quadruped_walk(0.66, 1.4, 'front_leg_left', 'front_leg_right', 'back_leg_left', 'back_leg_right')",
+  "walking_order": [
+    "q.look('head', 1, 1, 70, -45, 45, -45)",
+    "q.bedrock('inkyeon', 'ground_idle')",
+    "q.bedrock('inkyeon', 'rear_rest')",
+    "q.quadruped_walk(0.66, 1.4, 'front_leg_left', 'front_leg_right', 'back_leg_left', 'back_leg_right')"
+  ],
+  "standing_and_battle_unchanged": true,
+  "geometry_animation_textures_unchanged": true,
+  "runtime_checks": "Final JAR actual client passed; native rear transforms, feet, gait and transitions matched.",
+  "tested_jar_sha256": "7362eb76173c74a38f466c99d5fdfa9480040b1ca115f9a3d6f744779d048eb5"
+}

@@ -1,0 +1,194 @@
+{
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.249",
+  "mods": [
+    {
+      "label": "Cobblemon 1.8.4 NeoForge",
+      "version_id": "xsVHrAsY",
+      "file": "Cobblemon-neoforge-1.8.4+1.21.1.jar",
+      "sha512": "060579fb8ac67ddd131c9cc9076ef512cda9e66e7a584c7c82326be9ef0cbb69ce6c99ff772aa78f990dc1b771bac02f3bbba68a9c7ff68c557009c64f733d04"
+    },
+    {
+      "label": "Kotlin for Forge 5.12.0",
+      "version_id": "uhJhCT7X",
+      "file": "kotlinforforge-5.12.0-all.jar",
+      "sha512": "b8c3942f4d33179edf3f102f3d870b99dd436f8b8236dbbd31aa51b888162c692cfd88927295f24dc8b4375232f4c6c17360c5d6c4823f93cbcd7cf4bdc8bd14"
+    },
+    {
+      "label": "Mega Showdown 1.3.3",
+      "version_id": "TrpwiTL5",
+      "file": "mega_showdown-neoforge-1.3.3+1.8.4+1.21.1-release.jar",
+      "sha512": "880275d4a42ebd7986fc97a927b5117615473c93ab88e0f57ecede95e66f41a6ea3e4bbaf4a0dadd6fd076f00550cf66c3e6611630a1faabd556a818676beafc"
+    },
+    {
+      "label": "Accessories 1.1.0-beta.53",
+      "version_id": "Fb55Fgjz",
+      "file": "accessories-neoforge-1.1.0-beta.53+1.21.1.jar",
+      "sha512": "baafa9a5e48c17c243d45b6260095ffef2ad00e4e970aafc5b1ca9ab5f4a542b18b0fb35d4584318791edbaf00a3c44806f62062513d991383192aca4df27a07"
+    },
+    {
+      "label": "owo-lib 0.12.15.5-beta.1",
+      "version_id": "NMCHU6DZ",
+      "file": "owo-lib-neoforge-0.12.15.5-beta.1+1.21.jar",
+      "sha512": "4de5c5d52139244b8c5260d641087664d992624b822599a32e03c08eb133be854a2f413667dbca1e55772445b04a70210c17b3bc13e3c88e425e7d928104b9fa"
+    },
+    {
+      "label": "Architectury 13.0.11",
+      "version_id": "1IiqEQGl",
+      "file": "architectury-13.0.11-neoforge.jar",
+      "sha512": "d9f7c3bb8162577dfb461ffdf04bd6a3563c7586934a0e2a744c14421beffb8286f0d88d4c758317003f20f99fe8072a39b9d675af061e036970d36db36027f0"
+    },
+    {
+      "label": "Farmer's Delight 1.3.4",
+      "version_id": "XTVZDOol",
+      "file": "FarmersDelight-1.21.1-1.3.4.jar",
+      "sha512": "1f6f8796469f747cff36f477b4f589a3d69613882399f9ee7f86db36c7bca9aa4828731f43db15dc6c7f5a4c1bbe3d4092a232e8cef010b09cec0581848fda90"
+    },
+    {
+      "label": "My Nether's Delight 1.10.4.1",
+      "version_id": "SGFJBL5q",
+      "file": "MyNethersDelight-1.21.1-1.10.4.1.jar",
+      "sha512": "36df146974d70fe5f7c92c4aeef613d1e0192efbb550faa88efaa8170212c07f9fc5938961d1b8da489355579910e95fea2cd5ae714b614ce17f1b8e352f0bbf"
+    },
+    {
+      "label": "Twilight Delight 3.2.9",
+      "version_id": "MFC7tDeW",
+      "file": "twilightdelight-3.2.9.jar",
+      "sha512": "1425b40e55e6df0e26ed71e3a968bd07f84006654be17498e786e78922e2f097b205c4cb16cd26d9a402da2376b4d3b00390c275e481bea76a062c5a4d65a6bd"
+    },
+    {
+      "label": "End's Delight 2.6.1",
+      "version_id": "YTApg6Hl",
+      "file": "ends_delight-2.6.1+neoforge.1.21.1.jar",
+      "sha512": "1cb6893f285ce3bc3b2ab19e355ca14bb409e2b078e202ee273e722357494a68b156be097cbd3ceae860e985787fe37b053446bc1258884e831d7b01b4ad76a9"
+    },
+    {
+      "label": "CobbleDollars",
+      "version_id": "Iqiqjfsi",
+      "file": "CobbleDollars-neoforge-2.0.0+Beta-6.1+1.21.1.jar",
+      "sha512": "1e1b37de91b9aab4df3dcd92093ef2a35a4081841407d70725e0f455694558b39b9b84f3746509c04b3894c0d674d9ac723a0fe8c08b7bf5ea2501777ce0c219"
+    },
+    {
+      "label": "LightmansCurrency",
+      "version_id": "n2ynBeOK",
+      "file": "lightmanscurrency-1.21-2.3.0.5.jar",
+      "sha512": "f9eaf1020fe77c36912f7eec1d7e6500d7465e6bdb829e737c4bdb8af6a1213d83771a9e84392d210e675c8e74294fa7f8c1f4f78386f2966896b6891019c451"
+    },
+    {
+      "label": "Twilight Forest 4.8.3345",
+      "filename": "twilightforest-1.21.1-4.8.3345-universal.jar",
+      "url": "https://edge.forgecdn.net/files/7797/302/twilightforest-1.21.1-4.8.3345-universal.jar",
+      "sha1": "9cfd4154928433e2f1f6cfc3deb48c284debb580"
+    },
+    {
+      "label": "Integrated Unyielding mod",
+      "file": "Unyielding-Mawonna.jar",
+      "sha256": "7362eb76173c74a38f466c99d5fdfa9480040b1ca115f9a3d6f744779d048eb5"
+    }
+  ],
+  "commands": [
+    {
+      "species_argument": "mawonna",
+      "command_response": "",
+      "score": "spawn_0 has 1 [smoke]\n",
+      "entity_check": "entity_exists has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "mawonna shiny",
+      "command_response": "",
+      "score": "spawn_0_shiny has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "mawonna_flower",
+      "command_response": "",
+      "score": "spawn_1 has 1 [smoke]\n",
+      "entity_check": "entity_exists has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "mawonna_flower shiny",
+      "command_response": "",
+      "score": "spawn_1_shiny has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "covislight",
+      "command_response": "",
+      "score": "spawn_2 has 1 [smoke]\n",
+      "entity_check": "entity_exists has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "covislight shiny",
+      "command_response": "",
+      "score": "spawn_2_shiny has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "fairy_sliggoo",
+      "command_response": "",
+      "score": "spawn_3 has 1 [smoke]\n",
+      "entity_check": "entity_exists has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "fairy_sliggoo shiny",
+      "command_response": "",
+      "score": "spawn_3_shiny has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "inkyeon",
+      "command_response": "",
+      "score": "spawn_4 has 1 [smoke]\n",
+      "entity_check": "entity_exists has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "inkyeon shiny",
+      "command_response": "",
+      "score": "spawn_4_shiny has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "lunavee",
+      "command_response": "",
+      "score": "spawn_5 has 1 [smoke]\n",
+      "entity_check": "entity_exists has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "lunavee shiny",
+      "command_response": "",
+      "score": "spawn_5_shiny has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "buzzeon",
+      "command_response": "",
+      "score": "spawn_6 has 1 [smoke]\n",
+      "entity_check": "entity_exists has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "buzzeon shiny",
+      "command_response": "",
+      "score": "spawn_6_shiny has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "ghost_jirachi",
+      "command_response": "",
+      "score": "spawn_7 has 1 [smoke]\n",
+      "entity_check": "entity_exists has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "ghost_jirachi shiny",
+      "command_response": "",
+      "score": "spawn_7_shiny has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "creepyeon",
+      "command_response": "",
+      "score": "spawn_8 has 1 [smoke]\n",
+      "entity_check": "entity_exists has 1 [smoke]\n"
+    },
+    {
+      "species_argument": "creepyeon shiny",
+      "command_response": "",
+      "score": "spawn_8_shiny has 1 [smoke]\n"
+    }
+  ],
+  "scope": "Real server boot and normal/shiny spawning; real BattleFaintedEvent fixtures with synthetic actors exercise production defeat tracking, native counters, evolution gates, feeding, marriage and persistence. No full human battle replay.",
+  "status": "passed",
+  "enabled_datapacks": "There are 2 data pack(s) enabled: [vanilla (built-in)], [mod_data]\n",
+  "companion_self_test": "MAWONNA_SELF_TEST_OK\n"
+}

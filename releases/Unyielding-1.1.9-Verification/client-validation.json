@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "minecraft": "1.21.1",
+  "cobblemon": "1.8.4",
+  "jar_sha256": "7362eb76173c74a38f466c99d5fdfa9480040b1ca115f9a3d6f744779d048eb5",
+  "scope": "Actual Minecraft client resource reload; GUI profile and portrait screenshots; native portrait interception and map atlas frames; Buzzeon flight cycle; Ghost Jirachi angles; Frilligoo normal/shiny native-face angles; Inkyeon normal/shiny WALK renders with native Sylveon four-leg stride and static knee/ankle posture; runtime scale checks across pose transitions; malformed UV regression. Required dependencies only, without a world or complete user modpack. Live minimap radar still requires in-world verification."
+}
