@@ -36,7 +36,7 @@ public final class DailyLogin {
             Data d = new Data();
             for (Tag e : tag.getList("players", Tag.TAG_COMPOUND)) {
                 CompoundTag c = (CompoundTag) e;
-                d.players.put(c.getUUID("p"), new long[]{c.getLong("day"), c.getLong("streak"), c.getLong("spins")});
+                d.players.put(c.getUUID("p"), new long[]{c.getLong("day"), c.getLong("streak"), c.getLong("spins"), c.getLong("questSpins")});
             }
             return d;
         }
@@ -50,6 +50,7 @@ public final class DailyLogin {
                 c.putLong("day", e.getValue()[0]);
                 c.putLong("streak", e.getValue()[1]);
                 c.putLong("spins", e.getValue()[2]);
+                c.putLong("questSpins", e.getValue()[3]);
                 l.add(c);
             }
             tag.put("players", l);
@@ -117,7 +118,7 @@ public final class DailyLogin {
     public static boolean give(ServerPlayer p) {
         if (data == null || !Config.DAILY_ENABLED.get()) return false;
         long day = today();
-        long[] rec = data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0, 0, 0});
+        long[] rec = data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0, 0, 0, 0});
         if (rec[0] == day) return false;
         long streak = rec[0] == day - 1 ? rec[1] + 1 : 1;
         rec[0] = day;
@@ -140,16 +141,25 @@ public final class DailyLogin {
 
     public static long available(ServerPlayer p) {
         long[] rec=data == null ? null : data.players.get(p.getUUID());
-        return rec == null ? 0 : rec[2];
+        return rec == null ? 0 : (Config.DAILY_ENABLED.get() ? rec[2] : 0) + (LuckySpin.enabled() ? rec[3] : 0);
+    }
+
+    public static void creditQuest(ServerPlayer p) {
+        if (data == null) throw new IllegalStateException("Spin storage is not ready");
+        long[] rec=data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0,0,0,0});
+        rec[3]=Math.addExact(rec[3],1);
+        data.setDirty();
+        p.sendSystemMessage(Component.literal("Lucky Spin earned! Open your inventory and press Lucky Spin."));
     }
 
     /** Only called after a server-validated manual request. */
     public static LuckySpin.Spin redeem(ServerPlayer p) {
-        if (!Config.DAILY_ENABLED.get() || available(p)<=0 || !LuckySpin.starterReady(p)) return null;
+        if (available(p)<=0 || !LuckySpin.starterReady(p)) return null;
         long[] rec=data.players.get(p.getUUID());
-        rec[2]--;
+        int slot=Config.DAILY_ENABLED.get() && rec[2]>0 ? 2 : 3;
+        rec[slot]--;
         data.setDirty();
-        return LuckySpin.rollWith(p,"Daily login",new int[]{Config.DAILY_BASIC.get(),Config.DAILY_GOOD.get(),Config.DAILY_PARADOX.get(),Config.DAILY_MYTHICAL.get(),Config.DAILY_LEGENDARY.get()});
+        return LuckySpin.rollWith(p,slot==2?"Daily login":"Earned spin",slot==2?new int[]{Config.DAILY_BASIC.get(),Config.DAILY_GOOD.get(),Config.DAILY_PARADOX.get(),Config.DAILY_MYTHICAL.get(),Config.DAILY_LEGENDARY.get()}:LuckySpin.weights());
     }
 
     /** "Streak 3 days, next reward tomorrow" style status. */

@@ -654,10 +654,6 @@ public final class QuestManager {
     /** Rolls the quest's Lucky Spin for this player if it is still unused. */
     private static void spin(ServerPlayer p, TeamProgress tp, UUID tid, Quest q, List<LuckySpin.Spin> out) {
         if (!LuckySpin.enabled() || !tp.questDone(q.id)) return;
-        if (!LuckySpin.starterReady(p)) {
-            p.sendSystemMessage(Component.literal("Choose your starter with H before claiming your saved Lucky Spin."));
-            return;
-        }
         long sid = LuckySpin.spinId(q.id);
         if (data.isClaimed(p.getUUID(), sid)) return;
         Set<Long> mine = tp.claimed.computeIfAbsent(p.getUUID(), k -> new HashSet<>());
@@ -666,7 +662,7 @@ public final class QuestManager {
         tp.dirty = true;
         markDirty(tid);
         try {
-            out.add(LuckySpin.roll(p, q.displayTitle().replaceAll("[&§][0-9a-fk-orA-FK-OR]", "")));
+            dev.unyielding.quests.spin.DailyLogin.creditQuest(p);
         } catch (RuntimeException e) {
             mine.remove(sid);
             data.unclaim(p.getUUID(), sid);

@@ -18,8 +18,13 @@ public final class SpinMenu {
         if(action.equals("spin")){
             String token=tokens.remove(p.getUUID());
             if(token!=null && token.equals(request.getString("token")) && ready){
-                LuckySpin.Spin result=DailyLogin.redeem(p);
-                if(result!=null) Net.sendTo(p,new Net.SpinResult(List.of(result)));
+                try {
+                    LuckySpin.Spin result=DailyLogin.redeem(p);
+                    if(result!=null) Net.sendTo(p,new Net.SpinResult(List.of(result)));
+                } catch (RuntimeException failure) {
+                    dev.unyielding.quests.UnyieldingQuests.LOGGER.error("Manual spin payout failed",failure);
+                    p.sendSystemMessage(net.minecraft.network.chat.Component.literal("Spin payout failed. Ask an admin to check the server log."));
+                }
             }
         }
         CompoundTag state=new CompoundTag();
@@ -27,7 +32,7 @@ public final class SpinMenu {
         state.putString("token",next);
         state.putLong("count",DailyLogin.available(p));
         state.putBoolean("ready",ready);
-        state.putBoolean("enabled",Config.DAILY_ENABLED.get());
+        state.putBoolean("enabled",Config.DAILY_ENABLED.get() || LuckySpin.enabled());
         Net.sendTo(p,new Net.SpinMenuState(state));
     }
 }

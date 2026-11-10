@@ -48,7 +48,7 @@ public final class LuckySpinScreen extends Screen {
         int w=Math.min(360,width-16),x=(width-w)/2,y=height/2-70;
         g.fill(x,y,x+w,y+126,0xEE151925);
         g.drawCenteredString(font,title,width/2,y+10,0xFFFFCE40);
-        String status=waiting?"Loading...":!state.getBoolean("ready")?"Choose your starter with H first.":!state.getBoolean("enabled")?"Daily spins are disabled.":"Saved daily spins: "+state.getLong("count");
+        String status=waiting?"Loading...":!state.getBoolean("ready")?"Choose your starter with H first.":!state.getBoolean("enabled")?"Lucky Spin is disabled.":"Saved spins: "+state.getLong("count");
         g.drawCenteredString(font,status,width/2,y+28,0xFFFFFFFF);
         int top=y+50;
         g.enableScissor(x+8,top,x+w-8,top+40);

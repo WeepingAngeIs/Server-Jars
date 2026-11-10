@@ -338,7 +338,7 @@ public final class LootTables {
                         player.getServer().getCommands().getDispatcher().execute(command,
                                 player.createCommandSourceStack().withPermission(2).withSuppressedOutput());
                     }
-                    case "lucky_spin" -> spins.add(LuckySpin.roll(player, table.name));
+                    case "lucky_spin" -> dev.unyielding.quests.spin.DailyLogin.creditQuest(player);
                 }
             }
             if (!spins.isEmpty()) Net.sendTo(player, new Net.SpinResult(spins));
