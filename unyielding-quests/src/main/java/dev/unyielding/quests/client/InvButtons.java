@@ -54,7 +54,10 @@ public final class InvButtons {
 
     public static void onInit(ScreenEvent.Init.Post e) {
         Screen s = e.getScreen();
-        if (!wants(s)) return;
+        if (!wants(s)) {
+            AREAS.put(s, AdminInventoryButtons.onInit(e, null));
+            return;
+        }
         boolean topLeft = UiConfig.invButtons() == UiConfig.InvButtons.TOP_LEFT;
         AbstractContainerScreen<?> c = (AbstractContainerScreen<?>) s;
         int x = topLeft ? UiConfig.invX() : c.getGuiLeft() - SIZE - 3;
@@ -70,12 +73,12 @@ public final class InvButtons {
             if (topLeft) w += SIZE + 2;
             else h += SIZE + 2;
         }
-        AREAS.put(s, new int[]{x, y, w, h});
+        AREAS.put(s, AdminInventoryButtons.onInit(e, new int[]{x, y, w, h}));
     }
 
     /** Screen area the buttons occupy (for EMI/JEI to stay out of), or null. */
     public static int[] area(Screen s) {
-        return AREAS.get(s);
+        return AdminInventoryButtons.area(s, AREAS.get(s));
     }
 
     public static Component questButtonLabel() {

@@ -38,6 +38,8 @@ final class TeleCmds {
     private static final Map<UUID, List<Request>> REQUESTS = new HashMap<>();
     private static final Random RNG = new Random();
 
+    static void clearRequests() { REQUESTS.clear(); }
+
     static void register(CommandDispatcher<CommandSourceStack> d) {
         registerHomes(d);
         registerWarps(d);

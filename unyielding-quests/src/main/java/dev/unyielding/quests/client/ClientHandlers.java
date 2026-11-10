@@ -67,6 +67,9 @@ public final class ClientHandlers {
         ClientData.shareQuestProgress = tag.getBoolean("shareProgress");
         ClientData.inventoryButtonsEnabled = !tag.contains("inventoryButtons") || tag.getBoolean("inventoryButtons");
         ClientData.questToastsEnabled = !tag.contains("questPopups") || tag.getBoolean("questPopups");
+        ClientData.adminInventoryControls = !tag.contains("adminInventoryControls") || tag.getBoolean("adminInventoryControls");
+        double mapScale = tag.contains("customMapIconScale") ? tag.getDouble("customMapIconScale") : 1.0;
+        ClientData.customMapIconScale = Double.isFinite(mapScale) ? Math.clamp(mapScale, 0.25, 4.0) : 1.0;
         ClientData.ultimineEnabled = !tag.contains("veinMining") || tag.getBoolean("veinMining");
         ClientData.ultimineRequiresItem = tag.getBoolean("veinMiningRequiresItem");
         ClientData.teamVersion++;

@@ -224,6 +224,7 @@ public final class ConfigEditor {
         VALUES.forEach((key, value) -> {
             CompoundTag row = new CompoundTag();
             row.putString("key", key);
+            if (value == Config.CUSTOM_MAP_ICON_SCALE) row.putString("title", "Map icon size");
             row.putString("value", JSON.toJson(value.getRaw()));
             row.putString("help", BalanceSettings.help(value, Objects.toString(value.getSpec().getComment(), "")));
             rows.add(row);

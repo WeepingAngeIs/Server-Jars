@@ -1,0 +1,15 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+group = 'dev.unyielding.tests'
+version = '1.0.0'
+base { archivesName = 'settings-smoke-test-only' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(21) }
+neoForge { version = '21.1.249' }
+sourceSets.main.java.srcDirs = ['tests']
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+dependencies {
+    compileOnly files(providers.gradleProperty('combinedJar').getOrElse('../releases/Unyielding-1.1.10.jar'))
+}
+jar { manifest { attributes('Implementation-Version': project.version) } }

@@ -3,6 +3,7 @@ package dev.unyielding.quests.settings;
 import dev.unyielding.quests.Config;
 import dev.unyielding.quests.UnyieldingQuests;
 import dev.unyielding.quests.essentials.EssConfig;
+import dev.unyielding.quests.essentials.Essentials;
 import dev.unyielding.quests.net.Net;
 import dev.unyielding.quests.quest.QuestManager;
 import dev.unyielding.quests.team.TeamManager;
@@ -26,6 +27,26 @@ public final class AdminSettings {
     }
 
     private static final List<Setting> SETTINGS = List.of(
+            new Setting("admin_inventory_controls", "Admin inventory controls",
+                    "Show Day, Night and Weather buttons in operator inventories. Time changes all dimensions; weather cycles the current skylight dimension for ten minutes.", Config.ADMIN_INVENTORY_CONTROLS),
+            new Setting("admin_claim_bypass", "Admin claim bypass",
+                    "Automatically bypass claim interaction protection for online operators. Turning OFF removes this automatic bypass; existing OPAC manual modes remain separate. Requires Open Parties and Claims.", EssConfig.ADMIN_CLAIM_BYPASS, EssConfig.SPEC),
+            new Setting("homes", "Home commands",
+                    "Allow /home, /sethome, /delhome and /listhomes. Saved homes are kept while OFF.", EssConfig.HOME_ENABLED, EssConfig.SPEC),
+            new Setting("back", "Return with /back",
+                    "Allow /back. Destination history is kept and continues recording while OFF.", EssConfig.BACK_ENABLED, EssConfig.SPEC),
+            new Setting("warps", "Warp commands",
+                    "Allow /warp, /setwarp, /delwarp and /listwarps. Saved warps are kept while OFF.", EssConfig.WARP_ENABLED, EssConfig.SPEC),
+            new Setting("random_teleport", "Random teleport",
+                    "Allow /rtp. OFF prevents new random-location searches.", EssConfig.RTP_ENABLED, EssConfig.SPEC),
+            new Setting("teleport_requests", "Teleport requests",
+                    "Allow /tpa, /tpahere, /tpaccept and /tpdeny. Turning OFF cancels pending requests.", EssConfig.TPA_ENABLED, EssConfig.SPEC),
+            new Setting("nicknames", "Player nicknames",
+                    "Allow /nick and display saved nicknames. OFF shows real names without deleting saved nicknames.", EssConfig.NICK_ENABLED, EssConfig.SPEC),
+            new Setting("recording_tags", "Recording tags",
+                    "Allow /rec and display recording tags. OFF hides tags without deleting saved recording states.", EssConfig.RECORDING_ENABLED, EssConfig.SPEC),
+            new Setting("nearby_players", "Nearby-player lookup",
+                    "Allow /near to list nearby players.", EssConfig.NEAR_ENABLED, EssConfig.SPEC),
             new Setting("share_quest_progress", "Share quest progress",
                     "OFF: everyone earns their own quest completion, even in a party. ON: team members share progress. Existing progress and claimed rewards are preserved.",
                     Config.SHARE_QUEST_PROGRESS),
@@ -77,17 +98,20 @@ public final class AdminSettings {
 
     private static MinecraftServer server;
     private static List<Boolean> observed = List.of();
+    private static double observedMapIconScale = 1.0;
 
     private AdminSettings() { }
 
     public static void onServerStart(MinecraftServer value) {
         server = value;
         observed = values();
+        observedMapIconScale = Config.CUSTOM_MAP_ICON_SCALE.get();
     }
 
     public static void onServerStop() {
         server = null;
         observed = List.of();
+        observedMapIconScale = 1.0;
     }
 
     private static List<Boolean> values() {
@@ -96,7 +120,8 @@ public final class AdminSettings {
 
     /** Also reconcile normal config-file reloads on the server thread. */
     public static void onTick(MinecraftServer value) {
-        if (value.getTickCount() % 20 == 0 && !observed.equals(values())) publishChanges();
+        if (value.getTickCount() % 20 == 0 && (!observed.equals(values())
+                || Double.compare(observedMapIconScale, Config.CUSTOM_MAP_ICON_SCALE.get()) != 0)) publishChanges();
     }
 
     public static void open(ServerPlayer player) {
@@ -144,6 +169,9 @@ public final class AdminSettings {
     public static void publishChanges() {
         if (server == null) return;
         observed = values();
+        observedMapIconScale = Config.CUSTOM_MAP_ICON_SCALE.get();
+        Essentials.settingsChanged();
+        AdminClaimBypass.reconcile(server);
         QuestManager.onSharingChanged();
         TutorialManager.onAutomaticChanged();
         TeamManager.syncAllPlayers();
@@ -161,6 +189,8 @@ public final class AdminSettings {
         tag.putBoolean("shareProgress", Config.SHARE_QUEST_PROGRESS.get());
         tag.putBoolean("tutorialOnJoin", Config.TUTORIAL_ON_JOIN.get());
         tag.putBoolean("inventoryButtons", Config.INVENTORY_BUTTONS.get());
+        tag.putBoolean("adminInventoryControls", Config.ADMIN_INVENTORY_CONTROLS.get());
+        tag.putDouble("customMapIconScale", Config.CUSTOM_MAP_ICON_SCALE.get());
         tag.putBoolean("questPopups", Config.QUEST_TOASTS.get());
         tag.putBoolean("veinMining", UltimineConfig.ENABLED.get());
         tag.putBoolean("veinMiningRequiresItem", UltimineConfig.REQUIRE_TOOL.get());

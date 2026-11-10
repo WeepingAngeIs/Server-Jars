@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="settingssmoke"
+version="1.0.0"
+displayName="Settings smoke tests (TEST SERVER ONLY)"
+[[dependencies.settingssmoke]]
+modId="unyieldingquests"
+type="required"
+versionRange="[1.6.9,)"
+ordering="AFTER"
+side="SERVER"

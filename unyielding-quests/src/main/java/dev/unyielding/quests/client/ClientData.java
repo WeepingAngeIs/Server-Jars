@@ -31,6 +31,8 @@ public final class ClientData {
     public static boolean shareQuestProgress;
     public static boolean inventoryButtonsEnabled = true;
     public static boolean questToastsEnabled = true;
+    public static double customMapIconScale = 1.0;
+    public static boolean adminInventoryControls = true;
     public static boolean ultimineEnabled = true;
     public static boolean ultimineRequiresItem;
 
@@ -103,6 +105,8 @@ public final class ClientData {
         shareQuestProgress = false;
         inventoryButtonsEnabled = true;
         questToastsEnabled = true;
+        customMapIconScale = 1.0;
+        adminInventoryControls = true;
         ultimineEnabled = true;
         ultimineRequiresItem = false;
         adminSettings = new CompoundTag();

@@ -153,6 +153,10 @@ public final class ModCommands {
         }));
         quests.then(dailyCommand("daily"));
         d.register(quests);
+        d.register(Commands.literal("config").requires(source -> source.hasPermission(2)).executes(context -> {
+            dev.unyielding.quests.settings.AdminSettings.open(player(context));
+            return 1;
+        }));
 
         // Unyielding Ranks owns /daily for rank kits. Always expose quest rewards below /quests.
         if (!net.neoforged.fml.ModList.get().isLoaded("curanks")) d.register(dailyCommand("daily"));

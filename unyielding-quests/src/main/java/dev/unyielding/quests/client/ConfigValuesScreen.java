@@ -70,11 +70,16 @@ public final class ConfigValuesScreen extends FormScreen {
                     () -> { filter = category + "."; scroll = 0; relayout(); });
         }
         gap(26);
+        button(left(), (innerWidth() - 4) / 2, "Player commands", null, Ui.Style.NORMAL,
+                () -> { filter = "essentials."; scroll = 0; relayout(); });
+        button(left() + (innerWidth() + 4) / 2, (innerWidth() - 4) / 2, "Map icon size", null, Ui.Style.NORMAL,
+                () -> { filter = "quests.custom_pokemon.map_icon_scale"; scroll = 0; relayout(); });
+        gap(26);
         for (Tag raw : data.getList("rows", Tag.TAG_COMPOUND)) {
             CompoundTag row = (CompoundTag)raw;
             String key = row.getString("key");
             if (!key.toLowerCase(Locale.ROOT).contains(filter.toLowerCase(Locale.ROOT))) continue;
-            note(font.plainSubstrByWidth(key, innerWidth()));
+            note(font.plainSubstrByWidth(row.contains("title") ? row.getString("title") : key, innerWidth()));
             String preview = row.getString("value");
             button(left(), innerWidth(), font.plainSubstrByWidth(preview, innerWidth() - 18),
                     Ui.ICON_GEAR, Ui.Style.NORMAL, () -> minecraft.setScreen(new ValueScreen(this, row)));
@@ -116,7 +121,7 @@ public final class ConfigValuesScreen extends FormScreen {
             }
         }
         @Override protected void build() {
-            paragraph(row.getString("key")); gap(6);
+            paragraph(row.contains("title") ? row.getString("title") : row.getString("key")); gap(6);
             paragraph(row.getString("help")); gap(10);
             if (!message.isEmpty()) { paragraph(message); gap(8); }
             if (original.isJsonArray()) {

@@ -129,7 +129,20 @@ public final class Essentials {
     /** Registers a command unless it is switched off in the config. */
     public static void reg(CommandDispatcher<CommandSourceStack> d, String name, LiteralArgumentBuilder<CommandSourceStack> b) {
         if (EssConfig.disabled(name)) return;
-        d.register(b);
+        var feature = EssConfig.featureSwitch(name);
+        if (feature == null) d.register(b);
+        else d.getRoot().addChild(CommandGate.guard(b.build(), feature::get,
+                context -> fail(context.getSource(), "This feature is disabled in the server settings.")));
+    }
+
+    /** Refresh derived names and discard requests when their feature is switched off. */
+    public static void settingsChanged() {
+        if (!EssConfig.TPA_ENABLED.get()) TeleCmds.clearRequests();
+        if (server == null) return;
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            player.refreshDisplayName();
+            player.refreshTabListName();
+        }
     }
 
     // ---- events ----------------------------------------------------------------
@@ -146,6 +159,7 @@ public final class Essentials {
             server = null;
             data = null;
             COOLDOWNS.clear();
+            TeleCmds.clearRequests();
         }
 
         @SubscribeEvent
@@ -190,12 +204,13 @@ public final class Essentials {
         public void onName(PlayerEvent.NameFormat e) {
             if (data == null) return;
             UUID u = e.getEntity().getUUID();
-            String nick = data.nicks.get(u);
+            String nick = EssConfig.NICK_ENABLED.get() ? data.nicks.get(u) : null;
+            boolean recording = EssConfig.RECORDING_ENABLED.get() && data.rec.contains(u);
             net.minecraft.network.chat.MutableComponent c;
             if (nick != null) c = Component.literal(dev.unyielding.quests.Text.codes(nick));
-            else if (data.rec.contains(u)) c = e.getDisplayname().copy();
+            else if (recording) c = e.getDisplayname().copy();
             else return;
-            if (data.rec.contains(u)) c = Component.literal("[REC] ").withStyle(ChatFormatting.RED).append(c);
+            if (recording) c = Component.literal("[REC] ").withStyle(ChatFormatting.RED).append(c);
             e.setDisplayname(c);
         }
 
@@ -203,10 +218,11 @@ public final class Essentials {
         public void onTabName(PlayerEvent.TabListNameFormat e) {
             if (data == null) return;
             UUID u = e.getEntity().getUUID();
-            String nick = data.nicks.get(u);
-            if (nick == null && !data.rec.contains(u)) return;
+            String nick = EssConfig.NICK_ENABLED.get() ? data.nicks.get(u) : null;
+            boolean recording = EssConfig.RECORDING_ENABLED.get() && data.rec.contains(u);
+            if (nick == null && !recording) return;
             MutableComponent c = Component.literal(nick != null ? dev.unyielding.quests.Text.codes(nick) : e.getEntity().getGameProfile().getName());
-            if (data.rec.contains(u)) c = Component.literal("[REC] ").withStyle(ChatFormatting.RED).append(c);
+            if (recording) c = Component.literal("[REC] ").withStyle(ChatFormatting.RED).append(c);
             e.setDisplayName(c);
         }
     }

@@ -63,6 +63,7 @@ public final class ClientInit {
     public static final class Events {
         @SubscribeEvent
         public void onTick(ClientTickEvent.Post e) {
+            AdminInventoryButtons.tick();
             Minecraft mc = Minecraft.getInstance();
             dev.unyielding.quests.client.tutorial.TutorialClient.tick();
             if (mc.player == null) return;

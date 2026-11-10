@@ -216,6 +216,13 @@ public final class Net {
     // ---- client -> server ------------------------------------------------
 
     /** An allowlisted boolean change, or __open to request the operator menu. */
+    public record AdminWorldAction(String action) implements CustomPacketPayload {
+        public static final Type<AdminWorldAction> TYPE = mkType("admin_world_action");
+        public static final StreamCodec<RegistryFriendlyByteBuf, AdminWorldAction> CODEC = StreamCodec.composite(
+                ByteBufCodecs.stringUtf8(16), AdminWorldAction::action, AdminWorldAction::new);
+        public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
     public record AdminSettingsAction(String key, boolean value) implements CustomPacketPayload {
         public static final Type<AdminSettingsAction> TYPE = mkType("admin_settings_action");
         public static final StreamCodec<RegistryFriendlyByteBuf, AdminSettingsAction> CODEC = StreamCodec.composite(
@@ -306,6 +313,8 @@ public final class Net {
         r.playToServer(LootTablesAction.TYPE, LootTablesAction.CODEC,
                 (p, c) -> dev.unyielding.quests.loot.LootTables.onAction((ServerPlayer)c.player(), p.tag()));
         r.playToClient(AdminSettingsSync.TYPE, AdminSettingsSync.CODEC, (p, c) -> ClientHandlers.onAdminSettings(p));
+        r.playToServer(AdminWorldAction.TYPE, AdminWorldAction.CODEC,
+                (p, c) -> dev.unyielding.quests.settings.AdminWorldControls.handle((ServerPlayer)c.player(), p.action()));
         r.playToServer(AdminSettingsAction.TYPE, AdminSettingsAction.CODEC,
                 (p, c) -> dev.unyielding.quests.settings.AdminSettings.onAction((ServerPlayer) c.player(), p));
         r.playToClient(TutorialSync.TYPE, TutorialSync.CODEC,

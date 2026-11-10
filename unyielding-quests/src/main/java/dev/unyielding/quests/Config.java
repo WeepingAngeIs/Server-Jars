@@ -14,6 +14,8 @@ public final class Config {
     public static final ModConfigSpec.BooleanValue ANNOUNCE_COMPLETION;
     public static final ModConfigSpec.BooleanValue QUEST_TOASTS;
     public static final ModConfigSpec.BooleanValue INVENTORY_BUTTONS;
+    public static final ModConfigSpec.DoubleValue CUSTOM_MAP_ICON_SCALE;
+    public static final ModConfigSpec.BooleanValue ADMIN_INVENTORY_CONTROLS;
     public static final ModConfigSpec.IntValue DETECTION_DELAY_OVERRIDE;
     public static final ModConfigSpec.ConfigValue<String> QUEST_BOOK_SOURCE;
 
@@ -50,6 +52,15 @@ public final class Config {
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
+        b.push("admin");
+        ADMIN_INVENTORY_CONTROLS = b.comment("Show Day, Night and Weather inventory controls for operators. Every action requires operator level 2 on the server.", "Time affects all dimensions, matching /time set. Weather affects the current skylight dimension for ten minutes.").define("inventory_controls", true);
+        b.pop();
+        b.push("custom_pokemon");
+        CUSTOM_MAP_ICON_SCALE = b.comment("Size of all Unyielding custom Pokemon map icons. 1 = normal size; 0.5 = half; 2 = double.",
+                        "Applies to animated and static custom map icons for everyone. Portraits, models and other Pokemon icons are unchanged.",
+                        "Changes apply immediately. Requires Xaero Minimap for map rendering.")
+                .defineInRange("map_icon_scale", 1.0, 0.25, 4.0);
+        b.pop();
         b.push("teams");
         ALLOW_PARTIES = b.comment("Can players create new party teams? Existing parties remain available. Quest progress sharing is controlled separately.")
                 .define("allow_party_creation", true);
