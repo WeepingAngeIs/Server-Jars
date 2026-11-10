@@ -67,7 +67,7 @@ public final class LuckySpinScreen extends Screen {
         g.disableScissor();
         g.fill(width/2-1,top-3,width/2+1,top+38,0xFFFFCE40);
         if(result!=null)g.drawCenteredString(font,animating()?"Spinning...":font.plainSubstrByWidth(result.name(),w-16),width/2,y+103,animating()?0xFFFFFFFF:result.tier().color);
-        super.render(g,mx,my,partial);
+        for(var widget:renderables) widget.render(g,mx,my,partial);
     }
     @Override public boolean isPauseScreen(){return false;}
     @Override public void onClose(){minecraft.setScreen(parent);}
