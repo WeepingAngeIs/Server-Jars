@@ -1,0 +1,1 @@
+{"status":"PASS","assertions":227,"completed":["defaults","config command aliases and permissions","toggle permissions and persistence","real command gates and preserved data","map scale boundaries, persistence and wire sync","admin world controls","real OPAC protected-claim interaction and revoke"]}

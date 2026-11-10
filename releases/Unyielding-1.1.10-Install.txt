@@ -1,0 +1,26 @@
+Unyielding 1.1.10 - installation and controls
+
+Use the SAME combined JAR on server and clients.
+Stop Minecraft/the server, replace the previous combined Unyielding JAR, and keep only one combined version in mods.
+Keep normal pack dependencies; do not remove Cobblemon, NeoForge, currency/food mods or unrelated packs.
+Keep old Mawonna/friends ZIP resource packs/datapacks disabled where they would override bundled models.
+This release preserves all previous Pokemon species IDs, stats, moves, models, cries, evolution rules and native Inkyeon walking.
+
+/config opens Server settings for operators (permission level 2).
+Existing /quests settings also works. Native /config showfile is preserved.
+Map size: Config values -> Map icon size -> current number -> enter value -> Save.
+Allowed range 0.25-4; default 1. Applies to all nine custom species for everyone; does not resize portraits/models/other species.
+
+Day/Night/Weather buttons appear in operator inventories. Day/night change time in all dimensions.
+Weather cycles clear -> rain -> thunder -> clear, ten minutes each, in the current skylight dimension.
+Disable the buttons using Admin inventory controls in /config.
+Admin claim bypass is OFF by default. Enable it in /config to automatically bypass OPAC claim interactions for online operators.
+Disabling it, de-opping or leaving revokes this automatic pass. Claim ownership/manual OPAC modes are not changed.
+OPAC is optional and remains a separate mod; map icons need Xaero Minimap.
+
+New live command switches: homes, back, warps, random teleport, teleport requests, nicknames, recording tags and nearby-player lookup.
+All default ON. Saved homes/warps/nicknames/recording data remain intact while disabled. Pending teleport requests are cancelled when disabled.
+Existing config values remain; no user configuration reset is needed.
+
+Artwork: new Mawonna map GIF, previous animated Mawonna team portrait preserved; supplied Frilligoo map image added.
+Inkyeon's right-facing animated map icon and still face portrait remain unchanged.

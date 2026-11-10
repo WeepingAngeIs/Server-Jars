@@ -1,0 +1,30 @@
+Unyielding 1.1.10 validation - 2026-11-10
+
+SHA256: 802006a6a784bea663e7aa487fd98933fe30d8e6a2fbfb313301437a069798c3
+Hosted workflow: https://github.com/WeepingAngeIs/unyielding-mod/actions/runs/42884115072
+Tested source: unyielding-mod 59240bfba36034f1f5eb645680e5f6d319e4d8b7
+Pinned quest source: Server-Jars 0b01111213c6d6aaf63a955a5c010bc1a63ee04c
+
+Builds and heavy game tests ran on a GitHub-hosted Ubuntu24.04 runner, JDK21. Local work was editing/assets/light checks.
+28 unit tests passed, including live command-gate, progression-sharing, spin-odds and tutorial tests.
+227 settings runtime assertions passed on actual Minecraft 1.21.1/NeoForge 21.1.249:
+- operator/non-operator /config and /quests settings; native /config showfile preserved
+- all eight live feature toggles, persisted TOML, denied edits, saved data and cooldown preservation
+- scale .25-4 boundaries, invalid/stale/non-operator edits, real packet codec and operator/non-operator sync
+- allowlisted day/night/weather actions; denial for non-operators, disabled controls and no-skylight weather
+- actual OPAC 0.33.0 protected-block event path: grant/revoke on enable/disable/de-op/leaving and unchanged claim ownership
+Server progression/evolution/marriage/meal/persistence/exact Ghost Jirachi HP self-test passed.
+All nine species spawned in both normal and shiny forms (18 actual command checks).
+
+Actual Minecraft client resource reload and nine rendered screenshots passed.
+Client tests covered seven settings-packet handler cases, renderer reads of synced scale, absent-field defaults and disconnect reset.
+Eight matrix scaling/clamp cases and selection of all nine custom species passed.
+Mawonna map: 60 frames / 12 seconds. Portrait: 30 frames / 2.4 seconds, identical to previous release.
+Inkyeon portrait remains still; its animated map retains 20 frames / 3.6 seconds.
+Frilligoo static map artwork selects its added atlas cell; four friend map cells remain unchanged.
+Native portrait lookup, Ghost Jirachi skeleton, Frilligoo original face bones, Inkyeon normal/shiny four-leg WALK samples and 280+ transition samples passed.
+Final archive hash matches server and client reports. All nine module IDs, unrelated modules, species/model/animation bytes and approved portrait PNGs were retained. No test-only helper is bundled.
+
+Limits: focused tests use required dependencies, simulated players and title-screen rendering fixtures.
+They do not replay the complete user modpack, human multiplayer battles, player-operated inventory UI, riding or a live in-world minimap session.
+The previous 1.1.9 map/portrait animation was user-confirmed in game; this release's new map art and scale use the same rendering hook.

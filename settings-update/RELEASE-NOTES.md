@@ -1,6 +1,6 @@
-# Unyielding 1.1.10 â€” draft release and install notes
+# Unyielding 1.1.10 - draft release and install notes
 
-Release validation is still pending. This draft describes the intended changes; it does not certify that the final JAR has passed testing.
+Built and tested on GitHub-hosted runners. See [validation](../releases/Unyielding-1.1.10-Validation.txt) for checks and practical limits.
 
 ## Map artwork
 
@@ -15,7 +15,7 @@ Settings require operator permission level 2. The server checks permission again
 
 Run **`/config`** to open **Server settings**. The existing `/quests settings`, quest-book sidebar, and **Admin** button in the Teams window open the same menu.
 
-For map size, choose **Config values â†’ Map icon size**, click the current number, enter the new value, then **Save**. Default **1** keeps the normal size; **0.5** halves it and **2** doubles it. Allowed range: **0.25â€“4**. The change applies to everyone and is synchronized when players join. Xaero Minimap is required to display map icons.
+For map size, choose **Config values  ->  Map icon size**, click the current number, enter the new value, then **Save**. Default **1** keeps the normal size; **0.5** halves it and **2** doubles it. Allowed range: **0.25-4**. The change applies to everyone and is synchronized when players join. Xaero Minimap is required to display map icons.
 
 The main **`/config` → Server settings** list has these new switches:
 
@@ -32,9 +32,9 @@ The main **`/config` → Server settings** list has these new switches:
 | Admin inventory controls | ON | Hides and disables the Day, Night and Weather buttons. |
 | Admin claim bypass | OFF | Removes this automatic bypass; existing manual OPAC modes remain separate. |
 
-Switches save automatically and take effect live. Detailed command settings are under **Config values â†’ Player commands**. The existing `disabled_commands` list still requires a restart.
+Switches save automatically and take effect live. Detailed command settings are under **Config values  ->  Player commands**. The existing `disabled_commands` list still requires a restart.
 
-The new inventory buttons are visible only to operators. **Day** sets time to 1000 and **Night** to 13000 across all dimensions, matching vanilla `/time set`. **Weather** cycles clear â†’ rain â†’ thunder â†’ clear for ten minutes in the current skylight dimension. Nether/End clicks report that weather is unavailable. Hover over Weather to see the next state indicated by the client.
+The new inventory buttons are visible only to operators. **Day** sets time to 1000 and **Night** to 13000 across all dimensions, matching vanilla `/time set`. **Weather** cycles clear  ->  rain  ->  thunder  ->  clear for ten minutes in the current skylight dimension. Nether/End clicks report that weather is unavailable. Hover over Weather to see the next state indicated by the client.
 
 **Admin claim bypass** optionally uses Open Parties and Claims. Turning it ON automatically allows online operators through claim interaction protection; turning it OFF removes the automatic pass. Losing operator status or leaving the server also removes that pass. OPAC remains a separate dependency for this feature; claim ownership and existing manual bypass modes are unchanged.
 
@@ -47,6 +47,6 @@ The new inventory buttons are visible only to operators. **Day** sets time to 10
 
 Existing saved Pokemon IDs, evolution requirements, moves and stats carry forward from 1.1.9. Keep existing configuration files; new switches receive their defaults without resetting saved settings.
 
-## Validation still required
+## Validation
 
-Before publishing: build and assemble the final JAR; run command-gate tests and isolated server checks for permissions, live toggles, persistence, map-scale validation/sync, time/weather actions and optional OPAC integration; verify client loading, map artwork/scale and unchanged portraits. Full-modpack play and live UI appearance must be reported separately from automated checks. Test-only helper JARs must not ship with the release.
+Passed 28 unit tests, 227 settings runtime assertions, 18 normal/shiny spawn commands, the progression/HP self-test, and the actual Minecraft client resource/render checks. [Hosted run](https://github.com/WeepingAngeIs/unyielding-mod/actions/runs/42884115072). The full user modpack, player-operated inventory UI and live minimap gameplay were not replayed.
