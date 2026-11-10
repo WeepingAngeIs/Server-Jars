@@ -9,9 +9,9 @@ Minecraft 1.21.1 • NeoForge • Java 21
 • Updated custom map icons for Mawonna and Frilligoo and added a global icon size setting. Mawonna and Inkyeon map artwork comes bundled in the JAR.
 • Added compact sun, moon and rain-cloud inventory controls for admins, an optional global admin claim bypass, and server settings for utility commands.
 
-Install matching Unyielding JARs on the server and clients.
-
 • Eevee now shows its Gastly, Normal-type and Bug-type evolution counters in its summary. Operators can use /eeveedefeats <gastly|normal|bug> <slot> add <amount> or complete.
-• A trainer's sent-out Mawile approaches nearby new dishes dropped by its owner. It eats one serving with bite sounds and food particles. Repeated dishes stay on the ground.
-• Hamburger, Nether Burger, Ghast Burger, Hydra Burger and Starlight Hamburger now count as distinct dishes. Previously shared burger credit carries over as the regular hamburger.
-• Added the plate of honey-glazed ham. Direct feeding gives feedback for ineligible foods.
+• Wild and owned Mawile cry and follow nearby players holding a food they have never eaten with at least 8 Diversity. Drop the food to feed one serving with bite sounds and food particles. The counter belongs to each individual Mawile.
+• Food from any mod can qualify, including loot and plated feast servings. Mawile uses the server's Spice of Life Onion Diversity score. Each item ID earns credit once. Existing meal progress carries over.
+• The Mawilite Vow Ring now appears in Creative Tools & Utilities and search. It uses the approved ring texture and has the searchable subtitle “Mawile's Promise Ring.” Admins can obtain it with /give @s mawonna:mawilite_vow_ring for shop setup. Marriage requires your own eligible Mawile.
+
+Install matching Unyielding JARs on the server and clients.
