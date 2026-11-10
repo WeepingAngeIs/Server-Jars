@@ -25,7 +25,7 @@ public final class LuckySpinScreen extends Screen {
         spin=addRenderableWidget(Button.builder(Component.literal("Spin"),b->requestSpin()).bounds(width/2-100,height/2+64,96,20).build());
         addRenderableWidget(Button.builder(Component.literal("Quest spins"),b->ClientInit.openQuests()).bounds(width/2+4,height/2+64,96,20).build());
         addRenderableWidget(Button.builder(Component.literal("Back"),b->onClose()).bounds(width/2-50,height/2+90,100,20).build());
-        CompoundTag tag=new CompoundTag();tag.putString("action","status");Net.sendToServer(new Net.SpinMenuAction(tag));
+        CompoundTag tag=new CompoundTag();tag.putString("action","status");if(minecraft.getConnection()!=null) Net.sendToServer(new Net.SpinMenuAction(tag));
         updateButton();
     }
     private boolean animating(){return result!=null && Util.getMillis()-started<4500;}
