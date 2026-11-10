@@ -10,3 +10,8 @@ Minecraft 1.21.1 • NeoForge • Java 21
 • Added compact sun, moon and rain-cloud inventory controls for admins, an optional global admin claim bypass, and server settings for utility commands.
 
 Install matching Unyielding JARs on the server and clients.
+
+• Eevee now shows its Gastly, Normal-type and Bug-type evolution counters in its summary. Operators can use /eeveedefeats <gastly|normal|bug> <slot> add <amount> or complete.
+• A trainer's sent-out Mawile approaches nearby new dishes dropped by its owner. It eats one serving with bite sounds and food particles. Repeated dishes stay on the ground.
+• Hamburger, Nether Burger, Ghast Burger, Hydra Burger and Starlight Hamburger now count as distinct dishes. Previously shared burger credit carries over as the regular hamburger.
+• Added the plate of honey-glazed ham. Direct feeding gives feedback for ineligible foods.
