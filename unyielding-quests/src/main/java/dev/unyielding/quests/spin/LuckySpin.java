@@ -178,6 +178,10 @@ public final class LuckySpin {
         return ModList.get().isLoaded("cobblemon");
     }
 
+    public static boolean starterReady(ServerPlayer p) {
+        return !cobblemon() || SpinCobblemon.starterReady(p);
+    }
+
     /** A tier that can actually pay out (falls back to items when a Pokemon pool is empty). */
     private static Tier usable(Tier t) {
         if (t.isPokemon()) {
@@ -211,6 +215,7 @@ public final class LuckySpin {
 
     /** Same as {@link #roll} with explicit tier weights (used by the daily login reward). */
     public static Spin rollWith(ServerPlayer p, String questTitle, int[] w) {
+        if (!starterReady(p)) throw new IllegalStateException("Choose your starter before using Lucky Spin");
         Tier tier = usable(rollTier(RNG, w));
         ItemStack shown;
         String name;

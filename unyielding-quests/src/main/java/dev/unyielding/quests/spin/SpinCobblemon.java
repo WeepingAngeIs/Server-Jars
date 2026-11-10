@@ -19,6 +19,10 @@ import java.util.Set;
 
 /** Cobblemon side of the Lucky Spin (only loaded when Cobblemon is installed). */
 final class SpinCobblemon {
+    static boolean starterReady(ServerPlayer p) {
+        return Cobblemon.INSTANCE.getPlayerDataManager().getGenericData(p).getStarterSelected();
+    }
+
     /** What was handed over. */
     record Given(String name, int level, boolean shiny) {
     }

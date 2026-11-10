@@ -80,6 +80,7 @@ public final class SettingsSmoke {
             scale(player);
             worldControls(player);
             claimBypass(player);
+            manualSpins(player);
             report.put("status", "PASS");
             source.sendSuccess(() -> Component.literal("SETTINGSTEST PASS " + assertions + " assertions; " + String.join(", ", completed)), false);
             return 1;
@@ -437,6 +438,51 @@ public final class SettingsSmoke {
                     .invoke(claims, dimension, x, z);
         }
         completed.add("real OPAC protected-claim interaction and revoke");
+    }
+
+    private void manualSpins(TestPlayer p) throws Exception {
+        Class<?> daily=Class.forName("dev.unyielding.quests.spin.DailyLogin");
+        var dataField=field(daily,"data");
+        Object original=dataField.get(null);
+        Object fixture=Class.forName("dev.unyielding.quests.spin.DailyLogin$Data").getConstructor().newInstance();
+        Object cobblemon=Class.forName("com.cobblemon.mod.common.Cobblemon").getField("INSTANCE").get(null);
+        Object manager=cobblemon.getClass().getMethod("getPlayerDataManager").invoke(cobblemon);
+        Object general=manager.getClass().getMethod("getGenericData",ServerPlayer.class).invoke(manager,p);
+        var selected=general.getClass().getMethod("setStarterSelected",boolean.class);
+        boolean old=(boolean)general.getClass().getMethod("getStarterSelected").invoke(general);
+        boolean enabled=Config.DAILY_ENABLED.get();
+        try {
+            dataField.set(null,fixture); Config.DAILY_ENABLED.set(true); selected.invoke(general,false);
+            p.payloads.clear();
+            check(dev.unyielding.quests.spin.DailyLogin.give(p),"first login credits a spin");
+            long count=dev.unyielding.quests.spin.DailyLogin.available(p);
+            check(count>=1,"spin bank is populated");
+            check(p.payloads.stream().noneMatch(x->x instanceof Net.SpinResult),"login does not award a prize");
+            check(!dev.unyielding.quests.spin.DailyLogin.give(p),"same day cannot credit twice");
+            var status=new net.minecraft.nbt.CompoundTag();status.putString("action","status");
+            dev.unyielding.quests.spin.SpinMenu.handle(p,status);
+            Net.SpinMenuState menu=(Net.SpinMenuState)p.payloads.getLast();
+            check(!menu.tag().getBoolean("ready"),"starter selection gates UI");
+            var spin=new net.minecraft.nbt.CompoundTag();spin.putString("action","spin");spin.putString("token",menu.tag().getString("token"));
+            dev.unyielding.quests.spin.SpinMenu.handle(p,spin);
+            check(dev.unyielding.quests.spin.DailyLogin.available(p)==count,"blocked starter retains credit");
+            selected.invoke(general,true);
+            dev.unyielding.quests.spin.SpinMenu.handle(p,status);
+            menu=(Net.SpinMenuState)p.payloads.getLast();spin.putString("token",menu.tag().getString("token"));
+            dev.unyielding.quests.spin.SpinMenu.handle(p,spin);
+            check(dev.unyielding.quests.spin.DailyLogin.available(p)==count-1,"manual spin consumes one credit");
+            long results=p.payloads.stream().filter(x->x instanceof Net.SpinResult).count();
+            check(results==1,"one result packet for accepted spin");
+            dev.unyielding.quests.spin.SpinMenu.handle(p,spin);
+            check(p.payloads.stream().filter(x->x instanceof Net.SpinResult).count()==results,"replayed token cannot pay twice");
+            var saved=((dev.unyielding.quests.spin.DailyLogin.Data)fixture).save(new net.minecraft.nbt.CompoundTag(),p.registryAccess());
+            var restored=dev.unyielding.quests.spin.DailyLogin.Data.load(saved,p.registryAccess());
+            check(restored.players.get(p.getUUID())[2]==count-1,"remaining spins persist in saved data");
+            completed.add("manual spin bank, starter gate, replay protection and persistence");
+        } finally {
+            selected.invoke(general,old);dataField.set(null,original);Config.DAILY_ENABLED.set(enabled);
+            dev.unyielding.quests.spin.SpinMenu.logout(p);
+        }
     }
 
     private static Path configFile(String suffix) { return FMLPaths.CONFIGDIR.get().resolve("unyieldingquests-" + suffix + ".toml"); }

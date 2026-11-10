@@ -54,6 +54,10 @@ public final class InvButtons {
 
     public static void onInit(ScreenEvent.Init.Post e) {
         Screen s = e.getScreen();
+        if (s instanceof InventoryScreen || s instanceof CreativeModeInventoryScreen) {
+            e.addListener(Button.builder(Component.literal("Lucky Spin"), b -> Minecraft.getInstance().setScreen(new LuckySpinScreen(s)))
+                    .bounds(4, s.height - 24, 86, 20).build());
+        }
         if (!wants(s)) {
             AREAS.put(s, AdminInventoryButtons.onInit(e, null));
             return;
@@ -78,7 +82,11 @@ public final class InvButtons {
 
     /** Screen area the buttons occupy (for EMI/JEI to stay out of), or null. */
     public static int[] area(Screen s) {
-        return AdminInventoryButtons.area(s, AREAS.get(s));
+        int[] area=AdminInventoryButtons.area(s, AREAS.get(s));
+        if (!(s instanceof InventoryScreen) && !(s instanceof CreativeModeInventoryScreen)) return area;
+        if(area==null)return new int[]{4,s.height-24,86,20};
+        int left=Math.min(4,area[0]),top=Math.min(s.height-24,area[1]);
+        return new int[]{left,top,Math.max(90,area[0]+area[2])-left,Math.max(s.height-4,area[1]+area[3])-top};
     }
 
     public static Component questButtonLabel() {

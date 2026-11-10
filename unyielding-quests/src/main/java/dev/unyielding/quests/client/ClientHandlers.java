@@ -136,7 +136,9 @@ public final class ClientHandlers {
 
     public static void onSpinResult(Net.SpinResult r) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.screen instanceof QuestScreen qs) {
+        if (mc.screen instanceof LuckySpinScreen screen) {
+            screen.receiveSpins(r.spins());
+        } else if (mc.screen instanceof QuestScreen qs) {
             qs.queueSpins(r.spins());
         } else {
             for (var s : r.spins()) mc.getToasts().addToast(new SpinToast(s));

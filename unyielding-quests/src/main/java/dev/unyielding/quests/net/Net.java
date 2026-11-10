@@ -31,6 +31,17 @@ public final class Net {
 
     // ---- server -> client ------------------------------------------------
 
+    public record SpinMenuAction(CompoundTag tag) implements CustomPacketPayload {
+        public static final Type<SpinMenuAction> TYPE=mkType("spin_menu_action");
+        public static final StreamCodec<RegistryFriendlyByteBuf,SpinMenuAction> CODEC=StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG,SpinMenuAction::tag,SpinMenuAction::new);
+        @Override public Type<? extends CustomPacketPayload> type(){return TYPE;}
+    }
+    public record SpinMenuState(CompoundTag tag) implements CustomPacketPayload {
+        public static final Type<SpinMenuState> TYPE=mkType("spin_menu_state");
+        public static final StreamCodec<RegistryFriendlyByteBuf,SpinMenuState> CODEC=StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG,SpinMenuState::tag,SpinMenuState::new);
+        @Override public Type<? extends CustomPacketPayload> type(){return TYPE;}
+    }
+
     public record LootTablesSync(CompoundTag tag, boolean open) implements CustomPacketPayload {
         public static final Type<LootTablesSync> TYPE = mkType("loot_tables");
         public static final StreamCodec<RegistryFriendlyByteBuf, LootTablesSync> CODEC = StreamCodec.composite(
@@ -306,6 +317,8 @@ public final class Net {
         dev.unyielding.quests.settings.MusicSettings.register(event);
         dev.unyielding.quests.settings.ConfigEditor.register(event);
         PayloadRegistrar r = event.registrar("1");
+        r.playToServer(SpinMenuAction.TYPE,SpinMenuAction.CODEC,(p,c)->dev.unyielding.quests.spin.SpinMenu.handle((ServerPlayer)c.player(),p.tag()));
+        r.playToClient(SpinMenuState.TYPE,SpinMenuState.CODEC,(p,c)->dev.unyielding.quests.client.LuckySpinScreen.receive(p.tag()));
         r.playToServer(TutorialDismissed.TYPE, TutorialDismissed.CODEC,
                 (p, c) -> dev.unyielding.quests.tutorial.TutorialManager.dismissed((ServerPlayer)c.player()));
         r.playToClient(LootTablesSync.TYPE, LootTablesSync.CODEC,
