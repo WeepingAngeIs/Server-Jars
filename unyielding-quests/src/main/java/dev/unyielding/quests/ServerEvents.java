@@ -10,10 +10,15 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 public class ServerEvents {
+    @SubscribeEvent
+    public void onStarted(ServerStartedEvent e) {
+        dev.unyielding.quests.settings.PokemonEditor.start(e.getServer());
+    }
     @SubscribeEvent
     public void onStarting(ServerStartingEvent e) {
         TeamManager.onServerStart(e.getServer());
@@ -26,6 +31,7 @@ public class ServerEvents {
 
     @SubscribeEvent
     public void onStopped(ServerStoppedEvent e) {
+        dev.unyielding.quests.settings.PokemonEditor.stop();
         dev.unyielding.quests.loot.LootTables.stop();
         QuestManager.onServerStop();
         dev.unyielding.quests.spin.DailyLogin.onServerStop();
@@ -39,6 +45,7 @@ public class ServerEvents {
         if (e.getEntity() instanceof ServerPlayer p) {
             TeamManager.onLogin(p);
             dev.unyielding.quests.settings.AdminSettings.sync(p, false, "", false);
+            if(net.neoforged.fml.ModList.get().isLoaded("cobblemon"))dev.unyielding.quests.settings.PokemonProgressSync.login(p);
             QuestManager.onLogin(p);
             dev.unyielding.quests.spin.DailyLogin.onLogin(p);
             TutorialManager.onLogin(p);
@@ -48,6 +55,7 @@ public class ServerEvents {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent e) {
         if (e.getEntity() instanceof ServerPlayer p) {
+            dev.unyielding.quests.settings.PokemonEditor.logout(p);
             TeamManager.onLogout(p);
             dev.unyielding.quests.spin.DailyLogin.onLogout(p);
             TutorialManager.onLogout(p);

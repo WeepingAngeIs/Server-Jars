@@ -58,7 +58,7 @@ public final class AdminSettingsScreen extends Screen {
         ph = Math.min(360, height - 16);
         px = (width - pw) / 2;
         py = (height - ph) / 2;
-        top = py + 76;
+        top = py + 98;
         bottom = py + ph - 37;
         lastFrame = Util.getMillis();
         receiveChanges();
@@ -126,6 +126,9 @@ public final class AdminSettingsScreen extends Screen {
         footer.add(addRenderableWidget(new SpriteButton(px + 22 + shortcutWidth * 2, py + 54, shortcutWidth, 18,
                 Component.literal("Music mixer"), null, Ui.Style.NORMAL,
                 button -> MusicAdminScreen.requestOpen())));
+        footer.add(addRenderableWidget(new SpriteButton(px + 14, py + 76, pw - 28, 18,
+                Component.literal("Pokemon editor"), null, Ui.Style.ACCENT,
+                button -> PokemonEditorScreen.requestOpen())));
         updateControls();
     }
 

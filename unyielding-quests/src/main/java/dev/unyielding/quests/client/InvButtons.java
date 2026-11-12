@@ -54,12 +54,11 @@ public final class InvButtons {
 
     public static void onInit(ScreenEvent.Init.Post e) {
         Screen s = e.getScreen();
-        if (s instanceof InventoryScreen || s instanceof CreativeModeInventoryScreen) {
-            e.addListener(Button.builder(Component.literal("Lucky Spin"), b -> Minecraft.getInstance().setScreen(new LuckySpinScreen(s)))
-                    .bounds(4, s.height - 24, 86, 20).build());
-        }
+        if (!(s instanceof InventoryScreen) && !(s instanceof CreativeModeInventoryScreen)) return;
         if (!wants(s)) {
-            AREAS.put(s, AdminInventoryButtons.onInit(e, null));
+            e.addListener(new IconButton(4, 4, Component.literal("Lucky Spin"), true,
+                    b -> Minecraft.getInstance().setScreen(new LuckySpinScreen(s))));
+            AREAS.put(s, AdminInventoryButtons.onInit(e, new int[]{4, 4, SIZE, SIZE}));
             return;
         }
         boolean topLeft = UiConfig.invButtons() == UiConfig.InvButtons.TOP_LEFT;
@@ -73,24 +72,45 @@ public final class InvButtons {
         if (UiConfig.teamsButton()) {
             int tx = topLeft ? x + SIZE + 2 : x;
             int ty = topLeft ? y : y + SIZE + 2;
-            e.addListener(SpriteButton.iconButton(tx, ty, SIZE, Ui.ICON_TEAM, Component.literal("Teams"), b -> Minecraft.getInstance().setScreen(new TeamScreen())));
+            e.addListener(new IconButton(tx, ty, Component.literal("Teams"), false,
+                    b -> Minecraft.getInstance().setScreen(new TeamScreen())));
             if (topLeft) w += SIZE + 2;
             else h += SIZE + 2;
         }
+        int sx = topLeft ? Math.min(s.width - SIZE, x + w + 2) : x;
+        int sy = topLeft ? y : Math.min(s.height - SIZE, y + h + 2);
+        e.addListener(new IconButton(sx, sy, Component.literal("Lucky Spin"), true,
+                b -> Minecraft.getInstance().setScreen(new LuckySpinScreen(s))));
+        w = Math.max(w, sx + SIZE - x);
+        h = Math.max(h, sy + SIZE - y);
         AREAS.put(s, AdminInventoryButtons.onInit(e, new int[]{x, y, w, h}));
     }
 
     /** Screen area the buttons occupy (for EMI/JEI to stay out of), or null. */
     public static int[] area(Screen s) {
         int[] area=AdminInventoryButtons.area(s, AREAS.get(s));
-        if (!(s instanceof InventoryScreen) && !(s instanceof CreativeModeInventoryScreen)) return area;
-        if(area==null)return new int[]{4,s.height-24,86,20};
-        int left=Math.min(4,area[0]),top=Math.min(s.height-24,area[1]);
-        return new int[]{left,top,Math.max(90,area[0]+area[2])-left,Math.max(s.height-4,area[1]+area[3])-top};
+        return area;
     }
 
     public static Component questButtonLabel() {
         return Component.literal("Quest Book (" + ClientInit.questKeyLabel().getString() + ")");
+    }
+
+    /** Icon-only controls retain their normal clickable area and tooltips. */
+    private static final class IconButton extends Button {
+        private final boolean spin;
+        IconButton(int x, int y, Component tooltip, boolean spin, OnPress onPress) {
+            super(x, y, SIZE, SIZE, tooltip, onPress, DEFAULT_NARRATION);
+            this.spin = spin;
+            setTooltip(Tooltip.create(tooltip));
+        }
+        @Override protected void renderWidget(GuiGraphics g, int mx, int my, float pt) {
+            ResourceLocation icon = spin
+                    ? Ui.sprite("icon_spin_frame_" + ((System.currentTimeMillis() / 180) % 4))
+                    : Ui.ICON_TEAM;
+            int size = isHoveredOrFocused() ? 18 : 16;
+            Ui.blit(g, icon, getX() + (SIZE - size) / 2, getY() + (SIZE - size) / 2, size, size);
+        }
     }
 
     /** Round button showing the Premier Ball, with a red dot when rewards are waiting. */
@@ -108,7 +128,6 @@ public final class InvButtons {
                 setTooltip(Tooltip.create(label));
             }
             boolean hov = isHoveredOrFocused();
-            Ui.blit(g, hov ? Ui.Style.NORMAL.hover : Ui.Style.NORMAL.normal, getX(), getY(), width, height);
             g.pose().pushPose();
             g.pose().translate(getX() + 2, getY() + 2, 0);
             if (hov) {

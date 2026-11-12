@@ -23,8 +23,23 @@ public final class Registration {
             CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.unyieldingquests"))
                     .icon(() -> new ItemStack(QUEST_BOOK.get()))
-                    .displayItems((params, output) -> output.accept(QUEST_BOOK.get()))
+                    .displayItems((params, output) -> {
+                        output.accept(QUEST_BOOK.get());
+                        addSoulTomes(output);
+                    })
                     .build());
+
+    private static void addSoulTomes(CreativeModeTab.Output output) {
+        try {
+            Class<?> tome = Class.forName("dev.unyielding.soultome.Tome");
+            var create = tome.getDeclaredMethod("create", boolean.class);
+            create.setAccessible(true);
+            output.accept((ItemStack) create.invoke(null, false));
+            output.accept((ItemStack) create.invoke(null, true));
+        } catch (ReflectiveOperationException | LinkageError e) {
+            UnyieldingQuests.LOGGER.warn("Could not add Soul Tome books to creative inventory", e);
+        }
+    }
 
     private Registration() {
     }

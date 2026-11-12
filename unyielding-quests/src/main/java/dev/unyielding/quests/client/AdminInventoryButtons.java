@@ -20,7 +20,7 @@ public final class AdminInventoryButtons {
         var screen = event.getScreen();
         if (!(screen instanceof InventoryScreen) && !(screen instanceof CreativeModeInventoryScreen)) return occupied;
         // A horizontal row beside the container would cover armor/crafting slots.
-        boolean topLeft = occupied != null && UiConfig.invButtons() == UiConfig.InvButtons.TOP_LEFT;
+        boolean topLeft = occupied != null && (UiConfig.invButtons() == UiConfig.InvButtons.TOP_LEFT || (occupied[0] == 4 && occupied[1] == 4));
         int x = topLeft ? occupied[0] : 4;
         int y = topLeft ? occupied[1] + occupied[3] + 3 : 4;
         int width = Math.min(20, (screen.width - 12) / 3);
@@ -94,7 +94,7 @@ public final class AdminInventoryButtons {
             return "Next: " + next + " for ten minutes in this dimension";
         }
 
-        @Override public void renderString(net.minecraft.client.gui.GuiGraphics graphics, net.minecraft.client.gui.Font font, int color) {
+        @Override protected void renderWidget(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
             int size = Math.min(16, getWidth() - 2);
             dev.unyielding.quests.client.ui.Ui.blit(graphics, icon, getX() + (getWidth() - size) / 2,
                     getY() + (getHeight() - size) / 2, size, size);
@@ -105,3 +105,4 @@ public final class AdminInventoryButtons {
         }
     }
 }
+

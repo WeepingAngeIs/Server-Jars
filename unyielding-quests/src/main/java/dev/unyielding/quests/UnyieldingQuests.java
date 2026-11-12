@@ -24,6 +24,7 @@ public class UnyieldingQuests {
         Registration.register(modBus);
         modBus.addListener(Net::register);
         NeoForge.EVENT_BUS.register(new ServerEvents());
+        if (net.neoforged.fml.ModList.get().isLoaded("cobblemon")) NeoForge.EVENT_BUS.register(new dev.unyielding.quests.settings.CorvisquireStars());
         NeoForge.EVENT_BUS.register(new dev.unyielding.quests.essentials.Essentials.Events());
         NeoForge.EVENT_BUS.register(new dev.unyielding.quests.ultimine.Ultimine.Events());
         if (FMLEnvironment.dist.isClient()) {

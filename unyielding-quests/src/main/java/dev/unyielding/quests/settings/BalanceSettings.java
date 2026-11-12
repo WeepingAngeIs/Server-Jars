@@ -46,7 +46,13 @@ public final class BalanceSettings {
             balanceSend.setAccessible(true);
             for (String name : List.of("ARMOR_PERCENT", "TOUGHNESS_PERCENT", "KNOCKBACK_PERCENT",
                     "MOD_OVERRIDES", "ITEM_OVERRIDES", "RAID_ENABLED", "NORMAL_IV_MAX")) add("", config, name);
-            for (var tier : tiers) for (var value : tier) add("", value);
+            for (int i = 0; i < 6; i++) for (var value : tiers[i]) add("", value);
+        });
+        optional("uwuivrebalance", () -> {
+            Class<?> config = Class.forName("com.uwustudio.ivrebalance.RebalanceConfig");
+            add("egg_ivs", config, "RANDOMIZE_EGG_IVS");
+            add("tier_seven", config, "TIER_SEVEN_BONUS_CHANCE");
+            add("tier_seven", config, "TIER_SEVEN_BONUS_MAX_IVS");
         });
         optional("cuportal", () -> {
             Class<?> config = Class.forName("dev.unyielding.portal.PortalConfig");

@@ -127,6 +127,12 @@ public final class BalanceSettingsScreen extends FormScreen {
             }
             gap(27);
             heading("Tier " + (group + 1) + " raid rewards");
+            if (group == 6) {
+                paragraph("Raid Dens rolls the reward IVs. A bonus can raise additional IVs to 31.");
+                gap(6);
+                button(left(), innerWidth(), "Edit tier 7 bonus", null, Ui.Style.NORMAL, () -> openValues("tier_seven."));
+                return;
+            }
         } else {
             paragraph("100% is normal strength. 50% is half strength. Changes apply server-wide.");
             paragraph("Mod and item exceptions can override armor points and toughness.");
@@ -262,6 +268,7 @@ public final class BalanceSettingsScreen extends FormScreen {
         graphics.fill(0, 0, width, height, Ui.alpha(Theme.backdrop, 0.25f));
     }
     @Override protected void renderExtra(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        if (raid && group == 6) return;
         graphics.enableScissor(px + 2, top, px + pw - 2, bottom);
         try {
             double[] next = entered();

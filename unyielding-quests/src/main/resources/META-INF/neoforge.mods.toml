@@ -37,3 +37,6 @@ crafting anywhere, kits, and hold-a-key vein mining. Install the same jar on the
     versionRange = "[1.6,)"
     ordering = "AFTER"
     side = "BOTH"
+
+[[mixins]]
+config = "assets/unyieldingquests/pokemon.mixins.json"

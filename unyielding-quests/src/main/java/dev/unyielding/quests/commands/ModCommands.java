@@ -47,6 +47,7 @@ public final class ModCommands {
     }
 
     public static void register(CommandDispatcher<CommandSourceStack> d) {
+        ForceReviveCommand.register(d);
         d.register(Commands.literal("tutorial")
                 .executes(c -> {
                     TutorialManager.open(player(c));
