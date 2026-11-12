@@ -1,14 +1,9 @@
 # Counts dropped stacks in loaded chunks, matching the original pack.
 scoreboard players set #removed cui_items 0
-scoreboard players set #dimension cui_items 0
-execute in minecraft:overworld store result score #dimension cui_items run kill @e[type=minecraft:item]
-scoreboard players operation #removed cui_items += #dimension cui_items
-scoreboard players set #dimension cui_items 0
-execute in minecraft:the_nether store result score #dimension cui_items run kill @e[type=minecraft:item]
-scoreboard players operation #removed cui_items += #dimension cui_items
-scoreboard players set #dimension cui_items 0
-execute in minecraft:the_end store result score #dimension cui_items run kill @e[type=minecraft:item]
-scoreboard players operation #removed cui_items += #dimension cui_items
+# Classify each stack before deleting it, and count only deleted stacks.
+execute in minecraft:overworld as @e[type=minecraft:item] run function cui_cleanup:clear_item
+execute in minecraft:the_nether as @e[type=minecraft:item] run function cui_cleanup:clear_item
+execute in minecraft:the_end as @e[type=minecraft:item] run function cui_cleanup:clear_item
 function cui_cleanup:extra_dimensions
 scoreboard players set #timer cui_items 0
 scoreboard players operation #seconds cui_items = #interval cui_items
