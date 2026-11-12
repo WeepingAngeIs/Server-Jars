@@ -20,7 +20,7 @@ roots = [
     'mixin/CorvisquireEvolutionGuardMixin',
 ]
 frames = {f'assets/unyieldingquests/textures/gui/sprites/icon_spin_frame_{i}.png' for i in range(4)}
-out = Path('dist/118-followup/Unyielding-1.1.8.jar')
+out = Path('dist/119-release/Unyielding-1.1.9.jar')
 out.parent.mkdir(parents=True, exist_ok=True)
 with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
     assert len(base.namelist()) == len(set(base.namelist())), 'Duplicate baseline entries'
@@ -53,6 +53,10 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
             if value not in old_tag.setdefault('values', []):
                 old_tag['values'].append(value)
         updates[path] = json.dumps(old_tag, indent=2).encode()
+    manifest = 'META-INF/MANIFEST.MF'
+    before = b'Implementation-Version: 1.1.8'
+    assert base.read(manifest).count(before) == 1
+    updates[manifest] = base.read(manifest).replace(before, b'Implementation-Version: 1.1.9')
     replaced = set(updates)
     with ZipFile(out, 'w', ZIP_DEFLATED) as result:
         for entry in base.infolist():

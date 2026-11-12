@@ -1,4 +1,4 @@
-name: Build Unyielding 1.1.8 follow-up
+name: Build Unyielding 1.1.9
 
 on:
   workflow_dispatch:
@@ -35,14 +35,14 @@ jobs:
       - name: Upload build and checksums
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: Unyielding-1.1.8-followup
-          path: dist/118-followup/
+          name: Unyielding-1.1.9
+          path: dist/119-release/
           if-no-files-found: error
       - name: Upload build reports
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: Unyielding-1.1.8-followup-reports
+          name: Unyielding-1.1.9-reports
           path: |
             unyielding-quests/build/reports/
             unyielding-quests/build/test-results/
