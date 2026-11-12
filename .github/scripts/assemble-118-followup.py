@@ -41,6 +41,18 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
         if category in new_mixins:
             old_mixins[category] = list(dict.fromkeys(old_mixins.get(category, []) + new_mixins[category]))
     updates[mixin_path] = json.dumps(old_mixins, indent=2).encode()
+    cleanup_files = [n for n in names if n.startswith('data/cui_cleanup/') and not n.endswith('/')]
+    assert cleanup_files, 'Missing ground cleanup functions'
+    updates.update((n, component.read(n)) for n in cleanup_files)
+    for tag in ('load', 'tick'):
+        path = f'data/minecraft/tags/function/{tag}.json'
+        assert path in names, f'Missing cleanup {tag} tag'
+        old_tag = json.loads(base.read(path)) if path in base.namelist() else {'values': []}
+        new_tag = json.loads(component.read(path))
+        for value in new_tag.get('values', []):
+            if value not in old_tag.setdefault('values', []):
+                old_tag['values'].append(value)
+        updates[path] = json.dumps(old_tag, indent=2).encode()
     replaced = set(updates)
     with ZipFile(out, 'w', ZIP_DEFLATED) as result:
         for entry in base.infolist():
