@@ -136,6 +136,19 @@ public final class ConfigValuesScreen extends FormScreen {
             } else if (original.getAsJsonPrimitive().isBoolean()) {
                 toggle(left(), innerWidth(), flag ? "ON" : "OFF", flag, v -> flag = v); gap(25);
             } else {
+                if (row.getString("key").endsWith(".origin_creative_flight_speed")) {
+                    var slider = new net.minecraft.client.gui.components.AbstractSliderButton(left(), cy, innerWidth(), 20,
+                            net.minecraft.network.chat.Component.literal(text + "x"), (Double.parseDouble(text) - 1) / 3) {
+                        protected void updateMessage() {
+                            setMessage(net.minecraft.network.chat.Component.literal("Creative flight speed: " + multiplier() + "x"));
+                        }
+                        private double multiplier() { return Math.round((1 + value * 3) * 10) / 10.0; }
+                        protected void applyValue() { text = Double.toString(multiplier()); }
+                    };
+                    addRenderableWidget(slider);
+                    gap(25);
+                    return;
+                }
                 field("value", left(), cy, innerWidth(), text, "Value", 4096, s -> text = s); gap(25);
             }
         }

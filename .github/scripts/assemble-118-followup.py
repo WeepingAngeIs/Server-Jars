@@ -13,7 +13,7 @@ assert len(jars) == 1, f'Expected one quest JAR, got {jars}'
 
 prefix = 'dev/unyielding/quests/'
 roots = [
-    'Registration', 'UnyieldingQuests',
+    'Registration', 'UnyieldingQuests', 'Config', 'settings/OriginFlightSpeed', 'mixin/OriginFlightMixin', 'client/ConfigValuesScreen',
     'client/AdminInventoryButtons', 'client/InvButtons',
     'commands/ModCommands', 'commands/ForceReviveCommand',
     'settings/CorvisquireStars', 'mixin/PokemonProgressRequirementMixin',

@@ -22,6 +22,7 @@ public class UnyieldingQuests {
         container.registerConfig(ModConfig.Type.COMMON, dev.unyielding.quests.essentials.EssConfig.SPEC, "unyieldingquests-essentials.toml");
         container.registerConfig(ModConfig.Type.COMMON, dev.unyielding.quests.ultimine.UltimineConfig.SPEC, "unyieldingquests-ultimine.toml");
         Registration.register(modBus);
+        NeoForge.EVENT_BUS.register(new dev.unyielding.quests.settings.OriginFlightSpeed());
         modBus.addListener(Net::register);
         NeoForge.EVENT_BUS.register(new ServerEvents());
         if (net.neoforged.fml.ModList.get().isLoaded("cobblemon")) NeoForge.EVENT_BUS.register(new dev.unyielding.quests.settings.CorvisquireStars());

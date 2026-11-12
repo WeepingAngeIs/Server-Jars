@@ -3,6 +3,14 @@
   "minVersion": "0.8",
   "package": "dev.unyielding.quests.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["PokemonCompanionProgressMixin", "PokemonProgressRequirementMixin", "CorvisquireEvolutionGuardMixin"],
-  "client": ["PokemonSpeciesSyncMixin", "PokemonCounterDisplayMixin"]
+  "mixins": [
+    "PokemonCompanionProgressMixin",
+    "PokemonProgressRequirementMixin",
+    "CorvisquireEvolutionGuardMixin",
+    "OriginFlightMixin"
+  ],
+  "client": [
+    "PokemonSpeciesSyncMixin",
+    "PokemonCounterDisplayMixin"
+  ]
 }

@@ -50,8 +50,11 @@ public final class Config {
     public static final ModConfigSpec.IntValue DAILY_STREAK_BONUS_SPINS;
     public static final ModConfigSpec.ConfigValue<String> DAILY_TIMEZONE;
 
+    public static final ModConfigSpec.DoubleValue ORIGIN_FLIGHT_SPEED;
+
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
+        ORIGIN_FLIGHT_SPEED = b.comment("Speed multiplier for active NeoOrigins creative flight.").defineInRange("origin_creative_flight_speed", 1.5, 1.0, 4.0);
         b.push("admin");
         ADMIN_INVENTORY_CONTROLS = b.comment("Show Day, Night and Weather inventory controls for operators. Every action requires operator level 2 on the server.", "Time affects all dimensions, matching /time set. Weather affects the current skylight dimension for ten minutes.").define("inventory_controls", true);
         b.pop();
