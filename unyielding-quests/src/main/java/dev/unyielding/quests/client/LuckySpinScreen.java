@@ -18,6 +18,7 @@ public final class LuckySpinScreen extends Screen {
     private CompoundTag state=new CompoundTag();
     private LuckySpin.Spin result;
     private long started;
+    private boolean resultSoundPlayed;
     private boolean waiting=true;
     private Button spin;
     public LuckySpinScreen(Screen parent){super(Component.literal("Lucky Spin"));this.parent=parent;}
@@ -32,7 +33,7 @@ public final class LuckySpinScreen extends Screen {
     private void updateButton(){if(spin!=null)spin.active=!waiting && !animating() && state.getBoolean("ready") && state.getBoolean("enabled") && state.getLong("count")>0;}
     private void requestSpin(){
         if(!spin.active)return;
-        waiting=true;result=null;updateButton();
+        waiting=true;result=null;resultSoundPlayed=false;updateButton();
         CompoundTag tag=new CompoundTag();tag.putString("action","spin");tag.putString("token",state.getString("token"));Net.sendToServer(new Net.SpinMenuAction(tag));
     }
     public static void receive(CompoundTag tag){
@@ -40,9 +41,15 @@ public final class LuckySpinScreen extends Screen {
     }
     public void receiveSpins(List<LuckySpin.Spin> spins){
         if(spins.isEmpty())return;
-        result=spins.get(0);started=Util.getMillis();updateButton();
+        result=spins.get(0);started=Util.getMillis();resultSoundPlayed=false;updateButton();
     }
-    @Override public void tick(){updateButton();}
+    @Override public void tick(){
+        if(result!=null && !animating() && !resultSoundPlayed){
+            resultSoundPlayed=true;
+            LuckySpinSounds.play(result.tier());
+        }
+        updateButton();
+    }
     @Override public void render(GuiGraphics g,int mx,int my,float partial){
         renderBackground(g,mx,my,partial);
         int w=Math.min(360,width-16),x=(width-w)/2,y=height/2-70;

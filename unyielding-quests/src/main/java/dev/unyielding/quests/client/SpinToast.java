@@ -10,7 +10,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 
 /** Lucky Spin result shown as a popup when the quest book is not open. */
 public class SpinToast implements Toast {
@@ -26,7 +25,7 @@ public class SpinToast implements Toast {
         Theme.ensureLoaded();
         if (!played) {
             played = true;
-            Ui.play(spin.tier().isPokemon() ? SoundEvents.UI_TOAST_CHALLENGE_COMPLETE : SoundEvents.PLAYER_LEVELUP, 1.3f, 0.5f);
+            LuckySpinSounds.play(spin.tier());
         }
         Font font = Minecraft.getInstance().font;
         Ui.blit(g, Ui.TOAST, 0, 0, width(), height());

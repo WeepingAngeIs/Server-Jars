@@ -1,0 +1,51 @@
+name: Build 1.2.0 Lucky Spin component
+on:
+  push:
+    branches: ['codex/lucky-spin-120']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  component:
+    strategy:
+      fail-fast: false
+      matrix:
+        revision: [baseline, updated]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 2
+      - name: Select baseline source
+        if: matrix.revision == 'baseline'
+        run: git checkout HEAD^
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            unyielding-quests/*.gradle
+            unyielding-quests/gradle.properties
+            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
+      - name: Fetch verified compile dependencies
+        run: python3 .github/scripts/fetch-build-dependencies.py
+      - name: Compile and run existing checks
+        working-directory: unyielding-quests
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon --console=plain build
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: lucky-spin-component-${{ matrix.revision }}
+          path: unyielding-quests/build/libs/*.jar
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: lucky-spin-reports-${{ matrix.revision }}
+          path: |
+            unyielding-quests/build/reports/
+            unyielding-quests/build/test-results/
+          if-no-files-found: ignore

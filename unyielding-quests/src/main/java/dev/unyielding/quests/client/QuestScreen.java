@@ -1216,15 +1216,18 @@ public class QuestScreen extends Screen {
         spinStart = Util.getMillis();
         spinLanded = false;
         spinLastSlot = -1;
-        if (spinCur != null) Ui.play(SoundEvents.EXPERIENCE_ORB_PICKUP, 0.6f, 0.5f);
     }
 
     private void skipAllSpins() {
+        LuckySpin.Tier best = spinCur == null ? null : spinCur.tier();
+        for (LuckySpin.Spin spin : spinQueue) {
+            if (best == null || spin.tier().ordinal() > best.ordinal()) best = spin.tier();
+        }
         if (spinCur != null) spinSummary.add(spinCur);
         spinSummary.addAll(spinQueue);
         spinQueue.clear();
         spinCur = null;
-        Ui.play(SoundEvents.PLAYER_LEVELUP, 1.2f, 0.5f);
+        if (best != null) LuckySpinSounds.play(best);
     }
 
     private void closeSpins() {
@@ -1288,14 +1291,7 @@ public class QuestScreen extends Screen {
         float f = e * sp.index();
         if (t >= 1f && !spinLanded) {
             spinLanded = true;
-            switch (sp.tier()) {
-                case BASIC -> Ui.play(SoundEvents.EXPERIENCE_ORB_PICKUP, 1.2f, 0.8f);
-                case GOOD -> Ui.play(SoundEvents.PLAYER_LEVELUP, 1.3f, 0.6f);
-                default -> {
-                    Ui.play(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 0.9f);
-                    Ui.play(SoundEvents.FIREWORK_ROCKET_TWINKLE, 1.0f, 0.8f);
-                }
-            }
+            LuckySpinSounds.play(sp.tier());
         }
         int slot = Math.round(f);
         if (!spinLanded && slot != spinLastSlot) {
