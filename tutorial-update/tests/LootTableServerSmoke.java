@@ -6,6 +6,7 @@ import dev.unyielding.quests.quest.QuestManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -58,6 +59,8 @@ public final class LootTableServerSmoke {
             require(!LootTables.openCrate(player, crate), "Consumed crate could open again");
             require(player.getInventory().countItem(Items.DIAMOND) == diamonds + 3, "Replayed empty crate awarded another prize");
             report.put("server_save_reload_and_consume_once", "passed");
+            checkHeldCratePrize(player);
+            report.put("held_crate_slot_preserves_prize", "passed");
 
             CompoundTag stale = action("toggle");
             stale.putInt("revision", revision);
@@ -106,6 +109,27 @@ public final class LootTableServerSmoke {
     }
 
     private static int revision() { return LootTables.snapshot(true, "", false).getInt("revision"); }
+
+    private static void checkHeldCratePrize(ServerPlayer player) {
+        // Fill every main inventory slot so the consumed crate's slot must receive the prize.
+        var inventory = player.getInventory();
+        var saved = new java.util.ArrayList<ItemStack>();
+        for (int i = 0; i < inventory.items.size(); i++) saved.add(inventory.items.get(i).copy());
+        try {
+            for (int i = 0; i < inventory.items.size(); i++) inventory.items.set(i, new ItemStack(Items.DIRT, 64));
+            player.setItemInHand(InteractionHand.MAIN_HAND, LootTables.crate("cloud_test", 1));
+            ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
+            var result = held.getItem().use(player.level(), player, InteractionHand.MAIN_HAND);
+            // The game installs the result into the hand after Item.use returns.
+            player.setItemInHand(InteractionHand.MAIN_HAND, result.getObject());
+            require(player.getItemInHand(InteractionHand.MAIN_HAND).is(Items.DIAMOND)
+                    && player.getItemInHand(InteractionHand.MAIN_HAND).getCount() == 3,
+                    "Prize inserted into the crate hand was overwritten by the use result");
+        } finally {
+            for (int i = 0; i < saved.size(); i++) inventory.items.set(i, saved.get(i));
+            player.getCooldowns().removeCooldown(dev.unyielding.quests.Registration.LOOT_CRATE.get());
+        }
+    }
 
     private static void checkQuestRewardSafety(ServerPlayer player) throws Exception {
         long questId = 0x4211223344556677L;

@@ -25,6 +25,9 @@ public class EditQuestScreen extends FormScreen {
     private final Quest draft;
     private String descText;
     private String iconId;
+    private String xText;
+    private String yText;
+    private boolean positionError;
     private final List<String[]> taskKinds = new ArrayList<>();
 
     private static final String[] SHAPES = {"circle", "square", "rsquare", "diamond", "pentagon", "hexagon", "octagon", "gear", "star", "heart"};
@@ -42,6 +45,8 @@ public class EditQuestScreen extends FormScreen {
         draft = QuestEdit.copy(q);
         descText = String.join("\n", draft.desc);
         iconId = draft.icon == null ? "" : draft.icon.id;
+        xText = trimNum(draft.x);
+        yText = trimNum(draft.y);
     }
 
     @Override
@@ -217,8 +222,17 @@ public class EditQuestScreen extends FormScreen {
     @Override
     protected void build() {
         int w = innerWidth();
+        heading("Position on quest map");
+        int x = labelled("X position");
+        field("position_x", x, right() - x, xText, "X coordinate", s -> xText = s);
+        gap(24);
+        x = labelled("Y position");
+        field("position_y", x, right() - x, yText, "Y coordinate", s -> yText = s);
+        gap(24);
+        note(positionError ? "Enter a valid number for both positions." : "Negative and decimal positions are allowed.");
+        gap(8);
         heading("Text");
-        int x = labelled("Title");
+        x = labelled("Title");
         field("title", x, right() - x, draft.title, "Quest name (use & for colours, e.g. &6Gold)", s -> draft.title = s);
         gap(24);
         x = labelled("Subtitle");
@@ -444,6 +458,20 @@ public class EditQuestScreen extends FormScreen {
 
     @Override
     protected void save() {
+        double x;
+        double y;
+        try {
+            x = Double.parseDouble(xText.trim());
+            y = Double.parseDouble(yText.trim());
+            if (!Double.isFinite(x) || !Double.isFinite(y)) throw new NumberFormatException();
+        } catch (NumberFormatException e) {
+            positionError = true;
+            scroll = 0;
+            relayout();
+            return;
+        }
+        draft.x = x;
+        draft.y = y;
         if (draft.tasks.isEmpty()) {
             Task t = new Task();
             t.id = QuestEdit.newId();

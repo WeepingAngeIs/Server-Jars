@@ -20,6 +20,9 @@ public final class LootCrateItem extends Item {
             return InteractionResultHolder.fail(held);
         boolean opened = LootTables.openCrate(serverPlayer, held);
         if (opened) player.getCooldowns().addCooldown(this, 10);
-        return opened ? InteractionResultHolder.consume(held) : InteractionResultHolder.fail(held);
+        // Opening can empty this slot and immediately place a prize into it. Returning
+        // the old (now empty) crate would make the interaction overwrite that prize.
+        ItemStack currentHand = player.getItemInHand(hand);
+        return opened ? InteractionResultHolder.consume(currentHand) : InteractionResultHolder.fail(currentHand);
     }
 }
