@@ -10,7 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
+import com.cobblemon.mod.common.CobblemonSounds;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -30,7 +30,7 @@ public class QuestToast implements Toast {
         Theme.ensureLoaded();
         if (!played) {
             played = true;
-            Ui.play(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1.4f, 0.5f);
+            Ui.play(CobblemonSounds.PC_WALLPAPER_UNLOCK, 1.0f, 1.0f);
         }
         Font font = Minecraft.getInstance().font;
         Ui.blit(g, Ui.TOAST, 0, 0, width(), height());
