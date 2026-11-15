@@ -127,6 +127,10 @@ public final class DailyLogin {
     /** Called on login: queues the reward for a couple of seconds so the player is fully in the world. */
     public static void onLogin(ServerPlayer p) {
         if (data == null || !Config.DAILY_ENABLED.get()) return;
+        if (data.invalidDebitHistory != null) {
+            p.sendSystemMessage(Component.literal("Daily rewards are paused while an administrator reviews saved reward history."));
+            return;
+        }
         long[] rec = data.players.get(p.getUUID());
         if (rec != null && rec[0] >= today()) return;
         PENDING.put(p.getUUID(), 60);
@@ -255,6 +259,7 @@ public final class DailyLogin {
     /** "Streak 3 days, next reward tomorrow" style status. */
     public static String status(ServerPlayer p) {
         if (data == null) return "Daily rewards are not available.";
+        if (data.invalidDebitHistory != null) return "Daily rewards are paused while an administrator reviews saved reward history.";
         if (!Config.DAILY_ENABLED.get()) return "Daily login rewards are turned off on this server.";
         long[] rec = data.players.get(p.getUUID());
         long day = today();
