@@ -74,6 +74,7 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     assert not any(n.startswith(prefix + 'devtest/OpacOnlineSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/MeetingTwoPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/QuestSharingPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
+    assert not any(n.startswith(prefix + 'devtest/JailPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'
     assert result.read('META-INF/MANIFEST.MF').count(b'Implementation-Version: 1.2.0') == 1
     for name in base.namelist():
