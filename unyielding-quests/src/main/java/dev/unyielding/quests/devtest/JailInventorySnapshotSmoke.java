@@ -96,6 +96,12 @@ public final class JailInventorySnapshotSmoke {
                 details.append(" [").append(e.getKey()).append(" class=").append(alias == null ? "null" : alias.getClass().getName()).append(" same=").append(match)
                         .append(" size=").append(expected).append('/').append(normal.getContainerSize()).append('/').append(cosmetic.getContainerSize()).append(']');
             }
+            for (var e : aliases.entrySet()) {
+                Object alias = e.getValue(); Object backing = alias != null && alias.getClass() == wrapperApi ? wrapperApi.getMethod("container").invoke(alias) : null;
+                String matched = "none";
+                for (var src : containers.entrySet()) if (src.getValue() == backing) { matched = src.getKey().toString(); break; }
+                details.append(" {alias=").append(e.getKey()).append(" class=").append(alias == null ? "null" : alias.getClass().getName()).append(" backing=").append(matched).append('}');
+            }
             return details.toString();
         } catch (Exception failure) { return "diagnostic error " + failure; }
     }
