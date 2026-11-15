@@ -19,12 +19,24 @@ public final class SpinRecoveryCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("spinrecovery").requires(s -> s.hasPermission(2))
                 .then(Commands.literal("list").executes(c -> list(c.getSource())))
+                .then(Commands.literal("retry").executes(c -> retry(c.getSource())))
                 .then(Commands.literal("show").then(Commands.argument("transaction", StringArgumentType.word())
                         .executes(c -> show(c.getSource(), StringArgumentType.getString(c, "transaction")))))
                 .then(Commands.literal("export").then(Commands.argument("transaction", StringArgumentType.word())
                         .executes(c -> export(c.getSource(), StringArgumentType.getString(c, "transaction")))))
                 .then(Commands.literal("confirm_delivered").then(Commands.argument("transaction", StringArgumentType.word())
                         .executes(c -> confirmDelivered(c.getSource(), StringArgumentType.getString(c, "transaction"))))));
+    }
+
+    private static int retry(CommandSourceStack source) {
+        try {
+            DailyLogin.retryRecovery();
+            source.sendSuccess(() -> Component.literal("Reward journal reconciled. No prizes were replayed or refunded."), true);
+            return 1;
+        } catch (IOException | RuntimeException failure) {
+            source.sendFailure(Component.literal("Recovery is still unavailable: " + failure.getMessage()));
+            return 0;
+        }
     }
 
     private static RewardJournal journal(CommandSourceStack source, boolean reviewOnly) {

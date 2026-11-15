@@ -85,12 +85,7 @@ public final class DailyLogin {
         recoveryReady = false;
         try {
             rewardJournal = new RewardJournal(s.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("unyielding-recovery"));
-            for (RewardJournal.Entry entry : rewardJournal.list()) {
-                if (!applyDebit(entry)) throw new IOException("Cannot reconcile debit " + entry.id());
-                if (entry.state() == RewardJournal.State.PREPARED || entry.state() == RewardJournal.State.DEBIT_APPLIED || entry.state() == RewardJournal.State.DELIVERING)
-                    rewardJournal.transition(entry.id(), entry.state(), RewardJournal.State.HELD);
-            }
-            recoveryReady = true;
+            retryRecovery();
         } catch (IOException | RuntimeException failure) {
             UnyieldingQuests.LOGGER.error("Lucky Spin recovery unavailable; payouts are disabled pending admin review", failure);
         }
@@ -195,6 +190,17 @@ public final class DailyLogin {
         if (journal() == null || data == null) return false;
         RewardJournal.Entry entry = rewardJournal.read(id);
         return entry != null && applyDebit(entry);
+    }
+    /** Recheck existing records only; never deliver, refund, or replay a prize. */
+    public static void retryRecovery() throws IOException {
+        recoveryReady = false;
+        if (data == null || rewardJournal == null) throw new IOException("Reward journal is unavailable");
+        for (RewardJournal.Entry entry : rewardJournal.list()) {
+            if (!applyDebit(entry)) throw new IOException("Cannot reconcile debit " + entry.id());
+            if (entry.state() == RewardJournal.State.PREPARED || entry.state() == RewardJournal.State.DEBIT_APPLIED || entry.state() == RewardJournal.State.DELIVERING)
+                rewardJournal.transition(entry.id(), entry.state(), RewardJournal.State.HELD);
+        }
+        recoveryReady = true;
     }
 
     /** Only called after a server-validated manual request. */
