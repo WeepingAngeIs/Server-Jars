@@ -21,7 +21,7 @@ public final class JailInventorySnapshot {
     private static final int MAX_CONTAINERS = 256, MAX_SLOTS = 1024;
     private JailInventorySnapshot() {}
 
-    public enum Status { CAPTURED_ONLY, WRONG_THREAD, UNSUPPORTED_PROVIDER, UNAVAILABLE }
+    public enum Status { CAPTURED_ONLY, WRONG_THREAD, TRANSIENT_MENU, UNSUPPORTED_PROVIDER, UNAVAILABLE }
     public record Result(Status status, CompoundTag snapshot) {
         public Result { snapshot = snapshot == null ? null : snapshot.copy(); }
         @Override public CompoundTag snapshot() { return snapshot == null ? null : snapshot.copy(); }
@@ -29,6 +29,15 @@ public final class JailInventorySnapshot {
 
     public static Result capture(ServerPlayer player) {
         if (player == null || player.server == null || !player.server.isSameThread()) return new Result(Status.WRONG_THREAD, null);
+        // An open external menu can hold additional items; the carried stack and
+        // player crafting grid are not part of Inventory.getContainerSize(). Do not
+        // silently omit them or close the menu, which itself can move/drop items.
+        if (player.inventoryMenu == null || player.containerMenu != player.inventoryMenu
+                || !player.containerMenu.getCarried().isEmpty() || player.inventoryMenu.slots.size() < 5)
+            return new Result(Status.TRANSIENT_MENU, null);
+        for (int i = 0; i < 5; i++) {
+            if (player.inventoryMenu.getSlot(i).hasItem()) return new Result(Status.TRANSIENT_MENU, null);
+        }
         if (!version("accessories", "1.1.0-beta.53+1.21.1")
                 || !version("accessories_compat_layer", "0.1.12")
                 || !version("curios", "9.5.1+1.21.1")) return new Result(Status.UNSUPPORTED_PROVIDER, null);

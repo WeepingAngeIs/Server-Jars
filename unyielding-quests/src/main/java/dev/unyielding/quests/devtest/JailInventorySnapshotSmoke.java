@@ -52,6 +52,16 @@ public final class JailInventorySnapshotSmoke {
             vanity.set(DataComponents.CUSTOM_NAME, Component.literal("Cosmetic fixture"));
             regular.setItem(0, accessory.copy());
             cosmetic.setItem(0, vanity.copy());
+            ItemStack cursor = new ItemStack(Items.EMERALD);
+            player.containerMenu.setCarried(cursor.copy());
+            require(JailInventorySnapshot.capture(player).status() == JailInventorySnapshot.Status.TRANSIENT_MENU
+                    && ItemStack.matches(cursor, player.containerMenu.getCarried()), "cursor was ignored or changed");
+            player.containerMenu.setCarried(ItemStack.EMPTY);
+            ItemStack crafting = new ItemStack(Items.OAK_PLANKS);
+            player.inventoryMenu.getSlot(1).set(crafting.copy());
+            require(JailInventorySnapshot.capture(player).status() == JailInventorySnapshot.Status.TRANSIENT_MENU
+                    && ItemStack.matches(crafting, player.inventoryMenu.getSlot(1).getItem()), "crafting item was ignored or changed");
+            player.inventoryMenu.getSlot(1).set(ItemStack.EMPTY);
             var first = JailInventorySnapshot.capture(player);
             require(first.status() == JailInventorySnapshot.Status.CAPTURED_ONLY && first.snapshot() != null,
                     "snapshot preflight declined compatible APIs: " + first.status() + " " + diagnostics(player, containers));
