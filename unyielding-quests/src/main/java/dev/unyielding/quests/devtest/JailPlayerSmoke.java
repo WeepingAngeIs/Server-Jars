@@ -109,8 +109,16 @@ public final class JailPlayerSmoke {
             require(prisoner.distanceToSqr(origin.x(), origin.y(), origin.z()) < 0.0001, "test setup could not relocate player");
             NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerRespawnEvent(prisoner, false));
             require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "respawn event did not restore confinement");
+            var prisonerId = prisoner.getUUID();
+            prisoner.setHealth(0);
             prisoner.die(prisoner.damageSources().genericKill());
-            prisoner = server.getPlayerList().respawn(prisoner, false, net.minecraft.world.entity.Entity.RemovalReason.KILLED);
+            // Use vanilla's client-command handler: it updates the network listener's
+            // player reference after PlayerList.respawn returns. Calling respawn directly
+            // leaves later connection.teleport calls operating on the removed player.
+            prisoner.connection.handleClientCommand(new net.minecraft.network.protocol.game.ServerboundClientCommandPacket(
+                    net.minecraft.network.protocol.game.ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));
+            prisoner = server.getPlayerList().getPlayer(prisonerId);
+            require(prisoner != null && prisoner.connection.player == prisoner, "respawn did not rebind player connection");
             require(data.assignment(prisoner.getUUID()) != null, "death lost jail assignment");
             require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "actual death respawn escaped jail");
             // A damaged cage is never used as a teleport destination: preserve assignment,
@@ -119,6 +127,7 @@ public final class JailPlayerSmoke {
             level.setBlockAndUpdate(min, Blocks.AIR.defaultBlockState());
             require(!JailPlacement.intact(server, jail), "damaged jail appeared intact");
             prisoner.teleportTo(level, origin.x(), origin.y(), origin.z(), origin.yaw(), origin.pitch());
+            require(prisoner.distanceToSqr(origin.x(), origin.y(), origin.z()) < 0.0001, "damaged-jail test setup failed to relocate player");
             NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(prisoner));
             require(prisoner.distanceToSqr(origin.x(), origin.y(), origin.z()) < 0.0001, "unsafe jail was used for teleport");
             require(data.assignment(prisoner.getUUID()) != null, "unsafe jail lost assignment");
