@@ -169,7 +169,7 @@ public final class VanillaCustodySmoke {
         }
         @Override public void persistAndVerify() throws IOException {
             guard(); var before = current();
-            player.server.getPlayerList().save(player);
+            player.server.getPlayerList().saveAll();
             // PlayerList.save catches write failures internally: force the actual
             // replaced file and directory, then read back, rather than trusting it.
             try (var channel = FileChannel.open(file(), StandardOpenOption.WRITE)) { channel.force(true); }
