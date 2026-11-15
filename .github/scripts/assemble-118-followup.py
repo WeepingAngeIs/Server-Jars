@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 
-baseline = Path('ci-inputs/Unyielding-1.1.8-baseline.jar')
-expected = '638ded0f08d806939ed3ce8efafae841386907ec4a33687568a1b00565acc518'
+baseline = Path('ci-inputs/Unyielding-1.2.0-baseline.jar')
+expected = 'ec3ae2c48399e40ffa615ddec85408bc29b2479c5a35eb7236c3e036ebdf762c'
 assert hashlib.sha256(baseline.read_bytes()).hexdigest() == expected, 'Wrong baseline JAR'
 jars = list(Path('unyielding-quests/build/libs').glob('*.jar'))
 jars = [p for p in jars if not p.name.endswith(('-sources.jar', '-javadoc.jar'))]
@@ -26,7 +26,7 @@ roots = [
     'essentials/Essentials', 'essentials/TeleCmds',
 ]
 frames = {f'assets/unyieldingquests/textures/gui/sprites/icon_spin_frame_{i}.png' for i in range(4)}
-out = Path('dist/119-release/Unyielding-1.1.9.jar')
+out = Path('dist/120-release/Unyielding-1.2.0.jar')
 out.parent.mkdir(parents=True, exist_ok=True)
 with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
     assert len(base.namelist()) == len(set(base.namelist())), 'Duplicate baseline entries'
@@ -60,9 +60,7 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
                 old_tag['values'].append(value)
         updates[path] = json.dumps(old_tag, indent=2).encode()
     manifest = 'META-INF/MANIFEST.MF'
-    before = b'Implementation-Version: 1.1.8'
-    assert base.read(manifest).count(before) == 1
-    updates[manifest] = base.read(manifest).replace(before, b'Implementation-Version: 1.1.9')
+    assert base.read(manifest).count(b'Implementation-Version: 1.2.0') == 1, 'Unexpected baseline version'
     replaced = set(updates)
     with ZipFile(out, 'w', ZIP_DEFLATED) as result:
         for entry in base.infolist():
@@ -71,6 +69,8 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
             result.writestr(name, data)
 with ZipFile(baseline) as base, ZipFile(out) as result:
     assert len(result.namelist()) == len(set(result.namelist())), 'Duplicate output entries'
+    assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'
+    assert result.read('META-INF/MANIFEST.MF').count(b'Implementation-Version: 1.2.0') == 1
     for name in base.namelist():
         if name not in replaced:
             assert base.read(name) == result.read(name), f'Unexpected change: {name}'
