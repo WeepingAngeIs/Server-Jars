@@ -30,7 +30,9 @@ public final class SpinRecoveryCommand {
                 .then(Commands.literal("export").then(Commands.argument("transaction", StringArgumentType.word())
                         .executes(c -> export(c.getSource(), StringArgumentType.getString(c, "transaction")))))
                 .then(Commands.literal("confirm_delivered").then(Commands.argument("transaction", StringArgumentType.word())
-                        .executes(c -> confirmDelivered(c.getSource(), StringArgumentType.getString(c, "transaction"))))));
+                        .executes(c -> confirmDelivered(c.getSource(), StringArgumentType.getString(c, "transaction"), false))))
+                .then(Commands.literal("confirm_manually_delivered").then(Commands.argument("transaction", StringArgumentType.word())
+                        .executes(c -> confirmDelivered(c.getSource(), StringArgumentType.getString(c, "transaction"), true)))));
     }
 
     private static int initializeNew(CommandSourceStack source) {
@@ -119,6 +121,7 @@ public final class SpinRecoveryCommand {
             final String printable = detail;
             source.sendSuccess(() -> Component.literal("Recorded prize: " + printable), false);
             if (attempted) source.sendSuccess(() -> Component.literal("Verify delivery independently. To acknowledge a delivered prize without replay or refund: /spinrecovery confirm_delivered " + id), false);
+            source.sendSuccess(() -> Component.literal("After independently providing the exact prize manually, acknowledge it with /spinrecovery confirm_manually_delivered " + id + ". This command gives no prize."), false);
             else source.sendSuccess(() -> Component.literal("This prize was not attempted. Export the record and retain it for manual recovery; it will not be replayed automatically."), false);
             return 1;
         } catch (IOException | RuntimeException e) {
@@ -151,7 +154,7 @@ public final class SpinRecoveryCommand {
         }
     }
 
-    private static int confirmDelivered(CommandSourceStack source, String rawId) {
+    private static int confirmDelivered(CommandSourceStack source, String rawId, boolean manual) {
         RewardJournal journal = journal(source, false); UUID id = parseId(source, rawId);
         if (journal == null || id == null) return 0;
         try {
@@ -159,8 +162,8 @@ public final class SpinRecoveryCommand {
             if (entry == null || entry.state() != RewardJournal.State.HELD && entry.state() != RewardJournal.State.DELIVERING) {
                 source.sendFailure(Component.literal("Only an uncertain held or delivering transaction can be acknowledged.")); return 0;
             }
-            if (!journal.deliveryAttempted(id)) {
-                source.sendFailure(Component.literal("No delivery attempt was recorded. The transaction remains held for manual recovery.")); return 0;
+            if (!journal.deliveryAttempted(id) && !manual) {
+                source.sendFailure(Component.literal("No delivery attempt was recorded. Verify and provide the exact prize manually before using /spinrecovery confirm_manually_delivered " + id)); return 0;
             }
             if (!DailyLogin.reconcileDebit(id)) {
                 source.sendFailure(Component.literal("Debit could not be reconciled. Transaction remains unresolved; check the server log.")); return 0;
@@ -168,8 +171,8 @@ public final class SpinRecoveryCommand {
             if (entry.state() == RewardJournal.State.DELIVERING)
                 journal.transition(id, RewardJournal.State.DELIVERING, RewardJournal.State.HELD);
             journal.transition(id, RewardJournal.State.HELD, RewardJournal.State.COMPLETE);
-            source.sendSuccess(() -> Component.literal("Transaction " + id + " acknowledged as delivered by " + source.getTextName() + ". No prize was replayed or refunded."), true);
-            dev.unyielding.quests.UnyieldingQuests.LOGGER.info("Reward transaction {} acknowledged as delivered by {}", id, source.getTextName());
+            source.sendSuccess(() -> Component.literal("Transaction " + id + " acknowledged as " + (manual ? "manually delivered" : "delivered") + " by " + source.getTextName() + ". No prize was replayed or refunded."), true);
+            dev.unyielding.quests.UnyieldingQuests.LOGGER.info("Reward transaction {} acknowledged as {} by {}", id, manual ? "manually delivered" : "delivered", source.getTextName());
             return 1;
         } catch (IOException | RuntimeException e) {
             source.sendFailure(Component.literal("Could not complete recovery; transaction remains held or needs review. Check the server log."));
