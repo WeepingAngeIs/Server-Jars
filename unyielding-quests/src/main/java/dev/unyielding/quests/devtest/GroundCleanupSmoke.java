@@ -33,6 +33,7 @@ public final class GroundCleanupSmoke {
             require(objective!=null && board.getObjective("cui_candidate")!=null && board.getObjective("cui_itemcount")!=null,"cleanup objectives missing");
             if(stage==0) {
                 checkDebitHistory();
+                checkMeetingStorageAndClaims(server);
                 set(board,objective,"enabled",0); set(board,objective,"clear_gear",0); set(board,objective,"clear_food",1); set(board,objective,"clear_other",0); set(board,objective,"grace",1200);
                 set(board,objective,"dim_overworld",1); set(board,objective,"dim_nether",0); set(board,objective,"dim_end",0); set(board,objective,"dim_custom",0);
                 origin=level.getSharedSpawnPos().above(8); level.getChunkAt(origin);
@@ -86,6 +87,29 @@ public final class GroundCleanupSmoke {
     }
     private static void age(ItemEntity e,int age) {
         CompoundTag nbt=e.saveWithoutId(new CompoundTag()); nbt.putShort("Age",(short)age); e.load(nbt);
+    }
+    private static void checkMeetingStorageAndClaims(MinecraftServer server) throws Exception {
+        // Pure save/load roundtrip; does not touch any existing party, home or world SavedData.
+        var party = java.util.UUID.randomUUID(); var setter = java.util.UUID.randomUUID();
+        CompoundTag row = new CompoundTag(); row.putUUID("party", party); row.putUUID("setter", setter);
+        row.put("location", new dev.unyielding.quests.essentials.Loc("minecraft:overworld", 0.5, 70, 0.5, 15, 0).toTag());
+        var rows = new net.minecraft.nbt.ListTag(); rows.add(row);
+        CompoundTag input = new CompoundTag(); input.put("points", rows);
+        var clazz = dev.unyielding.quests.essentials.PartyMeetingData.class;
+        var load = clazz.getDeclaredMethod("load", CompoundTag.class, net.minecraft.core.HolderLookup.Provider.class);
+        load.setAccessible(true);
+        var restored = (dev.unyielding.quests.essentials.PartyMeetingData) load.invoke(null, input, null);
+        require(restored.save(new CompoundTag(), null).equals(input), "meeting persistence lost identity or location");
+        require(((dev.unyielding.quests.essentials.PartyMeetingData) load.invoke(null, new CompoundTag(), null))
+                .save(new CompoundTag(), null).getList("points", 10).isEmpty(), "legacy meeting storage not empty");
+        var claims = Class.forName("dev.unyielding.quests.essentials.MeetingClaims")
+                .getDeclaredMethod("hasAccess", MinecraftServer.class, java.util.UUID.class, ResourceLocation.class, int.class, int.class);
+        claims.setAccessible(true);
+        if (!net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"))
+            require(Boolean.FALSE.equals(claims.invoke(null, server, setter, ResourceLocation.parse("minecraft:overworld"), 100000, 100000)),
+                    "missing claim integration must fail closed");
+        require(net.neoforged.neoforge.server.permission.PermissionAPI.getRegisteredNodes()
+                .contains(dev.unyielding.quests.essentials.PartyMeetings.USE), "meeting permission node was not registered");
     }
     private static void checkDebitHistory() {
         var legacy = dev.unyielding.quests.spin.DailyLogin.Data.load(new CompoundTag(), null);
