@@ -109,6 +109,7 @@ public final class ConfigEditor {
                 throw failure;
             }
             saved = true;
+            ConfigAudit.record(player, action.key(), before, next);
             BalanceSettings.changed(player.getServer(), List.of(value), equipment);
             if (value == Config.QUEST_BOOK_SOURCE) QuestManager.reload(false);
             AdminSettings.publishChanges();
