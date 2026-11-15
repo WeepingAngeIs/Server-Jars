@@ -174,7 +174,11 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
         CompoundTag root=decode(snapshot);
         if (root.getInt("version")!=1 || !VERSIONS.equals(root.getString("dependencies")) || !"controlled-fixtures-v1".equals(root.getString("policy"))) throw new IOException("Changed accessory snapshot dependencies");
         if(!root.getCompound("holder").equals(normalize(root.getCompound("holder")))) throw new IOException("Unknown accessory holder format");
-        if (!Arrays.equals(emptyBody(snapshot),emptyBody(current().inventory()))) throw new IOException("Accessory slots or holder state changed");
+        byte[] sourceEmpty=emptyBody(snapshot), currentEmpty=emptyBody(current().inventory());
+        if (!Arrays.equals(sourceEmpty,currentEmpty)) {
+            var differences=new ArrayList<String>(); differences(decode(sourceEmpty),decode(currentEmpty),"",differences);
+            throw new IOException("Accessory slots or holder state changed: "+differences.stream().limit(12).toList());
+        }
         List<Row> rows=new ArrayList<>(); Set<AccessoryCustodyPolicy.Slot> used=new HashSet<>();
         CompoundTag stores=root.getCompound("holder").getCompound(CONTAINERS);
         for (String name:stores.getAllKeys()) for (boolean cosmetic:new boolean[]{false,true}) {
@@ -199,6 +203,13 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
         if (!remove) { CompoundTag tag=new CompoundTag(); tag.putInt("Slot",row.id().index()); entries.add((CompoundTag)row.stack().save(player.registryAccess(),tag)); }
         entries.sort(Comparator.comparingInt(tag -> tag.getInt("Slot"))); ListTag list=new ListTag(); list.addAll(entries); store.put(channel,list);
         return encode(root);
+    }
+    private static void differences(Tag source,Tag observed,String path,List<String> result) {
+        if(Objects.equals(source,observed)) return;
+        if(source instanceof CompoundTag a && observed instanceof CompoundTag b) {
+            Set<String> keys=new TreeSet<>(a.getAllKeys()); keys.addAll(b.getAllKeys());
+            for(String key:keys) differences(a.get(key),b.get(key),path+"/"+key,result);
+        } else result.add(path+": "+source+" -> "+observed);
     }
     @Override public void clearAndMark(UUID id) throws IOException {
         validateRemoval(); Layout layout=layout(); byte[] before=current().inventory(); List<Row> planned=rows(before,layout);
