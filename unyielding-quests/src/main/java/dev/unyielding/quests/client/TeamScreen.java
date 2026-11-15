@@ -251,7 +251,7 @@ public class TeamScreen extends Screen {
         send(disband ? "disband" : "transfer", targetName, "");
         String detail = disband
                 ? "Disband '" + team.name + "' and return " + team.members.size() + " members to personal teams? The party is deleted. Shared quest progress is merged into personal progress when sharing is enabled. Reward claims remain personal."
-                : "Transfer ownership of '" + team.name + "' to " + targetName + "? You will become an officer. Party progress and reward claims stay with the party.";
+                : "Transfer ownership of '" + team.name + "' to " + targetName + "? You will become an officer. Quest progress stays with the party; reward claims remain personal.";
         Minecraft.getInstance().setScreen(new ConfirmScreen(yes -> {
             if (yes) send("confirm", team.id.toString(), disband ? "" : target.toString());
             else send("cancel_confirmation", "", "");

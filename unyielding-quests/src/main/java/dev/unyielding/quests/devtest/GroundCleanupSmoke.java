@@ -22,7 +22,7 @@ import java.nio.file.Path;
 @EventBusSubscriber(modid=UnyieldingQuests.MODID)
 public final class GroundCleanupSmoke {
     private static int stage, wait;
-    private static ItemEntity oldFood, freshFood, gear, other, addedAfterPreview, merged;
+    private static ItemEntity oldFood, freshFood, gear, other, changedFood, addedAfterPreview, merged;
     private static BlockPos origin;
     private GroundCleanupSmoke() {}
     @SubscribeEvent public static void onTick(ServerTickEvent.Post event) {
@@ -37,14 +37,18 @@ public final class GroundCleanupSmoke {
                 origin=level.getSharedSpawnPos().above(8); level.getChunkAt(origin);
                 oldFood=item(level,origin,0,new ItemStack(Items.COOKED_BEEF,2)); freshFood=item(level,origin,3,new ItemStack(Items.COOKED_CHICKEN));
                 gear=item(level,origin,6,new ItemStack(Items.IRON_SWORD)); other=item(level,origin,9,new ItemStack(Items.DIAMOND));
+                changedFood=item(level,origin,18,new ItemStack(Items.COOKIE,2));
                 stage=1; wait=5; return;
             }
             if(stage==1) {
-                age(oldFood,1200); age(freshFood,1199); age(gear,1300); age(other,1300);
+                age(oldFood,1200); age(freshFood,1199); age(gear,1300); age(other,1300); age(changedFood,1300);
                 Objective candidates=board.getObjective("cui_candidate"); set(board,candidates,"preview_epoch",42);
-                function(server,"preview");
+                set(board,objective,"dim_overworld",0); function(server,"preview");
+                require(get(board,objective,"preview_stacks")==0,"disabled overworld was included");
+                set(board,objective,"dim_overworld",1); function(server,"preview");
                 require(get(board,objective,"preview_done")==1,"preview did not finish");
-                require(get(board,objective,"preview_stacks")==1 && get(board,objective,"preview_items")==2,"age/category preview counts incorrect");
+                require(get(board,objective,"preview_stacks")==2 && get(board,objective,"preview_items")==4,"age/category preview counts incorrect");
+                changedFood.getItem().setCount(3);
                 addedAfterPreview=item(level,origin,12,new ItemStack(Items.COOKED_PORKCHOP)); age(addedAfterPreview,1300);
                 stage=2; wait=5; return;
             }
@@ -52,7 +56,7 @@ public final class GroundCleanupSmoke {
                 function(server,"manual_clear");
                 require(get(board,objective,"manual_done")==1,"manual clear did not finish");
                 require(oldFood.isRemoved(),"previewed eligible food was not cleared");
-                require(!freshFood.isRemoved() && !gear.isRemoved() && !other.isRemoved() && !addedAfterPreview.isRemoved(),"manual clear removed protected or newly added item");
+                require(!freshFood.isRemoved() && !gear.isRemoved() && !other.isRemoved() && !changedFood.isRemoved() && !addedAfterPreview.isRemoved(),"manual clear removed protected or newly added item");
                 ItemEntity mergeOld=item(level,origin,15,new ItemStack(Items.COOKED_MUTTON,5));
                 ItemEntity mergeFresh=item(level,origin,15,new ItemStack(Items.COOKED_MUTTON,1));
                 age(mergeOld,1300); age(mergeFresh,0);
@@ -66,7 +70,7 @@ public final class GroundCleanupSmoke {
                 require(!merged.isRemoved(),"fresh merge was removed");
                 require(!gear.isRemoved() && !other.isRemoved(),"disabled categories were removed");
                 require(addedAfterPreview.isRemoved(),"automatic clear did not remove eligible food");
-                Files.writeString(Path.of("ground-smoke-result.txt"),"passed: server preview, exact age boundary, categories, candidate identity, merge grace, automatic clear\n");
+                Files.writeString(Path.of("ground-smoke-result.txt"),"passed: server preview, exact age boundary, categories, candidate identity, changed stacks, dimensions, merge grace, automatic clear\n");
                 stage=-1; server.halt(false);
             }
         } catch(Throwable failure) {

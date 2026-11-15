@@ -27,7 +27,7 @@ public final class TeamManager {
 
     private static MinecraftServer server;
     private static TeamData data;
-    private record PendingConfirmation(UUID teamId, String teamName, UUID targetId, String targetName, boolean adminDelete, int memberCount, long expiresAt) {}
+    private record PendingConfirmation(UUID teamId, String teamName, UUID targetId, String targetName, boolean adminDelete, java.util.Set<UUID> members, long expiresAt) {}
     private static final Map<UUID, PendingConfirmation> pending = new java.util.HashMap<>();
 
     private TeamManager() {
@@ -377,6 +377,7 @@ public final class TeamManager {
 
     public static String setRank(ServerPlayer actor, String targetName, Team.Rank rank) {
         if (rank != Team.Rank.OWNER) return setRankNow(actor, targetName, rank);
+        pending.remove(actor.getUUID());
         Team t = teamOf(actor.getUUID());
         if (t == null || t.type != Team.Type.PARTY) return "You are not in a party.";
         if (t.rankOf(actor.getUUID()) != Team.Rank.OWNER) return "Only the owner can change ranks.";
@@ -384,8 +385,8 @@ public final class TeamManager {
         if (target == null) return "No such member.";
         if (target.equals(actor.getUUID())) return "That is you.";
         String name = t.nameOf(target);
-        pending.put(actor.getUUID(), new PendingConfirmation(t.id, t.name, target, name, false, t.members.size(), System.nanoTime() + 60_000_000_000L));
-        actor.sendSystemMessage(Component.literal("Transfer ownership of '" + t.name + "' to " + name + "? You will become an officer. Progress and reward claims remain with the party. Use /team confirm or /team cancel within 60 seconds.").withStyle(ChatFormatting.YELLOW));
+        pending.put(actor.getUUID(), new PendingConfirmation(t.id, t.name, target, name, false, java.util.Set.copyOf(t.members.keySet()), System.nanoTime() + 60_000_000_000L));
+        actor.sendSystemMessage(Component.literal("Transfer ownership of '" + t.name + "' to " + name + "? You will become an officer. Quest progress remains with the party; reward claims remain personal. Use /team confirm or /team cancel within 60 seconds.").withStyle(ChatFormatting.YELLOW));
         return null;
     }
 
@@ -395,6 +396,14 @@ public final class TeamManager {
         if (t.rankOf(actor.getUUID()) != Team.Rank.OWNER) return "Only the owner can change ranks.";
         UUID target = memberByName(t, targetName);
         if (target == null) return "No such member.";
+        return setRankNow(actor, target, rank);
+    }
+
+    private static String setRankNow(ServerPlayer actor, UUID target, Team.Rank rank) {
+        Team t = teamOf(actor.getUUID());
+        if (t == null || t.type != Team.Type.PARTY) return "You are not in a party.";
+        if (t.rankOf(actor.getUUID()) != Team.Rank.OWNER) return "Only the owner can change ranks.";
+        if (!t.isMember(target)) return "No such member.";
         if (target.equals(actor.getUUID())) return "That is you.";
         if (rank == Team.Rank.OWNER) {
             t.members.put(actor.getUUID(), Team.Rank.OFFICER);
@@ -409,10 +418,11 @@ public final class TeamManager {
     }
 
     public static String disband(ServerPlayer actor) {
+        pending.remove(actor.getUUID());
         Team t = teamOf(actor.getUUID());
         if (t == null || t.type != Team.Type.PARTY) return "You are not in a party.";
         if (t.rankOf(actor.getUUID()) != Team.Rank.OWNER) return "Only the owner can disband the party.";
-        pending.put(actor.getUUID(), new PendingConfirmation(t.id, t.name, null, "", false, t.members.size(), System.nanoTime() + 60_000_000_000L));
+        pending.put(actor.getUUID(), new PendingConfirmation(t.id, t.name, null, "", false, java.util.Set.copyOf(t.members.keySet()), System.nanoTime() + 60_000_000_000L));
         actor.sendSystemMessage(Component.literal("Disband '" + t.name + "' and return its " + t.members.size() + " members to personal teams? The party is deleted. Where quest sharing is enabled, its progress is merged into each member's personal progress; reward claims stay per player. Use /team confirm or /team cancel within 60 seconds.").withStyle(ChatFormatting.YELLOW));
         return null;
     }
@@ -428,7 +438,7 @@ public final class TeamManager {
         if (!expectedTeam.isEmpty() && !request.teamId().toString().equals(expectedTeam)) return "Party changed; request the action again.";
         if (!expectedTeam.isEmpty() && !(request.targetId() == null ? "" : request.targetId().toString()).equals(expectedTarget)) return "Target changed; request the action again.";
         Team t = request.adminDelete() ? data.teams.get(request.teamId()) : teamOf(actor.getUUID());
-        if (t == null || t.members.size() != request.memberCount()) return "Party membership changed; request the action again.";
+        if (t == null || !t.members.keySet().equals(request.members())) return "Party membership changed; request the action again.";
         if (request.adminDelete()) {
             if (!expectedTeam.isEmpty()) return "Request changed; try again.";
             if (!actor.hasPermissions(2) || t == null || t.type == Team.Type.PLAYER || !t.name.equals(request.teamName())) return "Permission or team changed; request the action again.";
@@ -438,7 +448,7 @@ public final class TeamManager {
             return "Party or ownership changed; request the action again.";
         if (request.targetId() == null) return disbandNow(actor);
         if (!t.isMember(request.targetId()) || !t.nameOf(request.targetId()).equals(request.targetName())) return "Member changed; request the action again.";
-        return setRankNow(actor, request.targetName(), Team.Rank.OWNER);
+        return setRankNow(actor, request.targetId(), Team.Rank.OWNER);
     }
 
     private static String disbandNow(ServerPlayer actor) {
@@ -574,10 +584,11 @@ public final class TeamManager {
     }
 
     public static String adminDelete(ServerPlayer actor, String teamName) {
+        pending.remove(actor.getUUID());
         if (!actor.hasPermissions(2)) return "Only admins can delete teams.";
         Team t = findParty(teamName);
         if (t == null || t.type == Team.Type.PLAYER) return "No such team.";
-        pending.put(actor.getUUID(), new PendingConfirmation(t.id, t.name, null, "", true, t.members.size(), System.nanoTime() + 60_000_000_000L));
+        pending.put(actor.getUUID(), new PendingConfirmation(t.id, t.name, null, "", true, java.util.Set.copyOf(t.members.keySet()), System.nanoTime() + 60_000_000_000L));
         actor.sendSystemMessage(Component.literal("Delete team '" + t.name + "' and return " + t.members.size() + " members to personal teams? Team data is deleted; where sharing is enabled, quest progress is merged into personal progress. Use /team confirm or /team cancel within 60 seconds.").withStyle(ChatFormatting.YELLOW));
         return null;
     }
