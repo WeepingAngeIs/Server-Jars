@@ -29,9 +29,7 @@ public final class PartyMeetings {
     private static int run(CommandSourceStack source, String action) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         ServerPlayer player = source.getPlayerOrException();
         Team party = TeamManager.teamOf(player.getUUID());
-        boolean permission;
-        try { permission = PermissionAPI.getPermission(player, USE); }
-        catch (RuntimeException unavailable) { permission = false; }
+        boolean permission = hasPermission(player);
         if (!PartyMeetingPolicy.permitted(EssConfig.PARTY_MEET_ENABLED.get(), permission,
                 party != null && party.isParty(), party != null && party.isMember(player.getUUID())))
             return Essentials.fail(source, "Party meetings require an enabled server setting, permission and current party membership.");
@@ -69,11 +67,37 @@ public final class PartyMeetings {
         if (error != null) return Essentials.fail(source, error);
         long remaining = Essentials.cooldownRemaining(player, "partymeet");
         if (remaining > 0) return Essentials.fail(source, "Wait " + remaining + "s before another meeting teleport.");
+        // Re-read all mutable authorization state on the server thread immediately before
+        // movement. The built-in teleport commands have no delayed warmup.
+        Team current = TeamManager.teamOf(player.getUUID());
+        ServerPlayer setter = player.server.getPlayerList().getPlayer(point.setter());
+        Team setterTeam = TeamManager.teamOf(point.setter());
+        Team.Rank currentSetterRank = current == null ? null : current.rankOf(point.setter());
+        if (!PartyMeetingPolicy.executionAuthorized(
+                EssConfig.PARTY_MEET_ENABLED.get(), hasPermission(player),
+                current != null && current.isParty() && current.id.equals(party.id)
+                        && current.isMember(player.getUUID()),
+                setter != null && hasPermission(setter),
+                setterTeam != null && setterTeam.id.equals(party.id)
+                        && currentSetterRank != null && currentSetterRank.atLeast(Team.Rank.OFFICER),
+                data.points.get(party.id) == point))
+            return Essentials.fail(source, "Meeting access could not be verified. Ask a current officer to check the meeting point.");
+        error = validate(player, point.location(), point.setter());
+        if (error != null) return Essentials.fail(source, error);
+        remaining = Essentials.cooldownRemaining(player, "partymeet");
+        if (remaining > 0) return Essentials.fail(source, "Wait " + remaining + "s before another meeting teleport.");
         // Direct safe destination only; no search, chunk ticket, forced load or private /back entry.
-        if (!point.location().teleport(player)) return Essentials.fail(source, "The destination is unavailable.");
+        if (!point.location().teleport(player)
+                || !player.level().dimension().location().toString().equals(point.location().dim())
+                || player.distanceToSqr(point.location().x(), point.location().y(), point.location().z()) > 0.0001)
+            return Essentials.fail(source, "Meeting travel did not reach the destination.");
         player.fallDistance = 0;
         Essentials.cooldown(player, "partymeet", EssConfig.PARTY_MEET_COOLDOWN.get());
         Essentials.ok(source, "Arrived at your party meeting point."); return 1;
+    }
+    private static boolean hasPermission(ServerPlayer player) {
+        try { return player != null && Boolean.TRUE.equals(PermissionAPI.getPermission(player, USE)); }
+        catch (RuntimeException | LinkageError unavailable) { return false; }
     }
     private static String validate(ServerPlayer player, Loc loc, java.util.UUID setter) {
         if (!PartyMeetingPolicy.validCoordinates(loc.x(), loc.y(), loc.z(), loc.yaw(), loc.pitch())
@@ -96,7 +120,9 @@ public final class PartyMeetings {
                     return "Claim access could not be verified for this meeting point.";
             }
         if (!level.getWorldBorder().isWithinBounds(box) || !level.noCollision(player, box)) return "The meeting point is obstructed or outside the world border.";
-        for (BlockPos p : BlockPos.betweenClosed(feet.below(), feet.above(2))) {
+        BlockPos hazardMin = BlockPos.containing(box.minX, box.minY - 1, box.minZ);
+        BlockPos hazardMax = BlockPos.containing(Math.nextDown(box.maxX), Math.nextDown(box.maxY), Math.nextDown(box.maxZ));
+        for (BlockPos p : BlockPos.betweenClosed(hazardMin, hazardMax)) {
             var state = level.getBlockState(p);
             if (!state.getFluidState().isEmpty() || state.is(Blocks.MAGMA_BLOCK) || state.is(Blocks.CACTUS)
                     || state.is(Blocks.CAMPFIRE) || state.is(Blocks.SOUL_CAMPFIRE) || state.is(Blocks.FIRE)

@@ -10,6 +10,11 @@ class PartyMeetingPolicyTest {
   assertTrue(PartyMeetingPolicy.permitted(true,true,true,true));
   for(int i=0;i<4;i++) { boolean[] f={true,true,true,true}; f[i]=false; assertFalse(PartyMeetingPolicy.permitted(f[0],f[1],f[2],f[3])); }
  }
+ @Test void executionRequiresCurrentPermissionsMembershipOfficerAndUnchangedPoint() {
+  assertTrue(PartyMeetingPolicy.executionAuthorized(true,true,true,true,true,true));
+  for (int i=0; i<6; i++) { boolean[] f={true,true,true,true,true,true}; f[i]=false;
+   assertFalse(PartyMeetingPolicy.executionAuthorized(f[0],f[1],f[2],f[3],f[4],f[5])); }
+ }
  @Test void dimensionAllowlistNeverEnablesCrossDimensionTravel() {
   var allowed=List.of("minecraft:overworld","minecraft:the_end");
   assertTrue(PartyMeetingPolicy.dimensionAllowed("minecraft:overworld","minecraft:overworld",allowed));

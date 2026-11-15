@@ -108,6 +108,27 @@ public final class GroundCleanupSmoke {
         if (!net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"))
             require(Boolean.FALSE.equals(claims.invoke(null, server, setter, ResourceLocation.parse("minecraft:overworld"), 100000, 100000)),
                     "missing claim integration must fail closed");
+        if (Boolean.getBoolean("uq.opacSmoke")) {
+            require(net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"), "OPAC not loaded");
+            var dimension = ResourceLocation.parse("minecraft:overworld");
+            var owner = java.util.UUID.randomUUID(); var stranger = java.util.UUID.randomUUID();
+            var apiClass = Class.forName("xaero.pac.common.server.api.OpenPACServerAPI");
+            var api = apiClass.getMethod("get", MinecraftServer.class).invoke(null, server);
+            var manager = apiClass.getMethod("getServerClaimsManager").invoke(api);
+            var managerApi = Class.forName("xaero.pac.common.server.claims.api.IServerClaimsManagerAPI");
+            var protection = apiClass.getMethod("getChunkProtection").invoke(api);
+            var protectionApi = Class.forName("xaero.pac.common.server.claims.protection.api.IChunkProtectionAPI");
+            var uuidAccess = protectionApi.getMethod("hasChunkAccess", java.util.UUID.class, ResourceLocation.class, int.class, int.class);
+            int x = 12000, z = 12000;
+            require(Boolean.TRUE.equals(uuidAccess.invoke(protection, stranger, dimension, x, z)), "unclaimed access denied");
+            managerApi.getMethod("claim", ResourceLocation.class, java.util.UUID.class, int.class, int.class, int.class, boolean.class)
+                    .invoke(manager, dimension, owner, 0, x, z, false);
+            require(Boolean.TRUE.equals(uuidAccess.invoke(protection, owner, dimension, x, z)), "claim owner denied");
+            require(Boolean.FALSE.equals(uuidAccess.invoke(protection, stranger, dimension, x, z)), "stranger allowed in claimed chunk");
+            managerApi.getMethod("unclaim", ResourceLocation.class, int.class, int.class).invoke(manager, dimension, x, z);
+            require(Boolean.TRUE.equals(uuidAccess.invoke(protection, stranger, dimension, x, z)), "unclaimed access not restored");
+            require(Boolean.FALSE.equals(claims.invoke(null, server, owner, dimension, x, z)), "offline owner must fail closed");
+        }
         require(net.neoforged.neoforge.server.permission.PermissionAPI.getRegisteredNodes()
                 .contains(dev.unyielding.quests.essentials.PartyMeetings.USE), "meeting permission node was not registered");
     }

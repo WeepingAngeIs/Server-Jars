@@ -8,6 +8,10 @@ public final class PartyMeetingPolicy {
     public static boolean permitted(boolean enabled, boolean permission, boolean party, boolean member) {
         return enabled && permission && party && member;
     }
+    public static boolean executionAuthorized(boolean enabled, boolean callerPermission, boolean currentMembership,
+            boolean setterPermission, boolean setterOfficer, boolean samePoint) {
+        return enabled && callerPermission && currentMembership && setterPermission && setterOfficer && samePoint;
+    }
     /** Travel stays unavailable until all installed teleport protection providers can be checked. */
     public static boolean travelProtectionVerified() {
         return false;
