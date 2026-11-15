@@ -2,6 +2,8 @@
 
 Commands: `/partymeet`, `/partymeet set`, `/partymeet go`, `/partymeet clear`.
 
+**Travel is currently unavailable, even when enabled.** OPAC full claim access does not establish that every installed teleport restriction permits travel. The go command fails closed with an explanation until the relevant protection providers are integrated and verified; stored meeting points and settings are preserved. Setting or clearing a point remains available subject to the existing checks.
+
 Server opt-in: `[party_meeting] enabled = true` in the existing Essentials config. Default is disabled, preserving existing server/rank policy. To grant all members access set `allow_all_members = true`; otherwise grant `unyieldingquests.partymeet` through the server's active NeoForge permission handler. Operators are the default permission only, not a bypass for membership or claims. A provider denial overrides the default. Do not assume a command-only rank plugin implements NeoForge permissions.
 
 Only current party officers/owners may set or clear. Every visit checks current membership and permission, setter's continued officer role, dimension allowlist, both setter and visitor OPAC full claim access, loaded destination/neighbour chunks, world border, collision, fluids/hazards and solid floor. Same-dimension only. Missing OPAC or incompatible APIs deny travel. No access grants, chunk loading/search or private-home/back-history copying. A point stays stored while disabled; disbanded party IDs cannot be selected by commands. Data is separate server-only SavedData and never part of public team sync.

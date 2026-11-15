@@ -118,10 +118,18 @@ public final class AdminSettings {
         return SETTINGS.stream().map(setting -> setting.value().get()).toList();
     }
 
+    private static boolean sharingValue(List<Boolean> snapshot) {
+        for (int i = 0; i < SETTINGS.size(); i++) if (SETTINGS.get(i).value() == Config.SHARE_QUEST_PROGRESS) return snapshot.get(i);
+        throw new IllegalStateException("Sharing setting is missing from the settings list");
+    }
+
     /** Also reconcile normal config-file reloads on the server thread. */
     public static void onTick(MinecraftServer value) {
-        if (value.getTickCount() % 20 == 0 && (!observed.equals(values())
-                || Double.compare(observedMapIconScale, Config.CUSTOM_MAP_ICON_SCALE.get()) != 0)) publishChanges();
+        if (value.getTickCount() % 20 != 0) return;
+        List<Boolean> snapshot = values();
+        double scale = Config.CUSTOM_MAP_ICON_SCALE.get();
+        if (SharingSnapshot.needsPublish(observed, snapshot, observedMapIconScale, scale,
+                QuestManager.sharingModeMatches(sharingValue(snapshot)))) publishChanges(snapshot, scale);
     }
 
     public static void open(ServerPlayer player) {
@@ -149,6 +157,7 @@ public final class AdminSettings {
         }
         boolean before = setting.value().get();
         if (before == action.value()) {
+            QuestManager.onSharingChanged(sharingValue(values()));
             sync(player, false, setting.title() + " is already " + (before ? "ON." : "OFF."), false);
             return;
         }
@@ -170,11 +179,17 @@ public final class AdminSettings {
 
     public static void publishChanges() {
         if (server == null) return;
-        observed = values();
-        observedMapIconScale = Config.CUSTOM_MAP_ICON_SCALE.get();
+        publishChanges(values(), Config.CUSTOM_MAP_ICON_SCALE.get());
+    }
+
+    private static void publishChanges(List<Boolean> snapshot, double scale) {
+        if (server == null) return;
+        boolean sharing = sharingValue(snapshot);
         Essentials.settingsChanged();
         AdminClaimBypass.reconcile(server);
-        QuestManager.onSharingChanged();
+        SharingSnapshot.apply(sharing, QuestManager::onSharingChanged);
+        observed = snapshot;
+        observedMapIconScale = scale;
         TutorialManager.onAutomaticChanged();
         TeamManager.syncAllPlayers();
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {

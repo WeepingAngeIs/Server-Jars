@@ -2,6 +2,7 @@ package dev.unyielding.quests.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -51,6 +52,8 @@ public final class ModCommands {
         SpinRecoveryCommand.register(d);
         d.register(Commands.literal("configaudit").requires(s -> s.hasPermission(2)).executes(c ->
                 dev.unyielding.quests.settings.ConfigAudit.show(player(c)))
+                .then(Commands.argument("page", IntegerArgumentType.integer(1, 10)).executes(c ->
+                        dev.unyielding.quests.settings.ConfigAudit.show(player(c), IntegerArgumentType.getInteger(c, "page"))))
                 .then(Commands.literal("undo").executes(c -> dev.unyielding.quests.settings.ConfigEditor.undoLatest(player(c)))));
         d.register(Commands.literal("ground").then(Commands.literal("clear").requires(source -> source.hasPermission(2)).executes(c -> {
             if (!c.getSource().hasPermission(2)) return 0;

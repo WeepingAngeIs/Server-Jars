@@ -49,14 +49,24 @@ public final class ConfigAudit extends SavedData {
         return audit.entries.isEmpty()?null:audit.entries.get(audit.entries.size()-1).copy();
     }
     public static int show(ServerPlayer player) {
+        return show(player, 1);
+    }
+    public static int show(ServerPlayer player, int page) {
         if (!player.hasPermissions(2)) return 0;
         ConfigAudit audit = get(player);
-        player.sendSystemMessage(Component.literal("Recent single-setting edits (newest first):"));
-        for (int i = audit.entries.size() - 1; i >= Math.max(0, audit.entries.size() - 10); i--) {
+        int pages = ConfigAuditPolicy.pageCount(audit.entries.size());
+        if (page < 1 || page > pages) {
+            player.sendSystemMessage(Component.literal("No audit page " + page + "; available pages: 1–" + pages + "."));
+            return 0;
+        }
+        player.sendSystemMessage(Component.literal("Recent configuration edits (newest first), page " + page + "/" + pages + ":"));
+        int high = ConfigAuditPolicy.pageHighIndex(audit.entries.size(), page);
+        for (int i = high; i >= Math.max(0, high - 9); i--) {
             CompoundTag e = audit.entries.get(i);
             player.sendSystemMessage(Component.literal(Instant.ofEpochMilli(e.getLong("time")) + " " + e.getString("actor") + ": " + e.getString("key") + " " + ConfigAuditPolicy.display(e.getString("key"), e.getString("before")) + " → " + ConfigAuditPolicy.display(e.getString("key"), e.getString("after"))));
         }
         player.sendSystemMessage(Component.literal("Undo the latest supported numeric edit: /configaudit undo"));
+        if (pages > 1) player.sendSystemMessage(Component.literal("View another page: /configaudit <page>"));
         if (audit.entries.isEmpty()) player.sendSystemMessage(Component.literal("No individual config edits recorded yet."));
         return 1;
     }

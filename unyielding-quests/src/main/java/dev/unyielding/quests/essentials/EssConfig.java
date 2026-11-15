@@ -74,7 +74,7 @@ public final class EssConfig {
         NEAR_ENABLED = b.comment("Allow /near to list nearby players. Changes apply immediately.").define("enabled", true);
         b.pop();
         b.push("party_meeting");
-        PARTY_MEET_ENABLED = b.comment("Enable /partymeet. Requires working OPAC protection; never loads destination chunks.").define("enabled", false);
+        PARTY_MEET_ENABLED = b.comment("Enable meeting point commands. Meeting travel remains unavailable until teleport protections are verified.").define("enabled", false);
         PARTY_MEET_PUBLIC = b.comment("Default permission for non-operators when no rank provider overrides unyieldingquests.partymeet. Enable for all party members, or grant the node through your NeoForge permission provider.").define("allow_all_members", false);
         PARTY_MEET_COOLDOWN = b.defineInRange("cooldown_seconds", 60, 1, 86400);
         PARTY_MEET_DIMENSIONS = b.comment("Allowed meeting dimensions. Travel is always same-dimension; an empty list denies all.").defineListAllowEmpty("dimensions", List.of("minecraft:overworld"), () -> "", o -> o instanceof String);

@@ -195,8 +195,17 @@ public final class QuestManager {
 
     /** Apply an administrator change immediately; the same reconciliation runs after offline config edits. */
     public static void onSharingChanged() {
+        onSharingChanged(Config.SHARE_QUEST_PROGRESS.get());
+    }
+
+    public static boolean sharingModeMatches(boolean desired) {
+        return data != null && data.sharingInitialized && data.sharingEnabled == desired;
+    }
+
+    /** Apply the already captured value, without rereading mutable configuration. */
+    public static void onSharingChanged(boolean desired) {
         if (server == null || data == null || TeamManager.data() == null) return;
-        if (!data.prepareSharing(Config.SHARE_QUEST_PROGRESS.get(), TeamManager.data().playerTeam)) return;
+        if (!data.prepareSharing(desired, TeamManager.data().playerTeam)) return;
         dirtyTeams.clear();
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             autoClaim(player);

@@ -3,6 +3,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 class PartyMeetingPolicyTest {
+ @Test void travelIsUnavailableUntilTeleportProtectionsAreVerified() {
+  assertFalse(PartyMeetingPolicy.travelProtectionVerified());
+ }
  @Test void everyAuthorizationGateMustPass() {
   assertTrue(PartyMeetingPolicy.permitted(true,true,true,true));
   for(int i=0;i<4;i++) { boolean[] f={true,true,true,true}; f[i]=false; assertFalse(PartyMeetingPolicy.permitted(f[0],f[1],f[2],f[3])); }

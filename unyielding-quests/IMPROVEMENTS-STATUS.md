@@ -8,7 +8,7 @@ This is a development checklist, not a release or installation instruction. Exis
 4. Party rosters support search and paging, quest search has status filters, and parties can pin an informational goal. Rewards remain personal and sharing remains configurable.
 5. Party disband and ownership transfers require server-side confirmation and revalidation. Multiplayer race and cancellation testing is still needed.
 6. Optional compact vein-mining feedback is off by default. Protection compatibility and in-game presentation still need verification.
-7. Some durations accept readable units and presets. A bounded audit covers individual config edits, admin toggles and ground settings. Undo is limited to two allowlisted numeric settings; grouped edits and external changes are not audited.
+7. Some durations accept readable units and presets. A bounded audit covers individual config edits, admin toggles and ground settings, and `/configaudit <page>` shows up to 100 recent entries. Undo supports map icon scale, origin flight speed and seven teleport cooldown settings; it restores the value only when it has not changed since the audited edit. Grouped edits and external changes are not audited.
 
 Ground cleanup has an operator screen, item-age grace, category and dimension settings, countdown, warnings and manual preview. Manual clear covers selected vanilla dimensions, not arbitrary custom-dimension overrides. Do not enable a separate cleanup datapack with conflicting functions. Test real modpack item merging and multiplayer behavior before deployment.
 
