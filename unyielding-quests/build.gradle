@@ -13,6 +13,7 @@ neoForge {
             server()
             programArgument '--nogui'
             jvmArgument '-Xmx3G'
+            systemProperty 'uq.groundSmoke', System.getProperty('uq.groundSmoke', '')
             gameDirectory = project.file('run-server')
         }
         client {

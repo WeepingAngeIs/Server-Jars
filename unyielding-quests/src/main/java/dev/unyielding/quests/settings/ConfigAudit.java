@@ -21,7 +21,7 @@ public final class ConfigAudit extends SavedData {
     private static ConfigAudit load(CompoundTag tag, HolderLookup.Provider provider) {
         ConfigAudit audit = new ConfigAudit();
         ListTag list = tag.getList("entries", Tag.TAG_COMPOUND);
-        for (int i = Math.max(0, list.size() - LIMIT); i < list.size(); i++) audit.entries.add(list.getCompound(i).copy());
+        for (int i = ConfigAuditPolicy.retainedStart(list.size(), LIMIT); i < list.size(); i++) audit.entries.add(list.getCompound(i).copy());
         return audit;
     }
     @Override public CompoundTag save(CompoundTag tag, HolderLookup.Provider provider) {
@@ -34,17 +34,15 @@ public final class ConfigAudit extends SavedData {
         ConfigAudit audit = get(player);
         CompoundTag entry = new CompoundTag();
         entry.putString("actor", player.getGameProfile().getName());
+        entry.putUUID("actorId", player.getUUID());
         entry.putString("key", key);
         entry.putLong("time", System.currentTimeMillis());
         // Avoid persisting potentially sensitive or very large string/list configuration values.
-        entry.putString("before", printable(before));
-        entry.putString("after", printable(after));
+        entry.putString("before", ConfigAuditPolicy.printable(before));
+        entry.putString("after", ConfigAuditPolicy.printable(after));
         audit.entries.add(entry);
         while (audit.entries.size() > LIMIT) audit.entries.remove(0);
         audit.setDirty();
-    }
-    private static String printable(Object value) {
-        return value instanceof Number || value instanceof Boolean ? value.toString() : "[text or list omitted]";
     }
     public static int show(ServerPlayer player) {
         if (!player.hasPermissions(2)) return 0;

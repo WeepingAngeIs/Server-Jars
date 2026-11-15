@@ -21,7 +21,7 @@ roots = [
     'mixin/CorvisquireEvolutionGuardMixin',
     'client/LuckySpinScreen', 'client/LuckySpinSounds', 'client/QuestScreen', 'client/QuestToast', 'client/SpinToast',
     'client/TeamScreen', 'client/GroundSettingsScreen', 'client/tutorial/TutorialScreen',
-    'settings/GroundSettings', 'settings/DurationInput', 'settings/ConfigEditor', 'settings/ConfigAudit', 'net/Net', 'spin/DailyLogin', 'spin/DailyRewardPolicy', 'spin/SpinMenu',
+    'settings/GroundSettings', 'settings/DurationInput', 'settings/ConfigEditor', 'settings/ConfigAudit', 'settings/ConfigAuditPolicy', 'net/Net', 'spin/DailyLogin', 'spin/DailyRewardPolicy', 'spin/SpinMenu',
     'team/Team', 'team/TeamManager', 'tutorial/TutorialManager', 'ultimine/Ultimine', 'ultimine/UltimineConfig',
     'essentials/Essentials', 'essentials/TeleCmds',
 ]
