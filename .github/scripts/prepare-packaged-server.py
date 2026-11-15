@@ -27,4 +27,6 @@ template = template[:start] + template[end:]
 namespace = {'__name__': 'packaged_preparation', '__file__': str(ROOT / 'combined-unyielding/prepare_smoke.py')}
 exec(compile(template, 'packaged_preparation', 'exec'), namespace)
 namespace['DEPENDENCIES']['Open Parties and Claims 0.33.0'] = 'yWmXD7GW'
+namespace['DEPENDENCIES']['CobbleDollars 2.0.0 Beta 6.1 NeoForge'] = 'Iqiqjfsi'
+namespace['DEPENDENCIES']["Lightman's Currency 2.3.0.5 NeoForge"] = 'n2ynBeOK'
 namespace['main']()
