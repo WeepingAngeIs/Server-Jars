@@ -164,4 +164,31 @@ class JailVanillaRestoreTest {
         assertThrows(IOException.class, () -> new JailEscrowJournal(missing));
         assertEquals(0, port.grants); assertTrue(port.live.empty());
     }
+    @Test void everyTruncatedCompletionAppendFailsClosedAndNeverRegrants() throws Exception {
+        Path dir = temp.resolve("completion"); JailEscrowJournal.provisionNew(dir); Port port = new Port(); UUID id = UUID.randomUUID();
+        byte[] before, after;
+        try (var journal = new JailEscrowJournal(dir)) {
+            held(journal, id, port);
+            assertThrows(IOException.class, () -> JailVanillaCustody.restoreForDisposableTest(journal, id, port,
+                    at -> { if (at == JailVanillaCustody.RestoreBoundary.BEFORE_COMPLETE) throw new IOException("interrupt"); }));
+            before = Files.readAllBytes(dir.resolve("escrow.v1"));
+            journal.transition(id, JailEscrowJournal.State.RESTORE_STARTED, JailEscrowJournal.State.COMPLETE);
+            after = Files.readAllBytes(dir.resolve("escrow.v1"));
+        }
+        for (int cut = before.length; cut <= after.length; cut++) {
+            Path trial = temp.resolve("cut-" + cut); Files.createDirectory(trial);
+            Files.write(trial.resolve("escrow.v1"), Arrays.copyOf(after, cut));
+            if (cut != before.length && cut != after.length) {
+                assertThrows(IOException.class, () -> new JailEscrowJournal(trial));
+            } else try (var journal = new JailEscrowJournal(trial)) {
+                if (cut == before.length) {
+                    assertEquals(JailVanillaCustody.Inspection.RESTORE_PERSISTED_REVIEW, JailVanillaCustody.inspect(journal, id, port));
+                    assertThrows(IOException.class, () -> JailVanillaCustody.restoreForDisposableTest(journal, id, port, at -> {}));
+                } else assertEquals(JailVanillaCustody.RestoreResult.ALREADY_COMPLETE,
+                        JailVanillaCustody.restoreForDisposableTest(journal, id, port, at -> {}));
+                assertArrayEquals(ORIGINAL, journal.read(id).snapshot());
+            }
+            assertEquals(1, port.grants); assertArrayEquals(ORIGINAL, port.live.inventory());
+        }
+    }
 }
