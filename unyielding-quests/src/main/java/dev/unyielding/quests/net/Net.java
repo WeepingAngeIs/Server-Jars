@@ -319,6 +319,7 @@ public final class Net {
         dev.unyielding.quests.settings.MusicSettings.register(event);
         dev.unyielding.quests.settings.ConfigEditor.register(event);
         dev.unyielding.quests.settings.GroundSettings.register(event);
+        dev.unyielding.quests.essentials.DestinationMenu.register(event);
         PayloadRegistrar r = event.registrar("1");
         r.playToServer(SpinMenuAction.TYPE,SpinMenuAction.CODEC,(p,c)->dev.unyielding.quests.spin.SpinMenu.handle((ServerPlayer)c.player(),p.tag()));
         r.playToClient(SpinMenuState.TYPE,SpinMenuState.CODEC,(p,c)->dev.unyielding.quests.client.LuckySpinScreen.receive(p.tag()));

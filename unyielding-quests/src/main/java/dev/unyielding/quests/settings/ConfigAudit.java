@@ -44,14 +44,19 @@ public final class ConfigAudit extends SavedData {
         while (audit.entries.size() > LIMIT) audit.entries.remove(0);
         audit.setDirty();
     }
+    static CompoundTag latest(ServerPlayer player) {
+        ConfigAudit audit=get(player);
+        return audit.entries.isEmpty()?null:audit.entries.get(audit.entries.size()-1).copy();
+    }
     public static int show(ServerPlayer player) {
         if (!player.hasPermissions(2)) return 0;
         ConfigAudit audit = get(player);
         player.sendSystemMessage(Component.literal("Recent single-setting edits (newest first):"));
         for (int i = audit.entries.size() - 1; i >= Math.max(0, audit.entries.size() - 10); i--) {
             CompoundTag e = audit.entries.get(i);
-            player.sendSystemMessage(Component.literal(Instant.ofEpochMilli(e.getLong("time")) + " " + e.getString("actor") + ": " + e.getString("key") + " " + e.getString("before") + " → " + e.getString("after")));
+            player.sendSystemMessage(Component.literal(Instant.ofEpochMilli(e.getLong("time")) + " " + e.getString("actor") + ": " + e.getString("key") + " " + ConfigAuditPolicy.display(e.getString("key"), e.getString("before")) + " → " + ConfigAuditPolicy.display(e.getString("key"), e.getString("after"))));
         }
+        player.sendSystemMessage(Component.literal("Undo the latest supported numeric edit: /configaudit undo"));
         if (audit.entries.isEmpty()) player.sendSystemMessage(Component.literal("No individual config edits recorded yet."));
         return 1;
     }

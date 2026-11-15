@@ -161,6 +161,8 @@ public final class AdminSettings {
             sync(player, false, "Could not save this setting. The previous value is still active.", true);
             return;
         }
+        try { ConfigAudit.record(player, "toggle." + action.key(), before, action.value()); }
+        catch (RuntimeException failure) { UnyieldingQuests.LOGGER.error("Could not audit admin setting {}", action.key(), failure); }
         publishChanges();
         UnyieldingQuests.LOGGER.info("{} changed {} to {}", player.getGameProfile().getName(), action.key(), action.value());
         sync(player, false, "Saved: " + setting.title() + " " + (action.value() ? "ON" : "OFF") + ".", false);

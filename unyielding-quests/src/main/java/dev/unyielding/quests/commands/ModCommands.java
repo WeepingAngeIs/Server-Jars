@@ -49,7 +49,8 @@ public final class ModCommands {
     public static void register(CommandDispatcher<CommandSourceStack> d) {
         ForceReviveCommand.register(d);
         d.register(Commands.literal("configaudit").requires(s -> s.hasPermission(2)).executes(c ->
-                dev.unyielding.quests.settings.ConfigAudit.show(player(c))));
+                dev.unyielding.quests.settings.ConfigAudit.show(player(c)))
+                .then(Commands.literal("undo").executes(c -> dev.unyielding.quests.settings.ConfigEditor.undoLatest(player(c)))));
         d.register(Commands.literal("ground").then(Commands.literal("clear").requires(source -> source.hasPermission(2)).executes(c -> {
             if (!c.getSource().hasPermission(2)) return 0;
             var target = player(c);

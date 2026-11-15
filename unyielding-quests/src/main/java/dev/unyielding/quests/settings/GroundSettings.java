@@ -48,6 +48,11 @@ public final class GroundSettings {
     private static void set(Scoreboard board,Objective obj,String name,int value) {
         board.getOrCreatePlayerScore(ScoreHolder.forNameOnly("#"+name),obj).set(value);
     }
+    private static void audit(ServerPlayer p,String key,int before,int after) {
+        if(before==after) return;
+        try { ConfigAudit.record(p,"ground."+key,before,after); }
+        catch(RuntimeException failure) { dev.unyielding.quests.UnyieldingQuests.LOGGER.error("Could not audit ground setting {}",key,failure); }
+    }
     public static void open(ServerPlayer p) { sync(p,true,""); }
     private static void sync(ServerPlayer p,boolean open,String message) {
         if (!p.hasPermissions(2)) return;
@@ -91,10 +96,11 @@ public final class GroundSettings {
             if (get(b,o,"manual_done",0)!=1) { sync(p,false,"Manual clear did not finish. Some items may have been cleared; preview again."); return; }
             sync(p,false,"Manual clear finished. Fresh-drop grace still applies."); return;
         }
-        if (k.equals("interval") && v>=5 && v<=86400) { set(b,o,"interval",v*20); set(b,o,"timer",0); set(b,o,"last_interval",v*20); sync(p,false,"Interval saved; countdown reset to "+v+" seconds."); return; }
-        if (k.equals("grace") && v>=60 && v<=1600) { set(b,o,"grace",v*20); sync(p,false,"Fresh-drop grace saved."); return; }
+        if (k.equals("interval") && v>=5 && v<=86400) { int before=get(b,o,"interval",12000); set(b,o,"interval",v*20); audit(p,k,before,v*20); set(b,o,"timer",0); set(b,o,"last_interval",v*20); sync(p,false,"Interval saved; countdown reset to "+v+" seconds."); return; }
+        if (k.equals("grace") && v>=60 && v<=1600) { int before=get(b,o,"grace",1200); set(b,o,"grace",v*20); audit(p,k,before,v*20); sync(p,false,"Fresh-drop grace saved."); return; }
         if ((k.equals("enabled") || k.equals("clear_gear") || k.equals("clear_food") || k.equals("clear_other") || k.equals("dim_overworld") || k.equals("dim_nether") || k.equals("dim_end") || k.equals("dim_custom")) && (v==0 || v==1)) {
-            set(b,o,k,v); sync(p,false,"Saved."); return;
+            int before=get(b,o,k,k.equals("enabled") || k.equals("clear_food") || k.startsWith("dim_") ? 1 : 0);
+            set(b,o,k,v); audit(p,k,before,v); sync(p,false,"Saved."); return;
         }
         sync(p,false,"Invalid setting or value.");
     }

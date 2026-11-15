@@ -110,6 +110,12 @@ public final class AdminSettingsServerSmoke {
             data.get(party.id).completedQuests.add(INHERITED);
             data.get(party.id).completedTasks.add(INHERITED + 1);
 
+            require(TeamManager.leave(player) != null, "Owner left without transferring ownership");
+            require(TeamManager.setRank(player, "Offline tester", Team.Rank.OWNER) == null, "Could not request ownership transfer");
+            require(TeamManager.cancelConfirmation(player) == null, "Could not cancel transfer");
+            require(TeamManager.confirm(player, "", "") != null, "Cancelled transfer unexpectedly executed");
+            require(TeamManager.setRank(player, "Offline tester", Team.Rank.OWNER) == null, "Could not request transfer again");
+            require(TeamManager.confirm(player, "", "") == null && party.owner.equals(OFFLINE), "Transfer was not confirmed");
             require(TeamManager.leave(player) == null, "Could not leave fixture party");
             require(TeamManager.join(player, party.id.toString()) == null, "Could not join completed party");
             require(!QuestManager.progressOf(player).questDone(INHERITED), "Joining a completed party inherited its quests while sharing was off");
@@ -145,7 +151,8 @@ public final class AdminSettingsServerSmoke {
             Team second = TeamManager.teamOf(player.getUUID());
             data.get(second.id).completedQuests.add(OTHER_PARTY);
             require(!QuestManager.progressOf(player).questDone(OTHER_PARTY), "New party shared record bypassed solo mode");
-            require(TeamManager.leave(player) == null, "Could not disband second party");
+            require(TeamManager.leave(player) == null, "Could not request disband of second party");
+            require(TeamManager.confirm(player, "", "") == null, "Could not confirm disband of second party");
             require(TeamManager.join(player, party.id.toString()) == null, "Could not rejoin original party");
             QuestManager.onClaim(player, new Net.Claim(OWN + 2, 0));
             require(player.totalExperience == before + 30, "Party hopping replayed a reward");

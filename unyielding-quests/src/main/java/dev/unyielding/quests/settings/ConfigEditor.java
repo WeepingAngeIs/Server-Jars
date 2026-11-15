@@ -120,6 +120,21 @@ public final class ConfigEditor {
                     + Objects.toString(error.getMessage(), "Invalid value."));
         }
     }
+    /** Undo only the latest safe numeric edit, provided its value has not changed since. */
+    public static int undoLatest(ServerPlayer player) {
+        if (!player.hasPermissions(2)) return 0;
+        CompoundTag entry=ConfigAudit.latest(player);
+        if(entry==null) { player.sendSystemMessage(net.minecraft.network.chat.Component.literal("No config edit is available to undo.")); return 0; }
+        String key=entry.getString("key"), before=entry.getString("before"), after=entry.getString("after");
+        var value=VALUES.get(key);
+        if(value==null || !ConfigAuditPolicy.undoable(key,before,after,JSON.toJson(value.getRaw()))) {
+            player.sendSystemMessage(net.minecraft.network.chat.Component.literal("The latest edit cannot be safely undone, or its value has changed.")); return 0;
+        }
+        handle(player,new Action(key,after,before));
+        boolean restored=JSON.toJson(value.getRaw()).equals(before);
+        player.sendSystemMessage(net.minecraft.network.chat.Component.literal(restored?"Undid "+key+" to "+before+".":"Undo did not complete. Check the server config and logs."));
+        return restored?1:0;
+    }
     private static ModConfigSpec.IntValue[] odds(String group) {
         return switch (group) {
             case "quest" -> new ModConfigSpec.IntValue[]{Config.SPIN_BASIC, Config.SPIN_GOOD,

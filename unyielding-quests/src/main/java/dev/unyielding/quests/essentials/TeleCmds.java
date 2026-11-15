@@ -81,9 +81,10 @@ final class TeleCmds {
                         })));
         reg(d, "listhomes", Commands.literal("listhomes").executes(c -> {
             ServerPlayer p = c.getSource().getPlayerOrException();
-            Map<String, Loc> m = data().homes.get(p.getUUID());
-            if (m == null || m.isEmpty()) return fail(c.getSource(), "You have no homes. Use /sethome.");
+            Map<String, Loc> m = DestinationPolicy.ownHomes(data().homes, p.getUUID());
+            if (m.isEmpty()) return fail(c.getSource(), "You have no homes. Use /sethome.");
             destinationList(c.getSource(), p, m, "home", EssConfig.HOME_COOLDOWN.get());
+            DestinationMenu.open(c.getSource(), p, m, "home", EssConfig.HOME_COOLDOWN.get());
             return 1;
         }));
     }
@@ -152,6 +153,7 @@ final class TeleCmds {
             if (data().warps.isEmpty()) return fail(c.getSource(), "There are no warps yet.");
             ServerPlayer p = c.getSource().getPlayerOrException();
             destinationList(c.getSource(), p, data().warps, "warp", EssConfig.WARP_COOLDOWN.get());
+            DestinationMenu.open(c.getSource(), p, data().warps, "warp", EssConfig.WARP_COOLDOWN.get());
             return 1;
         }));
     }
