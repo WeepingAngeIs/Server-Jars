@@ -51,7 +51,11 @@ public final class JailPlayerSmoke {
             var level = admin.serverLevel();
             // The test world is a flat, generated grass surface: build on top of it,
             // never clearing or replacing its supporting blocks.
-            admin.teleportTo(level, admin.getX(), admin.getY(), admin.getZ(), 0, 0);
+            // Pack worldgen can decorate even a flat world with trees. Select an
+            // actually empty grass site; never weaken the protected-block guard
+            // or erase leaves/other blocks just to make this fixture pass.
+            BlockPos site = emptyGrassSite(level, admin.blockPosition());
+            admin.teleportTo(level, site.getX()+3.5, site.getY(), site.getZ()-7.5, 0, 0);
             BlockPos min = admin.blockPosition().relative(admin.getDirection(), 11).offset(-3, 0, -3);
             // Claim one candidate chunk as a stranger and verify the real OPAC API denies
             // this admin's placement rather than relying on a fabricated claim response.
@@ -221,6 +225,18 @@ public final class JailPlayerSmoke {
         var field = net.minecraft.server.network.ServerGamePacketListenerImpl.class.getDeclaredField("awaitingTeleport");
         field.setAccessible(true);
         player.connection.handleAcceptTeleportPacket(new net.minecraft.network.protocol.game.ServerboundAcceptTeleportationPacket(field.getInt(player.connection)));
+    }
+    private static BlockPos emptyGrassSite(net.minecraft.server.level.ServerLevel level, BlockPos around) {
+        for (int dx = -4; dx <= 4; dx++) for (int dz = -4; dz <= 4; dz++) {
+            BlockPos min = new BlockPos(around.getX()+dx*16, around.getY(), around.getZ()+dz*16);
+            boolean clear = true;
+            for (int x=0; x<13 && clear; x++) for (int z=0; z<7 && clear; z++) {
+                if (!level.getBlockState(min.offset(x,-1,z)).is(Blocks.GRASS_BLOCK)) { clear=false; break; }
+                for (int y=0; y<7; y++) if (!level.getBlockState(min.offset(x,y,z)).isAir()) { clear=false; break; }
+            }
+            if (clear) return min;
+        }
+        throw new IllegalStateException("No pristine grass site for disposable jail fixture; no blocks changed");
     }
     private static void require(boolean ok, String message) { if (!ok) throw new IllegalStateException(message); }
 }
