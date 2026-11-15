@@ -42,8 +42,24 @@ public final class JailInventorySnapshot {
             Object curios = ((Optional<?>) curiosApi.getMethod("getCuriosInventory", LivingEntity.class).invoke(null, player)).orElseThrow();
             Map<?, ?> source = (Map<?, ?>) accessoriesApi.getMethod("getContainers").invoke(capability);
             Map<?, ?> aliases = (Map<?, ?>) curiosInventoryApi.getMethod("getCurios").invoke(curios);
-            if (source.size() > MAX_CONTAINERS || !source.keySet().equals(aliases.keySet())) return new Result(Status.UNSUPPORTED_PROVIDER, null);
+            if (source.size() > MAX_CONTAINERS || aliases.size() > MAX_SLOTS) return new Result(Status.UNSUPPORTED_PROVIDER, null);
             Method unwrap = wrapperApi.getMethod("container");
+            // Curios translates names (e.g. hat -> head), so key sets are not
+            // identical. Verify every enumerated alias by backing identity instead
+            // of counting either the aliases or their stacks as a second inventory.
+            Map<String, Object> sourceBacking = new java.util.LinkedHashMap<>();
+            for (var entry : source.entrySet()) {
+                if (!(entry.getKey() instanceof String name) || entry.getValue() == null)
+                    return new Result(Status.UNSUPPORTED_PROVIDER, null);
+                sourceBacking.put(name, entry.getValue());
+            }
+            Map<String, Object> aliasBacking = new java.util.LinkedHashMap<>();
+            for (var entry : aliases.entrySet()) {
+                if (!(entry.getKey() instanceof String name) || entry.getValue() == null || entry.getValue().getClass() != wrapperApi)
+                    return new Result(Status.UNSUPPORTED_PROVIDER, null);
+                aliasBacking.put(name, unwrap.invoke(entry.getValue()));
+            }
+            if (!AccessoryBackingCoverage.covers(sourceBacking, aliasBacking)) return new Result(Status.UNSUPPORTED_PROVIDER, null);
             Method normal = containerApi.getMethod("getAccessories");
             Method cosmetic = containerApi.getMethod("getCosmeticAccessories");
             Method size = containerApi.getMethod("getSize");
