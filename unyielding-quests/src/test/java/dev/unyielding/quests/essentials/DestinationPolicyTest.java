@@ -16,7 +16,7 @@ final class DestinationPolicyTest {
     @Test void destinationFieldsAreBoundedByUtf8Bytes() {
         assertTrue(DestinationPolicy.fitsPayload("a".repeat(256), "minecraft:overworld"));
         assertFalse(DestinationPolicy.fitsPayload("a".repeat(257), "minecraft:overworld"));
-        assertFalse(DestinationPolicy.fitsPayload("é".repeat(129), "minecraft:overworld"));
+        assertFalse(DestinationPolicy.fitsPayload("\u00e9".repeat(129), "minecraft:overworld"));
         assertFalse(DestinationPolicy.fitsPayload("home", "a".repeat(257)));
         assertEquals(200, DestinationPolicy.MAX_ROWS);
     }

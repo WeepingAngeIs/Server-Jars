@@ -32,7 +32,7 @@ public final class DailyLogin {
         public final Map<UUID, long[]> players = new HashMap<>();
         public final Set<UUID> appliedDebits = new HashSet<>();
         private Tag invalidDebitHistory;
-        boolean hasValidDebitHistory() { return invalidDebitHistory == null; }
+        public boolean hasValidDebitHistory() { return invalidDebitHistory == null; }
 
         public static SavedData.Factory<Data> factory() {
             return new SavedData.Factory<>(Data::new, Data::load, null);

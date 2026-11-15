@@ -32,6 +32,7 @@ public final class GroundCleanupSmoke {
             ServerLevel level=server.overworld(); Scoreboard board=server.getScoreboard(); Objective objective=board.getObjective("cui_items");
             require(objective!=null && board.getObjective("cui_candidate")!=null && board.getObjective("cui_itemcount")!=null,"cleanup objectives missing");
             if(stage==0) {
+                checkDebitHistory();
                 set(board,objective,"enabled",0); set(board,objective,"clear_gear",0); set(board,objective,"clear_food",1); set(board,objective,"clear_other",0); set(board,objective,"grace",1200);
                 set(board,objective,"dim_overworld",1); set(board,objective,"dim_nether",0); set(board,objective,"dim_end",0); set(board,objective,"dim_custom",0);
                 origin=level.getSharedSpawnPos().above(8); level.getChunkAt(origin);
@@ -85,6 +86,18 @@ public final class GroundCleanupSmoke {
     }
     private static void age(ItemEntity e,int age) {
         CompoundTag nbt=e.saveWithoutId(new CompoundTag()); nbt.putShort("Age",(short)age); e.load(nbt);
+    }
+    private static void checkDebitHistory() {
+        var legacy = dev.unyielding.quests.spin.DailyLogin.Data.load(new CompoundTag(), null);
+        require(legacy.hasValidDebitHistory(), "legacy debit history rejected");
+        CompoundTag input = new CompoundTag(); input.putString("appliedDebits", "corrupt");
+        var bad = dev.unyielding.quests.spin.DailyLogin.Data.load(input, null);
+        require(!bad.hasValidDebitHistory(), "malformed debit history accepted");
+        require(input.get("appliedDebits").equals(bad.save(new CompoundTag(), null).get("appliedDebits")), "malformed history was not preserved");
+        var duplicate = new net.minecraft.nbt.ListTag();
+        CompoundTag id = new CompoundTag(); id.putUUID("id", java.util.UUID.randomUUID());
+        duplicate.add(id); duplicate.add(id.copy()); input.put("appliedDebits", duplicate);
+        require(!dev.unyielding.quests.spin.DailyLogin.Data.load(input, null).hasValidDebitHistory(), "duplicate debit marker accepted");
     }
     private static void function(MinecraftServer server,String name) {
         var f=server.getFunctions().get(ResourceLocation.fromNamespaceAndPath("cui_cleanup",name));
