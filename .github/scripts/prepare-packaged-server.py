@@ -36,7 +36,20 @@ exec(compile(template, 'packaged_preparation', 'exec'), namespace)
 namespace['DEPENDENCIES']['Open Parties and Claims 0.33.0'] = 'yWmXD7GW'
 namespace['DEPENDENCIES']['CobbleDollars 2.0.0 Beta 6.1 NeoForge'] = 'Iqiqjfsi'
 namespace['DEPENDENCIES']["Lightman's Currency 2.3.0.5 NeoForge"] = 'n2ynBeOK'
+if os.environ.get('UQ_ACCESSORY_INTEGRATION') == '1':
+    namespace['DEPENDENCIES']['Accessories compatibility layer 0.1.12'] = 'JMgVNypu'
+    namespace['DEPENDENCIES']['Curios 9.5.1 NeoForge'] = 'yohfFbgD'
 namespace['main']()
+
+if os.environ.get('UQ_ACCESSORY_INTEGRATION') == '1':
+    for name in ('AccessoryCustodyPort', 'AccessoryCustodySmoke'):
+        source = (ROOT / f'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/{name}.java').read_text(encoding='utf-8')
+        source = source.replace('package dev.unyielding.quests.devtest;', 'package dev.unyielding.bundlesmoke;', 1)
+        source = source.replace('@EventBusSubscriber(modid=UnyieldingQuests.MODID)', '@EventBusSubscriber(modid="uq_bundle_smoke")', 1)
+        (harness / f'src/main/java/dev/unyielding/bundlesmoke/{name}.java').write_text(source, encoding='utf-8')
+    tags = harness / 'src/main/resources/data/accessories/tags/item'
+    tags.mkdir(parents=True, exist_ok=True)
+    (tags / 'ring.json').write_text('{"replace":false,"values":["minecraft:gold_ingot","minecraft:amethyst_shard","minecraft:diamond"]}', encoding='utf-8')
 
 # Vanilla custody fixtures stay in this independent test mod. Only the pure
 # transaction and journal are shipped; there is no production inventory adapter.

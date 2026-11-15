@@ -17,6 +17,8 @@ public final class JailVanillaCustody {
     /** The caller must exclusively own inventory access throughout this synchronous operation. */
     public interface InventoryPort {
         UUID owner();
+        /** Data-only rejection of unsupported providers/restrictions; must never invoke mod callbacks. */
+        default void validateRemoval() throws IOException {}
         View current() throws IOException;
         View durable() throws IOException;
         /** Must persist, force file AND rename directory metadata, and read back exact inventory and marker. */
@@ -45,6 +47,7 @@ public final class JailVanillaCustody {
         if (journal.read(id) != null || journal.list().stream().anyMatch(e -> e.owner().equals(port.owner())
                 && e.state() != JailEscrowJournal.State.COMPLETE && e.state() != JailEscrowJournal.State.CANCELLED))
             throw new IOException("Existing custody requires review");
+        port.validateRemoval();
         View before = port.current();
         if (before.empty() || before.removedBy() != null || before.restoredBy() != null) throw new IOException("Not a fresh vanilla custody source");
         port.persistAndVerify();

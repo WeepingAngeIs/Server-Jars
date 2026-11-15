@@ -227,7 +227,7 @@ public final class VanillaCustodySmoke {
     // Standard NBT with sorted compound keys. List order, primitive types, exact
     // values and all item component fields remain unchanged. Hash-map iteration
     // order is not meaningful NBT state and may differ after a disk round-trip.
-    private static void canonicalPayload(Tag tag, DataOutput output) throws IOException {
+    static void canonicalPayload(Tag tag, DataOutput output) throws IOException {
         if (tag instanceof CompoundTag compound) {
             for (String key : new java.util.TreeSet<>(compound.getAllKeys())) {
                 Tag value = compound.get(key); output.writeByte(value.getId()); output.writeUTF(key);
