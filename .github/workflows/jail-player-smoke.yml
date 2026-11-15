@@ -28,13 +28,21 @@ jobs:
       - name: Test protected jail with real players
         env:
           UQ_RESULT_FILE: /tmp/uq-jail-player-result
-          JAVA_TOOL_OPTIONS: -Duq.jailPlayers=true
           LIBGL_ALWAYS_SOFTWARE: 'true'
           ALSOFT_DRIVERS: 'null'
-        run: bash .github/scripts/meeting-two-player.sh
+        run: |
+          export JAVA_TOOL_OPTIONS='-Duq.jailPlayers=true -Duq.jailPhase=1'
+          bash .github/scripts/meeting-two-player.sh
+          cp /tmp/uq-jail-player-result /tmp/uq-jail-phase1
+          cp -a meeting-two-player-logs meeting-two-player-phase1
+          export JAVA_TOOL_OPTIONS='-Duq.jailPlayers=true -Duq.jailPhase=2'
+          bash .github/scripts/meeting-two-player.sh
+          cat /tmp/uq-jail-phase1 /tmp/uq-jail-player-result
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: jail-player-smoke-logs
-          path: meeting-two-player-logs/
+          path: |
+            meeting-two-player-logs/
+            meeting-two-player-phase1/
           if-no-files-found: warn

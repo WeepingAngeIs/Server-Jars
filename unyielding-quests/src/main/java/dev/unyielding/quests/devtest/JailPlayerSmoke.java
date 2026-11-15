@@ -2,7 +2,6 @@ package dev.unyielding.quests.devtest;
 
 import dev.unyielding.quests.UnyieldingQuests;
 import dev.unyielding.quests.jail.JailData;
-import dev.unyielding.quests.jail.JailEnforcement;
 import dev.unyielding.quests.jail.JailPlacement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -32,6 +31,17 @@ public final class JailPlayerSmoke {
         finished = true;
         try {
             require(net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"), "OPAC missing");
+            if (Integer.getInteger("uq.jailPhase", 1) == 2) {
+                var data = JailData.get(server);
+                var assignment = data.assignment(prisoner.getUUID());
+                require(assignment != null, "jail assignment missing after restart");
+                var jail = assignment.jail();
+                require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "login did not retain confinement after restart");
+                server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "unjail Visitor");
+                require(data.assignment(prisoner.getUUID()) == null, "console release failed after restart");
+                Files.writeString(Path.of("/tmp/uq-jail-player-result"), "passed: assignment and confinement survived restart; console released player\n");
+                return;
+            }
             server.getPlayerList().op(admin.getGameProfile());
             var commands = server.getCommands();
             require(!commands.getDispatcher().getRoot().getChild("jailbuild").canUse(prisoner.createCommandSourceStack()), "non-admin could access jail building");
@@ -65,14 +75,19 @@ public final class JailPlayerSmoke {
             var breaking = new BlockEvent.BreakEvent(level, min, level.getBlockState(min), prisoner);
             NeoForge.EVENT_BUS.post(breaking);
             require(breaking.isCanceled(), "jailed block break not cancelled");
-            // Simulate arrival following respawn using the server-only trusted helper.
+            // Simulate a direct same-dimension teleport API that does not fire a teleport event.
             var origin = data.assignment(prisoner.getUUID()).prior();
-            require(JailEnforcement.teleportAuthorized(prisoner, origin), "test setup could not relocate player");
+            prisoner.teleportTo(level, origin.x(), origin.y(), origin.z(), origin.yaw(), origin.pitch());
+            require(prisoner.distanceToSqr(origin.x(), origin.y(), origin.z()) < 0.0001, "test setup could not relocate player");
             NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerRespawnEvent(prisoner, false));
             require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "respawn event did not restore confinement");
-            commands.performPrefixedCommand(server.createCommandSourceStack(), "unjail Visitor");
-            require(data.assignment(prisoner.getUUID()) == null, "assignment not cleared");
-            Files.writeString(Path.of("/tmp/uq-jail-player-result"), "passed: permission, preview collision, placement, self-jail, assignment, command/teleport/dimension/break events, respawn event, console release\n");
+            prisoner.die(prisoner.damageSources().genericKill());
+            prisoner = server.getPlayerList().respawn(prisoner, false, net.minecraft.world.entity.Entity.RemovalReason.KILLED);
+            require(data.assignment(prisoner.getUUID()) != null, "death lost jail assignment");
+            require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "actual death respawn escaped jail");
+            server.getPlayerList().saveAll();
+            server.saveEverything(true, true, true);
+            Files.writeString(Path.of("/tmp/uq-jail-player-result"), "passed: permission, preview collision, placement, self-jail, assignment, command/teleport/dimension/break events, direct teleport, death respawn\n");
         } catch (Throwable failure) {
             UnyieldingQuests.LOGGER.error("Jail player smoke failed", failure);
             try { Files.writeString(Path.of("/tmp/uq-jail-player-result"), "failed: " + failure + "\n"); } catch (Exception ignored) { }

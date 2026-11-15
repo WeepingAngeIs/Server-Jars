@@ -36,7 +36,7 @@ public final class JailEnforcement {
     }
 
     /** Scoped exemption only for trusted server-side jail management and recovery. */
-    public static boolean teleportAuthorized(ServerPlayer player, Loc location) {
+    static boolean teleportAuthorized(ServerPlayer player, Loc location) {
         UUID previous = INTERNAL_TELEPORT.get();
         INTERNAL_TELEPORT.set(player.getUUID());
         try {
