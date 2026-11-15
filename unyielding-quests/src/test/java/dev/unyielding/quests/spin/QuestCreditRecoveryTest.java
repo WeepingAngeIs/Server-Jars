@@ -64,4 +64,19 @@ class QuestCreditRecoveryTest {
             assertThrows(java.io.IOException.class,()->j.transition(id,RewardJournal.State.RETURNED,RewardJournal.State.DELIVERING));
         }
     }
+    @Test void recoveryPreservesDebitCreditOrderAtMaximumBalance() throws Exception {
+        Path path=temp.resolve("ordered"); RewardJournal.provisionNew(path); UUID player=UUID.randomUUID();
+        try(var j=new RewardJournal(path)) {
+            j.begin(UUID.randomUUID(),player,3,new byte[]{1});
+            j.creditQuest(player,7,QuestRewardEpochs.LEGACY);
+        }
+        long[] balance={0,0,0,Long.MAX_VALUE,0}; Set<UUID> debits=new HashSet<>(), credits=new HashSet<>();
+        try(var j=new RewardJournal(path)) {
+            for(int retry=0;retry<2;retry++) for(var change:j.balanceChanges()) {
+                if(change.credit()) RewardCredit.apply(balance,credits,change.id());
+                else assertTrue(RewardDebit.apply(balance,debits,change.id(),change.slot()));
+            }
+        }
+        assertEquals(Long.MAX_VALUE,balance[3]); assertEquals(1,debits.size()); assertEquals(1,credits.size());
+    }
 }

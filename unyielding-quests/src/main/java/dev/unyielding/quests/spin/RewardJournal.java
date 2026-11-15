@@ -13,6 +13,9 @@ import java.util.*;
 public final class RewardJournal implements AutoCloseable {
     private static final int MAGIC = 0x55515231, MAX_PAYLOAD = 1024 * 1024, MAX_FRAME = MAX_PAYLOAD + 128;
     private static final int CREDIT_MAGIC = 0x55514332;
+    public record BalanceChange(UUID id, UUID player, int slot, boolean credit) {}
+    private final List<BalanceChange> balanceChanges = new ArrayList<>();
+    public synchronized List<BalanceChange> balanceChanges() throws IOException { check(); return List.copyOf(balanceChanges); }
     public record QuestCredit(UUID id, UUID player, long spinId, UUID generation) {}
     private final Map<UUID, QuestCredit> credits = new LinkedHashMap<>();
     public enum State { PREPARED, DEBIT_APPLIED, DELIVERING, HELD, COMPLETE, RETURNED }
@@ -81,6 +84,7 @@ public final class RewardJournal implements AutoCloseable {
         ByteBuffer body = ByteBuffer.allocate(56).putLong(id.getMostSignificantBits()).putLong(id.getLeastSignificantBits()).put(identity.array());
         writeFrame(CREDIT_MAGIC, body.array());
         credits.put(id, credit);
+        balanceChanges.add(new BalanceChange(id, player, 3, true));
         return credit;
     }
     public synchronized List<QuestCredit> questCredits() throws IOException { check(); return List.copyOf(credits.values()); }
@@ -119,6 +123,7 @@ public final class RewardJournal implements AutoCloseable {
     private void check() throws IOException { if (poisoned || !channel.isOpen()) throw new IOException("Reward journal unavailable; admin review required"); }
     private void append(Entry entry) throws IOException {
         writeFrame(MAGIC, encode(entry));
+        if (!records.containsKey(entry.id())) balanceChanges.add(new BalanceChange(entry.id(), entry.player(), entry.slot(), false));
         records.put(entry.id(), entry);
         if (entry.state() == State.DELIVERING) deliveryAttempts.add(entry.id());
     }
@@ -157,11 +162,13 @@ public final class RewardJournal implements AutoCloseable {
                 if (!id.equals(UUID.nameUUIDFromBytes(Arrays.copyOfRange(body, 16, 56))) || credits.containsKey(id))
                     throw new IOException("Invalid or duplicate quest credit identity");
                 credits.put(id, new QuestCredit(id, player, spinId, generation));
+                balanceChanges.add(new BalanceChange(id, player, 3, true));
                 continue;
             }
             Entry entry = decode(body); Entry old = records.get(entry.id());
             if (old == null) { if (entry.state() != State.PREPARED) throw new IOException("Missing transaction start"); }
             else if (!old.player().equals(entry.player()) || old.slot() != entry.slot() || !Arrays.equals(old.payload(), entry.payload()) || !allowed(old.state(), entry.state())) throw new IOException("Invalid transaction history");
+            if (old == null) balanceChanges.add(new BalanceChange(entry.id(), entry.player(), entry.slot(), false));
             records.put(entry.id(), entry);
             if (entry.state() == State.DELIVERING) deliveryAttempts.add(entry.id());
         }

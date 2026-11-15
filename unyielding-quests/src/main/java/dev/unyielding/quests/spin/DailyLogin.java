@@ -265,15 +265,21 @@ public final class DailyLogin {
         Set<UUID> creditIds = new HashSet<>();
         for (RewardJournal.QuestCredit credit : credits) creditIds.add(credit.id());
         if (!creditIds.containsAll(data.appliedQuestCredits)) throw new IOException("Missing quest credit history; restore it before retrying");
-        try { for (RewardJournal.QuestCredit credit : credits) applyCredit(credit); }
-        catch (RuntimeException failure) { throw new IOException("Quest credit reconciliation failed", failure); }
         var entries = rewardJournal.list();
         Set<UUID> journalIds = new HashSet<>();
         for (RewardJournal.Entry entry : entries) journalIds.add(entry.id());
         if (!RewardDebit.journalCoversMarkers(data.appliedDebits, journalIds))
             throw new IOException("Reward journal is missing previously recorded transactions; restore it before retrying");
+        try {
+            // Preserve intent order: credit-first batching can overflow a valid debit/credit pair.
+            for (RewardJournal.BalanceChange change : rewardJournal.balanceChanges()) {
+                if (change.credit()) {
+                    long[] balance = data.players.computeIfAbsent(change.player(), k -> new long[]{0,0,0,0,0});
+                    if (RewardCredit.apply(balance, data.appliedQuestCredits, change.id())) data.setDirty();
+                } else if (!applyDebit(rewardJournal.read(change.id()))) throw new IOException("Cannot reconcile debit " + change.id());
+            }
+        } catch (RuntimeException failure) { throw new IOException("Reward balance reconciliation failed", failure); }
         for (RewardJournal.Entry entry : entries) {
-            if (!applyDebit(entry)) throw new IOException("Cannot reconcile debit " + entry.id());
             if (entry.state() == RewardJournal.State.PREPARED || entry.state() == RewardJournal.State.DEBIT_APPLIED || entry.state() == RewardJournal.State.DELIVERING)
                 rewardJournal.transition(entry.id(), entry.state(), RewardJournal.State.HELD);
         }

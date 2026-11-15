@@ -30,9 +30,13 @@ jobs:
             public static void main(String[] args) throws Exception {
               Path path=Paths.get("journal-check"); UUID id=UUID.randomUUID();
               RewardJournal.provisionNew(path);
+              UUID player=UUID.randomUUID(), generation=UUID.randomUUID(), creditId;
+              try(var j=new RewardJournal(path)){creditId=j.creditQuest(player,42,generation).id();}
               try(var j=new RewardJournal(path)){j.begin(id, UUID.randomUUID(), 2, new byte[]{1});}
               try(var j=new RewardJournal(path)){
                 if(j.read(id)==null)throw new Exception("missing journal record");
+                if(!creditId.equals(j.creditQuest(player,42,generation).id()) || j.questCredits().size()!=1)throw new Exception("duplicated quest credit");
+                if(!j.balanceChanges().get(0).credit() || j.balanceChanges().get(1).credit())throw new Exception("lost balance order");
                 j.transition(id, RewardJournal.State.PREPARED, RewardJournal.State.DEBIT_APPLIED);
                 j.transition(id, RewardJournal.State.DEBIT_APPLIED, RewardJournal.State.DELIVERING);
               }
