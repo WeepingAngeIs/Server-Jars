@@ -98,6 +98,31 @@ public final class GroundCleanupSmoke {
         CompoundTag id = new CompoundTag(); id.putUUID("id", java.util.UUID.randomUUID());
         duplicate.add(id); duplicate.add(id.copy()); input.put("appliedDebits", duplicate);
         require(!dev.unyielding.quests.spin.DailyLogin.Data.load(input, null).hasValidDebitHistory(), "duplicate debit marker accepted");
+        CompoundTag malformedCredit = new CompoundTag(); malformedCredit.putString("appliedQuestCredits", "broken");
+        var badCredit = dev.unyielding.quests.spin.DailyLogin.Data.load(malformedCredit, null);
+        require(!badCredit.hasValidDebitHistory(), "malformed credit history accepted");
+        require(badCredit.save(new CompoundTag(), null).get("appliedQuestCredits").equals(malformedCredit.get("appliedQuestCredits")), "credit evidence lost");
+        var credits = new dev.unyielding.quests.spin.DailyLogin.Data();
+        var player = java.util.UUID.randomUUID(); var credit = java.util.UUID.randomUUID();
+        credits.players.put(player, new long[]{0,0,0,3,0}); credits.appliedQuestCredits.add(credit);
+        var restoredCredits = dev.unyielding.quests.spin.DailyLogin.Data.load(credits.save(new CompoundTag(), null), null);
+        require(restoredCredits.players.get(player)[3] == 3 && restoredCredits.appliedQuestCredits.contains(credit), "credit and balance snapshot split");
+        var quests = dev.unyielding.quests.quest.QuestData.load(new CompoundTag(), null);
+        require(quests.validRewardEpochs(), "legacy quest epochs rejected");
+        quests.get(player).completedQuests.add(42L); quests.markClaimed(player, 42L);
+        CompoundTag beforeReset = quests.save(new CompoundTag(), null);
+        quests.get(player).completedQuests.remove(42L); quests.forgetClaims(java.util.Set.of(player), java.util.Set.of(42L));
+        var epoch = quests.rewardEpochs.generation(player, 42L);
+        quests.get(player).completedQuests.add(99L);
+        var afterReset = dev.unyielding.quests.quest.QuestData.load(quests.save(new CompoundTag(), null), null);
+        require(afterReset.rewardEpochs.generation(player,42L).equals(epoch), "reset epoch lost");
+        require(afterReset.get(player).completedQuests.contains(99L) && !afterReset.get(player).completedQuests.contains(42L), "newer progress changed");
+        var oldSnapshot = dev.unyielding.quests.quest.QuestData.load(beforeReset, null);
+        require(oldSnapshot.rewardEpochs.generation(player,42L).equals(dev.unyielding.quests.quest.QuestRewardEpochs.LEGACY) && oldSnapshot.isClaimed(player,42L), "pre-reset snapshot changed");
+        CompoundTag badEpochs = new CompoundTag(); badEpochs.putString("reward_epochs", "broken");
+        var invalidEpochs = dev.unyielding.quests.quest.QuestData.load(badEpochs, null);
+        require(!invalidEpochs.validRewardEpochs(), "malformed quest epochs accepted");
+        require(invalidEpochs.save(new CompoundTag(), null).get("reward_epochs").equals(badEpochs.get("reward_epochs")), "epoch evidence lost");
     }
     private static void function(MinecraftServer server,String name) {
         var f=server.getFunctions().get(ResourceLocation.fromNamespaceAndPath("cui_cleanup",name));

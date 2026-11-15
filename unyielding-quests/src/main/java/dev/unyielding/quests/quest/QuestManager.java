@@ -653,21 +653,18 @@ public final class QuestManager {
 
     /** Rolls the quest's Lucky Spin for this player if it is still unused. */
     private static void spin(ServerPlayer p, TeamProgress tp, UUID tid, Quest q, List<LuckySpin.Spin> out) {
-        if (!LuckySpin.enabled() || !tp.questDone(q.id)) return;
+        if (!LuckySpin.enabled() || !tp.questDone(q.id) || !data.validRewardEpochs()) return;
         long sid = LuckySpin.spinId(q.id);
         if (data.isClaimed(p.getUUID(), sid)) return;
-        Set<Long> mine = tp.claimed.computeIfAbsent(p.getUUID(), k -> new HashSet<>());
-        mine.add(sid);
-        data.markClaimed(p.getUUID(), sid);
-        tp.dirty = true;
-        markDirty(tid);
         try {
-            dev.unyielding.quests.spin.DailyLogin.creditQuest(p);
+            dev.unyielding.quests.spin.DailyLogin.creditQuest(p, sid, data.rewardEpochs.generation(p.getUUID(), sid));
+            tp.claimed.computeIfAbsent(p.getUUID(), k -> new HashSet<>()).add(sid);
+            data.markClaimed(p.getUUID(), sid);
+            tp.dirty = true;
+            markDirty(tid);
         } catch (RuntimeException e) {
-            mine.remove(sid);
-            data.unclaim(p.getUUID(), sid);
-            UnyieldingQuests.LOGGER.error("[spin] roll failed", e);
-            p.sendSystemMessage(Component.literal("The Lucky Spin failed; please try again.").withStyle(ChatFormatting.RED));
+            UnyieldingQuests.LOGGER.error("[spin] quest credit failed", e);
+            p.sendSystemMessage(Component.literal("The Lucky Spin credit is paused for recovery; no prize was rerolled.").withStyle(ChatFormatting.RED));
         }
     }
 
@@ -789,6 +786,7 @@ public final class QuestManager {
     }
 
     public static String adminReset(ServerPlayer target, long questId) {
+        if (!data.validRewardEpochs()) return "Quest reward generations require review; no progress was reset.";
         UUID tid = progressId(target.getUUID());
         TeamProgress tp = data.get(tid);
         Set<UUID> players = new HashSet<>();

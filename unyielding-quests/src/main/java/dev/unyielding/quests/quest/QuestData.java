@@ -18,6 +18,9 @@ public final class QuestData extends SavedData {
     public final Map<UUID, TeamProgress> teams = new HashMap<>();
     /** A reward belongs to the player, regardless of the active progress record or party. */
     public final Map<UUID, Set<Long>> claimedRewards = new HashMap<>();
+    public final QuestRewardEpochs rewardEpochs = new QuestRewardEpochs();
+    private Tag invalidRewardEpochs;
+    public boolean validRewardEpochs() { return invalidRewardEpochs == null; }
     public boolean sharingInitialized;
     public boolean sharingEnabled;
 
@@ -40,6 +43,25 @@ public final class QuestData extends SavedData {
         for (TeamProgress progress : d.teams.values()) {
             progress.claimed.forEach((player, rewards) ->
                     d.claimedRewards.computeIfAbsent(player, ignored -> new HashSet<>()).addAll(rewards));
+        }
+        if (tag.contains("reward_epochs")) {
+            Tag raw = tag.get("reward_epochs");
+            try {
+                if (!(raw instanceof ListTag list) || (!list.isEmpty() && list.getElementType() != Tag.TAG_COMPOUND)) throw new IllegalArgumentException();
+                Set<UUID> seen = new HashSet<>();
+                for (Tag e : (ListTag)raw) {
+                    CompoundTag c = (CompoundTag)e;
+                    if (!c.hasUUID("player") || !c.hasUUID("base") || !seen.add(c.getUUID("player"))) throw new IllegalArgumentException();
+                    UUID player = c.getUUID("player"); d.rewardEpochs.bases.put(player, c.getUUID("base"));
+                    if (!(c.get("overrides") instanceof ListTag entries) || (!entries.isEmpty() && entries.getElementType() != Tag.TAG_COMPOUND)) throw new IllegalArgumentException();
+                    Map<Long, UUID> overrides = new HashMap<>();
+                    for (Tag item : entries) {
+                        CompoundTag entry = (CompoundTag)item;
+                        if (!entry.contains("reward", Tag.TAG_LONG) || !entry.hasUUID("epoch") || overrides.put(entry.getLong("reward"), entry.getUUID("epoch")) != null) throw new IllegalArgumentException();
+                    }
+                    d.rewardEpochs.overrides.put(player, overrides);
+                }
+            } catch (RuntimeException invalid) { d.invalidRewardEpochs = raw.copy(); }
         }
         d.sharingInitialized = tag.getBoolean("sharing_initialized");
         d.sharingEnabled = tag.getBoolean("sharing_enabled");
@@ -64,6 +86,17 @@ public final class QuestData extends SavedData {
             claims.add(c);
         });
         tag.put("player_claims", claims);
+        ListTag epochs = new ListTag();
+        Set<UUID> epochPlayers = new HashSet<>(rewardEpochs.bases.keySet()); epochPlayers.addAll(rewardEpochs.overrides.keySet());
+        for (UUID player : epochPlayers) {
+            CompoundTag c = new CompoundTag(); c.putUUID("player", player); c.putUUID("base", rewardEpochs.bases.getOrDefault(player, QuestRewardEpochs.LEGACY));
+            ListTag overrides = new ListTag();
+            rewardEpochs.overrides.getOrDefault(player, Map.of()).forEach((reward, epoch) -> {
+                CompoundTag entry = new CompoundTag(); entry.putLong("reward", reward); entry.putUUID("epoch", epoch); overrides.add(entry);
+            });
+            c.put("overrides", overrides); epochs.add(c);
+        }
+        tag.put("reward_epochs", invalidRewardEpochs == null ? epochs : invalidRewardEpochs.copy());
         tag.putBoolean("sharing_initialized", sharingInitialized);
         tag.putBoolean("sharing_enabled", sharingEnabled);
         return tag;
@@ -90,6 +123,8 @@ public final class QuestData extends SavedData {
 
     /** Explicit administrator resets are the only action that clears the player claim ledger. */
     public void forgetClaims(Set<UUID> players, Set<Long> rewards) {
+        if (!validRewardEpochs()) throw new IllegalStateException("Quest reward generations require review");
+        rewardEpochs.reset(players, rewards);
         for (UUID player : players) {
             if (rewards == null) claimedRewards.remove(player);
             else {

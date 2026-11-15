@@ -12,7 +12,10 @@ import java.util.*;
 /** Durable append-only payout intent log. Damaged or incomplete records fail closed. */
 public final class RewardJournal implements AutoCloseable {
     private static final int MAGIC = 0x55515231, MAX_PAYLOAD = 1024 * 1024, MAX_FRAME = MAX_PAYLOAD + 128;
-    public enum State { PREPARED, DEBIT_APPLIED, DELIVERING, HELD, COMPLETE }
+    private static final int CREDIT_MAGIC = 0x55514332;
+    public record QuestCredit(UUID id, UUID player, long spinId, UUID generation) {}
+    private final Map<UUID, QuestCredit> credits = new LinkedHashMap<>();
+    public enum State { PREPARED, DEBIT_APPLIED, DELIVERING, HELD, COMPLETE, RETURNED }
     public record Entry(UUID id, UUID player, int slot, byte[] payload, State state) {
         public Entry { Objects.requireNonNull(id); Objects.requireNonNull(player); Objects.requireNonNull(payload); Objects.requireNonNull(state); payload = payload.clone(); }
         @Override public byte[] payload() { return payload.clone(); }
@@ -63,6 +66,25 @@ public final class RewardJournal implements AutoCloseable {
         // boot fails closed above. This is not a physical-power-loss guarantee.
     }
 
+    /** One credit per quest, player and reset generation; retries never add another. */
+    public synchronized QuestCredit creditQuest(UUID player, long spinId, UUID generation) throws IOException {
+        check();
+        ByteBuffer identity = ByteBuffer.allocate(40).putLong(player.getMostSignificantBits()).putLong(player.getLeastSignificantBits())
+                .putLong(spinId).putLong(generation.getMostSignificantBits()).putLong(generation.getLeastSignificantBits());
+        UUID id = UUID.nameUUIDFromBytes(identity.array());
+        QuestCredit credit = new QuestCredit(id, player, spinId, generation);
+        QuestCredit old = credits.get(id);
+        if (old != null) {
+            if (!old.equals(credit)) throw new IOException("Conflicting quest credit identity");
+            return old;
+        }
+        ByteBuffer body = ByteBuffer.allocate(56).putLong(id.getMostSignificantBits()).putLong(id.getLeastSignificantBits()).put(identity.array());
+        writeFrame(CREDIT_MAGIC, body.array());
+        credits.put(id, credit);
+        return credit;
+    }
+    public synchronized List<QuestCredit> questCredits() throws IOException { check(); return List.copyOf(credits.values()); }
+
     public synchronized Entry begin(UUID id, UUID player, int slot, byte[] payload) throws IOException {
         check();
         if (records.containsKey(id)) throw new IOException("Transaction already exists");
@@ -88,20 +110,24 @@ public final class RewardJournal implements AutoCloseable {
         return switch (from) {
             case PREPARED -> to == State.DEBIT_APPLIED || to == State.HELD;
             case DEBIT_APPLIED -> to == State.DELIVERING || to == State.HELD;
-            case DELIVERING -> to == State.HELD || to == State.COMPLETE;
+            case DELIVERING -> to == State.HELD || to == State.COMPLETE || to == State.RETURNED;
+            case RETURNED -> to == State.COMPLETE;
             case HELD -> to == State.COMPLETE;
             case COMPLETE -> false;
         };
     }
     private void check() throws IOException { if (poisoned || !channel.isOpen()) throw new IOException("Reward journal unavailable; admin review required"); }
     private void append(Entry entry) throws IOException {
-        byte[] body = encode(entry), digest = hash(body);
-        ByteBuffer frame = ByteBuffer.allocate(8 + body.length + digest.length).putInt(MAGIC).putInt(body.length).put(body).put(digest);
+        writeFrame(MAGIC, encode(entry));
+        records.put(entry.id(), entry);
+        if (entry.state() == State.DELIVERING) deliveryAttempts.add(entry.id());
+    }
+    private void writeFrame(int magic, byte[] body) throws IOException {
+        byte[] digest = hash(body);
+        ByteBuffer frame = ByteBuffer.allocate(8 + body.length + digest.length).putInt(magic).putInt(body.length).put(body).put(digest);
         frame.flip();
         try { channel.position(channel.size()); while (frame.hasRemaining()) channel.write(frame); channel.force(true); }
         catch (IOException e) { poisoned = true; throw e; }
-        records.put(entry.id(), entry);
-        if (entry.state() == State.DELIVERING) deliveryAttempts.add(entry.id());
     }
     private void replay() throws IOException {
         channel.position(0);
@@ -117,11 +143,22 @@ public final class RewardJournal implements AutoCloseable {
         }
         while (channel.position() < channel.size()) {
             ByteBuffer header = ByteBuffer.allocate(8); readFully(header); header.flip();
-            if (header.getInt() != MAGIC) throw new IOException("Corrupt reward journal header");
+            int magic = header.getInt();
+            if (magic != MAGIC && magic != CREDIT_MAGIC) throw new IOException("Corrupt reward journal header");
             int size = header.getInt(); if (size < 41 || size > MAX_FRAME) throw new IOException("Invalid reward journal frame");
             ByteBuffer data = ByteBuffer.allocate(size + 32); readFully(data); data.flip();
             byte[] body = new byte[size], digest = new byte[32]; data.get(body); data.get(digest);
             if (!MessageDigest.isEqual(digest, hash(body))) throw new IOException("Corrupt reward journal checksum");
+            if (magic == CREDIT_MAGIC) {
+                if (body.length != 56) throw new IOException("Invalid quest credit frame");
+                ByteBuffer b = ByteBuffer.wrap(body);
+                UUID id = new UUID(b.getLong(), b.getLong()), player = new UUID(b.getLong(), b.getLong());
+                long spinId = b.getLong(); UUID generation = new UUID(b.getLong(), b.getLong());
+                if (!id.equals(UUID.nameUUIDFromBytes(Arrays.copyOfRange(body, 16, 56))) || credits.containsKey(id))
+                    throw new IOException("Invalid or duplicate quest credit identity");
+                credits.put(id, new QuestCredit(id, player, spinId, generation));
+                continue;
+            }
             Entry entry = decode(body); Entry old = records.get(entry.id());
             if (old == null) { if (entry.state() != State.PREPARED) throw new IOException("Missing transaction start"); }
             else if (!old.player().equals(entry.player()) || old.slot() != entry.slot() || !Arrays.equals(old.payload(), entry.payload()) || !allowed(old.state(), entry.state())) throw new IOException("Invalid transaction history");

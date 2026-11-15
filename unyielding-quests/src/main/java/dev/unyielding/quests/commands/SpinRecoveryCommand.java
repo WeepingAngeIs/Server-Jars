@@ -159,8 +159,8 @@ public final class SpinRecoveryCommand {
         if (journal == null || id == null) return 0;
         try {
             var entry = journal.read(id);
-            if (entry == null || entry.state() != RewardJournal.State.HELD && entry.state() != RewardJournal.State.DELIVERING) {
-                source.sendFailure(Component.literal("Only an uncertain held or delivering transaction can be acknowledged.")); return 0;
+            if (entry == null || entry.state() != RewardJournal.State.HELD && entry.state() != RewardJournal.State.DELIVERING && entry.state() != RewardJournal.State.RETURNED) {
+                source.sendFailure(Component.literal("Only a held, delivering or returned transaction can be acknowledged.")); return 0;
             }
             if (!journal.deliveryAttempted(id) && !manual) {
                 source.sendFailure(Component.literal("No delivery attempt was recorded. Verify and provide the exact prize manually before using /spinrecovery confirm_manually_delivered " + id)); return 0;
@@ -170,7 +170,7 @@ public final class SpinRecoveryCommand {
             }
             if (entry.state() == RewardJournal.State.DELIVERING)
                 journal.transition(id, RewardJournal.State.DELIVERING, RewardJournal.State.HELD);
-            journal.transition(id, RewardJournal.State.HELD, RewardJournal.State.COMPLETE);
+            journal.transition(id, entry.state() == RewardJournal.State.RETURNED ? RewardJournal.State.RETURNED : RewardJournal.State.HELD, RewardJournal.State.COMPLETE);
             source.sendSuccess(() -> Component.literal("Transaction " + id + " acknowledged as " + (manual ? "manually delivered" : "delivered") + " by " + source.getTextName() + ". No prize was replayed or refunded."), true);
             dev.unyielding.quests.UnyieldingQuests.LOGGER.info("Reward transaction {} acknowledged as {} by {}", id, manual ? "manually delivered" : "delivered", source.getTextName());
             return 1;

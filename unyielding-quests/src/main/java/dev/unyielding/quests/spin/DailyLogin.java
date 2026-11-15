@@ -32,8 +32,10 @@ public final class DailyLogin {
         public final Map<UUID, long[]> players = new HashMap<>();
         public final Set<UUID> appliedDebits = new HashSet<>();
         private Tag invalidDebitHistory;
+        public final Set<UUID> appliedQuestCredits = new HashSet<>();
+        private Tag invalidQuestCredits;
         private boolean journalProvisioned;
-        public boolean hasValidDebitHistory() { return invalidDebitHistory == null; }
+        public boolean hasValidDebitHistory() { return invalidDebitHistory == null && invalidQuestCredits == null; }
 
         public static SavedData.Factory<Data> factory() {
             return new SavedData.Factory<>(Data::new, Data::load, null);
@@ -60,6 +62,14 @@ public final class DailyLogin {
                     }
                 }
             }
+            if (tag.contains("appliedQuestCredits")) {
+                Tag raw = tag.get("appliedQuestCredits");
+                if (!(raw instanceof ListTag list) || (!list.isEmpty() && list.getElementType() != Tag.TAG_COMPOUND)) d.invalidQuestCredits = raw.copy();
+                else for (Tag e : (ListTag)raw) {
+                    CompoundTag c = (CompoundTag)e;
+                    if (!c.hasUUID("id") || !d.appliedQuestCredits.add(c.getUUID("id"))) { d.invalidQuestCredits = raw.copy(); break; }
+                }
+            }
             return d;
         }
 
@@ -81,6 +91,9 @@ public final class DailyLogin {
             ListTag debits = new ListTag();
             for (UUID id : appliedDebits) { CompoundTag c = new CompoundTag(); c.putUUID("id", id); debits.add(c); }
             tag.put("appliedDebits", invalidDebitHistory == null ? debits : invalidDebitHistory.copy());
+            ListTag credits = new ListTag();
+            for (UUID id : appliedQuestCredits) { CompoundTag c = new CompoundTag(); c.putUUID("id", id); credits.add(c); }
+            tag.put("appliedQuestCredits", invalidQuestCredits == null ? credits : invalidQuestCredits.copy());
             return tag;
         }
     }
@@ -111,7 +124,7 @@ public final class DailyLogin {
     /** Operator explicitly attests there is no prior reward-journal history. */
     public static void provisionNewJournal(MinecraftServer server) throws IOException {
         if (data == null || rewardJournal != null || data.journalProvisioned
-                || data.invalidDebitHistory != null || !data.appliedDebits.isEmpty())
+                || !data.hasValidDebitHistory() || !data.appliedDebits.isEmpty() || !data.appliedQuestCredits.isEmpty())
             throw new IOException("Not a new reward installation; preserve and restore existing history");
         var path = server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("unyielding-recovery");
         RewardJournal.provisionNew(path);
@@ -143,7 +156,7 @@ public final class DailyLogin {
     /** Called on login: queues the reward for a couple of seconds so the player is fully in the world. */
     public static void onLogin(ServerPlayer p) {
         if (data == null || !Config.DAILY_ENABLED.get()) return;
-        if (data.invalidDebitHistory != null) {
+        if (!data.hasValidDebitHistory()) {
             p.sendSystemMessage(Component.literal("Daily rewards are paused while an administrator reviews saved reward history."));
             return;
         }
@@ -176,7 +189,7 @@ public final class DailyLogin {
 
     /** Gives today's reward if it has not been given yet. @return false when already claimed today. */
     public static boolean give(ServerPlayer p) {
-        if (data == null || data.invalidDebitHistory != null || !Config.DAILY_ENABLED.get()) return false;
+        if (data == null || !data.hasValidDebitHistory() || !Config.DAILY_ENABLED.get()) return false;
         long day = today();
         long now = System.currentTimeMillis();
         long[] rec = data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0, 0, 0, 0, 0});
@@ -201,16 +214,36 @@ public final class DailyLogin {
     }
 
     public static long available(ServerPlayer p) {
-        long[] rec=data == null || data.invalidDebitHistory != null ? null : data.players.get(p.getUUID());
+        long[] rec=data == null || !data.hasValidDebitHistory() ? null : data.players.get(p.getUUID());
         return rec == null ? 0 : (Config.DAILY_ENABLED.get() ? rec[2] : 0) + (LuckySpin.enabled() ? rec[3] : 0);
     }
 
     public static void creditQuest(ServerPlayer p) {
-        if (data == null || data.invalidDebitHistory != null) throw new IllegalStateException("Spin storage is not ready; debit history requires review");
+        if (data == null || !data.hasValidDebitHistory()) throw new IllegalStateException("Spin storage is not ready; debit history requires review");
         long[] rec=data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0,0,0,0,0});
         rec[3]=Math.addExact(rec[3],1);
         data.setDirty();
         p.sendSystemMessage(Component.literal("Lucky Spin earned! Open your inventory and press Lucky Spin."));
+    }
+
+    /** Quest source is journaled before its claimed flag is changed. No reset is ever replayed. */
+    public static void creditQuest(ServerPlayer p, long spinId, UUID generation) {
+        if (data == null || !data.hasValidDebitHistory() || journal() == null)
+            throw new IllegalStateException("Quest reward journal unavailable");
+        try {
+            RewardJournal.QuestCredit credit = rewardJournal.creditQuest(p.getUUID(), spinId, generation);
+            boolean added = applyCredit(credit);
+            if (added) p.sendSystemMessage(Component.literal("Lucky Spin earned! Open your inventory and press Lucky Spin."));
+        } catch (IOException | RuntimeException failure) {
+            recoveryReady = false;
+            throw new IllegalStateException("Quest reward requires recovery", failure);
+        }
+    }
+    private static boolean applyCredit(RewardJournal.QuestCredit credit) {
+        long[] balance = data.players.computeIfAbsent(credit.player(), k -> new long[]{0,0,0,0,0});
+        boolean changed = RewardCredit.apply(balance, data.appliedQuestCredits, credit.id());
+        if (changed) data.setDirty();
+        return changed;
     }
 
     private static boolean applyDebit(RewardJournal.Entry entry) {
@@ -227,7 +260,13 @@ public final class DailyLogin {
     public static void retryRecovery() throws IOException {
         recoveryReady = false;
         if (data == null || rewardJournal == null) throw new IOException("Reward journal is unavailable");
-        if (data.invalidDebitHistory != null) throw new IOException("Saved debit history is malformed; restore it before retrying");
+        if (!data.hasValidDebitHistory()) throw new IOException("Saved debit history is malformed; restore it before retrying");
+        var credits = rewardJournal.questCredits();
+        Set<UUID> creditIds = new HashSet<>();
+        for (RewardJournal.QuestCredit credit : credits) creditIds.add(credit.id());
+        if (!creditIds.containsAll(data.appliedQuestCredits)) throw new IOException("Missing quest credit history; restore it before retrying");
+        try { for (RewardJournal.QuestCredit credit : credits) applyCredit(credit); }
+        catch (RuntimeException failure) { throw new IOException("Quest credit reconciliation failed", failure); }
         var entries = rewardJournal.list();
         Set<UUID> journalIds = new HashSet<>();
         for (RewardJournal.Entry entry : entries) journalIds.add(entry.id());
@@ -256,8 +295,8 @@ public final class DailyLogin {
             rewardJournal.transition(id,RewardJournal.State.PREPARED,RewardJournal.State.DEBIT_APPLIED);
             rewardJournal.transition(id,RewardJournal.State.DEBIT_APPLIED,RewardJournal.State.DELIVERING);
             LuckySpin.Spin result=LuckySpin.deliverPrepared(p,selected,slot==2?"Daily login":"Earned spin",weights);
-            // Player and Pokemon storage are saved separately; an operator must reconcile this record.
-            rewardJournal.transition(id,RewardJournal.State.DELIVERING,RewardJournal.State.HELD);
+            // A successful call is evidence of return, NOT proof the separate stores reached disk.
+            rewardJournal.transition(id,RewardJournal.State.DELIVERING,RewardJournal.State.RETURNED);
             return result;
         } catch (IOException failure) {
             recoveryReady=false;
@@ -275,7 +314,7 @@ public final class DailyLogin {
     /** "Streak 3 days, next reward tomorrow" style status. */
     public static String status(ServerPlayer p) {
         if (data == null) return "Daily rewards are not available.";
-        if (data.invalidDebitHistory != null) return "Daily rewards are paused while an administrator reviews saved reward history.";
+        if (!data.hasValidDebitHistory()) return "Daily rewards are paused while an administrator reviews saved reward history.";
         if (!Config.DAILY_ENABLED.get()) return "Daily login rewards are turned off on this server.";
         long[] rec = data.players.get(p.getUUID());
         long day = today();
