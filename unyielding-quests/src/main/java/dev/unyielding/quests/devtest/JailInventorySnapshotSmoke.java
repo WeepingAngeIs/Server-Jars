@@ -54,7 +54,7 @@ public final class JailInventorySnapshotSmoke {
             cosmetic.setItem(0, vanity.copy());
             var first = JailInventorySnapshot.capture(player);
             require(first.status() == JailInventorySnapshot.Status.CAPTURED_ONLY && first.snapshot() != null,
-                    "snapshot preflight declined compatible APIs: " + first.status());
+                    "snapshot preflight declined compatible APIs: " + first.status() + " " + diagnostics(player, containers));
             var snapshot = first.snapshot();
             require(snapshot.getUUID("player").equals(player.getUUID()), "incorrect owner");
             require(snapshot.getInt("vanillaSlots") == player.getInventory().getContainerSize(), "slot count changed");
@@ -77,6 +77,27 @@ public final class JailInventorySnapshotSmoke {
             UnyieldingQuests.LOGGER.error("Jail inventory snapshot smoke failed", failure);
             try { Files.writeString(Path.of("/tmp/uq-jail-snapshot-result"), "failed: " + failure + "\n"); } catch (Exception ignored) { }
         }
+    }
+    private static String diagnostics(net.minecraft.server.level.ServerPlayer player, Map<?, ?> containers) {
+        try {
+            var curiosApi = Class.forName("top.theillusivec4.curios.api.CuriosApi");
+            var handlerApi = Class.forName("top.theillusivec4.curios.api.type.capability.ICuriosItemHandler");
+            var contApi = Class.forName("io.wispforest.accessories.api.AccessoriesContainer");
+            var wrapperApi = Class.forName("io.wispforest.accessories_compat.curios.wrapper.AccessoriesBasedStackHandler");
+            Object handler = ((Optional<?>) curiosApi.getMethod("getCuriosInventory", LivingEntity.class).invoke(null, player)).orElseThrow();
+            Map<?, ?> aliases = (Map<?, ?>) handlerApi.getMethod("getCurios").invoke(handler);
+            StringBuilder details = new StringBuilder("accessories=").append(containers.keySet()).append(" curios=").append(aliases.keySet());
+            for (var e : containers.entrySet()) {
+                Object alias = aliases.get(e.getKey());
+                int expected = (int) contApi.getMethod("getSize").invoke(e.getValue());
+                var normal = (Container) contApi.getMethod("getAccessories").invoke(e.getValue());
+                var cosmetic = (Container) contApi.getMethod("getCosmeticAccessories").invoke(e.getValue());
+                boolean match = alias != null && alias.getClass() == wrapperApi && wrapperApi.getMethod("container").invoke(alias) == e.getValue();
+                details.append(" [").append(e.getKey()).append(" class=").append(alias == null ? "null" : alias.getClass().getName()).append(" same=").append(match)
+                        .append(" size=").append(expected).append('/').append(normal.getContainerSize()).append('/').append(cosmetic.getContainerSize()).append(']');
+            }
+            return details.toString();
+        } catch (Exception failure) { return "diagnostic error " + failure; }
     }
     private static void check(CompoundTag snapshot, String kind, String slot, int index, ItemStack expected, net.minecraft.core.HolderLookup.Provider registry) {
         var rows = snapshot.getList("items", Tag.TAG_COMPOUND);
