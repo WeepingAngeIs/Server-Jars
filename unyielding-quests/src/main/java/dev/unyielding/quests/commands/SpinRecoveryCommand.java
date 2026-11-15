@@ -121,8 +121,8 @@ public final class SpinRecoveryCommand {
             final String printable = detail;
             source.sendSuccess(() -> Component.literal("Recorded prize: " + printable), false);
             if (attempted) source.sendSuccess(() -> Component.literal("Verify delivery independently. To acknowledge a delivered prize without replay or refund: /spinrecovery confirm_delivered " + id), false);
-            source.sendSuccess(() -> Component.literal("After independently providing the exact prize manually, acknowledge it with /spinrecovery confirm_manually_delivered " + id + ". This command gives no prize."), false);
             else source.sendSuccess(() -> Component.literal("This prize was not attempted. Export the record and retain it for manual recovery; it will not be replayed automatically."), false);
+            source.sendSuccess(() -> Component.literal("After independently providing the exact prize manually, acknowledge it with /spinrecovery confirm_manually_delivered " + id + ". This command gives no prize."), false);
             return 1;
         } catch (IOException | RuntimeException e) {
             source.sendFailure(Component.literal("Could not read the reward journal; no action was taken. Check the server log."));
