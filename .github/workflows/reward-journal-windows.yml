@@ -7,7 +7,11 @@ permissions:
   contents: read
 jobs:
   windows-journal:
-    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -25,8 +29,28 @@ jobs:
           class JournalWindowsCheck {
             public static void main(String[] args) throws Exception {
               Path path=Paths.get("journal-check"); UUID id=UUID.randomUUID();
+              RewardJournal.provisionNew(path);
               try(var j=new RewardJournal(path)){j.begin(id, UUID.randomUUID(), 2, new byte[]{1});}
-              try(var j=new RewardJournal(path)){if(j.read(id)==null)throw new Exception("missing journal record");}
+              try(var j=new RewardJournal(path)){
+                if(j.read(id)==null)throw new Exception("missing journal record");
+                j.transition(id, RewardJournal.State.PREPARED, RewardJournal.State.DEBIT_APPLIED);
+                j.transition(id, RewardJournal.State.DEBIT_APPLIED, RewardJournal.State.DELIVERING);
+              }
+              try(var j=new RewardJournal(path)){
+                if(j.read(id).state()!=RewardJournal.State.DELIVERING)throw new Exception("lost crash boundary");
+                j.transition(id, RewardJournal.State.DELIVERING, RewardJournal.State.HELD);
+              }
+              Path file=path.resolve("reward-journal.v1"); byte[] original=Files.readAllBytes(file);
+              Files.write(file, java.util.Arrays.copyOf(original,original.length-1));
+              expectFailure(path);
+              Files.delete(file); expectFailure(path);
+              if(Files.exists(file))throw new Exception("silently recreated history");
+              try { RewardJournal.provisionNew(path); throw new AssertionError("reprovisioned"); }
+              catch(java.io.IOException expected) {}
+            }
+            static void expectFailure(Path path) throws Exception {
+              try(var j=new RewardJournal(path)){throw new AssertionError("unsafe open");}
+              catch(java.io.IOException expected) {}
             }
           }
           '@ | Set-Content -Encoding utf8 JournalWindowsCheck.java

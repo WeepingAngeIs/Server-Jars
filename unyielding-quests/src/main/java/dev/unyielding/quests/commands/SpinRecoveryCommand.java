@@ -18,6 +18,8 @@ public final class SpinRecoveryCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("spinrecovery").requires(s -> s.hasPermission(2))
+                .then(Commands.literal("initialize_new").then(Commands.literal("confirm_no_previous_rewards")
+                        .executes(c -> initializeNew(c.getSource()))))
                 .then(Commands.literal("list").executes(c -> list(c.getSource())))
                 .then(Commands.literal("retry").executes(c -> retry(c.getSource())))
                 .then(Commands.literal("show").then(Commands.argument("transaction", StringArgumentType.word())
@@ -26,6 +28,17 @@ public final class SpinRecoveryCommand {
                         .executes(c -> export(c.getSource(), StringArgumentType.getString(c, "transaction")))))
                 .then(Commands.literal("confirm_delivered").then(Commands.argument("transaction", StringArgumentType.word())
                         .executes(c -> confirmDelivered(c.getSource(), StringArgumentType.getString(c, "transaction"))))));
+    }
+
+    private static int initializeNew(CommandSourceStack source) {
+        try {
+            DailyLogin.provisionNewJournal(source.getServer());
+            source.sendSuccess(() -> Component.literal("New recovery journal initialized. This is not power-loss certification. Keep it with world backups; missing history will pause payouts."), true);
+            return 1;
+        } catch (IOException | RuntimeException failure) {
+            source.sendFailure(Component.literal("Initialization refused: " + failure.getMessage() + ". Do not delete history to bypass this check."));
+            return 0;
+        }
     }
 
     private static int retry(CommandSourceStack source) {

@@ -13,6 +13,7 @@ class RewardRecoveryBoundaryTest {
     @Test void recordedIntentSurvivesRestartAndDebitReplaysOnlyOnce() throws Exception {
         UUID tx = UUID.randomUUID(), player = UUID.randomUUID();
         Path dir = temp.resolve("journal");
+        RewardJournal.provisionNew(dir);
         long[] balance = {0, 0, 2, 0, 0};
         var savedMarkers = new HashSet<UUID>();
         try (RewardJournal j = new RewardJournal(dir)) {
@@ -37,6 +38,7 @@ class RewardRecoveryBoundaryTest {
     }
     @Test void unsavedDebitIsReappliedAgainstPersistedBalance() throws Exception {
         UUID tx = UUID.randomUUID(); Path dir = temp.resolve("other");
+        RewardJournal.provisionNew(dir);
         try (RewardJournal j = new RewardJournal(dir)) {
             j.begin(tx, UUID.randomUUID(), 3, new byte[]{1});
             j.transition(tx, RewardJournal.State.PREPARED, RewardJournal.State.DEBIT_APPLIED);

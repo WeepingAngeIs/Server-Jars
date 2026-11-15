@@ -32,6 +32,7 @@ public final class DailyLogin {
         public final Map<UUID, long[]> players = new HashMap<>();
         public final Set<UUID> appliedDebits = new HashSet<>();
         private Tag invalidDebitHistory;
+        private boolean journalProvisioned;
         public boolean hasValidDebitHistory() { return invalidDebitHistory == null; }
 
         public static SavedData.Factory<Data> factory() {
@@ -40,6 +41,7 @@ public final class DailyLogin {
 
         public static Data load(CompoundTag tag, HolderLookup.Provider provider) {
             Data d = new Data();
+            d.journalProvisioned = tag.getBoolean("journalProvisioned");
             for (Tag e : tag.getList("players", Tag.TAG_COMPOUND)) {
                 CompoundTag c = (CompoundTag) e;
                 d.players.put(c.getUUID("p"), new long[]{c.getLong("day"), c.getLong("streak"), c.getLong("spins"), c.getLong("questSpins"), c.getLong("lastClaimMillis")});
@@ -75,6 +77,7 @@ public final class DailyLogin {
                 l.add(c);
             }
             tag.put("players", l);
+            tag.putBoolean("journalProvisioned", journalProvisioned);
             ListTag debits = new ListTag();
             for (UUID id : appliedDebits) { CompoundTag c = new CompoundTag(); c.putUUID("id", id); debits.add(c); }
             tag.put("appliedDebits", invalidDebitHistory == null ? debits : invalidDebitHistory.copy());
@@ -103,6 +106,19 @@ public final class DailyLogin {
         }
         PENDING.clear();
         SpinMenu.clear();
+    }
+
+    /** Operator explicitly attests there is no prior reward-journal history. */
+    public static void provisionNewJournal(MinecraftServer server) throws IOException {
+        if (data == null || rewardJournal != null || data.journalProvisioned
+                || data.invalidDebitHistory != null || !data.appliedDebits.isEmpty())
+            throw new IOException("Not a new reward installation; preserve and restore existing history");
+        var path = server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("unyielding-recovery");
+        RewardJournal.provisionNew(path);
+        data.journalProvisioned = true;
+        data.setDirty();
+        rewardJournal = new RewardJournal(path);
+        retryRecovery();
     }
 
     public static void onServerStop() {

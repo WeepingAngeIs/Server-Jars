@@ -9,6 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RewardJournalTest {
     @TempDir Path dir;
+    @org.junit.jupiter.api.BeforeEach void provision() throws Exception {
+        dir = dir.resolve("recovery");
+        RewardJournal.provisionNew(dir);
+    }
     @Test void failsBeforeCreationIfParentIsUnavailable() throws Exception {
         Path missing = dir.resolve("missing").resolve("journal");
         assertThrows(IOException.class, () -> new RewardJournal(missing));
@@ -71,6 +75,35 @@ class RewardJournalTest {
             assertEquals(RewardJournal.State.DEBIT_APPLIED,j.read(afterDebit).state());
             assertEquals(RewardJournal.State.DELIVERING,j.read(afterMutation).state());
             assertEquals(3,j.list().size());
+        }
+    }
+    @Test void missingJournalIsNeverRecreatedOrReprovisioned() throws Exception {
+        Path file = dir.resolve("reward-journal.v1");
+        Files.delete(file);
+        assertThrows(IOException.class, () -> new RewardJournal(dir));
+        assertThrows(IOException.class, () -> RewardJournal.provisionNew(dir));
+        assertFalse(Files.exists(file));
+    }
+    @Test void emptyAndPartialInitializationFailClosedWithoutChanges() throws Exception {
+        Path file = dir.resolve("reward-journal.v1");
+        for (byte[] bytes : new byte[][] {new byte[0], new byte[]{1,2,3}, new byte[]{0x55,0x51,0x48,0x31,0,0,0,2}}) {
+            Files.write(file, bytes);
+            assertThrows(IOException.class, () -> new RewardJournal(dir));
+            assertArrayEquals(bytes, Files.readAllBytes(file));
+        }
+    }
+    @Test void legacyRecordsOpenInPlaceAndKeepIdentity() throws Exception {
+        UUID tx = UUID.randomUUID();
+        try (RewardJournal j = new RewardJournal(dir)) { j.begin(tx, UUID.randomUUID(), 2, new byte[]{5}); }
+        Path file = dir.resolve("reward-journal.v1");
+        byte[] legacy = java.util.Arrays.copyOfRange(Files.readAllBytes(file), 8, (int)Files.size(file));
+        Files.write(file, legacy);
+        try (RewardJournal j = new RewardJournal(dir)) { assertArrayEquals(new byte[]{5}, j.read(tx).payload()); }
+        assertArrayEquals(legacy, Files.readAllBytes(file));
+    }
+    @Test void secondWriterCannotOpenJournal() throws Exception {
+        try (RewardJournal j = new RewardJournal(dir)) {
+            assertThrows(IOException.class, () -> new RewardJournal(dir));
         }
     }
 }

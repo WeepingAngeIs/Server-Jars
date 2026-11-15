@@ -24,22 +24,17 @@ public final class RewardJournal implements AutoCloseable {
 
     public RewardJournal(Path directory) throws IOException {
         Path absolute = directory.toAbsolutePath().normalize();
-        boolean existed = Files.isDirectory(absolute);
-        if (!existed) Files.createDirectory(absolute); // Parent must already exist and be durable.
-        // A prior startup might have created this directory but failed before syncing its parent.
-        if (absolute.getParent() != null) {
-            try (FileChannel parent = FileChannel.open(absolute.getParent(), StandardOpenOption.READ)) { parent.force(true); }
-        }
-        directory = absolute;
-        // Fail closed on filesystems where directory metadata cannot be forced.
-        try (FileChannel dir = FileChannel.open(directory, StandardOpenOption.READ)) { dir.force(true); }
-        Path file = directory.resolve("reward-journal.v1");
-        FileChannel opened = FileChannel.open(file, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
+        // Normal startup must never replace missing history with an empty journal.
+        if (!Files.isDirectory(absolute, LinkOption.NOFOLLOW_LINKS))
+            throw new IOException("Recovery directory missing; restore history or explicitly provision a new installation");
+        Path file = absolute.resolve("reward-journal.v1");
+        if (!Files.isRegularFile(file, LinkOption.NOFOLLOW_LINKS))
+            throw new IOException("Recovery journal missing; restore history, do not recreate it");
+        FileChannel opened = FileChannel.open(file, StandardOpenOption.READ, StandardOpenOption.WRITE);
         FileLock acquired = null;
         try {
             acquired = opened.tryLock();
             if (acquired == null) throw new IOException("Reward journal already in use");
-            try (FileChannel dir = FileChannel.open(directory, StandardOpenOption.READ)) { dir.force(true); }
             channel = opened; lock = acquired;
             replay();
         } catch (Exception e) {
@@ -48,6 +43,23 @@ public final class RewardJournal implements AutoCloseable {
             if (e instanceof IOException io) throw io;
             throw new IOException("Cannot open reward journal", e);
         }
+    }
+
+    /** Explicit NEW-installation operation. Never call from startup or recovery retry.
+     * A partial initialization is intentionally retained and requires operator inspection.
+     */
+    public static void provisionNew(Path directory) throws IOException {
+        Path absolute = directory.toAbsolutePath().normalize();
+        Files.createDirectory(absolute); // Refuse even an existing empty directory.
+        Path file = absolute.resolve("reward-journal.v1");
+        try (FileChannel out = FileChannel.open(file, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE)) {
+            ByteBuffer header = ByteBuffer.allocate(8).putInt(0x55514831).putInt(1);
+            header.flip();
+            while (header.hasRemaining()) out.write(header);
+            out.force(true);
+        }
+        // No portable directory-fsync contract on Windows. Missing publication on a later
+        // boot fails closed above. This is not a physical-power-loss guarantee.
     }
 
     public synchronized Entry begin(UUID id, UUID player, int slot, byte[] payload) throws IOException {
@@ -85,6 +97,16 @@ public final class RewardJournal implements AutoCloseable {
     }
     private void replay() throws IOException {
         channel.position(0);
+        if (channel.size() < 8) throw new IOException("Empty or incomplete journal; preserve it for review");
+        ByteBuffer initial = ByteBuffer.allocate(8); readFully(initial); initial.flip();
+        int first = initial.getInt();
+        if (first == 0x55514831) {
+            if (initial.getInt() != 1) throw new IOException("Unsupported journal header version");
+        } else {
+            // Legacy non-empty v1 record streams are read in place, never rewritten.
+            if (first != MAGIC) throw new IOException("Corrupt journal header");
+            channel.position(0);
+        }
         while (channel.position() < channel.size()) {
             ByteBuffer header = ByteBuffer.allocate(8); readFully(header); header.flip();
             if (header.getInt() != MAGIC) throw new IOException("Corrupt reward journal header");
