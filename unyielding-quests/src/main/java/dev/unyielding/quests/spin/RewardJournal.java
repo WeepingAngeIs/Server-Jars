@@ -20,6 +20,7 @@ public final class RewardJournal implements AutoCloseable {
     private final FileChannel channel;
     private final FileLock lock;
     private final Map<UUID,Entry> records = new LinkedHashMap<>();
+    private final Set<UUID> deliveryAttempts = new HashSet<>();
     private boolean poisoned;
 
     public RewardJournal(Path directory) throws IOException {
@@ -77,6 +78,12 @@ public final class RewardJournal implements AutoCloseable {
     }
     public synchronized Entry read(UUID id) throws IOException { check(); return records.get(id); }
     public synchronized List<Entry> list() throws IOException { check(); return List.copyOf(records.values()); }
+    /** A durable attempt marker is evidence of an attempt, not proof of receipt. */
+    public synchronized boolean deliveryAttempted(UUID id) throws IOException {
+        check();
+        if (!records.containsKey(id)) throw new IOException("Unknown reward transaction");
+        return deliveryAttempts.contains(id);
+    }
     private static boolean allowed(State from, State to) {
         return switch (from) {
             case PREPARED -> to == State.DEBIT_APPLIED || to == State.HELD;
@@ -94,6 +101,7 @@ public final class RewardJournal implements AutoCloseable {
         try { channel.position(channel.size()); while (frame.hasRemaining()) channel.write(frame); channel.force(true); }
         catch (IOException e) { poisoned = true; throw e; }
         records.put(entry.id(), entry);
+        if (entry.state() == State.DELIVERING) deliveryAttempts.add(entry.id());
     }
     private void replay() throws IOException {
         channel.position(0);
@@ -118,6 +126,7 @@ public final class RewardJournal implements AutoCloseable {
             if (old == null) { if (entry.state() != State.PREPARED) throw new IOException("Missing transaction start"); }
             else if (!old.player().equals(entry.player()) || old.slot() != entry.slot() || !Arrays.equals(old.payload(), entry.payload()) || !allowed(old.state(), entry.state())) throw new IOException("Invalid transaction history");
             records.put(entry.id(), entry);
+            if (entry.state() == State.DELIVERING) deliveryAttempts.add(entry.id());
         }
     }
     private void readFully(ByteBuffer buf) throws IOException { while (buf.hasRemaining()) if (channel.read(buf) < 0) throw new EOFException("Incomplete reward journal; admin review required"); }

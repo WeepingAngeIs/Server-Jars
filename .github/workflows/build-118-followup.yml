@@ -3,7 +3,7 @@ name: Build Unyielding 1.2.0 update
 on:
   workflow_dispatch:
   push:
-    branches: ['codex/unyielding-118-followup', 'codex/unyielding-improvements-wip']
+    branches: ['codex/unyielding-118-followup', 'codex/unyielding-improvements-wip', 'codex/recovery-review-safe']
 
 permissions:
   contents: read

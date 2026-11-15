@@ -1,7 +1,7 @@
 name: Reward journal Windows compatibility
 on:
   push:
-    branches: ['codex/unyielding-improvements-wip']
+    branches: ['codex/unyielding-improvements-wip', 'codex/recovery-review-safe']
   workflow_dispatch:
 permissions:
   contents: read

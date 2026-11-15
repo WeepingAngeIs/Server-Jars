@@ -2,6 +2,7 @@ package dev.unyielding.quests.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import dev.unyielding.quests.spin.DailyLogin;
 import dev.unyielding.quests.spin.RewardJournal;
 import net.minecraft.commands.CommandSourceStack;
@@ -20,7 +21,9 @@ public final class SpinRecoveryCommand {
         dispatcher.register(Commands.literal("spinrecovery").requires(s -> s.hasPermission(2))
                 .then(Commands.literal("initialize_new").then(Commands.literal("confirm_no_previous_rewards")
                         .executes(c -> initializeNew(c.getSource()))))
-                .then(Commands.literal("list").executes(c -> list(c.getSource())))
+                .then(Commands.literal("list").executes(c -> list(c.getSource(), 1))
+                        .then(Commands.argument("page", IntegerArgumentType.integer(1, 1000000))
+                                .executes(c -> list(c.getSource(), IntegerArgumentType.getInteger(c, "page")))))
                 .then(Commands.literal("retry").executes(c -> retry(c.getSource())))
                 .then(Commands.literal("show").then(Commands.argument("transaction", StringArgumentType.word())
                         .executes(c -> show(c.getSource(), StringArgumentType.getString(c, "transaction")))))
@@ -63,19 +66,19 @@ public final class SpinRecoveryCommand {
         catch (IllegalArgumentException e) { source.sendFailure(Component.literal("Enter a valid transaction UUID.")); return null; }
     }
 
-    private static int list(CommandSourceStack source) {
+    private static int list(CommandSourceStack source, int page) {
         RewardJournal journal = journal(source, true);
         if (journal == null) return 0;
         try {
             var entries = journal.list();
-            int pending = 0, shown = 0;
+            int pending = 0, start = (page - 1) * 30;
             for (var entry : entries) {
                 if (entry.state() == RewardJournal.State.COMPLETE) continue;
+                if (pending >= start && pending < start + 30) source.sendSuccess(() -> Component.literal(entry.id() + " player=" + entry.player() + " state=" + entry.state()), false);
                 pending++;
-                if (shown++ < 30) source.sendSuccess(() -> Component.literal(entry.id() + " player=" + entry.player() + " state=" + entry.state()), false);
             }
             final int total = pending;
-            source.sendSuccess(() -> Component.literal("Unresolved reward transactions: " + total + (total > 30 ? " (first 30 shown)" : "") + ". Use /spinrecovery show <transaction>."), false);
+            source.sendSuccess(() -> Component.literal("Unresolved reward transactions: " + total + ". Page " + page + "/" + Math.max(1, (total + 29) / 30) + ". Use /spinrecovery list <page> or show <transaction>."), false);
             return 1;
         } catch (IOException | RuntimeException e) {
             source.sendFailure(Component.literal("Could not read the reward journal; no action was taken. Check the server log."));
@@ -91,6 +94,10 @@ public final class SpinRecoveryCommand {
             var entry = journal.read(id);
             if (entry == null) { source.sendFailure(Component.literal("No such reward transaction.")); return 0; }
             source.sendSuccess(() -> Component.literal("Transaction " + entry.id() + " player=" + entry.player() + " source=" + (entry.slot() == 2 ? "daily" : "quest") + " state=" + entry.state()), false);
+            boolean attempted = journal.deliveryAttempted(id);
+            source.sendSuccess(() -> Component.literal(attempted
+                    ? "A delivery attempt was recorded; this does not prove the prize was received. Verify independently."
+                    : "No delivery attempt was recorded. Keep this prize on hold for manual recovery."), false);
             String detail = new String(entry.payload(), StandardCharsets.UTF_8);
             try {
                 var prize = net.minecraft.nbt.TagParser.parseTag(detail);
@@ -111,7 +118,8 @@ public final class SpinRecoveryCommand {
             if (detail.length() > 3500) detail = detail.substring(0, 3500) + " … [truncated; use /spinrecovery export " + id + "]";
             final String printable = detail;
             source.sendSuccess(() -> Component.literal("Recorded prize: " + printable), false);
-            source.sendSuccess(() -> Component.literal("Verify delivery independently. To acknowledge a delivered prize without replay or refund: /spinrecovery confirm_delivered " + id), false);
+            if (attempted) source.sendSuccess(() -> Component.literal("Verify delivery independently. To acknowledge a delivered prize without replay or refund: /spinrecovery confirm_delivered " + id), false);
+            else source.sendSuccess(() -> Component.literal("This prize was not attempted. Export the record and retain it for manual recovery; it will not be replayed automatically."), false);
             return 1;
         } catch (IOException | RuntimeException e) {
             source.sendFailure(Component.literal("Could not read the reward journal; no action was taken. Check the server log."));
@@ -150,6 +158,9 @@ public final class SpinRecoveryCommand {
             var entry = journal.read(id);
             if (entry == null || entry.state() != RewardJournal.State.HELD && entry.state() != RewardJournal.State.DELIVERING) {
                 source.sendFailure(Component.literal("Only an uncertain held or delivering transaction can be acknowledged.")); return 0;
+            }
+            if (!journal.deliveryAttempted(id)) {
+                source.sendFailure(Component.literal("No delivery attempt was recorded. The transaction remains held for manual recovery.")); return 0;
             }
             if (!DailyLogin.reconcileDebit(id)) {
                 source.sendFailure(Component.literal("Debit could not be reconciled. Transaction remains unresolved; check the server log.")); return 0;

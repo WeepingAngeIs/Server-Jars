@@ -2,7 +2,7 @@ name: Ground cleanup isolated server smoke
 on:
   workflow_dispatch:
   push:
-    branches: ['codex/unyielding-improvements-wip']
+    branches: ['codex/unyielding-improvements-wip', 'codex/recovery-review-safe']
 permissions:
   contents: read
 jobs:

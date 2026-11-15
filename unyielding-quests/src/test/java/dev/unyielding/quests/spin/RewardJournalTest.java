@@ -77,6 +77,24 @@ class RewardJournalTest {
             assertEquals(3,j.list().size());
         }
     }
+    @Test void deliveryAttemptEvidenceSurvivesHoldAndRestart() throws Exception {
+        UUID notAttempted=UUID.randomUUID(), attempted=UUID.randomUUID(), player=UUID.randomUUID();
+        try (RewardJournal j=new RewardJournal(dir)) {
+            j.begin(notAttempted,player,2,new byte[]{1});
+            j.transition(notAttempted,RewardJournal.State.PREPARED,RewardJournal.State.HELD);
+            j.begin(attempted,player,3,new byte[]{2});
+            j.transition(attempted,RewardJournal.State.PREPARED,RewardJournal.State.DEBIT_APPLIED);
+            j.transition(attempted,RewardJournal.State.DEBIT_APPLIED,RewardJournal.State.DELIVERING);
+            j.transition(attempted,RewardJournal.State.DELIVERING,RewardJournal.State.HELD);
+            assertFalse(j.deliveryAttempted(notAttempted));
+            assertTrue(j.deliveryAttempted(attempted));
+        }
+        try (RewardJournal j=new RewardJournal(dir)) {
+            assertFalse(j.deliveryAttempted(notAttempted));
+            assertTrue(j.deliveryAttempted(attempted));
+            assertThrows(IOException.class,()->j.deliveryAttempted(UUID.randomUUID()));
+        }
+    }
     @Test void missingJournalIsNeverRecreatedOrReprovisioned() throws Exception {
         Path file = dir.resolve("reward-journal.v1");
         Files.delete(file);
