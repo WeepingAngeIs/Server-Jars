@@ -12,6 +12,13 @@ shutil.copytree(ROOT / 'combined-unyielding/smoke-harness', harness,
 shutil.copy2(ROOT / '.github/packaged-smoke/BundleSmoke.java',
              harness / 'src/main/java/dev/unyielding/bundlesmoke/BundleSmoke.java')
 (harness / 'src/main/java/dev/unyielding/bundlesmoke/BundleClientSmoke.java').unlink()
+# The two-client init script supplies its own connection and display arguments.
+# Do not supply the template client's arguments twice (Minecraft rejects duplicates).
+build_file = harness / 'build.gradle'
+build_text = build_file.read_text(encoding='utf-8')
+client_args = "            programArguments.addAll('--quickPlayMultiplayer', '127.0.0.1:25565', '--username', 'Dev', '--width', '1280', '--height', '800')\n"
+assert build_text.count(client_args) == 1
+build_file.write_text(build_text.replace(client_args, ''), encoding='utf-8')
 template = (ROOT / 'combined-unyielding/prepare_smoke.py').read_text(encoding='utf-8')
 for before, after in {
     'ROOT / "combined-unyielding/smoke-harness"': 'ROOT / "dist/packaged-harness"',
