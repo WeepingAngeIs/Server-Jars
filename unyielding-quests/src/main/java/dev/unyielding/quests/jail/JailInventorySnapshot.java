@@ -22,6 +22,8 @@ public final class JailInventorySnapshot {
     private JailInventorySnapshot() {}
 
     public enum Status { CAPTURED_ONLY, WRONG_THREAD, TRANSIENT_MENU, UNSUPPORTED_PROVIDER, UNAVAILABLE }
+    /** Informational only: none of these values authorizes an inventory transfer. */
+    public enum UnequipStatus { NO_KNOWN_EQUIP_RESTRICTION, BOUND_EQUIPMENT, ACCESSORY_CALLBACK_UNVERIFIED, INSPECTION_UNAVAILABLE }
     public record Result(Status status, CompoundTag snapshot) {
         public Result { snapshot = snapshot == null ? null : snapshot.copy(); }
         @Override public CompoundTag snapshot() { return snapshot == null ? null : snapshot.copy(); }
@@ -114,6 +116,33 @@ public final class JailInventorySnapshot {
             return new Result(Status.CAPTURED_ONLY, snapshot);
         } catch (ReflectiveOperationException | RuntimeException | LinkageError failure) {
             return new Result(Status.UNAVAILABLE, null);
+        }
+    }
+    /**
+     * Conservative read-only check. Vanilla binding is data-only, but the
+     * Accessories unequip API invokes arbitrary mod callbacks against the live
+     * player. Merely inspecting must not call them: an equipped accessory makes
+     * this result unknown rather than assuming permission or risking mutation.
+     * Even NO_KNOWN_EQUIP_RESTRICTION is not permission to transfer any items.
+     */
+    public static UnequipStatus inspectUnequip(ServerPlayer player) {
+        Result result = capture(player);
+        if (result.status() != Status.CAPTURED_ONLY || result.snapshot() == null) return UnequipStatus.INSPECTION_UNAVAILABLE;
+        try {
+            for (int slot = 36; slot <= 40; slot++) {
+                ItemStack stack = player.getInventory().getItem(slot);
+                if (!stack.isEmpty() && net.minecraft.world.item.enchantment.EnchantmentHelper.has(
+                        stack, net.minecraft.world.item.enchantment.EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE))
+                    return UnequipStatus.BOUND_EQUIPMENT;
+            }
+            var entries = result.snapshot().getList("items", net.minecraft.nbt.Tag.TAG_COMPOUND);
+            for (var raw : entries) {
+                String kind = ((CompoundTag) raw).getString("kind");
+                if (kind.equals("accessory") || kind.equals("cosmetic")) return UnequipStatus.ACCESSORY_CALLBACK_UNVERIFIED;
+            }
+            return UnequipStatus.NO_KNOWN_EQUIP_RESTRICTION;
+        } catch (RuntimeException | LinkageError unavailable) {
+            return UnequipStatus.INSPECTION_UNAVAILABLE;
         }
     }
     private static boolean version(String id, String expected) {

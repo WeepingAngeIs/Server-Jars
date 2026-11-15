@@ -73,6 +73,42 @@ public final class JailInventorySnapshotSmoke {
             check(snapshot, "vanilla", "", 40, offhand, player.registryAccess());
             check(snapshot, "accessory", "ring", 0, accessory, player.registryAccess());
             check(snapshot, "cosmetic", "ring", 0, vanity, player.registryAccess());
+            // Register a denying callback only on this disposable test server.
+            // Production inspection must not execute arbitrary mod callbacks.
+            var callbackApi = Class.forName("io.wispforest.accessories.api.events.CanUnequipCallback");
+            var eventApi = Class.forName("net.fabricmc.fabric.api.event.Event");
+            Object denied = Class.forName("net.fabricmc.fabric.api.util.TriState").getField("FALSE").get(null);
+            var callbackCount = new java.util.concurrent.atomic.AtomicInteger();
+            Object callback = java.lang.reflect.Proxy.newProxyInstance(callbackApi.getClassLoader(), new Class<?>[]{callbackApi},
+                    (proxy, method, args) -> {
+                        if (method.getName().equals("canUnequip")) { callbackCount.incrementAndGet(); return denied; }
+                        if (method.getName().equals("toString")) return "synthetic denying unequip callback";
+                        if (method.getName().equals("hashCode")) return System.identityHashCode(proxy);
+                        if (method.getName().equals("equals")) return proxy == args[0];
+                        throw new UnsupportedOperationException(method.getName());
+                    });
+            eventApi.getMethod("register", Object.class).invoke(callbackApi.getField("EVENT").get(null), callback);
+            require(JailInventorySnapshot.inspectUnequip(player) == JailInventorySnapshot.UnequipStatus.ACCESSORY_CALLBACK_UNVERIFIED,
+                    "nonempty accessory did not fail closed");
+            require(callbackCount.get() == 0, "inspection invoked a mod callback");
+            var binding = armor.copy();
+            binding.enchant(player.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                    .getOrThrow(net.minecraft.world.item.enchantment.Enchantments.BINDING_CURSE), 1);
+            player.getInventory().setItem(39, binding.copy());
+            require(JailInventorySnapshot.inspectUnequip(player) == JailInventorySnapshot.UnequipStatus.BOUND_EQUIPMENT
+                    && ItemStack.matches(binding, player.getInventory().getItem(39)), "binding curse was ignored or changed");
+            require(callbackCount.get() == 0, "binding check invoked a mod callback");
+            player.getInventory().setItem(39, armor.copy());
+            regular.setItem(0, ItemStack.EMPTY); cosmetic.setItem(0, ItemStack.EMPTY);
+            require(JailInventorySnapshot.inspectUnequip(player) == JailInventorySnapshot.UnequipStatus.NO_KNOWN_EQUIP_RESTRICTION,
+                    "empty accessory inventory did not receive the informational status");
+            require(callbackCount.get() == 0, "empty inspection invoked a mod callback");
+            regular.setItem(0, accessory.copy()); cosmetic.setItem(0, vanity.copy());
+            Class<?> slotReference = Class.forName("io.wispforest.accessories.api.slot.SlotReference");
+            Object reference = containerClass.getMethod("createReference", int.class).invoke(ring, 0);
+            Object allowed = Class.forName("io.wispforest.accessories.api.AccessoriesAPI")
+                    .getMethod("canUnequip", ItemStack.class, slotReference).invoke(null, regular.getItem(0), reference);
+            require(Boolean.FALSE.equals(allowed) && callbackCount.get() > 0, "real API did not honor the denying callback");
             var second = JailInventorySnapshot.capture(player);
             require(second.status() == JailInventorySnapshot.Status.CAPTURED_ONLY && snapshot.equals(second.snapshot()), "repeat capture changed snapshot");
             require(item.save(player.registryAccess()).equals(player.getInventory().getItem(0).save(player.registryAccess()))
@@ -82,7 +118,7 @@ public final class JailInventorySnapshotSmoke {
                     && vanity.save(player.registryAccess()).equals(cosmetic.getItem(0).save(player.registryAccess())), "capture modified fixture items");
             snapshot.putString("tamper", "test");
             require(!first.snapshot().contains("tamper"), "snapshot record was not defensively copied");
-            Files.writeString(Path.of("/tmp/uq-jail-snapshot-result"), "passed: exact accessory APIs, vanilla armor/offhand/custom components, normal/cosmetic slots and non-mutation\n");
+            Files.writeString(Path.of("/tmp/uq-jail-snapshot-result"), "passed: exact accessory APIs, vanilla armor/offhand/custom components, cursor/crafting refusal, binding, callback fail-closed and non-mutation\n");
         } catch (Throwable failure) {
             UnyieldingQuests.LOGGER.error("Jail inventory snapshot smoke failed", failure);
             try { Files.writeString(Path.of("/tmp/uq-jail-snapshot-result"), "failed: " + failure + "\n"); } catch (Exception ignored) { }
