@@ -130,14 +130,17 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
                 if(!list.isEmpty()&&list.getElementType()!=10) throw new IOException("Unknown serialized stack list");
             }
         }
-        return copy;
+        // Holder-level fields are UI/equip-from-use preferences. Custody does
+        // not own or restore them. Keep every serialized container field, slot
+        // identity and stack component; native player saves retain current UI.
+        CompoundTag equipment=new CompoundTag(); equipment.put(CONTAINERS,stores); return equipment;
     }
     private JailVanillaCustody.View view(JailVanillaCustody.View vanillaView,CompoundTag playerTag) throws IOException {
         CompoundTag attachments=playerTag.getCompound("neoforge:attachments");
         if (!attachments.contains(STORE,10)) throw new IOException("Missing serialized accessory holder: " + attachments.getAllKeys());
         CompoundTag holder=normalize(attachments.getCompound(STORE));
-        CompoundTag body=new CompoundTag(); body.putInt("version",1); body.putString("dependencies",VERSIONS);
-        body.putString("policy","controlled-fixtures-v1"); body.putByteArray("vanilla",vanillaView.inventory()); body.put("holder",holder);
+        CompoundTag body=new CompoundTag(); body.putInt("version",2); body.putString("dependencies",VERSIONS);
+        body.putString("policy","controlled-fixtures-v2"); body.putByteArray("vanilla",vanillaView.inventory()); body.put("holder",holder);
         boolean empty=vanillaView.empty();
         for (String name : holder.getCompound(CONTAINERS).getAllKeys()) {
             CompoundTag store=holder.getCompound(CONTAINERS).getCompound(name);
@@ -172,7 +175,7 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
     }
     private List<Row> rows(byte[] snapshot,Layout layout) throws IOException {
         CompoundTag root=decode(snapshot);
-        if (root.getInt("version")!=1 || !VERSIONS.equals(root.getString("dependencies")) || !"controlled-fixtures-v1".equals(root.getString("policy"))) throw new IOException("Changed accessory snapshot dependencies");
+        if (root.getInt("version")!=2 || !VERSIONS.equals(root.getString("dependencies")) || !"controlled-fixtures-v2".equals(root.getString("policy"))) throw new IOException("Changed accessory snapshot dependencies");
         if(!root.getCompound("holder").equals(normalize(root.getCompound("holder")))) throw new IOException("Unknown accessory holder format");
         byte[] sourceEmpty=emptyBody(snapshot), currentEmpty=emptyBody(current().inventory());
         if (!Arrays.equals(sourceEmpty,currentEmpty)) {

@@ -70,15 +70,19 @@ public final class AccessoryCustodySmoke {
                 var p=new AccessoryCustodyPort(player,fixtures); var v=new AccessoryCustodyPort(visitor,fixtures);
                 try(var journal=new JailEscrowJournal(dir.resolve("held"))) {
                     require(JailVanillaCustody.inspect(journal,HELD,p)==JailVanillaCustody.Inspection.HELD_VERIFIED,"accessory custody missing after disconnect/restart");
+                    String control=control(p);
                     resetCounts();
                     require(JailVanillaCustody.restoreForDisposableTest(journal,HELD,p,at -> {})==JailVanillaCustody.RestoreResult.RESTORED_VERIFIED,"restore failed");
                     assertItems(p,journal.read(HELD).snapshot()); require(equips==1,"normal lifecycle equip not exactly once: "+equips);
+                    require(control.equals(control(p)),"restoration rolled back current equip UI preference");
                 }
                 try(var journal=new JailEscrowJournal(dir.resolve("saved"))) {
                     require(JailVanillaCustody.inspect(journal,SAVED,v)==JailVanillaCustody.Inspection.RESTORE_PERSISTED_REVIEW,"accessory restore receipt lost after restart");
+                    String control=control(v);
                     resetCounts(); expect(() -> JailVanillaCustody.restoreForDisposableTest(journal,SAVED,v,at -> {}),"review");
                     JailVanillaCustody.confirmRestoredForDisposableTest(journal,SAVED,v);
                     require(equips==0&&unequips==0&&permissions==0,"confirmation ran callbacks or transferred items"); assertItems(v,journal.read(SAVED).snapshot());
+                    require(control.equals(control(v)),"confirmation changed current equip UI preference");
                 }
                 server.saveEverything(true,true,true);
             } else if(phase==3) {
@@ -137,6 +141,9 @@ public final class AccessoryCustodySmoke {
         AccessoryCustodyPort.call("io.wispforest.accessories.api.AccessoriesContainer",ring,"update",new Class<?>[0]);
     }
     static void resetCounts() { permissions=equips=unequips=0; }
+    static String control(AccessoryCustodyPort p) {
+        return p.player.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments").getCompound(AccessoryCustodyPort.STORE).getString("equip_control");
+    }
     static AccessoryCustodyPort seed(ServerPlayer player) throws Exception {
         mode="normal"; var p=new AccessoryCustodyPort(player,fixtures); var layout=p.layout();
         for(var id:layout.slots()) p.container(layout,id).setItem(id.index(),ItemStack.EMPTY);
