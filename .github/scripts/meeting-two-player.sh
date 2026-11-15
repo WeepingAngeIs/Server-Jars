@@ -3,6 +3,7 @@ set -euo pipefail
 repository=$(cd "$(dirname "$0")/../.." && pwd)
 project="$repository/unyielding-quests"
 logs="$repository/meeting-two-player-logs"
+result_file="${UQ_RESULT_FILE:-/tmp/uq-meeting-two-player-result}"
 mkdir -p "$logs" "$project/run-server" "$project/run" "$project/run-visitor"
 for client_dir in "$project/run" "$project/run-visitor"; do
   cat > "$client_dir/options.txt" <<'EOF'
@@ -32,14 +33,17 @@ max-players=4
 generate-structures=false
 max-tick-time=-1
 EOF
-rm -f /tmp/uq-meeting-two-player-result
+rm -f "$result_file"
 server_pid= client_pid= visitor_pid=
 cleanup() {
   for pid in "$visitor_pid" "$client_pid" "$server_pid"; do
     if [[ -n "$pid" ]]; then kill -- -"$pid" 2>/dev/null || true; fi
   done
+  for pid in "$visitor_pid" "$client_pid" "$server_pid"; do
+    if [[ -n "$pid" ]]; then wait "$pid" 2>/dev/null || true; fi
+  done
   cp "$project/run-server/logs/latest.log" "$logs/server-latest.log" 2>/dev/null || true
-  cp /tmp/uq-meeting-two-player-result "$logs/" 2>/dev/null || true
+  cp "$result_file" "$logs/" 2>/dev/null || true
 }
 trap cleanup EXIT
 cd "$project"
@@ -60,9 +64,9 @@ grep -q 'Done (' "$logs/server.log"
 setsid xvfb-run -a -s '-screen 0 640x480x24' bash "$client_script" > "$logs/client.log" 2>&1 & client_pid=$!
 setsid xvfb-run -a -s '-screen 0 640x480x24' bash "$visitor_script" > "$logs/visitor.log" 2>&1 & visitor_pid=$!
 for ((i=0; i<360; i++)); do
-  if [[ -f /tmp/uq-meeting-two-player-result ]]; then
-    cat /tmp/uq-meeting-two-player-result
-    grep -q '^passed:' /tmp/uq-meeting-two-player-result
+  if [[ -f "$result_file" ]]; then
+    cat "$result_file"
+    grep -q '^passed:' "$result_file"
     exit
   fi
   kill -0 "$server_pid" 2>/dev/null && kill -0 "$client_pid" 2>/dev/null && kill -0 "$visitor_pid" 2>/dev/null || break
