@@ -90,6 +90,9 @@ public final class AdminSettingsServerSmoke {
         require(!Config.SHARE_QUEST_PROGRESS.get(), "Progress isolation must begin with sharing off");
         QuestData data = server.overworld().getDataStorage().computeIfAbsent(QuestData.factory(), QuestData.NAME);
         verifyLegacyMigration(server);
+        // This harness owns a fresh disposable world, never an existing player's journal.
+        if (dev.unyielding.quests.spin.DailyLogin.journal() == null)
+            dev.unyielding.quests.spin.DailyLogin.provisionNewJournal(server);
         QuestFile.Quest inherited = fixture(INHERITED, "Cloud party completion", 17);
         QuestFile.Quest own = fixture(OWN, "Cloud personal completion", 13);
         try {
@@ -131,7 +134,10 @@ public final class AdminSettingsServerSmoke {
             require(data.isClaimed(player.getUUID(), OWN + 2), "Claim was not recorded against the player");
 
             AdminSettings.onAction(player, new Net.AdminSettingsAction("share_quest_progress", true));
-            require(QuestManager.progressOf(player).questDone(INHERITED), "Enabling sharing did not expose current party progress");
+            require(QuestManager.progressOf(player).questDone(INHERITED), "Enabling sharing did not expose current party progress: config=" + Config.SHARE_QUEST_PROGRESS.get()
+                    + " applied=" + data.sharingEnabled + " currentTeam=" + TeamManager.teamIdOf(player.getUUID())
+                    + " expectedTeam=" + party.id + " partyHasQuest=" + data.get(party.id).questDone(INHERITED)
+                    + " viewIsParty=" + (QuestManager.progressOf(player) == data.get(party.id)));
             require(data.get(party.id).questDone(OWN) && data.get(party.id).questDone(OFFLINE_QUEST), "Enabling sharing lost online or offline personal progress");
             QuestManager.onClaim(player, new Net.Claim(OWN + 2, 0));
             require(player.totalExperience == before + 13, "Switching to shared progress replayed a claimed reward");
@@ -197,14 +203,18 @@ public final class AdminSettingsServerSmoke {
             Config.SPIN_MYTHICAL.set(0);
             Config.SPIN_LEGENDARY.set(0);
             long spin = LuckySpin.spinId(quest.id);
+            long creditsBefore = dev.unyielding.quests.spin.DailyLogin.available(player);
             QuestManager.onClaim(player, new Net.Claim(spin, 0));
             require(data.isClaimed(player.getUUID(), spin), "First quest spin was not recorded");
+            require(dev.unyielding.quests.spin.DailyLogin.available(player) == creditsBefore + 1, "First quest spin did not credit exactly once");
             int items = itemCount(player);
             QuestManager.onClaim(player, new Net.Claim(spin, 0));
-            require(itemCount(player) == items, "Quest spin replayed in the same mode");
+            require(itemCount(player) == items, "Quest spin unexpectedly delivered an item");
+            require(dev.unyielding.quests.spin.DailyLogin.available(player) == creditsBefore + 1, "Quest spin credit replayed in the same mode");
             AdminSettings.onAction(player, new Net.AdminSettingsAction("share_quest_progress", false));
             QuestManager.onClaim(player, new Net.Claim(spin, 0));
-            require(itemCount(player) == items, "Switching mode replayed a quest spin");
+            require(itemCount(player) == items, "Switching mode unexpectedly delivered a spin item");
+            require(dev.unyielding.quests.spin.DailyLogin.available(player) == creditsBefore + 1, "Switching mode replayed a quest spin credit");
             AdminSettings.onAction(player, new Net.AdminSettingsAction("share_quest_progress", true));
         } finally {
             Config.SPIN_BASIC.set(weights[0]);
