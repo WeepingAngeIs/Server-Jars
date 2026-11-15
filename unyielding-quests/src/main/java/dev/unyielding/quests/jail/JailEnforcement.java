@@ -12,6 +12,7 @@ import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerRespawnPositionEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import java.util.HashMap;
@@ -84,6 +85,21 @@ public final class JailEnforcement {
     }
     @SubscribeEvent public static void respawn(PlayerEvent.PlayerRespawnEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) enforce(player);
+    }
+    /** Select the validated jail before vanilla creates or positions the replacement player.
+     * Do not modify the player's stored bed/anchor. Unavailable destinations retain vanilla's
+     * safe fallback and are reported by the normal post-respawn enforcement. */
+    @SubscribeEvent public static void respawnPosition(PlayerRespawnPositionEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || player.server == null) return;
+        var assignment = JailData.get(player.server).assignment(player.getUUID());
+        if (assignment == null) return;
+        Loc jail = assignment.jail();
+        var level = jail.level(player.server);
+        if (level == null || !JailPlacement.intact(player.server, jail) || !JailCommands.safe(player, jail)) return;
+        event.setDimensionTransition(new net.minecraft.world.level.portal.DimensionTransition(
+                level, new net.minecraft.world.phys.Vec3(jail.x(), jail.y(), jail.z()),
+                net.minecraft.world.phys.Vec3.ZERO, jail.yaw(), jail.pitch(),
+                net.minecraft.world.level.portal.DimensionTransition.DO_NOTHING));
     }
     private static void enforce(ServerPlayer player) {
         if (player.server == null) return;
