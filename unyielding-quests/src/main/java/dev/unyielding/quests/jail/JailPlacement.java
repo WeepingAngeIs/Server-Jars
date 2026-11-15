@@ -54,6 +54,7 @@ public final class JailPlacement {
     }
 
     private static int fail(CommandSourceStack source, String message) {
+        dev.unyielding.quests.UnyieldingQuests.LOGGER.warn("Jail command refused for {}: {}", source.getTextName(), message);
         source.sendFailure(Component.literal(message));
         return 0;
     }

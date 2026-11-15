@@ -63,8 +63,10 @@ public final class JailPlayerSmoke {
             var dim = level.dimension().location();
             claimsApi.getMethod("claim", net.minecraft.resources.ResourceLocation.class, java.util.UUID.class,
                     int.class, int.class, int.class, boolean.class).invoke(claims, dim, java.util.UUID.randomUUID(), 0, cx, cz, false);
-            commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild preview");
-            commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild place");
+            require(commands.getDispatcher().execute("jailbuild preview", admin.createCommandSourceStack()) == 0,
+                    "preview did not reject a stranger claim");
+            require(commands.getDispatcher().execute("jailbuild place", admin.createCommandSourceStack()) == 0,
+                    "placement did not reject a stranger claim");
             require(JailData.get(server).location() == null && level.getBlockState(min).isAir(), "stranger claim allowed jail placement");
             claimsApi.getMethod("unclaim", net.minecraft.resources.ResourceLocation.class, int.class, int.class).invoke(claims, dim, cx, cz);
             // A previously placed 7×7×7 jail must remain recognizable under geometry v1.
@@ -78,11 +80,14 @@ public final class JailPlayerSmoke {
                 if (x==0 || x==6 || y==0 || y==6 || z==0 || z==6) level.setBlockAndUpdate(min.offset(x,y,z), Blocks.AIR.defaultBlockState());
             }
             level.setBlockAndUpdate(min, Blocks.CHEST.defaultBlockState());
-            commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild preview");
+            require(commands.getDispatcher().execute("jailbuild preview", admin.createCommandSourceStack()) == 0,
+                    "preview did not reject an existing chest");
             require(level.getBlockState(min).is(Blocks.CHEST), "preview changed existing chest");
             level.setBlockAndUpdate(min, Blocks.AIR.defaultBlockState());
-            commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild preview");
-            commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild place");
+            require(commands.getDispatcher().execute("jailbuild preview", admin.createCommandSourceStack()) > 0,
+                    "valid jail preview failed; inspect server log for exact refusal");
+            require(commands.getDispatcher().execute("jailbuild place", admin.createCommandSourceStack()) > 0,
+                    "confirmed jail placement failed; inspect server log for exact refusal");
             var data = JailData.get(server);
             var jail = data.location();
             require(jail != null && JailPlacement.intact(server, jail), "jail template is not intact");
