@@ -95,7 +95,7 @@ public final class JailEnforcement {
         if (assignment == null) return;
         Loc jail = assignment.jail();
         var level = jail.level(player.server);
-        if (level == null || !JailPlacement.intact(player.server, jail) || !JailCommands.safe(player, jail)) return;
+        if (level == null || !JailPlacement.intact(player.server, jail, assignment.geometry()) || !JailCommands.safe(player, jail)) return;
         event.setDimensionTransition(new net.minecraft.world.level.portal.DimensionTransition(
                 level, new net.minecraft.world.phys.Vec3(jail.x(), jail.y(), jail.z()),
                 net.minecraft.world.phys.Vec3.ZERO, jail.yaw(), jail.pitch(),
@@ -111,7 +111,7 @@ public final class JailEnforcement {
         boolean inside = JailBoundary.contains(player.level().dimension().location().toString(), player.getX(), player.getY(), player.getZ(), jail.dim(), jail.x(), jail.y(), jail.z());
         if (inside) return;
         // No chunk tickets, searching, or repeated teleports into damaged prisons.
-        if (!JailPlacement.intact(player.server, jail) || !JailCommands.safe(player, jail)) {
+        if (!JailPlacement.intact(player.server, jail, assignment.geometry()) || !JailCommands.safe(player, jail)) {
             player.setDeltaMovement(0, 0, 0);
             long now = player.server.getTickCount();
             long last = WARNED.getOrDefault(player.getUUID(), -1200L);

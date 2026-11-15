@@ -21,6 +21,9 @@ public final class JailCommands {
     public static final PermissionNode<Boolean> MANAGE = new PermissionNode<>("unyieldingquests", "jail.manage", PermissionTypes.BOOLEAN,
             (player, uuid, context) -> player != null && player.hasPermissions(2));
     private JailCommands() {}
+    // Do not admit new players until durable item and origin recovery is verified.
+    // Existing assignments and recovery commands remain available.
+    private static boolean admissionReady() { return false; }
     public static boolean mayManage(CommandSourceStack source) {
         if (source.getEntity() == null) return source.hasPermission(2);
         return source.getEntity() instanceof ServerPlayer player && canManage(player);
@@ -56,16 +59,18 @@ public final class JailCommands {
     private static int jail(CommandSourceStack source, ServerPlayer target) throws CommandSyntaxException {
         if (target == source.getEntity() || protectedFromJail(target))
             return Essentials.fail(source, "Administrators cannot be jailed; console remains available for recovery.");
+        if (!admissionReady())
+            return Essentials.fail(source, "New jail admissions are unavailable until inventory and origin recovery are verified. Existing jailed players can still be released.");
         var data = JailData.get(target.server);
         if (data.assignment(target.getUUID()) != null) return Essentials.fail(source, "That player is already jailed.");
         Loc dest = data.location();
-        if (dest == null || !JailPlacement.intact(target.server, dest) || !safe(target, dest))
+        if (dest == null || !JailPlacement.intact(target.server, dest, data.geometry()) || !safe(target, dest))
             return Essentials.fail(source, "The jail is unavailable, unsafe, not loaded, or claim access is denied.");
         if (source.getEntity() instanceof ServerPlayer actor && !claimAccess(actor, dest))
             return Essentials.fail(source, "Your claim access at the jail could not be verified.");
         Loc prior = Loc.of(target);
         if (!JailEnforcement.teleportAuthorized(target, dest)) return Essentials.fail(source, "Jail transfer failed.");
-        data.assign(target.getUUID(), new JailData.Assignment(dest, prior));
+        data.assign(target.getUUID(), new JailData.Assignment(dest, prior, data.geometry()));
         dev.unyielding.quests.UnyieldingQuests.LOGGER.info("Jail: {} jailed {} ({})", source.getTextName(), target.getGameProfile().getName(), target.getUUID());
         target.sendSystemMessage(net.minecraft.network.chat.Component.literal("An administrator has jailed you."));
         source.sendSuccess(() -> net.minecraft.network.chat.Component.literal("Jailed " + target.getGameProfile().getName() + "."), true);

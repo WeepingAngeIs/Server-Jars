@@ -49,8 +49,10 @@ public final class JailPlayerSmoke {
             var commands = server.getCommands();
             require(!commands.getDispatcher().getRoot().getChild("jailbuild").canUse(prisoner.createCommandSourceStack()), "non-admin could access jail building");
             var level = admin.serverLevel();
-            admin.teleportTo(level, admin.getX(), admin.getY() + 25, admin.getZ(), 0, 0);
-            BlockPos min = admin.blockPosition().relative(admin.getDirection(), 8).offset(-3, 0, -3);
+            // The test world is a flat, generated grass surface: build on top of it,
+            // never clearing or replacing its supporting blocks.
+            admin.teleportTo(level, admin.getX(), admin.getY(), admin.getZ(), 0, 0);
+            BlockPos min = admin.blockPosition().relative(admin.getDirection(), 11).offset(-3, 0, -3);
             // Claim one candidate chunk as a stranger and verify the real OPAC API denies
             // this admin's placement rather than relying on a fabricated claim response.
             var apiClass = Class.forName("xaero.pac.common.server.api.OpenPACServerAPI");
@@ -65,6 +67,16 @@ public final class JailPlayerSmoke {
             commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild place");
             require(JailData.get(server).location() == null && level.getBlockState(min).isAir(), "stranger claim allowed jail placement");
             claimsApi.getMethod("unclaim", net.minecraft.resources.ResourceLocation.class, int.class, int.class).invoke(claims, dim, cx, cz);
+            // A previously placed 7×7×7 jail must remain recognizable under geometry v1.
+            for (int x=0; x<7; x++) for (int y=0; y<7; y++) for (int z=0; z<7; z++) {
+                if (x!=0 && x!=6 && y!=0 && y!=6 && z!=0 && z!=6) continue;
+                level.setBlockAndUpdate(min.offset(x,y,z), (y==0 && x==3 && z==3 ? Blocks.SEA_LANTERN : Blocks.STONE_BRICKS).defaultBlockState());
+            }
+            var legacy = dev.unyielding.quests.essentials.Loc.of(level, min.getX()+3.5, min.getY()+1, min.getZ()+3.5, 0, 0);
+            require(JailPlacement.intact(server, legacy, JailData.LEGACY_GEOMETRY), "legacy jail geometry not recognized");
+            for (int x=0; x<7; x++) for (int y=0; y<7; y++) for (int z=0; z<7; z++) {
+                if (x==0 || x==6 || y==0 || y==6 || z==0 || z==6) level.setBlockAndUpdate(min.offset(x,y,z), Blocks.AIR.defaultBlockState());
+            }
             level.setBlockAndUpdate(min, Blocks.CHEST.defaultBlockState());
             commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild preview");
             require(level.getBlockState(min).is(Blocks.CHEST), "preview changed existing chest");
@@ -74,10 +86,21 @@ public final class JailPlayerSmoke {
             var data = JailData.get(server);
             var jail = data.location();
             require(jail != null && JailPlacement.intact(server, jail), "jail template is not intact");
+            require(data.geometry() == JailData.INTERROGATION_GEOMETRY, "new jail geometry not stored");
+            require(level.getBlockState(min.offset(6,2,3)).is(Blocks.IRON_BARS), "prison/admin divider lacks bars");
+            require(level.getBlockState(min.offset(12,1,3)).isAir() && level.getBlockState(min.offset(12,2,3)).isAir(), "admin doorway not accessible");
+            require(level.getBlockState(min.below()).is(Blocks.GRASS_BLOCK), "placement replaced ground");
             commands.performPrefixedCommand(admin.createCommandSourceStack(), "jail Dev");
             require(data.assignment(admin.getUUID()) == null, "admin self-jail allowed");
+            var prisonerPrior = dev.unyielding.quests.essentials.Loc.of(prisoner);
             commands.performPrefixedCommand(admin.createCommandSourceStack(), "jail Visitor");
-            require(data.assignment(prisoner.getUUID()) != null, "assignment missing");
+            require(data.assignment(prisoner.getUUID()) == null, "admission must fail closed until inventory and origin escrow are available");
+            require(prisoner.distanceToSqr(prisonerPrior.x(), prisonerPrior.y(), prisonerPrior.z()) < 0.0001, "refused admission moved player");
+            // Continue testing existing prisoners with a disposable synthetic assignment;
+            // this does not bypass the admission guard in the packaged mod.
+            prisoner.teleportTo(level, jail.x(), jail.y(), jail.z(), jail.yaw(), jail.pitch());
+            data.assign(prisoner.getUUID(), new JailData.Assignment(jail, prisonerPrior, data.geometry()));
+            require(data.assignment(prisoner.getUUID()) != null, "synthetic assignment missing");
             require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "prisoner did not reach jail");
             var commandEvent = new CommandEvent(commands.getDispatcher().parse("say escape", prisoner.createCommandSourceStack()));
             NeoForge.EVENT_BUS.post(commandEvent);

@@ -13,8 +13,15 @@ import net.minecraft.world.level.saveddata.SavedData;
 
 /** Server-owned jail assignments; does not expose the saved return point to clients. */
 public final class JailData extends SavedData {
-    public record Assignment(Loc jail, Loc prior) {}
+    public static final int LEGACY_GEOMETRY = 1;
+    public static final int INTERROGATION_GEOMETRY = 2;
+    public static final int INVALID_GEOMETRY = Integer.MIN_VALUE;
+    public record Assignment(Loc jail, Loc prior, int geometry) {
+        /** Existing call sites and saved assignments use the original 7-block cage. */
+        public Assignment(Loc jail, Loc prior) { this(jail, prior, LEGACY_GEOMETRY); }
+    }
     private Loc location;
+    private int geometry = LEGACY_GEOMETRY;
     private final Map<UUID, Assignment> prisoners = new HashMap<>();
 
     public static JailData get(MinecraftServer server) {
@@ -22,7 +29,9 @@ public final class JailData extends SavedData {
                 new SavedData.Factory<>(JailData::new, JailData::load, null), "unyielding_jail");
     }
     public Loc location() { return location; }
-    public void setLocation(Loc location) { this.location = location; setDirty(); }
+    public int geometry() { return geometry; }
+    public void setLocation(Loc location) { setLocation(location, LEGACY_GEOMETRY); }
+    public void setLocation(Loc location, int geometry) { this.location = location; this.geometry = geometry; setDirty(); }
     public boolean hasPrisoners() { return !prisoners.isEmpty(); }
     public Assignment assignment(UUID player) { return prisoners.get(player); }
     public void assign(UUID player, Assignment assignment) { prisoners.put(player, assignment); setDirty(); }
@@ -31,21 +40,28 @@ public final class JailData extends SavedData {
     private static JailData load(CompoundTag tag, HolderLookup.Provider ignored) {
         JailData data = new JailData();
         if (tag.contains("location", Tag.TAG_COMPOUND)) data.location = Loc.fromTag(tag.getCompound("location"));
+        data.geometry = readGeometry(tag);
         for (Tag item : tag.getList("prisoners", Tag.TAG_COMPOUND)) {
             CompoundTag row = (CompoundTag) item;
             if (row.hasUUID("player") && row.contains("jail", Tag.TAG_COMPOUND) && row.contains("prior", Tag.TAG_COMPOUND))
-                data.prisoners.put(row.getUUID("player"), new Assignment(Loc.fromTag(row.getCompound("jail")), Loc.fromTag(row.getCompound("prior"))));
+                data.prisoners.put(row.getUUID("player"), new Assignment(Loc.fromTag(row.getCompound("jail")), Loc.fromTag(row.getCompound("prior")), readGeometry(row)));
         }
         return data;
     }
+    private static int readGeometry(CompoundTag tag) {
+        if (!tag.contains("geometry")) return LEGACY_GEOMETRY;
+        return tag.contains("geometry", Tag.TAG_INT) ? tag.getInt("geometry") : INVALID_GEOMETRY;
+    }
     @Override public CompoundTag save(CompoundTag tag, HolderLookup.Provider ignored) {
         if (location != null) tag.put("location", location.toTag());
+        tag.putInt("geometry", geometry);
         ListTag rows = new ListTag();
         prisoners.forEach((player, assignment) -> {
             CompoundTag row = new CompoundTag();
             row.putUUID("player", player);
             row.put("jail", assignment.jail().toTag());
             row.put("prior", assignment.prior().toTag());
+            row.putInt("geometry", assignment.geometry());
             rows.add(row);
         });
         tag.put("prisoners", rows);
