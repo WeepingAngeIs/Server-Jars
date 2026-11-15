@@ -135,6 +135,7 @@ public final class AdminSettingsServerSmoke {
 
             AdminSettings.onAction(player, new Net.AdminSettingsAction("share_quest_progress", true));
             require(QuestManager.progressOf(player).questDone(INHERITED), "Enabling sharing did not expose current party progress: config=" + Config.SHARE_QUEST_PROGRESS.get()
+                    + " raw=" + Config.SHARE_QUEST_PROGRESS.getRaw()
                     + " applied=" + data.sharingEnabled + " currentTeam=" + TeamManager.teamIdOf(player.getUUID())
                     + " expectedTeam=" + party.id + " partyHasQuest=" + data.get(party.id).questDone(INHERITED)
                     + " viewIsParty=" + (QuestManager.progressOf(player) == data.get(party.id)));
