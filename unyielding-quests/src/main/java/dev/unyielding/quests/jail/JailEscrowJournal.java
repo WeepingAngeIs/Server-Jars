@@ -44,6 +44,11 @@ public final class JailEscrowJournal implements AutoCloseable {
             while (header.hasRemaining()) file.write(header);
             file.force(true);
         }
+        // The new file and directory names must survive rename/creation metadata
+        // loss as well. Unsupported platforms fail initialization, never claim
+        // durability from a SavedData dirty flag or a file-only flush.
+        try (var metadata = FileChannel.open(dir, StandardOpenOption.READ)) { metadata.force(true); }
+        try (var metadata = FileChannel.open(dir.getParent(), StandardOpenOption.READ)) { metadata.force(true); }
     }
 
     public JailEscrowJournal(Path directory) throws IOException {

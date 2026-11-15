@@ -38,6 +38,13 @@ namespace['DEPENDENCIES']['CobbleDollars 2.0.0 Beta 6.1 NeoForge'] = 'Iqiqjfsi'
 namespace['DEPENDENCIES']["Lightman's Currency 2.3.0.5 NeoForge"] = 'n2ynBeOK'
 namespace['main']()
 
+# Vanilla custody fixtures stay in this independent test mod. Only the pure
+# transaction and journal are shipped; there is no production inventory adapter.
+source = (ROOT / 'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/VanillaCustodySmoke.java').read_text(encoding='utf-8')
+source = source.replace('package dev.unyielding.quests.devtest;', 'package dev.unyielding.bundlesmoke;', 1)
+source = source.replace('@EventBusSubscriber(modid = UnyieldingQuests.MODID)', '@EventBusSubscriber(modid = "uq_bundle_smoke")', 1)
+(harness / 'src/main/java/dev/unyielding/bundlesmoke/VanillaCustodySmoke.java').write_text(source, encoding='utf-8')
+
 # Run the same two-real-player OPAC/jail checks from a separate test mod, never
 # from production development classes or inside the assembled distributable.
 source = (ROOT / 'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/JailPlayerSmoke.java').read_text(encoding='utf-8')

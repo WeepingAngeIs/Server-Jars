@@ -71,6 +71,22 @@ jobs:
           export JAVA_TOOL_OPTIONS='-Duq.jailTerrainPlayers=true -Duq.jailTerrainPhase=2'
           bash .github/scripts/meeting-two-player.sh
           cat /tmp/uq-packaged-terrain-phase1 /tmp/uq-jail-terrain-result
+      - name: Exercise assembled vanilla custody and restart reconciliation
+        env:
+          UQ_PACKAGED_JAIL_SMOKE: '1'
+          UQ_WORLD_NAME: jail_custody_smoke
+          UQ_RESULT_FILE: /tmp/uq-vanilla-custody-result
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          ALSOFT_DRIVERS: 'null'
+        run: |
+          cp -a dist/packaged-smoke/jail-player-logs dist/packaged-smoke/jail-terrain-phase2
+          export JAVA_TOOL_OPTIONS='-Duq.vanillaCustody=true -Duq.custodyPhase=1'
+          bash .github/scripts/meeting-two-player.sh
+          cp /tmp/uq-vanilla-custody-result /tmp/uq-packaged-custody-phase1
+          cp -a dist/packaged-smoke/jail-player-logs dist/packaged-smoke/jail-custody-phase1
+          export JAVA_TOOL_OPTIONS='-Duq.vanillaCustody=true -Duq.custodyPhase=2'
+          bash .github/scripts/meeting-two-player.sh
+          cat /tmp/uq-packaged-custody-phase1 /tmp/uq-vanilla-custody-result
       - name: Upload build and checksums
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
