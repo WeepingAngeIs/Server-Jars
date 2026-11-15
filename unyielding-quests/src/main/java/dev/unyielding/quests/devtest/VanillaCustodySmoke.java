@@ -5,6 +5,7 @@ import dev.unyielding.quests.jail.JailEscrowJournal;
 import dev.unyielding.quests.jail.JailVanillaCustody;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.DataOutput;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
@@ -17,6 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -155,7 +157,8 @@ public final class VanillaCustodySmoke {
             // Vanilla Inventory's Slot tags are the canonical original source slots,
             // including armor 100..103 and offhand 150; nested stacks stay opaque.
             root.put("items", items);
-            var output = new ByteArrayOutputStream(); NbtIo.write(root, new DataOutputStream(output));
+            var output = new ByteArrayOutputStream(); var data = new DataOutputStream(output);
+            data.writeByte(10); data.writeUTF(""); canonicalPayload(root, data);
             return new JailVanillaCustody.View(output.toByteArray(), items.isEmpty(), persistent.hasUUID(MARKER) ? persistent.getUUID(MARKER) : null);
         }
         private Path file() { return player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner() + ".dat"); }
@@ -176,11 +179,28 @@ public final class VanillaCustodySmoke {
             try (var directory = FileChannel.open(file().getParent(), StandardOpenOption.READ)) { directory.force(true); }
             var disk = durable();
             if (!Arrays.equals(before.inventory(), disk.inventory()) || before.empty() != disk.empty()
-                    || !java.util.Objects.equals(before.removedBy(), disk.removedBy())) throw new IOException("player save readback mismatch");
+                    || !java.util.Objects.equals(before.removedBy(), disk.removedBy())) throw new IOException("player save readback mismatch: inventory="
+                            + Arrays.equals(before.inventory(), disk.inventory()) + ", empty=" + before.empty() + "/" + disk.empty()
+                            + ", marker=" + before.removedBy() + "/" + disk.removedBy());
         }
         @Override public void clearAndMark(UUID transaction) throws IOException {
             guard(); player.getInventory().clearContent(); player.getPersistentData().putUUID(MARKER, transaction);
         }
+    }
+    // Standard NBT with sorted compound keys. List order, primitive types, exact
+    // values and all item component fields remain unchanged. Hash-map iteration
+    // order is not meaningful NBT state and may differ after a disk round-trip.
+    private static void canonicalPayload(Tag tag, DataOutput output) throws IOException {
+        if (tag instanceof CompoundTag compound) {
+            for (String key : new java.util.TreeSet<>(compound.getAllKeys())) {
+                Tag value = compound.get(key); output.writeByte(value.getId()); output.writeUTF(key);
+                canonicalPayload(value, output);
+            }
+            output.writeByte(0);
+        } else if (tag instanceof ListTag list) {
+            output.writeByte(list.getElementType()); output.writeInt(list.size());
+            for (Tag value : list) canonicalPayload(value, output);
+        } else tag.write(output);
     }
     private static void require(boolean value, String message) { if (!value) throw new IllegalStateException(message); }
 }
