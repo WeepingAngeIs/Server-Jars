@@ -155,6 +155,10 @@ public final class Essentials {
 
     public static final class Events {
         @SubscribeEvent
+        public void onPermissions(net.neoforged.neoforge.server.permission.events.PermissionGatherEvent.Nodes e) {
+            e.addNodes(PartyMeetings.USE);
+        }
+        @SubscribeEvent
         public void onStarting(ServerStartingEvent e) {
             server = e.getServer();
             data = server.overworld().getDataStorage().computeIfAbsent(EssData.factory(), EssData.NAME);
@@ -171,6 +175,7 @@ public final class Essentials {
         @SubscribeEvent
         public void onCommands(RegisterCommandsEvent e) {
             TeleCmds.register(e.getDispatcher());
+            PartyMeetings.register(e.getDispatcher());
             AdminCmds.register(e.getDispatcher());
             MiscCmds.register(e.getDispatcher());
         }
