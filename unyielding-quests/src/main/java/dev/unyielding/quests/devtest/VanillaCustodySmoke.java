@@ -159,7 +159,10 @@ public final class VanillaCustodySmoke {
             root.put("items", items);
             var output = new ByteArrayOutputStream(); var data = new DataOutputStream(output);
             data.writeByte(10); data.writeUTF(""); canonicalPayload(root, data);
-            return new JailVanillaCustody.View(output.toByteArray(), items.isEmpty(), persistent.hasUUID(MARKER) ? persistent.getUUID(MARKER) : null);
+            byte[] serialized = output.toByteArray();
+            CompoundTag decoded = NbtIo.read(new java.io.DataInputStream(new java.io.ByteArrayInputStream(serialized)));
+            if (!root.equals(decoded)) throw new IOException("canonical snapshot lost NBT state");
+            return new JailVanillaCustody.View(serialized, items.isEmpty(), persistent.hasUUID(MARKER) ? persistent.getUUID(MARKER) : null);
         }
         private Path file() { return player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner() + ".dat"); }
         @Override public JailVanillaCustody.View durable() throws IOException {

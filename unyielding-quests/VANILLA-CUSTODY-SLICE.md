@@ -13,6 +13,10 @@ player save, file force, directory force and exact readback of inventory plus th
 same transaction marker does it append HELD. Snapshots preserve vanilla source
 Slot tags, stack components and nested item data without traversing nested items
 as a second inventory. Journal snapshots cannot be opened or withdrawn as items.
+The fixture encodes standard NBT with compound keys sorted, retaining all types,
+values and list order; arbitrary hash-map iteration order is not inventory state.
+Every encoding is decoded and compared with the entire original tag, so this
+normalization cannot silently omit a component or change its value.
 
 The fixture uses vanilla `Inventory.save`, including armor/offhand. It refuses a
 non-player menu, cursor stack and crafting/result slots. It runs synchronously
