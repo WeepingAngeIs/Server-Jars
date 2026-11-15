@@ -3,6 +3,11 @@ set -euo pipefail
 repository=$(cd "$(dirname "$0")/../.." && pwd)
 project="$repository/unyielding-quests"
 logs="$repository/meeting-two-player-logs"
+if [[ "${UQ_PACKAGED_JAIL_SMOKE:-0}" == 1 ]]; then
+  [[ "${GITHUB_ACTIONS:-}" == true && "${RUNNER_ENVIRONMENT:-}" == github-hosted ]]
+  project="$repository/dist/packaged-harness"
+  logs="$repository/dist/packaged-smoke/jail-player-logs"
+fi
 result_file="${UQ_RESULT_FILE:-/tmp/uq-meeting-two-player-result}"
 mkdir -p "$logs" "$project/run-server" "$project/run" "$project/run-visitor"
 for client_dir in "$project/run" "$project/run-visitor"; do
@@ -47,7 +52,7 @@ cleanup() {
 }
 trap cleanup EXIT
 cd "$project"
-./gradlew --no-daemon --console=plain -Dorg.gradle.jvmargs=-Xmx768m \
+"$repository/unyielding-quests/gradlew" --no-daemon --console=plain -Dorg.gradle.jvmargs=-Xmx768m \
   -I "$repository/.github/scripts/meeting-two-player.gradle" \
   createServerLaunchScript createClientLaunchScript createVisitorLaunchScript > "$logs/prepare.log" 2>&1
 server_script=$(find build -type f -name runServer.sh -print -quit)

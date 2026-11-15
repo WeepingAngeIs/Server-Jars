@@ -38,6 +38,23 @@ jobs:
         run: python3 .github/scripts/prepare-packaged-server.py
       - name: Start and restart disposable world using assembled JAR
         run: bash .github/scripts/packaged-server-smoke.sh
+      - name: Install isolated client display dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Exercise packaged jail with two real players and restart
+        env:
+          UQ_PACKAGED_JAIL_SMOKE: '1'
+          UQ_RESULT_FILE: /tmp/uq-jail-player-result
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          ALSOFT_DRIVERS: 'null'
+        run: |
+          export JAVA_TOOL_OPTIONS='-Duq.jailPlayers=true -Duq.jailPhase=1'
+          bash .github/scripts/meeting-two-player.sh
+          cp /tmp/uq-jail-player-result /tmp/uq-packaged-jail-phase1
+          export JAVA_TOOL_OPTIONS='-Duq.jailPlayers=true -Duq.jailPhase=2'
+          bash .github/scripts/meeting-two-player.sh
+          cat /tmp/uq-packaged-jail-phase1 /tmp/uq-jail-player-result
       - name: Upload build and checksums
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

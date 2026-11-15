@@ -92,10 +92,25 @@ public final class JailPlayerSmoke {
             require(level.getBlockState(min.below()).is(Blocks.GRASS_BLOCK), "placement replaced ground");
             commands.performPrefixedCommand(admin.createCommandSourceStack(), "jail Dev");
             require(data.assignment(admin.getUUID()) == null, "admin self-jail allowed");
+            var sword = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.NETHERITE_SWORD);
+            sword.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("Distinctive test item"));
+            prisoner.getInventory().setItem(0, sword);
+            prisoner.getInventory().setItem(39, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_HELMET));
+            prisoner.getInventory().setItem(40, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.SHIELD));
+            var beforeInventory = new java.util.ArrayList<net.minecraft.nbt.Tag>();
+            for (int i=0; i<prisoner.getInventory().getContainerSize(); i++) {
+                var stack = prisoner.getInventory().getItem(i);
+                beforeInventory.add(stack.isEmpty() ? new net.minecraft.nbt.CompoundTag() : stack.save(prisoner.registryAccess()));
+            }
             var prisonerPrior = dev.unyielding.quests.essentials.Loc.of(prisoner);
             commands.performPrefixedCommand(admin.createCommandSourceStack(), "jail Visitor");
             require(data.assignment(prisoner.getUUID()) == null, "admission must fail closed until inventory and origin escrow are available");
             require(prisoner.distanceToSqr(prisonerPrior.x(), prisonerPrior.y(), prisonerPrior.z()) < 0.0001, "refused admission moved player");
+            for (int i=0; i<beforeInventory.size(); i++) {
+                var stack = prisoner.getInventory().getItem(i);
+                var after = stack.isEmpty() ? new net.minecraft.nbt.CompoundTag() : stack.save(prisoner.registryAccess());
+                require(beforeInventory.get(i).equals(after), "refused admission changed inventory or components in slot " + i);
+            }
             // Continue testing existing prisoners with a disposable synthetic assignment;
             // this does not bypass the admission guard in the packaged mod.
             prisoner.teleportTo(level, jail.x(), jail.y(), jail.z(), jail.yaw(), jail.pitch());

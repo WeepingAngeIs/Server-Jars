@@ -30,3 +30,20 @@ namespace['DEPENDENCIES']['Open Parties and Claims 0.33.0'] = 'yWmXD7GW'
 namespace['DEPENDENCIES']['CobbleDollars 2.0.0 Beta 6.1 NeoForge'] = 'Iqiqjfsi'
 namespace['DEPENDENCIES']["Lightman's Currency 2.3.0.5 NeoForge"] = 'n2ynBeOK'
 namespace['main']()
+
+# Run the same two-real-player OPAC/jail checks from a separate test mod, never
+# from production development classes or inside the assembled distributable.
+source = (ROOT / 'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/JailPlayerSmoke.java').read_text(encoding='utf-8')
+before = 'package dev.unyielding.quests.devtest;'
+assert source.count(before) == 1
+source = source.replace(before, 'package dev.unyielding.bundlesmoke;', 1)
+before = '@EventBusSubscriber(modid = UnyieldingQuests.MODID)'
+assert source.count(before) == 1
+source = source.replace(before, '@EventBusSubscriber(modid = "uq_bundle_smoke")', 1)
+before = 'if (!net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"))'
+assert source.count(before) == 1
+source = source.replace(before, '''require(java.nio.file.Path.of(System.getenv("UQ_BUNDLE_JAR")).toRealPath().equals(
+                    net.neoforged.fml.ModList.get().getModFileById("unyieldingquests").getFile().getFilePath().toRealPath()),
+                    "player jail check did not load the assembled JAR");
+            if (!net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"))''', 1)
+(harness / 'src/main/java/dev/unyielding/bundlesmoke/JailPlayerSmoke.java').write_text(source, encoding='utf-8')
