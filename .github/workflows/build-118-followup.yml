@@ -30,8 +30,14 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew --no-daemon --console=plain build
-      - name: Assemble against verified current release
+      - name: Test packaged class dependency checks
+        run: python3 -m unittest discover -s .github/scripts -p test_class_dependencies.py -v
+      - name: Assemble verified release
         run: python3 .github/scripts/assemble-118-followup.py
+      - name: Prepare independent assembled-JAR server
+        run: python3 .github/scripts/prepare-packaged-server.py
+      - name: Start and restart disposable world using assembled JAR
+        run: bash .github/scripts/packaged-server-smoke.sh
       - name: Upload build and checksums
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -46,4 +52,5 @@ jobs:
           path: |
             unyielding-quests/build/reports/
             unyielding-quests/build/test-results/
+            dist/packaged-smoke/
           if-no-files-found: warn

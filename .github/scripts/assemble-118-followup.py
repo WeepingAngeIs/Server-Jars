@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
+from class_dependencies import complete_missing_classes, missing_references
 
 baseline = Path('ci-inputs/Unyielding-1.2.0-baseline.jar')
 expected = 'ec3ae2c48399e40ffa615ddec85408bc29b2479c5a35eb7236c3e036ebdf762c'
@@ -39,6 +40,17 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
         found = [n for n in names if n == class_root + '.class' or n.startswith(class_root + '$') and n.endswith('.class')]
         assert class_root + '.class' in found, f'Missing compiled {class_root}'
         updates.update((n, component.read(n)) for n in found)
+    # Overlay classes are compiled against the complete component, but the release
+    # starts from an older baseline. Include every missing referenced application
+    # class from that same component (including nested classes) to a fixed point.
+    # Never replace an unrelated existing baseline class or ship test-only helpers.
+    classes = {n: base.read(n) for n in base.namelist() if n.endswith('.class')}
+    classes.update({n: data for n, data in updates.items() if n.endswith('.class')})
+    additions = complete_missing_classes(classes, names, component.read, prefix + 'devtest/')
+    updates.update(additions)
+    for member in sorted(additions):
+        print(f'Added required application class: {member}')
+    del classes
     for frame in frames:
         assert frame in names, f'Missing {frame}'
         updates[frame] = component.read(frame)
@@ -76,6 +88,8 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     assert not any(n.startswith(prefix + 'devtest/QuestSharingPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'
+    unresolved = missing_references({n: result.read(n) for n in result.namelist() if n.endswith('.class')})
+    assert not unresolved, f'Unresolved application classes in final JAR: {unresolved}'
     assert result.read('META-INF/MANIFEST.MF').count(b'Implementation-Version: 1.2.0') == 1
     for name in base.namelist():
         if name not in replaced:
