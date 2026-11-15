@@ -86,7 +86,9 @@ public final class GroundSettings {
         if (k.equals("confirm")) {
             Pending preview=PENDING.remove(p.getUUID());
             if(preview==null || preview.server()!=p.getServer() || preview.expires()<=System.nanoTime() || !preview.settings().equals(fingerprint(b,o)) || b.getObjective("cui_candidate")==null || preview.epoch()!=get(b,b.getObjective("cui_candidate"),"preview_epoch",0)) { sync(p,false,"Preview expired or settings changed; preview again."); return; }
+            set(b,o,"manual_done",0);
             if (!runFunction(p,"manual_clear")) { sync(p,false,"Manual clear unavailable; no items were cleared."); return; }
+            if (get(b,o,"manual_done",0)!=1) { sync(p,false,"Manual clear did not finish. Some items may have been cleared; preview again."); return; }
             sync(p,false,"Manual clear finished. Fresh-drop grace still applies."); return;
         }
         if (k.equals("interval") && v>=5 && v<=86400) { set(b,o,"interval",v*20); set(b,o,"timer",0); set(b,o,"last_interval",v*20); sync(p,false,"Interval saved; countdown reset to "+v+" seconds."); return; }

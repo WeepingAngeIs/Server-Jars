@@ -6,3 +6,4 @@ execute if score #dim_overworld cui_items matches 1 in minecraft:overworld as @e
 execute if score #dim_nether cui_items matches 1 in minecraft:the_nether as @e[type=minecraft:item] run function cui_cleanup:manual_candidate
 execute if score #dim_end cui_items matches 1 in minecraft:the_end as @e[type=minecraft:item] run function cui_cleanup:manual_candidate
 tellraw @a [{"text":"[Unyielding Cleanup] Manual clear removed ","color":"light_purple"},{"score":{"name":"#removed","objective":"cui_items"}},{"text":" eligible item stacks. Fresh drops were protected."}]
+scoreboard players set #manual_done cui_items 1
