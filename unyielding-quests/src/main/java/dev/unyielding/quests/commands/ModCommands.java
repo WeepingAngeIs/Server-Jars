@@ -48,6 +48,7 @@ public final class ModCommands {
 
     public static void register(CommandDispatcher<CommandSourceStack> d) {
         ForceReviveCommand.register(d);
+        SpinRecoveryCommand.register(d);
         d.register(Commands.literal("configaudit").requires(s -> s.hasPermission(2)).executes(c ->
                 dev.unyielding.quests.settings.ConfigAudit.show(player(c)))
                 .then(Commands.literal("undo").executes(c -> dev.unyielding.quests.settings.ConfigEditor.undoLatest(player(c)))));

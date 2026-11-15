@@ -213,35 +213,47 @@ public final class LuckySpin {
         return rollWith(p, questTitle, weights());
     }
 
-    /** Same as {@link #roll} with explicit tier weights (used by the daily login reward). */
-    public static Spin rollWith(ServerPlayer p, String questTitle, int[] w) {
+    /** Select and serialize the exact prize without modifying player inventory or Pokemon storage. */
+    public static CompoundTag prepare(ServerPlayer p, int[] w) {
         if (!starterReady(p)) throw new IllegalStateException("Choose your starter before using Lucky Spin");
         Tier tier = usable(rollTier(RNG, w));
-        ItemStack shown;
-        String name;
-        boolean pokemon = false;
+        CompoundTag selected = new CompoundTag();
         if (tier.isPokemon()) {
             String species = SpinCobblemon.pick(tier, RNG);
             int lo = Config.SPIN_LEVEL_MIN.get(), hi = Config.SPIN_LEVEL_MAX.get();
             int level = Math.min(lo, hi) + RNG.nextInt(Math.abs(hi - lo) + 1);
-            SpinCobblemon.Given g = SpinCobblemon.give(p, species, level);
-            if (g == null) {
-                tier = usable(Tier.GOOD);
-                Prize pr = pick(pool(tier), RNG);
-                shown = pr == null ? new ItemStack(Items.BREAD) : pr.roll(RNG);
-                ItemHandlerHelper.giveItemToPlayer(p, shown.copy());
-                name = shown.getCount() + " × " + shown.getHoverName().getString();
-            } else {
-                pokemon = true;
-                shown = pokemonStack(species, g.shiny());
-                name = (g.shiny() ? "Shiny " : "") + g.name() + " (Lv. " + g.level() + ")";
-            }
+            selected = SpinCobblemon.prepare(p, species, level);
+            selected.putString("kind", "pokemon");
         } else {
             Prize pr = pick(pool(tier), RNG);
-            shown = pr == null ? new ItemStack(Items.BREAD) : pr.roll(RNG);
-            ItemHandlerHelper.giveItemToPlayer(p, shown.copy());
-            name = shown.getCount() + " × " + shown.getHoverName().getString();
+            ItemStack item = pr == null ? new ItemStack(Items.BREAD) : pr.roll(RNG);
+            selected.putString("kind", "item");
+            selected.put("item", item.save(p.registryAccess()));
+            selected.putString("name", item.getCount() + " × " + item.getHoverName().getString());
         }
+        selected.putInt("tier", tier.ordinal());
+        return selected;
+    }
+
+    /** Deliver only the recorded prize; callers must durably record intent before invoking this. */
+    public static Spin deliverPrepared(ServerPlayer p, CompoundTag selected, String questTitle, int[] w) {
+        if (!selected.contains("tier", net.minecraft.nbt.Tag.TAG_INT) || selected.getInt("tier") < 0
+                || selected.getInt("tier") >= Tier.values().length || !selected.contains("name", net.minecraft.nbt.Tag.TAG_STRING))
+            throw new IllegalArgumentException("Invalid recorded prize metadata");
+        Tier tier = Tier.of(selected.getInt("tier"));
+        boolean pokemon = selected.getString("kind").equals("pokemon");
+        ItemStack shown;
+        if (pokemon) {
+            if (!tier.isPokemon() || !selected.contains("pokemon", net.minecraft.nbt.Tag.TAG_COMPOUND)
+                    || selected.getString("species").isEmpty()) throw new IllegalArgumentException("Invalid recorded Pokemon prize");
+            shown = pokemonStack(selected.getString("species"), selected.getBoolean("shiny"));
+            SpinCobblemon.deliver(p, selected);
+        } else {
+            if (!selected.getString("kind").equals("item") || tier.isPokemon()) throw new IllegalArgumentException("Invalid recorded item prize");
+            shown = ItemStack.parse(p.registryAccess(), selected.getCompound("item")).orElseThrow(() -> new IllegalArgumentException("Invalid recorded item"));
+            ItemHandlerHelper.giveItemToPlayer(p, shown.copy());
+        }
+        String name = selected.getString("name");
         List<Entry> strip = new ArrayList<>(STRIP_LEN);
         for (int i = 0; i < STRIP_LEN; i++) strip.add(i == STRIP_INDEX ? new Entry(tier, shown.copy()) : decoy(RNG, w));
         Spin spin = new Spin(tier, pokemon, name, STRIP_INDEX, strip);
@@ -261,6 +273,11 @@ public final class LuckySpin {
         }
         UnyieldingQuests.LOGGER.info("[spin] {} won {} ({}) for quest {}", p.getGameProfile().getName(), name, tier, questTitle);
         return spin;
+    }
+
+    /** Legacy wrapper for callers which do not yet use durable recovery. */
+    public static Spin rollWith(ServerPlayer p, String questTitle, int[] w) {
+        return deliverPrepared(p, prepare(p, w), questTitle, w);
     }
 
     /** A Cobblemon "Pokemon model" item showing a species (Poke Ball when that item is missing). */

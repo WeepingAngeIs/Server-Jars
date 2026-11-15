@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.pokemon.Species;
 import dev.unyielding.quests.Config;
 import dev.unyielding.quests.UnyieldingQuests;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.ArrayList;
@@ -100,23 +101,35 @@ final class SpinCobblemon {
         return p.isEmpty() ? "cobblemon:pikachu" : p.get(r.nextInt(p.size()));
     }
 
-    /** Creates the Pokemon with random stats and puts it in the party (or the PC when the party is full). Null if it could not be created. */
-    static Given give(ServerPlayer p, String speciesId, int level) {
-        try {
+    /** Create and serialize the exact Pokemon before any storage is changed. */
+    static CompoundTag prepare(ServerPlayer p, String speciesId, int level) {
             ResourceLocation rl = ResourceLocation.tryParse(speciesId);
             Species sp = rl == null ? null : PokemonSpecies.getByIdentifier(rl);
-            if (sp == null) return null;
+            if (sp == null) throw new IllegalStateException("Selected Pokemon species is unavailable");
             PokemonProperties props = new PokemonProperties();
             props.setSpecies(speciesId);
             props.setLevel(level);
             Pokemon pk = props.create(p);
-            boolean ok = Cobblemon.INSTANCE.getStorage().getParty(p).add(pk);
-            if (!ok) ok = Cobblemon.INSTANCE.getStorage().getPC(p).add(pk);
-            if (!ok) return null;
-            return new Given(sp.getName(), pk.getLevel(), pk.getShiny());
-        } catch (Throwable t) {
-            UnyieldingQuests.LOGGER.error("[spin] Could not give {}", speciesId, t);
-            return null;
-        }
+            // Match PlayerPartyStore.add's original-trainer initialization before
+            // recording the prize, so the saved payload contains this identity too.
+            if (pk.getOriginalTrainerType() == com.cobblemon.mod.common.pokemon.OriginalTrainerType.NONE)
+                pk.setOriginalTrainer(p.getUUID());
+            pk.refreshOriginalTrainer();
+            CompoundTag out = new CompoundTag();
+            out.put("pokemon", pk.saveToNBT(p.registryAccess(), new CompoundTag()));
+            out.putString("species", speciesId);
+            out.putString("name", (pk.getShiny() ? "Shiny " : "") + sp.getName() + " (Lv. " + pk.getLevel() + ")");
+            out.putInt("level", pk.getLevel());
+            out.putBoolean("shiny", pk.getShiny());
+            return out;
+    }
+
+    /** Never fall back to another prize after attempting storage mutation. */
+    static void deliver(ServerPlayer p, CompoundTag selected) {
+        Pokemon pk = new Pokemon().loadFromNBT(p.registryAccess(), selected.getCompound("pokemon"));
+        // PlayerPartyStore.add already routes a full party into its configured PC.
+        // One call only: never attempt another insertion after a false result or exception.
+        boolean ok = Cobblemon.INSTANCE.getStorage().getParty(p).add(pk);
+        if (!ok) throw new IllegalStateException("Pokemon could not be added; admin review required");
     }
 }

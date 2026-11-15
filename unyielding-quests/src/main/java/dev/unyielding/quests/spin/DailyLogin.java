@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
+import java.io.IOException;
 
 /** Daily login reward: one Lucky Spin per real-world day, with a streak bonus for logging in day after day. */
 public final class DailyLogin {
@@ -27,6 +30,7 @@ public final class DailyLogin {
     public static final class Data extends SavedData {
         public static final String NAME = "unyieldingquests_daily";
         public final Map<UUID, long[]> players = new HashMap<>();
+        public final Set<UUID> appliedDebits = new HashSet<>();
 
         public static SavedData.Factory<Data> factory() {
             return new SavedData.Factory<>(Data::new, Data::load, null);
@@ -37,6 +41,10 @@ public final class DailyLogin {
             for (Tag e : tag.getList("players", Tag.TAG_COMPOUND)) {
                 CompoundTag c = (CompoundTag) e;
                 d.players.put(c.getUUID("p"), new long[]{c.getLong("day"), c.getLong("streak"), c.getLong("spins"), c.getLong("questSpins"), c.getLong("lastClaimMillis")});
+            }
+            for (Tag e : tag.getList("appliedDebits", Tag.TAG_COMPOUND)) {
+                CompoundTag c = (CompoundTag)e;
+                if (c.hasUUID("id")) d.appliedDebits.add(c.getUUID("id"));
             }
             return d;
         }
@@ -55,11 +63,18 @@ public final class DailyLogin {
                 l.add(c);
             }
             tag.put("players", l);
+            ListTag debits = new ListTag();
+            for (UUID id : appliedDebits) { CompoundTag c = new CompoundTag(); c.putUUID("id", id); debits.add(c); }
+            tag.put("appliedDebits", debits);
             return tag;
         }
     }
 
     private static Data data;
+    private static RewardJournal rewardJournal;
+    private static boolean recoveryReady;
+    public static RewardJournal journal() { return recoveryReady ? rewardJournal : null; }
+    public static RewardJournal journalForReview() { return rewardJournal; }
     private static final Map<UUID, Integer> PENDING = new HashMap<>();
 
     private DailyLogin() {
@@ -67,11 +82,26 @@ public final class DailyLogin {
 
     public static void onServerStart(MinecraftServer s) {
         data = s.overworld().getDataStorage().computeIfAbsent(Data.factory(), Data.NAME);
+        recoveryReady = false;
+        try {
+            rewardJournal = new RewardJournal(s.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("unyielding-recovery"));
+            for (RewardJournal.Entry entry : rewardJournal.list()) {
+                if (!applyDebit(entry)) throw new IOException("Cannot reconcile debit " + entry.id());
+                if (entry.state() == RewardJournal.State.PREPARED || entry.state() == RewardJournal.State.DEBIT_APPLIED || entry.state() == RewardJournal.State.DELIVERING)
+                    rewardJournal.transition(entry.id(), entry.state(), RewardJournal.State.HELD);
+            }
+            recoveryReady = true;
+        } catch (IOException | RuntimeException failure) {
+            UnyieldingQuests.LOGGER.error("Lucky Spin recovery unavailable; payouts are disabled pending admin review", failure);
+        }
         PENDING.clear();
         SpinMenu.clear();
     }
 
     public static void onServerStop() {
+        recoveryReady = false;
+        if (rewardJournal != null) try { rewardJournal.close(); } catch (IOException e) { UnyieldingQuests.LOGGER.error("Could not close reward journal", e); }
+        rewardJournal = null;
         data = null;
         PENDING.clear();
         SpinMenu.clear();
@@ -156,14 +186,46 @@ public final class DailyLogin {
         p.sendSystemMessage(Component.literal("Lucky Spin earned! Open your inventory and press Lucky Spin."));
     }
 
+    private static boolean applyDebit(RewardJournal.Entry entry) {
+        if (!RewardDebit.apply(data.players.get(entry.player()), data.appliedDebits, entry.id(), entry.slot())) return false;
+        data.setDirty();
+        return true;
+    }
+    public static boolean reconcileDebit(UUID id) throws IOException {
+        if (journal() == null || data == null) return false;
+        RewardJournal.Entry entry = rewardJournal.read(id);
+        return entry != null && applyDebit(entry);
+    }
+
     /** Only called after a server-validated manual request. */
     public static LuckySpin.Spin redeem(ServerPlayer p) {
         if (available(p)<=0 || !LuckySpin.starterReady(p)) return null;
+        if (journal() == null) throw new IllegalStateException("Reward recovery is unavailable; contact an administrator.");
         long[] rec=data.players.get(p.getUUID());
         int slot=Config.DAILY_ENABLED.get() && rec[2]>0 ? 2 : 3;
-        rec[slot]--;
-        data.setDirty();
-        return LuckySpin.rollWith(p,slot==2?"Daily login":"Earned spin",slot==2?new int[]{Config.DAILY_BASIC.get(),Config.DAILY_GOOD.get(),Config.DAILY_PARADOX.get(),Config.DAILY_MYTHICAL.get(),Config.DAILY_LEGENDARY.get()}:LuckySpin.weights());
+        int[] weights=slot==2?new int[]{Config.DAILY_BASIC.get(),Config.DAILY_GOOD.get(),Config.DAILY_PARADOX.get(),Config.DAILY_MYTHICAL.get(),Config.DAILY_LEGENDARY.get()}:LuckySpin.weights();
+        CompoundTag selected = LuckySpin.prepare(p, weights);
+        UUID id=UUID.randomUUID();
+        try {
+            RewardJournal.Entry entry=rewardJournal.begin(id,p.getUUID(),slot,selected.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            if (!applyDebit(entry)) throw new IOException("Cannot apply payout debit " + id);
+            rewardJournal.transition(id,RewardJournal.State.PREPARED,RewardJournal.State.DEBIT_APPLIED);
+            rewardJournal.transition(id,RewardJournal.State.DEBIT_APPLIED,RewardJournal.State.DELIVERING);
+            LuckySpin.Spin result=LuckySpin.deliverPrepared(p,selected,slot==2?"Daily login":"Earned spin",weights);
+            // Player and Pokemon storage are saved separately; an operator must reconcile this record.
+            rewardJournal.transition(id,RewardJournal.State.DELIVERING,RewardJournal.State.HELD);
+            return result;
+        } catch (IOException failure) {
+            recoveryReady=false;
+            throw new IllegalStateException("Payout requires administrator recovery ("+id+").",failure);
+        } catch (RuntimeException failure) {
+            try {
+                RewardJournal.Entry entry=rewardJournal.read(id);
+                if(entry!=null && entry.state()!=RewardJournal.State.HELD && entry.state()!=RewardJournal.State.COMPLETE)
+                    rewardJournal.transition(id,entry.state(),RewardJournal.State.HELD);
+            } catch (IOException journalFailure) { recoveryReady=false; failure.addSuppressed(journalFailure); }
+            throw failure;
+        }
     }
 
     /** "Streak 3 days, next reward tomorrow" style status. */
