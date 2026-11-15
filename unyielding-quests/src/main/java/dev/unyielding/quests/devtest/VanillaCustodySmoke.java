@@ -34,6 +34,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 @EventBusSubscriber(modid = UnyieldingQuests.MODID)
 public final class VanillaCustodySmoke {
     private static final String MARKER = "uq_disposable_custody";
+    private static final String RESTORED = "uq_disposable_restored";
     private static final UUID HELD = UUID.fromString("73409e80-1541-428a-8aba-dd3695ff2f01");
     private static final UUID INTERRUPTED = UUID.fromString("73409e80-1541-428a-8aba-dd3695ff2f02");
     private static boolean finished;
@@ -125,8 +126,8 @@ public final class VanillaCustodySmoke {
         }
     }
 
-    private static void seed(ServerPlayer player) throws IOException {
-        player.getInventory().clearContent(); player.getPersistentData().remove(MARKER);
+    static void seed(ServerPlayer player) throws IOException {
+        player.getInventory().clearContent(); player.getPersistentData().remove(MARKER); player.getPersistentData().remove(RESTORED);
         ItemStack sword = new ItemStack(Items.NETHERITE_SWORD);
         sword.set(DataComponents.CUSTOM_NAME, Component.literal("Escrow component fixture")); sword.setDamageValue(17);
         CompoundTag custom = new CompoundTag(); custom.putString("unique", UUID.randomUUID().toString());
@@ -141,13 +142,16 @@ public final class VanillaCustodySmoke {
     }
 
     /** Same-thread exclusive test path; this does not claim to capture Accessories or arbitrary mod stores. */
-    private record PlayerPort(ServerPlayer player) implements JailVanillaCustody.InventoryPort {
+    record PlayerPort(ServerPlayer player) implements JailVanillaCustody.InventoryPort {
         private void guard() throws IOException {
             if (!player.server.isSameThread() || player.containerMenu != player.inventoryMenu
                     || !player.containerMenu.getCarried().isEmpty()) throw new IOException("transient inventory");
             for (int i = 0; i < 5; i++) if (player.inventoryMenu.getSlot(i).hasItem()) throw new IOException("crafting items present");
         }
         @Override public UUID owner() { return player.getUUID(); }
+        @Override public boolean online() {
+            return player.server.isSameThread() && player.server.getPlayerList().getPlayer(owner()) == player && !player.hasDisconnected();
+        }
         @Override public JailVanillaCustody.View current() throws IOException {
             guard(); return view(player.getInventory().save(new ListTag()), player.getPersistentData());
         }
@@ -162,7 +166,8 @@ public final class VanillaCustodySmoke {
             byte[] serialized = output.toByteArray();
             CompoundTag decoded = NbtIo.read(new java.io.DataInputStream(new java.io.ByteArrayInputStream(serialized)));
             if (!root.equals(decoded)) throw new IOException("canonical snapshot lost NBT state");
-            return new JailVanillaCustody.View(serialized, items.isEmpty(), persistent.hasUUID(MARKER) ? persistent.getUUID(MARKER) : null);
+            return new JailVanillaCustody.View(serialized, items.isEmpty(), persistent.hasUUID(MARKER) ? persistent.getUUID(MARKER) : null,
+                    persistent.hasUUID(RESTORED) ? persistent.getUUID(RESTORED) : null);
         }
         private Path file() { return player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner() + ".dat"); }
         @Override public JailVanillaCustody.View durable() throws IOException {
@@ -182,12 +187,41 @@ public final class VanillaCustodySmoke {
             try (var directory = FileChannel.open(file().getParent(), StandardOpenOption.READ)) { directory.force(true); }
             var disk = durable();
             if (!Arrays.equals(before.inventory(), disk.inventory()) || before.empty() != disk.empty()
-                    || !java.util.Objects.equals(before.removedBy(), disk.removedBy())) throw new IOException("player save readback mismatch: inventory="
+                    || !java.util.Objects.equals(before.removedBy(), disk.removedBy())
+                    || !java.util.Objects.equals(before.restoredBy(), disk.restoredBy())) throw new IOException("player save readback mismatch: inventory="
                             + Arrays.equals(before.inventory(), disk.inventory()) + ", empty=" + before.empty() + "/" + disk.empty()
                             + ", marker=" + before.removedBy() + "/" + disk.removedBy());
         }
         @Override public void clearAndMark(UUID transaction) throws IOException {
             guard(); player.getInventory().clearContent(); player.getPersistentData().putUUID(MARKER, transaction);
+        }
+        private net.minecraft.world.entity.player.Inventory staged(byte[] snapshot, UUID transaction) throws IOException {
+            guard();
+            if (!online() || !player.getInventory().isEmpty() || !transaction.equals(current().removedBy()) || current().restoredBy() != null)
+                throw new IOException("Restore destination occupied, changed or offline");
+            CompoundTag source = NbtIo.read(new java.io.DataInputStream(new java.io.ByteArrayInputStream(snapshot)), NbtAccounter.create(16L * 1024 * 1024));
+            if (source.getInt("version") != 1 || source.getInt("vanillaSlots") != player.getInventory().getContainerSize()
+                    || !source.contains("items", 9)) throw new IOException("Unsupported custody snapshot");
+            var staged = new net.minecraft.world.entity.player.Inventory(player);
+            staged.load(source.getList("items", 10));
+            if (staged.isEmpty() || !Arrays.equals(view(staged.save(new ListTag()), new CompoundTag()).inventory(), snapshot))
+                throw new IOException("Snapshot cannot round-trip all components and source slots");
+            for (int slot = 0; slot < staged.getContainerSize(); slot++) {
+                ItemStack item = staged.getItem(slot);
+                if (!item.isEmpty() && (item.getCount() <= 0 || item.getCount() > item.getMaxStackSize())) throw new IOException("Restore overflow");
+            }
+            return staged;
+        }
+        @Override public JailVanillaCustody.View planRestore(byte[] snapshot, UUID transaction) throws IOException {
+            var staged = staged(snapshot, transaction);
+            CompoundTag receipt = new CompoundTag(); receipt.putUUID(RESTORED, transaction);
+            return view(staged.save(new ListTag()), receipt);
+        }
+        @Override public void restoreExact(byte[] snapshot, UUID transaction) throws IOException {
+            var staged = staged(snapshot, transaction);
+            for (int slot = 0; slot < staged.getContainerSize(); slot++) player.getInventory().setItem(slot, staged.getItem(slot).copy());
+            player.getPersistentData().remove(MARKER); player.getPersistentData().putUUID(RESTORED, transaction);
+            player.getInventory().setChanged();
         }
     }
     // Standard NBT with sorted compound keys. List order, primitive types, exact

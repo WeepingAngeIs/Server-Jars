@@ -1,7 +1,7 @@
 # Experimental vanilla custody slice
 
 Production jail admissions remain disabled. This is not complete custody, an
-accessible confiscation chest, an accessory transfer, an origin swap, or a refund.
+accessible confiscation chest, an accessory transfer, or an origin swap.
 The only Minecraft inventory mutation adapter is a devtest fixture excluded from
 the component JAR and copied into a separate disposable CI test mod. The shipped
 transaction class has no command/event registration or production adapter.
@@ -51,3 +51,47 @@ damage, armor/offhand and a nested shulker stack. A second server process reload
 both a HELD player and a player interrupted before removal. Existing partial-frame
 and checksum corruption tests remain in place. No installation/profile/world
 changes are part of this slice.
+
+## Controlled vanilla restoration
+
+The experimental transaction now supports HELD -> RESTORE_STARTED -> COMPLETE.
+Before changing that phase, restoration requires an online player, exact matching
+live/saved HELD marker, and a wholly empty vanilla inventory. It decodes the entire
+snapshot into a separate staging inventory, checks its supported shape/slot count,
+round-trips every component and original source slot, and refuses stack overflow.
+This conservative slice does not merge items or choose alternate slots. Any
+occupied slot (including one originally empty), a full inventory or an unknown
+format leaves HELD and the exact snapshot unchanged. Nothing overwrites existing
+items, drops overflow or deletes custody records.
+
+After the durable RESTORE_STARTED append, the destination is checked again. The
+fixture inserts staged copies into original slots and replaces the held marker
+with a transaction-specific restored receipt in the same player save. COMPLETE
+requires exact live/player-file comparison, forced player file and directory,
+then a forced journal append. The COMPLETE record and snapshot remain retained;
+repeated release returns ALREADY_COMPLETE without inspecting or replacing any
+subsequently consumed, moved or lost item. Receipts are retained; clearing/rotating
+them for future admission is outside this slice.
+
+RESTORE_STARTED never authorizes another grant, even when a restart shows the
+empty pre-restore inventory. Matching complete inventory plus its saved restored
+receipt is still review-only until explicit `confirmRestoredForDisposableTest`.
+That separate operation only appends COMPLETE, never changes inventory or saves
+the player. Partial restores, mismatched slots/receipts, failed saves and missing
+or corrupt history refuse both automatic transfer and completion. Original
+snapshots stay available for future explicit administrative reconciliation; no
+general partial-inventory repair or offline-file editing is implemented.
+
+Pure fault tests reopen journals and reload persisted player copies at every
+restoration boundary. They cover pre/post-save failures, partial setters, changed
+destinations, occupied/full inventories, offline players, overflow, invalid plans,
+missing/corrupt history and repeat releases. Independent assembled-JAR tests run
+the real adapter with connected players in a separate `jail_restore_smoke` world.
+They exercise all checkpoints and real component/armor/offhand/nested-container
+restoration, then actually restart with one pre-mutation interrupted player and
+one post-save interrupted player. A third server process verifies COMPLETE
+survives another restart and consumed items cannot be granted twice. These are
+controlled interruption fixtures and ordinary restarts, not physical power-loss
+tests or proof of cross-store atomicity. The adapter still exists only in the
+separate test mod; full accessory/origin workflow, production quarantine/locks,
+chest access and production admission remain unfinished and disabled.

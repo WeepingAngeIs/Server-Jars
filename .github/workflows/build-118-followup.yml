@@ -87,6 +87,20 @@ jobs:
           export JAVA_TOOL_OPTIONS='-Duq.vanillaCustody=true -Duq.custodyPhase=2'
           bash .github/scripts/meeting-two-player.sh
           cat /tmp/uq-packaged-custody-phase1 /tmp/uq-vanilla-custody-result
+      - name: Exercise assembled vanilla restoration through two actual restarts
+        env:
+          UQ_PACKAGED_JAIL_SMOKE: '1'
+          UQ_WORLD_NAME: jail_restore_smoke
+          UQ_RESULT_FILE: /tmp/uq-vanilla-restore-result
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          ALSOFT_DRIVERS: 'null'
+        run: |
+          cp -a dist/packaged-smoke/jail-player-logs dist/packaged-smoke/jail-custody-phase2
+          for phase in 1 2 3; do
+            export JAVA_TOOL_OPTIONS="-Duq.vanillaRestore=true -Duq.restorePhase=$phase"
+            bash .github/scripts/meeting-two-player.sh
+            cp -a dist/packaged-smoke/jail-player-logs "dist/packaged-smoke/jail-restore-phase$phase"
+          done
       - name: Upload build and checksums
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
