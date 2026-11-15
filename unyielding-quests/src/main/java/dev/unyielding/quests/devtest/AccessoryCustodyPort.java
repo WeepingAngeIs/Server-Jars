@@ -58,7 +58,10 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
         Map<String,Object> canonical = new TreeMap<>((Map<String,Object>)call("io.wispforest.accessories.api.AccessoriesCapability",capability,"getContainers"));
         Object holder = call("io.wispforest.accessories.api.AccessoriesCapability",capability,"getHolder");
         try {
-            if (!((List<?>)type("io.wispforest.accessories.impl.AccessoriesHolderImpl").getField("invalidStacks").get(holder)).isEmpty()) throw new IOException("Pending invalid accessory stacks require review");
+            var pending=(List<?>)type("io.wispforest.accessories.impl.AccessoriesHolderImpl").getField("invalidStacks").get(holder);
+            // Resizing may queue EMPTY entries. They carry no items; nonempty
+            // entries remain an unconditional refusal and are never discarded.
+            for(Object value:pending) if(!(value instanceof ItemStack stack)||!stack.isEmpty()) throw new IOException("Pending invalid accessory stacks require review: "+pending);
         } catch (ReflectiveOperationException e) { throw new IOException("Cannot inspect invalid stack queue",e); }
         Object curios = ((Optional<?>)call("top.theillusivec4.curios.api.CuriosApi",null,"getCuriosInventory",new Class<?>[]{LivingEntity.class},player)).orElseThrow(() -> new IOException("Missing Curios view"));
         Map<String,Object> aliases = new TreeMap<>();
@@ -123,6 +126,8 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
             for (String channel : new String[]{"items","cosmetics"}) {
                 if (!store.contains(channel)) store.put(channel,new ListTag());
                 if (!store.contains(channel,9)) throw new IOException("Unknown serialized channel");
+                ListTag list=(ListTag)store.get(channel);
+                if(!list.isEmpty()&&list.getElementType()!=10) throw new IOException("Unknown serialized stack list");
             }
         }
         return copy;
@@ -140,7 +145,9 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
         }
         return new JailVanillaCustody.View(encode(body),empty,vanillaView.removedBy(),vanillaView.restoredBy());
     }
-    @Override public JailVanillaCustody.View current() throws IOException { layout(); return view(vanilla.current(),player.saveWithoutId(new CompoundTag())); }
+    @Override public JailVanillaCustody.View current() throws IOException {
+        layout(); var v=vanilla.current(); var serialized=player.saveWithoutId(new CompoundTag()); layout(); return view(v,serialized);
+    }
     @Override public JailVanillaCustody.View durable() throws IOException {
         try (var input=Files.newInputStream(player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner()+".dat"))) {
             return view(vanilla.durable(),NbtIo.readCompressed(input,NbtAccounter.create(16L*1024*1024)));
@@ -148,7 +155,8 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
     }
     @Override public void persistAndVerify() throws IOException {
         settled(layout()); var before=current(); vanilla.persistAndVerify(); var saved=durable();
-        if (!Arrays.equals(before.inventory(),saved.inventory()) || !Objects.equals(before.removedBy(),saved.removedBy()) || !Objects.equals(before.restoredBy(),saved.restoredBy())) throw new IOException("Accessory player save mismatch");
+        if (!Arrays.equals(before.inventory(),saved.inventory()) || !Arrays.equals(before.inventory(),current().inventory())
+                || !Objects.equals(before.removedBy(),saved.removedBy()) || !Objects.equals(before.restoredBy(),saved.restoredBy())) throw new IOException("Accessory player save mismatch");
     }
     private byte[] emptyBody(byte[] bytes) throws IOException {
         CompoundTag root=decode(bytes), v=decode(root.getByteArray("vanilla")); v.put("items",new ListTag()); root.putByteArray("vanilla",encode(v));
@@ -165,6 +173,7 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
     private List<Row> rows(byte[] snapshot,Layout layout) throws IOException {
         CompoundTag root=decode(snapshot);
         if (root.getInt("version")!=1 || !VERSIONS.equals(root.getString("dependencies")) || !"controlled-fixtures-v1".equals(root.getString("policy"))) throw new IOException("Changed accessory snapshot dependencies");
+        if(!root.getCompound("holder").equals(normalize(root.getCompound("holder")))) throw new IOException("Unknown accessory holder format");
         if (!Arrays.equals(emptyBody(snapshot),emptyBody(current().inventory()))) throw new IOException("Accessory slots or holder state changed");
         List<Row> rows=new ArrayList<>(); Set<AccessoryCustodyPolicy.Slot> used=new HashSet<>();
         CompoundTag stores=root.getCompound("holder").getCompound(CONTAINERS);
