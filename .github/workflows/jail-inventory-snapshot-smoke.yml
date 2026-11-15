@@ -1,0 +1,49 @@
+name: Jail inventory snapshot real-API smoke
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/recovery-review-safe']
+permissions:
+  contents: read
+jobs:
+  inventory-read-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch verified public dependencies
+        run: |
+          python3 .github/scripts/fetch-build-dependencies.py
+          for d in run-server run run-visitor; do mkdir -p "unyielding-quests/$d/mods"; done
+          cd unyielding-quests/run-server/mods
+          curl --fail --location --retry 3 'https://cdn.modrinth.com/data/jtmvUHXj/versions/Fb55Fgjz/accessories-neoforge-1.1.0-beta.53%2B1.21.1.jar' -o accessories.jar
+          echo 'baafa9a5e48c17c243d45b6260095ffef2ad00e4e970aafc5b1ca9ab5f4a542b18b0fb35d4584318791edbaf00a3c44806f62062513d991383192aca4df27a07  accessories.jar' | sha512sum -c -
+          curl --fail --location --retry 3 'https://cdn.modrinth.com/data/ySnjMzLg/versions/JMgVNypu/accessories_compat_layer-neoforge-0.1.12%2B1.21.1.jar' -o compat.jar
+          echo 'f729c4e1c069182aac89805551a056b937e17fd6d9c031b14a6003b5c4fac609563f2c3d6786fe56ecfb62a1094124e68b2e4fb6e2612818d899d3bac181c215  compat.jar' | sha512sum -c -
+          curl --fail --location --retry 3 'https://cdn.modrinth.com/data/vvuO3ImH/versions/yohfFbgD/curios-neoforge-9.5.1%2B1.21.1.jar' -o curios.jar
+          echo '5981a267686b744e7e3c227f78cbcd5267c14ac6979a28e814695f4589273998563147207fef4a5cdb7cdbdc39797cd95d9e4abadb55869f18e02a38d0654ae5  curios.jar' | sha512sum -c -
+          curl --fail --location --retry 3 'https://cdn.modrinth.com/data/ccKDOlHs/versions/NMCHU6DZ/owo-lib-neoforge-0.12.15.5-beta.1%2B1.21.jar' -o owo.jar
+          echo '4de5c5d52139244b8c5260d641087664d992624b822599a32e03c08eb133be854a2f413667dbca1e55772445b04a70210c17b3bc13e3c88e425e7d928104b9fa  owo.jar' | sha512sum -c -
+          cp *.jar ../../run/mods/
+          cp *.jar ../../run-visitor/mods/
+      - name: Prepare display
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Snapshot connected player without mutation
+        env:
+          UQ_RESULT_FILE: /tmp/uq-jail-snapshot-result
+          JAVA_TOOL_OPTIONS: -Duq.jailInventorySnapshot=true
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          ALSOFT_DRIVERS: 'null'
+        run: bash .github/scripts/meeting-two-player.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: jail-inventory-snapshot-smoke-logs
+          path: meeting-two-player-logs/
+          if-no-files-found: warn
