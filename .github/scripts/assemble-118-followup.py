@@ -25,6 +25,7 @@ roots = [
     'spin/LuckySpin', 'spin/SpinCobblemon', 'spin/RewardJournal', 'spin/RewardDebit',
     'team/Team', 'team/TeamManager', 'tutorial/TutorialManager', 'ultimine/Ultimine', 'ultimine/UltimineConfig',
     'essentials/Essentials', 'essentials/EssConfig', 'essentials/TeleCmds', 'essentials/DestinationMenu', 'essentials/DestinationPolicy', 'essentials/PartyMeetings', 'essentials/PartyMeetingPolicy', 'essentials/PartyMeetingData', 'essentials/MeetingClaims', 'client/DestinationScreen', 'settings/AdminSettings', 'settings/SharingSnapshot', 'quest/QuestManager', 'quest/QuestData',
+    'jail/JailData', 'jail/JailCommands', 'jail/JailPlacement', 'jail/JailEnforcement', 'jail/JailBoundary',
 ]
 frames = {f'assets/unyieldingquests/textures/gui/sprites/icon_spin_frame_{i}.png' for i in range(4)}
 out = Path('dist/120-release/Unyielding-1.2.0.jar')
