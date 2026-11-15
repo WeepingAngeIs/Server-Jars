@@ -4,6 +4,18 @@ repository=$(cd "$(dirname "$0")/../.." && pwd)
 project="$repository/unyielding-quests"
 logs="$repository/meeting-two-player-logs"
 mkdir -p "$logs" "$project/run-server" "$project/run" "$project/run-visitor"
+for client_dir in "$project/run" "$project/run-visitor"; do
+  cat > "$client_dir/options.txt" <<'EOF'
+guiScale:2
+renderDistance:2
+simulationDistance:2
+maxFps:30
+enableVsync:false
+onboardAccessibility:false
+soundCategory_master:0.0
+tutorialStep:none
+EOF
+done
 printf 'eula=true\n' > "$project/run-server/eula.txt"
 cat > "$project/run-server/server.properties" <<'EOF'
 online-mode=false
@@ -56,5 +68,8 @@ for ((i=0; i<360; i++)); do
   kill -0 "$server_pid" 2>/dev/null && kill -0 "$client_pid" 2>/dev/null && kill -0 "$visitor_pid" 2>/dev/null || break
   sleep 2
 done
-tail -100 "$logs/server.log" "$logs/client.log" "$logs/visitor.log"
+for log in "$logs/server.log" "$logs/client.log" "$logs/visitor.log"; do
+  echo "Last 100 lines of $log:"
+  tail -n 100 -- "$log" || true
+done
 exit 1
