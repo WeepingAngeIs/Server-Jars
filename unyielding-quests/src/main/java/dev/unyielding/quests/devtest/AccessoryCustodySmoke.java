@@ -145,7 +145,22 @@ public final class AccessoryCustodySmoke {
         return p.player.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments").getCompound(AccessoryCustodyPort.STORE).getString("equip_control");
     }
     static AccessoryCustodyPort seed(ServerPlayer player) throws Exception {
-        mode="normal"; var p=new AccessoryCustodyPort(player,fixtures); var layout=p.layout();
+        mode="normal"; var p=new AccessoryCustodyPort(player,fixtures);
+        // Reset our own zero-capacity negative fixture only while both physical
+        // channels are empty. No production transfer uses this setup operation.
+        Object cap=((Optional<?>)AccessoryCustodyPort.call("io.wispforest.accessories.api.AccessoriesCapability",null,"getOptionally",new Class<?>[]{net.minecraft.world.entity.LivingEntity.class},player)).orElseThrow();
+        Map<?,?> raw=(Map<?,?>)AccessoryCustodyPort.call("io.wispforest.accessories.api.AccessoriesCapability",cap,"getContainers",new Class<?>[0]);
+        Object rawRing=raw.get("ring");
+        if(rawRing!=null) {
+            Container normal=(Container)AccessoryCustodyPort.call("io.wispforest.accessories.api.AccessoriesContainer",rawRing,"getAccessories",new Class<?>[0]);
+            Container cosmetic=(Container)AccessoryCustodyPort.call("io.wispforest.accessories.api.AccessoriesContainer",rawRing,"getCosmeticAccessories",new Class<?>[0]);
+            if(normal.getContainerSize()==0) {
+                require(normal.isEmpty()&&cosmetic.isEmpty(),"cannot reset populated fixture slots");
+                AccessoryCustodyPort.call("io.wispforest.accessories.api.AccessoriesContainer",rawRing,"removeModifier",new Class<?>[]{ResourceLocation.class},RESIZE);
+                AccessoryCustodyPort.call("io.wispforest.accessories.api.AccessoriesContainer",rawRing,"update",new Class<?>[0]); p.flush();
+            }
+        }
+        var layout=p.layout();
         for(var id:layout.slots()) p.container(layout,id).setItem(id.index(),ItemStack.EMPTY);
         p.flush();
         for(Object c:layout.canonical().values()) {
@@ -215,16 +230,16 @@ public final class AccessoryCustodySmoke {
         }
     }
     static void negatives(Path dir,ServerPlayer player) throws Exception {
-        for(String problem:new String[]{"unsupported","binding","deny","mutate","resize","unequip_mutate","partial_remove"}) {
+        for(String problem:new String[]{"unsupported","binding","cosmetic_binding","deny","mutate","resize","unequip_mutate","partial_remove"}) {
             var p=seed(player); var layout=p.layout(); ItemStack source=layout.normal().get("ring").getItem(0).copy();
             if(problem.equals("unsupported")) layout.normal().get("ring").setItem(0,new ItemStack(Items.DIAMOND));
-            if(problem.equals("binding")) layout.normal().get("ring").getItem(0).enchant(player.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.BINDING_CURSE),1);
-            if(problem.equals("unsupported")||problem.equals("binding")) { p.flush(); p.persistAndVerify(); resetCounts(); }
+            if(problem.endsWith("binding")) (problem.equals("binding")?layout.normal():layout.cosmetic()).get("ring").getItem(0).enchant(player.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.BINDING_CURSE),1);
+            if(problem.equals("unsupported")||problem.endsWith("binding")) { p.flush(); p.persistAndVerify(); resetCounts(); }
             mode=problem; if(problem.equals("partial_remove")) p.failAfterRemoval=1;
             Path path=dir.resolve(problem); UUID id=UUID.randomUUID(); JailEscrowJournal.provisionNew(path);
             try(var journal=new JailEscrowJournal(path)) {
                 byte[] before=p.current().inventory(); expect(() -> JailVanillaCustody.removeForDisposableTest(journal,id,p,at -> {}),"");
-                if(problem.equals("unsupported")||problem.equals("binding")) {
+                if(problem.equals("unsupported")||problem.endsWith("binding")) {
                     require(journal.list().isEmpty()&&permissions==0&&Arrays.equals(before,p.current().inventory()),"unsafe preflight mutated or called permission hooks");
                 } else {
                     require(journal.read(id).state()==JailEscrowJournal.State.REMOVAL_STARTED&&Arrays.equals(before,journal.read(id).snapshot()),"callback failure lost source");
@@ -240,7 +255,11 @@ public final class AccessoryCustodySmoke {
         for(String problem:new String[]{"occupied","missing_slot","dependencies","equip_deny","equip_mutate","partial_insert","save_before","save_after"}) {
             var p=seed(player); UUID id=UUID.randomUUID(); Path path=dir.resolve(problem); prepare(path,id,p);
             if(problem.equals("occupied")) { p.layout().cosmetic().get("ring").setItem(0,new ItemStack(Items.AMETHYST_SHARD)); p.flush(); p.persistAndVerify(); }
-            if(problem.equals("missing_slot")) resize(player,-1);
+            if(problem.equals("missing_slot")) {
+                Object ring=p.layout().canonical().get("ring");
+                resize(player,-p.layout().normal().get("ring").getContainerSize());
+                require(((Container)AccessoryCustodyPort.call("io.wispforest.accessories.api.AccessoriesContainer",ring,"getAccessories",new Class<?>[0])).getContainerSize()==0,"missing-slot fixture retained capacity");
+            }
             if(problem.equals("partial_insert")) p.failAfterInsertion=1;
             mode=problem;
             try(var journal=new JailEscrowJournal(path)) {

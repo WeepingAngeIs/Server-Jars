@@ -12,10 +12,16 @@ layer 0.1.12 and Curios 9.5.1+1.21.1. CI fetches their published version IDs and
 checks SHA512 hashes. Curios aliases are verified against the exact backing
 container identity; only canonical Accessories slots supply items. Both regular
 and cosmetic slots are captured once, with original names/indices, all item
-components, vanilla armor/offhand and the complete serialized accessory holder.
+components, vanilla armor/offhand and every serialized accessory container.
+Version 2 snapshots compare equipment/container state, preserving all slot data
+and stack fields. Holder-level UI preferences are outside custody ownership and
+remain at their current player values. An actual restart test exposed the client
+changing `equip_control` from MUST_CROUCH to MUST_NOT_CROUCH; restoration now tests
+that this current preference is preserved while every equipment field matches.
+Earlier experimental formats fail closed; no automatic migration/grant is used.
 
 The adapter requires audited synchronous fixture providers, single accessories,
-no slot modifiers or pending lifecycle/invalid-item queues at removal, and no
+no slot modifiers, pending lifecycle changes or nonempty invalid-item queues at removal, and no
 binding effect on accessories or vanilla armor/offhand. Unknown providers are
 rejected by a data-only preflight before saving or recording a transfer. No
 production provider whitelist is implied by the fixture whitelist.
@@ -35,7 +41,7 @@ does not edit previous stacks or call callbacks in place of the mod. It verifies
 settled normal/cosmetic slots after this handler and refuses unexpected inventory,
 layout or holder changes. Uncertain transfers are never replayed. Receipts share
 the player save with the Accessories attachment; the player file and directory
-are forced and the serialized holder plus vanilla inventory read back before HELD
+are forced and the serialized containers plus vanilla inventory read back before HELD
 or COMPLETE. Journal records retain all original data, including after completion.
 Changed/full/missing slots, changed dependency/policy metadata and unknown stack
 formats retain escrow. No fallback insertion, dropping, overwriting or snapshot
@@ -79,3 +85,6 @@ completed records and that consumed accessories cannot be granted again.
 The standard exact-commit final-JAR regressions still cover vanilla restoration,
 capture, jail terrain/layout/protection, advancement and startup/restart. These are
 ordinary restarts and deterministic interruptions, not real power-loss tests.
+The main release run then installs the pinned integration mods around that same
+assembled JAR and repeats the accessory phases without rebuilding/replacing it.
+The independent focused workflow provides earlier accessory failure diagnostics.

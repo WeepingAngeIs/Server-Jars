@@ -72,10 +72,12 @@ final class AccessoryCustodyPort implements JailVanillaCustody.InventoryPort {
             aliases.put(key,call(wrapper.getName(),entry.getValue(),"container"));
         }
         Map<String,Container> normal = new TreeMap<>(), cosmetic = new TreeMap<>();
+        Set<Container> physical=Collections.newSetFromMap(new IdentityHashMap<>());
         Map<String,AccessoryCustodyPolicy.Size> sizes = new TreeMap<>();
         for (var entry : canonical.entrySet()) {
             Container n = (Container)call("io.wispforest.accessories.api.AccessoriesContainer",entry.getValue(),"getAccessories");
             Container c = (Container)call("io.wispforest.accessories.api.AccessoriesContainer",entry.getValue(),"getCosmeticAccessories");
+            if(!physical.add(n)||!physical.add(c)) throw new IOException("Overlapping accessory channel storage");
             int size = (int)call("io.wispforest.accessories.api.AccessoriesContainer",entry.getValue(),"getSize");
             if (size != n.getContainerSize() || size != c.getContainerSize()) throw new IOException("Accessory size mismatch");
             normal.put(entry.getKey(),n); cosmetic.put(entry.getKey(),c); sizes.put(entry.getKey(),new AccessoryCustodyPolicy.Size(n.getContainerSize(),c.getContainerSize()));

@@ -101,6 +101,20 @@ jobs:
             bash .github/scripts/meeting-two-player.sh
             cp -a dist/packaged-smoke/jail-player-logs "dist/packaged-smoke/jail-restore-phase$phase"
           done
+      - name: Exercise actual accessory integration against the same assembled JAR
+        env:
+          UQ_PACKAGED_JAIL_SMOKE: '1'
+          UQ_WORLD_NAME: jail_accessory_smoke
+          UQ_RESULT_FILE: /tmp/uq-accessory-result
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          ALSOFT_DRIVERS: 'null'
+        run: |
+          python3 .github/scripts/install-accessory-test-runtime.py
+          for phase in 1 2 3; do
+            export JAVA_TOOL_OPTIONS="-Duq.accessoryCustody=true -Duq.accessoryPhase=$phase"
+            bash .github/scripts/meeting-two-player.sh
+            cp -a dist/packaged-smoke/jail-player-logs "dist/packaged-smoke/accessory-phase$phase"
+          done
       - name: Upload build and checksums
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

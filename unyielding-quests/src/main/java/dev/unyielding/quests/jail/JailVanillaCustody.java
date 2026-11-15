@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
-/** Experimental vanilla-only transactions. No admission, chest access or automatic replay. */
+/** Experimental inventory transactions with opaque snapshots. No admission, chest access or automatic replay. */
 public final class JailVanillaCustody {
     private JailVanillaCustody() {}
 
