@@ -15,17 +15,9 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Prepare candidate and dependencies in runner only
+      - name: Prepare dependencies
         run: |
           python3 .github/scripts/fetch-build-dependencies.py
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('unyielding-quests/src/main/java/dev/unyielding/quests/essentials/PartyMeetingPolicy.java')
-          source = path.read_text()
-          old = 'public static boolean travelProtectionVerified() {\n        return false;\n    }'
-          assert source.count(old) == 1, 'candidate guard changed unexpectedly'
-          path.write_text(source.replace(old, old.replace('return false;', 'return true;')))
-          PY
           for d in run-server run run-visitor; do mkdir -p "unyielding-quests/$d/mods"; done
           curl --fail --location --retry 3 'https://cdn.modrinth.com/data/gF3BGWvG/versions/yWmXD7GW/open-parties-and-claims-neoforge-1.21.1-0.33.0.jar' -o unyielding-quests/run-server/mods/opac.jar
           echo '646fd9796ef2dfd1132e22aacf1a417639233d90fb7eb862a718badfed955d54714c88327b7ddc651f98cd5b7d2a80e8c91233d2232680d4998fdd10ef392ffb  unyielding-quests/run-server/mods/opac.jar' | sha512sum -c -

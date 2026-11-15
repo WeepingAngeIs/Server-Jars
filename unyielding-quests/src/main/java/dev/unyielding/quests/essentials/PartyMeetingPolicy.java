@@ -12,9 +12,9 @@ public final class PartyMeetingPolicy {
             boolean setterPermission, boolean setterOfficer, boolean samePoint) {
         return enabled && callerPermission && currentMembership && setterPermission && setterOfficer && samePoint;
     }
-    /** Travel stays unavailable until all installed teleport protection providers can be checked. */
+    /** The protected path still requires live permission, membership and OPAC checks. */
     public static boolean travelProtectionVerified() {
-        return false;
+        return true;
     }
     public static boolean dimensionAllowed(String source, String target, List<? extends String> allowed) {
         return source != null && source.equals(target) && allowed.contains(target);

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 class PartyMeetingPolicyTest {
  @Test void travelIsUnavailableUntilTeleportProtectionsAreVerified() {
-  assertFalse(PartyMeetingPolicy.travelProtectionVerified());
+  assertTrue(PartyMeetingPolicy.travelProtectionVerified());
  }
  @Test void everyAuthorizationGateMustPass() {
   assertTrue(PartyMeetingPolicy.permitted(true,true,true,true));

@@ -34,7 +34,7 @@ public final class PartyMeetings {
                 party != null && party.isParty(), party != null && party.isMember(player.getUUID())))
             return Essentials.fail(source, "Party meetings require an enabled server setting, permission and current party membership.");
         if (action.equals("help")) {
-            Essentials.ok(source, "Party officers: /partymeet set or clear. Meeting travel is unavailable until teleport protections can be verified. Private homes remain private."); return 1;
+            Essentials.ok(source, "Party officers: /partymeet set or clear. Members: /partymeet go. Private homes remain private."); return 1;
         }
         var data = PartyMeetingData.get(player.server);
         if (action.equals("set") || action.equals("clear")) {
@@ -50,7 +50,7 @@ public final class PartyMeetings {
             String error = validate(player, location, player.getUUID());
             if (error != null) return Essentials.fail(source, error);
             data.points.put(party.id, new PartyMeetingData.Meeting(player.getUUID(), location)); data.setDirty();
-            Essentials.ok(source, "Party meeting point saved. Meeting travel is currently unavailable until teleport protections can be verified."); return 1;
+            Essentials.ok(source, "Party meeting point saved. Party members can use /partymeet go when permitted."); return 1;
         }
         // A full OPAC claim-access check is not proof that every teleport restriction
         // permits travel. Never allow this feature to bypass an unverified provider.
