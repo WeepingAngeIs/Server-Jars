@@ -16,6 +16,9 @@ server-port=25565
 level-type=minecraft:flat
 generator-settings={"layers":[{"block":"minecraft:bedrock","height":1},{"block":"minecraft:dirt","height":2},{"block":"minecraft:grass_block","height":1}],"biome":"minecraft:plains"}
 spawn-protection=0
+# UI/permission assertions must not race hostile mobs killing the test player.
+difficulty=peaceful
+spawn-monsters=false
 view-distance=2
 simulation-distance=2
 max-players=2
