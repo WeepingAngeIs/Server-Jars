@@ -1,0 +1,21 @@
+// Separate game directories and identities are mandatory for simultaneous clients.
+allprojects {
+    afterEvaluate {
+        def loader = extensions.findByName('neoForge')
+        if (loader != null) {
+            loader.runs.named('server') {
+                jvmArgument '-Xmx1536m'
+            }
+            loader.runs.named('client') {
+                jvmArgument '-Xmx1200m'
+                programArguments.addAll('--quickPlayMultiplayer', '127.0.0.1:25565', '--username', 'Dev', '--width', '640', '--height', '480')
+            }
+            loader.runs.register('visitor') {
+                client()
+                gameDirectory = project.file('run-visitor')
+                jvmArgument '-Xmx1200m'
+                programArguments.addAll('--quickPlayMultiplayer', '127.0.0.1:25565', '--username', 'Visitor', '--width', '640', '--height', '480')
+            }
+        }
+    }
+}

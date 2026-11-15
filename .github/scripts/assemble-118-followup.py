@@ -24,7 +24,7 @@ roots = [
     'settings/GroundSettings', 'settings/DurationInput', 'settings/ConfigEditor', 'settings/ConfigAudit', 'settings/ConfigAuditPolicy', 'net/Net', 'spin/DailyLogin', 'spin/DailyRewardPolicy', 'spin/SpinMenu',
     'spin/LuckySpin', 'spin/SpinCobblemon', 'spin/RewardJournal', 'spin/RewardDebit',
     'team/Team', 'team/TeamManager', 'tutorial/TutorialManager', 'ultimine/Ultimine', 'ultimine/UltimineConfig',
-    'essentials/Essentials', 'essentials/TeleCmds', 'essentials/DestinationMenu', 'essentials/DestinationPolicy', 'client/DestinationScreen', 'settings/AdminSettings', 'settings/SharingSnapshot', 'quest/QuestManager',
+    'essentials/Essentials', 'essentials/EssConfig', 'essentials/TeleCmds', 'essentials/DestinationMenu', 'essentials/DestinationPolicy', 'essentials/PartyMeetings', 'essentials/PartyMeetingPolicy', 'essentials/PartyMeetingData', 'essentials/MeetingClaims', 'client/DestinationScreen', 'settings/AdminSettings', 'settings/SharingSnapshot', 'quest/QuestManager', 'quest/QuestData',
 ]
 frames = {f'assets/unyieldingquests/textures/gui/sprites/icon_spin_frame_{i}.png' for i in range(4)}
 out = Path('dist/120-release/Unyielding-1.2.0.jar')
@@ -70,6 +70,8 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
             result.writestr(name, data)
 with ZipFile(baseline) as base, ZipFile(out) as result:
     assert len(result.namelist()) == len(set(result.namelist())), 'Duplicate output entries'
+    assert not any(n.startswith(prefix + 'devtest/OpacOnlineSmoke') for n in result.namelist()), 'Test harness leaked into release'
+    assert not any(n.startswith(prefix + 'devtest/MeetingTwoPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'
     assert result.read('META-INF/MANIFEST.MF').count(b'Implementation-Version: 1.2.0') == 1
     for name in base.namelist():

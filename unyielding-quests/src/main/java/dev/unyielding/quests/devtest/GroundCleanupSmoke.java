@@ -34,6 +34,7 @@ public final class GroundCleanupSmoke {
             if(stage==0) {
                 checkDebitHistory();
                 checkMeetingStorageAndClaims(server);
+                checkQuestSharingPersistence();
                 set(board,objective,"enabled",0); set(board,objective,"clear_gear",0); set(board,objective,"clear_food",1); set(board,objective,"clear_other",0); set(board,objective,"grace",1200);
                 set(board,objective,"dim_overworld",1); set(board,objective,"dim_nether",0); set(board,objective,"dim_end",0); set(board,objective,"dim_custom",0);
                 origin=level.getSharedSpawnPos().above(8); level.getChunkAt(origin);
@@ -84,6 +85,46 @@ public final class GroundCleanupSmoke {
     private static ItemEntity item(ServerLevel level,BlockPos p,int dx,ItemStack stack) {
         ItemEntity e=new ItemEntity(level,p.getX()+0.5+dx,p.getY(),p.getZ()+0.5,stack); e.setNoGravity(true);
         require(level.addFreshEntity(e),"could not add test item"); return e;
+    }
+    private static void checkQuestSharingPersistence() {
+        var party = java.util.UUID.randomUUID();
+        var owner = java.util.UUID.randomUUID();
+        var newcomer = java.util.UUID.randomUUID();
+        var members = new java.util.HashMap<java.util.UUID, java.util.UUID>();
+        members.put(owner, party);
+        var data = new dev.unyielding.quests.quest.QuestData();
+        data.prepareSharing(false, members);
+        data.get(party).completedQuests.add(101L);
+        data.get(party).taskProgress.put(102L, 8L);
+        data.markClaimed(owner, 103L);
+        data.get(newcomer).taskProgress.put(102L, 2L);
+        members.put(newcomer, party);
+        data.membershipChanged(newcomer, null, party);
+        require(!data.get(newcomer).questDone(101L) && data.get(newcomer).progress(102L) == 2L,
+                "joining completed party copied quest progress while sharing disabled");
+        require(!data.isClaimed(newcomer, 103L), "joining copied another player's reward claim");
+        data.membershipChanged(newcomer, party, null);
+        members.remove(newcomer);
+        members.put(newcomer, party);
+        data.membershipChanged(newcomer, null, party);
+        data = dev.unyielding.quests.quest.QuestData.load(data.save(new CompoundTag(), null), null);
+        data.prepareSharing(false, members);
+        require(!data.get(newcomer).questDone(101L) && data.get(newcomer).progress(102L) == 2L,
+                "off-mode rejoin or restart copied party progress");
+        require(data.isClaimed(owner, 103L) && !data.isClaimed(newcomer, 103L), "claims changed after restart");
+        data.prepareSharing(true, members);
+        require(data.get(party).questDone(101L) && data.get(party).progress(102L) == 8L,
+                "enabling sharing lost or duplicated progress");
+        data.prepareSharing(false, members);
+        require(data.get(newcomer).questDone(101L) && data.get(newcomer).progress(102L) == 8L,
+                "disabling sharing did not preserve progress available during sharing");
+        data.markClaimed(newcomer, 104L);
+        data.prepareSharing(true, members);
+        data.prepareSharing(false, members);
+        data = dev.unyielding.quests.quest.QuestData.load(data.save(new CompoundTag(), null), null);
+        require(data.get(newcomer).progress(102L) == 8L && data.isClaimed(newcomer, 104L)
+                && data.isClaimed(owner, 103L) && !data.isClaimed(newcomer, 103L),
+                "toggle or restart changed personal claims or duplicated progress");
     }
     private static void age(ItemEntity e,int age) {
         CompoundTag nbt=e.saveWithoutId(new CompoundTag()); nbt.putShort("Age",(short)age); e.load(nbt);

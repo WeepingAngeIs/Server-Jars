@@ -335,12 +335,9 @@ public final class QuestManager {
 
     public static void onTeamChanged(UUID player, Team from, Team to) {
         if (data == null) return;
-        if (data.sharingEnabled) {
-            TeamProgress mine = data.get(player);
-            // While sharing is enabled, preserve progress the player was already entitled to use.
-            if (from != null && from.type != Team.Type.PLAYER) mine.mergeFrom(data.get(from.id));
-            if (to != null && to.type != Team.Type.PLAYER) data.get(to.id).mergeFrom(mine);
-        }
+        data.membershipChanged(player,
+                from != null && from.type != Team.Type.PLAYER ? from.id : null,
+                to != null && to.type != Team.Type.PLAYER ? to.id : null);
         if (from != null) markDirty(from.id);
         if (to != null) markDirty(to.id);
         markDirty(player);

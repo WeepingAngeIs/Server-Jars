@@ -106,6 +106,14 @@ public final class QuestData extends SavedData {
         return teams.computeIfAbsent(team, k -> new TeamProgress());
     }
 
+    /** Reconcile only shared-mode membership changes; null means no shared team. */
+    public void membershipChanged(UUID player, UUID fromTeam, UUID toTeam) {
+        if (!sharingEnabled) return;
+        TeamProgress mine = get(player);
+        if (fromTeam != null) mine.mergeFrom(get(fromTeam));
+        if (toTeam != null) get(toTeam).mergeFrom(mine);
+    }
+
     public boolean isClaimed(UUID player, long reward) {
         return claimedRewards.getOrDefault(player, Set.of()).contains(reward);
     }
