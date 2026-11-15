@@ -40,10 +40,10 @@ source = source.replace(before, 'package dev.unyielding.bundlesmoke;', 1)
 before = '@EventBusSubscriber(modid = UnyieldingQuests.MODID)'
 assert source.count(before) == 1
 source = source.replace(before, '@EventBusSubscriber(modid = "uq_bundle_smoke")', 1)
-before = 'if (!net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"))'
+before = 'require(net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"), "OPAC missing");'
 assert source.count(before) == 1
 source = source.replace(before, '''require(java.nio.file.Path.of(System.getenv("UQ_BUNDLE_JAR")).toRealPath().equals(
                     net.neoforged.fml.ModList.get().getModFileById("unyieldingquests").getFile().getFilePath().toRealPath()),
                     "player jail check did not load the assembled JAR");
-            if (!net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"))''', 1)
+            require(net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"), "OPAC missing");''', 1)
 (harness / 'src/main/java/dev/unyielding/bundlesmoke/JailPlayerSmoke.java').write_text(source, encoding='utf-8')
