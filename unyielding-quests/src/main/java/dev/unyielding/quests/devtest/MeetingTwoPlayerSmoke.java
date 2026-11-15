@@ -57,6 +57,33 @@ public final class MeetingTwoPlayerSmoke {
             server.getCommands().performPrefixedCommand(visitor.createCommandSourceStack(), "partymeet go");
             require(visitor.distanceToSqr(destination.getX() + 2.5, destination.getY(), destination.getZ() + .5) < .0001, "former officer's point allowed movement");
             party.members.put(owner.getUUID(), dev.unyielding.quests.team.Team.Rank.OWNER);
+            server.getCommands().performPrefixedCommand(owner.createCommandSourceStack(), "partymeet clear");
+            server.getCommands().performPrefixedCommand(visitor.createCommandSourceStack(), "partymeet go");
+            require(visitor.distanceToSqr(destination.getX() + 2.5, destination.getY(), destination.getZ() + .5) < .0001, "cleared point allowed movement");
+            server.getCommands().performPrefixedCommand(owner.createCommandSourceStack(), "partymeet set");
+            var meetingDataClass = Class.forName("dev.unyielding.quests.essentials.PartyMeetingData");
+            var getData = meetingDataClass.getDeclaredMethod("get", MinecraftServer.class);
+            getData.setAccessible(true);
+            var meetingData = getData.invoke(null, server);
+            var pointsField = meetingDataClass.getDeclaredField("points");
+            pointsField.setAccessible(true);
+            @SuppressWarnings("unchecked") var points = (java.util.Map<java.util.UUID, Object>) pointsField.get(meetingData);
+            Object originalPoint = points.get(party.id);
+            require(originalPoint != null, "meeting point not stored");
+            var pointClass = Class.forName("dev.unyielding.quests.essentials.PartyMeetingData$Meeting");
+            var constructor = pointClass.getConstructor(java.util.UUID.class, dev.unyielding.quests.essentials.Loc.class);
+            var wrongDimension = new dev.unyielding.quests.essentials.Loc("minecraft:the_nether", destination.getX() + .5, destination.getY(), destination.getZ() + .5, 0, 0);
+            points.put(party.id, constructor.newInstance(owner.getUUID(), wrongDimension));
+            server.getCommands().performPrefixedCommand(visitor.createCommandSourceStack(), "partymeet go");
+            require(visitor.distanceToSqr(destination.getX() + 2.5, destination.getY(), destination.getZ() + .5) < .0001, "wrong dimension allowed movement");
+            int farX = destination.getX() + 160000, farZ = destination.getZ() + 160000;
+            require(!level.hasChunk(farX >> 4, farZ >> 4), "test destination unexpectedly loaded");
+            var unloaded = new dev.unyielding.quests.essentials.Loc("minecraft:overworld", farX + .5, destination.getY(), farZ + .5, 0, 0);
+            points.put(party.id, constructor.newInstance(owner.getUUID(), unloaded));
+            server.getCommands().performPrefixedCommand(visitor.createCommandSourceStack(), "partymeet go");
+            require(visitor.distanceToSqr(destination.getX() + 2.5, destination.getY(), destination.getZ() + .5) < .0001, "unloaded point allowed movement");
+            require(!level.hasChunk(farX >> 4, farZ >> 4), "meeting check loaded a chunk");
+            points.put(party.id, originalPoint);
             level.setBlockAndUpdate(destination, Blocks.STONE.defaultBlockState());
             server.getCommands().performPrefixedCommand(visitor.createCommandSourceStack(), "partymeet go");
             require(visitor.distanceToSqr(destination.getX() + 2.5, destination.getY(), destination.getZ() + .5) < .0001, "obstructed destination allowed movement");
@@ -69,6 +96,19 @@ public final class MeetingTwoPlayerSmoke {
             int cx = destination.getX() >> 4, cz = destination.getZ() >> 4;
             managerApi.getMethod("claim", ResourceLocation.class, java.util.UUID.class, int.class, int.class, int.class, boolean.class)
                     .invoke(manager, dim, owner.getUUID(), 0, cx, cz, false);
+            var opacParties = apiClass.getMethod("getPartyManager").invoke(api);
+            var opacPartiesApi = Class.forName("xaero.pac.common.server.parties.party.api.IPartyManagerAPI");
+            var opacParty = opacPartiesApi.getMethod("createPartyForOwner", net.minecraft.world.entity.player.Player.class).invoke(opacParties, owner);
+            var opacPartyApi = Class.forName("xaero.pac.common.server.parties.party.api.IServerPartyAPI");
+            var rankClass = Class.forName("xaero.pac.common.parties.party.member.PartyMemberRank");
+            var memberRank = rankClass.getField("MEMBER").get(null);
+            opacPartyApi.getMethod("addMember", java.util.UUID.class, rankClass, String.class).invoke(opacParty, visitorId, memberRank, "Visitor");
+            var claimsClass = Class.forName("dev.unyielding.quests.essentials.MeetingClaims");
+            var access = claimsClass.getDeclaredMethod("hasAccess", MinecraftServer.class, java.util.UUID.class, ResourceLocation.class, int.class, int.class);
+            access.setAccessible(true);
+            require(Boolean.TRUE.equals(access.invoke(null, server, visitorId, dim, cx, cz)), "OPAC party member did not receive claim access");
+            opacPartyApi.getMethod("removeMember", java.util.UUID.class).invoke(opacParty, visitorId);
+            require(Boolean.FALSE.equals(access.invoke(null, server, visitorId, dim, cx, cz)), "OPAC claim access was not revoked");
             server.getCommands().performPrefixedCommand(visitor.createCommandSourceStack(), "partymeet go");
             require(visitor.distanceToSqr(destination.getX() + 2.5, destination.getY(), destination.getZ() + .5) < .0001, "visitor moved into denied claim");
             managerApi.getMethod("unclaim", ResourceLocation.class, int.class, int.class).invoke(manager, dim, cx, cz);
@@ -77,7 +117,7 @@ public final class MeetingTwoPlayerSmoke {
             visitor.teleportTo(level, destination.getX() + 2.5, destination.getY(), destination.getZ() + .5, 0, 0);
             server.getCommands().performPrefixedCommand(visitor.createCommandSourceStack(), "partymeet go");
             require(visitor.distanceToSqr(destination.getX() + 2.5, destination.getY(), destination.getZ() + .5) < .0001, "cooldown allowed travel");
-            Files.writeString(Path.of("/tmp/uq-meeting-two-player-result"), "passed: connected visitor moved; cooldown denied second move\n");
+            Files.writeString(Path.of("/tmp/uq-meeting-two-player-result"), "passed: permission, membership, officer, cleared point, dimension, unloaded chunk, obstruction, claim revocation, movement, cooldown\n");
         } catch (Throwable failure) {
             UnyieldingQuests.LOGGER.error("Two-player meeting smoke failed", failure);
             try { Files.writeString(Path.of("/tmp/uq-meeting-two-player-result"), "failed: " + failure + "\n"); } catch (Exception ignored) { }
