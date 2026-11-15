@@ -31,6 +31,8 @@ public final class DailyLogin {
         public static final String NAME = "unyieldingquests_daily";
         public final Map<UUID, long[]> players = new HashMap<>();
         public final Set<UUID> appliedDebits = new HashSet<>();
+        private Tag invalidDebitHistory;
+        boolean hasValidDebitHistory() { return invalidDebitHistory == null; }
 
         public static SavedData.Factory<Data> factory() {
             return new SavedData.Factory<>(Data::new, Data::load, null);
@@ -42,9 +44,19 @@ public final class DailyLogin {
                 CompoundTag c = (CompoundTag) e;
                 d.players.put(c.getUUID("p"), new long[]{c.getLong("day"), c.getLong("streak"), c.getLong("spins"), c.getLong("questSpins"), c.getLong("lastClaimMillis")});
             }
-            for (Tag e : tag.getList("appliedDebits", Tag.TAG_COMPOUND)) {
-                CompoundTag c = (CompoundTag)e;
-                if (c.hasUUID("id")) d.appliedDebits.add(c.getUUID("id"));
+            if (tag.contains("appliedDebits")) {
+                Tag raw = tag.get("appliedDebits");
+                if (!(raw instanceof ListTag list) || (!list.isEmpty() && list.getElementType() != Tag.TAG_COMPOUND)) {
+                    d.invalidDebitHistory = raw.copy();
+                } else {
+                    for (Tag e : (ListTag)raw) {
+                        CompoundTag c = (CompoundTag)e;
+                        if (!c.hasUUID("id") || !d.appliedDebits.add(c.getUUID("id"))) {
+                            d.invalidDebitHistory = raw.copy();
+                            break;
+                        }
+                    }
+                }
             }
             return d;
         }
@@ -65,7 +77,7 @@ public final class DailyLogin {
             tag.put("players", l);
             ListTag debits = new ListTag();
             for (UUID id : appliedDebits) { CompoundTag c = new CompoundTag(); c.putUUID("id", id); debits.add(c); }
-            tag.put("appliedDebits", debits);
+            tag.put("appliedDebits", invalidDebitHistory == null ? debits : invalidDebitHistory.copy());
             return tag;
         }
     }
@@ -144,7 +156,7 @@ public final class DailyLogin {
 
     /** Gives today's reward if it has not been given yet. @return false when already claimed today. */
     public static boolean give(ServerPlayer p) {
-        if (data == null || !Config.DAILY_ENABLED.get()) return false;
+        if (data == null || data.invalidDebitHistory != null || !Config.DAILY_ENABLED.get()) return false;
         long day = today();
         long now = System.currentTimeMillis();
         long[] rec = data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0, 0, 0, 0, 0});
@@ -169,12 +181,12 @@ public final class DailyLogin {
     }
 
     public static long available(ServerPlayer p) {
-        long[] rec=data == null ? null : data.players.get(p.getUUID());
+        long[] rec=data == null || data.invalidDebitHistory != null ? null : data.players.get(p.getUUID());
         return rec == null ? 0 : (Config.DAILY_ENABLED.get() ? rec[2] : 0) + (LuckySpin.enabled() ? rec[3] : 0);
     }
 
     public static void creditQuest(ServerPlayer p) {
-        if (data == null) throw new IllegalStateException("Spin storage is not ready");
+        if (data == null || data.invalidDebitHistory != null) throw new IllegalStateException("Spin storage is not ready; debit history requires review");
         long[] rec=data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0,0,0,0,0});
         rec[3]=Math.addExact(rec[3],1);
         data.setDirty();
@@ -195,6 +207,7 @@ public final class DailyLogin {
     public static void retryRecovery() throws IOException {
         recoveryReady = false;
         if (data == null || rewardJournal == null) throw new IOException("Reward journal is unavailable");
+        if (data.invalidDebitHistory != null) throw new IOException("Saved debit history is malformed; restore it before retrying");
         var entries = rewardJournal.list();
         Set<UUID> journalIds = new HashSet<>();
         for (RewardJournal.Entry entry : entries) journalIds.add(entry.id());
