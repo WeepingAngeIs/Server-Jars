@@ -19,6 +19,11 @@ roots = [
     'commands/ModCommands', 'commands/ForceReviveCommand',
     'settings/CorvisquireStars', 'mixin/PokemonProgressRequirementMixin',
     'mixin/CorvisquireEvolutionGuardMixin',
+    'client/LuckySpinScreen', 'client/LuckySpinSounds', 'client/QuestScreen', 'client/QuestToast', 'client/SpinToast',
+    'client/TeamScreen', 'client/GroundSettingsScreen', 'client/tutorial/TutorialScreen',
+    'settings/GroundSettings', 'settings/DurationInput', 'net/Net', 'spin/DailyLogin', 'spin/DailyRewardPolicy', 'spin/SpinMenu',
+    'team/Team', 'team/TeamManager', 'tutorial/TutorialManager', 'ultimine/Ultimine', 'ultimine/UltimineConfig',
+    'essentials/Essentials', 'essentials/TeleCmds',
 ]
 frames = {f'assets/unyieldingquests/textures/gui/sprites/icon_spin_frame_{i}.png' for i in range(4)}
 out = Path('dist/119-release/Unyielding-1.1.9.jar')

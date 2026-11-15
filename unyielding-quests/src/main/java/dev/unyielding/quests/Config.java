@@ -48,6 +48,7 @@ public final class Config {
     public static final ModConfigSpec.IntValue DAILY_LEGENDARY;
     public static final ModConfigSpec.IntValue DAILY_STREAK_EVERY;
     public static final ModConfigSpec.IntValue DAILY_STREAK_BONUS_SPINS;
+    public static final ModConfigSpec.IntValue DAILY_GRACE_DAYS;
     public static final ModConfigSpec.ConfigValue<String> DAILY_TIMEZONE;
 
     public static final ModConfigSpec.DoubleValue ORIGIN_FLIGHT_SPEED;
@@ -265,6 +266,7 @@ public final class Config {
         DAILY_LEGENDARY = b.comment("Daily spin: chance of a Legendary Pokemon.").defineInRange("chance_legendary", 2, 0, 1_000_000);
         DAILY_STREAK_EVERY = b.comment("Every this many days in a row the player gets bonus spins (0 = no streak bonus).").defineInRange("streak_bonus_every_days", 7, 0, 365);
         DAILY_STREAK_BONUS_SPINS = b.comment("How many extra spins the streak bonus gives.").defineInRange("streak_bonus_spins", 2, 1, 20);
+        DAILY_GRACE_DAYS = b.comment("Number of missed calendar days allowed between daily rewards without resetting the streak. Missed days do not award spins.").defineInRange("streak_grace_days", 1, 0, 30);
         DAILY_TIMEZONE = b.comment("Time zone that decides when a new day starts, e.g. America/Chicago or UTC. Blank = the server's own clock.").define("timezone", "America/Chicago");
         b.pop();
         SPEC = b.build();

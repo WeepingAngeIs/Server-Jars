@@ -223,6 +223,17 @@ public final class TutorialManager {
         }
         result.put("pages", pages);
 
+        // Server-authored descriptions reflect live settings and never grant command access.
+        ListTag whatsNew = new ListTag();
+        if (Config.DAILY_ENABLED.get()) {
+            whatsNew.add(entryTag("Daily login streaks", "Keep your streak through up to "
+                    + Config.DAILY_GRACE_DAYS.get() + " missed days. Missed days do not award spins. Claims require a new day and 20 hours since the previous claim."));
+        }
+        whatsNew.add(entryTag("Party quest progress", Config.SHARE_QUEST_PROGRESS.get()
+                ? "Quest progress sharing is enabled on this server."
+                : "Quest progress stays personal on this server."));
+        result.put("whats_new", whatsNew);
+
         ListTag directory = new ListTag();
         int directoryBytes = 0;
         boolean truncated = false;

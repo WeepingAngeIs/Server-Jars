@@ -33,6 +33,12 @@ public final class Essentials {
     private static EssData data;
     private static final Map<String, Long> COOLDOWNS = new HashMap<>();
 
+    public static long cooldownRemaining(ServerPlayer player, String key) {
+        if (EssConfig.ADMINS_EXEMPT_COOLDOWNS.get() && player.hasPermissions(2)) return 0;
+        long until = COOLDOWNS.getOrDefault(key + "/" + player.getUUID(), 0L);
+        return Math.max(0, (until - System.currentTimeMillis() + 999) / 1000);
+    }
+
     private Essentials() {
     }
 

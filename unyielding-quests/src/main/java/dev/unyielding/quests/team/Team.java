@@ -37,6 +37,8 @@ public final class Team {
     public String description = "";
     public int color = 0x55AAFF;
     public boolean freeToJoin;
+    /** Informational shared quest marker, independent of progress and reward claims. */
+    public long pinnedQuest;
     public UUID owner;
     public final Map<UUID, Rank> members = new LinkedHashMap<>();
     public final Map<UUID, String> names = new LinkedHashMap<>();
@@ -91,6 +93,7 @@ public final class Team {
         }
         t.put("members", ms);
         if (withHistory) {
+            t.putLong("pinnedQuest", pinnedQuest);
             ListTag hs = new ListTag();
             for (Message m : history) {
                 CompoundTag h = new CompoundTag();
@@ -117,6 +120,7 @@ public final class Team {
         team.description = t.getString("desc");
         team.color = t.getInt("color");
         team.freeToJoin = t.getBoolean("free");
+        team.pinnedQuest = t.getLong("pinnedQuest");
         if (t.hasUUID("owner")) team.owner = t.getUUID("owner");
         team.created = t.getLong("created");
         for (Tag e : t.getList("members", Tag.TAG_COMPOUND)) {

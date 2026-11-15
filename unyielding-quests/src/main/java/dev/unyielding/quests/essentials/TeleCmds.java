@@ -83,9 +83,7 @@ final class TeleCmds {
             ServerPlayer p = c.getSource().getPlayerOrException();
             Map<String, Loc> m = data().homes.get(p.getUUID());
             if (m == null || m.isEmpty()) return fail(c.getSource(), "You have no homes. Use /sethome.");
-            StringBuilder sb = new StringBuilder("Homes (" + m.size() + "/" + EssConfig.HOME_MAX.get() + "):");
-            for (var e : m.entrySet()) sb.append("\n - ").append(e.getKey()).append("  ").append(e.getValue().pretty());
-            c.getSource().sendSuccess(() -> Component.literal(sb.toString()), false);
+            destinationList(c.getSource(), p, m, "home", EssConfig.HOME_COOLDOWN.get());
             return 1;
         }));
     }
@@ -152,9 +150,28 @@ final class TeleCmds {
                         })));
         reg(d, "listwarps", Commands.literal("listwarps").executes(c -> {
             if (data().warps.isEmpty()) return fail(c.getSource(), "There are no warps yet.");
-            c.getSource().sendSuccess(() -> Component.literal("Warps: " + String.join(", ", data().warps.keySet())), false);
+            ServerPlayer p = c.getSource().getPlayerOrException();
+            destinationList(c.getSource(), p, data().warps, "warp", EssConfig.WARP_COOLDOWN.get());
             return 1;
         }));
+    }
+
+    private static void destinationList(CommandSourceStack source, ServerPlayer player, Map<String, Loc> destinations, String kind, int cooldownSeconds) {
+        var node = source.getServer().getCommands().getDispatcher().getRoot().getChild(kind);
+        boolean available = node != null && node.canUse(source) && EssConfig.featureSwitch(kind).get();
+        long remaining = cooldownRemaining(player, kind);
+        String cooldownText = remaining > 0 ? "Wait " + remaining + "s" : "Ready";
+        if (EssConfig.ADMINS_EXEMPT_COOLDOWNS.get() && player.hasPermissions(2)) cooldownText += " (admin exempt)";
+        else cooldownText += " (cooldown " + cooldownSeconds + "s)";
+        var message = Component.literal((kind.equals("home") ? "Homes" : "Warps") + " • " + cooldownText).withStyle(ChatFormatting.GOLD);
+        for (var entry : destinations.entrySet()) {
+            String name = entry.getKey();
+            message.append(Component.literal("\n[" + kind.toUpperCase(Locale.ROOT) + "] ").withStyle(ChatFormatting.AQUA));
+            if (available && name.matches("[A-Za-z0-9_.+\\-]+")) message.append(clickable(name, "/" + kind + " " + name, ChatFormatting.YELLOW));
+            else message.append(Component.literal(name));
+            message.append(Component.literal("  " + entry.getValue().pretty()).withStyle(ChatFormatting.GRAY));
+        }
+        source.sendSuccess(() -> message, false);
     }
 
     private static void registerSimple(CommandDispatcher<CommandSourceStack> d) {

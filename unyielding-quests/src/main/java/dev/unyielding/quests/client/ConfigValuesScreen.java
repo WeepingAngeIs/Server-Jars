@@ -5,6 +5,7 @@ import dev.unyielding.quests.client.edit.FormScreen;
 import dev.unyielding.quests.client.ui.Ui;
 import dev.unyielding.quests.net.Net;
 import dev.unyielding.quests.settings.ConfigEditor;
+import dev.unyielding.quests.settings.DurationInput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.*;
@@ -108,7 +109,7 @@ public final class ConfigValuesScreen extends FormScreen {
             original = JsonParser.parseString(row.getString("value"));
             if (original.isJsonArray()) for (JsonElement item : original.getAsJsonArray()) entries.add(item.getAsString());
             else if (original.getAsJsonPrimitive().isBoolean()) flag = original.getAsBoolean();
-            else text = original.getAsString();
+            else text = DurationInput.applies(row.getString("key")) ? DurationInput.format(original.getAsInt()) : original.getAsString();
         }
         private void paragraph(String text) {
             for (String line : text.split("\\n")) {
@@ -149,6 +150,16 @@ public final class ConfigValuesScreen extends FormScreen {
                     gap(25);
                     return;
                 }
+                if (DurationInput.applies(row.getString("key"))) {
+                    paragraph("Enter seconds or a duration such as 1m 30s. Presets are previews until saved."); gap(5);
+                    int w = (innerWidth() - 12) / 4;
+                    String[] labels = {"Off", "10s", "1m", "5m"};
+                    for (int i = 0; i < labels.length; i++) {
+                        final String chosen = i == 0 ? "0s" : labels[i];
+                        button(left() + i * (w + 4), w, labels[i], null, Ui.Style.NORMAL, () -> { text = chosen; relayout(); });
+                    }
+                    gap(25);
+                }
                 field("value", left(), cy, innerWidth(), text, "Value", 4096, s -> text = s); gap(25);
             }
         }
@@ -159,6 +170,7 @@ public final class ConfigValuesScreen extends FormScreen {
                 if (original.isJsonArray()) value = JSON.toJson(entries);
                 else if (original.getAsJsonPrimitive().isBoolean()) value = JSON.toJson(flag);
                 else if (original.getAsJsonPrimitive().isString()) value = JSON.toJson(text);
+                else if (DurationInput.applies(row.getString("key"))) value = Integer.toString(DurationInput.seconds(text));
                 else { new java.math.BigDecimal(text); value = text; }
                 if (value.length() > 30000) {
                     message = "This setting is too large. Use fewer or shorter entries.";
@@ -168,7 +180,7 @@ public final class ConfigValuesScreen extends FormScreen {
                 pending = true;
                 message = "Saving on server...";
                 Net.sendToServer(new ConfigEditor.Action(row.getString("key"), row.getString("value"), value));
-            } catch (RuntimeException ex) { message = "Enter a valid number."; }
+            } catch (RuntimeException ex) { message = DurationInput.applies(row.getString("key")) ? "Enter a duration such as 1m 30s." : "Enter a valid number."; }
             relayout();
         }
     }

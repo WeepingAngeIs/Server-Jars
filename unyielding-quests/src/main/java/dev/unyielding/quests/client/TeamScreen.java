@@ -12,6 +12,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.PlayerFaceRenderer;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.PlayerSkin;
@@ -38,6 +39,9 @@ public class TeamScreen extends Screen {
     private boolean seenAdminPermission;
     private EditBox nameBox, inviteBox, chatBox, descBox, colorBox, renameBox;
     private String nameDraft = "";
+    private String memberSearch = "";
+    private EditBox memberSearchBox;
+    private int memberPage = 0;
     private final List<Field> fields = new ArrayList<>();
 
     public TeamScreen() {
@@ -121,7 +125,15 @@ public class TeamScreen extends Screen {
                     create.active = ClientData.canCreateParty;
                     addRenderableWidget(create);
                 } else {
-                    buildMemberButtons(mine, y + 30);
+                    memberSearchBox = box(px + 14, y + 28, 130, "Search members", memberSearch, 32);
+                    addRenderableWidget(new SpriteButton(px + 148, y + 28, 48, 20, Component.literal("Find"), null, Ui.Style.NORMAL, x -> searchMembers()));
+                    int pageCount = memberPageCount(mine);
+                    memberPage = Math.max(0, Math.min(memberPage, pageCount - 1));
+                    SpriteButton prev = addRenderableWidget(new SpriteButton(px + pw - 110, y + 28, 42, 20, Component.literal("<"), null, Ui.Style.NORMAL, x -> { memberPage--; rebuildWidgets(); }));
+                    prev.active = memberPage > 0;
+                    SpriteButton next = addRenderableWidget(new SpriteButton(px + pw - 62, y + 28, 42, 20, Component.literal(">"), null, Ui.Style.NORMAL, x -> { memberPage++; rebuildWidgets(); }));
+                    next.active = memberPage + 1 < pageCount;
+                    buildMemberButtons(mine, y + 52);
                     int by = py + ph - 30;
                     inviteBox = box(px + 14, by, 130, "Player name", "", 32);
                     addRenderableWidget(new SpriteButton(px + 150, by, 60, 20, Component.literal("Invite"), Ui.ICON_JOIN, Ui.Style.ACCENT, x -> {
@@ -134,7 +146,7 @@ public class TeamScreen extends Screen {
                                 x -> send("leave", "", "")));
                         if (owner) {
                             addRenderableWidget(new SpriteButton(px + pw - 14 - 62, by, 62, 20, Component.literal("Disband"), null, Ui.Style.ACCENT,
-                                    x -> send("disband", "", "")));
+                                    x -> confirmPartyAction(mine, null)));
                         }
                     }
                 }
@@ -214,14 +226,49 @@ public class TeamScreen extends Screen {
         if (chatBox != null) chatDraft = chatBox.getValue();
     }
 
+    private List<java.util.Map.Entry<UUID, Team.Rank>> matchingMembers(Team t) {
+        String query = memberSearch.trim().toLowerCase(java.util.Locale.ROOT);
+        return t.members.entrySet().stream().filter(e -> t.nameOf(e.getKey()).toLowerCase(java.util.Locale.ROOT).contains(query)).toList();
+    }
+
+    private int memberPageSize() {
+        return Math.max(1, Math.min(5, (py + ph - 44 - (top + 52)) / 20));
+    }
+
+    private int memberPageCount(Team t) {
+        return Math.max(1, (matchingMembers(t).size() + memberPageSize() - 1) / memberPageSize());
+    }
+
+    private void searchMembers() {
+        if (memberSearchBox != null) memberSearch = memberSearchBox.getValue();
+        memberPage = 0;
+        rebuildWidgets();
+    }
+
+    private void confirmPartyAction(Team team, UUID target) {
+        boolean disband = target == null;
+        String targetName = disband ? "" : team.nameOf(target);
+        send(disband ? "disband" : "transfer", targetName, "");
+        String detail = disband
+                ? "Disband '" + team.name + "' and return " + team.members.size() + " members to personal teams? The party is deleted. Shared quest progress is merged into personal progress when sharing is enabled. Reward claims remain personal."
+                : "Transfer ownership of '" + team.name + "' to " + targetName + "? You will become an officer. Party progress and reward claims stay with the party.";
+        Minecraft.getInstance().setScreen(new ConfirmScreen(yes -> {
+            if (yes) send("confirm", team.id.toString(), disband ? "" : target.toString());
+            else send("cancel_confirmation", "", "");
+            Minecraft.getInstance().setScreen(this);
+        }, Component.literal(disband ? "Disband party?" : "Transfer ownership?"), Component.literal(detail)));
+    }
+
     private void buildMemberButtons(Team t, int startY) {
         UUID me = me();
         Team.Rank myRank = t.rankOf(me);
         if (myRank == null) return;
         int y = startY;
-        int shown = 0;
-        for (var e : t.members.entrySet()) {
-            if (shown++ >= 6) break;
+        int index = 0;
+        int first = memberPage * memberPageSize();
+        for (var e : matchingMembers(t)) {
+            if (index++ < first) continue;
+            if (index > first + memberPageSize()) break;
             UUID u = e.getKey();
             Team.Rank r = e.getValue();
             if (!u.equals(me) && myRank.atLeast(Team.Rank.OFFICER) && r.ordinal() < myRank.ordinal()) {
@@ -236,7 +283,7 @@ public class TeamScreen extends Screen {
                         addRenderableWidget(new SpriteButton(bx, y + 2, 44, 15, Component.literal("Demote"), null, Ui.Style.NORMAL, x -> send("demote", name, "")));
                     }
                     bx -= 48;
-                    addRenderableWidget(new SpriteButton(bx, y + 2, 44, 15, Component.literal("Owner"), Ui.ICON_CROWN, Ui.Style.NORMAL, x -> send("transfer", name, "")));
+                    addRenderableWidget(new SpriteButton(bx, y + 2, 44, 15, Component.literal("Owner"), Ui.ICON_CROWN, Ui.Style.NORMAL, x -> confirmPartyAction(t, u)));
                 }
             }
             y += 20;
@@ -299,17 +346,19 @@ public class TeamScreen extends Screen {
                     String type = mine.type == Team.Type.SERVER ? "SERVER TEAM" : "PARTY";
                     int nw = font.width(Component.literal(mine.name).withStyle(ChatFormatting.BOLD));
                     Ui.chip(g, font, x0 + 16 + nw, y, type, 0xFF3A4150, Theme.textDim);
-                    String cnt = mine.members.size() + (mine.members.size() == 1 ? " member" : " members");
+                    String cnt = mine.members.size() + (mine.members.size() == 1 ? " member" : " members")
+                            + "  " + (memberPage + 1) + "/" + memberPageCount(mine);
                     g.drawString(font, cnt, x1 - font.width(cnt), y + 1, Theme.textMuted, false);
                     if (!mine.description.isEmpty())
                         g.drawString(font, font.plainSubstrByWidth(mine.description, pw - 28), x0, y + 14, Theme.textDim, false);
-                    int ry = y + 30;
+                    int ry = y + 52;
+                    var members = matchingMembers(mine);
+                    if (members.isEmpty()) g.drawString(font, "No matching members", x0, ry + 5, Theme.textMuted, false);
                     int shown = 0;
-                    for (var e : mine.members.entrySet()) {
-                        if (shown++ >= 6) {
-                            g.drawString(font, "+" + (mine.members.size() - 6) + " more", x0, ry + 5, Theme.textMuted, false);
-                            break;
-                        }
+                    int first = memberPage * memberPageSize();
+                    for (var e : members) {
+                        if (shown++ < first) continue;
+                        if (shown > first + memberPageSize()) break;
                         UUID u = e.getKey();
                         boolean online = ClientData.online.containsKey(u);
                         Ui.blit(g, Ui.CARD, x0 - 4, ry, x1 - x0 + 8, 19);
@@ -415,6 +464,18 @@ public class TeamScreen extends Screen {
     }
 
     @Override
+    public boolean mouseScrolled(double mx, double my, double sx, double sy) {
+        Team team = ClientData.myTeam();
+        if (tab == Tab.TEAM && team != null && team.type != Team.Type.PLAYER
+                && mx >= px && mx < px + pw && my >= top + 52 && my < py + ph - 44) {
+            int nextPage = Math.max(0, Math.min(memberPageCount(team) - 1, memberPage + (sy < 0 ? 1 : -1)));
+            if (nextPage != memberPage) { memberPage = nextPage; rebuildWidgets(); }
+            return true;
+        }
+        return super.mouseScrolled(mx, my, sx, sy);
+    }
+
+    @Override
     public boolean keyPressed(int key, int scan, int mods) {
         if ((key == 257 || key == 335) && tab == Tab.CHAT && chatBox != null && chatBox.isFocused()) {
             sendChat();
@@ -422,6 +483,10 @@ public class TeamScreen extends Screen {
         }
         if ((key == 257 || key == 335) && nameBox != null && nameBox.isFocused() && tab == Tab.TEAM) {
             send("create", nameBox.getValue(), "");
+            return true;
+        }
+        if ((key == 257 || key == 335) && memberSearchBox != null && memberSearchBox.isFocused() && tab == Tab.TEAM) {
+            searchMembers();
             return true;
         }
         if ((key == 257 || key == 335) && inviteBox != null && inviteBox.isFocused() && tab == Tab.TEAM) {

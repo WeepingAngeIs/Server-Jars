@@ -65,6 +65,9 @@ public class QuestScreen extends Screen {
     private Chapter chapter;
     private float viewX, viewY, zoom = 1f;
     private Quest selected, shown;
+    private String searchQuery = "";
+    private int searchStatus;
+    private long lastSearchResult;
     private float detailAnim;
     private int detailScroll;
     private int sideScroll;
@@ -213,6 +216,51 @@ public class QuestScreen extends Screen {
     }
 
     private enum Status {LOCKED, AVAILABLE, STARTED, DONE, CLAIM}
+
+    private String searchStatusName() {
+        return searchStatus == 0 ? "All" : Status.values()[searchStatus - 1].name();
+    }
+
+    private void findNextQuest() {
+        QuestFile f = ClientData.file;
+        if (f == null) return;
+        TeamProgress tp = ClientData.progress;
+        String query = searchQuery.trim().toLowerCase(java.util.Locale.ROOT);
+        List<Quest> results = new ArrayList<>();
+        for (Chapter c : f.chapters) for (Quest q : c.quests) {
+            if (!visible(q, tp)) continue;
+            if (searchStatus != 0 && status(q, tp, f) != Status.values()[searchStatus - 1]) continue;
+            if (!Gfx.readable(q.displayTitle()).toLowerCase(java.util.Locale.ROOT).contains(query)) continue;
+            results.add(q);
+        }
+        if (results.isEmpty()) {
+            ClientData.notice = "No matching visible quests.";
+            ClientData.noticeTime = System.currentTimeMillis();
+            return;
+        }
+        int index = -1;
+        for (int i = 0; i < results.size(); i++) if (results.get(i).id == lastSearchResult) index = i;
+        Quest q = results.get((index + 1) % results.size());
+        lastSearchResult = q.id;
+        Chapter c = f.chapterMap.get(q.chapter);
+        if (c != null) selectChapter(c);
+        open(q);
+    }
+
+    private void openPartyGoal() {
+        var team = ClientData.myTeam();
+        QuestFile f = ClientData.file;
+        if (team == null || f == null) return;
+        Quest q = f.quests.get(team.pinnedQuest);
+        if (q == null || !visible(q, ClientData.progress)) {
+            ClientData.notice = "Party goal is unavailable to you.";
+            ClientData.noticeTime = System.currentTimeMillis();
+            return;
+        }
+        Chapter c = f.chapterMap.get(q.chapter);
+        if (c != null) selectChapter(c);
+        open(q);
+    }
 
     private Status status(Quest q, TeamProgress tp, QuestFile f) {
         if (tp.questDone(q.id)) return hasUnclaimed(q, tp) ? Status.CLAIM : Status.DONE;
@@ -674,6 +722,20 @@ public class QuestScreen extends Screen {
             button(g, 6, height - 48, side - 12, 18, "+ New chapter", null, Ui.Style.ACCENT, true, mx, my,
                     () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.EditChapterScreen(this, null, chapter == null ? 0 : chapter.group)));
         }
+        var myTeam = ClientData.myTeam();
+        if (myTeam != null && myTeam.type == dev.unyielding.quests.team.Team.Type.PARTY && myTeam.pinnedQuest != 0) {
+            listBottom -= 22;
+            button(g, 6, listBottom, side - 12, 18, "Party goal", Ui.ICON_STAR, Ui.Style.NORMAL, true, mx, my, this::openPartyGoal);
+        }
+        listBottom -= 44;
+        button(g, 6, listBottom, (side - 16) / 2, 18, "Search", null, Ui.Style.NORMAL, true, mx, my,
+                () -> Minecraft.getInstance().setScreen(new dev.unyielding.quests.client.edit.PromptScreen(this, "Search quests", "Title", "Quest title", searchQuery, value -> {
+                    searchQuery = value; lastSearchResult = 0; findNextQuest();
+                })));
+        button(g, 10 + (side - 16) / 2, listBottom, (side - 16) / 2, 18, "Next", null, Ui.Style.NORMAL, true, mx, my, this::findNextQuest);
+        String statusLabel = "Status: " + searchStatusName();
+        button(g, 6, listBottom + 22, side - 12, 18, statusLabel, null, Ui.Style.NORMAL, true, mx, my,
+                () -> { searchStatus = (searchStatus + 1) % (Status.values().length + 1); lastSearchResult = 0; });
         g.enableScissor(2, listTop, side - 2, listBottom);
         int y = listTop + 2 - sideScroll;
         long lastGroup = Long.MIN_VALUE;
@@ -946,7 +1008,9 @@ public class QuestScreen extends Screen {
         } else {
             g.renderItem(questIcon(q), px + 11, py + 12);
         }
-        int titleW = pw - 44 - 30 - (editing() ? font.width("Edit") + 26 : 0);
+        var goalTeam = ClientData.myTeam();
+        boolean canPin = !editing() && goalTeam != null && goalTeam.type == dev.unyielding.quests.team.Team.Type.PARTY;
+        int titleW = pw - 44 - 30 - (editing() ? font.width("Edit") + 26 : 0) - (canPin ? 48 : 0);
         g.drawString(font, Component.literal(font.plainSubstrByWidth(Gfx.readable(q.displayTitle()), titleW)).withStyle(ChatFormatting.BOLD), px + 36, py + 9, Theme.text, true);
         String sub = q.subtitle.isEmpty() ? "" : Gfx.codes(q.subtitle.get(0));
         String chipText = switch (st) {
@@ -959,6 +1023,11 @@ public class QuestScreen extends Screen {
         int cw = Ui.chip(g, font, px + 36, py + 21, chipText, color(st), st == Status.CLAIM || st == Status.STARTED ? 0xFF2A1C00 : 0xFFFFFFFF);
         if (!sub.isEmpty()) g.drawString(font, font.plainSubstrByWidth(sub, pw - 36 - cw - 34), px + 40 + cw, py + 23, Theme.textDim, false);
         button(g, px + pw - 24, py + 9, 16, 16, null, Ui.ICON_CLOSE, Ui.Style.NORMAL, interactive, mx, my, () -> selected = null);
+        if (canPin) {
+            boolean pinned = goalTeam.pinnedQuest == q.id;
+            button(g, px + pw - 75, py + 9, 47, 16, pinned ? "Unpin" : "Pin", null, Ui.Style.NORMAL, interactive, mx, my,
+                    () -> Net.sendToServer(new Net.TeamAction("pin_quest", Long.toString(pinned ? 0 : q.id), "")));
+        }
         if (editing()) {
             int ew = font.width("Edit") + 22;
             final Quest eq = q;
@@ -1718,7 +1787,9 @@ public class QuestScreen extends Screen {
             return true;
         }
         if (mx < side) {
-            int controlsHeight = (canEdit() ? 24 : 0) + (editing() ? 24 : 0);
+            var myTeam = ClientData.myTeam();
+            int controlsHeight = (canEdit() ? 24 : 0) + (editing() ? 24 : 0) + 44
+                    + (myTeam != null && myTeam.type == dev.unyielding.quests.team.Team.Type.PARTY && myTeam.pinnedQuest != 0 ? 22 : 0);
             int max = Math.max(0, sideContentHeight - (height - 34 - controlsHeight));
             sideScroll = (int) Math.max(0, Math.min(max, sideScroll - sy * 18));
             return true;

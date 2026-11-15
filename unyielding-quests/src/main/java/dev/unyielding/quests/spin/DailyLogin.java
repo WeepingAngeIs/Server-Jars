@@ -36,7 +36,7 @@ public final class DailyLogin {
             Data d = new Data();
             for (Tag e : tag.getList("players", Tag.TAG_COMPOUND)) {
                 CompoundTag c = (CompoundTag) e;
-                d.players.put(c.getUUID("p"), new long[]{c.getLong("day"), c.getLong("streak"), c.getLong("spins"), c.getLong("questSpins")});
+                d.players.put(c.getUUID("p"), new long[]{c.getLong("day"), c.getLong("streak"), c.getLong("spins"), c.getLong("questSpins"), c.getLong("lastClaimMillis")});
             }
             return d;
         }
@@ -51,6 +51,7 @@ public final class DailyLogin {
                 c.putLong("streak", e.getValue()[1]);
                 c.putLong("spins", e.getValue()[2]);
                 c.putLong("questSpins", e.getValue()[3]);
+                c.putLong("lastClaimMillis", e.getValue()[4]);
                 l.add(c);
             }
             tag.put("players", l);
@@ -90,7 +91,7 @@ public final class DailyLogin {
     public static void onLogin(ServerPlayer p) {
         if (data == null || !Config.DAILY_ENABLED.get()) return;
         long[] rec = data.players.get(p.getUUID());
-        if (rec != null && rec[0] == today()) return;
+        if (rec != null && rec[0] >= today()) return;
         PENDING.put(p.getUUID(), 60);
     }
 
@@ -108,9 +109,11 @@ public final class DailyLogin {
             if (n <= 0) ready.add(e.getKey());
         }
         for (UUID u : ready) {
-            PENDING.remove(u);
             ServerPlayer p = s.getPlayerList().getPlayer(u);
-            if (p != null) give(p);
+            if (p == null || !Config.DAILY_ENABLED.get()) PENDING.remove(u);
+            else if (give(p)) PENDING.remove(u);
+            else if (data == null || data.players.get(u) == null || data.players.get(u)[0] >= today()) PENDING.remove(u);
+            else PENDING.put(u, 1200); // Retry after a minute if the minimum interval has not passed.
         }
     }
 
@@ -118,17 +121,18 @@ public final class DailyLogin {
     public static boolean give(ServerPlayer p) {
         if (data == null || !Config.DAILY_ENABLED.get()) return false;
         long day = today();
-        long[] rec = data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0, 0, 0, 0});
-        if (rec[0] == day) return false;
-        long streak = rec[0] == day - 1 ? rec[1] + 1 : 1;
-        rec[0] = day;
-        rec[1] = streak;
-        data.setDirty();
-        int[] w = {Config.DAILY_BASIC.get(), Config.DAILY_GOOD.get(), Config.DAILY_PARADOX.get(), Config.DAILY_MYTHICAL.get(), Config.DAILY_LEGENDARY.get()};
+        long now = System.currentTimeMillis();
+        long[] rec = data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0, 0, 0, 0, 0});
+        if (!DailyRewardPolicy.eligible(rec[0], rec[4], day, now)) return false;
+        long streak = DailyRewardPolicy.nextStreak(rec[0], rec[1], day, Config.DAILY_GRACE_DAYS.get());
         int every = Config.DAILY_STREAK_EVERY.get();
         int spins = 1;
         if (every > 0 && streak % every == 0) spins += Config.DAILY_STREAK_BONUS_SPINS.get();
-        rec[2] = Math.addExact(rec[2], spins);
+        long balance = Math.addExact(rec[2], spins);
+        rec[0] = day;
+        rec[1] = streak;
+        rec[4] = now;
+        rec[2] = balance;
         data.setDirty();
         Component msg = Component.literal("Daily login reward! ").withStyle(ChatFormatting.GOLD)
                 .append(Component.literal("Streak: " + streak + " day" + (streak == 1 ? "" : "s")).withStyle(ChatFormatting.YELLOW));
@@ -146,7 +150,7 @@ public final class DailyLogin {
 
     public static void creditQuest(ServerPlayer p) {
         if (data == null) throw new IllegalStateException("Spin storage is not ready");
-        long[] rec=data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0,0,0,0});
+        long[] rec=data.players.computeIfAbsent(p.getUUID(), k -> new long[]{0,0,0,0,0});
         rec[3]=Math.addExact(rec[3],1);
         data.setDirty();
         p.sendSystemMessage(Component.literal("Lucky Spin earned! Open your inventory and press Lucky Spin."));
@@ -170,6 +174,10 @@ public final class DailyLogin {
         long day = today();
         if (rec == null) return "No daily reward yet; it arrives a few seconds after you log in.";
         String streak = "Login streak: " + rec[1] + " day" + (rec[1] == 1 ? "" : "s") + ".";
-        return rec[0] == day ? "Today's spins are saved. " + streak + " Come back tomorrow!" : streak + " Today's reward is on its way.";
+        String policy = " Up to " + Config.DAILY_GRACE_DAYS.get() + " missed days keep your streak; missed days do not give spins. Claims require a new calendar day and 20 hours since the previous claim.";
+        if (rec[0] > day) return "The server's date is behind your last claim. " + streak + policy;
+        if (rec[0] == day) return "Today's spins are saved. " + streak + policy;
+        if (rec[4] > 0 && System.currentTimeMillis() - rec[4] < DailyRewardPolicy.MIN_CLAIM_MILLIS) return streak + " Your next reward is waiting for the 20-hour interval." + policy;
+        return streak + " Today's reward is on its way." + policy;
     }
 }

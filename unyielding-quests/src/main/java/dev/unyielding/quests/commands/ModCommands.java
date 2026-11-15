@@ -48,6 +48,14 @@ public final class ModCommands {
 
     public static void register(CommandDispatcher<CommandSourceStack> d) {
         ForceReviveCommand.register(d);
+        d.register(Commands.literal("ground").then(Commands.literal("clear").requires(source -> source.hasPermission(2)).executes(c -> {
+            if (!c.getSource().hasPermission(2)) return 0;
+            var target = player(c);
+            if (!target.hasPermissions(2)) return 0;
+            dev.unyielding.quests.settings.GroundSettings.open(target);
+            return 1;
+        })));
+
         d.register(Commands.literal("tutorial")
                 .executes(c -> {
                     TutorialManager.open(player(c));
@@ -73,10 +81,13 @@ public final class ModCommands {
         team.then(teamAction("decline", "team", c -> safe(c, p -> TeamManager.decline(p, StringArgumentType.getString(c, "team"))), null));
         team.then(Commands.literal("leave").executes(c -> result(c, safe(c, TeamManager::leave), null)));
         team.then(Commands.literal("disband").executes(c -> result(c, safe(c, TeamManager::disband), null)));
+        team.then(Commands.literal("confirm").executes(c -> result(c, safe(c, p -> TeamManager.confirm(p, "", "")), null)));
+        team.then(Commands.literal("cancel").executes(c -> result(c, safe(c, TeamManager::cancelConfirmation), "Confirmation cancelled.")));
         team.then(memberAction("kick", c -> safe(c, p -> TeamManager.kick(p, StringArgumentType.getString(c, "player")))));
         team.then(memberAction("promote", c -> safe(c, p -> TeamManager.setRank(p, StringArgumentType.getString(c, "player"), Team.Rank.OFFICER))));
         team.then(memberAction("demote", c -> safe(c, p -> TeamManager.setRank(p, StringArgumentType.getString(c, "player"), Team.Rank.MEMBER))));
-        team.then(memberAction("transfer", c -> safe(c, p -> TeamManager.setRank(p, StringArgumentType.getString(c, "player"), Team.Rank.OWNER))));
+        team.then(Commands.literal("transfer").then(Commands.argument("player", StringArgumentType.word())
+                .executes(c -> result(c, safe(c, p -> TeamManager.setRank(p, StringArgumentType.getString(c, "player"), Team.Rank.OWNER)), null))));
         team.then(Commands.literal("set").then(Commands.argument("setting", StringArgumentType.word())
                 .suggests((c, b) -> SharedSuggestionProvider.suggest(List.of("name", "description", "color", "free"), b))
                 .then(Commands.argument("value", StringArgumentType.greedyString())
@@ -109,7 +120,7 @@ public final class ModCommands {
                 .then(Commands.literal("remove").then(Commands.argument("player", EntityArgument.player()).executes(c ->
                         result(c, TeamManager.adminRemove(EntityArgument.getPlayer(c, "player")), "Removed."))))
                 .then(Commands.literal("delete").then(Commands.argument("team", StringArgumentType.greedyString()).executes(c ->
-                        result(c, TeamManager.adminDelete(StringArgumentType.getString(c, "team")), "Deleted.")))));
+                        result(c, safe(c, p -> TeamManager.adminDelete(p, StringArgumentType.getString(c, "team"))), null)))));
         d.register(team);
 
         LiteralArgumentBuilder<CommandSourceStack> quests = Commands.literal("quests");

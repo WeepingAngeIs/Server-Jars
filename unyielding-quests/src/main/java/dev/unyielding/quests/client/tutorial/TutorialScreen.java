@@ -53,6 +53,10 @@ public final class TutorialScreen extends Screen {
                         new Entry("/tutorial  ·  Come back anytime",
                                 "Use Back and Next to explore the guide. Later closes it so you can return when you are ready.")
                 ), false));
+        List<Entry> whatsNew = entries(data, "whats_new");
+        if (!whatsNew.isEmpty()) {
+            pages.add(new Page("What's new", "Recent updates and the settings active on this server.", whatsNew, false));
+        }
         for (Tag value : data.getList("pages", Tag.TAG_COMPOUND)) {
             CompoundTag tag = (CompoundTag) value;
             List<Entry> entries = entries(tag, "entries");

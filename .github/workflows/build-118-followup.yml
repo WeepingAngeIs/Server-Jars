@@ -3,7 +3,7 @@ name: Build Unyielding 1.1.9
 on:
   workflow_dispatch:
   push:
-    branches: ['codex/unyielding-118-followup']
+    branches: ['codex/unyielding-118-followup', 'codex/unyielding-improvements-wip']
 
 permissions:
   contents: read

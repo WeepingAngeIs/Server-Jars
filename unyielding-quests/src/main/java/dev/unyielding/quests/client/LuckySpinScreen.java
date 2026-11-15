@@ -57,6 +57,10 @@ public final class LuckySpinScreen extends Screen {
         g.drawCenteredString(font,title,width/2,y+10,0xFFFFCE40);
         String status=waiting?"Loading...":!state.getBoolean("ready")?"Choose your starter with H first.":!state.getBoolean("enabled")?"Lucky Spin is disabled.":"Saved spins: "+state.getLong("count");
         g.drawCenteredString(font,status,width/2,y+28,0xFFFFFFFF);
+        if(!waiting && state.getBoolean("dailyEnabled")) {
+            String policy="Daily policy (hover)";
+            g.drawCenteredString(font,policy,width/2,y+39,0xFFB8C0D0);
+        }
         int top=y+50;
         g.enableScissor(x+8,top,x+w-8,top+40);
         if(result!=null){
@@ -75,6 +79,12 @@ public final class LuckySpinScreen extends Screen {
         g.fill(width/2-1,top-3,width/2+1,top+38,0xFFFFCE40);
         if(result!=null)g.drawCenteredString(font,animating()?"Spinning...":font.plainSubstrByWidth(result.name(),w-16),width/2,y+103,animating()?0xFFFFFFFF:result.tier().color);
         for(var widget:renderables) widget.render(g,mx,my,partial);
+        String policy="Daily policy (hover)";
+        int left=width/2-font.width(policy)/2;
+        if(!waiting && state.getBoolean("dailyEnabled") && mx>=left && mx<left+font.width(policy) && my>=y+39 && my<y+49)
+            g.renderTooltip(font,List.of(Component.literal("Miss up to " + state.getInt("dailyGraceDays") + " days without losing your streak."),
+                    Component.literal("Missed days do not award spins."),
+                    Component.literal("Claims require a new day and 20 hours since the last claim.")), java.util.Optional.empty(),mx,my);
     }
     @Override public boolean isPauseScreen(){return false;}
     @Override public void onClose(){minecraft.setScreen(parent);}

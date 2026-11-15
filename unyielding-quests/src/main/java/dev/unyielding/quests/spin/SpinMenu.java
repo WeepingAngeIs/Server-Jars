@@ -33,6 +33,8 @@ public final class SpinMenu {
         state.putLong("count",DailyLogin.available(p));
         state.putBoolean("ready",ready);
         state.putBoolean("enabled",Config.DAILY_ENABLED.get() || LuckySpin.enabled());
+        state.putBoolean("dailyEnabled", Config.DAILY_ENABLED.get());
+        state.putInt("dailyGraceDays", Config.DAILY_GRACE_DAYS.get());
         Net.sendTo(p,new Net.SpinMenuState(state));
     }
 }

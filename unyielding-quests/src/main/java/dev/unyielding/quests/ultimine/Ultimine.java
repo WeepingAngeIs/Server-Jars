@@ -3,6 +3,7 @@ package dev.unyielding.quests.ultimine;
 import dev.unyielding.quests.net.Net;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -68,13 +69,20 @@ public final class Ultimine {
             ACTIVE.add(p.getUUID());
             try {
                 float exhaustion = (float) (0.005 * UltimineConfig.EXHAUSTION.get());
+                int mined = 0;
+                String stop = "finished";
                 for (BlockPos pos : list) {
                     if (pos.equals(origin)) continue;
                     ItemStack tool = p.getMainHandItem();
                     int keep = UltimineConfig.PREVENT_TOOL_BREAK.get();
-                    if (tool.isDamageableItem() && tool.getMaxDamage() - tool.getDamageValue() <= Math.max(1, keep)) break;
-                    if (p.getFoodData().getFoodLevel() <= 0 && !p.isCreative() && exhaustion > 0) break;
-                    if (p.gameMode.destroyBlock(pos)) p.causeFoodExhaustion(exhaustion);
+                    if (tool.isDamageableItem() && tool.getMaxDamage() - tool.getDamageValue() <= Math.max(1, keep)) { stop = "tool durability"; break; }
+                    if (p.getFoodData().getFoodLevel() <= 0 && !p.isCreative() && exhaustion > 0) { stop = "out of hunger"; break; }
+                    if (p.gameMode.destroyBlock(pos)) { mined++; p.causeFoodExhaustion(exhaustion); }
+                }
+                if (UltimineConfig.COMPACT_FEEDBACK.get()) {
+                    ItemStack tool = p.getMainHandItem();
+                    String durability = tool.isDamageableItem() ? "; durability " + (tool.getMaxDamage() - tool.getDamageValue()) + "/" + tool.getMaxDamage() : "";
+                    p.displayClientMessage(Component.literal("Vein mining: " + mined + " extra blocks" + durability + "; " + stop), true);
                 }
             } finally {
                 ACTIVE.remove(p.getUUID());

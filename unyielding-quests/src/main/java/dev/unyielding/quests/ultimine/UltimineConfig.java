@@ -11,6 +11,7 @@ public final class UltimineConfig {
     public static final ModConfigSpec.IntValue MAX_BLOCKS;
     public static final ModConfigSpec.DoubleValue EXHAUSTION;
     public static final ModConfigSpec.BooleanValue REQUIRE_TOOL;
+    public static final ModConfigSpec.BooleanValue COMPACT_FEEDBACK;
     public static final ModConfigSpec.IntValue PREVENT_TOOL_BREAK;
     public static final ModConfigSpec.BooleanValue RIGHT_CLICK_AXE, RIGHT_CLICK_HOE, RIGHT_CLICK_SHOVEL;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> MERGE_TAGS, MERGE_TAGS_SHAPED;
@@ -21,6 +22,7 @@ public final class UltimineConfig {
         MAX_BLOCKS = b.comment("Most blocks mined at once (besides the one you hit).").defineInRange("max_blocks", 64, 1, 1024);
         EXHAUSTION = b.comment("Hunger cost per extra block, in multiples of a normal block break (0 = free).").defineInRange("exhaustion_per_block", 20.0, 0.0, 1000.0);
         REQUIRE_TOOL = b.comment("Only vein-mine while holding something in your hand.").define("require_tool", false);
+        COMPACT_FEEDBACK = b.comment("Show a brief vein-mining result in the action bar.").define("compact_feedback", false);
         PREVENT_TOOL_BREAK = b.comment("Stop vein-mining when the tool has this much durability left (0 = never stop early).").defineInRange("prevent_tool_break", 0, 0, 1000);
         b.push("right_click");
         RIGHT_CLICK_AXE = b.comment("Strip all connected logs at once with an axe.").define("axe", true);
