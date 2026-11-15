@@ -195,7 +195,12 @@ public final class DailyLogin {
     public static void retryRecovery() throws IOException {
         recoveryReady = false;
         if (data == null || rewardJournal == null) throw new IOException("Reward journal is unavailable");
-        for (RewardJournal.Entry entry : rewardJournal.list()) {
+        var entries = rewardJournal.list();
+        Set<UUID> journalIds = new HashSet<>();
+        for (RewardJournal.Entry entry : entries) journalIds.add(entry.id());
+        if (!RewardDebit.journalCoversMarkers(data.appliedDebits, journalIds))
+            throw new IOException("Reward journal is missing previously recorded transactions; restore it before retrying");
+        for (RewardJournal.Entry entry : entries) {
             if (!applyDebit(entry)) throw new IOException("Cannot reconcile debit " + entry.id());
             if (entry.state() == RewardJournal.State.PREPARED || entry.state() == RewardJournal.State.DEBIT_APPLIED || entry.state() == RewardJournal.State.DELIVERING)
                 rewardJournal.transition(entry.id(), entry.state(), RewardJournal.State.HELD);

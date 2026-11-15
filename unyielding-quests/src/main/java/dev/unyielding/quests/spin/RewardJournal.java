@@ -26,7 +26,8 @@ public final class RewardJournal implements AutoCloseable {
         Path absolute = directory.toAbsolutePath().normalize();
         boolean existed = Files.isDirectory(absolute);
         if (!existed) Files.createDirectory(absolute); // Parent must already exist and be durable.
-        if (!existed && absolute.getParent() != null) {
+        // A prior startup might have created this directory but failed before syncing its parent.
+        if (absolute.getParent() != null) {
             try (FileChannel parent = FileChannel.open(absolute.getParent(), StandardOpenOption.READ)) { parent.force(true); }
         }
         directory = absolute;

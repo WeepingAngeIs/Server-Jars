@@ -6,6 +6,12 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RewardDebitTest {
+    @Test void missingJournalHistoryFailsClosed() {
+        UUID known = UUID.randomUUID(), missing = UUID.randomUUID();
+        assertTrue(RewardDebit.journalCoversMarkers(java.util.Set.of(known), java.util.Set.of(known)));
+        assertFalse(RewardDebit.journalCoversMarkers(java.util.Set.of(known, missing), java.util.Set.of(known)));
+        assertTrue(RewardDebit.journalCoversMarkers(java.util.Set.of(), java.util.Set.of()));
+    }
     @Test void replayDoesNotDebitTwiceOrOverwriteLaterCredit() {
         long[] record = {0, 0, 3, 2, 0};
         var applied = new HashSet<UUID>();
