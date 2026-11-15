@@ -61,8 +61,14 @@ for ((i=0; i<240; i++)); do
   sleep 2
 done
 grep -q 'Done (' "$logs/server.log"
-setsid xvfb-run -a -s '-screen 0 640x480x24' bash "$client_script" > "$logs/client.log" 2>&1 & client_pid=$!
-setsid xvfb-run -a -s '-screen 0 640x480x24' bash "$visitor_script" > "$logs/visitor.log" 2>&1 & visitor_pid=$!
+mkdir -p "$project/run/tmp" "$project/run-visitor/tmp"
+# LWJGL extracts native libraries at startup. Separate temporary directories prevent
+# two simultaneous JVMs racing while creating or loading the same native library.
+setsid env TMPDIR="$project/run/tmp" JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -Djava.io.tmpdir=$project/run/tmp" \
+  xvfb-run -a -s '-screen 0 640x480x24' bash "$client_script" > "$logs/client.log" 2>&1 & client_pid=$!
+sleep 5
+setsid env TMPDIR="$project/run-visitor/tmp" JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -Djava.io.tmpdir=$project/run-visitor/tmp" \
+  xvfb-run -a -s '-screen 0 640x480x24' bash "$visitor_script" > "$logs/visitor.log" 2>&1 & visitor_pid=$!
 for ((i=0; i<360; i++)); do
   if [[ -f "$result_file" ]]; then
     cat "$result_file"
