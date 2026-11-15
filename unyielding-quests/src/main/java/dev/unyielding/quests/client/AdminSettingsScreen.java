@@ -132,6 +132,16 @@ public final class AdminSettingsScreen extends Screen {
         updateControls();
     }
 
+    /** Used by the isolated client smoke runner to locate a named server setting. */
+    public net.minecraft.client.gui.components.Button locateSettingForSmoke(String key) {
+        for (Row row : rows) if (row.key().equals(key)) {
+            scroll = targetScroll = Mth.clamp(row.offset(), 0, maxScroll());
+            updateControls();
+            return row.toggle();
+        }
+        return null;
+    }
+
     private int maxScroll() {
         return Math.max(0, contentHeight - (bottom - top));
     }

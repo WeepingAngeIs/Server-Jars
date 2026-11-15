@@ -13,6 +13,13 @@ final class DestinationPolicyTest {
         assertFalse(DestinationPolicy.ownHomes(homes, a).containsKey("private-b"));
         assertTrue(DestinationPolicy.ownHomes(homes, UUID.randomUUID()).isEmpty());
     }
+    @Test void destinationFieldsAreBoundedByUtf8Bytes() {
+        assertTrue(DestinationPolicy.fitsPayload("a".repeat(256), "minecraft:overworld"));
+        assertFalse(DestinationPolicy.fitsPayload("a".repeat(257), "minecraft:overworld"));
+        assertFalse(DestinationPolicy.fitsPayload("é".repeat(129), "minecraft:overworld"));
+        assertFalse(DestinationPolicy.fitsPayload("home", "a".repeat(257)));
+        assertEquals(200, DestinationPolicy.MAX_ROWS);
+    }
     @Test void destinationCommandsCannotInjectAnotherCommandOrUseAnotherRoot() {
         assertEquals("home cottage-1", DestinationPolicy.command("home", "cottage-1"));
         assertEquals("warp market", DestinationPolicy.command("warp", "market"));

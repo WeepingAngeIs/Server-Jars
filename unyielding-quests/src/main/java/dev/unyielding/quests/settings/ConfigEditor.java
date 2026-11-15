@@ -132,7 +132,7 @@ public final class ConfigEditor {
         }
         handle(player,new Action(key,after,before));
         boolean restored=JSON.toJson(value.getRaw()).equals(before);
-        player.sendSystemMessage(net.minecraft.network.chat.Component.literal(restored?"Undid "+key+" to "+before+".":"Undo did not complete. Check the server config and logs."));
+        player.sendSystemMessage(net.minecraft.network.chat.Component.literal(restored?"Current value of "+key+" is "+before+". Check the settings screen for save or refresh status.":"Undo did not complete. Check the server config and logs."));
         return restored?1:0;
     }
     private static ModConfigSpec.IntValue[] odds(String group) {

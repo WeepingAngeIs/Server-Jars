@@ -26,6 +26,10 @@ public final class DestinationScreen extends FormScreen {
         long remain = Math.max(0L, data.getLong("remaining") - Math.max(0L, (System.nanoTime()-received)/1_000_000_000L));
         note(data.getBoolean("exempt") ? "Cooldown: admin exempt" : "Cooldown: " + data.getInt("cooldown") + " seconds; " + (remain > 0 ? "wait " + remain + " seconds" : "ready"));
         if (!data.getBoolean("allowed")) note("Teleport command unavailable for you.");
+        if (data.getInt("omitted") > 0) {
+            note(data.getInt("omitted") + " destinations omitted from this list.");
+            note("Use /" + kind + " <name> to access them.");
+        }
         gap(5);
         for (Tag tag : data.getList("entries", Tag.TAG_COMPOUND)) {
             CompoundTag row = (CompoundTag)tag;

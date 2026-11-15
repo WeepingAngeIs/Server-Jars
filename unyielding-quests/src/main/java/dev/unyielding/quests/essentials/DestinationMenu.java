@@ -34,9 +34,12 @@ public final class DestinationMenu {
         data.putInt("cooldown", seconds);
         data.putBoolean("exempt", EssConfig.ADMINS_EXEMPT_COOLDOWNS.get() && player.hasPermissions(2));
         ListTag rows = new ListTag();
-        entries.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(e -> {
+        for (var e : entries.entrySet().stream().sorted(Map.Entry.comparingByKey()).toList()) {
+            if (rows.size() >= DestinationPolicy.MAX_ROWS) break;
+            if (!DestinationPolicy.fitsPayload(e.getKey(), e.getValue().dim())) continue;
             CompoundTag row = new CompoundTag(); row.putString("name", e.getKey()); row.putString("dimension", e.getValue().dim()); rows.add(row);
-        });
+        }
+        data.putInt("omitted", entries.size() - rows.size());
         data.put("entries", rows);
         Net.sendTo(player, new Sync(data));
     }

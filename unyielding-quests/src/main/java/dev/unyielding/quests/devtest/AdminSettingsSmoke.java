@@ -186,15 +186,12 @@ public final class AdminSettingsSmoke {
     private static void pressToggle(String value) {
         Minecraft mc = Minecraft.getInstance();
         require(mc.screen instanceof AdminSettingsScreen, "Admin menu not open");
-        for (var element : mc.screen.children()) {
-            if (element instanceof Button button && button.visible && button.active
-                    && button.getMessage().getString().equals(value)) {
-                mc.screen.mouseClicked(button.getX() + button.getWidth() / 2d,
-                        button.getY() + button.getHeight() / 2d, 0);
-                return;
-            }
-        }
-        throw new IllegalStateException("Sharing toggle not clickable: " + value);
+        AdminSettingsScreen screen = (AdminSettingsScreen) mc.screen;
+        Button button = screen.locateSettingForSmoke("share_quest_progress");
+        require(button != null && button.visible && button.active && button.getMessage().getString().equals(value),
+                "Sharing toggle not clickable: " + value);
+        screen.mouseClicked(button.getX() + button.getWidth() / 2d,
+                button.getY() + button.getHeight() / 2d, 0);
     }
 
     private static void request(String command) throws Exception {
