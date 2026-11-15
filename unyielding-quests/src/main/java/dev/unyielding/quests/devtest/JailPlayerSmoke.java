@@ -12,8 +12,11 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.CommandEvent;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
+import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,6 +51,20 @@ public final class JailPlayerSmoke {
             var level = admin.serverLevel();
             admin.teleportTo(level, admin.getX(), admin.getY() + 25, admin.getZ(), 0, 0);
             BlockPos min = admin.blockPosition().relative(admin.getDirection(), 8).offset(-3, 0, -3);
+            // Claim one candidate chunk as a stranger and verify the real OPAC API denies
+            // this admin's placement rather than relying on a fabricated claim response.
+            var apiClass = Class.forName("xaero.pac.common.server.api.OpenPACServerAPI");
+            var api = apiClass.getMethod("get", net.minecraft.server.MinecraftServer.class).invoke(null, server);
+            var claims = apiClass.getMethod("getServerClaimsManager").invoke(api);
+            var claimsApi = Class.forName("xaero.pac.common.server.claims.api.IServerClaimsManagerAPI");
+            int cx = min.getX() >> 4, cz = min.getZ() >> 4;
+            var dim = level.dimension().location();
+            claimsApi.getMethod("claim", net.minecraft.resources.ResourceLocation.class, java.util.UUID.class,
+                    int.class, int.class, int.class, boolean.class).invoke(claims, dim, java.util.UUID.randomUUID(), 0, cx, cz, false);
+            commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild preview");
+            commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild place");
+            require(JailData.get(server).location() == null && level.getBlockState(min).isAir(), "stranger claim allowed jail placement");
+            claimsApi.getMethod("unclaim", net.minecraft.resources.ResourceLocation.class, int.class, int.class).invoke(claims, dim, cx, cz);
             level.setBlockAndUpdate(min, Blocks.CHEST.defaultBlockState());
             commands.performPrefixedCommand(admin.createCommandSourceStack(), "jailbuild preview");
             require(level.getBlockState(min).is(Blocks.CHEST), "preview changed existing chest");
@@ -75,6 +92,17 @@ public final class JailPlayerSmoke {
             var breaking = new BlockEvent.BreakEvent(level, min, level.getBlockState(min), prisoner);
             NeoForge.EVENT_BUS.post(breaking);
             require(breaking.isCanceled(), "jailed block break not cancelled");
+            var snapshot = net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(), level, min);
+            var placing = new BlockEvent.EntityPlaceEvent(snapshot, Blocks.AIR.defaultBlockState(), prisoner);
+            NeoForge.EVENT_BUS.post(placing);
+            require(placing.isCanceled(), "jailed block placement not cancelled");
+            var itemUse = new PlayerInteractEvent.RightClickItem(prisoner, net.minecraft.world.InteractionHand.MAIN_HAND);
+            NeoForge.EVENT_BUS.post(itemUse);
+            require(itemUse.isCanceled(), "jailed item use not cancelled");
+            var boat = new net.minecraft.world.entity.vehicle.Boat(level, jail.x(), jail.y(), jail.z());
+            var mount = new EntityMountEvent(prisoner, boat, level, true);
+            NeoForge.EVENT_BUS.post(mount);
+            require(mount.isCanceled(), "jailed vehicle mount not cancelled");
             // Simulate a direct same-dimension teleport API that does not fire a teleport event.
             var origin = data.assignment(prisoner.getUUID()).prior();
             prisoner.teleportTo(level, origin.x(), origin.y(), origin.z(), origin.yaw(), origin.pitch());
@@ -85,9 +113,21 @@ public final class JailPlayerSmoke {
             prisoner = server.getPlayerList().respawn(prisoner, false, net.minecraft.world.entity.Entity.RemovalReason.KILLED);
             require(data.assignment(prisoner.getUUID()) != null, "death lost jail assignment");
             require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "actual death respawn escaped jail");
+            // A damaged cage is never used as a teleport destination: preserve assignment,
+            // then restore the block and verify recontainment resumes safely.
+            var originalShell = level.getBlockState(min);
+            level.setBlockAndUpdate(min, Blocks.AIR.defaultBlockState());
+            require(!JailPlacement.intact(server, jail), "damaged jail appeared intact");
+            prisoner.teleportTo(level, origin.x(), origin.y(), origin.z(), origin.yaw(), origin.pitch());
+            NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(prisoner));
+            require(prisoner.distanceToSqr(origin.x(), origin.y(), origin.z()) < 0.0001, "unsafe jail was used for teleport");
+            require(data.assignment(prisoner.getUUID()) != null, "unsafe jail lost assignment");
+            level.setBlockAndUpdate(min, originalShell);
+            NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(prisoner));
+            require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "restored jail did not recontain player");
             server.getPlayerList().saveAll();
             server.saveEverything(true, true, true);
-            Files.writeString(Path.of("/tmp/uq-jail-player-result"), "passed: permission, preview collision, placement, self-jail, assignment, command/teleport/dimension/break events, direct teleport, death respawn\n");
+            Files.writeString(Path.of("/tmp/uq-jail-player-result"), "passed: permission, claim and preview denial, placement, self-jail, command/teleport/dimension/break/place/item/mount events, direct teleport, death respawn, damaged-jail recovery\n");
         } catch (Throwable failure) {
             UnyieldingQuests.LOGGER.error("Jail player smoke failed", failure);
             try { Files.writeString(Path.of("/tmp/uq-jail-player-result"), "failed: " + failure + "\n"); } catch (Exception ignored) { }
