@@ -87,6 +87,7 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     assert not any(n.startswith(prefix + 'devtest/MeetingTwoPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/QuestSharingPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
+    assert not any(n.startswith(prefix + 'devtest/NeoOriginsPreflightSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'
     unresolved = missing_references({n: result.read(n) for n in result.namelist() if n.endswith('.class')})
     assert not unresolved, f'Unresolved application classes in final JAR: {unresolved}'
