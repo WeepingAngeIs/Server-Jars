@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:story/root",
+  "display": {
+    "icon": { "id": "minecraft:iron_bars" },
+    "title": { "text": "Nice Try, Houdini" },
+    "description": { "text": "You almost got away with it." },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "escape": { "trigger": "minecraft:impossible" }
+  }
+}

@@ -38,6 +38,9 @@ max-players=4
 generate-structures=false
 max-tick-time=-1
 EOF
+world_name="${UQ_WORLD_NAME:-world}"
+[[ "$world_name" =~ ^[A-Za-z0-9_-]{1,32}$ ]] || { echo 'Invalid disposable world name' >&2; exit 1; }
+printf 'level-name=%s\n' "$world_name" >> "$project/run-server/server.properties"
 rm -f "$result_file"
 server_pid= client_pid= visitor_pid=
 cleanup() {

@@ -54,3 +54,19 @@ source = source.replace(before, '''require(java.nio.file.Path.of(System.getenv("
                     "player jail check did not load the assembled JAR");
             require(net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"), "OPAC missing");''', 1)
 (harness / 'src/main/java/dev/unyielding/bundlesmoke/JailPlayerSmoke.java').write_text(source, encoding='utf-8')
+
+# Run terrain recovery against that same packaged production JAR in a separate world.
+source = (ROOT / 'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/JailTerrainPlayerSmoke.java').read_text(encoding='utf-8')
+before = 'package dev.unyielding.quests.devtest;'
+assert source.count(before) == 1
+source = source.replace(before, 'package dev.unyielding.bundlesmoke;', 1)
+before = '@EventBusSubscriber(modid = UnyieldingQuests.MODID)'
+assert source.count(before) == 1
+source = source.replace(before, '@EventBusSubscriber(modid = "uq_bundle_smoke")', 1)
+before = 'require(net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"), "OPAC missing");'
+assert source.count(before) == 1
+source = source.replace(before, '''require(java.nio.file.Path.of(System.getenv("UQ_BUNDLE_JAR")).toRealPath().equals(
+                    net.neoforged.fml.ModList.get().getModFileById("unyieldingquests").getFile().getFilePath().toRealPath()),
+                    "terrain check did not load the assembled JAR");
+            require(net.neoforged.fml.ModList.get().isLoaded("openpartiesandclaims"), "OPAC missing");''', 1)
+(harness / 'src/main/java/dev/unyielding/bundlesmoke/JailTerrainPlayerSmoke.java').write_text(source, encoding='utf-8')

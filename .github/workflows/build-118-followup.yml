@@ -11,7 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
@@ -55,6 +55,22 @@ jobs:
           export JAVA_TOOL_OPTIONS='-Duq.jailPlayers=true -Duq.jailPhase=2'
           bash .github/scripts/meeting-two-player.sh
           cat /tmp/uq-packaged-jail-phase1 /tmp/uq-jail-player-result
+      - name: Exercise packaged jail terrain and interrupted recovery
+        env:
+          UQ_PACKAGED_JAIL_SMOKE: '1'
+          UQ_WORLD_NAME: jail_terrain_smoke
+          UQ_RESULT_FILE: /tmp/uq-jail-terrain-result
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          ALSOFT_DRIVERS: 'null'
+        run: |
+          cp -a dist/packaged-smoke/jail-player-logs dist/packaged-smoke/jail-player-previous
+          export JAVA_TOOL_OPTIONS='-Duq.jailTerrainPlayers=true -Duq.jailTerrainPhase=1'
+          bash .github/scripts/meeting-two-player.sh
+          cp /tmp/uq-jail-terrain-result /tmp/uq-packaged-terrain-phase1
+          cp -a dist/packaged-smoke/jail-player-logs dist/packaged-smoke/jail-terrain-phase1
+          export JAVA_TOOL_OPTIONS='-Duq.jailTerrainPlayers=true -Duq.jailTerrainPhase=2'
+          bash .github/scripts/meeting-two-player.sh
+          cat /tmp/uq-packaged-terrain-phase1 /tmp/uq-jail-terrain-result
       - name: Upload build and checksums
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

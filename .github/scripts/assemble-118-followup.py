@@ -26,7 +26,7 @@ roots = [
     'spin/LuckySpin', 'spin/SpinCobblemon', 'spin/RewardJournal', 'spin/RewardDebit',
     'team/Team', 'team/TeamManager', 'tutorial/TutorialManager', 'ultimine/Ultimine', 'ultimine/UltimineConfig',
     'essentials/Essentials', 'essentials/EssConfig', 'essentials/TeleCmds', 'essentials/DestinationMenu', 'essentials/DestinationPolicy', 'essentials/PartyMeetings', 'essentials/PartyMeetingPolicy', 'essentials/PartyMeetingData', 'essentials/MeetingClaims', 'client/DestinationScreen', 'settings/AdminSettings', 'settings/SharingSnapshot', 'quest/QuestManager', 'quest/QuestData',
-    'jail/JailData', 'jail/JailCommands', 'jail/JailPlacement', 'jail/JailEnforcement', 'jail/JailBoundary',
+    'jail/JailData', 'jail/JailCommands', 'jail/JailPlacement', 'jail/JailEnforcement', 'jail/JailBoundary', 'jail/JailTerrainJournal', 'jail/JailEscape', 'jail/JailEscapeBoundary', 'mixin/JailMovementMixin',
 ]
 frames = {f'assets/unyieldingquests/textures/gui/sprites/icon_spin_frame_{i}.png' for i in range(4)}
 out = Path('dist/120-release/Unyielding-1.2.0.jar')
@@ -54,6 +54,9 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
     for frame in frames:
         assert frame in names, f'Missing {frame}'
         updates[frame] = component.read(frame)
+    advancement = 'data/unyieldingquests/advancement/jail_escape.json'
+    assert advancement in names, 'Missing jail escape advancement'
+    updates[advancement] = component.read(advancement)
     mixin_path = 'assets/unyieldingquests/pokemon.mixins.json'
     old_mixins = json.loads(base.read(mixin_path))
     new_mixins = json.loads(component.read(mixin_path))
@@ -89,6 +92,7 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     assert not any(n.startswith(prefix + 'devtest/JailPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/NeoOriginsPreflightSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailInventorySnapshotSmoke') for n in result.namelist()), 'Test harness leaked into release'
+    assert not any(n.startswith(prefix + 'devtest/JailTerrainPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'
     unresolved = missing_references({n: result.read(n) for n in result.namelist() if n.endswith('.class')})
     assert not unresolved, f'Unresolved application classes in final JAR: {unresolved}'

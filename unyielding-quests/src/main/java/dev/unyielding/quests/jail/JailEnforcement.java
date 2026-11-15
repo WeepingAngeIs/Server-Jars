@@ -38,6 +38,7 @@ public final class JailEnforcement {
 
     /** Scoped exemption only for trusted server-side jail management and recovery. */
     static boolean teleportAuthorized(ServerPlayer player, Loc location) {
+        JailEscape.invalidate(player);
         UUID previous = INTERNAL_TELEPORT.get();
         INTERNAL_TELEPORT.set(player.getUUID());
         try {
@@ -56,9 +57,11 @@ public final class JailEnforcement {
         }
     }
     @SubscribeEvent public static void teleport(EntityTeleportEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) JailEscape.invalidate(player);
         if (event.getEntity() instanceof ServerPlayer player && jailed(player) && !internal(player)) event.setCanceled(true);
     }
     @SubscribeEvent public static void dimension(EntityTravelToDimensionEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) JailEscape.invalidate(player);
         if (event.getEntity() instanceof ServerPlayer player && jailed(player) && !internal(player)) event.setCanceled(true);
     }
     @SubscribeEvent public static void mount(EntityMountEvent event) {
@@ -81,10 +84,16 @@ public final class JailEnforcement {
         if (event.getEntity() instanceof ServerPlayer player) enforce(player);
     }
     @SubscribeEvent public static void login(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) enforce(player);
+        if (event.getEntity() instanceof ServerPlayer player) { JailEscape.invalidate(player); enforce(player); }
     }
     @SubscribeEvent public static void respawn(PlayerEvent.PlayerRespawnEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) enforce(player);
+        if (event.getEntity() instanceof ServerPlayer player) { JailEscape.invalidate(player); enforce(player); }
+    }
+    @SubscribeEvent public static void logout(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) JailEscape.invalidate(player);
+    }
+    @SubscribeEvent public static void death(net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) JailEscape.invalidate(player);
     }
     /** Select the validated jail before vanilla creates or positions the replacement player.
      * Do not modify the player's stored bed/anchor. Unavailable destinations retain vanilla's

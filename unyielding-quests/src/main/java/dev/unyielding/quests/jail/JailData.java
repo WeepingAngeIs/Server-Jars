@@ -15,6 +15,7 @@ import net.minecraft.world.level.saveddata.SavedData;
 public final class JailData extends SavedData {
     public static final int LEGACY_GEOMETRY = 1;
     public static final int INTERROGATION_GEOMETRY = 2;
+    public static final int INTERROGATION_CHAIR_GEOMETRY = 3;
     public static final int INVALID_GEOMETRY = Integer.MIN_VALUE;
     public record Assignment(Loc jail, Loc prior, int geometry) {
         /** Existing call sites and saved assignments use the original 7-block cage. */

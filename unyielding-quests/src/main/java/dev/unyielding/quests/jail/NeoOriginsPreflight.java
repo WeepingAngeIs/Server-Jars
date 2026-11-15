@@ -37,7 +37,7 @@ public final class NeoOriginsPreflight {
     private NeoOriginsPreflight() { }
 
     public static Result inspect(ServerPlayer player) {
-        if (player == null || player.server == null) return result(Status.API_UNAVAILABLE);
+        if (player == null || player.server == null || !player.server.isSameThread()) return result(Status.API_UNAVAILABLE);
         try {
             var container = ModList.get().getModContainerById("neoorigins");
             if (container.isEmpty()) return result(Status.MOD_ABSENT);

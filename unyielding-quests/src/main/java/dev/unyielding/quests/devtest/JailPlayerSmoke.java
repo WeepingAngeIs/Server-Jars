@@ -86,9 +86,12 @@ public final class JailPlayerSmoke {
             var data = JailData.get(server);
             var jail = data.location();
             require(jail != null && JailPlacement.intact(server, jail), "jail template is not intact");
-            require(data.geometry() == JailData.INTERROGATION_GEOMETRY, "new jail geometry not stored");
+            require(data.geometry() == JailData.INTERROGATION_CHAIR_GEOMETRY, "new jail geometry not stored");
             require(level.getBlockState(min.offset(6,2,3)).is(Blocks.IRON_BARS), "prison/admin divider lacks bars");
             require(level.getBlockState(min.offset(12,1,3)).isAir() && level.getBlockState(min.offset(12,2,3)).isAir(), "admin doorway not accessible");
+            require(level.getBlockState(min.offset(10,1,3)).is(Blocks.OAK_STAIRS)
+                    && level.getBlockState(min.offset(10,1,3)).getValue(net.minecraft.world.level.block.StairBlock.FACING) == net.minecraft.core.Direction.WEST,
+                    "interrogation chair missing or facing away from cell");
             require(level.getBlockState(min.below()).is(Blocks.GRASS_BLOCK), "placement replaced ground");
             commands.performPrefixedCommand(admin.createCommandSourceStack(), "jail Dev");
             require(data.assignment(admin.getUUID()) == null, "admin self-jail allowed");
@@ -117,6 +120,19 @@ public final class JailPlayerSmoke {
             data.assign(prisoner.getUUID(), new JailData.Assignment(jail, prisonerPrior, data.geometry()));
             require(data.assignment(prisoner.getUUID()) != null, "synthetic assignment missing");
             require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "prisoner did not reach jail");
+            var escapeAdvancement = server.getAdvancements().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("unyieldingquests", "jail_escape"));
+            require(escapeAdvancement != null, "jail escape advancement missing");
+            require(!escapeAdvancement.value().display().orElseThrow().shouldAnnounceChat(), "escape advancement globally announces");
+            require(escapeAdvancement.value().rewards().equals(net.minecraft.advancements.AdvancementRewards.EMPTY), "escape advancement has a reward");
+            require(!prisoner.getAdvancements().getOrStartProgress(escapeAdvancement).isDone(), "fresh player already has escape advancement");
+            // A normal move touching the inside wall is not a full escape.
+            acknowledgePosition(prisoner);
+            prisoner.setPos(jail.x()+2.0, jail.y(), jail.z());
+            prisoner.connection.resetPosition();
+            prisoner.connection.handleMovePlayer(new net.minecraft.network.protocol.game.ServerboundMovePlayerPacket.Pos(jail.x()+2.19, jail.y(), jail.z(), true));
+            require(!prisoner.getAdvancements().getOrStartProgress(escapeAdvancement).isDone(), "normal wall contact granted escape advancement");
+            prisoner.setPos(jail.x(), jail.y(), jail.z());
+            prisoner.connection.resetPosition();
             var commandEvent = new CommandEvent(commands.getDispatcher().parse("say escape", prisoner.createCommandSourceStack()));
             NeoForge.EVENT_BUS.post(commandEvent);
             require(commandEvent.isCanceled(), "jailed command event not cancelled");
@@ -159,6 +175,22 @@ public final class JailPlayerSmoke {
             require(prisoner != null && prisoner.connection.player == prisoner, "respawn did not rebind player connection");
             require(data.assignment(prisoner.getUUID()) != null, "death lost jail assignment");
             require(prisoner.distanceToSqr(jail.x(), jail.y(), jail.z()) < 0.0001, "actual death respawn escaped jail");
+            require(!prisoner.getAdvancements().getOrStartProgress(escapeAdvancement).isDone(), "teleport or respawn granted escape advancement");
+            // Simulate an actual client movement packet bypassing collision. The server
+            // must observe the full player box crossing the cell's outer face.
+            acknowledgePosition(prisoner);
+            prisoner.setPos(jail.x()+2.0, jail.y(), jail.z());
+            prisoner.connection.resetPosition();
+            int xpBeforeEscape = prisoner.totalExperience;
+            prisoner.noPhysics = true;
+            try {
+                prisoner.connection.handleMovePlayer(new net.minecraft.network.protocol.game.ServerboundMovePlayerPacket.Pos(jail.x()+4.0, jail.y(), jail.z(), true));
+            } finally { prisoner.noPhysics = false; }
+            require(prisoner.getAdvancements().getOrStartProgress(escapeAdvancement).isDone(), "real movement escape did not grant advancement");
+            require(prisoner.totalExperience == xpBeforeEscape, "escape advancement granted experience");
+            require(!prisoner.getAdvancements().award(escapeAdvancement, "escape"), "escape advancement could be granted twice");
+            prisoner.setPos(jail.x(), jail.y(), jail.z());
+            prisoner.connection.resetPosition();
             // A damaged cage is never used as a teleport destination: preserve assignment,
             // then restore the block and verify recontainment resumes safely.
             var originalShell = level.getBlockState(min);
@@ -179,6 +211,11 @@ public final class JailPlayerSmoke {
             UnyieldingQuests.LOGGER.error("Jail player smoke failed", failure);
             try { Files.writeString(Path.of("/tmp/uq-jail-player-result"), "failed: " + failure + "\n"); } catch (Exception ignored) { }
         }
+    }
+    private static void acknowledgePosition(net.minecraft.server.level.ServerPlayer player) throws Exception {
+        var field = net.minecraft.server.network.ServerGamePacketListenerImpl.class.getDeclaredField("awaitingTeleport");
+        field.setAccessible(true);
+        player.connection.handleAcceptTeleportPacket(new net.minecraft.network.protocol.game.ServerboundAcceptTeleportationPacket(field.getInt(player.connection)));
     }
     private static void require(boolean ok, String message) { if (!ok) throw new IllegalStateException(message); }
 }

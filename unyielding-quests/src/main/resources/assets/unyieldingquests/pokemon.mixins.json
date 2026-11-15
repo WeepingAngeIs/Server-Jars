@@ -7,7 +7,8 @@
     "PokemonCompanionProgressMixin",
     "PokemonProgressRequirementMixin",
     "CorvisquireEvolutionGuardMixin",
-    "OriginFlightMixin"
+    "OriginFlightMixin",
+    "JailMovementMixin"
   ],
   "client": [
     "PokemonSpeciesSyncMixin",
