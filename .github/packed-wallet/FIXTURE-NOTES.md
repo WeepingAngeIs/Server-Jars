@@ -32,3 +32,7 @@ and restore without review is refused. It then invokes the existing native
 commands and verifies completion without any additional resource grant.
 Two validator tests reject missing/false final-review evidence. No production
 logic or safety gate was changed to satisfy this test.
+
+The final workflow must rerun all six custody scenarios and all four regression
+slices against one exact commit. Unit tests alone and incomplete earlier attempts
+must not promote the candidate to a runtime-verified artifact.
