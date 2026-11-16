@@ -48,7 +48,7 @@ receipt. Both still require matching runtime, identity, full snapshot and empty
 restoration destinations. A conflicting destination is never cleared, merged or
 dropped. Unsupported or uncertain saved phases stay quarantined without automatic
 replay. An authorized explicit recovery may confirm an already durable operation;
-it must not recreate resources from an unreceipted ambiguous operation.
+it must not recreate resources from an unreceipted ambiguous operation. Recovery deliberately retains the custody-ledger hold even after confirming completed native returns. Final release requires the existing explicit `jailcustody review <transaction>` followed by `jailcustody restore <transaction>`; these confirm completion without another item grant. Ordinary unjail cannot skip this review.
 
 Two additional interruption checkpoints expose already-existing return boundaries
 MUTATED and PLAYER_DURABLE through the existing hosted-disposable-only fault hook.

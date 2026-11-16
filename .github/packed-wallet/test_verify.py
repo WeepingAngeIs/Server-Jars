@@ -51,4 +51,10 @@ class EvidenceValidation(unittest.TestCase):
     def test_wrong_boundary(self):
         r=self.report('remove-unsaved',1);r['crash_boundary']='ITEMS_DURABLE'
         with self.assertRaises(ValueError):self.check(r,'86')
+    def test_missing_final_review_is_not_a_pass(self):
+        r=self.report('return-saved',3);del r['final_review_completed_without_resource_regrant']
+        with self.assertRaises(ValueError):self.check(r)
+    def test_false_final_review_gate_is_not_a_pass(self):
+        r=self.report('return-saved',3);r['unreviewed_saved_return_cannot_finish']=False
+        with self.assertRaises(ValueError):self.check(r)
 if __name__=='__main__':unittest.main()

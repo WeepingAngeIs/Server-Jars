@@ -16,7 +16,7 @@ REQUIRED={
  ('occupied',4):['competing_wallet_not_deleted','native_wallet_exact_original_slot'],
  ('remove-saved',2):['durable_removal_receipt_survived_abrupt_stop','saved_removal_explicitly_recovered_without_removal_replay','release_after_saved_removal_recovery'],
  ('remove-saved',3):['native_wallet_exact_original_slot'],
- ('return-saved',3):['saved_return_receipt_and_complete_wallet_survived_abrupt_stop','saved_return_explicitly_confirmed_without_regrant'],
+ ('return-saved',3):['saved_return_receipt_and_complete_wallet_survived_abrupt_stop','saved_return_explicitly_confirmed_without_regrant','saved_return_waits_for_explicit_final_review','normal_unjail_cannot_skip_recovery_review','unreviewed_saved_return_cannot_finish','final_review_completed_without_resource_regrant'],
  ('return-saved',4):['native_wallet_exact_original_slot'],
 }
 ROOT=Path(__file__).resolve().parents[2]

@@ -17,3 +17,18 @@ Neither correction edits a production class, certificate, companion binary,
 transaction receipt, or expected resource state. They do not substitute a test
 pass for a real admission, release, death or crash. All runtime groups must pass
 again against the final exact commit before a verified delivery is emitted.
+
+## Saved-return recovery is not final release
+
+Run `43973652674` at `0e3cfd4d` proved the saved wallet return after an
+actual abrupt stop, then correctly found that the existing custody ledger
+remains QUARANTINED after `jailcustody recover`. The fixture had incorrectly
+expected recovery alone to release that administrative hold.
+
+The fixture now explicitly proves that exact items and receipts are retained,
+the spatial assignment is complete, ordinary unjail cannot skip the hold,
+and restore without review is refused. It then invokes the existing native
+`jailcustody review <transaction>` and `jailcustody restore <transaction>`
+commands and verifies completion without any additional resource grant.
+Two validator tests reject missing/false final-review evidence. No production
+logic or safety gate was changed to satisfy this test.

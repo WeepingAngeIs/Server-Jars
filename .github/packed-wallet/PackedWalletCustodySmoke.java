@@ -123,6 +123,21 @@ public final class PackedWalletCustodySmoke {
         proof(nativeWallet().isEmpty(),"wallet_not_duplicated_into_equipped_storage");stored("COMPLETE");noDrops();
         for(int i=0;i<3;i++)proof(command("unjail Visitor")==0&&Arrays.equals(original,items().current().inventory()),"repeated_release_never_grants_again");
     }
+    static void completeRecoveredReturn()throws Exception {
+        byte[] before=items().current().inventory();
+        proof(Arrays.equals(original,before)&&JailCustodyService.quarantined(player)
+                &&JailData.get(admin.server).assignment(owner)==null
+                &&binding().state()==JailCustodyLedger.State.QUARANTINED,
+                "saved_return_waits_for_explicit_final_review");
+        stored("COMPLETE");
+        proof(command("unjail Visitor")==0&&Arrays.equals(before,items().current().inventory()),
+                "normal_unjail_cannot_skip_recovery_review");
+        proof(command("jailcustody restore "+tx)==0&&Arrays.equals(before,items().current().inventory()),
+                "unreviewed_saved_return_cannot_finish");
+        proof(command("jailcustody review "+tx)==1&&command("jailcustody restore "+tx)==1
+                &&Arrays.equals(before,items().current().inventory()),
+                "final_review_completed_without_resource_regrant");
+    }
     static void admit()throws Exception {
         proof(command("jail Visitor")==1,"actual_wallet_custody_admission");rememberTransaction();held();
         int size=JailCustodyService.ledger(admin.server).list().size();proof(command("jail Visitor")==0&&JailCustodyService.ledger(admin.server).list().size()==size,"duplicate_admission_refused");
@@ -185,7 +200,7 @@ public final class PackedWalletCustodySmoke {
         }else if(scenario.equals("return-unsaved")||scenario.equals("return-saved")){
             if(phase==2){held();haltAt(scenario.equals("return-saved")?JailIntegrated.Boundary.ITEMS_RETURN_DURABLE:JailIntegrated.Boundary.ITEMS_RETURN_MUTATED);command("unjail Visitor");throw new IOException("return interruption hook did not halt server");}
             else if(scenario.equals("return-unsaved")){uncertain(false);disconnect();}
-            else if(phase==3){stored("RESTORE_STARTED");proof(Arrays.equals(original,items().current().inventory())&&tx.equals(items().current().restoredBy()),"saved_return_receipt_and_complete_wallet_survived_abrupt_stop");proof(command("jailcustody recover "+tx)==1,"saved_return_explicitly_confirmed_without_regrant");returned();disconnect();}
+            else if(phase==3){stored("RESTORE_STARTED");proof(Arrays.equals(original,items().current().inventory())&&tx.equals(items().current().restoredBy()),"saved_return_receipt_and_complete_wallet_survived_abrupt_stop");proof(command("jailcustody recover "+tx)==1,"saved_return_explicitly_confirmed_without_regrant");completeRecoveredReturn();returned();disconnect();}
             else if(phase==4){returned();disconnect();}else throw new IOException("unknown saved return phase");
         }else throw new IOException("unknown scenario");
     }
