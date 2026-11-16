@@ -11,6 +11,11 @@ ROOT = Path(__file__).resolve().parents[2]
 if os.environ.get('GITHUB_ACTIONS') != 'true' or os.environ.get('RUNNER_ENVIRONMENT') != 'github-hosted':
     raise SystemExit('Origin game checks require GitHub-hosted runners')
 harness = ROOT / 'dist/packaged-harness'
+# Java fixtures now call actual Kotlin-backed party APIs. The outer Kotlin-for-Forge
+# mod JAR exposes nested libraries only to FML, not javac. Use the already verified
+# build library for compilation without adding any binary to the game runtime.
+build_file = harness / 'build.gradle'
+build_file.write_text(build_file.read_text(encoding='utf-8') + '\ndependencies { compileOnly files("../../unyielding-quests/libs/kotlin-stdlib.jar") }\n', encoding='utf-8')
 release = ROOT / 'dist/120-release/Unyielding-1.2.0.jar'
 runtime = harness / 'libs/Unyielding-1.2.0.jar'
 digest = hashlib.sha256(release.read_bytes()).hexdigest()
