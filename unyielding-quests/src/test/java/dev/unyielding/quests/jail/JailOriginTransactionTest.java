@@ -31,6 +31,17 @@ class JailOriginTransactionTest {
     private static void held(JailEscrowJournal inventory,UUID id,UUID owner)throws Exception {
         inventory.begin(id,owner,new byte[]{11,22,33});inventory.transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.REMOVAL_STARTED);inventory.transition(id,JailEscrowJournal.State.REMOVAL_STARTED,JailEscrowJournal.State.HELD);
     }
+    @Test void terminalReviewStillBindsTheSameOwnerAndImmutableItemSource()throws Exception {
+        Path o=temp.resolve("origin"),i=temp.resolve("items"),f=temp.resolve("foreign"),d=temp.resolve("different");for(Path path:new Path[]{o,i,f,d})JailEscrowJournal.provisionNew(path);Port port=new Port();UUID id=UUID.randomUUID();
+        try(var origins=new JailEscrowJournal(o);var items=new JailEscrowJournal(i);var foreign=new JailEscrowJournal(f);var different=new JailEscrowJournal(d)){
+            held(items,id,port.owner);JailOriginTransaction.temporaryForDisposableTest(origins,items,id,port,at->{});JailOriginTransaction.originalForDisposableTest(origins,items,id,port,at->{});
+            items.transition(id,JailEscrowJournal.State.HELD,JailEscrowJournal.State.RESTORE_STARTED);items.transition(id,JailEscrowJournal.State.RESTORE_STARTED,JailEscrowJournal.State.COMPLETE);
+            assertArrayEquals(new byte[]{42},JailOriginTransaction.intentForBoundReview(origins,items,id,port.owner));
+            assertThrows(IOException.class,()->JailOriginTransaction.intentForBoundReview(origins,items,id,UUID.randomUUID()));
+            held(foreign,id,UUID.randomUUID());assertThrows(IOException.class,()->JailOriginTransaction.intentForBoundReview(origins,foreign,id,port.owner));
+            different.begin(id,port.owner,new byte[]{99});assertThrows(IOException.class,()->JailOriginTransaction.intentForBoundReview(origins,different,id,port.owner));
+        }
+    }
     @Test void allTemporaryBoundariesReopenAndNeverRepeatCallbacks()throws Exception {
         for(var boundary:JailOriginTransaction.Boundary.values()) {
             Path o=temp.resolve("o-"+boundary),i=temp.resolve("i-"+boundary);JailEscrowJournal.provisionNew(o);JailEscrowJournal.provisionNew(i);Port port=new Port();UUID id=UUID.randomUUID();

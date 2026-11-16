@@ -115,6 +115,12 @@ public final class JailOriginTransaction {
         var entry=origins.read(id);if(entry==null||!entry.owner().equals(owner))throw new IOException("Missing or foreign origin history");
         return decode(entry.snapshot()).intent().clone();
     }
+    /** Read-only immutable binding check, including terminal histories; never authorizes another transfer. */
+    public static byte[] intentForBoundReview(JailEscrowJournal origins,JailEscrowJournal custody,UUID id,UUID owner)throws IOException {
+        var origin=origins.read(id);var item=custody.read(id);
+        if(origin==null||item==null||!origin.owner().equals(owner)||!item.owner().equals(owner))throw new IOException("Missing/foreign paired transaction");
+        Link link=decode(origin.snapshot());if(!MessageDigest.isEqual(link.custodyDigest(),hash(item.snapshot())))throw new IOException("Terminal origin/custody source digest changed");return link.intent().clone();
+    }
     private static JailEscrowJournal.Entry owned(JailEscrowJournal origins,UUID id,Port port)throws IOException {
         var entry=origins.read(id);if(entry==null||!entry.owner().equals(port.owner()))throw new IOException("Missing or foreign origin transaction");return entry;
     }

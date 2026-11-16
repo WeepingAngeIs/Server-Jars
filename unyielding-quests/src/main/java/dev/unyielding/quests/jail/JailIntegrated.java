@@ -121,16 +121,16 @@ public final class JailIntegrated {
             private void authority()throws IOException{if(actor==null)throw new IOException("No command authority");permitted(actor,p);}
             final JailVanillaPort inventory=new JailVanillaPort(p,b.id(),retired);final JailHumanPort human=new JailHumanPort(p,b.id(),retired);
             public String descriptor(){return "human-empty-v1 exact-slot command coordinator";}
-            private boolean originComplete(JailEscrowJournal origins)throws IOException {
-                var o=origins.read(b.id());if(o==null||o.state()!=JailEscrowJournal.State.COMPLETE||!o.owner().equals(b.owner()))return false;byte[] intent=JailOriginTransaction.intentForReview(origins,b.id(),b.owner());var live=human.current();var disk=human.durable();return human.isOriginal(intent,b.id(),live)&&Arrays.equals(live.state(),disk.state());
+            private boolean originComplete(JailEscrowJournal origins,JailEscrowJournal items)throws IOException {
+                var o=origins.read(b.id());if(o==null||o.state()!=JailEscrowJournal.State.COMPLETE||!o.owner().equals(b.owner()))return false;byte[] intent=JailOriginTransaction.intentForBoundReview(origins,items,b.id(),b.owner());var live=human.current();var disk=human.durable();return human.isOriginal(intent,b.id(),live)&&Arrays.equals(live.state(),disk.state());
             }
             public JailCustodyService.Health inspect()throws IOException {
                 if(!inventory.online())return JailCustodyService.Health.REVIEW_REQUIRED;var now=plans(s).read(b.id());
                 try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){
                     var item=items.read(b.id());if(item==null||!item.owner().equals(b.owner())||!Arrays.equals(JailOriginTransaction.hash(item.snapshot()),b.digest()))throw new IOException("Custody source binding changed");
-                    if(now.state()==JailEscrowJournal.State.COMPLETE)return item.state()==JailEscrowJournal.State.COMPLETE&&originComplete(origins)&&JailData.get(s).assignment(b.owner())==null?JailCustodyService.Health.COMPLETE:JailCustodyService.Health.REVIEW_REQUIRED;
+                    if(now.state()==JailEscrowJournal.State.COMPLETE)return item.state()==JailEscrowJournal.State.COMPLETE&&originComplete(origins,items)&&JailData.get(s).assignment(b.owner())==null?JailCustodyService.Health.COMPLETE:JailCustodyService.Health.REVIEW_REQUIRED;
                     requireAssignment(s,b.owner(),plan,false);if(now.state()!=JailEscrowJournal.State.HELD||!JailCustodyService.physical(s,b)||JailVanillaCustody.inspect(items,b.id(),inventory)!=JailVanillaCustody.Inspection.HELD_VERIFIED)return JailCustodyService.Health.REVIEW_REQUIRED;
-                    var state=JailOriginTransaction.inspect(origins,items,b.id(),human);return state==JailOriginTransaction.Inspection.TEMPORARY_VERIFIED||state==JailOriginTransaction.Inspection.COMPLETE_RECORDED&&originComplete(origins)?JailCustodyService.Health.READY:JailCustodyService.Health.REVIEW_REQUIRED;
+                    var state=JailOriginTransaction.inspect(origins,items,b.id(),human);return state==JailOriginTransaction.Inspection.TEMPORARY_VERIFIED||state==JailOriginTransaction.Inspection.COMPLETE_RECORDED&&originComplete(origins,items)?JailCustodyService.Health.READY:JailCustodyService.Health.REVIEW_REQUIRED;
                 }
             }
             public void restore()throws IOException {
@@ -151,7 +151,7 @@ public final class JailIntegrated {
             };}
             private void finish(JailEscrowJournal items,JailEscrowJournal origins)throws IOException {
                 authority();
-                if(items.read(b.id()).state()!=JailEscrowJournal.State.COMPLETE||!originComplete(origins))throw new IOException("Native returns incomplete; restrictions retained");requireAssignment(s,b.owner(),plan,true);
+                if(items.read(b.id()).state()!=JailEscrowJournal.State.COMPLETE||!originComplete(origins,items))throw new IOException("Native returns incomplete; restrictions retained");requireAssignment(s,b.owner(),plan,true);
                 Loc prior=assignment(plan).prior();if(!JailCommands.safe(p,prior)||actor.getEntity() instanceof ServerPlayer staff&&!JailCommands.claimAccess(staff,prior))throw new IOException("Return location unavailable or claim denied; items returned but quarantine retained");
                 moveSaved(p,prior,inventory);checkpoint.at(Boundary.RETURN_POSITION_DURABLE);authority();JailData.get(s).remove(b.owner());saveAssignments(s);checkpoint.at(Boundary.ASSIGNMENT_REMOVED);
                 plans(s).transition(b.id(),JailEscrowJournal.State.RESTORE_STARTED,JailEscrowJournal.State.COMPLETE);checkpoint.at(Boundary.COMPLETE);
@@ -163,7 +163,7 @@ public final class JailIntegrated {
                     if(itemStatus==JailVanillaCustody.Inspection.REMOVAL_PERSISTED_REVIEW){JailVanillaCustody.confirmRemoved(items,b.id(),inventory);confirmed=true;}
                     var originStatus=JailOriginTransaction.inspect(origins,items,b.id(),human);
                     if(originStatus==JailOriginTransaction.Inspection.TEMPORARY_SAVED_REVIEW||originStatus==JailOriginTransaction.Inspection.ORIGINAL_SAVED_REVIEW){JailOriginTransaction.confirmSavedForDisposableTest(origins,items,b.id(),human);confirmed=true;}
-                    if(itemStatus==JailVanillaCustody.Inspection.RESTORE_PERSISTED_REVIEW&&originComplete(origins)){JailVanillaCustody.confirmRestoredForDisposableTest(items,b.id(),guarded(items,origins));confirmed=true;}
+                    if(itemStatus==JailVanillaCustody.Inspection.RESTORE_PERSISTED_REVIEW&&originComplete(origins,items)){JailVanillaCustody.confirmRestoredForDisposableTest(items,b.id(),guarded(items,origins));confirmed=true;}
                 }
                 if(!confirmed)throw new IOException("No exact persisted native phase to confirm; use explicit coordinated recovery for command continuation");
             }
@@ -172,7 +172,7 @@ public final class JailIntegrated {
                 var now=plans(s).read(b.id());try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){
                     if(now.state()==JailEscrowJournal.State.RESTORE_STARTED){
                         var status=JailOriginTransaction.inspect(origins,items,b.id(),human);if(status==JailOriginTransaction.Inspection.ORIGINAL_SAVED_REVIEW)JailOriginTransaction.confirmSavedForDisposableTest(origins,items,b.id(),human);
-                        if(!originComplete(origins))throw new IOException("No saved completed origin return; no replay authorized");
+                        if(!originComplete(origins,items))throw new IOException("No saved completed origin return; no replay authorized");
                         if(items.read(b.id()).state()==JailEscrowJournal.State.HELD){JailOriginTransaction.assertInventoryReleaseReady(origins,items,b.id(),human,false);JailVanillaCustody.restoreForDisposableTest(items,b.id(),guarded(items,origins),phase->authority());}
                         if(JailVanillaCustody.inspect(items,b.id(),inventory)==JailVanillaCustody.Inspection.RESTORE_PERSISTED_REVIEW)JailVanillaCustody.confirmRestoredForDisposableTest(items,b.id(),guarded(items,origins));
                         if(items.read(b.id()).state()!=JailEscrowJournal.State.COMPLETE)throw new IOException("No saved completed item return; no replay authorized");finish(items,origins);return;
@@ -187,7 +187,7 @@ public final class JailIntegrated {
                         if(now.state()==JailEscrowJournal.State.PREPARED)now=plans(s).transition(b.id(),JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.REMOVAL_STARTED);
                         confine(actor,p,now,inventory);return;
                     }
-                    if(now.state()==JailEscrowJournal.State.COMPLETE&&items.read(b.id()).state()==JailEscrowJournal.State.COMPLETE&&originComplete(origins)&&JailData.get(s).assignment(b.owner())==null)return;
+                    if(now.state()==JailEscrowJournal.State.COMPLETE&&items.read(b.id()).state()==JailEscrowJournal.State.COMPLETE&&originComplete(origins,items)&&JailData.get(s).assignment(b.owner())==null)return;
                     throw new IOException("No exact saved command outcome to confirm; records retained");
                 }
             }
