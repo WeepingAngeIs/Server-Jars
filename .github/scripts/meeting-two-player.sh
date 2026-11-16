@@ -154,6 +154,10 @@ sleep 5
 setsid env TMPDIR="$project/run-visitor/tmp" JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -Djava.io.tmpdir=$project/run-visitor/tmp" \
   xvfb-run -a -s '-screen 0 640x480x24' bash "$visitor_script" > "$logs/visitor.log" 2>&1 & visitor_pid=$!
 for ((i=0; i<360; i++)); do
+  if grep -q 'lost connection: Flying is not enabled on this server' "$logs/server.log"; then
+    echo 'Disposable client was fly-kicked before fixture completion; refusing a partial pass' >&2
+    break
+  fi
   if [[ -f "$result_file" ]]; then
     cat "$result_file"
     grep -q '^passed:' "$result_file"

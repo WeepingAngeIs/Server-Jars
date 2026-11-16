@@ -114,7 +114,12 @@ public final class CustodyInterfaceSmoke {
         failOrigin=true;controls(FAR,JailCustodyMenu.REVIEW);require(record(A).state()==JailCustodyLedger.State.REVIEWED,"native review did not verify");controls(FAR,JailCustodyMenu.RESTORE);require(record(A).state()==JailCustodyLedger.State.QUARANTINED&&target.getInventory().isEmpty()&&restores==1,"interrupted native return escaped quarantine");
         int calls=OriginCustodySmoke.callbacks;controls(FAR,JailCustodyMenu.RESTORE);require(restores==1&&OriginCustodySmoke.callbacks==calls,"repeated ambiguous request replayed callbacks");
         savedMenu=open(FAR);level.setBlock(FAR,Blocks.AIR.defaultBlockState(),3);require(!savedMenu.stillValid(admin),"missing block left stale screen valid");savedMenu.clicked(JailCustodyMenu.RESTORE,0,ClickType.PICKUP,admin);require(admin.containerMenu==admin.inventoryMenu&&target.getInventory().isEmpty(),"missing interface returned inventory");
-        teleport(admin,BlockPos.ZERO.above(5));require(JailCustodyService.items(server,record(A)).snapshot().length>100&&record(B)!=null,"lost block discarded escrow");server.saveEverything(true,true,true);passed(1);
+        // The next phase waits for two independently loading clients. Persist the
+        // first client on real ground so vanilla cannot fly-kick it during that gap.
+        int ground=level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,0,2);
+        admin.teleportTo(level,0.5,ground,2.5,Set.of(),180,0);admin.setDeltaMovement(Vec3.ZERO);admin.fallDistance=0;
+        require(!level.getBlockState(admin.blockPosition().below()).isAir()&&level.noCollision(admin),"fixture restart landing is not supported/collision-free");
+        require(JailCustodyService.items(server,record(A)).snapshot().length>100&&record(B)!=null,"lost block discarded escrow");server.saveEverything(true,true,true);passed(1);
     }
     static void phase2()throws Exception {
         var server=admin.server;var level=(net.minecraft.server.level.ServerLevel)admin.level();server.getPlayerList().op(admin.getGameProfile());require(record(A).state()==JailCustodyLedger.State.QUARANTINED&&JailCustodyService.quarantined(target)&&JailData.get(server).assignment(target.getUUID())!=null,"restart lost quarantine or legacy assignment");
