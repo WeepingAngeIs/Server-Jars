@@ -5,6 +5,7 @@ on:
     branches: ['codex/jail-standalone-extraction']
     paths:
       - '.github/resource-native/**'
+      - '.github/party-wallet/**'
       - '.github/workflows/jail-native-resource.yml'
 permissions:
   contents: read
