@@ -33,6 +33,8 @@ public final class JailEscapeCustody {
     static void attempt(ServerPlayer p){
         try{
             if(!p.isAlive()||p.isInvulnerableTo(p.damageSources().generic()))return;var c=JailIntegrated.escapeContext(p,true,true);if(c==null)return;destination(p,c);
+            // Experience has no custody adapter yet. Refuse rather than create dropped or lost XP.
+            if(p.totalExperience!=0||p.experienceLevel!=0||p.experienceProgress!=0)throw new IOException("Escape experience custody is unsupported; no lethal damage applied");
             try(var j=journal(p.server,c.transaction())){
                 if(pending(j)!=null)return;
                 CompoundTag t=new CompoundTag();t.putUUID("custody",c.transaction());t.putByteArray("digest",c.digest());t.put("jail",c.assignment().jail().toTag());t.putInt("selected",p.getInventory().selected);
@@ -84,7 +86,8 @@ public final class JailEscapeCustody {
     static void recover(ServerPlayer p)throws IOException {complete(p,true);}
     @SubscribeEvent public static void respawn(PlayerEvent.PlayerRespawnEvent event){
         if(event.isEndConquered()||!(event.getEntity() instanceof ServerPlayer p))return;
-        try{UUID tx=JailIntegrated.activeTransaction(p.server,p.getUUID());if(tx!=null&&pending(p.server,tx))complete(p,false);}catch(IOException|RuntimeException bad){report(p,bad);}
+        if(!JailData.get(p.server).integratedCustodyInitialized())return;
+        try{UUID tx=JailIntegrated.activeTransaction(p.server,p.getUUID());if(tx!=null&&JailIntegrated.expanded(p.server,tx)&&pending(p.server,tx))complete(p,false);}catch(IOException|RuntimeException bad){report(p,bad);}
     }
     private static void report(ServerPlayer p,Exception bad){UnyieldingQuests.LOGGER.error("Jail escape outcome for {} requires review; no death or item replay: {}",p.getUUID(),bad.toString());}
 }

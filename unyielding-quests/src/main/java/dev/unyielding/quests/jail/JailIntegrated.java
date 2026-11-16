@@ -131,8 +131,10 @@ public final class JailIntegrated {
         JailCustodyService.action(actor,b.id(),b.revision(),"review");b=JailCustodyService.ledger(target.server).get(b.id());JailCustodyService.action(actor,b.id(),b.revision(),"restore");
     }
     record EscapeContext(UUID transaction,JailVanillaCustody.InventoryPort inventory,JailOriginTransaction.Port origin,JailData.Assignment assignment,byte[] digest){}
+    static boolean expanded(MinecraftServer s,UUID id)throws IOException {var e=plans(s).read(id);return e!=null&&EXPANDED.equals(JailNbt.decode(e.snapshot()).getString("contract"));}
     /** No callback replay. The same bound, empty native stores are required even during clone/respawn. */
     static EscapeContext escapeContext(ServerPlayer p,boolean persist,boolean authoritative)throws IOException {
+        if(!JailData.get(p.server).integratedCustodyInitialized())return null;
         var e=outstanding(p.server,p.getUUID());if(e==null)return null;var plan=JailNbt.decode(e.snapshot());
         if(!EXPANDED.equals(plan.getString("contract")))return null;
         if(e.state()!=JailEscrowJournal.State.HELD||!p.server.isSameThread()||authoritative&&(p.server.getPlayerList().getPlayer(p.getUUID())!=p||p.hasDisconnected()))throw new IOException("Escape custody not authoritative/held");
