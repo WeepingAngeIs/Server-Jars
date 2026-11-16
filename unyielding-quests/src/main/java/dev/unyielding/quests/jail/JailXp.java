@@ -13,11 +13,11 @@ public final class JailXp {
     private static final class Scope {final ServerPlayer owner;final JailXpState xp;int drops;Scope(ServerPlayer p,JailXpState xp){owner=p;this.xp=xp;}}
     static boolean nonzero(ServerPlayer p){return p.totalExperience!=0||p.experienceLevel!=0||p.experienceProgress!=0;}
     static JailXpState read(CompoundTag n)throws IOException {
-        if(!n.contains("XpLevel",3)||!n.contains("XpTotal",3)||!n.contains("XpP",5)||!n.contains("XpSeed",3)||!n.contains("Score",3))throw new IOException("Missing exact native XP fields");
-        try{return new JailXpState(n.getInt("XpLevel"),n.getInt("XpTotal"),n.getFloat("XpP"),n.getInt("XpSeed"),n.getInt("Score"));}catch(IllegalArgumentException bad){throw new IOException(bad.getMessage(),bad);}
+        if(!n.contains("XpLevel",3)||!n.contains("XpTotal",3)||!n.contains("XpP",5)||!n.contains("Score",3))throw new IOException("Missing exact native XP fields");
+        try{return new JailXpState(n.getInt("XpLevel"),n.getInt("XpTotal"),n.getFloat("XpP"),n.getInt("Score"));}catch(IllegalArgumentException bad){throw new IOException(bad.getMessage(),bad);}
     }
     static JailXpState live(ServerPlayer p)throws IOException{return read(p.saveWithoutId(new CompoundTag()));}
-    static CompoundTag encode(JailXpState s){CompoundTag n=new CompoundTag();n.putInt("XpLevel",s.level());n.putInt("XpTotal",s.total());n.putFloat("XpP",s.progress());n.putInt("XpSeed",s.seed());n.putInt("Score",s.score());return n;}
+    static CompoundTag encode(JailXpState s){CompoundTag n=new CompoundTag();n.putInt("XpLevel",s.level());n.putInt("XpTotal",s.total());n.putFloat("XpP",s.progress());n.putInt("Score",s.score());return n;}
     static void begin(ServerPlayer p,CompoundTag expected)throws IOException {if(scope.get()!=null)throw new IOException("Nested XP death scope refused");var xp=read(expected);if(!xp.equals(live(p)))throw new IOException("XP changed before guarded death");scope.set(new Scope(p,xp));}
     static void end(ServerPlayer p,boolean accepted)throws IOException {var s=scope.get();scope.remove();if(s==null||s.owner!=p)throw new IOException("Missing XP death scope");if(!s.xp.equals(live(p))||accepted&&s.drops!=1)throw new IOException("Native XP/death-drop outcome differs; no clone replay authorized");}
     /** Invoked at the native dropExperience entry, not on every XP award or ordinary death. */
@@ -26,8 +26,8 @@ public final class JailXp {
     static void verify(ServerPlayer p,CompoundTag attempt)throws IOException {if(retained(attempt)&&!read(attempt.getCompound("xp")).equals(live(p)))throw new IOException("Retained XP changed; no automatic refund/rewind");}
     static void cloneTo(ServerPlayer old,ServerPlayer next,UUID attempt,CompoundTag snapshot)throws IOException {
         verify(old,snapshot);var xp=read(snapshot.getCompound("xp"));var source=JailVanillaPort.readSavedPlayer(old);if(!xp.equals(read(source)))throw new IOException("Saved old-player XP is not the linked source");
-        // Native restoreFrom always copies XpSeed. keepInventory may already copy the XP tuple.
-        var dest=live(next);if(dest.seed()!=xp.seed()||!(dest.equals(xp)||dest.level()==0&&dest.total()==0&&dest.progress()==0&&dest.score()==0))throw new IOException("Fresh clone has conflicting XP; no overwrite");
+        // Vanilla owns XpSeed (including zero-seed randomization on load). keepInventory may already copy XP.
+        var dest=live(next);if(!(dest.equals(xp)||dest.level()==0&&dest.total()==0&&dest.progress()==0&&dest.score()==0))throw new IOException("Fresh clone has conflicting XP; no overwrite");
         if(next.getPersistentData().contains(RECEIPT))throw new IOException("Replacement already has an XP delivery receipt");
         next.experienceLevel=xp.level();next.totalExperience=xp.total();next.experienceProgress=xp.progress();next.setScore(xp.score());
         at(next,Boundary.AFTER_COPY);

@@ -11,7 +11,7 @@ public final class JailAdmissions {
     private JailAdmissions(){}
     static String contract(ServerPlayer p)throws IOException {
         if(Config.JAIL_CERTIFIED_ADMISSIONS.get())return auditedContract(p);
-        if(JailHumanAudit.disposable(p)&&!Boolean.getBoolean("uq.certifiedJail"))return Boolean.getBoolean("uq.expandedJail")?JailIntegrated.EXPANDED:"human-empty-v1";
+        if(JailHumanAudit.disposable(p)&&!Boolean.getBoolean("uq.certifiedJail")&&!Boolean.getBoolean("uq.retainedXp"))return Boolean.getBoolean("uq.expandedJail")?JailIntegrated.EXPANDED:"human-empty-v1";
         throw new IOException("Jail admissions are disabled. Console: /jailintegrated check "+p.getGameProfile().getName()+", then /jailintegrated mode supported. Recovery remains available");
     }
     static String auditedContract(ServerPlayer p){return JailXp.nonzero(p)?JailIntegrated.RETAINED_XP:JailIntegrated.SUPPORTED;}

@@ -29,6 +29,7 @@ public final class JailEscapeCustody {
         var a=c.assignment();if(!a.equals(JailData.get(p.server).assignment(p.getUUID()))||!JailPlacement.intact(p.server,a.jail(),a.geometry())||!JailCommands.safe(p,a.jail())||!JailCommands.claimAccess(p,a.jail()))throw new IOException("Escape jail destination unsafe, unavailable or protected");
     }
     private static void bound(ServerPlayer p,JailIntegrated.EscapeContext c,JailEscrowJournal.Entry e)throws IOException {
+        if(JailIntegrated.retainsXp(p)&&!JailXp.retained(JailNbt.decode(e.snapshot())))throw new IOException("Retained-XP contract lacks its linked source; no clone/replay authorized");
         CompoundTag t=JailNbt.decode(e.snapshot());if(!e.owner().equals(p.getUUID())||!t.hasUUID("custody")||!t.getUUID("custody").equals(c.transaction())||!Arrays.equals(c.digest(),t.getByteArray("digest"))||!c.assignment().jail().toTag().equals(t.getCompound("jail")))throw new IOException("Escape/custody binding changed");
     }
     private static void atJail(ServerPlayer p,JailIntegrated.EscapeContext c)throws IOException {destination(p,c);var l=c.assignment().jail();if(!p.level().dimension().location().toString().equals(l.dim())||p.distanceToSqr(l.x(),l.y(),l.z())>0.0001)throw new IOException("Respawn is not at verified jail");}
