@@ -12,6 +12,10 @@ immutable journal snapshot. Unique components and nested inventories remain only
 in the original authoritative snapshot, not in a second withdrawable inventory.
 All normal click, drag, hotbar, shift, throw, clone and double-click paths are
 denied and resynchronized, including clicks in the player's own inventory.
+The underlying display container and every menu slot also reject standard
+insertion/removal APIs and return detached item values; internal painting is a
+private path. The view is not a `SimpleContainer` that another inventory handler
+can freely withdraw from.
 
 The screen is bound server-side to transaction, owner, revision and physical
 anchor. Permission API and actual Open Parties and Claims permission, range,
