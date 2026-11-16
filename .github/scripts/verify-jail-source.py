@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import subprocess
 from jail_split import BASE_COMMIT, MIXINS, relocated_source
+from companion_certificate import CERTIFICATE, validate_extension
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--base', default=BASE_COMMIT)
@@ -24,7 +25,10 @@ for source, target in manifest['moves']:
     expected = old(source)
     if source.endswith('.java'):
         expected = relocated_source(expected.decode('utf-8')).encode('utf-8')
-    assert (root / target).read_bytes() == expected, f'Behavior/resource drift in {target}'
+    if target.endswith(CERTIFICATE):
+        validate_extension(expected, (root / target).read_bytes())
+    else:
+        assert (root / target).read_bytes() == expected, f'Behavior/resource drift in {target}'
     assert not (root / source).exists(), f'Old jail source still present: {source}'
     removed.add(source)
 for source, target in manifest['legacy_fixtures']:

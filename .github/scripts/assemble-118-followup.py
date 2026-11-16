@@ -147,6 +147,10 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     for name in base.namelist():
         if name not in replaced and not is_jail_entry(name):
             assert base.read(name) == result.read(name), f'Unexpected change: {name}'
+# Reproducible packaging preserves every non-jail entry byte; certification still
+# requires an explicitly reviewed raw SHA-512, not a filename or version match.
+from stable_companion import canonicalize
+canonicalize(out)
 sha = hashlib.sha256(out.read_bytes()).hexdigest()
 (out.parent / 'SHA256SUMS').write_text(f'{sha}  {out.name}\n')
 print(f'Assembled {out}: {sha}; patched {len(replaced)} class/resource entries')

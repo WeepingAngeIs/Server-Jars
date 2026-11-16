@@ -14,6 +14,7 @@ import xml.etree.ElementTree as ET
 from zipfile import ZipFile
 from class_dependencies import application_references, missing_references
 from jail_split import BASE_COMMIT, MIXINS, OLD_PACKAGE, NEW_PACKAGE, RESOURCES, is_jail_entry
+from companion_certificate import CERTIFICATE, validate_extension, verify_companion
 
 parser=argparse.ArgumentParser()
 parser.add_argument('--before', required=True, type=Path)
@@ -43,7 +44,13 @@ for category in ('mixins','client','server'):
     if category in expected: expected[category]=[name for name in expected[category] if name not in MIXINS]
 assert json.loads(after[mixin_path])==expected, 'Non-jail mixins changed'
 for resource in RESOURCES:
-    assert resource not in after and jail[resource]==before[resource], f'Resource not moved exactly: {resource}'
+    assert resource not in after, f'Jail resource remains in companion: {resource}'
+    if resource == CERTIFICATE:
+        validate_extension(before[resource], jail[resource])
+    else:
+        assert jail[resource]==before[resource], f'Resource not moved exactly: {resource}'
+companion_proof = verify_companion(args.unyielding)
+assert companion_proof['sha512'] in json.loads(jail[CERTIFICATE])['sha512']
 for entries,label in ((after,'Unyielding'),(jail,'Minecraft Jail')):
     classes={name:data for name,data in entries.items() if name.endswith('.class')}
     missing=missing_references(classes)
@@ -88,6 +95,7 @@ report={
     'removed_jail_entries':len(removed),'changed_integration_entries':sorted(changed),
     'separate_application_class_closure':True,'duplicate_application_classes':False,
     'tests':{'unyielding':junit('unyielding-quests/build/test-results/test'),'jail':junit('minecraft-jail/build/test-results/test')},
+    'companion_certificate':companion_proof,
     'artifacts':{}
 }
 lines=[]

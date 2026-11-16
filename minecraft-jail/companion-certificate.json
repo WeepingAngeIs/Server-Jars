@@ -1,0 +1,18 @@
+{
+  "source_commit": "0215b636b0897b8a7b23ea319f3aec436011ba4b",
+  "entry_sha256": "32f5faa3576e17c1ddee44e608ca83411566795434f3f659a7c3c9734441cd9e",
+  "artifacts": [
+    {
+      "label": "previously_delivered_split",
+      "sha256": "71015d72492809c581155eee77b859375cefd93f4fdf7a7ac95bf3a256ee9966",
+      "sha512": "b9f011f52492f649706e919e082939c2773a2a015c6187db8e4ffaf684f8311a4d8b0bad436758f27d9e8dc6c8bf2c22e610d96f5ebdf3c6781e9ed72c4d7965",
+      "bytes": 17214276
+    },
+    {
+      "label": "deterministic_repack",
+      "sha256": "61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7",
+      "sha512": "31b34a1c655c306d4317ae8a765eda6d7d2a5a691fe517e4c5cf45cd1dff7ba9c93ef03a37cea0810083adea1cdb938af610680d7001351b9873c5b4ae4c56e4",
+      "bytes": 17109697
+    }
+  ]
+}

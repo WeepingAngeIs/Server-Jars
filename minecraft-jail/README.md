@@ -6,7 +6,14 @@ The original commit and branch remain intact. `extraction-manifest.json` records
 all moved files; the source verifier permits only explicit ownership/import
 changes to the 39 existing jail classes, four mixins and 14 unit-test classes.
 
-## Scope and status
+## Follow-up runtime work
+
+The companion certificate and disposable two-JAR harness are now implemented.
+See `RUNTIME-VALIDATION.md` and the exact-commit runtime evidence. The original
+extraction-only status below describes the baseline, not a claim that the new
+runtime run has passed. A failed or unfinished runtime run does not certify a JAR.
+
+## Original extraction scope and status
 
 This is a **code-only extraction candidate, not a runtime-certified release**.
 The split workflow builds both outputs, executes unit tests, compares non-jail
@@ -47,12 +54,13 @@ no Pokemon are confiscated, moved or deleted by this extraction.
 
 **Splitting the bundle changes the runtime trust boundary.** The runtime audit now
 excludes only its own `minecraftjail` JAR, not the separate Unyielding companion.
-The old certificate is copied byte-for-byte; the new companion is not silently
-added to it. Therefore admission alongside the newly assembled Unyielding JAR can
-be refused as an uncertified runtime. Existing transaction fingerprints can also
+At the original extraction checkpoint the old certificate was copied byte-for-byte.
+The follow-up explicitly adds only the two reviewed byte-identities listed in
+`companion-certificate.json`; any other companion still fails certification. Existing transaction fingerprints can also
 cause recovery to hold for explicit review. That is a safety limitation, not a
 reason to edit out a check, replace a certificate, or replay uncertain custody.
-Runtime certification and live recovery are outside this code-only task.
+Disposable runtime validation is covered by the follow-up; live-save migration
+remains unverified and must not bypass runtime fingerprints.
 
 The standalone entry point rejects an old Unyielding JAR that still owns jail
 classes/mixins before opening a world. Use of both an integrated old JAR and this
@@ -108,8 +116,8 @@ separate class closure, no duplicate application classes, metadata and resources
 Sixteen original launch-based fixtures plus the ground-smoke jail geometry check
 are retained under `src/legacySmoke/`. That directory is deliberately not a
 configured source set and cannot leak into either production JAR. Those fixtures
-still describe the old integrated topology; porting and executing a two-JAR
-launch/restart harness is pending explicit authorization to launch Minecraft.
+still describe the old integrated topology; the follow-up adapts copies into an isolated two-JAR
+launch/restart harness after explicit user authorization. The originals stay unchanged.
 Historical jail/full-regression workflows must not be treated as split-JAR test
 evidence. The new split workflow is the code-only verification entry point.
 
