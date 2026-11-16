@@ -30,6 +30,7 @@ public final class JailCustodyService {
     private JailCustodyService(){}
     public enum Health { READY, COMPLETE, REVIEW_REQUIRED }
     public interface VerifiedAdapter {
+        default void authorize(CommandSourceStack actor)throws IOException {}
         String descriptor();Health inspect()throws IOException;
         void restore()throws IOException;
         /** Only phase confirmation through the verified coordinators, never raw insertion. */
@@ -47,7 +48,7 @@ public final class JailCustodyService {
     private static Path root(MinecraftServer server){return server.getWorldPath(LevelResource.ROOT).resolve("custody-interface-v1");}
     private static Context context(MinecraftServer server){return contexts.computeIfAbsent(server,key->{Context c=new Context();if(Files.exists(root(key),LinkOption.NOFOLLOW_LINKS))try{if(Files.isSymbolicLink(root(key)))throw new IOException("Custody ledger symlink");c.ledger=new JailCustodyLedger(root(key));}catch(IOException bad){c.unavailable=bad.getMessage();}return c;});}
     public static JailCustodyLedger ledger(MinecraftServer server)throws IOException {if(!server.isSameThread())throw new IOException("Custody action off server thread");Context c=context(server);if(c.unavailable!=null||c.ledger!=null&&!c.ledger.healthy())throw new IOException("Custody unavailable; preserve records and restore audited history: "+c.unavailable);if(c.ledger==null)throw new IOException("Custody index not initialized; console must explicitly initialize or recover history");return c.ledger;}
-    public static boolean blocked(MinecraftServer server,UUID owner){if(server==null)return true;Context c=context(server);return c.unavailable!=null||c.ledger!=null&&(!c.ledger.healthy()||c.ledger.outstanding(owner));}
+    public static boolean blocked(MinecraftServer server,UUID owner){if(server==null)return true;Context c=context(server);return JailIntegrated.blocked(server,owner)||c.unavailable!=null||c.ledger!=null&&(!c.ledger.healthy()||c.ledger.outstanding(owner));}
     public static boolean quarantined(ServerPlayer player){return player.server!=null&&blocked(player.server,player.getUUID());}
     private static boolean manager(ServerPlayer player){return !quarantined(player)&&JailCommands.mayManage(player.createCommandSourceStack());}
     public static boolean physical(MinecraftServer server,JailCustodyLedger.Binding b){var a=b.anchor();ServerLevel level=server.getLevel(ResourceKey.create(Registries.DIMENSION,ResourceLocation.parse(a.dimension())));BlockPos pos=new BlockPos(a.x(),a.y(),a.z());return level!=null&&level.hasChunkAt(pos)&&level.getBlockState(pos).is(dev.unyielding.quests.Registration.CUSTODY_VAULT.get());}
@@ -72,7 +73,7 @@ public final class JailCustodyService {
     public static JailEscrowJournal.Entry items(MinecraftServer server,JailCustodyLedger.Binding b)throws IOException {
         try(var journal=new JailEscrowJournal(journalPath(server,b.items()))){var e=journal.read(b.id());if(e==null||!e.owner().equals(b.owner())||!MessageDigest.isEqual(b.digest(),JailOriginTransaction.hash(e.snapshot())))throw new IOException("Custody UUID, owner or source digest changed");return e;}
     }
-    private static VerifiedAdapter adapter(MinecraftServer server,JailCustodyLedger.Binding b)throws IOException {items(server,b);if(fixtureFactory==null)throw new IOException("No audited production origin/accessory adapter; custody remains quarantined");var adapter=fixtureFactory.open(server,b);if(adapter==null||adapter.descriptor()==null||adapter.descriptor().isBlank())throw new IOException("Unsupported custody adapter");return adapter;}
+    private static VerifiedAdapter adapter(MinecraftServer server,JailCustodyLedger.Binding b)throws IOException {items(server,b);var adapter=fixtureFactory==null?JailIntegrated.adapter(server,b):fixtureFactory.open(server,b);if(adapter==null||adapter.descriptor()==null||adapter.descriptor().isBlank())throw new IOException("Unsupported custody adapter");return adapter;}
     public static void open(ServerPlayer player,BlockPos pos){
         try{if(!manager(player))throw new IOException("Administrator permission required; quarantine has no player bypass");var ledger=ledger(player.server);var matches=ledger.list().stream().filter(b->b.anchor().equals(new JailCustodyLedger.Anchor(player.level().dimension().location().toString(),pos.getX(),pos.getY(),pos.getZ()))).toList();if(matches.size()!=1)throw new IOException("Unbound custody interface; no inventory is stored here");var b=matches.getFirst();if(!valid(player,b))throw new IOException("Interface, range, permissions or claim access changed");
             var rows=JailCustodyMenu.previews(player,items(player.server,b).snapshot());player.openMenu(new SimpleMenuProvider((id,inventory,ignored)->new JailCustodyMenu(id,inventory,b,rows),Component.literal("Custody "+b.owner().toString().substring(0,8)+" · "+b.state())));
@@ -89,8 +90,9 @@ public final class JailCustodyService {
         if(action.equals("hold")){change(server,b,JailCustodyLedger.State.QUARANTINED,name,"Explicit administrator hold; review required");return;}
         if(b.state()==JailCustodyLedger.State.RELEASED){if(action.equals("restore"))return;throw new IOException("This transaction was already returned; records retained");}
         try{
-            var adapter=adapter(server,b);Health health=adapter.inspect();
+            var adapter=adapter(server,b);adapter.authorize(actor);
             if(action.equals("confirm")){adapter.confirmSaved();change(server,b,JailCustodyLedger.State.QUARANTINED,name,"Explicit saved-phase confirmation via "+adapter.descriptor()+"; review before return");return;}
+            Health health=adapter.inspect();
             if(health==Health.REVIEW_REQUIRED)throw new IOException("Native origin/accessory or player-save outcome is ambiguous; explicit saved-phase recovery required");
             if(action.equals("review")){change(server,b,JailCustodyLedger.State.REVIEWED,name,"Verified "+adapter.descriptor()+"; quarantine retained until return completes");return;}
             if(!action.equals("restore")||b.state()!=JailCustodyLedger.State.REVIEWED)throw new IOException("Review this exact transaction before restoring");
@@ -115,7 +117,7 @@ public final class JailCustodyService {
             if(quarantined(player)&&player.containerMenu!=player.inventoryMenu)player.closeContainer();
         }
     }
-    @SubscribeEvent public static void stopped(ServerStoppedEvent event){Context c=contexts.remove(event.getServer());if(c!=null&&c.ledger!=null)try{c.ledger.close();}catch(IOException ignored){}fixtureFactory=null;checkpoint=()->{};}
+    @SubscribeEvent public static void stopped(ServerStoppedEvent event){JailIntegrated.stopped(event.getServer());Context c=contexts.remove(event.getServer());if(c!=null&&c.ledger!=null)try{c.ledger.close();}catch(IOException ignored){}fixtureFactory=null;checkpoint=()->{};}
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher){
         var root=Commands.literal("jailcustody").requires(JailCommands::mayManage);
         root.then(Commands.literal("list").executes(c->command(c.getSource(),()->list(c.getSource(),1)))

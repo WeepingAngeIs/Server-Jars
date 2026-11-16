@@ -23,7 +23,6 @@ public final class JailCommands {
     private JailCommands() {}
     // Do not admit new players until durable item and origin recovery is verified.
     // Existing assignments and recovery commands remain available.
-    private static boolean admissionReady() { return false; }
     public static boolean mayManage(CommandSourceStack source) {
         if (source.getEntity() == null) return source.hasPermission(2);
         return source.getEntity() instanceof ServerPlayer player && canManage(player);
@@ -39,6 +38,7 @@ public final class JailCommands {
     }
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         JailCustodyService.register(dispatcher);
+        JailIntegrated.register(dispatcher);
         dispatcher.register(Commands.literal("jail").requires(JailCommands::mayManage)
                 .then(Commands.argument("player", EntityArgument.player()).executes(c -> jail(c.getSource(), EntityArgument.getPlayer(c, "player")))));
         dispatcher.register(Commands.literal("unjail").requires(JailCommands::mayManage)
@@ -61,24 +61,12 @@ public final class JailCommands {
     private static int jail(CommandSourceStack source, ServerPlayer target) throws CommandSyntaxException {
         if (target == source.getEntity() || protectedFromJail(target))
             return Essentials.fail(source, "Administrators cannot be jailed; console remains available for recovery.");
-        if (!admissionReady())
-            return Essentials.fail(source, "New jail admissions are unavailable until inventory and origin recovery are verified. Existing jailed players can still be released.");
-        var data = JailData.get(target.server);
-        if (data.assignment(target.getUUID()) != null) return Essentials.fail(source, "That player is already jailed.");
-        Loc dest = data.location();
-        if (dest == null || !JailPlacement.intact(target.server, dest, data.geometry()) || !safe(target, dest))
-            return Essentials.fail(source, "The jail is unavailable, unsafe, not loaded, or claim access is denied.");
-        if (source.getEntity() instanceof ServerPlayer actor && !claimAccess(actor, dest))
-            return Essentials.fail(source, "Your claim access at the jail could not be verified.");
-        Loc prior = Loc.of(target);
-        if (!JailEnforcement.teleportAuthorized(target, dest)) return Essentials.fail(source, "Jail transfer failed.");
-        data.assign(target.getUUID(), new JailData.Assignment(dest, prior, data.geometry()));
-        dev.unyielding.quests.UnyieldingQuests.LOGGER.info("Jail: {} jailed {} ({})", source.getTextName(), target.getGameProfile().getName(), target.getUUID());
-        target.sendSystemMessage(net.minecraft.network.chat.Component.literal("An administrator has jailed you."));
-        source.sendSuccess(() -> net.minecraft.network.chat.Component.literal("Jailed " + target.getGameProfile().getName() + "."), true);
-        return 1;
+        try { JailIntegrated.admit(source,target);return 1; }
+        catch (java.io.IOException | RuntimeException unsafe) { return Essentials.fail(source,"Jail: "+unsafe.getMessage()+". Records retained; no automatic replay."); }
     }
     private static int release(CommandSourceStack source, ServerPlayer target, boolean pardon) {
+        try { if(JailIntegrated.managed(source.getServer(),target.getUUID())){JailIntegrated.release(source,target);return 1;} }
+        catch(java.io.IOException|RuntimeException unsafe){return Essentials.fail(source,"Release held for verified recovery: "+unsafe.getMessage());}
         if(JailCustodyService.blocked(source.getServer(),target.getUUID()))return Essentials.fail(source,"Outstanding or unavailable custody history; use /jailcustody inspect and verified recovery before release. Records retained.");
         var data = JailData.get(target.server);
         var assignment = data.assignment(target.getUUID());
@@ -118,7 +106,7 @@ public final class JailCommands {
         }
         return level.getBlockState(feet.below()).isFaceSturdy(level, feet.below(), Direction.UP);
     }
-    private static boolean claimAccess(ServerPlayer player, Loc loc) {
+    static boolean claimAccess(ServerPlayer player, Loc loc) {
         var box = player.getBoundingBox().move(loc.x() - player.getX(), loc.y() - player.getY(), loc.z() - player.getZ());
         for (int x = net.minecraft.util.Mth.floor(box.minX - 1) >> 4; x <= net.minecraft.util.Mth.floor(box.maxX + 1) >> 4; x++)
             for (int z = net.minecraft.util.Mth.floor(box.minZ - 1) >> 4; z <= net.minecraft.util.Mth.floor(box.maxZ + 1) >> 4; z++)

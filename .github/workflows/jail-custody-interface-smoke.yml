@@ -1,6 +1,11 @@
 name: Assembled protected custody interface and quarantine
 on:
   workflow_dispatch:
+    inputs:
+      integrated:
+        description: Run integrated command coordinator instead of interface-only regression
+        type: boolean
+        default: false
   push:
     branches: ['codex/recovery-review-safe']
 permissions:
@@ -44,13 +49,17 @@ jobs:
       - name: Protected custody menus quarantine and native recovery through two restarts
         env:
           UQ_PACKAGED_JAIL_SMOKE: '1'
-          UQ_WORLD_NAME: jail_interface_smoke
-          UQ_RESULT_FILE: /tmp/uq-interface-result
+          UQ_WORLD_NAME: ${{ inputs.integrated && 'jail_integrated_smoke' || 'jail_interface_smoke' }}
+          UQ_RESULT_FILE: ${{ inputs.integrated && '/tmp/uq-integrated-result' || '/tmp/uq-interface-result' }}
           LIBGL_ALWAYS_SOFTWARE: 'true'
           ALSOFT_DRIVERS: 'null'
         run: |
           for phase in 1 2 3; do
-            export JAVA_TOOL_OPTIONS="-Duq.custodyInterface=true -Duq.interfacePhase=$phase"
+            if [[ '${{ inputs.integrated }}' == true ]]; then
+              export JAVA_TOOL_OPTIONS="-Duq.integratedJail=true -Duq.integratedPhase=$phase"
+            else
+              export JAVA_TOOL_OPTIONS="-Duq.custodyInterface=true -Duq.interfacePhase=$phase"
+            fi
             bash .github/scripts/meeting-two-player.sh
             cp -a dist/packaged-smoke/jail-player-logs "dist/packaged-smoke/interface-phase$phase"
           done

@@ -107,6 +107,12 @@ public final class JailVanillaCustody {
         journal.transition(id, JailEscrowJournal.State.RESTORE_STARTED, JailEscrowJournal.State.COMPLETE);
     }
 
+    /** Explicit confirmation of an already saved empty inventory and transaction receipt; no removal replay. */
+    public static void confirmRemoved(JailEscrowJournal journal,UUID id,InventoryPort port)throws IOException {
+        if(!port.online()||inspect(journal,id,port)!=Inspection.REMOVAL_PERSISTED_REVIEW)throw new IOException("No exact persisted removal to confirm");
+        journal.transition(id,JailEscrowJournal.State.REMOVAL_STARTED,JailEscrowJournal.State.HELD);
+    }
+
     /** Read-only reconciliation. Even a matching interrupted removal is never promoted or replayed. */
     public static Inspection inspect(JailEscrowJournal journal, UUID id, InventoryPort port) throws IOException {
         var entry = journal.read(id);

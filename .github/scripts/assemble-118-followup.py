@@ -14,6 +14,7 @@ assert len(jars) == 1, f'Expected one quest JAR, got {jars}'
 
 prefix = 'dev/unyielding/quests/'
 roots = [
+    'jail/JailIntegrated', 'jail/JailHumanAudit', 'jail/JailHumanPort', 'jail/JailVanillaPort', 'jail/JailNbt',
     'jail/JailVanillaCustody',
     'jail/JailOriginTransaction',
     'jail/JailCustodyLedger', 'jail/JailCustodyService', 'jail/JailCustodyMenu', 'jail/JailCustodyBlock', 'jail/JailQuarantineEvents', 'mixin/CustodyPacketMixin',
@@ -61,7 +62,7 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
     advancement = 'data/unyieldingquests/advancement/jail_escape.json'
     assert advancement in names, 'Missing jail escape advancement'
     updates[advancement] = component.read(advancement)
-    for asset in ('blockstates/custody_vault.json', 'models/block/custody_vault.json'):
+    for asset in ('blockstates/custody_vault.json', 'models/block/custody_vault.json', 'jail-certified-runtime.json'):
         path = 'assets/unyieldingquests/' + asset
         assert path in names, f'Missing custody interface asset {path}'
         updates[path] = component.read(path)
