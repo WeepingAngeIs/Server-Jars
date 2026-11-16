@@ -1,0 +1,26 @@
+name: Jail party wallet source review
+on:
+  push:
+    branches: ['codex/jail-standalone-extraction']
+    paths: ['.github/workflows/jail-party-wallet-source.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Export tracked source only
+        run: |
+          mkdir -p /tmp/jail-review
+          git rev-parse HEAD > /tmp/jail-review/commit.txt
+          git archive --format=zip HEAD .github minecraft-jail unyielding-quests combined-unyielding ci-inputs AGENTS.md docs > /tmp/jail-review/source.zip
+          git ls-tree -r HEAD > /tmp/jail-review/tree.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: jail-party-wallet-source
+          path: /tmp/jail-review/
+          retention-days: 7
+          if-no-files-found: error
