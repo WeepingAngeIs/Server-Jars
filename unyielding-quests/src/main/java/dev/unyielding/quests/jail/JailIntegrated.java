@@ -41,7 +41,7 @@ public final class JailIntegrated {
         if(!actor.getServer().isSameThread()||!JailCommands.mayManage(actor)||actor.getEntity() instanceof ServerPlayer p&&JailCustodyService.quarantined(p))throw new IOException("Administrator permission lost");
         if(target.server.getPlayerList().getPlayer(target.getUUID())!=target||target.hasDisconnected()||!target.isAlive())throw new IOException("Target offline/dead; records retained");
     }
-    private static void auditItems(ServerPlayer p)throws IOException {
+    static void auditItems(ServerPlayer p)throws IOException {
         if(p.isPassenger()||p.isVehicle()||p.isUsingItem()||!p.getShoulderEntityLeft().isEmpty()||!p.getShoulderEntityRight().isEmpty())throw new IOException("Active use, mounts or shoulder entities unsupported");
         if(!p.getMainHandItem().isEmpty()||!p.getOffhandItem().isEmpty())throw new IOException("Selected hand/offhand must be empty");for(var stack:p.getArmorSlots())if(!stack.isEmpty())throw new IOException("Equipped armor requires another audited adapter");
         for(int i=0;i<p.getInventory().getContainerSize();i++){var stack=p.getInventory().getItem(i);if(stack.isEmpty())continue;
@@ -65,10 +65,10 @@ public final class JailIntegrated {
         CompoundTag plan=JailNbt.decode(entry.snapshot());var b=JailCustodyService.ledger(s).get(entry.id());
         if(b==null||!b.owner().equals(entry.owner())||!b.items().equals(relative(entry.id(),"items"))||!b.origins().equals(relative(entry.id(),"origins"))||!Arrays.equals(b.digest(),plan.getByteArray("digest")))throw new IOException("Command/custody binding changed");return b;
     }
-    private static BlockPos anchor(MinecraftServer s,Loc dest)throws IOException {
+    private static BlockPos anchor(MinecraftServer s,Loc dest,Loc prior)throws IOException {
         var ledger=JailCustodyService.ledger(s);var level=dest.level(s);BlockPos base=BlockPos.containing(dest.x()-3.5,dest.y()-1,dest.z()-3.5);
         for(int x=8;x<=11;x++)for(int z=1;z<=5;z++){BlockPos pos=base.offset(x,1,z);var a=new JailCustodyLedger.Anchor(dest.dim(),pos.getX(),pos.getY(),pos.getZ());
-            if(level.hasChunkAt(pos)&&level.getWorldBorder().isWithinBounds(pos)&&level.getBlockState(pos).isAir()&&ledger.list().stream().noneMatch(b->b.anchor().equals(a)))return pos;}
+            if(!pos.equals(BlockPos.containing(prior.x(),prior.y(),prior.z()))&&level.hasChunkAt(pos)&&level.getWorldBorder().isWithinBounds(pos)&&level.getBlockState(pos).isAir()&&ledger.list().stream().noneMatch(b->b.anchor().equals(a)))return pos;}
         throw new IOException("No unused custody anchor; prior bindings retained");
     }
     /** Returns false only when there is no managed record; legacy releases remain separate. */
@@ -82,9 +82,8 @@ public final class JailIntegrated {
         var data=JailData.get(s);Loc dest=data.location(),prior=Loc.of(target);if(data.geometry()!=JailData.INTERROGATION_CHAIR_GEOMETRY||dest==null||!JailPlacement.intact(s,dest,data.geometry())||!JailCommands.safe(target,dest)||!JailCommands.safe(target,prior)||actor.getEntity() instanceof ServerPlayer p&&!JailCommands.claimAccess(p,dest))throw new IOException("Jail/return location unavailable, unsafe or claim denied");
         UUID id=UUID.randomUUID(),retired=retired(s,target.getUUID());var inventory=new JailVanillaPort(target,id,retired);auditItems(target);var nativePort=new JailHumanPort(target,id,retired);var human=nativePort.current();
         var source=inventory.current();if(source.empty()||source.removedBy()!=null||source.restoredBy()!=null||human.transaction()!=null)throw new IOException("Source empty or unresolved receipt");
-        nativePort.persistAndVerify();if(!Arrays.equals(source.inventory(),inventory.current().inventory()))throw new IOException("Source changed during baseline save");
         // Save/readback BEFORE the plan: no custody has started and no mutation occurred.
-        inventory.persistAndVerify();nativePort.persistAndVerify();saveAssignments(s);BlockPos anchor=anchor(s,dest);
+        inventory.persistAndVerify();nativePort.persistAndVerify();saveAssignments(s);if(!Arrays.equals(source.inventory(),inventory.current().inventory())||!Arrays.equals(human.state(),nativePort.current().state()))throw new IOException("Source changed during baseline save");BlockPos anchor=anchor(s,dest,prior);
         CompoundTag plan=new CompoundTag();plan.putString("contract","human-empty-v1");plan.put("prior",prior.toTag());plan.put("jail",dest.toTag());plan.putInt("geometry",data.geometry());plan.putByteArray("digest",JailOriginTransaction.hash(source.inventory()));plan.putByteArray("human",human.state());if(retired!=null)plan.putUUID("retired",retired);
         plan.putInt("x",anchor.getX());plan.putInt("y",anchor.getY());plan.putInt("z",anchor.getZ());plan.putString("actor",actor.getTextName());
         plan.putByteArray("origin_before",human.state());
@@ -128,7 +127,7 @@ public final class JailIntegrated {
             public JailCustodyService.Health inspect()throws IOException {
                 if(!inventory.online())return JailCustodyService.Health.REVIEW_REQUIRED;var now=plans(s).read(b.id());
                 try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){
-                    JailCustodyService.items(s,b);var item=items.read(b.id());
+                    var item=items.read(b.id());if(item==null||!item.owner().equals(b.owner())||!Arrays.equals(JailOriginTransaction.hash(item.snapshot()),b.digest()))throw new IOException("Custody source binding changed");
                     if(now.state()==JailEscrowJournal.State.COMPLETE)return item.state()==JailEscrowJournal.State.COMPLETE&&originComplete(origins)&&JailData.get(s).assignment(b.owner())==null?JailCustodyService.Health.COMPLETE:JailCustodyService.Health.REVIEW_REQUIRED;
                     requireAssignment(s,b.owner(),plan,false);if(now.state()!=JailEscrowJournal.State.HELD||!JailCustodyService.physical(s,b)||JailVanillaCustody.inspect(items,b.id(),inventory)!=JailVanillaCustody.Inspection.HELD_VERIFIED)return JailCustodyService.Health.REVIEW_REQUIRED;
                     var state=JailOriginTransaction.inspect(origins,items,b.id(),human);return state==JailOriginTransaction.Inspection.TEMPORARY_VERIFIED||state==JailOriginTransaction.Inspection.COMPLETE_RECORDED&&originComplete(origins)?JailCustodyService.Health.READY:JailCustodyService.Health.REVIEW_REQUIRED;
@@ -136,6 +135,7 @@ public final class JailIntegrated {
             }
             public void restore()throws IOException {
                 authority();
+                Loc prior=assignment(plan).prior();if(!JailCommands.safe(p,prior)||actor.getEntity() instanceof ServerPlayer staff&&!JailCommands.claimAccess(staff,prior))throw new IOException("Return position unavailable or claim denied");
                 if(inspect()!=JailCustodyService.Health.READY)throw new IOException("Command release requires verified active custody");
                 plans(s).transition(b.id(),JailEscrowJournal.State.HELD,JailEscrowJournal.State.RESTORE_STARTED);
                 try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){

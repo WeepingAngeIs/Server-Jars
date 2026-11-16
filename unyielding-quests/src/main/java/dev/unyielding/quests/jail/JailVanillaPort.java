@@ -16,6 +16,7 @@ public final class JailVanillaPort implements JailVanillaCustody.InventoryPort {
     public JailVanillaPort(ServerPlayer player,UUID transaction,UUID verifiedRetiredReceipt){this.player=player;this.transaction=transaction;this.retired=verifiedRetiredReceipt;}
     private void guard()throws IOException {if(!player.server.isSameThread()||player.containerMenu!=player.inventoryMenu||!player.containerMenu.getCarried().isEmpty())throw new IOException("Transient inventory/menu; custody refused");for(int i=0;i<5;i++)if(player.inventoryMenu.getSlot(i).hasItem())throw new IOException("Crafting/cursor inventory is not empty");}
     public UUID owner(){return player.getUUID();}public boolean online(){return player.server.isSameThread()&&player.server.getPlayerList().getPlayer(owner())==player&&!player.hasDisconnected()&&player.isAlive();}
+    public void validateRemoval()throws IOException{guard();if(!online())throw new IOException("Player offline");JailIntegrated.auditItems(player);JailHumanAudit.inspect(player);}
     private JailVanillaCustody.View view(ListTag items,CompoundTag persistent)throws IOException {
         CompoundTag body=new CompoundTag();body.putInt("version",1);body.putInt("vanillaSlots",player.getInventory().getContainerSize());body.put("items",items);
         UUID removed=persistent.hasUUID(REMOVED)?persistent.getUUID(REMOVED):null,restored=persistent.hasUUID(RESTORED)?persistent.getUUID(RESTORED):null;
