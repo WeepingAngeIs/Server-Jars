@@ -64,6 +64,10 @@ source = source.replace('@EventBusSubscriber(modid = UnyieldingQuests.MODID)', '
 
 # Run the same two-real-player OPAC/jail checks from a separate test mod, never
 # from production development classes or inside the assembled distributable.
+source = (ROOT / 'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/ShutdownSmoke.java').read_text(encoding='utf-8')
+source = source.replace('package dev.unyielding.quests.devtest;', 'package dev.unyielding.bundlesmoke;', 1)
+source = source.replace('@EventBusSubscriber(modid=UnyieldingQuests.MODID)', '@EventBusSubscriber(modid="uq_bundle_smoke")', 1)
+(harness / 'src/main/java/dev/unyielding/bundlesmoke/ShutdownSmoke.java').write_text(source, encoding='utf-8')
 source = (ROOT / 'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/JailPlayerSmoke.java').read_text(encoding='utf-8')
 before = 'package dev.unyielding.quests.devtest;'
 assert source.count(before) == 1

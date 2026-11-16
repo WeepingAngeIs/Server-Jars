@@ -100,6 +100,7 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     assert not any(n.startswith(prefix + 'devtest/MeetingTwoPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/QuestSharingPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
+    assert not any(n.startswith(prefix + 'devtest/ShutdownSmoke') for n in result.namelist()), 'Shutdown harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/NeoOriginsPreflightSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailInventorySnapshotSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailTerrainPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'

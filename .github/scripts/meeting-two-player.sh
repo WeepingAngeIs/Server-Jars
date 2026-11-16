@@ -73,6 +73,19 @@ cleanup() {
       sleep 0.5
       if tail -c +"$((shutdown_offset+1))" "$logs/server.log" | grep -q 'There are 0 of a max of'; then break; fi
     done
+    rm -f /tmp/uq-smoke-shutdown-ready
+    printf 'uqsmoke_shutdown_ready\n' >&9
+    for ((attempt=0; attempt<120; attempt++)); do
+      if [[ -f /tmp/uq-smoke-shutdown-ready ]]; then break; fi
+      sleep 0.5
+    done
+    if [[ ! -f /tmp/uq-smoke-shutdown-ready ]]; then
+      echo 'Native generation/save readiness did not settle before shutdown' >&2
+      diagnose_group "$server_pid"
+      printf 'stop\n' >&9
+      return 1
+    fi
+    cp /tmp/uq-smoke-shutdown-ready "$logs/shutdown-ready.txt"
     printf 'stop\n' >&9
     if ! await_group "$server_pid"; then
       echo "Graceful disposable server shutdown timed out; terminating owned group $server_pid" >&2
