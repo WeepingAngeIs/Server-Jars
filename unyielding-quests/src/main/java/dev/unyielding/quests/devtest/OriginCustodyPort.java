@@ -246,7 +246,11 @@ final class OriginCustodyPort implements JailOriginTransaction.Port {
     @Override public void persistAndVerify()throws IOException {
         var before=current();durable(); // missing/corrupt history is not recreated by saving over it
         saveFault.at(SaveBoundary.BEFORE_PLAYER);player.server.getPlayerList().saveAll();saveFault.at(SaveBoundary.AFTER_PLAYER);
-        player.server.overworld().getDataStorage().save();saveFault.at(SaveBoundary.AFTER_CLAIMS);
+        player.server.overworld().getDataStorage().save();
+        // SavedData.save queues its actual write in this NeoForge version.
+        // Waiting only for DimensionDataStorage.save() is not a disk barrier.
+        try{net.neoforged.neoforge.common.IOUtilities.waitUntilIOWorkerComplete();}catch(RuntimeException failed){throw new IOException("Native SavedData worker failed",failed);}
+        saveFault.at(SaveBoundary.AFTER_CLAIMS);
         force(player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner()+".dat"));force(claimsFile());saveFault.at(SaveBoundary.AFTER_FORCE);var disk=durable();var live=current();
         if(!Arrays.equals(before.state(),disk.state())||!Arrays.equals(before.state(),live.state())||before.receipt()!=disk.receipt()||!Objects.equals(before.transaction(),disk.transaction()))throw new IOException("Origin/player/claims persistence mismatch: disk="+differences(before,disk)+" live="+differences(before,live));
     }

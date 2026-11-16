@@ -80,7 +80,7 @@ public final class OriginCustodySmoke {
         UUID previous=p.owner(claims,original);require(previous==null||previous.equals(player.getUUID()),"fixture would steal original claim");
         OriginCustodyPort.call(OriginCustodyPort.CLAIMS,claims,"claim",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},main,original,player.getUUID());
         OriginCustodyPort.call(OriginCustodyPort.CLAIMS,claims,"releaseIfOwner",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},main,p.human,player.getUUID());
-        player.server.overworld().getDataStorage().save();VanillaCustodySmoke.seed(player);p.persistAndVerify();callbacks=0;return p;
+        player.server.overworld().getDataStorage().save();net.neoforged.neoforge.common.IOUtilities.waitUntilIOWorkerComplete();VanillaCustodySmoke.seed(player);p.persistAndVerify();callbacks=0;return p;
     }
     static void prepare(Path directory,UUID id,OriginCustodyPort p)throws Exception {
         Files.createDirectory(directory);JailEscrowJournal.provisionNew(directory.resolve("items"));JailEscrowJournal.provisionNew(directory.resolve("origins"));
@@ -106,7 +106,9 @@ public final class OriginCustodySmoke {
             var p=seed(player,OriginCustodyPort.ALPHA);UUID id=UUID.randomUUID();Path dir=root.resolve((restore?"restore-":"switch-")+boundary);prepare(dir,id,p);
             if(restore)temporary(dir,id,p,at->{});
             int before=callbacks;
-            refuse(()->{if(restore)original(dir,id,p,at->{if(at==boundary)throw new IOException("injected "+at);});else temporary(dir,id,p,at->{if(at==boundary)throw new IOException("injected "+at);});});
+            boolean[] reached={false};
+            refuse(()->{if(restore)original(dir,id,p,at->{if(at==boundary){reached[0]=true;throw new IOException("injected "+at);}});else temporary(dir,id,p,at->{if(at==boundary){reached[0]=true;throw new IOException("injected "+at);}});});
+            require(reached[0],"did not reach intended native interruption "+boundary+" restore="+restore);
             int after=callbacks;
             try(var items=new JailEscrowJournal(dir.resolve("items"));var origins=new JailEscrowJournal(dir.resolve("origins"))){
                 var status=JailOriginTransaction.inspect(origins,items,id,p);require(callbacks==after,"inspection replayed callback");
@@ -119,7 +121,7 @@ public final class OriginCustodySmoke {
         }
         for(String fault:List.of("throw","item","progress"))for(boolean restore:new boolean[]{false,true}){
             var p=seed(player,OriginCustodyPort.ALPHA);UUID id=UUID.randomUUID();Path dir=root.resolve("callback-"+fault+restore);prepare(dir,id,p);if(restore)temporary(dir,id,p,at->{});
-            mode=fault;refuse(()->{if(restore)original(dir,id,p,at->{});else temporary(dir,id,p,at->{});});mode="normal";int count=callbacks;
+            int priorCallbacks=callbacks;mode=fault;refuse(()->{if(restore)original(dir,id,p,at->{});else temporary(dir,id,p,at->{});});mode="normal";int count=callbacks;require(count==priorCallbacks+1,"native fault callback not exercised");
             try(var items=new JailEscrowJournal(dir.resolve("items"));var origins=new JailEscrowJournal(dir.resolve("origins"))){
                 require(origins.read(id).state()==(restore?JailEscrowJournal.State.RESTORE_STARTED:JailEscrowJournal.State.REMOVAL_STARTED),"callback failure promoted phase");
                 require(JailOriginTransaction.inspect(origins,items,id,p)==JailOriginTransaction.Inspection.REVIEW_REQUIRED,"unexpected callback side effect accepted");
@@ -129,8 +131,8 @@ public final class OriginCustodySmoke {
         }
         for(var boundary:OriginCustodyPort.SaveBoundary.values())for(boolean restore:new boolean[]{false,true}){
             var p=seed(player,OriginCustodyPort.ALPHA);UUID id=UUID.randomUUID();Path dir=root.resolve("save-"+boundary+restore);prepare(dir,id,p);if(restore)temporary(dir,id,p,at->{});
-            JailOriginTransaction.Checkpoint inject=at->{if(at==JailOriginTransaction.Boundary.BEFORE_SAVE)p.saveFault=b->{if(b==boundary)throw new IOException("injected split save "+b);};};
-            refuse(()->{if(restore)original(dir,id,p,inject);else temporary(dir,id,p,inject);});p.saveFault=at->{};
+            boolean[] reached={false};JailOriginTransaction.Checkpoint inject=at->{if(at==JailOriginTransaction.Boundary.BEFORE_SAVE)p.saveFault=b->{if(b==boundary){reached[0]=true;throw new IOException("injected split save "+b);}};};
+            refuse(()->{if(restore)original(dir,id,p,inject);else temporary(dir,id,p,inject);});p.saveFault=at->{};require(reached[0],"native save boundary not reached "+boundary);
             try(var origins=new JailEscrowJournal(dir.resolve("origins"));var items=new JailEscrowJournal(dir.resolve("items"))){require(origins.read(id).state()==(restore?JailEscrowJournal.State.RESTORE_STARTED:JailEscrowJournal.State.REMOVAL_STARTED),"save failure promoted transaction");
                 var expected=boundary==OriginCustodyPort.SaveBoundary.BEFORE_PLAYER||boundary==OriginCustodyPort.SaveBoundary.AFTER_PLAYER?JailOriginTransaction.Inspection.REVIEW_REQUIRED:restore?JailOriginTransaction.Inspection.ORIGINAL_SAVED_REVIEW:JailOriginTransaction.Inspection.TEMPORARY_SAVED_REVIEW;
                 require(JailOriginTransaction.inspect(origins,items,id,p)==expected,"split native save misclassified "+boundary+" restore="+restore);

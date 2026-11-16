@@ -40,7 +40,9 @@ disconnect. Restoration releases only a Human reservation created by this
 transaction and still owned by that player. A preexisting self-owned Human claim
 is retained. Conflicts never authorize overwriting another owner's claim.
 
-Player and claims saves are separate stores. Both native saves are forced and
+Player and claims saves are separate stores. NeoForge queues the actual
+SavedData write; the adapter waits on its native IO-worker completion barrier
+after scheduling the claims save. Both native saves are then forced and
 read back, including parent directories, before a verified phase is recorded.
 This is not cross-store atomicity. Failures between saves retain an incomplete
 phase and block item return. The fixtures inject failures at both journal and
