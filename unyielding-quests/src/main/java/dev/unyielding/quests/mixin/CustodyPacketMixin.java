@@ -14,5 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class CustodyPacketMixin {
     @Shadow public ServerPlayer player;
     @Inject(method={"handleContainerClick","handleSetCreativeModeSlot","handlePlayerAction","handleUseItem","handleUseItemOn","handleInteract","handleSetCarriedItem","handlePlaceRecipe"},at=@At("HEAD"),cancellable=true)
-    private void custodyFence(CallbackInfo ci){if(player.server.isSameThread()&&JailCustodyService.quarantined(player)){player.containerMenu.sendAllDataToRemote();ci.cancel();}}
+    private void custodyFence(CallbackInfo ci){
+        if(!player.server.isSameThread())return;
+        if(player.containerMenu instanceof dev.unyielding.quests.jail.JailCustodyMenu menu&&!menu.stillValid(player)){player.closeContainer();ci.cancel();return;}
+        if(JailCustodyService.quarantined(player)){player.containerMenu.sendAllDataToRemote();ci.cancel();}
+    }
 }

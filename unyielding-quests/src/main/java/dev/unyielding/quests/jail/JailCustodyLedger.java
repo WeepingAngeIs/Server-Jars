@@ -54,7 +54,7 @@ public final class JailCustodyLedger implements AutoCloseable {
         bindings.put(id,now);audit.add(new Audit(next,id,actor,reason,state));sequence=next;
     }
     public Binding get(UUID id){return bindings.get(id);}public List<Binding> list(){return List.copyOf(bindings.values());}public List<Audit> audit(UUID id){return audit.stream().filter(e->e.transaction().equals(id)).toList();}
-    public boolean healthy(){return !poisoned&&file.isOpen()&&Files.isRegularFile(path,LinkOption.NOFOLLOW_LINKS);}
+    public boolean healthy(){try{var attributes=Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class,LinkOption.NOFOLLOW_LINKS);return !poisoned&&file.isOpen()&&attributes.isRegularFile()&&fileIdentity.equals(attributes.fileKey())&&attributes.size()==file.size();}catch(IOException bad){return false;}}
     /** Revalidate the authoritative index before a privileged recovery action. */
     public void verifyDisk()throws IOException {
         try{if(!healthy()||!fileIdentity.equals(Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class,LinkOption.NOFOLLOW_LINKS).fileKey())||file.size()>64L*1024*1024)throw new IOException("Custody history missing, replaced or too large");

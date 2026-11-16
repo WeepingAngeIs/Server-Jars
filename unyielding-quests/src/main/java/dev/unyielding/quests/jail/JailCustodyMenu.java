@@ -52,7 +52,7 @@ public final class JailCustodyMenu extends ChestMenu {
         ItemStack original=ItemStack.parse(viewer.registryAccess(),tag).orElseThrow(()->new IOException("Unknown recorded item; records retained"));if(original.isEmpty())return;
         // A simple registry icon, not a copy of the authoritative components or
         // nested contents. The original byte snapshot is never rewritten.
-        rows.add(new Preview(new ItemStack(original.getItem()),source,original.getCount()));
+        ItemStack icon=new ItemStack(original.getItem());String name=original.getHoverName().getString().replaceAll("[\\p{Cntrl}]"," ");icon.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,Component.literal(name.substring(0,Math.min(120,name.length()))));rows.add(new Preview(icon,source,original.getCount()));
     }
     private static CompoundTag decode(byte[] bytes)throws IOException{return NbtIo.read(new DataInputStream(new ByteArrayInputStream(bytes)),NbtAccounter.create(4L*1024*1024));}
 }
