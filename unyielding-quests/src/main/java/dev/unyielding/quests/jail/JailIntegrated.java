@@ -200,17 +200,18 @@ public final class JailIntegrated {
     }
     /** Console-only cancellation after proving no native removal/switch ever started. No item insertion. */
     private static void cancel(CommandSourceStack actor,UUID id)throws IOException {
-        var s=actor.getServer();var e=plans(s).read(id);if(e==null||e.state()!=JailEscrowJournal.State.PREPARED)throw new IOException("Only an unchanged prepared admission can be cancelled");
+        var s=actor.getServer();var e=plans(s).read(id);if(e==null||e.state()!=JailEscrowJournal.State.PREPARED&&e.state()!=JailEscrowJournal.State.CANCELLED)throw new IOException("Only an unchanged prepared admission can be cancelled");
         ServerPlayer p=s.getPlayerList().getPlayer(e.owner());if(p==null)throw new IOException("Player offline");permitted(actor,p);CompoundTag plan=JailNbt.decode(e.snapshot());UUID retired=plan.hasUUID("retired")?plan.getUUID("retired"):null;
         var inventory=new JailVanillaPort(p,id,retired);var human=new JailHumanPort(p,id,retired);var live=inventory.current();var disk=inventory.durable();
         if(live.removedBy()!=null||live.restoredBy()!=null||disk.removedBy()!=null||disk.restoredBy()!=null||!Arrays.equals(live.inventory(),disk.inventory())||!Arrays.equals(JailOriginTransaction.hash(live.inventory()),plan.getByteArray("digest"))||!Arrays.equals(human.current().state(),plan.getByteArray("origin_before"))||!Arrays.equals(human.current().state(),human.durable().state())||JailData.get(s).assignment(e.owner())!=null)throw new IOException("Prepared source is no longer exactly unchanged");
         for(String kind:List.of("items","origins")){
             Path path=root(s).resolve(id.toString()).resolve(kind);if(!Files.exists(path,LinkOption.NOFOLLOW_LINKS))continue;
-            try(var journal=journal(s,id,kind)){var nativeEntry=journal.read(id);if(nativeEntry==null)continue;
+            try(var journal=journal(s,id,kind)){var nativeEntry=journal.read(id);if(nativeEntry==null){if(!journal.list().isEmpty())throw new IOException("Foreign native cancellation history");continue;}
+                if(kind.equals("items")&&nativeEntry.state()==JailEscrowJournal.State.CANCELLED&&nativeEntry.owner().equals(e.owner())&&Arrays.equals(JailOriginTransaction.hash(nativeEntry.snapshot()),plan.getByteArray("digest")))continue;
                 if(!kind.equals("items")||nativeEntry.state()!=JailEscrowJournal.State.PREPARED||JailVanillaCustody.inspect(journal,id,inventory)!=JailVanillaCustody.Inspection.PREPARED_UNCHANGED)throw new IOException("Native mutation has started/has uncertain history; cancellation refused");
                 journal.transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.CANCELLED);
             }
         }
-        plans(s).transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.CANCELLED);var binding=JailCustodyService.ledger(s).get(id);if(binding!=null)JailCustodyService.ledger(s).transition(id,binding.revision(),JailCustodyLedger.State.RELEASED,"console","Unchanged admission cancelled; no items or origin were transferred");
+        if(e.state()==JailEscrowJournal.State.PREPARED)plans(s).transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.CANCELLED);var binding=JailCustodyService.ledger(s).get(id);if(binding!=null&&binding.state()!=JailCustodyLedger.State.RELEASED)JailCustodyService.ledger(s).transition(id,binding.revision(),JailCustodyLedger.State.RELEASED,"console","Unchanged admission cancelled; no items or origin were transferred");
     }
 }
