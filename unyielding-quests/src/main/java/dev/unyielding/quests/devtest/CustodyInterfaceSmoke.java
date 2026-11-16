@@ -33,7 +33,7 @@ public final class CustodyInterfaceSmoke {
     static boolean done;static int waitUntil,restores;static ItemEntity pickup;static JailCustodyMenu savedMenu;static ServerPlayer admin,target;static Path world;
     static boolean failOrigin,failLedger;
     static void require(boolean value,String message){if(!value)throw new IllegalStateException(message);}
-    static int command(net.minecraft.server.MinecraftServer server,String text){return server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),text);}
+    static int command(net.minecraft.server.MinecraftServer server,String text)throws com.mojang.brigadier.exceptions.CommandSyntaxException{return server.getCommands().getDispatcher().execute(text,server.createCommandSourceStack());}
     static JailCustodyLedger.Binding record(UUID id)throws IOException{return JailCustodyService.ledger(admin.server).get(id);}
     static OriginCustodyPort port()throws Exception{return OriginCustodySmoke.reopen(world.resolve("custody-fixtures/visitor"),A,target);}
     static void install()throws IOException {
