@@ -89,7 +89,11 @@ public final class JailIntegrated {
         plan.putByteArray("origin_before",human.state());
         records.begin(id,target.getUUID(),JailNbt.encode(plan));checkpoint.at(Boundary.PLAN_DURABLE);
         // Plan itself quarantines, even if binding or journal provisioning fails.
-        Path directory=root(s).resolve(id.toString());Files.createDirectory(directory);JailEscrowJournal.provisionNew(directory.resolve("items"));JailEscrowJournal.provisionNew(directory.resolve("origins"));
+        Path directory=root(s).resolve(id.toString());Files.createDirectory(directory);
+        // Force the UUID directory's name in its parent before any source removal.
+        // Forcing items/origins and their immediate parent does not persist this ancestor entry.
+        try(var metadata=java.nio.channels.FileChannel.open(root(s),StandardOpenOption.READ)){metadata.force(true);}
+        JailEscrowJournal.provisionNew(directory.resolve("items"));JailEscrowJournal.provisionNew(directory.resolve("origins"));
         JailCustodyService.ledger(s).bind(id,target.getUUID(),relative(id,"items"),relative(id,"origins"),plan.getByteArray("digest"),new JailCustodyLedger.Anchor(dest.dim(),anchor.getX(),anchor.getY(),anchor.getZ()),actor.getTextName());
         try(var items=journal(s,id,"items");var origins=journal(s,id,"origins")){
             permitted(actor,target);JailVanillaCustody.removeForDisposableTest(items,id,inventory,b->{permitted(actor,target);if(b==JailVanillaCustody.Boundary.MUTATED)checkpoint.at(Boundary.ITEMS_MUTATED);});checkpoint.at(Boundary.ITEMS_DURABLE);
