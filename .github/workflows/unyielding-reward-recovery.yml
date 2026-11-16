@@ -3,6 +3,13 @@ on:
   workflow_dispatch:
   push:
     branches: ['codex/unyielding-jail-free-followup']
+    paths:
+      - '.github/reward-recovery/**'
+      - '.github/scripts/prepare-reward-server.py'
+      - '.github/scripts/reward-server-smoke.sh'
+      - '.github/workflows/unyielding-reward-recovery.yml'
+      - 'unyielding-quests/src/main/java/dev/unyielding/quests/spin/**'
+      - 'unyielding-quests/src/main/java/dev/unyielding/quests/quest/**'
 permissions:
   contents: read
 jobs:
