@@ -61,8 +61,8 @@ public final class JailEscapeCustody {
                 c.inventory().persistAndVerify();c.origin().persistAndVerify();atJail(p,c);
                 j.transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.REMOVAL_STARTED);
                 // Respect invulnerability, damage and death cancellation hooks. No retry if they stop it.
-                p.hurt(p.damageSources().generic(),Float.MAX_VALUE);
-                if(p.isAlive())throw new IOException("Escape damage prevented; explicit review required, no retry");
+                p.hurt(p.damageSources().generic(),1000.0F);
+                if(p.hasDisconnected()||p.getHealth()>0||p.isAlive())throw new IOException("Escape death prevented/unverified; explicit review required, no retry");
                 c.inventory().persistAndVerify();c.origin().persistAndVerify();JailIntegrated.escapeContext(p,false,true);
                 if(JailVanillaPort.readSavedPlayer(p).getFloat("Health")>0)throw new IOException("Escape death not durably observed");
                 j.transition(id,JailEscrowJournal.State.REMOVAL_STARTED,JailEscrowJournal.State.HELD);

@@ -73,7 +73,9 @@ public final class ExpandedJailSmoke {
     }
     static void cross()throws Exception {
         var jail=JailData.get(admin.server).assignment(target.getUUID()).jail();var field=net.minecraft.server.network.ServerGamePacketListenerImpl.class.getDeclaredField("awaitingTeleport");field.setAccessible(true);
-        target.connection.handleAcceptTeleportPacket(new net.minecraft.network.protocol.game.ServerboundAcceptTeleportationPacket(field.getInt(target.connection)));
+        var pending=net.minecraft.server.network.ServerGamePacketListenerImpl.class.getDeclaredField("awaitingPositionFromClient");pending.setAccessible(true);
+        if(pending.get(target.connection)!=null)target.connection.handleAcceptTeleportPacket(new net.minecraft.network.protocol.game.ServerboundAcceptTeleportationPacket(field.getInt(target.connection)));
+        require(!target.hasDisconnected(),"movement fixture lost its actual player connection");
         target.setPos(jail.x()+2,jail.y(),jail.z());target.connection.resetPosition();target.noPhysics=true;
         try{target.connection.handleMovePlayer(new net.minecraft.network.protocol.game.ServerboundMovePlayerPacket.Pos(jail.x()+4,jail.y(),jail.z(),true));}finally{target.noPhysics=false;}
     }
@@ -83,12 +85,13 @@ public final class ExpandedJailSmoke {
         var a=JailData.get(admin.server).assignment(target.getUUID());var corner=net.minecraft.core.BlockPos.containing(a.jail().x()-3.5,a.jail().y()-1,a.jail().z()-3.5);var block=target.serverLevel().getBlockState(corner);
         target.serverLevel().setBlock(corner,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),3);cross();require(target.isAlive(),"unsafe jail caused escape death");target.serverLevel().setBlock(corner,block,3);
         target.totalExperience=3;cross();require(target.isAlive()&&target.totalExperience==3,"unsupported experience was dropped/lost");target.totalExperience=0;
-        cross();require(!target.isAlive()&&items(last,null).current().empty(),"verified escape did not die with empty native stores");
+        cross();require(!target.hasDisconnected()&&target.getHealth()<=0&&!target.isAlive()&&items(last,null).current().empty(),"verified escape did not die with empty native stores and active connection");
+        try(var attempts=new JailEscrowJournal(world.resolve("integrated-jail-v1").resolve(last.toString()).resolve("escapes"))){require(attempts.list().size()==1&&attempts.list().getFirst().state()==JailEscrowJournal.State.HELD,"no verified durable escape death receipt");}
         require(target.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,target.getBoundingBox().inflate(128)).isEmpty(),"escape death dropped custody items");
         saved();target.connection.disconnect(Component.literal("Disposable dead jail restart"));pass();
     }
     static void phase4()throws Exception {
-        last=UUID.fromString(Files.readString(world.resolve("active-expanded")));require(!target.isAlive()&&items(last,null).current().empty(),"durable dead custody lost across restart");
+        last=UUID.fromString(Files.readString(world.resolve("active-expanded")));require(!target.hasDisconnected()&&target.getHealth()<=0&&!target.isAlive()&&items(last,null).current().empty(),"durable dead custody lost across restart");
         JailEscapeCustody.disposableCheckpoint(target,()->{throw new IOException("saved native respawn before escape completion");});
         var id=target.getUUID();target.connection.handleClientCommand(new net.minecraft.network.protocol.game.ServerboundClientCommandPacket(net.minecraft.network.protocol.game.ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));target=admin.server.getPlayerList().getPlayer(id);
         require(target!=null&&target.connection.player==target&&target.isAlive(),"actual native respawn did not rebind replacement player");held();var jail=JailData.get(admin.server).assignment(id).jail();require(target.distanceToSqr(jail.x(),jail.y(),jail.z())<0.0001,"replacement escaped safe jail");
