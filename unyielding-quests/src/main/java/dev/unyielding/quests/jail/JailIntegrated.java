@@ -157,6 +157,17 @@ public final class JailIntegrated {
                 plans(s).transition(b.id(),JailEscrowJournal.State.RESTORE_STARTED,JailEscrowJournal.State.COMPLETE);checkpoint.at(Boundary.COMPLETE);
             }
             public void confirmSaved()throws IOException {
+                authority();boolean confirmed=false;
+                try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){
+                    var itemStatus=JailVanillaCustody.inspect(items,b.id(),inventory);
+                    if(itemStatus==JailVanillaCustody.Inspection.REMOVAL_PERSISTED_REVIEW){JailVanillaCustody.confirmRemoved(items,b.id(),inventory);confirmed=true;}
+                    var originStatus=JailOriginTransaction.inspect(origins,items,b.id(),human);
+                    if(originStatus==JailOriginTransaction.Inspection.TEMPORARY_SAVED_REVIEW||originStatus==JailOriginTransaction.Inspection.ORIGINAL_SAVED_REVIEW){JailOriginTransaction.confirmSavedForDisposableTest(origins,items,b.id(),human);confirmed=true;}
+                    if(itemStatus==JailVanillaCustody.Inspection.RESTORE_PERSISTED_REVIEW&&originComplete(origins)){JailVanillaCustody.confirmRestoredForDisposableTest(items,b.id(),guarded(items,origins));confirmed=true;}
+                }
+                if(!confirmed)throw new IOException("No exact persisted native phase to confirm; use explicit coordinated recovery for command continuation");
+            }
+            public void recoverVerified()throws IOException {
                 authority();
                 var now=plans(s).read(b.id());try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){
                     if(now.state()==JailEscrowJournal.State.RESTORE_STARTED){

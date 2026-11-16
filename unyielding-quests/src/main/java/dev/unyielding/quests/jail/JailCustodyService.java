@@ -35,6 +35,8 @@ public final class JailCustodyService {
         void restore()throws IOException;
         /** Only phase confirmation through the verified coordinators, never raw insertion. */
         void confirmSaved()throws IOException;
+        /** Explicit coordinated continuation; unsupported adapters keep their previous recovery behavior. */
+        default void recoverVerified()throws IOException {throw new IOException("No audited coordinated recovery adapter");}
     }
     @FunctionalInterface public interface FixtureFactory {VerifiedAdapter open(MinecraftServer server,JailCustodyLedger.Binding binding)throws IOException;}
     @FunctionalInterface public interface FixtureCheckpoint {void afterVerifiedRestore()throws IOException;}
@@ -92,6 +94,7 @@ public final class JailCustodyService {
         try{
             var adapter=adapter(server,b);adapter.authorize(actor);
             if(action.equals("confirm")){adapter.confirmSaved();change(server,b,JailCustodyLedger.State.QUARANTINED,name,"Explicit saved-phase confirmation via "+adapter.descriptor()+"; review before return");return;}
+            if(action.equals("recover")){adapter.recoverVerified();change(server,b,JailCustodyLedger.State.QUARANTINED,name,"Explicit verified command continuation via "+adapter.descriptor()+"; review before final release");return;}
             Health health=adapter.inspect();
             if(health==Health.REVIEW_REQUIRED)throw new IOException("Native origin/accessory or player-save outcome is ambiguous; explicit saved-phase recovery required");
             if(action.equals("review")){change(server,b,JailCustodyLedger.State.REVIEWED,name,"Verified "+adapter.descriptor()+"; quarantine retained until return completes");return;}
@@ -128,7 +131,7 @@ public final class JailCustodyService {
             JailEscrowJournal.Entry entry;try(var journal=new JailEscrowJournal(journalPath(server,items));var nativeJournal=new JailEscrowJournal(journalPath(server,origins))){entry=journal.read(id);var original=nativeJournal.read(id);if(entry==null||!entry.owner().equals(owner)||original==null||!original.owner().equals(owner))throw new IOException("Missing or foreign linked histories");}
             ledger(server).bind(id,owner,items,origins,JailOriginTransaction.hash(entry.snapshot()),new JailCustodyLedger.Anchor(level.dimension().location().toString(),pos.getX(),pos.getY(),pos.getZ()),"console:"+c.getSource().getTextName());if(!level.setBlock(pos,dev.unyielding.quests.Registration.CUSTODY_VAULT.get().defaultBlockState(),3))throw new IOException("Interface placement failed; custody retained in quarantine");return "Indexed existing custody; prisoner quarantined, no copied inventory.";
         }))))))));
-        for(String action:List.of("inspect","audit","review","confirm","restore","hold"))root.then(Commands.literal(action).then(Commands.argument("transaction",UuidArgument.uuid()).executes(c->command(c.getSource(),()->{
+        for(String action:List.of("inspect","audit","review","confirm","recover","restore","hold"))root.then(Commands.literal(action).then(Commands.argument("transaction",UuidArgument.uuid()).executes(c->command(c.getSource(),()->{
             var ledger=ledger(c.getSource().getServer());var b=ledger.get(UuidArgument.getUuid(c,"transaction"));if(b==null)throw new IOException("Unknown transaction");
             if(action.equals("inspect")){items(c.getSource().getServer(),b);return b.id()+" owner="+b.owner()+" "+b.state()+" revision="+b.revision()+" · "+b.reason();}
             if(action.equals("audit"))return ledger.audit(b.id()).stream().skip(Math.max(0,ledger.audit(b.id()).size()-8)).map(e->e.sequence()+" "+e.actor()+" "+e.state()+" "+e.reason()).collect(java.util.stream.Collectors.joining(" | "));
