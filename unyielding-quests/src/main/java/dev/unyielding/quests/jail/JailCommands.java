@@ -31,7 +31,7 @@ public final class JailCommands {
         try { return Boolean.TRUE.equals(PermissionAPI.getPermission(player, MANAGE)); }
         catch (RuntimeException | LinkageError unavailable) { return false; }
     }
-    private static boolean protectedFromJail(ServerPlayer player) {
+    static boolean protectedFromJail(ServerPlayer player) {
         if (player.hasPermissions(2)) return true;
         try { return Boolean.TRUE.equals(PermissionAPI.getPermission(player, MANAGE)); }
         catch (RuntimeException | LinkageError unavailable) { return true; }

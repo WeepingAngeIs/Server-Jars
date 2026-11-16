@@ -69,6 +69,7 @@ final class JailHumanAudit {
         Map<String,AccessoryCustodyPolicy.Size> sizes=new TreeMap<>();CompoundTag result=new CompoundTag();
         for(var e:canonical.entrySet()){
             Object c=e.getValue();Container normal=(Container)call("io.wispforest.accessories.api.AccessoriesContainer",c,"getAccessories"),cosmetic=(Container)call("io.wispforest.accessories.api.AccessoriesContainer",c,"getCosmeticAccessories");int count=(int)call("io.wispforest.accessories.api.AccessoriesContainer",c,"getSize");
+            if(!((Map<?,?>)call("io.wispforest.accessories.api.AccessoriesContainer",c,"getModifiers")).isEmpty())throw new IOException("Slot modifiers/lifecycle are not certified");
             if(count!=normal.getContainerSize()||count!=cosmetic.getContainerSize()||!normal.isEmpty()||!cosmetic.isEmpty())throw new IOException("Only empty, settled accessory/cosmetic stores are certified");
             for(Container channel:List.of(normal,cosmetic))for(int i=0;i<count;i++)if(!((ItemStack)call("io.wispforest.accessories.impl.ExpandedSimpleContainer",channel,"getPreviousItem",new Class<?>[]{int.class},i)).isEmpty())throw new IOException("Pending accessory lifecycle");
             sizes.put(e.getKey(),new AccessoryCustodyPolicy.Size(count,count));result.putInt(e.getKey(),count);

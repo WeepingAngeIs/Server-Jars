@@ -12,7 +12,8 @@ class JailVanillaCustodyTest {
     static final class Port implements JailVanillaCustody.InventoryPort {
         final UUID owner = UUID.randomUUID();
         JailVanillaCustody.View live = new JailVanillaCustody.View(new byte[]{7, 3, 11}, false, null), disk = live;
-        int removals, saves; boolean failSave;
+        int removals, saves; boolean failSave,online=true;
+        public boolean online(){return online;}
         public UUID owner() { return owner; }
         public JailVanillaCustody.View current() { return live; }
         public JailVanillaCustody.View durable() { return disk; }
@@ -68,6 +69,17 @@ class JailVanillaCustodyTest {
         try (var journal = new JailEscrowJournal(dir)) {
             assertThrows(IOException.class, () -> JailVanillaCustody.removeForDisposableTest(journal, UUID.randomUUID(), port, at -> {}));
             assertTrue(journal.list().isEmpty()); assertEquals(0, port.removals);
+        }
+    }
+    @Test void confirmationOnlyPromotesExactSavedRemovalAndNeverReplays()throws Exception {
+        Path dir=temp.resolve("confirm");JailEscrowJournal.provisionNew(dir);Port port=new Port();UUID id=UUID.randomUUID();
+        try(var journal=new JailEscrowJournal(dir)){
+            assertThrows(IOException.class,()->JailVanillaCustody.removeForDisposableTest(journal,id,port,at->{if(at==JailVanillaCustody.Boundary.PLAYER_DURABLE)throw new IOException("saved interruption");}));
+            int saves=port.saves,removals=port.removals;port.online=false;assertThrows(IOException.class,()->JailVanillaCustody.confirmRemoved(journal,id,port));port.online=true;
+            var correct=port.live;port.live=port.disk=new JailVanillaCustody.View(new byte[]{0},true,UUID.randomUUID());assertThrows(IOException.class,()->JailVanillaCustody.confirmRemoved(journal,id,port));
+            port.live=correct;assertThrows(IOException.class,()->JailVanillaCustody.confirmRemoved(journal,id,port));port.disk=correct;
+            JailVanillaCustody.confirmRemoved(journal,id,port);assertEquals(JailEscrowJournal.State.HELD,journal.read(id).state());assertEquals(saves,port.saves);assertEquals(removals,port.removals);
+            assertThrows(IOException.class,()->JailVanillaCustody.confirmRemoved(journal,id,port));
         }
     }
     @Test void journalWriteFailureNeverMutatesPlayer() throws Exception {
