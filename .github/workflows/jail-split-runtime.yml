@@ -1,0 +1,98 @@
+name: Split jail certificate and disposable runtime
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/jail-standalone-extraction']
+    paths:
+      - 'minecraft-jail/**'
+      - 'unyielding-quests/**'
+      - '.github/scripts/**'
+      - '.github/split-smoke/**'
+      - '.github/workflows/jail-split-runtime.yml'
+      - '.github/workflows/jail-standalone-build.yml'
+permissions:
+  contents: read
+concurrency:
+  group: split-jail-runtime-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    uses: ./.github/workflows/jail-standalone-build.yml
+  runtime:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        slice: [integrated, retained-xp, certified, startup-terrain]
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            unyielding-quests/*.gradle
+            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
+            combined-unyielding/smoke-harness/*.gradle
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-split-code-only-${{ github.sha }}
+          path: dist/jail-split/
+      - name: Stage the unchanged exact-commit JAR pair
+        run: |
+          set -euo pipefail
+          (cd dist/jail-split && sha256sum -c SHA256SUMS)
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp dist/jail-split/Unyielding-1.2.0.jar dist/120-release/
+          cp dist/jail-split/Minecraft-Jail-1.2.0.jar minecraft-jail/build/libs/
+          python3 .github/scripts/fetch-build-dependencies.py
+      - name: Prepare independent disposable two-JAR server and pinned native dependencies
+        run: python3 .github/scripts/prepare-split-server.py
+      - name: Prepare isolated client displays
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Exercise actual packaged pair through bounded runtime and restart phases
+        run: bash .github/scripts/run-split-runtime.sh '${{ matrix.slice }}'
+      - name: Upload exact-commit runtime evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: jail-split-runtime-${{ matrix.slice }}-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/
+            dist/packaged-harness/build/reports/
+            dist/packaged-harness/run-server/crash-reports/
+          if-no-files-found: warn
+          retention-days: 30
+  verified-delivery:
+    needs: [build, runtime]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-split-code-only-${{ github.sha }}
+          path: dist/jail-split/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: jail-split-runtime-*-${{ github.sha }}
+          path: dist/runtime-evidence/
+      - name: Require all runtime reports to match this exact commit and both unchanged JARs
+        run: python3 .github/scripts/summarize-split-runtime.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: minecraft-jail-runtime-verified-${{ github.sha }}
+          path: dist/verified-split-runtime/
+          if-no-files-found: error
+          retention-days: 30

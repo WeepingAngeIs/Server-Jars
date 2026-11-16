@@ -1,12 +1,6 @@
 name: Build and verify standalone jail without launching Minecraft
 on:
-  push:
-    branches: ['codex/jail-standalone-extraction']
-    paths:
-      - 'minecraft-jail/**'
-      - 'unyielding-quests/**'
-      - '.github/scripts/**'
-      - '.github/workflows/jail-standalone-build.yml'
+  workflow_call:
   workflow_dispatch:
 permissions:
   contents: read
