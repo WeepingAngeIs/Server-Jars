@@ -26,7 +26,8 @@ public final class JailVanillaPort implements JailVanillaCustody.InventoryPort {
     }
     public JailVanillaCustody.View current()throws IOException {guard();return view(player.getInventory().save(new ListTag()),player.getPersistentData());}
     Path file(){return player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner()+".dat");}
-    CompoundTag savedPlayer()throws IOException {try(var input=Files.newInputStream(file())){CompoundTag tag=NbtIo.readCompressed(input,NbtAccounter.create(16L*1024*1024));if(!tag.hasUUID("UUID")||!tag.getUUID("UUID").equals(owner())||!tag.contains("Inventory",9))throw new IOException("Wrong or malformed player save");return tag;}}
+    CompoundTag savedPlayer()throws IOException {return readSavedPlayer(player);}
+    static CompoundTag readSavedPlayer(ServerPlayer player)throws IOException {try(var input=Files.newInputStream(player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(player.getUUID()+".dat"))){CompoundTag tag=NbtIo.readCompressed(input,NbtAccounter.create(16L*1024*1024));if(!tag.hasUUID("UUID")||!tag.getUUID("UUID").equals(player.getUUID())||!tag.contains("Inventory",9))throw new IOException("Wrong or malformed player save");return tag;}}
     public JailVanillaCustody.View durable()throws IOException {guard();CompoundTag tag=savedPlayer();return view(tag.getList("Inventory",10),tag.getCompound("NeoForgeData"));}
     static void force(Path file)throws IOException {try(var c=FileChannel.open(file,StandardOpenOption.WRITE)){c.force(true);}try(var c=FileChannel.open(file.getParent(),StandardOpenOption.READ)){c.force(true);}}
     public void persistAndVerify()throws IOException {guard();durable();var before=current();player.server.getPlayerList().saveAll();force(file());var saved=durable();if(!same(before,saved)||!same(before,current()))throw new IOException("Player inventory/receipt save did not verify");}

@@ -9,7 +9,8 @@
     "CorvisquireEvolutionGuardMixin",
     "OriginFlightMixin",
     "JailMovementMixin",
-    "CustodyPacketMixin"
+    "CustodyPacketMixin",
+    "JailEquipmentAccess"
   ],
   "client": [
     "PokemonSpeciesSyncMixin",

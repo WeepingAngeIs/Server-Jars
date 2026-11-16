@@ -14,6 +14,7 @@ assert len(jars) == 1, f'Expected one quest JAR, got {jars}'
 
 prefix = 'dev/unyielding/quests/'
 roots = [
+    'jail/JailEquipmentPort', 'jail/JailEquipmentEffects', 'jail/JailNativeOriginPort', 'mixin/JailEquipmentAccess',
     'jail/JailIntegrated', 'jail/JailHumanAudit', 'jail/JailHumanPort', 'jail/JailVanillaPort', 'jail/JailNbt',
     'jail/JailVanillaCustody',
     'jail/JailOriginTransaction',
