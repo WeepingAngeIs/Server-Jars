@@ -24,11 +24,12 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     private static final String VERSIONS = "accessories=1.1.0-beta.53+1.21.1;accessories_compat_layer=0.1.12;curios=9.5.1+1.21.1";
     final ServerPlayer player;
     final JailVanillaPort vanilla;
+    final UUID transaction;
     record Layout(Map<String,Object> canonical, Map<String,Container> normal, Map<String,Container> cosmetic,
                   List<AccessoryCustodyPolicy.Slot> slots) {}
     record Row(AccessoryCustodyPolicy.Slot id, ItemStack stack) {}
     public JailEquipmentPort(ServerPlayer player, UUID transaction, UUID retired) throws IOException {
-        this.player=player;this.vanilla=new JailVanillaPort(player,transaction,retired);
+        this.player=player;this.transaction=transaction;this.vanilla=new JailVanillaPort(player,transaction,retired);
         JailHumanAudit.runtime(player);
     }
     static Class<?> type(String name) throws IOException {
@@ -106,10 +107,11 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     @Override public void validateRemoval() throws IOException {
         if (!online()) throw new IOException("Player offline");
         JailEquipmentEffects.supported(player);
-        Layout layout=layout(); settled(layout);
+        Layout layout=layout();
         for (int slot=36;slot<=40;slot++) if (EnchantmentHelper.has(player.getInventory().getItem(slot),EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) throw new IOException("Bound vanilla equipment");
         for (Object c : layout.canonical().values()) if (!((Map<?,?>)call("io.wispforest.accessories.api.AccessoriesContainer",c,"getModifiers")).isEmpty()) throw new IOException("Unaudited slot modifiers");
         for (var id : layout.slots()) supported(container(layout,id).getItem(id.index()));
+        settled(layout);
     }
     static byte[] encode(CompoundTag tag) throws IOException {
         var output = new ByteArrayOutputStream(); var data = new DataOutputStream(output);
@@ -142,7 +144,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         if (!attachments.contains(STORE,10)) throw new IOException("Missing serialized accessory holder: " + attachments.getAllKeys());
         CompoundTag holder=normalize(attachments.getCompound(STORE));
         CompoundTag body=new CompoundTag(); body.putInt("version",2); body.putString("dependencies",VERSIONS);
-        body.putString("policy","native-default-equipment-v1"); body.putString("runtime",JailHumanAudit.runtime(player)); body.putByteArray("vanilla",vanillaView.inventory()); body.put("holder",holder);
+        body.putString("policy","native-default-equipment-v1"); body.putString("runtime",JailHumanAudit.runtime(player)); body.putInt("selected",playerTag.getInt("SelectedItemSlot")); body.putByteArray("vanilla",vanillaView.inventory()); body.put("holder",holder);
         boolean empty=vanillaView.empty();
         for (String name : holder.getCompound(CONTAINERS).getAllKeys()) {
             CompoundTag store=holder.getCompound(CONTAINERS).getCompound(name);
@@ -163,6 +165,32 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         if(!Arrays.equals(neutral,JailEquipmentEffects.neutral(player)))throw new IOException("Player save changed undeclared equipment effects");
         if (!Arrays.equals(before.inventory(),saved.inventory()) || !Arrays.equals(before.inventory(),current().inventory())
                 || !Objects.equals(before.removedBy(),saved.removedBy()) || !Objects.equals(before.restoredBy(),saved.restoredBy())) throw new IOException("Accessory player save mismatch");
+        if(transaction.equals(saved.removedBy()))verifyEffects(false,true);else if(transaction.equals(saved.restoredBy()))verifyEffects(true,true);
+    }
+    private JailEscrowJournal effectJournal(boolean restore)throws IOException {
+        return new JailEscrowJournal(JailCustodyService.journalPath(player.server,"integrated-jail-v1/"+transaction+"/"+(restore?"return-effects":"remove-effects")));
+    }
+    private void beforeCallbacks(boolean restore,byte[] neutral)throws IOException {
+        try(var journal=effectJournal(restore)){
+            if(journal.read(transaction)!=null||!journal.list().isEmpty())throw new IOException("Existing equipment callback intent; never replay an uncertain mutation");
+            journal.begin(transaction,owner(),neutral);journal.transition(transaction,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.REMOVAL_STARTED);
+        }
+    }
+    private void verifyEffects(boolean restore,boolean promote)throws IOException {
+        if(!transaction.equals(JailIntegrated.activeTransaction(player.server,owner())))return;
+        try(var journal=effectJournal(restore)){
+            var e=journal.read(transaction);if(e==null)return;
+            if(!e.owner().equals(owner()))throw new IOException("Foreign equipment effect intent");
+            if(e.state()==JailEscrowJournal.State.HELD)return;
+            if(e.state()!=JailEscrowJournal.State.REMOVAL_STARTED)throw new IOException("Uncertain equipment effect phase");
+            settled(layout());JailEquipmentEffects.settled(player);
+            if(!Arrays.equals(e.snapshot(),JailEquipmentEffects.neutral(player)))throw new IOException("Equipment callback changed undeclared persisted state; no replay/confirmation");
+            if(promote)journal.transition(transaction,JailEscrowJournal.State.REMOVAL_STARTED,JailEscrowJournal.State.HELD);
+        }
+    }
+    @Override public void validateSavedOutcome(UUID id,boolean restored)throws IOException {
+        if(!transaction.equals(id))throw new IOException("Foreign callback outcome");
+        if(!Arrays.equals(current().inventory(),durable().inventory()))throw new IOException("Equipment outcome is not saved");verifyEffects(restored,true);
     }
     private byte[] emptyBody(byte[] bytes) throws IOException {
         CompoundTag root=decode(bytes), v=decode(root.getByteArray("vanilla")); v.put("items",new ListTag()); root.putByteArray("vanilla",encode(v));
@@ -218,7 +246,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         } else result.add(path+": "+source+" -> "+observed);
     }
     @Override public void clearAndMark(UUID id) throws IOException {
-        validateRemoval(); byte[] neutral=JailEquipmentEffects.neutral(player); Layout layout=layout(); byte[] before=current().inventory(); List<Row> planned=rows(before,layout);
+        validateRemoval(); byte[] neutral=JailEquipmentEffects.neutral(player); Layout layout=layout(); byte[] before=current().inventory(); List<Row> planned=rows(before,layout);beforeCallbacks(false,neutral);
         // Actual UI permission semantics: cosmetics do not invoke canUnequip;
         // normal slots do. No binding bypass is permitted by this fixture.
         for (Row row:planned) {
@@ -246,7 +274,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         return new JailVanillaCustody.View(snapshot,false,null,id);
     }
     @Override public void restoreExact(byte[] snapshot,UUID id) throws IOException {
-        planRestore(snapshot,id); byte[] neutral=JailEquipmentEffects.neutral(player); Layout layout=layout(); byte[] before=current().inventory(); List<Row> rows=rows(snapshot,layout);
+        planRestore(snapshot,id); byte[] neutral=JailEquipmentEffects.neutral(player); Layout layout=layout(); byte[] before=current().inventory(); List<Row> rows=rows(snapshot,layout);beforeCallbacks(true,neutral);
         byte[] expected=before;
         for (Row row:rows) {
             unchanged(layout,expected);

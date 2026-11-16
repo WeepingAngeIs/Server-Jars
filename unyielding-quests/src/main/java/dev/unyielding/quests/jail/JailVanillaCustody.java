@@ -17,6 +17,8 @@ public final class JailVanillaCustody {
     /** The caller must exclusively own inventory access throughout this synchronous operation. */
     public interface InventoryPort {
         UUID owner();
+        /** Verify declared native callback effects during explicit saved-phase confirmation. */
+        default void validateSavedOutcome(UUID transaction,boolean restored)throws IOException {}
         /** Data-only rejection of unsupported providers/restrictions; must never invoke mod callbacks. */
         default void validateRemoval() throws IOException {}
         View current() throws IOException;
@@ -104,12 +106,14 @@ public final class JailVanillaCustody {
     public static void confirmRestoredForDisposableTest(JailEscrowJournal journal, UUID id, InventoryPort port) throws IOException {
         if (!port.online() || inspect(journal, id, port) != Inspection.RESTORE_PERSISTED_REVIEW)
             throw new IOException("No exact persisted restoration to confirm");
+        port.validateSavedOutcome(id,true);
         journal.transition(id, JailEscrowJournal.State.RESTORE_STARTED, JailEscrowJournal.State.COMPLETE);
     }
 
     /** Explicit confirmation of an already saved empty inventory and transaction receipt; no removal replay. */
     public static void confirmRemoved(JailEscrowJournal journal,UUID id,InventoryPort port)throws IOException {
         if(!port.online()||inspect(journal,id,port)!=Inspection.REMOVAL_PERSISTED_REVIEW)throw new IOException("No exact persisted removal to confirm");
+        port.validateSavedOutcome(id,false);
         journal.transition(id,JailEscrowJournal.State.REMOVAL_STARTED,JailEscrowJournal.State.HELD);
     }
 

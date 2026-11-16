@@ -107,6 +107,7 @@ public final class JailIntegrated {
         // Forcing items/origins and their immediate parent does not persist this ancestor entry.
         try(var metadata=java.nio.channels.FileChannel.open(root(s),StandardOpenOption.READ)){metadata.force(true);}
         JailEscrowJournal.provisionNew(directory.resolve("items"));JailEscrowJournal.provisionNew(directory.resolve("origins"));
+        if(contract.equals(EXPANDED))for(String effect:List.of("remove-effects","return-effects"))JailEscrowJournal.provisionNew(directory.resolve(effect));
         JailCustodyService.ledger(s).bind(id,target.getUUID(),relative(id,"items"),relative(id,"origins"),plan.getByteArray("digest"),new JailCustodyLedger.Anchor(dest.dim(),anchor.getX(),anchor.getY(),anchor.getZ()),actor.getTextName());
         try(var items=journal(s,id,"items");var origins=journal(s,id,"origins")){
             permitted(actor,target);JailVanillaCustody.removeForDisposableTest(items,id,inventory,b->{permitted(actor,target);if(b==JailVanillaCustody.Boundary.MUTATED)checkpoint.at(Boundary.ITEMS_MUTATED);});checkpoint.at(Boundary.ITEMS_DURABLE);
@@ -164,7 +165,7 @@ public final class JailIntegrated {
                 }
             }
             private JailVanillaCustody.InventoryPort guarded(JailEscrowJournal items,JailEscrowJournal origins){return new JailVanillaCustody.InventoryPort(){
-                public UUID owner(){return inventory.owner();}public boolean online(){return inventory.online();}public JailVanillaCustody.View current()throws IOException{return inventory.current();}public JailVanillaCustody.View durable()throws IOException{return inventory.durable();}public void persistAndVerify()throws IOException{inventory.persistAndVerify();}public void clearAndMark(UUID tx)throws IOException{throw new IOException("Release adapter cannot remove");}
+                public UUID owner(){return inventory.owner();}public boolean online(){return inventory.online();}public JailVanillaCustody.View current()throws IOException{return inventory.current();}public JailVanillaCustody.View durable()throws IOException{return inventory.durable();}public void persistAndVerify()throws IOException{inventory.persistAndVerify();}public void clearAndMark(UUID tx)throws IOException{throw new IOException("Release adapter cannot remove");}public void validateSavedOutcome(UUID tx,boolean restored)throws IOException{inventory.validateSavedOutcome(tx,restored);}
                 public JailVanillaCustody.View planRestore(byte[] bytes,UUID tx)throws IOException{JailOriginTransaction.assertInventoryReleaseReady(origins,items,tx,human,false);return inventory.planRestore(bytes,tx);}public void restoreExact(byte[] bytes,UUID tx)throws IOException{JailOriginTransaction.assertInventoryReleaseReady(origins,items,tx,human,true);inventory.restoreExact(bytes,tx);}
             };}
             private void finish(JailEscrowJournal items,JailEscrowJournal origins)throws IOException {

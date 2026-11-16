@@ -56,7 +56,7 @@ final class JailEquipmentEffects {
             row.put("modifiers",mods);sorted.add(row);
         }
         if(!seen.equals(equipment.keySet()))throw new IOException("Declared equipment effects are not settled");sorted.sort(Comparator.comparing(t->t.getString("id")));attributes.addAll(sorted);all.put("attributes",attributes);
-        CompoundTag saved=p.saveWithoutId(new CompoundTag());all.putFloat("health",p.getHealth());all.put("effects",saved.getList("active_effects",10).copy());all.put("abilities",saved.getCompound("abilities").copy());
+        CompoundTag saved=p.saveWithoutId(new CompoundTag());for(String key:List.of("XpP","XpLevel","XpTotal","Score","foodLevel","foodSaturationLevel","foodExhaustionLevel"))if(saved.contains(key))all.put(key,saved.get(key).copy());all.putFloat("health",p.getHealth());all.put("effects",saved.getList("active_effects",10).copy());all.put("abilities",saved.getCompound("abilities").copy());
         CompoundTag persistent=p.getPersistentData().copy();persistent.remove(JailVanillaPort.REMOVED);persistent.remove(JailVanillaPort.RESTORED);all.put("persistent",persistent);
         return JailNbt.encode(all);
     }

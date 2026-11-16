@@ -50,6 +50,34 @@ cleanup() {
   for pid in "$visitor_pid" "$client_pid" "$server_pid"; do
     if [[ -n "$pid" ]]; then wait "$pid" 2>/dev/null || true; fi
   done
+  # The wrapper shell can exit before its JVM finishes shutdown. Do not start
+  # another server until every owned process group is gone; never remove a lock.
+  for pid in "$visitor_pid" "$client_pid" "$server_pid"; do
+    if [[ -n "$pid" ]]; then
+      for ((attempt=0; attempt<240; attempt++)); do
+        if ! ps -eo pgid=,stat= | awk -v group="$pid" '$1==group && $2 !~ /^Z/ {live=1} END {exit !live}'; then break; fi
+        sleep 0.25
+      done
+      if ps -eo pgid=,stat= | awk -v group="$pid" '$1==group && $2 !~ /^Z/ {live=1} END {exit !live}'; then echo "Owned disposable process group still shutting down: $pid" >&2; return 1; fi
+    fi
+  done
+  python3 - "$project/run-server/$world_name/session.lock" <<'PYLOCK'
+import errno, fcntl, pathlib, sys, time
+path = pathlib.Path(sys.argv[1])
+if path.exists():
+    with path.open('r+b') as lock:
+        for attempt in range(240):
+            try:
+                fcntl.lockf(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                fcntl.lockf(lock, fcntl.LOCK_UN)
+                break
+            except OSError as error:
+                if error.errno not in (errno.EACCES, errno.EAGAIN):
+                    raise
+                time.sleep(0.25)
+        else:
+            raise SystemExit('Previous disposable server still owns its world lock; refusing restart')
+PYLOCK
   cp "$project/run-server/logs/latest.log" "$logs/server-latest.log" 2>/dev/null || true
   cp "$result_file" "$logs/" 2>/dev/null || true
 }

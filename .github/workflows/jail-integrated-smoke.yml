@@ -1,6 +1,11 @@
 name: Assembled integrated jail command coordinator
 on:
   workflow_dispatch:
+    inputs:
+      expanded:
+        description: Test equipped custody and supported native origin transitions
+        type: boolean
+        default: false
   push:
     branches: ['codex/recovery-review-safe']
 permissions:
@@ -49,7 +54,11 @@ jobs:
           LIBGL_ALWAYS_SOFTWARE: 'true'
           ALSOFT_DRIVERS: 'null'
         run: |
-          bash .github/scripts/integrated-jail-smoke.sh
+          if [[ '${{ inputs.expanded }}' == true ]]; then
+            bash .github/scripts/expanded-jail-smoke.sh
+          else
+            bash .github/scripts/integrated-jail-smoke.sh
+          fi
       - name: Upload integrated jail evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
