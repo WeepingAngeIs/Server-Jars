@@ -38,6 +38,7 @@ public final class JailCommands {
         catch (RuntimeException | LinkageError unavailable) { return true; }
     }
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        JailCustodyService.register(dispatcher);
         dispatcher.register(Commands.literal("jail").requires(JailCommands::mayManage)
                 .then(Commands.argument("player", EntityArgument.player()).executes(c -> jail(c.getSource(), EntityArgument.getPlayer(c, "player")))));
         dispatcher.register(Commands.literal("unjail").requires(JailCommands::mayManage)
@@ -49,6 +50,7 @@ public final class JailCommands {
                                 .executes(c -> pardonUuid(c.getSource(), net.minecraft.commands.arguments.UuidArgument.getUuid(c, "uuid"))))));
     }
     private static int pardonUuid(CommandSourceStack source, java.util.UUID player) {
+        if(JailCustodyService.blocked(source.getServer(),player))return Essentials.fail(source,"Outstanding or unavailable custody history; use /jailcustody inspect and verified recovery before release. Records retained.");
         var data = JailData.get(source.getServer());
         if (data.assignment(player) == null) return Essentials.fail(source, "That UUID has no jail assignment.");
         data.remove(player);
@@ -77,6 +79,7 @@ public final class JailCommands {
         return 1;
     }
     private static int release(CommandSourceStack source, ServerPlayer target, boolean pardon) {
+        if(JailCustodyService.blocked(source.getServer(),target.getUUID()))return Essentials.fail(source,"Outstanding or unavailable custody history; use /jailcustody inspect and verified recovery before release. Records retained.");
         var data = JailData.get(target.server);
         var assignment = data.assignment(target.getUUID());
         if (assignment == null) return Essentials.fail(source, "That player is not jailed.");

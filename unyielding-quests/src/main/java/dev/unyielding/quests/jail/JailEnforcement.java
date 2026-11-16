@@ -27,7 +27,7 @@ public final class JailEnforcement {
     private JailEnforcement() {}
 
     private static boolean jailed(ServerPlayer player) {
-        return player.server != null && JailData.get(player.server).assignment(player.getUUID()) != null;
+        return player.server != null && (JailCustodyService.quarantined(player)||JailData.get(player.server).assignment(player.getUUID()) != null);
     }
     private static boolean jailedEntity(net.minecraft.world.entity.Entity entity) {
         return entity instanceof ServerPlayer player && jailed(player);

@@ -16,6 +16,7 @@ prefix = 'dev/unyielding/quests/'
 roots = [
     'jail/JailVanillaCustody',
     'jail/JailOriginTransaction',
+    'jail/JailCustodyLedger', 'jail/JailCustodyService', 'jail/JailCustodyMenu', 'jail/JailCustodyBlock', 'jail/JailQuarantineEvents', 'mixin/CustodyPacketMixin',
     'jail/AccessoryCustodyPolicy',
     'Registration', 'UnyieldingQuests', 'Config', 'settings/OriginFlightSpeed', 'mixin/OriginFlightMixin', 'client/ConfigValuesScreen',
     'client/AdminInventoryButtons', 'client/InvButtons', 'client/edit/EditQuestScreen',
@@ -60,6 +61,10 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
     advancement = 'data/unyieldingquests/advancement/jail_escape.json'
     assert advancement in names, 'Missing jail escape advancement'
     updates[advancement] = component.read(advancement)
+    for asset in ('blockstates/custody_vault.json', 'models/block/custody_vault.json'):
+        path = 'assets/unyieldingquests/' + asset
+        assert path in names, f'Missing custody interface asset {path}'
+        updates[path] = component.read(path)
     mixin_path = 'assets/unyieldingquests/pokemon.mixins.json'
     old_mixins = json.loads(base.read(mixin_path))
     new_mixins = json.loads(component.read(mixin_path))
@@ -96,7 +101,7 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     assert not any(n.startswith(prefix + 'devtest/NeoOriginsPreflightSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailInventorySnapshotSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailTerrainPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
-    for fixture in ('VanillaCustodySmoke', 'VanillaRestoreSmoke', 'AccessoryCustodyPort', 'AccessoryCustodySmoke', 'OriginCustodyPort', 'OriginCustodySmoke'):
+    for fixture in ('VanillaCustodySmoke', 'VanillaRestoreSmoke', 'AccessoryCustodyPort', 'AccessoryCustodySmoke', 'OriginCustodyPort', 'OriginCustodySmoke', 'CustodyInterfaceSmoke'):
         assert not any(n.startswith(prefix + 'devtest/' + fixture) for n in result.namelist()), f'{fixture} leaked into release'
     assert prefix + 'jail/JailOriginTransaction.class' in result.namelist(), 'Origin transaction coordinator missing'
     assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'

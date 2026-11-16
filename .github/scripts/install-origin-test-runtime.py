@@ -36,7 +36,7 @@ for filename, url, sha in inputs:
                 time.sleep(3 * (attempt + 1))
     assert hashlib.sha512(target.read_bytes()).hexdigest() == sha, filename
     manifest['integration_mods'].append({'file': filename, 'url': url, 'sha512': sha})
-for name in ('OriginCustodyPort', 'OriginCustodySmoke'):
+for name in ('OriginCustodyPort', 'OriginCustodySmoke', 'CustodyInterfaceSmoke'):
     source = (ROOT / f'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/{name}.java').read_text(encoding='utf-8')
     source = source.replace('package dev.unyielding.quests.devtest;', 'package dev.unyielding.bundlesmoke;', 1)
     source = source.replace('@EventBusSubscriber(modid=UnyieldingQuests.MODID)', '@EventBusSubscriber(modid="uq_bundle_smoke")', 1)
