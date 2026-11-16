@@ -1,0 +1,46 @@
+name: Apply reviewed standalone jail extraction
+on:
+  push:
+    branches: ['codex/jail-standalone-extraction']
+    paths: ['.github/workflows/jail-standalone-apply.yml']
+permissions:
+  contents: write
+jobs:
+  apply-extraction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - name: Validate original source, patch checksum and namespace-only extraction
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e minecraft-jail
+          git fetch --depth=1 origin dc3699ab04e775bd772c38b9ff24646e0791f81a
+          git diff --exit-code dc3699ab04e775bd772c38b9ff24646e0791f81a HEAD -- unyielding-quests .github/scripts README.md
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, lzma
+          encoded = ''.join(Path('.github/migrations/jail-split-' + n + '.b64').read_text().strip() for n in ('01','02'))
+          patch = lzma.decompress(base64.b64decode(encoded, validate=True))
+          expected = '80cde5e3e61f32787f3aab699841cf5c51f2c65bdc24075b43ba5fdd197b4bc6'
+          assert hashlib.sha256(patch).hexdigest() == expected, 'Extraction patch checksum mismatch'
+          Path('/tmp/jail-extraction.patch').write_bytes(patch)
+          PY
+          git apply --index --unidiff-zero --check /tmp/jail-extraction.patch
+          git apply --index --unidiff-zero /tmp/jail-extraction.patch
+          python3 .github/scripts/verify-jail-source.py
+          python3 -m unittest discover -s .github/scripts -p 'test_*.py' -v
+          python3 -m py_compile .github/scripts/*.py
+      - name: Commit preserved-history extraction without force-pushing
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Extract existing jail into standalone module; preserve non-jail source and safety gates'
+          git push origin HEAD:refs/heads/codex/jail-standalone-extraction
+          git rev-parse HEAD
