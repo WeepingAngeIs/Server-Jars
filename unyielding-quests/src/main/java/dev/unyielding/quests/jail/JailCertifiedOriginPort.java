@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.*;
 
-/** Separate contract: one powered native layer, unconditional attribute effects and no-state immunity. */
+/** Separate opt-in contract for the verified native Human + Warrior/Nitwit combination. */
 public final class JailCertifiedOriginPort extends JailNativeOriginPort {
     static final String POLICY="native-supported-v2";
     record Effect(ResourceLocation power,ResourceLocation attribute,ResourceLocation modifier,double amount){}
@@ -39,6 +39,14 @@ public final class JailCertifiedOriginPort extends JailNativeOriginPort {
     }
     @Override protected String audit()throws IOException {
         versions();available();Object data=data();
+        // The mutation machinery can describe more additive powers than the hosted
+        // proof covers. Admission must not mistake that capability for certification.
+        var selected=selections();ResourceLocation main=id("neoorigins:origin"),classes=id("neoorigins:class");
+        if(!layer.equals(classes)||!original.equals(id("neoorigins:class_warrior"))||!human.equals(id("neoorigins:class_nitwit"))
+                ||!selected.keySet().equals(Set.of(main,classes))||!id("neoorigins:human").equals(selected.get(main)))
+            throw new IOException("Certified admissions currently require exactly native Human + Warrior; other origin/class combinations need their own hosted proof. No layers were changed");
+        Set<ResourceLocation> verifiedPowers=Set.of(id("neoorigins:class_warrior_damage"),id("neoorigins:class_warrior_knockback_resist"),id("neoorigins:class_warrior_battle_stance"),id("neoorigins:class_warrior_endurance"),id("neoorigins:class_warrior_iron_will"));
+        if(powers(original).size()!=verifiedPowers.size()||!new HashSet<>(powers(original)).equals(verifiedPowers))throw new IOException("Native Warrior power list differs from the verified combination");
         if((int)call(DATA,data,"getEvolutionTier")!=0)throw new IOException("Tier "+call(DATA,data,"getEvolutionTier")+" is not certified: Human gains powers at higher tiers");
         if(!((Set<?>)call(DATA,data,"getDynamicGrantedPowers")).isEmpty()||!((Set<?>)call(DATA,data,"getGlobalGrantedPowers")).isEmpty())throw new IOException("Dynamic/global granted powers have unaudited lifecycle hooks");
         for(String key:List.of("isPendingOrbCommit","isPendingLayerPickerCommit","isPendingAdminReselect"))if(Boolean.TRUE.equals(call(DATA,data,key)))throw new IOException("Finish the pending origin selection before jailing");
@@ -65,6 +73,10 @@ public final class JailCertifiedOriginPort extends JailNativeOriginPort {
             definitions.add(power.toString(),canonicalJson(raw));
         }
         declared=List.copyOf(effects);manifest.add("powers",definitions);
+        Map<String,Double> verifiedAttributes=Map.of("class_warrior_damage",1.0,"class_warrior_knockback_resist",0.3,"class_warrior_battle_stance",2.0,"class_warrior_endurance",2.0);
+        Map<String,String> verifiedTargets=Map.of("class_warrior_damage","attack_damage","class_warrior_knockback_resist","knockback_resistance","class_warrior_battle_stance","armor","class_warrior_endurance","max_health");
+        if(declared.size()!=4)throw new IOException("Native Warrior effect set differs from the verified combination");
+        for(var effect:declared)if(!verifiedAttributes.containsKey(effect.power().getPath())||effect.amount()!=verifiedAttributes.get(effect.power().getPath())||!effect.attribute().getPath().replaceFirst("^(generic|player)\\.","").equals(verifiedTargets.get(effect.power().getPath())))throw new IOException("Native Warrior power changed: "+effect.power()+"; no mutation was authorized");
         String hash=HexFormat.of().formatHex(JailOriginTransaction.hash(canonicalJson(manifest).toString().getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         if(intent!=null&&(!POLICY.equals(intent.getString("adapter"))||!hash.equals(intent.getString("definitions"))))throw new IOException("Certified origin definitions changed since capture");return hash;
     }
