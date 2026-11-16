@@ -33,16 +33,18 @@ public final class JailIntegrated {
     }
     public static void stopped(MinecraftServer s){var p=plans.remove(s);if(p!=null)try{p.close();}catch(IOException ignored){}checkpoint=b->{};}
     static final String EXPANDED="native-equipment-luck-v1";
+    static final String SUPPORTED="native-supported-v2";
+    private static boolean equipped(String contract){return contract.equals(EXPANDED)||contract.equals(SUPPORTED);}
     private record Ports(JailVanillaCustody.InventoryPort inventory,JailOriginTransaction.Port origin,String contract){
         byte[] stable()throws IOException{return origin instanceof JailNativeOriginPort nativePort?nativePort.stableState():origin.current().state();}
     }
     private static Ports ports(MinecraftServer server,ServerPlayer player,UUID id,UUID retired,String contract)throws IOException {
         if(contract.equals("human-empty-v1"))return new Ports(new JailVanillaPort(player,id,retired),new JailHumanPort(player,id,retired),contract);
-        if(!contract.equals(EXPANDED))throw new IOException("Unsupported custody contract");
-        var inventory=new JailEquipmentPort(player,id,retired);byte[] existing=null;
+        if(!equipped(contract))throw new IOException("Unsupported custody contract");
+        var inventory=new JailEquipmentPort(player,id,retired,contract.equals(SUPPORTED));byte[] existing=null;
         Path path=root(server).resolve(id.toString()).resolve("origins");
         if(Files.exists(path,LinkOption.NOFOLLOW_LINKS))try(var origins=new JailEscrowJournal(JailCustodyService.journalPath(server,relative(id,"origins")))){if(origins.read(id)!=null)existing=JailOriginTransaction.intentForReview(origins,id,player.getUUID());}
-        return new Ports(inventory,new JailNativeOriginPort(player,inventory,id,retired,existing),contract);
+        return new Ports(inventory,contract.equals(SUPPORTED)?new JailCertifiedOriginPort(player,inventory,id,retired,existing):new JailNativeOriginPort(player,inventory,id,retired,existing),contract);
     }
     private static UUID retired(MinecraftServer s,UUID owner)throws IOException {UUID result=null;for(var p:plans(s).list())if(p.owner().equals(owner)&&p.state()==JailEscrowJournal.State.COMPLETE)result=p.id();return result;}
     private static JailEscrowJournal.Entry outstanding(MinecraftServer s,UUID owner)throws IOException {
@@ -89,12 +91,12 @@ public final class JailIntegrated {
     }
     public static void admit(CommandSourceStack actor,ServerPlayer target)throws IOException {
         if(actor.getEntity()==target||JailCommands.protectedFromJail(target))throw new IOException("Administrators/self cannot be jailed");
-        permitted(actor,target);if(!JailHumanAudit.disposable(target))throw new IOException("Production admissions remain disabled; native callback/death surfaces not certified");
+        permitted(actor,target);String contract=JailAdmissions.contract(target);
         var s=target.server;var records=plans(s);if(outstanding(s,target.getUUID())!=null||JailCustodyService.blocked(s,target.getUUID())||JailData.get(s).assignment(target.getUUID())!=null)throw new IOException("Existing assignment/custody must be recovered first");
         var data=JailData.get(s);Loc dest=data.location(),prior=Loc.of(target);if(data.geometry()!=JailData.INTERROGATION_CHAIR_GEOMETRY||dest==null||!JailPlacement.intact(s,dest,data.geometry())||!JailCommands.safe(target,dest)||!JailCommands.safe(target,prior)||actor.getEntity() instanceof ServerPlayer p&&!JailCommands.claimAccess(p,dest))throw new IOException("Jail/return location unavailable, unsafe or claim denied");
-        UUID id=UUID.randomUUID(),retired=retired(s,target.getUUID());String contract=Boolean.getBoolean("uq.expandedJail")?EXPANDED:"human-empty-v1";
-        var ports=ports(s,target,id,retired,contract);var inventory=ports.inventory();var nativePort=ports.origin();if(contract.equals(EXPANDED))inventory.validateRemoval();else auditItems(target);if(nativePort instanceof JailNativeOriginPort nativeOrigin)nativeOrigin.validateAdmission();var human=nativePort.current();byte[] stable=ports.stable();
-        var source=inventory.current();if(source.empty()||source.removedBy()!=null||source.restoredBy()!=null||human.transaction()!=null)throw new IOException("Source empty or unresolved receipt");
+        UUID id=UUID.randomUUID(),retired=retired(s,target.getUUID());
+        var ports=ports(s,target,id,retired,contract);var inventory=ports.inventory();var nativePort=ports.origin();if(equipped(contract))inventory.validateRemoval();else auditItems(target);if(nativePort instanceof JailNativeOriginPort nativeOrigin)nativeOrigin.validateAdmission();if(contract.equals(SUPPORTED)){JailAdmissions.boundary(target);((JailCertifiedOriginPort)nativePort).neutralBase();}var human=nativePort.current();byte[] stable=ports.stable();
+        var source=inventory.current();if(source.empty())throw new IOException("Empty-inventory custody is not certified yet; no items or origin were changed");if(source.removedBy()!=null||source.restoredBy()!=null||human.transaction()!=null)throw new IOException("An earlier custody receipt requires review before a new admission");
         // Save/readback BEFORE the plan: no custody has started and no mutation occurred.
         inventory.persistAndVerify();nativePort.persistAndVerify();saveAssignments(s);if(!Arrays.equals(source.inventory(),inventory.current().inventory())||!Arrays.equals(stable,ports.stable()))throw new IOException("Source changed during baseline save");BlockPos anchor=anchor(s,dest,prior);
         CompoundTag plan=new CompoundTag();plan.putString("contract",contract);plan.put("prior",prior.toTag());plan.put("jail",dest.toTag());plan.putInt("geometry",data.geometry());plan.putByteArray("digest",JailOriginTransaction.hash(source.inventory()));plan.putByteArray("human",human.state());if(retired!=null)plan.putUUID("retired",retired);
@@ -107,7 +109,7 @@ public final class JailIntegrated {
         // Forcing items/origins and their immediate parent does not persist this ancestor entry.
         try(var metadata=java.nio.channels.FileChannel.open(root(s),StandardOpenOption.READ)){metadata.force(true);}
         JailEscrowJournal.provisionNew(directory.resolve("items"));JailEscrowJournal.provisionNew(directory.resolve("origins"));
-        if(contract.equals(EXPANDED))for(String effect:List.of("remove-effects","return-effects","escapes"))JailEscrowJournal.provisionNew(directory.resolve(effect));
+        if(equipped(contract))for(String effect:List.of("remove-effects","return-effects","escapes"))JailEscrowJournal.provisionNew(directory.resolve(effect));
         JailCustodyService.ledger(s).bind(id,target.getUUID(),relative(id,"items"),relative(id,"origins"),plan.getByteArray("digest"),new JailCustodyLedger.Anchor(dest.dim(),anchor.getX(),anchor.getY(),anchor.getZ()),actor.getTextName());
         try(var items=journal(s,id,"items");var origins=journal(s,id,"origins")){
             permitted(actor,target);JailVanillaCustody.removeForDisposableTest(items,id,inventory,b->{permitted(actor,target);if(b==JailVanillaCustody.Boundary.MUTATED)checkpoint.at(Boundary.ITEMS_MUTATED);});checkpoint.at(Boundary.ITEMS_DURABLE);
@@ -131,15 +133,23 @@ public final class JailIntegrated {
         JailCustodyService.action(actor,b.id(),b.revision(),"review");b=JailCustodyService.ledger(target.server).get(b.id());JailCustodyService.action(actor,b.id(),b.revision(),"restore");
     }
     record EscapeContext(UUID transaction,JailVanillaCustody.InventoryPort inventory,JailOriginTransaction.Port origin,JailData.Assignment assignment,byte[] digest){}
-    static boolean expanded(MinecraftServer s,UUID id)throws IOException {var e=plans(s).read(id);return e!=null&&EXPANDED.equals(JailNbt.decode(e.snapshot()).getString("contract"));}
+    static boolean expanded(MinecraftServer s,UUID id)throws IOException {var e=plans(s).read(id);return e!=null&&equipped(JailNbt.decode(e.snapshot()).getString("contract"));}
+    static boolean certifiedActive(ServerPlayer p)throws IOException {var e=outstanding(p.server,p.getUUID());return e!=null&&SUPPORTED.equals(JailNbt.decode(e.snapshot()).getString("contract"));}
+    private static String check(ServerPlayer p)throws IOException {
+        if(p.hasDisconnected()||!p.isAlive())throw new IOException("Player must be alive and online");
+        boolean initialized=JailData.get(p.server).integratedCustodyInitialized();if(initialized&&outstanding(p.server,p.getUUID())!=null)throw new IOException("Existing custody: use /jailcustody inspect, not a new admission");
+        UUID tx=UUID.randomUUID(),old=initialized?retired(p.server,p.getUUID()):null;var ports=ports(p.server,p,tx,old,SUPPORTED);ports.inventory().validateRemoval();((JailCertifiedOriginPort)ports.origin()).validateAdmission();JailAdmissions.boundary(p);((JailCertifiedOriginPort)ports.origin()).neutralBase();
+        if(ports.inventory().current().empty())throw new IOException("Empty-inventory custody is not certified yet; no items or origin were changed");
+        return "Supported native combination; admissions "+(dev.unyielding.quests.Config.JAIL_CERTIFIED_ADMISSIONS.get()?"ON":"OFF")+". History "+(initialized?"initialized":"must be explicitly initialized")+". Jail, return position and claims are checked again on /jail.";
+    }
     /** No callback replay. The same bound, empty native stores are required even during clone/respawn. */
     static EscapeContext escapeContext(ServerPlayer p,boolean persist,boolean authoritative)throws IOException {
         if(!JailData.get(p.server).integratedCustodyInitialized())return null;
         var e=outstanding(p.server,p.getUUID());if(e==null)return null;var plan=JailNbt.decode(e.snapshot());
-        if(!EXPANDED.equals(plan.getString("contract")))return null;
+        if(!equipped(plan.getString("contract")))return null;
         if(e.state()!=JailEscrowJournal.State.HELD||!p.server.isSameThread()||authoritative&&(p.server.getPlayerList().getPlayer(p.getUUID())!=p||p.hasDisconnected()))throw new IOException("Escape custody not authoritative/held");
         var b=binding(p.server,e);if(!JailCustodyService.physical(p.server,b))throw new IOException("Escape custody interface unavailable");requireAssignment(p.server,p.getUUID(),plan,false);
-        var ports=ports(p.server,p,e.id(),plan.hasUUID("retired")?plan.getUUID("retired"):null,EXPANDED);
+        var ports=ports(p.server,p,e.id(),plan.hasUUID("retired")?plan.getUUID("retired"):null,plan.getString("contract"));
         try(var items=journal(p.server,e.id(),"items");var origins=journal(p.server,e.id(),"origins")){
             var item=items.read(e.id());var origin=origins.read(e.id());
             if(item==null||origin==null||item.state()!=JailEscrowJournal.State.HELD||origin.state()!=JailEscrowJournal.State.HELD||!Arrays.equals(b.digest(),JailOriginTransaction.hash(item.snapshot())))throw new IOException("Escape item/origin phase not held");
@@ -152,7 +162,7 @@ public final class JailIntegrated {
         return new EscapeContext(e.id(),ports.inventory(),ports.origin(),assignment(plan),b.digest());
     }
     static JailCustodyService.VerifiedAdapter adapter(MinecraftServer s,JailCustodyLedger.Binding b)throws IOException {
-        var e=plans(s).read(b.id());if(e==null||!e.owner().equals(b.owner())||!binding(s,e).equals(b)||!Set.of("human-empty-v1",EXPANDED).contains(JailNbt.decode(e.snapshot()).getString("contract")))throw new IOException("No audited integrated command binding");
+        var e=plans(s).read(b.id());if(e==null||!e.owner().equals(b.owner())||!binding(s,e).equals(b)||!Set.of("human-empty-v1",EXPANDED,SUPPORTED).contains(JailNbt.decode(e.snapshot()).getString("contract")))throw new IOException("No audited integrated command binding");
         ServerPlayer p=s.getPlayerList().getPlayer(b.owner());if(p==null)throw new IOException("Player offline; custody retained");CompoundTag plan=JailNbt.decode(e.snapshot());UUID retired=plan.hasUUID("retired")?plan.getUUID("retired"):null;
         final Ports ports=ports(s,p,b.id(),retired,plan.getString("contract"));
         return new JailCustodyService.VerifiedAdapter(){
@@ -166,7 +176,7 @@ public final class JailIntegrated {
             }
             public JailCustodyService.Health inspect()throws IOException {
                 if(!inventory.online())return JailCustodyService.Health.REVIEW_REQUIRED;var now=plans(s).read(b.id());
-                if(ports.contract().equals(EXPANDED)&&JailEscapeCustody.pending(s,b.id()))return JailCustodyService.Health.REVIEW_REQUIRED;
+                if(equipped(ports.contract())&&JailEscapeCustody.pending(s,b.id()))return JailCustodyService.Health.REVIEW_REQUIRED;
                 try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){
                     var item=items.read(b.id());if(item==null||!item.owner().equals(b.owner())||!Arrays.equals(JailOriginTransaction.hash(item.snapshot()),b.digest()))throw new IOException("Custody source binding changed");
                     if(now.state()==JailEscrowJournal.State.COMPLETE)return item.state()==JailEscrowJournal.State.COMPLETE&&originComplete(origins,items)&&JailData.get(s).assignment(b.owner())==null?JailCustodyService.Health.COMPLETE:JailCustodyService.Health.REVIEW_REQUIRED;
@@ -210,7 +220,7 @@ public final class JailIntegrated {
             }
             public void recoverVerified()throws IOException {
                 authority();
-                if(ports.contract().equals(EXPANDED)&&JailEscapeCustody.pending(s,b.id())){JailEscapeCustody.recover(p);return;}
+                if(equipped(ports.contract())&&JailEscapeCustody.pending(s,b.id())){JailEscapeCustody.recover(p);return;}
                 var now=plans(s).read(b.id());try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){
                     if(now.state()==JailEscrowJournal.State.RESTORE_STARTED){
                         var status=JailOriginTransaction.inspect(origins,items,b.id(),human);if(status==JailOriginTransaction.Inspection.ORIGINAL_SAVED_REVIEW)JailOriginTransaction.confirmSavedForDisposableTest(origins,items,b.id(),human);
@@ -236,10 +246,13 @@ public final class JailIntegrated {
         };
     }
     public static void register(com.mojang.brigadier.CommandDispatcher<CommandSourceStack> dispatcher){
-        dispatcher.register(Commands.literal("jailintegrated").requires(s->s.getEntity()==null&&s.hasPermission(2))
-            .then(Commands.literal("init").executes(c->{try{var s=c.getSource().getServer();JailCustodyService.ledger(s);if(JailData.get(s).integratedCustodyInitialized()||Files.exists(root(s),LinkOption.NOFOLLOW_LINKS))throw new IOException("Existing integrated history must not be reset");JailEscrowJournal.provisionNew(root(s));JailData.get(s).markIntegratedCustodyInitialized();saveAssignments(s);plans(s);c.getSource().sendSuccess(()->net.minecraft.network.chat.Component.literal("Integrated history initialized; production admissions remain disabled."),true);return 1;}catch(IOException bad){return dev.unyielding.quests.essentials.Essentials.fail(c.getSource(),bad.getMessage());}}))
-            .then(Commands.literal("cancel").then(Commands.argument("transaction",UuidArgument.uuid()).executes(c->{try{cancel(c.getSource(),UuidArgument.getUuid(c,"transaction"));return 1;}catch(IOException bad){return dev.unyielding.quests.essentials.Essentials.fail(c.getSource(),bad.getMessage());}}))));
+        dispatcher.register(Commands.literal("jailintegrated").requires(JailCommands::mayManage)
+            .then(Commands.literal("check").then(Commands.argument("player",net.minecraft.commands.arguments.EntityArgument.player()).executes(c->{try{String result=check(net.minecraft.commands.arguments.EntityArgument.getPlayer(c,"player"));c.getSource().sendSuccess(()->net.minecraft.network.chat.Component.literal(result),false);return 1;}catch(IOException|RuntimeException bad){return dev.unyielding.quests.essentials.Essentials.fail(c.getSource(),"Not supported: "+bad.getMessage());}})))
+            .then(Commands.literal("mode").requires(s->s.getEntity()==null&&s.hasPermission(2)).then(Commands.literal("supported").executes(c->mode(c.getSource(),true))).then(Commands.literal("disabled").executes(c->mode(c.getSource(),false))))
+            .then(Commands.literal("init").requires(s->s.getEntity()==null&&s.hasPermission(2)).executes(c->{try{var s=c.getSource().getServer();JailCustodyService.ledger(s);if(JailData.get(s).integratedCustodyInitialized()||Files.exists(root(s),LinkOption.NOFOLLOW_LINKS))throw new IOException("Existing integrated history must not be reset");JailEscrowJournal.provisionNew(root(s));JailData.get(s).markIntegratedCustodyInitialized();saveAssignments(s);plans(s);c.getSource().sendSuccess(()->net.minecraft.network.chat.Component.literal("Integrated history initialized. Admission mode is unchanged; use /jailintegrated check <player>."),true);return 1;}catch(IOException bad){return dev.unyielding.quests.essentials.Essentials.fail(c.getSource(),bad.getMessage());}}))
+            .then(Commands.literal("cancel").requires(s->s.getEntity()==null&&s.hasPermission(2)).then(Commands.argument("transaction",UuidArgument.uuid()).executes(c->{try{cancel(c.getSource(),UuidArgument.getUuid(c,"transaction"));return 1;}catch(IOException bad){return dev.unyielding.quests.essentials.Essentials.fail(c.getSource(),bad.getMessage());}}))));
     }
+    private static int mode(CommandSourceStack actor,boolean enabled){try{if(enabled){plans(actor.getServer());JailCustodyService.ledger(actor.getServer());}dev.unyielding.quests.Config.JAIL_CERTIFIED_ADMISSIONS.set(enabled);dev.unyielding.quests.Config.JAIL_CERTIFIED_ADMISSIONS.save();actor.sendSuccess(()->net.minecraft.network.chat.Component.literal("Certified admissions "+(enabled?"enabled; every player's runtime, origin, items and death state must still pass preflight":"disabled; existing custody recovery and protections remain active")),true);return 1;}catch(IOException|RuntimeException bad){return dev.unyielding.quests.essentials.Essentials.fail(actor,bad.getMessage());}}
     /** Console-only cancellation after proving no native removal/switch ever started. No item insertion. */
     private static void cancel(CommandSourceStack actor,UUID id)throws IOException {
         var s=actor.getServer();var e=plans(s).read(id);if(e==null||e.state()!=JailEscrowJournal.State.PREPARED&&e.state()!=JailEscrowJournal.State.CANCELLED)throw new IOException("Only an unchanged prepared admission can be cancelled");

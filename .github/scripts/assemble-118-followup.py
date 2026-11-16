@@ -15,6 +15,7 @@ assert len(jars) == 1, f'Expected one quest JAR, got {jars}'
 prefix = 'dev/unyielding/quests/'
 roots = [
     'jail/JailEquipmentPort', 'jail/JailEquipmentEffects', 'jail/JailNativeOriginPort', 'jail/JailEscapeCustody', 'mixin/JailEquipmentAccess',
+    'jail/JailCertifiedOriginPort', 'jail/JailHealthShift', 'jail/JailPackedItems', 'jail/JailAdmissions', 'jail/JailDamageProtection',
     'jail/JailIntegrated', 'jail/JailHumanAudit', 'jail/JailHumanPort', 'jail/JailVanillaPort', 'jail/JailNbt',
     'jail/JailVanillaCustody',
     'jail/JailOriginTransaction',
@@ -104,7 +105,7 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     assert not any(n.startswith(prefix + 'devtest/NeoOriginsPreflightSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailInventorySnapshotSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailTerrainPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
-    for fixture in ('VanillaCustodySmoke', 'VanillaRestoreSmoke', 'AccessoryCustodyPort', 'AccessoryCustodySmoke', 'OriginCustodyPort', 'OriginCustodySmoke', 'CustodyInterfaceSmoke', 'IntegratedJailSmoke', 'ExpandedJailSmoke'):
+    for fixture in ('VanillaCustodySmoke', 'VanillaRestoreSmoke', 'AccessoryCustodyPort', 'AccessoryCustodySmoke', 'OriginCustodyPort', 'OriginCustodySmoke', 'CustodyInterfaceSmoke', 'IntegratedJailSmoke', 'ExpandedJailSmoke', 'CertifiedJailSmoke', 'CertifiedPayloadProbe'):
         assert not any(n.startswith(prefix + 'devtest/' + fixture) for n in result.namelist()), f'{fixture} leaked into release'
     assert prefix + 'jail/JailOriginTransaction.class' in result.namelist(), 'Origin transaction coordinator missing'
     assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'

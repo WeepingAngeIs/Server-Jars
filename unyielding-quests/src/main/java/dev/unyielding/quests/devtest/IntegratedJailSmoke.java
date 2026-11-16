@@ -104,7 +104,7 @@ public final class IntegratedJailSmoke {
     }
     static void pass()throws IOException {Files.writeString(Path.of("/tmp/uq-integrated-result"),"passed: actual /jail /unjail production Human/empty-accessory ports phase "+phase+"; exact packed slots and nested conservation, no repeated grant, persisted interruption, disconnect/restart, permissions and interface recovery\n");}
     @SubscribeEvent public static void tick(ServerTickEvent.Post event){
-        if(!Boolean.getBoolean("uq.integratedJail")||Boolean.getBoolean("uq.expandedJail"))return;try{
+        if(!Boolean.getBoolean("uq.integratedJail")||Boolean.getBoolean("uq.expandedJail")||Boolean.getBoolean("uq.certifiedJail"))return;try{
             if(waiting){if(!target.hasDisconnected()||event.getServer().getPlayerList().getPlayer(target.getUUID())!=null)return;waiting=false;require(command("jailcustody review "+record().id())==0,"offline target accepted");pass();return;}
             if(done)return;admin=event.getServer().getPlayerList().getPlayerByName("Dev");target=event.getServer().getPlayerList().getPlayerByName("Visitor");if(admin==null||target==null||event.getServer().getTickCount()<120)return;done=true;
             world=event.getServer().getWorldPath(LevelResource.ROOT);require("true".equals(System.getenv("GITHUB_ACTIONS"))&&"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT"))&&world.toRealPath().getFileName().toString().equals("jail_integrated_smoke"),"wrong runtime/world");require(Path.of(System.getenv("UQ_BUNDLE_JAR")).toRealPath().equals(net.neoforged.fml.ModList.get().getModFileById("unyieldingquests").getFile().getFilePath().toRealPath()),"not final assembled JAR");

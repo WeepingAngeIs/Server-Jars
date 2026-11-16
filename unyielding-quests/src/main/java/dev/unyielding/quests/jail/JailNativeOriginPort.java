@@ -20,7 +20,7 @@ import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.attachment.AttachmentType;
 
 /** Audited unconditional native Luck-origin transitions; all other power hooks are refused. */
-public final class JailNativeOriginPort implements JailOriginTransaction.Port {
+public class JailNativeOriginPort implements JailOriginTransaction.Port {
     static final String DATA="com.cyberday1.neoorigins.attachment.PlayerOriginData", ORIGINS="com.cyberday1.neoorigins.data.OriginDataManager",
             LAYERS="com.cyberday1.neoorigins.data.LayerDataManager", CLAIMS="com.cyberday1.neoorigins.data.OriginClaimsData",
             SERVICE="com.cyberday1.neoorigins.service.ActiveOriginService", NETWORK="com.cyberday1.neoorigins.network.NeoOriginsNetwork";
@@ -29,8 +29,11 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
     final ServerPlayer player; final JailVanillaCustody.InventoryPort inventory;
     ResourceLocation layer,original,human,power; double amount; CompoundTag intent; final UUID transaction,retired;
     public JailNativeOriginPort(ServerPlayer player,JailVanillaCustody.InventoryPort inventory,UUID transaction,UUID retired,byte[] existing)throws IOException {
+        this(player,inventory,transaction,retired,existing,false);
+    }
+    protected JailNativeOriginPort(ServerPlayer player,JailVanillaCustody.InventoryPort inventory,UUID transaction,UUID retired,byte[] existing,boolean deferResolve)throws IOException {
         this.player=player;this.inventory=inventory;this.transaction=transaction;this.retired=retired;
-        if(existing==null)resolve();else{intent=decode(existing);layer=id(intent.getString("layer"));original=id(intent.getString("original"));human=id(intent.getString("human"));}
+        if(existing==null){if(!deferResolve)resolve();}else{intent=decode(existing);layer=id(intent.getString("layer"));original=id(intent.getString("original"));human=id(intent.getString("human"));}
     }
     static ResourceLocation id(String value){return ResourceLocation.parse(value);}
     static Class<?> type(String name)throws IOException{try{return Class.forName(name);}catch(ReflectiveOperationException|LinkageError e){throw new IOException("Missing origin API "+name,e);}}
@@ -46,13 +49,13 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
     }
     @SuppressWarnings("unchecked") Map<ResourceLocation,ResourceLocation> selections()throws IOException{return Map.copyOf((Map<ResourceLocation,ResourceLocation>)call(DATA,data(),"getOrigins"));}
     static CompoundTag choices(Map<ResourceLocation,ResourceLocation> choices){CompoundTag tag=new CompoundTag();choices.forEach((key,value)->tag.putString(key.toString(),value.toString()));return tag;}
-    private void versions()throws IOException {
+    protected void versions()throws IOException {
         JailHumanAudit.runtime(player);
         for(String spec:DEPS.split(";")){String[] p=spec.split("=",2);if(!ModList.get().getModContainerById(p[0]).map(c->p[1].equals(c.getModInfo().getVersion().toString())).orElse(false))throw new IOException("Unsupported origin dependency "+p[0]);}
         if(ModList.get().isLoaded("kubejs"))throw new IOException("Unaudited origin scripting hooks");
         if(!player.server.isSameThread())throw new IOException("Origin operation off server thread");
     }
-    @SuppressWarnings("unchecked") private void resolve()throws IOException {
+    @SuppressWarnings("unchecked") protected void resolve()throws IOException {
         versions();Object manager=singleton(ORIGINS);
         Map<ResourceLocation,?> definitions=(Map<ResourceLocation,?>)call(ORIGINS,manager,"getOrigins");List<ResourceLocation> humans=new ArrayList<>();
         for(ResourceLocation key:definitions.keySet()){
@@ -79,11 +82,11 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
         Object definition=origin(origin);if(definition==null)throw new IOException("Origin definition missing: "+origin);
         return (List<ResourceLocation>)call("com.cyberday1.neoorigins.api.origin.Origin",definition,"powersForTier",new Class<?>[]{int.class},0);
     }
-    private static JsonElement canonicalJson(JsonElement value){
+    protected static JsonElement canonicalJson(JsonElement value){
         if(value.isJsonObject()){JsonObject sorted=new JsonObject();new TreeSet<>(value.getAsJsonObject().keySet()).forEach(k->sorted.add(k,canonicalJson(value.getAsJsonObject().get(k))));return sorted;}
         if(value.isJsonArray()){JsonArray result=new JsonArray();value.getAsJsonArray().forEach(v->result.add(canonicalJson(v)));return result;}return value.deepCopy();
     }
-    private String audit()throws IOException {
+    protected String audit()throws IOException {
         versions();available();Object current=data();
         if((int)call(DATA,current,"getEvolutionTier")!=0)throw new IOException("Higher-tier origin effects not audited");
         if(!((Set<?>)call(DATA,current,"getDynamicGrantedPowers")).isEmpty()||!((Set<?>)call(DATA,current,"getGlobalGrantedPowers")).isEmpty())throw new IOException("Dynamic/global origin powers not audited");
@@ -117,21 +120,21 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
         CompoundTag result=new CompoundTag();Map<ResourceLocation,Map<ResourceLocation,UUID>> all=(Map<ResourceLocation,Map<ResourceLocation,UUID>>)call(CLAIMS,claims,"view");
         all.forEach((l,entries)->{CompoundTag nested=new CompoundTag();entries.forEach((o,owner)->nested.putUUID(o.toString(),owner));if(!nested.isEmpty())result.put(l.toString(),nested);});return result;
     }
-    private CompoundTag expectedAllClaims(boolean temporary)throws IOException {
+    protected CompoundTag expectedAllClaims(boolean temporary)throws IOException {
         CompoundTag all=intent.getCompound("all_claims_before").copy();
         if(intent.getCompound("claims_before").getBoolean("unique")){CompoundTag selected=all.getCompound(layer.toString()).copy();selected.putUUID(original.toString(),owner());if(temporary||intent.getBoolean("human_preowned"))selected.putUUID(human.toString(),owner());else selected.remove(human.toString());all.put(layer.toString(),selected);}return all;
     }
     static boolean owned(CompoundTag tag,String key,UUID owner){return tag.hasUUID(key)&&owner.equals(tag.getUUID(key));}
-    private CompoundTag expectedClaims(boolean temporary)throws IOException {
+    protected CompoundTag expectedClaims(boolean temporary)throws IOException {
         CompoundTag initial=intent.getCompound("claims_before"),result=initial.copy();
         if(initial.getBoolean("unique")) {result.putUUID("original",owner());if(temporary||intent.getBoolean("human_preowned"))result.putUUID("human",owner());else result.remove("human");}
         return result;
     }
-    private CompoundTag receipt(UUID id,JailOriginTransaction.Receipt phase){CompoundTag receipt=new CompoundTag();receipt.putUUID("transaction",id);receipt.putString("phase",phase.name());receipt.putByteArray("custody_digest",intent.getByteArray("custody_digest"));receipt.putString("layer",layer.toString());receipt.putString("original",original.toString());receipt.putString("human",human.toString());receipt.putString("definitions",intent.getString("definitions"));return receipt;}
-    private static CompoundTag attachment(CompoundTag playerTag)throws IOException {
+    protected CompoundTag receipt(UUID id,JailOriginTransaction.Receipt phase){CompoundTag receipt=new CompoundTag();receipt.putUUID("transaction",id);receipt.putString("phase",phase.name());receipt.putByteArray("custody_digest",intent.getByteArray("custody_digest"));receipt.putString("layer",layer.toString());receipt.putString("original",original.toString());receipt.putString("human",human.toString());receipt.putString("definitions",intent.getString("definitions"));return receipt;}
+    protected static CompoundTag attachment(CompoundTag playerTag)throws IOException {
         CompoundTag attachments=playerTag.getCompound("neoforge:attachments");if(!attachments.contains(ATTACHMENT,10))throw new IOException("Serialized origin attachment missing");return attachments.getCompound(ATTACHMENT).copy();
     }
-    private static ListTag attributes(CompoundTag playerTag)throws IOException {
+    protected static ListTag attributes(CompoundTag playerTag)throws IOException {
         if(!playerTag.contains("attributes",9))throw new IOException("Player attribute state missing");
         List<CompoundTag> entries=new ArrayList<>();
         for(Tag raw:playerTag.getList("attributes",10)){
@@ -147,7 +150,7 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
         return store.getCompound("accessories_containers").copy();
     }
     private static boolean accessoriesEmpty(CompoundTag stores){for(String name:stores.getAllKeys()){CompoundTag s=stores.getCompound(name);if(!s.getList("items",10).isEmpty()||!s.getList("cosmetics",10).isEmpty())return false;}return true;}
-    private void effects()throws IOException {
+    protected void effects()throws IOException {
         ResourceLocation current=selections().get(layer);boolean active=power!=null&&original.equals(current);
         if(!original.equals(current)&&!human.equals(current))throw new IOException("Origin selection changed outside custody");
         var luck=player.getAttribute(Attributes.LUCK);if(luck==null)throw new IOException("Luck attribute unavailable");
@@ -211,7 +214,7 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
         bind(bytes);CompoundTag state=decode(view.state());var phase=temporary?JailOriginTransaction.Receipt.TEMPORARY:JailOriginTransaction.Receipt.ORIGINAL;
         return id.equals(view.transaction())&&view.receipt()==phase&&selectionsMatch(state,temporary)&&state.getCompound("claims").equals(expectedClaims(temporary))&&state.getCompound("all_claims").equals(expectedAllClaims(temporary))&&state.getCompound("receipt").equals(receipt(id,phase));
     }
-    private JailOriginTransaction.View plan(byte[] bytes,UUID tx,boolean temporary)throws IOException {
+    protected JailOriginTransaction.View plan(byte[] bytes,UUID tx,boolean temporary)throws IOException {
         bind(bytes);var before=current();if(temporary){if(!isPrepared(bytes,before))throw new IOException("Original origin or unique claims changed");}
         else if(!isTemporary(bytes,tx,before))throw new IOException("Temporary origin/unique claims conflict");
         CompoundTag body=decode(before.state());body.getCompound("origin_data").getCompound("origins").putString(layer.toString(),(temporary?human:original).toString());body.put("claims",expectedClaims(temporary));body.put("all_claims",expectedAllClaims(temporary));
@@ -221,8 +224,10 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
     }
     @Override public JailOriginTransaction.View planTemporary(byte[] intent,UUID id)throws IOException{return plan(intent,id,true);}
     @Override public JailOriginTransaction.View planOriginal(byte[] intent,UUID id)throws IOException{return plan(intent,id,false);}
+    protected void expectedNativeHealth(CompoundTag expected,float previousHealth,float previousMax)throws IOException {}
+    protected void finishDeclaredHealth(CompoundTag expected)throws IOException {}
     private void mutate(byte[] bytes,UUID tx,boolean temporary)throws IOException {
-        var planned=temporary?planTemporary(bytes,tx):planOriginal(bytes,tx);CompoundTag receiptBefore=decode(current().state()).getCompound("receipt").copy();Object data=data();int version=(int)call(DATA,data,"version");Object claims=claims();
+        var planned=temporary?planTemporary(bytes,tx):planOriginal(bytes,tx);float previousHealth=player.getHealth(),previousMax=player.getMaxHealth();CompoundTag receiptBefore=decode(current().state()).getCompound("receipt").copy();Object data=data();int version=(int)call(DATA,data,"version");Object claims=claims();
         CompoundTag expectedBefore=temporary?intent.getCompound("claims_before"):expectedClaims(true);if(!claimState(claims).equals(expectedBefore))throw new IOException("Claim ownership changed before mutation");
         if(temporary&&intent.getCompound("claims_before").getBoolean("unique")&&!intent.getBoolean("human_preowned")){
             if(owner(claims,human)!=null)throw new IOException("Human claim conflict");call(CLAIMS,claims,"claim",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},layer,human,owner());
@@ -240,6 +245,7 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
         CompoundTag beforeLeaseRelease=decode(current().state()),expectedBeforeRelease=decode(planned.state());
         if(!beforeLeaseRelease.getCompound("receipt").equals(receiptBefore))throw new IOException("Origin callback changed custody receipt");
         expectedBeforeRelease.put("claims",expectedClaims(true));expectedBeforeRelease.put("all_claims",expectedAllClaims(true));beforeLeaseRelease.put("receipt",expectedBeforeRelease.getCompound("receipt").copy());
+        expectedNativeHealth(expectedBeforeRelease,previousHealth,previousMax);
         if(!beforeLeaseRelease.equals(expectedBeforeRelease))throw new IOException("Origin callback changed undeclared state before lease release");
         if(!temporary&&intent.getCompound("claims_before").getBoolean("unique")&&!intent.getBoolean("human_preowned")){
             if(!owner().equals(owner(claims,human)))throw new IOException("Temporary Human claim changed; not releasing another owner");
@@ -247,7 +253,7 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
         }
         // Receipt is written only after the entire declared callback effect set
         // matches. Unexpected state is retained; no rollback/replay is attempted.
-        CompoundTag observed=decode(current().state()),expected=decode(planned.state());observed.put("receipt",expected.getCompound("receipt").copy());
+        CompoundTag expected=decode(planned.state());finishDeclaredHealth(expected);CompoundTag observed=decode(current().state());observed.put("receipt",expected.getCompound("receipt").copy());
         if(!observed.equals(expected))throw new IOException("Origin callback changed undeclared state");
         player.getPersistentData().put(RECEIPT,expected.getCompound("receipt").copy());
     }

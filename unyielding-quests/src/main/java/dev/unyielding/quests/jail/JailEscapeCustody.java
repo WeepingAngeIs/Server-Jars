@@ -15,6 +15,9 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public final class JailEscapeCustody {
     private JailEscapeCustody(){}
     private static final String RESPAWN="uq_jail_escape_respawn";
+    private static final ThreadLocal<UUID> OWN_DAMAGE=new ThreadLocal<>();
+    static boolean ownDamage(ServerPlayer p){return p.getUUID().equals(OWN_DAMAGE.get());}
+    static boolean acceptedCorpse(ServerPlayer p){try{UUID tx=JailIntegrated.activeTransaction(p.server,p.getUUID());if(tx==null)return false;try(var j=journal(p.server,tx)){var e=pending(j);return e!=null&&(e.state()==JailEscrowJournal.State.HELD||e.state()==JailEscrowJournal.State.RESTORE_STARTED);}}catch(IOException bad){return true;}}
     @FunctionalInterface public interface Checkpoint {void saved()throws IOException;}
     private static Checkpoint checkpoint=()->{};
     public static void disposableCheckpoint(ServerPlayer p,Checkpoint value)throws IOException {if(!JailHumanAudit.disposable(p))throw new IOException("Escape fault hook unavailable");checkpoint=Objects.requireNonNull(value);}
@@ -52,17 +55,19 @@ public final class JailEscapeCustody {
             if(active==null||!JailIntegrated.expanded(p.server,active)||pending(p.server,active))return;
             if(!p.isAlive()||p.isInvulnerableTo(p.damageSources().generic()))return;var c=JailIntegrated.escapeContext(p,true,true);if(c==null)return;destination(p,c);
             deathSurface(p);
+            if(JailAdmissions.protectedCustody(p))JailAdmissions.boundary(p);
             try(var j=journal(p.server,c.transaction())){
                 if(pending(j)!=null)return;
                 CompoundTag t=new CompoundTag();t.putUUID("custody",c.transaction());t.putByteArray("digest",c.digest());t.put("jail",c.assignment().jail().toTag());t.putInt("selected",p.getInventory().selected);
                 t.put("origin_receipt",p.getPersistentData().getCompound(JailNativeOriginPort.RECEIPT).copy());
+                int deaths=p.getStats().getValue(net.minecraft.stats.Stats.CUSTOM.get(net.minecraft.stats.Stats.DEATHS));t.putInt("deaths_before",deaths);
                 UUID id=UUID.randomUUID();j.begin(id,p.getUUID(),JailNbt.encode(t));
                 if(!JailEnforcement.teleportAuthorized(p,c.assignment().jail()))throw new IOException("Escape containment transfer refused");
                 c.inventory().persistAndVerify();c.origin().persistAndVerify();atJail(p,c);
                 j.transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.REMOVAL_STARTED);
                 // Respect invulnerability, damage and death cancellation hooks. No retry if they stop it.
-                p.hurt(p.damageSources().generic(),1000.0F);
-                if(p.hasDisconnected()||p.getHealth()>0||p.isAlive())throw new IOException("Escape death prevented/unverified; explicit review required, no retry");
+                UUID previous=OWN_DAMAGE.get();OWN_DAMAGE.set(p.getUUID());try{p.hurt(p.damageSources().generic(),1000.0F);}finally{if(previous==null)OWN_DAMAGE.remove();else OWN_DAMAGE.set(previous);}
+                if(p.hasDisconnected()||p.getHealth()>0||p.isAlive()||p.getStats().getValue(net.minecraft.stats.Stats.CUSTOM.get(net.minecraft.stats.Stats.DEATHS))!=deaths+1)throw new IOException("Escape death prevented/unverified; explicit review required, no retry");
                 c.inventory().persistAndVerify();c.origin().persistAndVerify();JailIntegrated.escapeContext(p,false,true);
                 if(JailVanillaPort.readSavedPlayer(p).getFloat("Health")>0)throw new IOException("Escape death not durably observed");
                 j.transition(id,JailEscrowJournal.State.REMOVAL_STARTED,JailEscrowJournal.State.HELD);

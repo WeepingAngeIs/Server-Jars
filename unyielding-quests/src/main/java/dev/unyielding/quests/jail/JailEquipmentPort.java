@@ -25,11 +25,16 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     final ServerPlayer player;
     final JailVanillaPort vanilla;
     final UUID transaction;
+    final boolean certified;
     record Layout(Map<String,Object> canonical, Map<String,Container> normal, Map<String,Container> cosmetic,
                   List<AccessoryCustodyPolicy.Slot> slots) {}
     record Row(AccessoryCustodyPolicy.Slot id, ItemStack stack) {}
     public JailEquipmentPort(ServerPlayer player, UUID transaction, UUID retired) throws IOException {
+        this(player,transaction,retired,false);
+    }
+    public JailEquipmentPort(ServerPlayer player, UUID transaction, UUID retired,boolean certified) throws IOException {
         this.player=player;this.transaction=transaction;this.vanilla=new JailVanillaPort(player,transaction,retired);
+        this.certified=certified;
         JailHumanAudit.runtime(player);
     }
     static Class<?> type(String name) throws IOException {
@@ -41,6 +46,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     }
     private static Object call(String api,Object target,String method) throws IOException { return call(api,target,method,new Class<?>[0]); }
     @Override public UUID owner() { return player.getUUID(); }
+    private String policy(){return certified?"native-default-equipment-packed-coins-v2":"native-default-equipment-v1";}
     @Override public boolean online() { return vanilla.online(); }
     private void versions() throws IOException {
         for (String row : VERSIONS.split(";")) {
@@ -106,7 +112,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     }
     @Override public void validateRemoval() throws IOException {
         if (!online()) throw new IOException("Player offline");
-        JailEquipmentEffects.supported(player);
+        JailEquipmentEffects.supported(player,certified);
         Layout layout=layout();
         for (int slot=36;slot<=40;slot++) if (EnchantmentHelper.has(player.getInventory().getItem(slot),EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) throw new IOException("Bound vanilla equipment");
         for (Object c : layout.canonical().values()) if (!((Map<?,?>)call("io.wispforest.accessories.api.AccessoriesContainer",c,"getModifiers")).isEmpty()) throw new IOException("Unaudited slot modifiers");
@@ -144,7 +150,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         if (!attachments.contains(STORE,10)) throw new IOException("Missing serialized accessory holder: " + attachments.getAllKeys());
         CompoundTag holder=normalize(attachments.getCompound(STORE));
         CompoundTag body=new CompoundTag(); body.putInt("version",2); body.putString("dependencies",VERSIONS);
-        body.putString("policy","native-default-equipment-v1"); body.putString("runtime",JailHumanAudit.runtime(player)); body.putInt("selected",playerTag.getInt("SelectedItemSlot")); body.putByteArray("vanilla",vanillaView.inventory()); body.put("holder",holder);
+        body.putString("policy",policy()); body.putString("runtime",JailHumanAudit.runtime(player)); body.putInt("selected",playerTag.getInt("SelectedItemSlot")); body.putByteArray("vanilla",vanillaView.inventory()); body.put("holder",holder);
         boolean empty=vanillaView.empty();
         for (String name : holder.getCompound(CONTAINERS).getAllKeys()) {
             CompoundTag store=holder.getCompound(CONTAINERS).getCompound(name);
@@ -206,7 +212,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     }
     private List<Row> rows(byte[] snapshot,Layout layout) throws IOException {
         CompoundTag root=decode(snapshot);
-        if (root.getInt("version")!=2 || !VERSIONS.equals(root.getString("dependencies")) || !"native-default-equipment-v1".equals(root.getString("policy"))) throw new IOException("Changed accessory snapshot dependencies");
+        if (root.getInt("version")!=2 || !VERSIONS.equals(root.getString("dependencies")) || !policy().equals(root.getString("policy"))) throw new IOException("Changed accessory snapshot dependencies");
         if(!root.getCompound("holder").equals(normalize(root.getCompound("holder")))) throw new IOException("Unknown accessory holder format");
         byte[] sourceEmpty=emptyBody(snapshot), currentEmpty=emptyBody(current().inventory());
         if (!Arrays.equals(sourceEmpty,currentEmpty)) {

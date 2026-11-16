@@ -37,7 +37,8 @@ final class OriginCustodyPort implements JailOriginTransaction.Port {
         if(!"true".equals(System.getenv("GITHUB_ACTIONS"))||!"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT"))
                 ||!(Boolean.getBoolean("uq.originCustody")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_origin_smoke")
                 ||Boolean.getBoolean("uq.custodyInterface")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_interface_smoke")
-                ||Boolean.getBoolean("uq.expandedJail")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_expanded_smoke")))throw new IOException("Origin mutation fixture forbidden here");
+                ||Boolean.getBoolean("uq.expandedJail")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_expanded_smoke")
+                ||Boolean.getBoolean("uq.certifiedJail")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_certified_smoke")))throw new IOException("Origin mutation fixture forbidden here");
         if(existing==null)resolve();else{intent=decode(existing);layer=id(intent.getString("layer"));original=id(intent.getString("original"));human=id(intent.getString("human"));}
     }
     static ResourceLocation id(String value){return ResourceLocation.parse(value);}
