@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
-/** Experimental origin transaction coordinator; no production admission or native mutation adapter. */
+/** Opaque origin transaction coordinator; native effects and admission bounds belong to audited adapters. */
 public final class JailOriginTransaction {
     private JailOriginTransaction() {}
     public enum Receipt { NONE, TEMPORARY, ORIGINAL }

@@ -24,7 +24,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-/** Protected record UI and quarantine. No production native restoration adapter is enabled. */
+/** Protected record UI and quarantine. Only explicitly bound, audited adapters may restore. */
 @EventBusSubscriber(modid="unyieldingquests")
 public final class JailCustodyService {
     private JailCustodyService(){}

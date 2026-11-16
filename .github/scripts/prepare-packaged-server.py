@@ -51,8 +51,8 @@ if os.environ.get('UQ_ACCESSORY_INTEGRATION') == '1':
     tags.mkdir(parents=True, exist_ok=True)
     (tags / 'ring.json').write_text('{"replace":false,"values":["minecraft:gold_ingot","minecraft:amethyst_shard","minecraft:diamond"]}', encoding='utf-8')
 
-# Vanilla custody fixtures stay in this independent test mod. Only the pure
-# transaction and journal are shipped; there is no production inventory adapter.
+# Destructive vanilla fixtures stay in this independent test mod. The released
+# Human/empty-accessory adapter is exercised separately through real commands.
 source = (ROOT / 'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/VanillaCustodySmoke.java').read_text(encoding='utf-8')
 source = source.replace('package dev.unyielding.quests.devtest;', 'package dev.unyielding.bundlesmoke;', 1)
 source = source.replace('@EventBusSubscriber(modid = UnyieldingQuests.MODID)', '@EventBusSubscriber(modid = "uq_bundle_smoke")', 1)

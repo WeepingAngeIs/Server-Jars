@@ -36,6 +36,23 @@ for filename, url, sha in inputs:
                 time.sleep(3 * (attempt + 1))
     assert hashlib.sha512(target.read_bytes()).hexdigest() == sha, filename
     manifest['integration_mods'].append({'file': filename, 'url': url, 'sha512': sha})
+certificate_path = 'assets/unyieldingquests/jail-certified-runtime.json'
+with zipfile.ZipFile(release) as jar:
+    certificate_bytes = jar.read(certificate_path)
+certificate = json.loads(certificate_bytes)
+assert certificate_bytes == (ROOT / 'unyielding-quests/src/main/resources' / certificate_path).read_bytes()
+parents = {}
+for proof in certificate['embedded']:
+    parents.setdefault((proof['parent'], proof['parent_sha512']), []).append(proof)
+for (filename, parent_sha), proofs in parents.items():
+    parent = harness / 'libs' / filename
+    assert hashlib.sha512(parent.read_bytes()).hexdigest() == parent_sha, f'Uncertified embedded parent: {filename}'
+    with zipfile.ZipFile(parent) as jar:
+        for proof in proofs:
+            assert hashlib.sha512(jar.read(proof['entry'])).hexdigest() == proof['sha512'], proof
+            assert proof['sha512'] in certificate['sha512']
+manifest['custody_certificate_sha256'] = hashlib.sha256(certificate_bytes).hexdigest()
+manifest['verified_embedded_binaries'] = len(certificate['embedded'])
 for name in ('OriginCustodyPort', 'OriginCustodySmoke', 'CustodyInterfaceSmoke', 'IntegratedJailSmoke'):
     source = (ROOT / f'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/{name}.java').read_text(encoding='utf-8')
     source = source.replace('package dev.unyielding.quests.devtest;', 'package dev.unyielding.bundlesmoke;', 1)
