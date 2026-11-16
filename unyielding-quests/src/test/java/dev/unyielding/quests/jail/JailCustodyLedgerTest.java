@@ -34,4 +34,8 @@ class JailCustodyLedgerTest {
         Path path=temp.resolve("ledger");JailCustodyLedger.provisionNew(path);UUID a=UUID.randomUUID(),b=UUID.randomUUID();
         try(var ledger=new JailCustodyLedger(path)){var first=ledger.bind(UUID.randomUUID(),a,"a/items","a/origins",new byte[32],ANCHOR,"admin");ledger.bind(UUID.randomUUID(),b,"b/items","b/origins",new byte[32],new JailCustodyLedger.Anchor("minecraft:overworld",1003,5,1000),"admin");ledger.transition(first.id(),first.revision(),JailCustodyLedger.State.RELEASED,"admin","Verified completion");assertFalse(ledger.outstanding(a));assertTrue(ledger.outstanding(b));assertThrows(IllegalArgumentException.class,()->ledger.bind(UUID.randomUUID(),a,"../outside","a/origins",new byte[32],ANCHOR,"admin"));assertThrows(IllegalArgumentException.class,()->ledger.transition(first.id(),ledger.get(first.id()).revision(),JailCustodyLedger.State.QUARANTINED,"admin\nforged","Bad audit"));}
     }
+    @Test void damagedOpenLedgerCannotAuthorizeOrAppendARecovery()throws Exception {
+        Path path=temp.resolve("ledger");JailCustodyLedger.provisionNew(path);
+        try(var ledger=new JailCustodyLedger(path)){var b=ledger.bind(UUID.randomUUID(),UUID.randomUUID(),"a/items","a/origins",new byte[32],ANCHOR,"admin");byte[] bytes=Files.readAllBytes(path.resolve("custody.v1"));bytes[bytes.length-1]^=1;Files.write(path.resolve("custody.v1"),bytes);assertThrows(IOException.class,ledger::verifyDisk);assertFalse(ledger.healthy());assertThrows(IOException.class,()->ledger.transition(b.id(),b.revision(),JailCustodyLedger.State.RELEASED,"admin","Must not authorize"));assertEquals(JailCustodyLedger.State.QUARANTINED,ledger.get(b.id()).state());}
+    }
 }

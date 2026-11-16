@@ -19,7 +19,7 @@ public final class JailCustodyLedger implements AutoCloseable {
         @Override public byte[] digest(){return digest.clone();}
     }
     public record Audit(long sequence,UUID transaction,String actor,String reason,State state) {}
-    private final FileChannel file;private final FileLock lock;private byte[] chain=new byte[32];private long sequence;private boolean poisoned;
+    private final FileChannel file;private final FileLock lock;private final Path path;private final Object fileIdentity;private byte[] chain=new byte[32];private long sequence;private boolean poisoned;
     private final Map<UUID,Binding> bindings=new LinkedHashMap<>();private final List<Audit> audit=new ArrayList<>();
     public static void provisionNew(Path directory)throws IOException {
         Files.createDirectory(directory);
@@ -27,7 +27,7 @@ public final class JailCustodyLedger implements AutoCloseable {
         forceDirectory(directory);forceDirectory(directory.getParent());
     }
     public JailCustodyLedger(Path directory)throws IOException {
-        file=FileChannel.open(directory.resolve("custody.v1"),StandardOpenOption.READ,StandardOpenOption.WRITE);FileLock acquired=null;
+        path=directory.resolve("custody.v1");fileIdentity=Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class,LinkOption.NOFOLLOW_LINKS).fileKey();if(fileIdentity==null||Files.isSymbolicLink(path))throw new IOException("Cannot verify custody file identity");file=FileChannel.open(path,StandardOpenOption.READ,StandardOpenOption.WRITE);FileLock acquired=null;
         try{acquired=file.tryLock();if(acquired==null)throw new IOException("Custody ledger is already in use");lock=acquired;load();}catch(Throwable failure){if(acquired!=null)acquired.release();file.close();if(failure instanceof IOException io)throw io;throw new IOException("Invalid custody ledger",failure);}
     }
     static void path(String value){if(value==null||value.isBlank()||value.length()>512||!value.matches("[a-zA-Z0-9_./-]+")||value.startsWith("/")||Arrays.asList(value.split("/")).contains("..")||value.contains("//"))throw new IllegalArgumentException("Invalid custody path");}
@@ -54,6 +54,15 @@ public final class JailCustodyLedger implements AutoCloseable {
         bindings.put(id,now);audit.add(new Audit(next,id,actor,reason,state));sequence=next;
     }
     public Binding get(UUID id){return bindings.get(id);}public List<Binding> list(){return List.copyOf(bindings.values());}public List<Audit> audit(UUID id){return audit.stream().filter(e->e.transaction().equals(id)).toList();}
+    public boolean healthy(){return !poisoned&&file.isOpen()&&Files.isRegularFile(path,LinkOption.NOFOLLOW_LINKS);}
+    /** Revalidate the authoritative index before a privileged recovery action. */
+    public void verifyDisk()throws IOException {
+        try{if(!healthy()||!fileIdentity.equals(Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class,LinkOption.NOFOLLOW_LINKS).fileKey())||file.size()>64L*1024*1024)throw new IOException("Custody history missing, replaced or too large");
+            file.position(0);var header=ByteBuffer.wrap(read(8));if(header.getInt()!=MAGIC||header.getInt()!=1)throw new IOException("Custody header changed");byte[] verified=new byte[32];long count=0;
+            while(file.position()<file.size()){int length=ByteBuffer.wrap(read(4)).getInt();if(length<1||length>MAX)throw new IOException("Corrupt custody frame");byte[] payload=read(length),checksum=read(32);if(!MessageDigest.isEqual(checksum,digest(verified,payload)))throw new IOException("Custody audit checksum failed");verified=checksum;count++;}
+            if(count!=sequence||!MessageDigest.isEqual(verified,chain))throw new IOException("Custody history changed outside coordinator");
+        }catch(IOException failed){poisoned=true;throw failed;}
+    }
     public boolean outstanding(UUID owner){return bindings.values().stream().anyMatch(b->b.owner().equals(owner)&&b.state()!=State.RELEASED);}
     public Binding bind(UUID id,UUID owner,String items,String origins,byte[] hash,Anchor anchor,String actor)throws IOException {
         if(bindings.containsKey(id))throw new IOException("Transaction already indexed; use its existing record");
@@ -63,7 +72,7 @@ public final class JailCustodyLedger implements AutoCloseable {
     public Binding relocate(UUID id,long revision,Anchor anchor,String actor)throws IOException {Binding old=expected(id,revision);return append(new Binding(id,old.owner(),old.items(),old.origins(),old.digest(),anchor,State.QUARANTINED,sequence+1,"Interface rebound; custody retained and review required"),actor);}
     private Binding expected(UUID id,long revision)throws IOException{Binding b=get(id);if(b==null||b.revision()!=revision)throw new IOException("Stale or missing custody selection");return b;}
     private Binding append(Binding b,String actor)throws IOException {
-        if(poisoned)throw new IOException("Custody write outcome is uncertain; restart recovery required");text(actor,128);
+        verifyDisk();text(actor,128);
         for(Binding other:bindings.values())if(!other.id().equals(b.id())&&other.anchor().equals(b.anchor()))throw new IOException("Another prisoner owns this interface");
         var bytes=new ByteArrayOutputStream();var out=new DataOutputStream(bytes);out.writeLong(sequence+1);out.writeLong(b.id().getMostSignificantBits());out.writeLong(b.id().getLeastSignificantBits());out.writeLong(b.owner().getMostSignificantBits());out.writeLong(b.owner().getLeastSignificantBits());out.writeUTF(b.items());out.writeUTF(b.origins());out.write(b.digest());out.writeUTF(b.anchor().dimension());out.writeInt(b.anchor().x());out.writeInt(b.anchor().y());out.writeInt(b.anchor().z());out.writeByte(b.state().ordinal());out.writeUTF(actor);out.writeUTF(b.reason());byte[] payload=bytes.toByteArray();if(payload.length>MAX)throw new IOException("Custody frame too large");byte[] checksum=digest(chain,payload);
         try{file.position(file.size());write(file,ByteBuffer.allocate(4).putInt(payload.length).flip());write(file,ByteBuffer.wrap(payload));write(file,ByteBuffer.wrap(checksum));file.force(true);apply(payload);chain=checksum;return get(b.id());}catch(Throwable failed){poisoned=true;if(failed instanceof IOException io)throw io;throw new IOException("Custody write outcome uncertain",failed);}

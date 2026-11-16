@@ -46,8 +46,8 @@ public final class JailCustodyService {
     }
     private static Path root(MinecraftServer server){return server.getWorldPath(LevelResource.ROOT).resolve("custody-interface-v1");}
     private static Context context(MinecraftServer server){return contexts.computeIfAbsent(server,key->{Context c=new Context();if(Files.exists(root(key),LinkOption.NOFOLLOW_LINKS))try{if(Files.isSymbolicLink(root(key)))throw new IOException("Custody ledger symlink");c.ledger=new JailCustodyLedger(root(key));}catch(IOException bad){c.unavailable=bad.getMessage();}return c;});}
-    public static JailCustodyLedger ledger(MinecraftServer server)throws IOException {if(!server.isSameThread())throw new IOException("Custody action off server thread");Context c=context(server);if(c.unavailable!=null)throw new IOException("Custody unavailable; preserve records and restore audited history: "+c.unavailable);if(c.ledger==null)throw new IOException("Custody index not initialized; console must explicitly initialize or recover history");return c.ledger;}
-    public static boolean blocked(MinecraftServer server,UUID owner){if(server==null)return true;Context c=context(server);return c.unavailable!=null||c.ledger!=null&&c.ledger.outstanding(owner);}
+    public static JailCustodyLedger ledger(MinecraftServer server)throws IOException {if(!server.isSameThread())throw new IOException("Custody action off server thread");Context c=context(server);if(c.unavailable!=null||c.ledger!=null&&!c.ledger.healthy())throw new IOException("Custody unavailable; preserve records and restore audited history: "+c.unavailable);if(c.ledger==null)throw new IOException("Custody index not initialized; console must explicitly initialize or recover history");return c.ledger;}
+    public static boolean blocked(MinecraftServer server,UUID owner){if(server==null)return true;Context c=context(server);return c.unavailable!=null||c.ledger!=null&&(!c.ledger.healthy()||c.ledger.outstanding(owner));}
     public static boolean quarantined(ServerPlayer player){return player.server!=null&&blocked(player.server,player.getUUID());}
     private static boolean manager(ServerPlayer player){return !quarantined(player)&&JailCommands.mayManage(player.createCommandSourceStack());}
     public static boolean physical(MinecraftServer server,JailCustodyLedger.Binding b){var a=b.anchor();ServerLevel level=server.getLevel(ResourceKey.create(Registries.DIMENSION,ResourceLocation.parse(a.dimension())));BlockPos pos=new BlockPos(a.x(),a.y(),a.z());return level!=null&&level.hasChunkAt(pos)&&level.getBlockState(pos).is(dev.unyielding.quests.Registration.CUSTODY_VAULT.get());}
@@ -84,7 +84,7 @@ public final class JailCustodyService {
     }
     public static void action(CommandSourceStack actor,UUID id,long revision,String action)throws IOException {
         if(!JailCommands.mayManage(actor)||actor.getEntity() instanceof ServerPlayer player&&quarantined(player))throw new IOException("Administrator or console recovery permission required");
-        MinecraftServer server=actor.getServer();var ledger=ledger(server);var b=ledger.get(id);if(b==null||b.revision()!=revision)throw new IOException("Stale or cross-prisoner custody selection");
+        MinecraftServer server=actor.getServer();var ledger=ledger(server);ledger.verifyDisk();var b=ledger.get(id);if(b==null||b.revision()!=revision)throw new IOException("Stale or cross-prisoner custody selection");
         String name=actor.getEntity()==null?"console:"+actor.getTextName():actor.getEntity().getUUID().toString();
         if(action.equals("hold")){change(server,b,JailCustodyLedger.State.QUARANTINED,name,"Explicit administrator hold; review required");return;}
         if(b.state()==JailCustodyLedger.State.RELEASED){if(action.equals("restore"))return;throw new IOException("This transaction was already returned; records retained");}
