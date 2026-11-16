@@ -29,12 +29,27 @@ public final class JailEscapeCustody {
         CompoundTag t=JailNbt.decode(e.snapshot());if(!e.owner().equals(p.getUUID())||!t.hasUUID("custody")||!t.getUUID("custody").equals(c.transaction())||!Arrays.equals(c.digest(),t.getByteArray("digest"))||!c.assignment().jail().toTag().equals(t.getCompound("jail")))throw new IOException("Escape/custody binding changed");
     }
     private static void atJail(ServerPlayer p,JailIntegrated.EscapeContext c)throws IOException {destination(p,c);var l=c.assignment().jail();if(!p.level().dimension().location().toString().equals(l.dim())||p.distanceToSqr(l.x(),l.y(),l.z())>0.0001)throw new IOException("Respawn is not at verified jail");}
+    private static void deathSurface(ServerPlayer p)throws IOException {
+        if(p.totalExperience!=0||p.experienceLevel!=0||p.experienceProgress!=0||!p.getActiveEffects().isEmpty()||p.getAbsorptionAmount()!=0)throw new IOException("Escape XP/potion custody unsupported; no lethal damage applied");
+        var abilities=p.getAbilities();if(abilities.mayfly||abilities.flying||abilities.instabuild||abilities.invulnerable||!abilities.mayBuild||abilities.getFlyingSpeed()!=0.05F||abilities.getWalkingSpeed()!=0.1F)throw new IOException("Nondefault flight/creative abilities are not certified for death");
+        var defaults=net.minecraft.world.entity.ai.attributes.DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);
+        for(var raw:p.getAttributes().save()){
+            var row=(CompoundTag)raw;var holder=net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.getHolder(net.minecraft.resources.ResourceLocation.parse(row.getString("id"))).orElseThrow();var live=p.getAttribute(holder);
+            if(live==null||!defaults.hasAttribute(holder)||Double.compare(live.getBaseValue(),defaults.getBaseValue(holder))!=0||!live.getModifiers().isEmpty())throw new IOException("Nondefault native attributes have no death custody adapter");
+        }
+        CompoundTag attachments=p.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments");
+        if(!Set.of("neoorigins:origin_data","neoorigins:resource_state","accessories:inventory_holder","curios:inventory","lightmanscurrency:wallet","lightmanscurrency:event_unlocks").containsAll(attachments.getAllKeys()))throw new IOException("Unknown attached death inventory; no lethal damage applied");
+        if(!attachments.getCompound("neoorigins:resource_state").isEmpty())throw new IOException("Active origin resource state is not certified for death");
+        if(attachments.contains("lightmanscurrency:wallet")){
+            CompoundTag wallet=attachments.getCompound("lightmanscurrency:wallet");
+            if(!Set.of("Wallet","Visible").containsAll(wallet.getAllKeys())||!wallet.contains("Wallet",10)||!wallet.getCompound("Wallet").isEmpty())throw new IOException("Occupied or unknown currency wallet; no wallet custody adapter");
+        }
+    }
     /** Only called from a validated accepted movement crossing. Never called on ticks/login/respawn. */
     static void attempt(ServerPlayer p){
         try{
             if(!p.isAlive()||p.isInvulnerableTo(p.damageSources().generic()))return;var c=JailIntegrated.escapeContext(p,true,true);if(c==null)return;destination(p,c);
-            // Experience has no custody adapter yet. Refuse rather than create dropped or lost XP.
-            if(p.totalExperience!=0||p.experienceLevel!=0||p.experienceProgress!=0)throw new IOException("Escape experience custody is unsupported; no lethal damage applied");
+            deathSurface(p);
             try(var j=journal(p.server,c.transaction())){
                 if(pending(j)!=null)return;
                 CompoundTag t=new CompoundTag();t.putUUID("custody",c.transaction());t.putByteArray("digest",c.digest());t.put("jail",c.assignment().jail().toTag());t.putInt("selected",p.getInventory().selected);

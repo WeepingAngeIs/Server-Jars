@@ -51,26 +51,42 @@ await_group() {
   done
   return 1
 }
+diagnose_group() {
+  ps -eo pid,ppid,pgid,stat,args | awk -v group="$1" 'NR==1 || $3==group' >&2
+  while read -r java_pid; do
+    timeout 15s jcmd "$java_pid" Thread.print -l > "$logs/shutdown-threads-$java_pid.txt" 2>&1 || true
+  done < <(ps -eo pid=,pgid=,comm= | awk -v group="$1" '$2==group && $3=="java" {print $1}')
+}
 cleanup() {
-  # Ask our own server to stop and finish native world/player saves first.
-  if [[ -n "$server_pid" ]] && group_alive "$server_pid"; then
-    printf 'stop\n' >&9
-    if ! await_group "$server_pid"; then
-      echo "Graceful disposable server shutdown timed out; terminating owned group $server_pid" >&2
-      ps -eo pid,ppid,pgid,stat,args | awk -v group="$server_pid" 'NR==1 || $3==group' >&2
-      kill -- -"$server_pid" 2>/dev/null || true
-    fi
-  fi
+  # Drain the two clients while the server is still ticking their disconnects.
   for pid in "$visitor_pid" "$client_pid"; do
     if [[ -n "$pid" ]]; then kill -- -"$pid" 2>/dev/null || true; fi
   done
+  for pid in "$visitor_pid" "$client_pid"; do
+    if [[ -n "$pid" ]] && ! await_group "$pid"; then diagnose_group "$pid"; return 1; fi
+  done
+  # Ask our own server to stop and finish native world/player saves first.
+  if [[ -n "$server_pid" ]] && group_alive "$server_pid"; then
+    shutdown_offset=$(wc -c < "$logs/server.log")
+    for ((attempt=0; attempt<30; attempt++)); do
+      printf 'list\n' >&9
+      sleep 0.5
+      if tail -c +"$((shutdown_offset+1))" "$logs/server.log" | grep -q 'There are 0 of a max of'; then break; fi
+    done
+    printf 'stop\n' >&9
+    if ! await_group "$server_pid"; then
+      echo "Graceful disposable server shutdown timed out; terminating owned group $server_pid" >&2
+      diagnose_group "$server_pid"
+      kill -- -"$server_pid" 2>/dev/null || true
+    fi
+  fi
   # The wrapper shell can exit before its JVM finishes shutdown. Do not start
   # another server until every owned process group is gone; never remove a lock.
   for pid in "$visitor_pid" "$client_pid" "$server_pid"; do
     if [[ -n "$pid" ]]; then
       if ! await_group "$pid"; then
         echo "Owned disposable process group still shutting down: $pid" >&2
-        ps -eo pid,ppid,pgid,stat,args | awk -v group="$pid" 'NR==1 || $3==group' >&2
+        diagnose_group "$pid"
         return 1
       fi
       wait "$pid" 2>/dev/null || true
