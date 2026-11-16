@@ -123,6 +123,7 @@ public final class TeamManager {
     }
 
     public static void onLogout(ServerPlayer p) {
+        pending.remove(p.getUUID());
         syncAllPlayers();
     }
 
