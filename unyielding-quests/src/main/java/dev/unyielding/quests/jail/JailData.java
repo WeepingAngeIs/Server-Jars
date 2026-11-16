@@ -23,6 +23,7 @@ public final class JailData extends SavedData {
     }
     private Loc location;
     private int geometry = LEGACY_GEOMETRY;
+    private boolean integratedCustodyInitialized;
     private final Map<UUID, Assignment> prisoners = new HashMap<>();
 
     public static JailData get(MinecraftServer server) {
@@ -31,6 +32,8 @@ public final class JailData extends SavedData {
     }
     public Loc location() { return location; }
     public int geometry() { return geometry; }
+    boolean integratedCustodyInitialized(){return integratedCustodyInitialized;}
+    void markIntegratedCustodyInitialized(){integratedCustodyInitialized=true;setDirty();}
     public void setLocation(Loc location) { setLocation(location, LEGACY_GEOMETRY); }
     public void setLocation(Loc location, int geometry) { this.location = location; this.geometry = geometry; setDirty(); }
     public boolean hasPrisoners() { return !prisoners.isEmpty(); }
@@ -42,6 +45,7 @@ public final class JailData extends SavedData {
         JailData data = new JailData();
         if (tag.contains("location", Tag.TAG_COMPOUND)) data.location = Loc.fromTag(tag.getCompound("location"));
         data.geometry = readGeometry(tag);
+        data.integratedCustodyInitialized=tag.getBoolean("integratedCustodyInitialized");
         for (Tag item : tag.getList("prisoners", Tag.TAG_COMPOUND)) {
             CompoundTag row = (CompoundTag) item;
             if (row.hasUUID("player") && row.contains("jail", Tag.TAG_COMPOUND) && row.contains("prior", Tag.TAG_COMPOUND))
@@ -56,6 +60,7 @@ public final class JailData extends SavedData {
     @Override public CompoundTag save(CompoundTag tag, HolderLookup.Provider ignored) {
         if (location != null) tag.put("location", location.toTag());
         tag.putInt("geometry", geometry);
+        if(integratedCustodyInitialized)tag.putBoolean("integratedCustodyInitialized",true);
         ListTag rows = new ListTag();
         prisoners.forEach((player, assignment) -> {
             CompoundTag row = new CompoundTag();

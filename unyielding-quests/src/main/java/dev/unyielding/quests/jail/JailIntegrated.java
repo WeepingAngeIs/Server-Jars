@@ -25,10 +25,10 @@ public final class JailIntegrated {
     public static void disposableCheckpoint(ServerPlayer p,Checkpoint value)throws IOException {if(!JailHumanAudit.disposable(p))throw new IOException("Fault hook unavailable");checkpoint=Objects.requireNonNull(value);}
     static Path root(MinecraftServer s){return s.getWorldPath(LevelResource.ROOT).resolve("integrated-jail-v1");}
     private static JailEscrowJournal plans(MinecraftServer s)throws IOException {
-        if(!s.isSameThread())throw new IOException("Command off server thread");JailEscrowJournal p=plans.get(s);if(p==null){p=new JailEscrowJournal(root(s));plans.put(s,p);}return p;
+        if(!s.isSameThread()||!JailData.get(s).integratedCustodyInitialized())throw new IOException("Integrated history not durably initialized");JailEscrowJournal p=plans.get(s);if(p==null){p=new JailEscrowJournal(root(s));plans.put(s,p);}return p;
     }
     static boolean blocked(MinecraftServer s,UUID owner){
-        if(!Files.exists(root(s),LinkOption.NOFOLLOW_LINKS))return false;
+        if(!Files.exists(root(s),LinkOption.NOFOLLOW_LINKS))return plans.containsKey(s)||JailData.get(s).integratedCustodyInitialized();
         try{return plans(s).list().stream().anyMatch(e->e.owner().equals(owner)&&e.state()!=JailEscrowJournal.State.COMPLETE&&e.state()!=JailEscrowJournal.State.CANCELLED);}catch(IOException bad){return true;}
     }
     public static void stopped(MinecraftServer s){var p=plans.remove(s);if(p!=null)try{p.close();}catch(IOException ignored){}checkpoint=b->{};}
@@ -195,7 +195,7 @@ public final class JailIntegrated {
     }
     public static void register(com.mojang.brigadier.CommandDispatcher<CommandSourceStack> dispatcher){
         dispatcher.register(Commands.literal("jailintegrated").requires(s->s.getEntity()==null&&s.hasPermission(2))
-            .then(Commands.literal("init").executes(c->{try{var s=c.getSource().getServer();JailCustodyService.ledger(s);if(Files.exists(root(s),LinkOption.NOFOLLOW_LINKS))throw new IOException("Existing integrated history must not be reset");JailEscrowJournal.provisionNew(root(s));plans(s);c.getSource().sendSuccess(()->net.minecraft.network.chat.Component.literal("Integrated history initialized; production admissions remain disabled."),true);return 1;}catch(IOException bad){return dev.unyielding.quests.essentials.Essentials.fail(c.getSource(),bad.getMessage());}}))
+            .then(Commands.literal("init").executes(c->{try{var s=c.getSource().getServer();JailCustodyService.ledger(s);if(JailData.get(s).integratedCustodyInitialized()||Files.exists(root(s),LinkOption.NOFOLLOW_LINKS))throw new IOException("Existing integrated history must not be reset");JailEscrowJournal.provisionNew(root(s));JailData.get(s).markIntegratedCustodyInitialized();saveAssignments(s);plans(s);c.getSource().sendSuccess(()->net.minecraft.network.chat.Component.literal("Integrated history initialized; production admissions remain disabled."),true);return 1;}catch(IOException bad){return dev.unyielding.quests.essentials.Essentials.fail(c.getSource(),bad.getMessage());}}))
             .then(Commands.literal("cancel").then(Commands.argument("transaction",UuidArgument.uuid()).executes(c->{try{cancel(c.getSource(),UuidArgument.getUuid(c,"transaction"));return 1;}catch(IOException bad){return dev.unyielding.quests.essentials.Essentials.fail(c.getSource(),bad.getMessage());}}))));
     }
     /** Console-only cancellation after proving no native removal/switch ever started. No item insertion. */
