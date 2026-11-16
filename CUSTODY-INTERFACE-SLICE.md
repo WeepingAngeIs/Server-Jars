@@ -100,3 +100,12 @@ and recovery authority, and a verified whole-path test matrix. Safe escape-death
 must distinguish actual supported custody from legacy/ambiguous records, retain
 items through death/respawn without duplication, and preserve console recovery.
 This slice neither adds escape-death punishment nor marks the full jail complete.
+
+## Focused native evidence
+
+Commit `6d5b3cf8c6dafe70c0d435855d4d327a07025843` passed the component build,
+policy tests, assembled dependency checks and all three native interface phases
+in [GitHub run 43798304231](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/43798304231),
+job `133072160166`. Its independently assembled JAR SHA-256 was
+`52c02df041b90e3bbcb46d825a959bc109a138a8be8cb84df5ca7277b8cf650a`.
+This evidence does not replace the main workflow's same-JAR regression sequence.
