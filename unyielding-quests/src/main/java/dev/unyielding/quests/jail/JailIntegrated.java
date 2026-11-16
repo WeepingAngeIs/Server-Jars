@@ -18,7 +18,7 @@ import net.minecraft.world.level.storage.LevelResource;
  * New admissions remain hosted-disposable-only until the complete confinement surface is audited. */
 public final class JailIntegrated {
     private JailIntegrated(){}
-    public enum Boundary { PLAN_DURABLE, ITEMS_DURABLE, HUMAN_DURABLE, ASSIGNMENT_DURABLE, CONFINED, ORIGIN_RETURNED, ITEMS_RETURNED, RETURN_POSITION_DURABLE, ASSIGNMENT_REMOVED, COMPLETE }
+    public enum Boundary { PLAN_DURABLE, ITEMS_MUTATED, ITEMS_DURABLE, HUMAN_DURABLE, ASSIGNMENT_DURABLE, CONFINED, ORIGIN_RETURNED, ITEMS_RETURNED, RETURN_POSITION_DURABLE, ASSIGNMENT_REMOVED, COMPLETE }
     @FunctionalInterface public interface Checkpoint {void at(Boundary boundary)throws IOException;}
     private static Checkpoint checkpoint=b->{};
     private static final Map<MinecraftServer,JailEscrowJournal> plans=new WeakHashMap<>();
@@ -93,7 +93,7 @@ public final class JailIntegrated {
         Path directory=root(s).resolve(id.toString());Files.createDirectory(directory);JailEscrowJournal.provisionNew(directory.resolve("items"));JailEscrowJournal.provisionNew(directory.resolve("origins"));
         JailCustodyService.ledger(s).bind(id,target.getUUID(),relative(id,"items"),relative(id,"origins"),plan.getByteArray("digest"),new JailCustodyLedger.Anchor(dest.dim(),anchor.getX(),anchor.getY(),anchor.getZ()),actor.getTextName());
         try(var items=journal(s,id,"items");var origins=journal(s,id,"origins")){
-            permitted(actor,target);JailVanillaCustody.removeForDisposableTest(items,id,inventory,b->permitted(actor,target));checkpoint.at(Boundary.ITEMS_DURABLE);
+            permitted(actor,target);JailVanillaCustody.removeForDisposableTest(items,id,inventory,b->{permitted(actor,target);if(b==JailVanillaCustody.Boundary.MUTATED)checkpoint.at(Boundary.ITEMS_MUTATED);});checkpoint.at(Boundary.ITEMS_DURABLE);
             if(!Arrays.equals(human.state(),nativePort.current().state()))throw new IOException("Human audit changed during removal");
             JailOriginTransaction.temporaryForDisposableTest(origins,items,id,nativePort,b->permitted(actor,target));checkpoint.at(Boundary.HUMAN_DURABLE);
         }

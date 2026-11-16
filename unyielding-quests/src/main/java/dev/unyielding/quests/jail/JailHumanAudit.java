@@ -25,7 +25,7 @@ final class JailHumanAudit {
     static Object call(String type,Object target,String method)throws IOException{return call(type,target,method,new Class<?>[0]);}
     static Object singleton(String type)throws IOException{try{return Class.forName(type).getField("INSTANCE").get(null);}catch(ReflectiveOperationException e){throw new IOException("Missing audited registry",e);}}
     static Object data(ServerPlayer p)throws IOException {var type=(AttachmentType<?>)call("com.cyberday1.neoorigins.attachment.OriginAttachments",null,"originData");Object data=p.getExistingDataOrNull(type);if(data==null)throw new IOException("Origin attachment absent; never create one during admission");return data;}
-    static boolean disposable(ServerPlayer p){return "true".equals(System.getenv("GITHUB_ACTIONS"))&&"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT"))&&Boolean.getBoolean("uq.integratedJail")&&p.server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).getFileName().toString().equals("jail_integrated_smoke");}
+    static boolean disposable(ServerPlayer p){return "true".equals(System.getenv("GITHUB_ACTIONS"))&&"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT"))&&Boolean.getBoolean("uq.integratedJail")&&p.server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).toAbsolutePath().normalize().getFileName().toString().equals("jail_integrated_smoke");}
     private static String hash(Path path)throws IOException {
         var a=Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class);Hashed old=hashes.get(path);if(old!=null&&Objects.equals(old.key(),a.fileKey())&&old.size()==a.size()&&old.modified()==a.lastModifiedTime().toMillis())return old.hash();
         try{MessageDigest digest=MessageDigest.getInstance("SHA-512");try(var input=Files.newInputStream(path)){byte[] bytes=new byte[65536];for(int n;(n=input.read(bytes))>=0;)digest.update(bytes,0,n);}String value=HexFormat.of().formatHex(digest.digest());hashes.put(path,new Hashed(a.fileKey(),a.size(),a.lastModifiedTime().toMillis(),value));return value;}catch(java.security.NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
@@ -47,6 +47,8 @@ final class JailHumanAudit {
     @SuppressWarnings("unchecked") static Result inspect(ServerPlayer p)throws IOException {
         if(!p.server.isSameThread()||!p.isAlive()||p.hasDisconnected()||p.server.getPlayerList().getPlayer(p.getUUID())!=p)throw new IOException("Subject offline, dead or not authoritative");
         String runtime=runtime(p);Object data=data(p);
+        if(!p.getActiveEffects().isEmpty())throw new IOException("Active effects require another audited contract");
+        for(Tag raw:p.saveWithoutId(new CompoundTag()).getList("attributes",10))if(!((CompoundTag)raw).getList("modifiers",10).isEmpty())throw new IOException("Residual/equipped attribute modifiers are unsupported");
         if((int)call(DATA,data,"getEvolutionTier")!=0||!Boolean.TRUE.equals(call(DATA,data,"isHadAllOrigins")))throw new IOException("Only settled tier-zero Human origin is certified");
         for(String pending:List.of("isPendingOrbCommit","isPendingLayerPickerCommit","isPendingAdminReselect"))if(Boolean.TRUE.equals(call(DATA,data,pending)))throw new IOException("Pending origin selection");
         for(String granted:List.of("getDynamicGrantedPowers","getGlobalGrantedPowers"))if(!((Set<?>)call(DATA,data,granted)).isEmpty())throw new IOException("Unaudited dynamic/global powers");

@@ -49,11 +49,7 @@ jobs:
           LIBGL_ALWAYS_SOFTWARE: 'true'
           ALSOFT_DRIVERS: 'null'
         run: |
-          for phase in 1 2 3; do
-            export JAVA_TOOL_OPTIONS="-Duq.integratedJail=true -Duq.integratedPhase=$phase"
-            bash .github/scripts/meeting-two-player.sh
-            cp -a dist/packaged-smoke/jail-player-logs "dist/packaged-smoke/integrated-phase$phase"
-          done
+          bash .github/scripts/integrated-jail-smoke.sh
       - name: Upload integrated jail evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

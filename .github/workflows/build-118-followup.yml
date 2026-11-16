@@ -142,6 +142,8 @@ jobs:
             bash .github/scripts/meeting-two-player.sh
             cp -a dist/packaged-smoke/jail-player-logs "dist/packaged-smoke/interface-phase$phase"
           done
+      - name: Integrated jail commands production adapters and fault/restart conservation
+        run: bash .github/scripts/integrated-jail-smoke.sh
       - name: Upload build and checksums
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

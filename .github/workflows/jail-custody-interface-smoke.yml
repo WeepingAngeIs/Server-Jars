@@ -54,12 +54,12 @@ jobs:
           LIBGL_ALWAYS_SOFTWARE: 'true'
           ALSOFT_DRIVERS: 'null'
         run: |
+          if [[ '${{ inputs.integrated }}' == true ]]; then
+            bash .github/scripts/integrated-jail-smoke.sh
+            exit
+          fi
           for phase in 1 2 3; do
-            if [[ '${{ inputs.integrated }}' == true ]]; then
-              export JAVA_TOOL_OPTIONS="-Duq.integratedJail=true -Duq.integratedPhase=$phase"
-            else
-              export JAVA_TOOL_OPTIONS="-Duq.custodyInterface=true -Duq.interfacePhase=$phase"
-            fi
+            export JAVA_TOOL_OPTIONS="-Duq.custodyInterface=true -Duq.interfacePhase=$phase"
             bash .github/scripts/meeting-two-player.sh
             cp -a dist/packaged-smoke/jail-player-logs "dist/packaged-smoke/interface-phase$phase"
           done

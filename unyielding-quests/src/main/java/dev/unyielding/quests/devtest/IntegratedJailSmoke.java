@@ -46,6 +46,23 @@ public final class IntegratedJailSmoke {
         byte[] before=inventory(id,null);require(command("unjail Visitor")==0,"repeat unjail succeeded");require(Arrays.equals(before,inventory(id,null)),"repeat unjail changed inventory");
         require(target.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,target.getBoundingBox().inflate(128)).isEmpty(),"custody produced ground drops/overflow");
     }
+    static void confirmReturn(UUID id)throws Exception {require(command("jailcustody confirm "+id)==1,"explicit saved-phase confirmation failed: "+id);require(command("jailcustody review "+id)==1&&command("jailcustody restore "+id)==1,"confirmed release failed");returned(id);}
+    static void faults()throws Exception {
+        for(var at:List.of(JailIntegrated.Boundary.ITEMS_DURABLE,JailIntegrated.Boundary.HUMAN_DURABLE,JailIntegrated.Boundary.ASSIGNMENT_DURABLE,JailIntegrated.Boundary.CONFINED)){
+            JailIntegrated.disposableCheckpoint(target,b->{if(b==at)throw new IOException("command admission fault "+at);});require(command("jail Visitor")==0,"admission boundary not reached: "+at);UUID id=JailIntegrated.activeTransaction(target.server,target.getUUID());require(target.getInventory().isEmpty()&&JailCustodyService.quarantined(target),"fault lost source/quarantine: "+at);
+            JailIntegrated.disposableCheckpoint(target,b->{});require(command("jailcustody confirm "+id)==1,"admission saved-phase confirmation failed: "+at);require(command("unjail Visitor")==1,"confirmed command return failed: "+at);returned(id);
+        }
+        for(var at:List.of(JailIntegrated.Boundary.ORIGIN_RETURNED,JailIntegrated.Boundary.RETURN_POSITION_DURABLE,JailIntegrated.Boundary.ASSIGNMENT_REMOVED,JailIntegrated.Boundary.COMPLETE)){
+            require(command("jail Visitor")==1,"release fault setup failed");UUID id=record().id();JailIntegrated.disposableCheckpoint(target,b->{if(b==at)throw new IOException("command return fault "+at);});require(command("unjail Visitor")==0,"release boundary not reached: "+at);require(JailCustodyService.quarantined(target),"fault lifted quarantine early: "+at);
+            JailIntegrated.disposableCheckpoint(target,b->{});confirmReturn(id);
+        }
+        Path file=world.resolve("playerdata/"+target.getUUID()+".dat"),directory=file.getParent();var oldDirectory=Files.getPosixFilePermissions(directory);var oldFile=Files.getPosixFilePermissions(file);boolean[] reached={false};
+        try{
+            JailIntegrated.disposableCheckpoint(target,b->{if(b==JailIntegrated.Boundary.ITEMS_MUTATED){reached[0]=true;Files.setPosixFilePermissions(file,java.nio.file.attribute.PosixFilePermissions.fromString("r--r--r--"));Files.setPosixFilePermissions(directory,java.nio.file.attribute.PosixFilePermissions.fromString("r-xr-xr-x"));}});
+            require(command("jail Visitor")==0&&reached[0]&&target.getInventory().isEmpty(),"actual player-save write failure did not hold custody");
+        }finally{Files.setPosixFilePermissions(directory,oldDirectory);Files.setPosixFilePermissions(file,oldFile);JailIntegrated.disposableCheckpoint(target,b->{});}
+        UUID id=record().id();require(command("jailcustody confirm "+id)==0,"unsaved removal falsely confirmed");saved();require(command("jailcustody confirm "+id)==1,"explicit persisted receipt not recovered");require(command("unjail Visitor")==1,"write-fault return failed");returned(id);
+    }
     static void phase1()throws Exception {
         admin.server.getPlayerList().op(admin.getGameProfile());target.setInvulnerable(true);admin.setInvulnerable(true);BlockPos min=site();admin.teleportTo(admin.serverLevel(),min.getX()+3.5,min.getY(),min.getZ()-7.5,0,0);
         require(staff("jailbuild preview")>0&&staff("jailbuild place")>0,"real jail placement failed");target.teleportTo(target.serverLevel(),min.getX()-3.5,min.getY(),min.getZ()-3.5,0,0);human();
@@ -58,6 +75,7 @@ public final class IntegratedJailSmoke {
         admin.server.getPlayerList().deop(admin.getGameProfile());require(!admin.server.getCommands().getDispatcher().getRoot().getChild("unjail").canUse(admin.createCommandSourceStack()),"lost permission retained command");admin.server.getPlayerList().op(admin.getGameProfile());
         BlockPos anchor=new BlockPos(first.anchor().x(),first.anchor().y(),first.anchor().z());admin.serverLevel().setBlock(anchor,Blocks.AIR.defaultBlockState(),3);require(command("unjail Visitor")==0&&target.getInventory().isEmpty(),"lost interface allowed normal release");require(command("jailcustody reattach "+first.id()+" "+anchor.getX()+" "+anchor.getY()+" "+anchor.getZ())==1,"logical interface reattach failed");
         require(command("unjail Visitor")==1,"actual managed release failed");returned(first.id());
+        faults();
         JailIntegrated.disposableCheckpoint(target,b->{if(b==JailIntegrated.Boundary.HUMAN_DURABLE)throw new IOException("injected persisted admission before confinement");});require(command("jail Visitor")==0,"admission fault was not injected");var held=record();require(target.getInventory().isEmpty()&&JailCustodyService.quarantined(target)&&JailData.get(admin.server).assignment(target.getUUID())==null,"interrupted admission lost quarantine/source");
         require(command("unjail Visitor")==0&&command("unjail pardonuuid "+target.getUUID())==0,"legacy recovery bypassed custody");Files.writeString(world.resolve("active-transaction"),held.id().toString());saved();target.connection.disconnect(Component.literal("Disposable integrated disconnect"));waiting=true;
     }
@@ -70,13 +88,17 @@ public final class IntegratedJailSmoke {
         UUID id=UUID.fromString(Files.readString(world.resolve("active-transaction")));require(Arrays.equals(source,inventory(id,null))&&JailCustodyService.quarantined(target),"saved return lost across restart");
         require(command("jailcustody confirm "+id)==1,"saved return confirmation failed");require(command("jailcustody review "+id)==1&&command("jailcustody restore "+id)==1,"verified logical release failed");returned(id);require(command("jailcustody restore "+id)==1,"terminal restore no-op rejected");require(Arrays.equals(source,inventory(id,null)),"terminal restore duplicated items");saved();pass();
     }
+    static void dependencyProbe()throws Exception {
+        UUID id=UUID.fromString(Files.readString(world.resolve("active-transaction")));require(net.neoforged.fml.ModList.get().isLoaded("uq_uncertified_runtime"),"extra dependency did not actually load");byte[] before=inventory(id,null);require(Arrays.equals(source,before)&&JailCustodyService.quarantined(target),"dependency probe lost persisted custody");
+        require(command("unjail Visitor")==0&&command("jailcustody confirm "+id)==0&&command("jailcustody restore "+id)==0,"changed dependency allowed recovery");require(Arrays.equals(before,inventory(id,null))&&Arrays.equals(source,JailCustodyService.items(admin.server,record()).snapshot())&&JailCustodyService.quarantined(target),"dependency refusal changed/granted inventory");saved();pass();
+    }
     static void pass()throws IOException {Files.writeString(Path.of("/tmp/uq-integrated-result"),"passed: actual /jail /unjail production Human/empty-accessory ports phase "+phase+"; exact packed slots and nested conservation, no repeated grant, persisted interruption, disconnect/restart, permissions and interface recovery\n");}
     @SubscribeEvent public static void tick(ServerTickEvent.Post event){
         if(!Boolean.getBoolean("uq.integratedJail"))return;try{
             if(waiting){if(!target.hasDisconnected()||event.getServer().getPlayerList().getPlayer(target.getUUID())!=null)return;waiting=false;require(command("jailcustody review "+record().id())==0,"offline target accepted");pass();return;}
             if(done)return;admin=event.getServer().getPlayerList().getPlayerByName("Dev");target=event.getServer().getPlayerList().getPlayerByName("Visitor");if(admin==null||target==null||event.getServer().getTickCount()<120)return;done=true;
             world=event.getServer().getWorldPath(LevelResource.ROOT);require("true".equals(System.getenv("GITHUB_ACTIONS"))&&"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT"))&&world.toRealPath().getFileName().toString().equals("jail_integrated_smoke"),"wrong runtime/world");require(Path.of(System.getenv("UQ_BUNDLE_JAR")).toRealPath().equals(net.neoforged.fml.ModList.get().getModFileById("unyieldingquests").getFile().getFilePath().toRealPath()),"not final assembled JAR");
-            phase=Integer.getInteger("uq.integratedPhase",1);if(phase==1)phase1();else{source=Files.readAllBytes(world.resolve("expected-items.nbt"));if(phase==2)phase2();else if(phase==3)phase3();else throw new IOException("unknown phase");}
+            phase=Integer.getInteger("uq.integratedPhase",1);if(phase==1)phase1();else{source=Files.readAllBytes(world.resolve("expected-items.nbt"));if(Boolean.getBoolean("uq.integratedDependencyProbe"))dependencyProbe();else if(phase==2)phase2();else if(phase==3)phase3();else throw new IOException("unknown phase");}
         }catch(Throwable bad){done=true;waiting=false;UnyieldingQuests.LOGGER.error("Integrated jail commands failed",bad);try{Files.writeString(Path.of("/tmp/uq-integrated-result"),"failed: "+bad+"\n");}catch(IOException ignored){}}
     }
 }
