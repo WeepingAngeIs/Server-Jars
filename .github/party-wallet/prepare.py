@@ -16,6 +16,13 @@ s = p.read_text()
 needle = '    @SubscribeEvent public static void tick(ServerTickEvent.Post event){'
 assert s.count(needle) == 1
 p.write_text(s.replace(needle, needle+'\n        if(Boolean.getBoolean("uq.partyWalletProbe"))return;', 1))
+# The destructive origin seed helper has its own world allowlist. Extend only
+# that TEST fixture for this named synthetic experiment; retain hosted guards.
+p=source/'OriginCustodyPort.java';s=p.read_text()
+needle='||!(Boolean.getBoolean("uq.originCustody")'
+replacement='||!(Boolean.getBoolean("uq.partyWalletProbe")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_integrated_smoke")||Boolean.getBoolean("uq.originCustody")'
+assert s.count(needle)==1
+p.write_text(s.replace(needle,replacement,1))
 shutil.copy2(ROOT/'.github/party-wallet/PartyWalletProbe.java', source)
 evidence=ROOT/'dist/packaged-smoke/api-audit'
 evidence.mkdir()
