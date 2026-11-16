@@ -113,3 +113,10 @@ in [GitHub run 43798304231](https://github.com/WeepingAngeIs/Server-Jars/actions
 job `133072160166`. Its independently assembled JAR SHA-256 was
 `52c02df041b90e3bbcb46d825a959bc109a138a8be8cb84df5ca7277b8cf650a`.
 This evidence does not replace the main workflow's same-JAR regression sequence.
+
+The sealed display/slot APIs additionally passed all phases at commit
+`e9f79fd3d4bdba7d7f3a0b3e97368ee8c9c2ec4b` in
+[run 43800692226](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/43800692226),
+job `133079981220`, including direct standard extraction/insertion calls and
+detached preview values. That run's assembled SHA-256 was
+`045bac979045ce9fd72df940c9b895afaf22d7507537fba85fda4278c30a30c2`.
