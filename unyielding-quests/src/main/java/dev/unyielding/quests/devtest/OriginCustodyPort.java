@@ -161,6 +161,7 @@ final class OriginCustodyPort implements JailOriginTransaction.Port {
         CompoundTag body=new CompoundTag();body.putString("dependencies",DEPS);body.putString("definitions",audit());body.put("origin_data",attachment(saved));body.put("claims",claimState(claims));
         body.put("all_claims",allClaims(claims));body.putByteArray("inventory",itemView.inventory());body.put("accessories",accessoryState(saved));body.put("attributes",attributes(saved));body.putFloat("health",saved.getFloat("Health"));
         CompoundTag r=saved.getCompound("NeoForgeData").getCompound(RECEIPT).copy();body.put("receipt",r);
+        CompoundTag otherPersistent=saved.getCompound("NeoForgeData").copy();otherPersistent.remove(RECEIPT);body.put("other_persistent",otherPersistent);
         UUID tx=r.hasUUID("transaction")?r.getUUID("transaction"):null;JailOriginTransaction.Receipt phase=JailOriginTransaction.Receipt.NONE;
         if(!r.isEmpty())try{phase=JailOriginTransaction.Receipt.valueOf(r.getString("phase"));}catch(IllegalArgumentException unsafe){throw new IOException("Unknown origin receipt",unsafe);}
         return new JailOriginTransaction.View(encode(body),tx,phase);
@@ -214,7 +215,7 @@ final class OriginCustodyPort implements JailOriginTransaction.Port {
     @Override public JailOriginTransaction.View planTemporary(byte[] intent,UUID id)throws IOException{return plan(intent,id,true);}
     @Override public JailOriginTransaction.View planOriginal(byte[] intent,UUID id)throws IOException{return plan(intent,id,false);}
     private void mutate(byte[] bytes,UUID tx,boolean temporary)throws IOException {
-        var planned=temporary?planTemporary(bytes,tx):planOriginal(bytes,tx);Object data=data();int version=(int)call(DATA,data,"version");Object claims=claims();
+        var planned=temporary?planTemporary(bytes,tx):planOriginal(bytes,tx);CompoundTag receiptBefore=player.getPersistentData().getCompound(RECEIPT).copy();Object data=data();int version=(int)call(DATA,data,"version");Object claims=claims();
         CompoundTag expectedBefore=temporary?intent.getCompound("claims_before"):expectedClaims(true);if(!claimState(claims).equals(expectedBefore))throw new IOException("Claim ownership changed before mutation");
         if(temporary&&intent.getCompound("claims_before").getBoolean("unique")&&!intent.getBoolean("human_preowned")){
             if(owner(claims,human)!=null)throw new IOException("Human claim conflict");call(CLAIMS,claims,"claim",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},layer,human,owner());
@@ -228,6 +229,7 @@ final class OriginCustodyPort implements JailOriginTransaction.Port {
         // The only planned claim change during callbacks is the earlier lease
         // acquisition; native power hooks are not allowed to change any claims.
         CompoundTag beforeLeaseRelease=decode(current().state()),expectedBeforeRelease=decode(planned.state());
+        if(!beforeLeaseRelease.getCompound("receipt").equals(receiptBefore))throw new IOException("Origin callback changed custody receipt");
         expectedBeforeRelease.put("claims",expectedClaims(true));expectedBeforeRelease.put("all_claims",expectedAllClaims(true));beforeLeaseRelease.put("receipt",expectedBeforeRelease.getCompound("receipt").copy());
         if(!beforeLeaseRelease.equals(expectedBeforeRelease))throw new IOException("Origin callback changed undeclared state before lease release");
         if(!temporary&&intent.getCompound("claims_before").getBoolean("unique")&&!intent.getBoolean("human_preowned")){

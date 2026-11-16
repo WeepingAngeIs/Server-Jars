@@ -44,6 +44,8 @@ public final class OriginCustodySmoke {
                     case "throw"->throw new IllegalStateException("injected native event callback failure");
                     case "item"->player.getInventory().setItem(1,new ItemStack(Items.DIRT));
                     case "progress"->OriginCustodyPort.call(OriginCustodyPort.DATA,data(player),"setCustomFloat",new Class<?>[]{String.class,float.class},"callback",99f);
+                    case "receipt"->{CompoundTag bad=new CompoundTag();bad.putUUID("transaction",UUID.randomUUID());bad.putString("phase","ORIGINAL");player.getPersistentData().put(OriginCustodyPort.RECEIPT,bad);}
+                    case "marker"->player.getPersistentData().putUUID("uq_disposable_custody",UUID.randomUUID());
                     default->{}
                 }
             }catch(IOException|ReflectiveOperationException error){throw new IllegalStateException(error);}}));
@@ -119,7 +121,7 @@ public final class OriginCustodySmoke {
                 require(items.read(id).snapshot().length>100&&player.getInventory().isEmpty(),"custody source lost or inserted during fault");
             }
         }
-        for(String fault:List.of("throw","item","progress"))for(boolean restore:new boolean[]{false,true}){
+        for(String fault:List.of("throw","item","progress","receipt","marker"))for(boolean restore:new boolean[]{false,true}){
             var p=seed(player,OriginCustodyPort.ALPHA);UUID id=UUID.randomUUID();Path dir=root.resolve("callback-"+fault+restore);prepare(dir,id,p);if(restore)temporary(dir,id,p,at->{});
             int priorCallbacks=callbacks;mode=fault;refuse(()->{if(restore)original(dir,id,p,at->{});else temporary(dir,id,p,at->{});});mode="normal";int count=callbacks;require(count==priorCallbacks+1,"native fault callback not exercised");
             try(var items=new JailEscrowJournal(dir.resolve("items"));var origins=new JailEscrowJournal(dir.resolve("origins"))){
