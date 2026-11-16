@@ -1,7 +1,10 @@
 # Split companion certificate and bounded runtime validation
 
-This follow-up preserves the extracted implementation. The only production jail
-change is a narrowly extended runtime certificate. All 39 relocated jail classes,
+This follow-up preserves the extracted implementation. Production changes are a
+narrowly extended runtime certificate and corrected loader metadata for the exact
+pinned Cobblemon version `1.8.4+1.21.1`. The initial runtime attempt found that
+`[1.8.4]` rejected this binary before startup. The constraint is corrected to
+`[1.8.4+1.21.1]`, not broadened to a version wildcard. All 39 relocated jail classes,
 four mixins, admission switches, runtime audit code, custody journals and original
 fixture sources remain unchanged from the extraction.
 

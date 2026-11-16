@@ -30,7 +30,7 @@ side = "BOTH"
 [[dependencies.minecraftjail]]
 modId = "cobblemon"
 type = "required"
-versionRange = "[1.8.4]"
+versionRange = "[1.8.4+1.21.1]"
 ordering = "AFTER"
 side = "BOTH"
 
