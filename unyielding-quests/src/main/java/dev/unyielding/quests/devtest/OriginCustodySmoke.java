@@ -131,17 +131,23 @@ public final class OriginCustodySmoke {
             var p=seed(player,OriginCustodyPort.ALPHA);UUID id=UUID.randomUUID();Path dir=root.resolve("save-"+boundary+restore);prepare(dir,id,p);if(restore)temporary(dir,id,p,at->{});
             JailOriginTransaction.Checkpoint inject=at->{if(at==JailOriginTransaction.Boundary.BEFORE_SAVE)p.saveFault=b->{if(b==boundary)throw new IOException("injected split save "+b);};};
             refuse(()->{if(restore)original(dir,id,p,inject);else temporary(dir,id,p,inject);});p.saveFault=at->{};
-            try(var origins=new JailEscrowJournal(dir.resolve("origins"))){require(origins.read(id).state()==(restore?JailEscrowJournal.State.RESTORE_STARTED:JailEscrowJournal.State.REMOVAL_STARTED),"save failure promoted transaction");}
+            try(var origins=new JailEscrowJournal(dir.resolve("origins"));var items=new JailEscrowJournal(dir.resolve("items"))){require(origins.read(id).state()==(restore?JailEscrowJournal.State.RESTORE_STARTED:JailEscrowJournal.State.REMOVAL_STARTED),"save failure promoted transaction");
+                var expected=boundary==OriginCustodyPort.SaveBoundary.BEFORE_PLAYER||boundary==OriginCustodyPort.SaveBoundary.AFTER_PLAYER?JailOriginTransaction.Inspection.REVIEW_REQUIRED:restore?JailOriginTransaction.Inspection.ORIGINAL_SAVED_REVIEW:JailOriginTransaction.Inspection.TEMPORARY_SAVED_REVIEW;
+                require(JailOriginTransaction.inspect(origins,items,id,p)==expected,"split native save misclassified "+boundary+" restore="+restore);
+                if(expected==JailOriginTransaction.Inspection.REVIEW_REQUIRED)refuse(()->JailOriginTransaction.confirmSavedForDisposableTest(origins,items,id,p));
+            }
             held(dir,id,p);
         }
     }
     static void negatives(Path root,ServerPlayer player,ServerPlayer other)throws Exception {
-        for(String fault:List.of("tier","picker","cooldown","class","humanConflict","originalConflict")){
+        for(String fault:List.of("tier","picker","cooldown","class","dynamic","global","humanConflict","originalConflict")){
             var p=seed(player,OriginCustodyPort.ALPHA);byte[] before=p.inventory.current().inventory();Object d=p.data();Object claims=p.claims();
             switch(fault){
                 case "tier"->callData(p,"setEvolutionTier",new Class<?>[]{int.class},1);
                 case "picker"->callData(p,"setPendingLayerPickerCommit",new Class<?>[]{boolean.class},true);
                 case "cooldown"->callData(p,"setCooldown",new Class<?>[]{String.class,int.class,int.class},"probe",player.tickCount,9999);
+                case "dynamic"->callData(p,"addDynamicGrant",new Class<?>[]{ResourceLocation.class},OriginCustodyPort.POWER);
+                case "global"->callData(p,"addGlobalGrant",new Class<?>[]{ResourceLocation.class},OriginCustodyPort.POWER);
                 case "class"->{var classLayer=layerFor(OriginCustodyPort.KEPT_CLASS,p.selections());callData(p,"setOrigin",new Class<?>[]{ResourceLocation.class,ResourceLocation.class},classLayer,OriginCustodyPort.id("origins_classes_ex:crusader"));}
                 case "humanConflict","originalConflict"->OriginCustodyPort.call(OriginCustodyPort.CLAIMS,claims,"claim",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},p.layer,fault.equals("humanConflict")?p.human:p.original,other.getUUID());
             }
@@ -152,6 +158,13 @@ public final class OriginCustodySmoke {
                 OriginCustodyPort.call(OriginCustodyPort.CLAIMS,claims,"releaseIfOwner",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},p.layer,origin,other.getUUID());
             }
         }
+        for(boolean humanConflict:new boolean[]{false,true}){
+            var conflict=seed(player,OriginCustodyPort.ALPHA);UUID tx=UUID.randomUUID();Path test=root.resolve("late-claim-"+humanConflict);prepare(test,tx,conflict);temporary(test,tx,conflict,at->{});
+            var contested=humanConflict?conflict.human:conflict.original;Object claims=conflict.claims();
+            OriginCustodyPort.call(OriginCustodyPort.CLAIMS,claims,"claim",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},conflict.layer,contested,other.getUUID());
+            int before=callbacks;refuse(()->original(test,tx,conflict,at->{}));held(test,tx,conflict);require(before==callbacks&&other.getUUID().equals(conflict.owner(claims,contested)),"late conflict stole/released a claim");
+            OriginCustodyPort.call(OriginCustodyPort.CLAIMS,claims,"releaseIfOwner",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},conflict.layer,contested,other.getUUID());
+        }
         var p=seed(player,OriginCustodyPort.ALPHA);UUID id=UUID.randomUUID();Path dir=root.resolve("preowned");
         OriginCustodyPort.call(OriginCustodyPort.CLAIMS,p.claims(),"claim",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},p.layer,p.human,p.owner());p.persistAndVerify();prepare(dir,id,p);temporary(dir,id,p,at->{});original(dir,id,p,at->{});
         require(p.owner().equals(p.owner(p.claims(),p.human)),"preexisting self claim deleted");
@@ -160,7 +173,7 @@ public final class OriginCustodySmoke {
         if(!Boolean.getBoolean("uq.originCustody"))return;
         try{
             if(disconnecting!=null){if(!disconnecting.hasDisconnected()||event.getServer().getPlayerList().getPlayer(disconnecting.getUUID())!=null)return;
-                var p=reopen(pendingDirectory,DEV,disconnecting);int count=callbacks;refuse(()->original(pendingDirectory,DEV,p,at->{}));require(callbacks==count,"offline restore invoked native lifecycle");passed(1);disconnecting=null;return;}
+                var p=reopen(pendingDirectory,DEV,disconnecting);int count=callbacks;refuse(()->original(pendingDirectory,DEV,p,at->{}));require(callbacks==count,"offline restore invoked native lifecycle");require(p.owner().equals(p.owner(p.claims(),p.original))&&p.owner().equals(p.owner(p.claims(),p.human)),"disconnect released origin reservation/lease");passed(1);disconnecting=null;return;}
             if(finished)return;var server=event.getServer();var dev=server.getPlayerList().getPlayerByName("Dev");var visitor=server.getPlayerList().getPlayerByName("Visitor");if(dev==null||visitor==null||server.getTickCount()<120)return;finished=true;
             require("true".equals(System.getenv("GITHUB_ACTIONS"))&&"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT")),"hosted fixtures only");require(server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_origin_smoke"),"wrong fixture world");
             require(Path.of(System.getenv("UQ_BUNDLE_JAR")).toRealPath().equals(net.neoforged.fml.ModList.get().getModFileById("unyieldingquests").getFile().getFilePath().toRealPath()),"not final assembled JAR");listeners();

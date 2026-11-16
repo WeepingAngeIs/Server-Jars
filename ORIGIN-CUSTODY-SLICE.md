@@ -69,3 +69,17 @@ Those production fences, the protected chest UI, integrated admission/release,
 and escape punishment remain unfinished. No universal accessory enablement is
 claimed, and admissions must stay disabled until the entire supported path is
 implemented and verified against the same final JAR.
+
+The concrete port boundary is `JailVanillaCustody.InventoryPort`: `validateRemoval`
+must reject unsupported providers without calling them, `current` and `durable`
+must encode identical canonical physical channels and receipts, `planRestore`
+must be data-only and capacity-complete, `clearAndMark`/`restoreExact` must execute
+the audited native lifecycle once, and `persistAndVerify` must force/read back
+all stores and their effects. An audit descriptor must bind the binary hashes,
+registered global callback identities, native slot/backing coverage and effect
+scope to the snapshot version; any descriptor change during custody refuses.
+Native `AccessoriesInternalSlot.mayPickup/mayPlace/remove/set` and the genuine
+Accessories tick settlement are part of that descriptor, including the distinct
+cosmetic semantics and Curios compatibility aliases. The existing controlled
+fixture adapter demonstrates these calls, but does not certify third-party
+providers, unbounded callbacks or the missing production quarantine.

@@ -105,4 +105,15 @@ class JailOriginTransactionTest {
             assertEquals(JailEscrowJournal.State.HELD,origin.read(id).state());assertEquals(JailOriginTransaction.Inspection.REVIEW_REQUIRED,JailOriginTransaction.inspect(origin,inv,id,p));
         }
     }
+    @Test void anotherCustodySnapshotWithTheSameIdentityCannotAuthorizeRelease()throws Exception {
+        Path o=temp.resolve("origins"),i=temp.resolve("items"),substitute=temp.resolve("substitute");
+        JailEscrowJournal.provisionNew(o);JailEscrowJournal.provisionNew(i);JailEscrowJournal.provisionNew(substitute);Port p=new Port();UUID id=UUID.randomUUID();
+        try(var origins=new JailEscrowJournal(o);var inventory=new JailEscrowJournal(i);var wrong=new JailEscrowJournal(substitute)){
+            held(inventory,id,p.owner());JailOriginTransaction.temporaryForDisposableTest(origins,inventory,id,p,at->{});
+            wrong.begin(id,p.owner(),new byte[]{77,88});wrong.transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.REMOVAL_STARTED);wrong.transition(id,JailEscrowJournal.State.REMOVAL_STARTED,JailEscrowJournal.State.HELD);
+            int callbacks=p.changes;assertThrows(IOException.class,()->JailOriginTransaction.originalForDisposableTest(origins,wrong,id,p,at->{}));
+            assertEquals(callbacks,p.changes);assertEquals(JailOriginTransaction.Inspection.REVIEW_REQUIRED,JailOriginTransaction.inspect(origins,wrong,id,p));
+            assertEquals(JailEscrowJournal.State.HELD,origins.read(id).state());
+        }
+    }
 }
