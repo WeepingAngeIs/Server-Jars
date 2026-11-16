@@ -7,7 +7,7 @@ import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
-/** Observes actual handled movement packets; never moves, kills or changes inventory. */
+/** Observes accepted boundary crossings; only certified managed custody may start an escape consequence. */
 public final class JailEscape {
     private static final ResourceLocation ADVANCEMENT = ResourceLocation.fromNamespaceAndPath("unyieldingquests", "jail_escape");
     private static final Map<ServerPlayer, Step> ACTIVE = new WeakHashMap<>();
@@ -59,5 +59,6 @@ public final class JailEscape {
         var advancement = player.server.getAdvancements().get(ADVANCEMENT);
         if (advancement != null && !player.getAdvancements().getOrStartProgress(advancement).isDone())
             player.getAdvancements().award(advancement, "escape");
+        JailEscapeCustody.attempt(player);
     }
 }

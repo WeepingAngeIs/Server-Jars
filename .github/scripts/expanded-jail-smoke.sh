@@ -26,7 +26,7 @@ for file in sorted(target.rglob('*')):
 PY
 }
 trap collect_evidence EXIT
-for phase in 1 2 3; do
+for phase in 1 2 3 4 5; do
   export JAVA_TOOL_OPTIONS="-Duq.integratedJail=true -Duq.expandedJail=true -Duq.expandedPhase=$phase"
   bash .github/scripts/meeting-two-player.sh
   cp -a dist/packaged-smoke/jail-player-logs "dist/packaged-smoke/expanded-phase$phase"

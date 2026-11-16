@@ -107,7 +107,7 @@ public final class JailIntegrated {
         // Forcing items/origins and their immediate parent does not persist this ancestor entry.
         try(var metadata=java.nio.channels.FileChannel.open(root(s),StandardOpenOption.READ)){metadata.force(true);}
         JailEscrowJournal.provisionNew(directory.resolve("items"));JailEscrowJournal.provisionNew(directory.resolve("origins"));
-        if(contract.equals(EXPANDED))for(String effect:List.of("remove-effects","return-effects"))JailEscrowJournal.provisionNew(directory.resolve(effect));
+        if(contract.equals(EXPANDED))for(String effect:List.of("remove-effects","return-effects","escapes"))JailEscrowJournal.provisionNew(directory.resolve(effect));
         JailCustodyService.ledger(s).bind(id,target.getUUID(),relative(id,"items"),relative(id,"origins"),plan.getByteArray("digest"),new JailCustodyLedger.Anchor(dest.dim(),anchor.getX(),anchor.getY(),anchor.getZ()),actor.getTextName());
         try(var items=journal(s,id,"items");var origins=journal(s,id,"origins")){
             permitted(actor,target);JailVanillaCustody.removeForDisposableTest(items,id,inventory,b->{permitted(actor,target);if(b==JailVanillaCustody.Boundary.MUTATED)checkpoint.at(Boundary.ITEMS_MUTATED);});checkpoint.at(Boundary.ITEMS_DURABLE);
@@ -130,6 +130,25 @@ public final class JailIntegrated {
         permitted(actor,target);var e=outstanding(target.server,target.getUUID());if(e==null)throw new IOException("No managed outstanding transaction");var b=binding(target.server,e);
         JailCustodyService.action(actor,b.id(),b.revision(),"review");b=JailCustodyService.ledger(target.server).get(b.id());JailCustodyService.action(actor,b.id(),b.revision(),"restore");
     }
+    record EscapeContext(UUID transaction,JailVanillaCustody.InventoryPort inventory,JailOriginTransaction.Port origin,JailData.Assignment assignment,byte[] digest){}
+    /** No callback replay. The same bound, empty native stores are required even during clone/respawn. */
+    static EscapeContext escapeContext(ServerPlayer p,boolean persist,boolean authoritative)throws IOException {
+        var e=outstanding(p.server,p.getUUID());if(e==null)return null;var plan=JailNbt.decode(e.snapshot());
+        if(!EXPANDED.equals(plan.getString("contract")))return null;
+        if(e.state()!=JailEscrowJournal.State.HELD||!p.server.isSameThread()||authoritative&&(p.server.getPlayerList().getPlayer(p.getUUID())!=p||p.hasDisconnected()))throw new IOException("Escape custody not authoritative/held");
+        var b=binding(p.server,e);if(!JailCustodyService.physical(p.server,b))throw new IOException("Escape custody interface unavailable");requireAssignment(p.server,p.getUUID(),plan,false);
+        var ports=ports(p.server,p,e.id(),plan.hasUUID("retired")?plan.getUUID("retired"):null,EXPANDED);
+        try(var items=journal(p.server,e.id(),"items");var origins=journal(p.server,e.id(),"origins")){
+            var item=items.read(e.id());var origin=origins.read(e.id());
+            if(item==null||origin==null||item.state()!=JailEscrowJournal.State.HELD||origin.state()!=JailEscrowJournal.State.HELD||!Arrays.equals(b.digest(),JailOriginTransaction.hash(item.snapshot())))throw new IOException("Escape item/origin phase not held");
+            byte[] intent=JailOriginTransaction.intentForBoundReview(origins,items,e.id(),p.getUUID());var live=ports.inventory().current();
+            if(!live.empty()||!e.id().equals(live.removedBy())||live.restoredBy()!=null||!ports.origin().isTemporary(intent,e.id(),ports.origin().current()))throw new IOException("Escape requires empty marked stores and verified temporary Human");
+            if(persist){ports.inventory().persistAndVerify();ports.origin().persistAndVerify();}
+            var disk=ports.inventory().durable();var nativeLive=ports.origin().current();var nativeDisk=ports.origin().durable();
+            if(!disk.empty()||!e.id().equals(disk.removedBy())||disk.restoredBy()!=null||!Arrays.equals(live.inventory(),disk.inventory())||!Arrays.equals(nativeLive.state(),nativeDisk.state())||!ports.origin().isTemporary(intent,e.id(),nativeDisk))throw new IOException("Escape native saves/claims are ambiguous");
+        }
+        return new EscapeContext(e.id(),ports.inventory(),ports.origin(),assignment(plan),b.digest());
+    }
     static JailCustodyService.VerifiedAdapter adapter(MinecraftServer s,JailCustodyLedger.Binding b)throws IOException {
         var e=plans(s).read(b.id());if(e==null||!e.owner().equals(b.owner())||!binding(s,e).equals(b)||!Set.of("human-empty-v1",EXPANDED).contains(JailNbt.decode(e.snapshot()).getString("contract")))throw new IOException("No audited integrated command binding");
         ServerPlayer p=s.getPlayerList().getPlayer(b.owner());if(p==null)throw new IOException("Player offline; custody retained");CompoundTag plan=JailNbt.decode(e.snapshot());UUID retired=plan.hasUUID("retired")?plan.getUUID("retired"):null;
@@ -145,6 +164,7 @@ public final class JailIntegrated {
             }
             public JailCustodyService.Health inspect()throws IOException {
                 if(!inventory.online())return JailCustodyService.Health.REVIEW_REQUIRED;var now=plans(s).read(b.id());
+                if(ports.contract().equals(EXPANDED)&&JailEscapeCustody.pending(s,b.id()))return JailCustodyService.Health.REVIEW_REQUIRED;
                 try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){
                     var item=items.read(b.id());if(item==null||!item.owner().equals(b.owner())||!Arrays.equals(JailOriginTransaction.hash(item.snapshot()),b.digest()))throw new IOException("Custody source binding changed");
                     if(now.state()==JailEscrowJournal.State.COMPLETE)return item.state()==JailEscrowJournal.State.COMPLETE&&originComplete(origins,items)&&JailData.get(s).assignment(b.owner())==null?JailCustodyService.Health.COMPLETE:JailCustodyService.Health.REVIEW_REQUIRED;
@@ -188,6 +208,7 @@ public final class JailIntegrated {
             }
             public void recoverVerified()throws IOException {
                 authority();
+                if(ports.contract().equals(EXPANDED)&&JailEscapeCustody.pending(s,b.id())){JailEscapeCustody.recover(p);return;}
                 var now=plans(s).read(b.id());try(var items=journal(s,b.id(),"items");var origins=journal(s,b.id(),"origins")){
                     if(now.state()==JailEscrowJournal.State.RESTORE_STARTED){
                         var status=JailOriginTransaction.inspect(origins,items,b.id(),human);if(status==JailOriginTransaction.Inspection.ORIGINAL_SAVED_REVIEW)JailOriginTransaction.confirmSavedForDisposableTest(origins,items,b.id(),human);
