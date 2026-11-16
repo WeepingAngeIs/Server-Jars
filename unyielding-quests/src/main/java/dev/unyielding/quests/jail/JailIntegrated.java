@@ -31,20 +31,21 @@ public final class JailIntegrated {
         if(!Files.exists(root(s),LinkOption.NOFOLLOW_LINKS))return plans.containsKey(s)||JailData.get(s).integratedCustodyInitialized();
         try{return plans(s).list().stream().anyMatch(e->e.owner().equals(owner)&&e.state()!=JailEscrowJournal.State.COMPLETE&&e.state()!=JailEscrowJournal.State.CANCELLED);}catch(IOException bad){return true;}
     }
-    public static void stopped(MinecraftServer s){var p=plans.remove(s);if(p!=null)try{p.close();}catch(IOException ignored){}checkpoint=b->{};}
+    public static void stopped(MinecraftServer s){JailXp.stopped();var p=plans.remove(s);if(p!=null)try{p.close();}catch(IOException ignored){}checkpoint=b->{};}
     static final String EXPANDED="native-equipment-luck-v1";
-    static final String SUPPORTED="native-supported-v2";
-    private static boolean equipped(String contract){return contract.equals(EXPANDED)||contract.equals(SUPPORTED);}
+    static final String SUPPORTED="native-supported-v2", RETAINED_XP="native-retained-xp-v3";
+    static boolean audited(String contract){return contract.equals(SUPPORTED)||contract.equals(RETAINED_XP);}
+    private static boolean equipped(String contract){return contract.equals(EXPANDED)||audited(contract);}
     private record Ports(JailVanillaCustody.InventoryPort inventory,JailOriginTransaction.Port origin,String contract){
         byte[] stable()throws IOException{return origin instanceof JailNativeOriginPort nativePort?nativePort.stableState():origin.current().state();}
     }
     private static Ports ports(MinecraftServer server,ServerPlayer player,UUID id,UUID retired,String contract)throws IOException {
         if(contract.equals("human-empty-v1"))return new Ports(new JailVanillaPort(player,id,retired),new JailHumanPort(player,id,retired),contract);
         if(!equipped(contract))throw new IOException("Unsupported custody contract");
-        var inventory=new JailEquipmentPort(player,id,retired,contract.equals(SUPPORTED));byte[] existing=null;
+        var inventory=new JailEquipmentPort(player,id,retired,audited(contract));byte[] existing=null;
         Path path=root(server).resolve(id.toString()).resolve("origins");
         if(Files.exists(path,LinkOption.NOFOLLOW_LINKS))try(var origins=new JailEscrowJournal(JailCustodyService.journalPath(server,relative(id,"origins")))){if(origins.read(id)!=null)existing=JailOriginTransaction.intentForReview(origins,id,player.getUUID());}
-        return new Ports(inventory,contract.equals(SUPPORTED)?new JailCertifiedOriginPort(player,inventory,id,retired,existing):new JailNativeOriginPort(player,inventory,id,retired,existing),contract);
+        return new Ports(inventory,contract.equals(RETAINED_XP)?new JailXpOriginPort(player,inventory,id,retired,existing):contract.equals(SUPPORTED)?new JailCertifiedOriginPort(player,inventory,id,retired,existing):new JailNativeOriginPort(player,inventory,id,retired,existing),contract);
     }
     private static UUID retired(MinecraftServer s,UUID owner)throws IOException {UUID result=null;for(var p:plans(s).list())if(p.owner().equals(owner)&&p.state()==JailEscrowJournal.State.COMPLETE)result=p.id();return result;}
     private static JailEscrowJournal.Entry outstanding(MinecraftServer s,UUID owner)throws IOException {
@@ -95,7 +96,7 @@ public final class JailIntegrated {
         var s=target.server;var records=plans(s);if(outstanding(s,target.getUUID())!=null||JailCustodyService.blocked(s,target.getUUID())||JailData.get(s).assignment(target.getUUID())!=null)throw new IOException("Existing assignment/custody must be recovered first");
         var data=JailData.get(s);Loc dest=data.location(),prior=Loc.of(target);if(data.geometry()!=JailData.INTERROGATION_CHAIR_GEOMETRY||dest==null||!JailPlacement.intact(s,dest,data.geometry())||!JailCommands.safe(target,dest)||!JailCommands.safe(target,prior)||actor.getEntity() instanceof ServerPlayer p&&!JailCommands.claimAccess(p,dest))throw new IOException("Jail/return location unavailable, unsafe or claim denied");
         UUID id=UUID.randomUUID(),retired=retired(s,target.getUUID());
-        var ports=ports(s,target,id,retired,contract);var inventory=ports.inventory();var nativePort=ports.origin();if(equipped(contract))inventory.validateRemoval();else auditItems(target);if(nativePort instanceof JailNativeOriginPort nativeOrigin)nativeOrigin.validateAdmission();if(contract.equals(SUPPORTED)){JailAdmissions.boundary(target);((JailCertifiedOriginPort)nativePort).neutralBase();}var human=nativePort.current();byte[] stable=ports.stable();
+        var ports=ports(s,target,id,retired,contract);var inventory=ports.inventory();var nativePort=ports.origin();if(equipped(contract))inventory.validateRemoval();else auditItems(target);if(nativePort instanceof JailNativeOriginPort nativeOrigin)nativeOrigin.validateAdmission();if(audited(contract)){JailAdmissions.boundary(target,contract.equals(RETAINED_XP));((JailCertifiedOriginPort)nativePort).neutralBase();}var human=nativePort.current();byte[] stable=ports.stable();
         var source=inventory.current();if(source.empty())throw new IOException("Empty-inventory custody is not certified yet; no items or origin were changed");if(source.removedBy()!=null||source.restoredBy()!=null||human.transaction()!=null)throw new IOException("An earlier custody receipt requires review before a new admission");
         // Save/readback BEFORE the plan: no custody has started and no mutation occurred.
         inventory.persistAndVerify();nativePort.persistAndVerify();saveAssignments(s);if(!Arrays.equals(source.inventory(),inventory.current().inventory())||!Arrays.equals(stable,ports.stable()))throw new IOException("Source changed during baseline save");BlockPos anchor=anchor(s,dest,prior);
@@ -134,11 +135,12 @@ public final class JailIntegrated {
     }
     record EscapeContext(UUID transaction,JailVanillaCustody.InventoryPort inventory,JailOriginTransaction.Port origin,JailData.Assignment assignment,byte[] digest){}
     static boolean expanded(MinecraftServer s,UUID id)throws IOException {var e=plans(s).read(id);return e!=null&&equipped(JailNbt.decode(e.snapshot()).getString("contract"));}
-    static boolean certifiedActive(ServerPlayer p)throws IOException {var e=outstanding(p.server,p.getUUID());return e!=null&&SUPPORTED.equals(JailNbt.decode(e.snapshot()).getString("contract"));}
+    static boolean certifiedActive(ServerPlayer p)throws IOException {var e=outstanding(p.server,p.getUUID());return e!=null&&audited(JailNbt.decode(e.snapshot()).getString("contract"));}
+    static boolean retainsXp(ServerPlayer p)throws IOException {var e=outstanding(p.server,p.getUUID());return e!=null&&RETAINED_XP.equals(JailNbt.decode(e.snapshot()).getString("contract"));}
     private static String check(ServerPlayer p)throws IOException {
         if(p.hasDisconnected()||!p.isAlive())throw new IOException("Player must be alive and online");
         boolean initialized=JailData.get(p.server).integratedCustodyInitialized();if(initialized&&outstanding(p.server,p.getUUID())!=null)throw new IOException("Existing custody: use /jailcustody inspect, not a new admission");
-        UUID tx=UUID.randomUUID(),old=initialized?retired(p.server,p.getUUID()):null;var ports=ports(p.server,p,tx,old,SUPPORTED);ports.inventory().validateRemoval();((JailCertifiedOriginPort)ports.origin()).validateAdmission();JailAdmissions.boundary(p);((JailCertifiedOriginPort)ports.origin()).neutralBase();
+        UUID tx=UUID.randomUUID(),old=initialized?retired(p.server,p.getUUID()):null;var ports=ports(p.server,p,tx,old,JailAdmissions.auditedContract(p));ports.inventory().validateRemoval();((JailCertifiedOriginPort)ports.origin()).validateAdmission();JailAdmissions.boundary(p,ports.contract().equals(RETAINED_XP));((JailCertifiedOriginPort)ports.origin()).neutralBase();
         if(ports.inventory().current().empty())throw new IOException("Empty-inventory custody is not certified yet; no items or origin were changed");
         return "Supported native combination; admissions "+(dev.unyielding.quests.Config.JAIL_CERTIFIED_ADMISSIONS.get()?"ON":"OFF")+". History "+(initialized?"initialized":"must be explicitly initialized")+". Jail, return position and claims are checked again on /jail.";
     }
@@ -162,7 +164,7 @@ public final class JailIntegrated {
         return new EscapeContext(e.id(),ports.inventory(),ports.origin(),assignment(plan),b.digest());
     }
     static JailCustodyService.VerifiedAdapter adapter(MinecraftServer s,JailCustodyLedger.Binding b)throws IOException {
-        var e=plans(s).read(b.id());if(e==null||!e.owner().equals(b.owner())||!binding(s,e).equals(b)||!Set.of("human-empty-v1",EXPANDED,SUPPORTED).contains(JailNbt.decode(e.snapshot()).getString("contract")))throw new IOException("No audited integrated command binding");
+        var e=plans(s).read(b.id());if(e==null||!e.owner().equals(b.owner())||!binding(s,e).equals(b)||!Set.of("human-empty-v1",EXPANDED,SUPPORTED,RETAINED_XP).contains(JailNbt.decode(e.snapshot()).getString("contract")))throw new IOException("No audited integrated command binding");
         ServerPlayer p=s.getPlayerList().getPlayer(b.owner());if(p==null)throw new IOException("Player offline; custody retained");CompoundTag plan=JailNbt.decode(e.snapshot());UUID retired=plan.hasUUID("retired")?plan.getUUID("retired"):null;
         final Ports ports=ports(s,p,b.id(),retired,plan.getString("contract"));
         return new JailCustodyService.VerifiedAdapter(){

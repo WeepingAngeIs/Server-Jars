@@ -53,7 +53,7 @@ for (filename, parent_sha), proofs in parents.items():
             assert proof['sha512'] in certificate['sha512']
 manifest['custody_certificate_sha256'] = hashlib.sha256(certificate_bytes).hexdigest()
 manifest['verified_embedded_binaries'] = len(certificate['embedded'])
-for name in ('OriginCustodyPort', 'OriginCustodySmoke', 'CustodyInterfaceSmoke', 'IntegratedJailSmoke', 'ExpandedJailSmoke', 'CertifiedJailSmoke', 'CertifiedPayloadProbe'):
+for name in ('OriginCustodyPort', 'OriginCustodySmoke', 'CustodyInterfaceSmoke', 'IntegratedJailSmoke', 'ExpandedJailSmoke', 'CertifiedJailSmoke', 'CertifiedPayloadProbe', 'RetainedXpSmoke'):
     source = (ROOT / f'unyielding-quests/src/main/java/dev/unyielding/quests/devtest/{name}.java').read_text(encoding='utf-8')
     source = source.replace('package dev.unyielding.quests.devtest;', 'package dev.unyielding.bundlesmoke;', 1)
     source = source.replace('modid=UnyieldingQuests.MODID', 'modid="uq_bundle_smoke"', 1)

@@ -10,7 +10,8 @@
     "OriginFlightMixin",
     "JailMovementMixin",
     "CustodyPacketMixin",
-    "JailEquipmentAccess"
+    "JailEquipmentAccess",
+    "JailXpDropMixin"
   ],
   "client": [
     "PokemonSpeciesSyncMixin",

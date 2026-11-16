@@ -28,7 +28,7 @@ final class JailHumanAudit {
     static boolean disposable(ServerPlayer p){
         if(!"true".equals(System.getenv("GITHUB_ACTIONS"))||!"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT"))||!Boolean.getBoolean("uq.integratedJail"))return false;
         String world=p.server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).toAbsolutePath().normalize().getFileName().toString();
-        return world.equals("jail_integrated_smoke")||Boolean.getBoolean("uq.expandedJail")&&world.equals("jail_expanded_smoke")||Boolean.getBoolean("uq.certifiedJail")&&world.equals("jail_certified_smoke");
+        return Boolean.getBoolean("uq.retainedXp")&&world.equals("jail_xp_smoke")||world.equals("jail_integrated_smoke")||Boolean.getBoolean("uq.expandedJail")&&world.equals("jail_expanded_smoke")||Boolean.getBoolean("uq.certifiedJail")&&world.equals("jail_certified_smoke");
     }
     private static String hash(Path path)throws IOException {
         var a=Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class);Hashed old=hashes.get(path);if(old!=null&&Objects.equals(old.key(),a.fileKey())&&old.size()==a.size()&&old.modified()==a.lastModifiedTime().toMillis())return old.hash();

@@ -38,6 +38,7 @@ final class OriginCustodyPort implements JailOriginTransaction.Port {
                 ||!(Boolean.getBoolean("uq.originCustody")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_origin_smoke")
                 ||Boolean.getBoolean("uq.custodyInterface")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_interface_smoke")
                 ||Boolean.getBoolean("uq.expandedJail")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_expanded_smoke")
+                ||Boolean.getBoolean("uq.retainedXp")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_xp_smoke")
                 ||Boolean.getBoolean("uq.certifiedJail")&&player.server.getWorldPath(LevelResource.ROOT).toRealPath().getFileName().toString().equals("jail_certified_smoke")))throw new IOException("Origin mutation fixture forbidden here");
         if(existing==null)resolve();else{intent=decode(existing);layer=id(intent.getString("layer"));original=id(intent.getString("original"));human=id(intent.getString("human"));}
     }

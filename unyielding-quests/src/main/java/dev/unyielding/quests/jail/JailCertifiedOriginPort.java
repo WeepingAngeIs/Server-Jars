@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.*;
 
 /** Separate opt-in contract for the verified native Human + Warrior/Nitwit combination. */
-public final class JailCertifiedOriginPort extends JailNativeOriginPort {
+public class JailCertifiedOriginPort extends JailNativeOriginPort {
     static final String POLICY="native-supported-v2";
     record Effect(ResourceLocation power,ResourceLocation attribute,ResourceLocation modifier,double amount){}
     private List<Effect> declared=List.of();

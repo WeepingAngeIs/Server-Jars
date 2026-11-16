@@ -158,6 +158,7 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         if(modifiers.size()!=(active?1:0)||Math.abs(luck.getValue()-luck.getBaseValue()-(active?amount:0))>0.000001)throw new IOException("Native origin effects not verified");
         if(active){var m=modifiers.iterator().next();if(m.amount()!=amount||m.operation()!=AttributeModifier.Operation.ADD_VALUE||(intent!=null&&!m.id().toString().equals(intent.getString("modifier_id"))))throw new IOException("Unexpected native origin modifier");}
     }
+    protected void augmentView(CompoundTag saved,CompoundTag body)throws IOException {}
     private JailOriginTransaction.View view(CompoundTag saved,Object claims,JailVanillaCustody.View itemView)throws IOException {
         CompoundTag body=new CompoundTag();body.putString("dependencies",DEPS);body.putString("definitions",audit());body.put("origin_data",attachment(saved));body.put("claims",claimState(claims));
         body.put("all_claims",allClaims(claims));body.putByteArray("inventory",itemView.inventory());body.put("accessories",accessoryState(saved));body.put("attributes",attributes(saved));body.putFloat("health",saved.getFloat("Health"));
@@ -167,7 +168,7 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         CompoundTag otherPersistent=saved.getCompound("NeoForgeData").copy();otherPersistent.remove(RECEIPT);body.put("other_persistent",otherPersistent);
         UUID tx=r.hasUUID("transaction")?r.getUUID("transaction"):null;JailOriginTransaction.Receipt phase=JailOriginTransaction.Receipt.NONE;
         if(!r.isEmpty())try{phase=JailOriginTransaction.Receipt.valueOf(r.getString("phase"));}catch(IllegalArgumentException unsafe){throw new IOException("Unknown origin receipt",unsafe);}
-        return new JailOriginTransaction.View(encode(body),tx,phase);
+        augmentView(saved,body);return new JailOriginTransaction.View(encode(body),tx,phase);
     }
     public byte[] stableState()throws IOException {CompoundTag body=decode(current().state());for(String key:List.of("inventory","accessories","attributes","health","receipt","other_persistent"))body.remove(key);return encode(body);}
     @Override public UUID owner(){return player.getUUID();}@Override public boolean online(){return inventory.online();}

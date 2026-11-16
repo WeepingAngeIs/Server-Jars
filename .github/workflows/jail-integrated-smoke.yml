@@ -2,6 +2,10 @@ name: Assembled integrated jail command coordinator
 on:
   workflow_dispatch:
     inputs:
+      retained_xp:
+        description: Test nonzero retained XP, native death/respawn and ambiguous clone handoff
+        type: boolean
+        default: false
       certified:
         description: Test opted-in audited native class and packed-item admissions
         type: boolean
@@ -58,7 +62,9 @@ jobs:
           LIBGL_ALWAYS_SOFTWARE: 'true'
           ALSOFT_DRIVERS: 'null'
         run: |
-          if [[ '${{ inputs.certified }}' == true ]]; then
+          if [[ '${{ inputs.retained_xp }}' == true ]]; then
+            bash .github/scripts/retained-xp-smoke.sh
+          elif [[ '${{ inputs.certified }}' == true ]]; then
             bash .github/scripts/certified-jail-smoke.sh
           elif [[ '${{ inputs.expanded }}' == true ]]; then
             bash .github/scripts/expanded-jail-smoke.sh
