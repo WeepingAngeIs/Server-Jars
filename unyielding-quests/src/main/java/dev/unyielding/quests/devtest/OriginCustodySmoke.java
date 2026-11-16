@@ -61,7 +61,7 @@ public final class OriginCustodySmoke {
     }
     @SuppressWarnings("unchecked") static OriginCustodyPort seed(ServerPlayer player,ResourceLocation original)throws Exception {
         mode="normal";Object data=data(player);OriginCustodyPort.call(OriginCustodyPort.DATA,data,"clear");
-        var main=layerFor(original,Map.of()),classes=layerFor(OriginCustodyPort.KEPT_CLASS,Map.of());require(!main.equals(classes),"class layer was flattened");
+        var main=layerFor(original,Map.of());var classes=layerFor(OriginCustodyPort.KEPT_CLASS,Map.of());require(!main.equals(classes),"class layer was flattened");
         Object config=OriginCustodyPort.type("com.cyberday1.neoorigins.config.AdminConfig").getField("UNIQUE_ORIGIN_LAYERS").get(null);
         ((net.neoforged.neoforge.common.ModConfigSpec.ConfigValue<List<? extends String>>)config).set(List.of(main.toString()));
         ((net.neoforged.neoforge.common.ModConfigSpec.ConfigValue<?>)config).save();
