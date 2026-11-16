@@ -248,7 +248,11 @@ final class OriginCustodyPort implements JailOriginTransaction.Port {
         saveFault.at(SaveBoundary.BEFORE_PLAYER);player.server.getPlayerList().saveAll();saveFault.at(SaveBoundary.AFTER_PLAYER);
         player.server.overworld().getDataStorage().save();saveFault.at(SaveBoundary.AFTER_CLAIMS);
         force(player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner()+".dat"));force(claimsFile());saveFault.at(SaveBoundary.AFTER_FORCE);var disk=durable();var live=current();
-        if(!Arrays.equals(before.state(),disk.state())||!Arrays.equals(before.state(),live.state())||before.receipt()!=disk.receipt()||!Objects.equals(before.transaction(),disk.transaction()))throw new IOException("Origin/player/claims persistence mismatch");
+        if(!Arrays.equals(before.state(),disk.state())||!Arrays.equals(before.state(),live.state())||before.receipt()!=disk.receipt()||!Objects.equals(before.transaction(),disk.transaction()))throw new IOException("Origin/player/claims persistence mismatch: disk="+differences(before,disk)+" live="+differences(before,live));
+    }
+    private static String differences(JailOriginTransaction.View expected,JailOriginTransaction.View observed)throws IOException{
+        CompoundTag a=decode(expected.state()),b=decode(observed.state());List<String> result=new ArrayList<>();Set<String> keys=new TreeSet<>(a.getAllKeys());keys.addAll(b.getAllKeys());
+        for(String key:keys)if(!Objects.equals(a.get(key),b.get(key)))result.add(key+" expected="+a.get(key)+" observed="+b.get(key));return result.toString();
     }
     static byte[] encode(CompoundTag tag)throws IOException {var out=new ByteArrayOutputStream();var data=new DataOutputStream(out);data.writeByte(10);data.writeUTF("");VanillaCustodySmoke.canonicalPayload(tag,data);byte[] bytes=out.toByteArray();if(!tag.equals(decode(bytes)))throw new IOException("Origin snapshot lost NBT");return bytes;}
     static CompoundTag decode(byte[] bytes)throws IOException{return NbtIo.read(new DataInputStream(new ByteArrayInputStream(bytes)),NbtAccounter.create(16L*1024*1024));}
