@@ -12,7 +12,8 @@ class JailVanillaCustodyTest {
     static final class Port implements JailVanillaCustody.InventoryPort {
         final UUID owner = UUID.randomUUID();
         JailVanillaCustody.View live = new JailVanillaCustody.View(new byte[]{7, 3, 11}, false, null), disk = live;
-        int removals, saves; boolean failSave,online=true;
+        int removals, saves; boolean failSave,online=true,rejectEffects;
+        public void validateSavedOutcome(UUID id,boolean restored)throws IOException {if(rejectEffects)throw new IOException("Unverified callback effects");}
         public boolean online(){return online;}
         public UUID owner() { return owner; }
         public JailVanillaCustody.View current() { return live; }
@@ -87,5 +88,17 @@ class JailVanillaCustodyTest {
         var journal = new JailEscrowJournal(dir); journal.close();
         assertThrows(IOException.class, () -> JailVanillaCustody.removeForDisposableTest(journal, UUID.randomUUID(), port, at -> {}));
         assertEquals(0, port.removals); assertEquals(0, port.saves);
+    }
+    @Test void savedItemsDoNotAuthorizeUnverifiedNativeEffects()throws Exception {
+        Path dir=temp.resolve("effects");JailEscrowJournal.provisionNew(dir);Port port=new Port();UUID id=UUID.randomUUID();
+        try(var journal=new JailEscrowJournal(dir)){
+            assertThrows(IOException.class,()->JailVanillaCustody.removeForDisposableTest(journal,id,port,at->{if(at==JailVanillaCustody.Boundary.PLAYER_DURABLE)throw new IOException("interrupted");}));
+            int saves=port.saves,removals=port.removals;port.rejectEffects=true;
+            assertThrows(IOException.class,()->JailVanillaCustody.confirmRemoved(journal,id,port));
+            assertEquals(JailEscrowJournal.State.REMOVAL_STARTED,journal.read(id).state());
+            assertEquals(saves,port.saves);assertEquals(removals,port.removals);
+            port.rejectEffects=false;JailVanillaCustody.confirmRemoved(journal,id,port);
+            assertEquals(JailEscrowJournal.State.HELD,journal.read(id).state());
+        }
     }
 }

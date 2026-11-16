@@ -179,7 +179,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     private void verifyEffects(boolean restore,boolean promote)throws IOException {
         if(!transaction.equals(JailIntegrated.activeTransaction(player.server,owner())))return;
         try(var journal=effectJournal(restore)){
-            var e=journal.read(transaction);if(e==null)return;
+            var e=journal.read(transaction);if(e==null)throw new IOException("Equipment callback intent missing; saved item markers alone cannot authorize confirmation");
             if(!e.owner().equals(owner()))throw new IOException("Foreign equipment effect intent");
             if(e.state()==JailEscrowJournal.State.HELD)return;
             if(e.state()!=JailEscrowJournal.State.REMOVAL_STARTED)throw new IOException("Uncertain equipment effect phase");

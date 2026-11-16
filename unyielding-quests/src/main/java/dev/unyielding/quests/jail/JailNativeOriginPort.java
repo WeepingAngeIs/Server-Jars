@@ -48,7 +48,6 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
     static CompoundTag choices(Map<ResourceLocation,ResourceLocation> choices){CompoundTag tag=new CompoundTag();choices.forEach((key,value)->tag.putString(key.toString(),value.toString()));return tag;}
     private void versions()throws IOException {
         JailHumanAudit.runtime(player);
-        JailHumanAudit.runtime(player);
         for(String spec:DEPS.split(";")){String[] p=spec.split("=",2);if(!ModList.get().getModContainerById(p[0]).map(c->p[1].equals(c.getModInfo().getVersion().toString())).orElse(false))throw new IOException("Unsupported origin dependency "+p[0]);}
         if(ModList.get().isLoaded("kubejs"))throw new IOException("Unaudited origin scripting hooks");
         if(!player.server.isSameThread())throw new IOException("Origin operation off server thread");

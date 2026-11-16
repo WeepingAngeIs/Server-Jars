@@ -15,7 +15,8 @@ class JailVanillaRestoreTest {
     static final class Port implements JailVanillaCustody.InventoryPort {
         final UUID owner = UUID.randomUUID();
         JailVanillaCustody.View live = new JailVanillaCustody.View(ORIGINAL, false, null), disk = live;
-        boolean online = true, failBeforeSave, failAfterSave, partial, overflow, badPlan;
+        boolean online = true, failBeforeSave, failAfterSave, partial, overflow, badPlan, rejectEffects;
+        public void validateSavedOutcome(UUID id,boolean restored)throws IOException {if(rejectEffects)throw new IOException("Unverified callback effects");}
         int grants, saves;
         public UUID owner() { return owner; }
         public boolean online() { return online; }
@@ -38,6 +39,19 @@ class JailVanillaRestoreTest {
     }
     private static void held(JailEscrowJournal journal, UUID id, Port port) throws Exception {
         JailVanillaCustody.removeForDisposableTest(journal, id, port, at -> {});
+    }
+    @Test void savedReturnCannotCompleteWithUnverifiedNativeEffects()throws Exception {
+        Path dir=temp.resolve("effects");JailEscrowJournal.provisionNew(dir);Port port=new Port();UUID id=UUID.randomUUID();
+        try(var journal=new JailEscrowJournal(dir)){
+            held(journal,id,port);
+            assertThrows(IOException.class,()->JailVanillaCustody.restoreForDisposableTest(journal,id,port,at->{if(at==JailVanillaCustody.RestoreBoundary.PLAYER_DURABLE)throw new IOException("interrupted");}));
+            int saves=port.saves,grants=port.grants;port.rejectEffects=true;
+            assertThrows(IOException.class,()->JailVanillaCustody.confirmRestoredForDisposableTest(journal,id,port));
+            assertEquals(JailEscrowJournal.State.RESTORE_STARTED,journal.read(id).state());
+            assertEquals(saves,port.saves);assertEquals(grants,port.grants);
+            port.rejectEffects=false;JailVanillaCustody.confirmRestoredForDisposableTest(journal,id,port);
+            assertEquals(JailEscrowJournal.State.COMPLETE,journal.read(id).state());
+        }
     }
     @Test void everyBoundaryReopensWithNoAutomaticReplayOrSecondGrant() throws Exception {
         for (var boundary : JailVanillaCustody.RestoreBoundary.values()) {
