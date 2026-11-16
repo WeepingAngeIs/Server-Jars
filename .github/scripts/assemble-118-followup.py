@@ -96,6 +96,9 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     assert not any(n.startswith(prefix + 'devtest/NeoOriginsPreflightSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailInventorySnapshotSmoke') for n in result.namelist()), 'Test harness leaked into release'
     assert not any(n.startswith(prefix + 'devtest/JailTerrainPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
+    for fixture in ('VanillaCustodySmoke', 'VanillaRestoreSmoke', 'AccessoryCustodyPort', 'AccessoryCustodySmoke', 'OriginCustodyPort', 'OriginCustodySmoke'):
+        assert not any(n.startswith(prefix + 'devtest/' + fixture) for n in result.namelist()), f'{fixture} leaked into release'
+    assert prefix + 'jail/JailOriginTransaction.class' in result.namelist(), 'Origin transaction coordinator missing'
     assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'
     unresolved = missing_references({n: result.read(n) for n in result.namelist() if n.endswith('.class')})
     assert not unresolved, f'Unresolved application classes in final JAR: {unresolved}'

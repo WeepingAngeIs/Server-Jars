@@ -39,6 +39,8 @@ Human claim is reserved after a same-thread ownership check and retained across
 disconnect. Restoration releases only a Human reservation created by this
 transaction and still owned by that player. A preexisting self-owned Human claim
 is retained. Conflicts never authorize overwriting another owner's claim.
+The current bounded adapter also refuses unrelated claim-store changes between
+stages; it does not overwrite them from the snapshot.
 
 Player and claims saves are separate stores. NeoForge queues the actual
 SavedData write; the adapter waits on its native IO-worker completion barrier
@@ -85,3 +87,17 @@ Accessories tick settlement are part of that descriptor, including the distinct
 cosmetic semantics and Curios compatibility aliases. The existing controlled
 fixture adapter demonstrates these calls, but does not certify third-party
 providers, unbounded callbacks or the missing production quarantine.
+
+## Focused native evidence
+
+Commit `22138333012394587560e001357ae373b7dae3d2` passed the component build,
+transaction policy tests, final-JAR closure checks, and all three actual native
+integration phases in [GitHub run 43790071438](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/43790071438),
+job `133046244123`. The tested assembled JAR SHA-256 was
+`b0376779d345269ecbd3f3b2470f272855d0a866e78068cdc323f2927e66cd34`.
+The evidence artifact contains per-phase native server/client logs, runtime
+binary input hashes and JUnit XML. The main build workflow additionally runs
+the origin phases after vanilla custody/restoration and actual accessory checks
+without changing its assembled release JAR. Independently assembled jobs may
+have different archive hashes; their artifacts are not interchangeable evidence
+for that same-JAR main sequence.
