@@ -1,0 +1,61 @@
+name: Jail standalone source audit
+
+on:
+  push:
+    branches: ['codex/jail-standalone-extraction']
+    paths: ['.github/workflows/jail-standalone-audit.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Export exact-commit source and jail dependency inventory without launching Minecraft
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import pathlib, subprocess, zipfile
+          root = pathlib.Path('.')
+          out = root / 'jail-source-audit'
+          out.mkdir()
+          sha = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          (out / 'commit.txt').write_text(sha + '\n')
+          tree = subprocess.check_output(['git', 'ls-tree', '-r', 'HEAD'], text=True)
+          (out / 'git-tree.txt').write_text(tree)
+          files = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          extensions = {'.java', '.gradle', '.properties', '.json', '.md', '.yml', '.yaml', '.py', '.sh', '.toml', '.txt', '.mcmeta', '.accesswidener', '.cfg', '.xml'}
+          references = []
+          with zipfile.ZipFile(out / 'source.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+              for name in files:
+                  if not name or name.startswith(('releases/', 'astra-art/')):
+                      continue
+                  path = pathlib.Path(name)
+                  if path.suffix not in extensions and path.name not in {'gradlew', 'gradlew.bat', '.gitignore', 'gradle-wrapper.jar'}:
+                      continue
+                  archive.write(path, name)
+                  if path.suffix in extensions:
+                      try:
+                          lines = path.read_text().splitlines()
+                      except UnicodeDecodeError:
+                          continue
+                      for number, line in enumerate(lines, 1):
+                          if 'jail' in line.lower() or 'custody' in line.lower():
+                              references.append(f'{name}:{number}:{line}')
+          (out / 'jail-references.txt').write_text('\n'.join(references) + '\n')
+          print('Audited source commit:', sha)
+          print('Jail/custody reference lines:', len(references))
+          print('Source archive bytes:', (out / 'source.zip').stat().st_size)
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: jail-standalone-source-audit
+          path: jail-source-audit/
+          if-no-files-found: error
+          retention-days: 7
