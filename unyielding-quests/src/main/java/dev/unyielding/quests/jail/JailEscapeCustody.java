@@ -48,6 +48,8 @@ public final class JailEscapeCustody {
     /** Only called from a validated accepted movement crossing. Never called on ticks/login/respawn. */
     static void attempt(ServerPlayer p){
         try{
+            if(!JailData.get(p.server).integratedCustodyInitialized())return;UUID active=JailIntegrated.activeTransaction(p.server,p.getUUID());
+            if(active==null||!JailIntegrated.expanded(p.server,active)||pending(p.server,active))return;
             if(!p.isAlive()||p.isInvulnerableTo(p.damageSources().generic()))return;var c=JailIntegrated.escapeContext(p,true,true);if(c==null)return;destination(p,c);
             deathSurface(p);
             try(var j=journal(p.server,c.transaction())){

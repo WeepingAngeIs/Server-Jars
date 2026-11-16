@@ -183,11 +183,16 @@ public final class JailNativeOriginPort implements JailOriginTransaction.Port {
         }
         throw new IOException("Foreign custody owner");
     }
-    @Override public byte[] prepareIntent(UUID transactionId,byte[] digest)throws IOException {
-        if(!online())throw new IOException("Origin player offline");String fingerprint=audit();effects();
+    void validateAdmission()throws IOException {
+        if(!online())throw new IOException("Origin player offline");audit();effects();
         if(!original.equals(selections().get(layer)))throw new IOException("Expected original origin selection");
-        if(!transaction.equals(transactionId)||current().receipt()!=JailOriginTransaction.Receipt.NONE)throw new IOException("Existing/foreign origin receipt requires review");
+        if(current().receipt()!=JailOriginTransaction.Receipt.NONE)throw new IOException("Existing origin receipt requires review");
         CompoundTag claims=claimState(claims());if(claims.getBoolean("unique")&&(!owned(claims,"original",owner())||(claims.hasUUID("human")&&!owned(claims,"human",owner()))))throw new IOException("Unique origin claim conflict");
+    }
+    @Override public byte[] prepareIntent(UUID transactionId,byte[] digest)throws IOException {
+        validateAdmission();String fingerprint=audit();
+        if(!transaction.equals(transactionId))throw new IOException("Foreign origin receipt requires review");
+        CompoundTag claims=claimState(claims());
         CompoundTag result=new CompoundTag();result.putInt("version",1);result.putString("layer",layer.toString());result.putString("original",original.toString());result.putString("human",human.toString());result.putString("dependencies",DEPS);result.putString("definitions",fingerprint);
         result.put("choices",choices(selections()));result.put("claims_before",claims);result.put("all_claims_before",allClaims(claims()));result.putBoolean("human_preowned",owned(claims,"human",owner()));result.putByteArray("custody_digest",digest);
         result.put("original_data",attachment(player.saveWithoutId(new CompoundTag())));
