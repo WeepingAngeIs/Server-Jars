@@ -14,16 +14,15 @@ jobs:
         with:
           ref: ${{ github.sha }}
           fetch-depth: 0
-      - name: Apply exact baseline-checked edits, retaining history
+      - name: Apply exact baseline-checked source edits, retaining history
         run: |
           set -euo pipefail
           test "$GITHUB_REF" = refs/heads/codex/jail-packed-wallet-custody
           python3 .github/wallet-transfer/apply.py
-          mv .github/wallet-transfer/jail-packed-wallet-custody.yml .github/workflows/jail-packed-wallet-custody.yml
           git diff --check
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add minecraft-jail/src/main/java/dev/unyielding/jail/JailAdmissions.java minecraft-jail/src/main/java/dev/unyielding/jail/JailConfig.java minecraft-jail/src/main/java/dev/unyielding/jail/JailEquipmentEffects.java minecraft-jail/src/main/java/dev/unyielding/jail/JailEquipmentPort.java minecraft-jail/src/main/java/dev/unyielding/jail/JailIntegrated.java .github/wallet-transfer/jail-packed-wallet-custody.yml .github/workflows/jail-packed-wallet-custody.yml
+          git add minecraft-jail/src/main/java/dev/unyielding/jail/JailAdmissions.java minecraft-jail/src/main/java/dev/unyielding/jail/JailConfig.java minecraft-jail/src/main/java/dev/unyielding/jail/JailEquipmentEffects.java minecraft-jail/src/main/java/dev/unyielding/jail/JailEquipmentPort.java minecraft-jail/src/main/java/dev/unyielding/jail/JailIntegrated.java
           git commit -m 'Implement opt-in exact-slot occupied leather-wallet custody without changing certificates or companion'
           git fetch origin codex/jail-packed-wallet-custody
           test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
