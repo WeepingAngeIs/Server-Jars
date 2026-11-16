@@ -1,0 +1,34 @@
+name: Jail private-copy planner synthetic tests
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/jail-standalone-extraction']
+    paths:
+      - 'tools/jail-migration/**'
+      - '.github/workflows/jail-migration-plan.yml'
+permissions:
+  contents: read
+jobs:
+  synthetic-planner:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - name: Confirm no runtime or non-jail source changes
+        run: |
+          git fetch --no-tags --depth=1 origin 4e3667a149d4e530bddb5326ee739ad386fe6a47
+          git diff --exit-code 4e3667a149d4e530bddb5326ee739ad386fe6a47 HEAD -- minecraft-jail unyielding-quests combined-unyielding currency-bridge iv-substitute-update model-hotfix riding-update settings-update tutorial-update
+      - name: Synthetic archives only, never user saves
+        run: |
+          set -euo pipefail
+          mkdir -p dist/planner-tests
+          python3 -m unittest discover -s tools/jail-migration -p 'test_*.py' -v 2>&1 | tee dist/planner-tests/tests.txt
+          git rev-parse HEAD > dist/planner-tests/commit.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: jail-planner-tests-${{ github.sha }}
+          path: dist/planner-tests/
+          if-no-files-found: error
+          retention-days: 30
