@@ -1,0 +1,29 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+version = mod_version
+group = 'dev.unyielding'
+base { archivesName = 'Minecraft-Jail' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(21) }
+neoForge {
+    version = neo_version
+    mods { "${mod_id}" { sourceSet(sourceSets.main) } }
+}
+repositories {
+    mavenCentral()
+    maven { url = 'https://libraries.minecraft.net' }
+}
+dependencies {
+    compileOnly files('libs/cobblemon.jar', 'libs/kotlin-stdlib.jar')
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'com.google.code.gson:gson:2.10.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.withType(Test).configureEach { useJUnitPlatform() }
+jar {
+    exclude '**/devtest/**', '**/legacySmoke/**'
+    manifest { attributes('Implementation-Title': 'Minecraft Jail', 'Implementation-Version': project.version) }
+}

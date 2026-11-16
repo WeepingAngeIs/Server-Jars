@@ -12,8 +12,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class Registration {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(UnyieldingQuests.MODID);
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(UnyieldingQuests.MODID);
-    public static final net.neoforged.neoforge.registries.DeferredBlock<dev.unyielding.quests.jail.JailCustodyBlock> CUSTODY_VAULT = BLOCKS.register("custody_vault",()->new dev.unyielding.quests.jail.JailCustodyBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().strength(-1,3600000).noLootTable().pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK)));
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, UnyieldingQuests.MODID);
 
     public static final DeferredHolder<Item, QuestBookItem> QUEST_BOOK =
@@ -47,7 +45,6 @@ public final class Registration {
     }
 
     public static void register(IEventBus bus) {
-        BLOCKS.register(bus);
         ITEMS.register(bus);
         TABS.register(bus);
     }

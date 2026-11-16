@@ -1,0 +1,42 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "MIT"
+
+[[mods]]
+modId = "minecraftjail"
+version = "${file.jarVersion}"
+displayName = "Minecraft Jail"
+authors = "Cobblemon Unyielding"
+displayTest = "MATCH_VERSION"
+description = "The existing Unyielding jail, extracted into its own JAR. Admission remains fail-closed and disabled by default."
+
+[[mixins]]
+config = "minecraftjail.mixins.json"
+
+[[dependencies.minecraftjail]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.255,21.2)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.minecraftjail]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.minecraftjail]]
+modId = "cobblemon"
+type = "required"
+versionRange = "[1.8.4]"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.minecraftjail]]
+modId = "unyieldingquests"
+type = "optional"
+versionRange = "[0,)"
+ordering = "AFTER"
+side = "BOTH"

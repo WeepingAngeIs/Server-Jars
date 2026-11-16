@@ -35,7 +35,6 @@ public final class GroundCleanupSmoke {
                 checkDebitHistory();
                 checkMeetingStorageAndClaims(server);
                 checkQuestSharingPersistence();
-                checkJailGeometry(server);
                 set(board,objective,"enabled",0); set(board,objective,"clear_gear",0); set(board,objective,"clear_food",1); set(board,objective,"clear_other",0); set(board,objective,"grace",1200);
                 set(board,objective,"dim_overworld",1); set(board,objective,"dim_nether",0); set(board,objective,"dim_end",0); set(board,objective,"dim_custom",0);
                 origin=level.getSharedSpawnPos().above(8); level.getChunkAt(origin);
@@ -87,36 +86,6 @@ public final class GroundCleanupSmoke {
         ItemEntity e=new ItemEntity(level,p.getX()+0.5+dx,p.getY(),p.getZ()+0.5,stack); e.setNoGravity(true);
         require(level.addFreshEntity(e),"could not add test item"); return e;
     }
-    private static void checkJailGeometry(MinecraftServer server) throws Exception {
-        var id = java.util.UUID.randomUUID();
-        var loc = new dev.unyielding.quests.essentials.Loc("minecraft:overworld", 3.5, 70, 3.5, 0, 0);
-        var row = new CompoundTag(); row.putUUID("player", id); row.put("jail", loc.toTag()); row.put("prior", loc.toTag());
-        var rows = new net.minecraft.nbt.ListTag(); rows.add(row);
-        var old = new CompoundTag(); old.put("location", loc.toTag()); old.put("prisoners", rows);
-        var load = dev.unyielding.quests.jail.JailData.class.getDeclaredMethod("load", CompoundTag.class, net.minecraft.core.HolderLookup.Provider.class);
-        load.setAccessible(true);
-        var legacy = (dev.unyielding.quests.jail.JailData) load.invoke(null, old, null);
-        require(legacy.geometry() == dev.unyielding.quests.jail.JailData.LEGACY_GEOMETRY && legacy.assignment(id).geometry() == dev.unyielding.quests.jail.JailData.LEGACY_GEOMETRY && loc.equals(legacy.assignment(id).jail()), "legacy jail assignment or location was reinterpreted");
-        var updated = new dev.unyielding.quests.jail.JailData();
-        updated.setLocation(loc, dev.unyielding.quests.jail.JailData.INTERROGATION_GEOMETRY);
-        updated.assign(id, new dev.unyielding.quests.jail.JailData.Assignment(loc, loc, 42));
-        var reloaded = (dev.unyielding.quests.jail.JailData) load.invoke(null, updated.save(new CompoundTag(), null), null);
-        require(reloaded.geometry() == dev.unyielding.quests.jail.JailData.INTERROGATION_GEOMETRY && reloaded.assignment(id).geometry() == 42, "jail geometry version did not survive serialization");
-        row.putString("geometry", "broken"); old.putString("geometry", "broken");
-        var invalid = (dev.unyielding.quests.jail.JailData) load.invoke(null, old, null);
-        require(invalid.geometry() == dev.unyielding.quests.jail.JailData.INVALID_GEOMETRY && invalid.assignment(id) != null && invalid.assignment(id).geometry() == dev.unyielding.quests.jail.JailData.INVALID_GEOMETRY && loc.equals(invalid.assignment(id).prior()), "malformed geometry was not retained as invalid");
-        require(!dev.unyielding.quests.jail.JailPlacement.intact(server, loc, invalid.assignment(id).geometry()), "invalid geometry did not fail closed");
-        var structure = dev.unyielding.quests.jail.JailPlacement.class.getDeclaredMethod("newStructure", int.class, int.class, int.class);
-        structure.setAccessible(true);
-        for (int z=0; z<7; z++) for (int y=0; y<7; y++) {
-            require(Boolean.TRUE.equals(structure.invoke(null, 0,y,z)) && Boolean.TRUE.equals(structure.invoke(null, 6,y,z)), "prisoner wall has a gap");
-        }
-        for (int x=0; x<=6; x++) for (int y=0; y<7; y++) {
-            require(Boolean.TRUE.equals(structure.invoke(null, x,y,0)) && Boolean.TRUE.equals(structure.invoke(null, x,y,6)), "prisoner side has a gap");
-        }
-        require(Boolean.FALSE.equals(structure.invoke(null, 12,1,3)) && Boolean.FALSE.equals(structure.invoke(null, 12,2,3)) && Boolean.TRUE.equals(structure.invoke(null, 12,3,3)) && Boolean.FALSE.equals(structure.invoke(null, 9,1,3)), "staff entrance is not accessible");
-    }
-
     private static void checkQuestSharingPersistence() {
         var party = java.util.UUID.randomUUID();
         var owner = java.util.UUID.randomUUID();

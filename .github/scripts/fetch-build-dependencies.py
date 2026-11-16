@@ -1,5 +1,6 @@
 """Fetch the three compile-only JARs, verifying their published checksums."""
 import hashlib
+import sys
 from pathlib import Path
 import urllib.request
 
@@ -25,7 +26,7 @@ DEPENDENCIES = [
     ),
 ]
 
-destination = Path("unyielding-quests/libs")
+destination = Path(sys.argv[1]) if len(sys.argv) == 2 else Path("unyielding-quests/libs")
 destination.mkdir(parents=True, exist_ok=True)
 for name, url, algorithm, expected in DEPENDENCIES:
     target = destination / name

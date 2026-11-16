@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.unyielding.jail.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "JailMovementMixin",
+    "CustodyPacketMixin",
+    "JailEquipmentAccess",
+    "JailXpDropMixin"
+  ]
+}

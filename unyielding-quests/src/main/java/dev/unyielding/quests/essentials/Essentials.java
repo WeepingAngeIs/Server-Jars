@@ -157,7 +157,6 @@ public final class Essentials {
         @SubscribeEvent
         public void onPermissions(net.neoforged.neoforge.server.permission.events.PermissionGatherEvent.Nodes e) {
             e.addNodes(PartyMeetings.USE);
-            e.addNodes(dev.unyielding.quests.jail.JailCommands.MANAGE);
         }
         @SubscribeEvent
         public void onStarting(ServerStartingEvent e) {
@@ -177,8 +176,6 @@ public final class Essentials {
         public void onCommands(RegisterCommandsEvent e) {
             TeleCmds.register(e.getDispatcher());
             PartyMeetings.register(e.getDispatcher());
-            dev.unyielding.quests.jail.JailCommands.register(e.getDispatcher());
-            dev.unyielding.quests.jail.JailPlacement.register(e.getDispatcher());
             AdminCmds.register(e.getDispatcher());
             MiscCmds.register(e.getDispatcher());
         }

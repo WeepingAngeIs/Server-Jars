@@ -13,3 +13,11 @@ Unyielding 1.1.10 includes the approved custom Pokemon ZIP edits, animated Mawon
 * `currency-bridge/` - cloud assembly and compatibility checks for the CobbleDollars and Lightman's Currency integration.
 * `combined-unyielding/` - reproducible cloud assembly and checks for the single-file Unyielding and Quests update.
 * `astra-art/` - Astra's folder: the art list, a ready resource pack to drop PNGs into, and upload instructions (`READ-ME-FIRST.txt`).
+
+## Separate Minecraft Jail extraction
+
+On `codex/jail-standalone-extraction`, the existing jail implementation lives in
+`minecraft-jail/`, with a separate JAR and a jail-free Unyielding assembly. See
+`minecraft-jail/README.md` for the code-only verification scope, preserved state
+identifiers, strict runtime-admission limitation and deferred launch-based tests.
+The original recovery-review branch and historical commits are unchanged.

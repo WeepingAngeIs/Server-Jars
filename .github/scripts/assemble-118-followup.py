@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 from class_dependencies import complete_missing_classes, missing_references
+from jail_split import MIXINS, is_jail_entry
 
 baseline = Path('ci-inputs/Unyielding-1.2.0-baseline.jar')
 expected = 'ec3ae2c48399e40ffa615ddec85408bc29b2479c5a35eb7236c3e036ebdf762c'
@@ -13,28 +14,63 @@ jars = [p for p in jars if not p.name.endswith(('-sources.jar', '-javadoc.jar'))
 assert len(jars) == 1, f'Expected one quest JAR, got {jars}'
 
 prefix = 'dev/unyielding/quests/'
-roots = [
-    'jail/JailEquipmentPort', 'jail/JailEquipmentEffects', 'jail/JailNativeOriginPort', 'jail/JailEscapeCustody', 'mixin/JailEquipmentAccess',
-    'jail/JailCertifiedOriginPort', 'jail/JailHealthShift', 'jail/JailPackedItems', 'jail/JailAdmissions', 'jail/JailDamageProtection', 'jail/JailXpState', 'jail/JailXp', 'jail/JailXpOriginPort', 'mixin/JailXpDropMixin',
-    'jail/JailIntegrated', 'jail/JailHumanAudit', 'jail/JailHumanPort', 'jail/JailVanillaPort', 'jail/JailNbt',
-    'jail/JailVanillaCustody',
-    'jail/JailOriginTransaction',
-    'jail/JailCustodyLedger', 'jail/JailCustodyService', 'jail/JailCustodyMenu', 'jail/JailCustodyBlock', 'jail/JailQuarantineEvents', 'mixin/CustodyPacketMixin',
-    'jail/AccessoryCustodyPolicy',
-    'Registration', 'UnyieldingQuests', 'Config', 'settings/OriginFlightSpeed', 'mixin/OriginFlightMixin', 'client/ConfigValuesScreen',
-    'client/AdminInventoryButtons', 'client/InvButtons', 'client/edit/EditQuestScreen',
-    'loot/LootCrateItem',
-    'commands/ModCommands', 'commands/ForceReviveCommand', 'commands/SpinRecoveryCommand',
-    'settings/CorvisquireStars', 'mixin/PokemonProgressRequirementMixin',
-    'mixin/CorvisquireEvolutionGuardMixin',
-    'client/LuckySpinScreen', 'client/LuckySpinSounds', 'client/QuestScreen', 'client/QuestToast', 'client/SpinToast',
-    'client/TeamScreen', 'client/AdminSettingsScreen', 'client/GroundSettingsScreen', 'client/tutorial/TutorialScreen',
-    'settings/GroundSettings', 'settings/DurationInput', 'settings/ConfigEditor', 'settings/ConfigAudit', 'settings/ConfigAuditPolicy', 'net/Net', 'spin/DailyLogin', 'spin/DailyRewardPolicy', 'spin/SpinMenu',
-    'spin/LuckySpin', 'spin/SpinCobblemon', 'spin/RewardJournal', 'spin/RewardDebit',
-    'team/Team', 'team/TeamManager', 'tutorial/TutorialManager', 'ultimine/Ultimine', 'ultimine/UltimineConfig',
-    'essentials/Essentials', 'essentials/EssConfig', 'essentials/TeleCmds', 'essentials/DestinationMenu', 'essentials/DestinationPolicy', 'essentials/PartyMeetings', 'essentials/PartyMeetingPolicy', 'essentials/PartyMeetingData', 'essentials/MeetingClaims', 'client/DestinationScreen', 'settings/AdminSettings', 'settings/SharingSnapshot', 'quest/QuestManager', 'quest/QuestData',
-    'jail/JailData', 'jail/JailCommands', 'jail/JailPlacement', 'jail/JailEnforcement', 'jail/JailBoundary', 'jail/JailTerrainJournal', 'jail/JailEscape', 'jail/JailEscapeBoundary', 'mixin/JailMovementMixin',
-]
+roots = ['Registration',
+ 'UnyieldingQuests',
+ 'Config',
+ 'settings/OriginFlightSpeed',
+ 'mixin/OriginFlightMixin',
+ 'client/ConfigValuesScreen',
+ 'client/AdminInventoryButtons',
+ 'client/InvButtons',
+ 'client/edit/EditQuestScreen',
+ 'loot/LootCrateItem',
+ 'commands/ModCommands',
+ 'commands/ForceReviveCommand',
+ 'commands/SpinRecoveryCommand',
+ 'settings/CorvisquireStars',
+ 'mixin/PokemonProgressRequirementMixin',
+ 'mixin/CorvisquireEvolutionGuardMixin',
+ 'client/LuckySpinScreen',
+ 'client/LuckySpinSounds',
+ 'client/QuestScreen',
+ 'client/QuestToast',
+ 'client/SpinToast',
+ 'client/TeamScreen',
+ 'client/AdminSettingsScreen',
+ 'client/GroundSettingsScreen',
+ 'client/tutorial/TutorialScreen',
+ 'settings/GroundSettings',
+ 'settings/DurationInput',
+ 'settings/ConfigEditor',
+ 'settings/ConfigAudit',
+ 'settings/ConfigAuditPolicy',
+ 'net/Net',
+ 'spin/DailyLogin',
+ 'spin/DailyRewardPolicy',
+ 'spin/SpinMenu',
+ 'spin/LuckySpin',
+ 'spin/SpinCobblemon',
+ 'spin/RewardJournal',
+ 'spin/RewardDebit',
+ 'team/Team',
+ 'team/TeamManager',
+ 'tutorial/TutorialManager',
+ 'ultimine/Ultimine',
+ 'ultimine/UltimineConfig',
+ 'essentials/Essentials',
+ 'essentials/EssConfig',
+ 'essentials/TeleCmds',
+ 'essentials/DestinationMenu',
+ 'essentials/DestinationPolicy',
+ 'essentials/PartyMeetings',
+ 'essentials/PartyMeetingPolicy',
+ 'essentials/PartyMeetingData',
+ 'essentials/MeetingClaims',
+ 'client/DestinationScreen',
+ 'settings/AdminSettings',
+ 'settings/SharingSnapshot',
+ 'quest/QuestManager',
+ 'quest/QuestData']
 frames = {f'assets/unyieldingquests/textures/gui/sprites/icon_spin_frame_{i}.png' for i in range(4)}
 out = Path('dist/120-release/Unyielding-1.2.0.jar')
 out.parent.mkdir(parents=True, exist_ok=True)
@@ -51,7 +87,7 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
     # starts from an older baseline. Include every missing referenced application
     # class from that same component (including nested classes) to a fixed point.
     # Never replace an unrelated existing baseline class or ship test-only helpers.
-    classes = {n: base.read(n) for n in base.namelist() if n.endswith('.class')}
+    classes = {n: base.read(n) for n in base.namelist() if n.endswith('.class') and not is_jail_entry(n)}
     classes.update({n: data for n, data in updates.items() if n.endswith('.class')})
     additions = complete_missing_classes(classes, names, component.read, prefix + 'devtest/')
     updates.update(additions)
@@ -61,19 +97,12 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
     for frame in frames:
         assert frame in names, f'Missing {frame}'
         updates[frame] = component.read(frame)
-    advancement = 'data/unyieldingquests/advancement/jail_escape.json'
-    assert advancement in names, 'Missing jail escape advancement'
-    updates[advancement] = component.read(advancement)
-    for asset in ('blockstates/custody_vault.json', 'models/block/custody_vault.json', 'jail-certified-runtime.json'):
-        path = 'assets/unyieldingquests/' + asset
-        assert path in names, f'Missing custody interface asset {path}'
-        updates[path] = component.read(path)
     mixin_path = 'assets/unyieldingquests/pokemon.mixins.json'
     old_mixins = json.loads(base.read(mixin_path))
     new_mixins = json.loads(component.read(mixin_path))
     for category in ('mixins', 'client', 'server'):
         if category in new_mixins:
-            old_mixins[category] = list(dict.fromkeys(old_mixins.get(category, []) + new_mixins[category]))
+            old_mixins[category] = [name for name in dict.fromkeys(old_mixins.get(category, []) + new_mixins[category]) if name not in MIXINS]
     updates[mixin_path] = json.dumps(old_mixins, indent=2).encode()
     cleanup_files = [n for n in names if n.startswith('data/cui_cleanup/') and not n.endswith('/')]
     assert cleanup_files, 'Missing ground cleanup functions'
@@ -92,6 +121,8 @@ with ZipFile(baseline) as base, ZipFile(jars[0]) as component:
     replaced = set(updates)
     with ZipFile(out, 'w', ZIP_DEFLATED) as result:
         for entry in base.infolist():
+            if is_jail_entry(entry.filename):
+                continue
             result.writestr(entry, updates.pop(entry.filename, base.read(entry)))
         for name, data in updates.items():
             result.writestr(name, data)
@@ -107,13 +138,14 @@ with ZipFile(baseline) as base, ZipFile(out) as result:
     assert not any(n.startswith(prefix + 'devtest/JailTerrainPlayerSmoke') for n in result.namelist()), 'Test harness leaked into release'
     for fixture in ('VanillaCustodySmoke', 'VanillaRestoreSmoke', 'AccessoryCustodyPort', 'AccessoryCustodySmoke', 'OriginCustodyPort', 'OriginCustodySmoke', 'CustodyInterfaceSmoke', 'IntegratedJailSmoke', 'ExpandedJailSmoke', 'CertifiedJailSmoke', 'CertifiedPayloadProbe'):
         assert not any(n.startswith(prefix + 'devtest/' + fixture) for n in result.namelist()), f'{fixture} leaked into release'
-    assert prefix + 'jail/JailOriginTransaction.class' in result.namelist(), 'Origin transaction coordinator missing'
-    assert set(base.namelist()).issubset(result.namelist()), 'Baseline entries were lost'
+    assert not any(is_jail_entry(n) for n in result.namelist()), 'Jail code/resources leaked into Unyielding'
+    retained = {n for n in base.namelist() if not is_jail_entry(n)}
+    assert retained.issubset(result.namelist()), 'Non-jail baseline entries were lost'
     unresolved = missing_references({n: result.read(n) for n in result.namelist() if n.endswith('.class')})
     assert not unresolved, f'Unresolved application classes in final JAR: {unresolved}'
     assert result.read('META-INF/MANIFEST.MF').count(b'Implementation-Version: 1.2.0') == 1
     for name in base.namelist():
-        if name not in replaced:
+        if name not in replaced and not is_jail_entry(name):
             assert base.read(name) == result.read(name), f'Unexpected change: {name}'
 sha = hashlib.sha256(out.read_bytes()).hexdigest()
 (out.parent / 'SHA256SUMS').write_text(f'{sha}  {out.name}\n')
