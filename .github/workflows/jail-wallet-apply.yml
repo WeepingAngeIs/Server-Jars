@@ -1,0 +1,30 @@
+name: Apply reviewed finite wallet contract
+on:
+  push:
+    branches: ['codex/jail-packed-wallet-custody']
+    paths: ['.github/workflows/jail-wallet-apply.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Apply exact baseline-checked edits, retaining history
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = refs/heads/codex/jail-packed-wallet-custody
+          python3 .github/wallet-transfer/apply.py
+          mv .github/wallet-transfer/jail-packed-wallet-custody.yml .github/workflows/jail-packed-wallet-custody.yml
+          git diff --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add minecraft-jail/src/main/java/dev/unyielding/jail/JailAdmissions.java minecraft-jail/src/main/java/dev/unyielding/jail/JailConfig.java minecraft-jail/src/main/java/dev/unyielding/jail/JailEquipmentEffects.java minecraft-jail/src/main/java/dev/unyielding/jail/JailEquipmentPort.java minecraft-jail/src/main/java/dev/unyielding/jail/JailIntegrated.java .github/wallet-transfer/jail-packed-wallet-custody.yml .github/workflows/jail-packed-wallet-custody.yml
+          git commit -m 'Implement opt-in exact-slot occupied leather-wallet custody without changing certificates or companion'
+          git fetch origin codex/jail-packed-wallet-custody
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
+          git push origin HEAD:refs/heads/codex/jail-packed-wallet-custody
