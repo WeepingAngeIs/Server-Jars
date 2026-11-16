@@ -1,0 +1,47 @@
+package dev.unyielding.bundlesmoke;
+
+import dev.unyielding.quests.client.UltimineClient;
+import dev.unyielding.quests.net.Net;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.Screenshot;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import java.nio.file.*;
+
+@EventBusSubscriber(modid="uq_bundle_smoke",value=Dist.CLIENT)
+public final class ClientChecks {
+    static String seen="";static String[] command;static int delay;
+    static final Path ROOT=Path.of("/tmp/uq-vein-controls");
+    static Object field(Object target,String name)throws Exception{for(Class<?> type=target.getClass();type!=null;type=type.getSuperclass()){try{var f=type.getDeclaredField(name);f.setAccessible(true);return f.get(target);}catch(NoSuchFieldException ignored){}}throw new NoSuchFieldException(name);}
+    @SubscribeEvent public static void tick(ClientTickEvent.Post e){
+        if(!"true".equals(System.getenv("GITHUB_ACTIONS")))return;var mc=Minecraft.getInstance();if(mc.player==null||!mc.player.getGameProfile().getName().equals("Dev"))return;
+        try{
+            if(command!=null){if(--delay>0)return;String verdict="passed";
+                try{String text=((Component)field(mc.gui,"overlayMessage")).getString();if(command[3].equals("NONE")){if(text.startsWith("Vein mining:"))throw new IllegalStateException("unexpected action bar: "+text);}else if(!text.contains(command[3]))throw new IllegalStateException("wrong action bar: "+text);
+                    if(command[1].startsWith("preview")){if(!(boolean)fieldClass(UltimineClient.class,"held"))throw new IllegalStateException("held overlay inactive");if(((java.util.List<?>)fieldClass(UltimineClient.class,"preview")).size()!=3)throw new IllegalStateException("wrong preview size");}
+                    if(command[1].equals("menu")&&(boolean)fieldClass(UltimineClient.class,"held"))throw new IllegalStateException("menu retained held mining state");
+                }catch(Throwable bad){verdict="failed: "+bad;}
+                Screenshot.grab(Path.of(System.getenv("UQ_VEIN_EVIDENCE")).toFile(),command[4]+".png",mc.getMainRenderTarget(),c->{});
+                Files.writeString(ROOT.resolve("Dev.ack"),command[0]+"\t"+verdict);UltimineClient.KEY.setDown(false);Net.sendToServer(new Net.UltimineState(false,0));command=null;return;
+            }
+            Path path=ROOT.resolve("Dev.txt");if(!Files.exists(path))return;String value=Files.readString(path);if(value.equals(seen))return;seen=value;command=value.split("\t",-1);mc.setScreen(null);mc.options.hideGui=command[1].equals("preview_hidden");mc.gui.setOverlayMessage(Component.empty(),false);
+            String[] xyz=command[2].split(",");var pos=new BlockPos(Integer.parseInt(xyz[0]),Integer.parseInt(xyz[1]),Integer.parseInt(xyz[2]));var hit=new BlockHitResult(Vec3.atCenterOf(pos).add(0,.5,0),Direction.UP,pos,false);mc.hitResult=hit;
+            UltimineClient.KEY.setDown(true);Net.sendToServer(new Net.UltimineState(true,0));
+            var eye=mc.player.getEyePosition();double dx=pos.getX()+.5-eye.x,dy=pos.getY()+.8-eye.y,dz=pos.getZ()+.5-eye.z;mc.player.setYRot((float)(Math.toDegrees(Math.atan2(dz,dx))-90));mc.player.setXRot((float)-Math.toDegrees(Math.atan2(dy,Math.sqrt(dx*dx+dz*dz))));
+            if(command[1].equals("menu"))mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
+            if(command[1].equals("mine"))mc.getConnection().send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,pos,Direction.UP,0));
+            if(command[1].equals("use"))mc.getConnection().send(new ServerboundUseItemOnPacket(InteractionHand.MAIN_HAND,hit,0));delay=25;
+        }catch(Throwable bad){bad.printStackTrace();try{Files.writeString(ROOT.resolve("Dev.ack"),(command==null?"0":command[0])+"\tfailed: client "+bad);}catch(Exception ignored){}command=null;}
+    }
+    static Object fieldClass(Class<?> type,String name)throws Exception{var f=type.getDeclaredField(name);f.setAccessible(true);return f.get(null);}
+}
