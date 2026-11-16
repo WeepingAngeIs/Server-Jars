@@ -7,7 +7,6 @@ assert os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('RUNNER_ENVIR
 subprocess.run(['python3','.github/party-wallet/prepare.py'],cwd=root,check=True)
 source=root/'dist/packaged-harness/src/main/java/dev/unyielding/bundlesmoke'
 p=source/'PartyWalletProbe.java';s=p.read_text()
-needle='        if(!Boolean.getBoolean("uq.partyWalletProbe"))||finished)return;'
 needle='        if(!Boolean.getBoolean("uq.partyWalletProbe")||finished)return;'
 assert s.count(needle)==1
 s=s.replace(needle,needle+'\n        if(Boolean.getBoolean("uq.nativeResourceProbe"))return;',1)
@@ -20,5 +19,11 @@ assert s.count(old)==1;s=s.replace(old,new,1)
 old='player.hurt(player.damageSources().generic(),1000F);'
 new='''report.put("death_trigger","vanilla /kill on explicitly unjailed synthetic player");
                 require(PartyWalletProbe.command("kill Visitor")==1,"Vanilla kill command failed");'''
+assert s.count(old)==1;s=s.replace(old,new,1)
+old='    static boolean started,waiting,finished;'
+assert s.count(old)==1;s=s.replace(old,old+'\n    static int readyTicks;',1)
+old='if(admin==null||player==null||event.getServer().getTickCount()<120||player.tickCount<100)return;'
+new='''if(admin==null||player==null||event.getServer().getTickCount()<120)return;
+            if(++readyTicks<100)return;'''
 assert s.count(old)==1;s=s.replace(old,new,1)
 (source/'NativeResourceProbe.java').write_text(s)
