@@ -98,7 +98,7 @@ public final class PackedWalletCustodySmoke {
         proof(Arrays.equals(before,items().current().inventory())&&JailCustodyService.ledger(admin.server).list().size()==size,name+"_nonmutating");
     }
     static void negativeAdmission()throws Exception {
-        ItemStack captured=player.getInventory().getItem(SLOT);player.getInventory().setItem(SLOT,ItemStack.EMPTY);player.getInventory().setItem(player.getInventory().selected,captured);CertifiedJailSmoke.flush();refusalUnchanged("selected_wallet_refused");player.getInventory().setItem(player.getInventory().selected,ItemStack.EMPTY);player.getInventory().setItem(SLOT,captured);CertifiedJailSmoke.flush();
+        ItemStack selectedBefore=player.getInventory().removeItemNoUpdate(player.getInventory().selected);ItemStack captured=player.getInventory().getItem(SLOT);player.getInventory().setItem(SLOT,ItemStack.EMPTY);player.getInventory().setItem(player.getInventory().selected,captured);CertifiedJailSmoke.flush();refusalUnchanged("selected_wallet_refused");player.getInventory().setItem(player.getInventory().selected,selectedBefore);player.getInventory().setItem(SLOT,captured);CertifiedJailSmoke.flush();
         player.getInventory().setItem(13,captured.copy());refusalUnchanged("multiple_wallets_refused");player.getInventory().setItem(13,ItemStack.EMPTY);
         captured.set(DataComponents.MAX_STACK_SIZE,2);refusalUnchanged("altered_component_refused");captured.remove(DataComponents.MAX_STACK_SIZE);
         // Restore only our synthetic full stack, not a normalized approximation.
@@ -126,6 +126,16 @@ public final class PackedWalletCustodySmoke {
     static void admit()throws Exception {
         proof(command("jail Visitor")==1,"actual_wallet_custody_admission");rememberTransaction();held();
         int size=JailCustodyService.ledger(admin.server).list().size();proof(command("jail Visitor")==0&&JailCustodyService.ledger(admin.server).list().size()==size,"duplicate_admission_refused");
+    }
+    static void offlineRefusal()throws Exception {
+        require(admin.server.getPlayerList().getPlayer(owner)==null,"Offline negative control has a live target");
+        var before=binding();boolean refused=false;
+        try{refused=command("unjail Visitor")==0;}
+        catch(com.mojang.brigadier.exceptions.CommandSyntaxException expected){
+            require(expected.getRawMessage().getString().equals("No player was found"),"Unexpected parser failure: "+expected);
+            refused=true;
+        }
+        proof(refused&&before.equals(binding()),"offline_release_refused");
     }
     static void disconnect()throws Exception {save();waiting=true;player.connection.disconnect(Component.literal("Disposable packed wallet persistence test"));}
     static void writeReport(boolean crash,String stage)throws IOException {
@@ -182,7 +192,7 @@ public final class PackedWalletCustodySmoke {
     @SubscribeEvent public static void tick(ServerTickEvent.Post event){
         if(!Boolean.getBoolean("uq.packedWallet")||done)return;
         try{
-            if(waiting){if(event.getServer().getPlayerList().getPlayer(owner)!=null)return;waiting=false;proof(true,"actual_disconnect_observed");if(JailCustodyService.ledger(admin.server).list().stream().anyMatch(b->b.owner().equals(owner)))proof(command("unjail Visitor")==0,"offline_release_refused");writeReport(false,"");done=true;return;}
+            if(waiting){if(event.getServer().getPlayerList().getPlayer(owner)!=null)return;waiting=false;proof(true,"actual_disconnect_observed");if(JailCustodyService.ledger(admin.server).list().stream().anyMatch(b->b.owner().equals(owner)))offlineRefusal();writeReport(false,"");done=true;return;}
             if(started)return;admin=event.getServer().getPlayerList().getPlayerByName("Dev");player=event.getServer().getPlayerList().getPlayerByName("Visitor");if(admin==null||player==null||event.getServer().getTickCount()<120||player.isAlive()&&player.tickCount<100)return;
             started=true;owner=player.getUUID();world=event.getServer().getWorldPath(LevelResource.ROOT);scenario=System.getProperty("uq.walletScenario");phase=Integer.getInteger("uq.walletPhase",0);guard();
             CertifiedJailSmoke.admin=admin;CertifiedJailSmoke.target=player;CertifiedJailSmoke.world=world;step();
