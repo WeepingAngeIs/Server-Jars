@@ -27,4 +27,6 @@ end = template.index('    (EVIDENCE / "runtime-inputs.json")', start)
 template = template[:start] + template[end:]
 namespace = {'__name__': 'reward_preparation', '__file__': str(ROOT / 'combined-unyielding/prepare_smoke.py')}
 exec(compile(template, 'reward_preparation', 'exec'), namespace)
+namespace['DEPENDENCIES']['CobbleDollars 2.0.0 Beta 6.1 NeoForge'] = 'Iqiqjfsi'
+namespace['DEPENDENCIES']["Lightman's Currency 2.3.0.5 NeoForge"] = 'n2ynBeOK'
 namespace['main']()

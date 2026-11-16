@@ -26,6 +26,6 @@ for phase in 1 2 3 4 5 6; do
     cp "$UQ_REWARD_EVIDENCE/balance-before-failed-save.dat" "run-server/world/data/unyieldingquests_daily.dat"
   fi
   UQ_REWARD_PHASE="$phase" timeout 720 bash "$server_script" > "$UQ_REWARD_EVIDENCE/server-$phase.log" 2>&1 || { tail -100 "$UQ_REWARD_EVIDENCE/server-$phase.log"; exit 1; }
-  grep -q '^passed:' "$UQ_REWARD_EVIDENCE/phase-$phase.txt"
+  grep -q '^passed:' "$UQ_REWARD_EVIDENCE/phase-$phase.txt" || { tail -100 "$UQ_REWARD_EVIDENCE/server-$phase.log"; exit 1; }
   cat "$UQ_REWARD_EVIDENCE/phase-$phase.txt"
 done
