@@ -42,23 +42,38 @@ world_name="${UQ_WORLD_NAME:-world}"
 [[ "$world_name" =~ ^[A-Za-z0-9_-]{1,32}$ ]] || { echo 'Invalid disposable world name' >&2; exit 1; }
 printf 'level-name=%s\n' "$world_name" >> "$project/run-server/server.properties"
 rm -f "$result_file"
-server_pid= client_pid= visitor_pid=
-cleanup() {
-  for pid in "$visitor_pid" "$client_pid" "$server_pid"; do
-    if [[ -n "$pid" ]]; then kill -- -"$pid" 2>/dev/null || true; fi
+server_pid= client_pid= visitor_pid= server_input=
+group_alive() { ps -eo pgid=,stat= | awk -v group="$1" '$1==group && $2 !~ /^Z/ {live=1} END {exit !live}'; }
+await_group() {
+  for ((attempt=0; attempt<240; attempt++)); do
+    if ! group_alive "$1"; then return 0; fi
+    sleep 0.25
   done
-  for pid in "$visitor_pid" "$client_pid" "$server_pid"; do
-    if [[ -n "$pid" ]]; then wait "$pid" 2>/dev/null || true; fi
+  return 1
+}
+cleanup() {
+  # Ask our own server to stop and finish native world/player saves first.
+  if [[ -n "$server_pid" ]] && group_alive "$server_pid"; then
+    printf 'stop\n' >&9
+    if ! await_group "$server_pid"; then
+      echo "Graceful disposable server shutdown timed out; terminating owned group $server_pid" >&2
+      ps -eo pid,ppid,pgid,stat,args | awk -v group="$server_pid" 'NR==1 || $3==group' >&2
+      kill -- -"$server_pid" 2>/dev/null || true
+    fi
+  fi
+  for pid in "$visitor_pid" "$client_pid"; do
+    if [[ -n "$pid" ]]; then kill -- -"$pid" 2>/dev/null || true; fi
   done
   # The wrapper shell can exit before its JVM finishes shutdown. Do not start
   # another server until every owned process group is gone; never remove a lock.
   for pid in "$visitor_pid" "$client_pid" "$server_pid"; do
     if [[ -n "$pid" ]]; then
-      for ((attempt=0; attempt<240; attempt++)); do
-        if ! ps -eo pgid=,stat= | awk -v group="$pid" '$1==group && $2 !~ /^Z/ {live=1} END {exit !live}'; then break; fi
-        sleep 0.25
-      done
-      if ps -eo pgid=,stat= | awk -v group="$pid" '$1==group && $2 !~ /^Z/ {live=1} END {exit !live}'; then echo "Owned disposable process group still shutting down: $pid" >&2; return 1; fi
+      if ! await_group "$pid"; then
+        echo "Owned disposable process group still shutting down: $pid" >&2
+        ps -eo pid,ppid,pgid,stat,args | awk -v group="$pid" 'NR==1 || $3==group' >&2
+        return 1
+      fi
+      wait "$pid" 2>/dev/null || true
     fi
   done
   python3 - "$project/run-server/$world_name/session.lock" <<'PYLOCK'
@@ -78,6 +93,7 @@ if path.exists():
         else:
             raise SystemExit('Previous disposable server still owns its world lock; refusing restart')
 PYLOCK
+  if [[ -n "$server_input" ]]; then exec 9>&-; rm -- "$server_input"; fi
   cp "$project/run-server/logs/latest.log" "$logs/server-latest.log" 2>/dev/null || true
   cp "$result_file" "$logs/" 2>/dev/null || true
 }
@@ -90,7 +106,10 @@ server_script=$(find build -type f -name runServer.sh -print -quit)
 client_script=$(find build -type f -name runClient.sh -print -quit)
 visitor_script=$(find build -type f -name runVisitor.sh -print -quit)
 test -n "$server_script" && test -n "$client_script" && test -n "$visitor_script"
-setsid bash "$server_script" > "$logs/server.log" 2>&1 & server_pid=$!
+server_input="$logs/server-input-$$"
+mkfifo "$server_input"
+exec 9<>"$server_input"
+setsid bash "$server_script" < "$server_input" > "$logs/server.log" 2>&1 & server_pid=$!
 for ((i=0; i<240; i++)); do
   if grep -q 'Done (' "$logs/server.log"; then break; fi
   kill -0 "$server_pid" 2>/dev/null || { tail -100 "$logs/server.log"; exit 1; }
