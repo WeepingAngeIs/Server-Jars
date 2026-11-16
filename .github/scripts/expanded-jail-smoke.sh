@@ -10,7 +10,7 @@ from pathlib import Path
 world = Path('dist/packaged-harness/run-server/jail_expanded_smoke')
 target = Path('dist/packaged-smoke/expanded-world-evidence')
 target.mkdir(exist_ok=True)
-for name in ('integrated-jail-v1', 'custody-interface-v1', 'playerdata'):
+for name in ('integrated-jail-v1', 'custody-interface-v1', 'playerdata', 'advancements', 'stats'):
     if (world / name).is_dir():
         shutil.copytree(world / name, target / name, dirs_exist_ok=True)
 for name in ('expected-equipment.nbt', 'active-expanded', 'data/unyielding_jail.dat', 'data/neoorigins_origin_claims.dat'):
