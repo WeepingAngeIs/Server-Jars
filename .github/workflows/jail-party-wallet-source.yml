@@ -12,15 +12,20 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-      - name: Export tracked source only
+      - name: Export tracked investigation source only and verify production preservation
         run: |
+          set -euo pipefail
           mkdir -p /tmp/jail-review
+          git fetch --no-tags --depth=1 origin 4e3667a149d4e530bddb5326ee739ad386fe6a47
+          git diff --exit-code 4e3667a149d4e530bddb5326ee739ad386fe6a47 HEAD -- minecraft-jail unyielding-quests combined-unyielding currency-bridge iv-substitute-update model-hotfix riding-update settings-update tutorial-update ci-inputs
           git rev-parse HEAD > /tmp/jail-review/commit.txt
-          git archive --format=zip HEAD .github minecraft-jail unyielding-quests combined-unyielding ci-inputs AGENTS.md docs > /tmp/jail-review/source.zip
-          git ls-tree -r HEAD > /tmp/jail-review/tree.txt
+          git diff --name-status 4e3667a149d4e530bddb5326ee739ad386fe6a47 HEAD > /tmp/jail-review/changed-files.txt
+          git archive --format=zip HEAD .github/party-wallet .github/resource-native .github/workflows/jail-party-wallet.yml .github/workflows/jail-native-resource.yml tools/jail-sandbox docs/JAIL-PARTY-WALLET-RESEARCH.md > /tmp/jail-review/investigation-source.zip
+          python3 -m unittest discover -s tools/jail-sandbox -p 'test_*.py' -v 2>&1 | tee /tmp/jail-review/preflight-tests.txt
+          printf '%s\n' 'Production source trees and certificates equal verified split 4e3667a149d4e530bddb5326ee739ad386fe6a47. No production build performed.' > /tmp/jail-review/production-preservation.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: jail-party-wallet-source
+          name: jail-investigation-source-${{ github.sha }}
           path: /tmp/jail-review/
-          retention-days: 7
+          retention-days: 30
           if-no-files-found: error
