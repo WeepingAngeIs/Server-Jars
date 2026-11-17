@@ -106,14 +106,14 @@ public final class Ultimine {
             else if (stack.getItem() instanceof ShovelItem && UltimineConfig.RIGHT_CLICK_SHOVEL.get()) sameLayer = true;
             else return;
             BlockPos origin = e.getPos();
-            if (!level.mayInteract(p, origin) || p.blockActionRestricted(level, origin, p.gameMode.getGameModeForPlayer())) return;
+            if (!level.mayInteract(p, origin)) return;
             List<BlockPos> list = Shapes.compute(level, origin, e.getFace() == null ? Direction.UP : e.getFace(), Shapes.Shape.SHAPELESS, UltimineConfig.MAX_BLOCKS.get());
             ACTIVE.add(p.getUUID());
             try {
                 for (BlockPos pos : list) {
                     if (pos.equals(origin) || sameLayer && pos.getY() != origin.getY()) continue;
                     if (stack.isEmpty()) break;
-                    if (!level.mayInteract(p, pos) || p.blockActionRestricted(level, pos, p.gameMode.getGameModeForPlayer())) continue;
+                    if (!level.mayInteract(p, pos)) continue;
                     Direction f = e.getFace() == null ? Direction.UP : e.getFace();
                     BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos).relative(f, 0.5), f, pos, false);
                     // Keep this item-only action, but give protection listeners each target.

@@ -58,6 +58,13 @@ public final class BundleSmoke {
     static void ground(boolean hoe){seed(false);p().setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(hoe?Items.IRON_HOE:Items.IRON_SHOVEL));for(int i=0;i<3;i++)server.overworld().setBlock(origin.offset(i,0,0),Blocks.DIRT.defaultBlockState(),3);}
     static void groundChanged(boolean hoe,boolean a,boolean b,boolean c){boolean[] expected={a,b,c};for(int i=0;i<3;i++)require(server.overworld().getBlockState(origin.offset(i,0,0)).is(hoe?Blocks.FARMLAND:Blocks.DIRT_PATH)==expected[i],"unexpected ground transformation at "+origin.offset(i,0,0));}
     static void survivalStop(boolean hungry){seed(false);for(int i=0;i<3;i++)server.overworld().setBlock(origin.offset(i,0,0),Blocks.SLIME_BLOCK.defaultBlockState(),3);p().setGameMode(GameType.SURVIVAL);if(hungry)p().getFoodData().setFoodLevel(0);else p().getMainHandItem().setDamageValue(249);server.overworld().setBlock(new BlockPos(527,80,522),Blocks.BEDROCK.defaultBlockState(),3);}
+    static void adventure(boolean mining,boolean permitted){
+        if(mining){seed(false);for(int i=0;i<3;i++)server.overworld().setBlock(origin.offset(i,0,0),Blocks.SLIME_BLOCK.defaultBlockState(),3);}else ground(false);
+        p().setGameMode(GameType.ADVENTURE);server.overworld().setBlock(new BlockPos(527,80,522),Blocks.BEDROCK.defaultBlockState(),3);
+        if(permitted){String component=mining?"can_break":"can_place_on",item=mining?"iron_pickaxe":"iron_shovel",block=mining?"slime_block":"dirt";
+            server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),"item replace entity Dev weapon.mainhand with minecraft:"+item+"[minecraft:"+component+"={predicates:[{blocks:\"minecraft:"+block+"\"}]}]");
+            require(p().getMainHandItem().has(mining?net.minecraft.core.component.DataComponents.CAN_BREAK:net.minecraft.core.component.DataComponents.CAN_PLACE_ON),"adventure permission component missing");}
+    }
     static void add(String name,Runnable setup,String action,String expected,Runnable check){cases.add(new Case(name,setup,action,expected,check));}
     static void setup(){
         require(!UltimineConfig.COMPACT_FEEDBACK.get(),"compact feedback default changed");
@@ -85,6 +92,10 @@ public final class BundleSmoke {
         add("late item-use origin denied",()->{ground(false);cancel="use_origin";},"use","NONE",()->groundChanged(false,false,false,false));
         add("item-use extras denied",()->{ground(false);cancel="use_extra";},"use","NONE",()->groundChanged(false,true,false,false));
         add("spectator tool use denied",()->{seed(true);p().setGameMode(GameType.SPECTATOR);},"use","NONE",()->stripped(false,false,false));
+        add("adventure tool use denied",()->adventure(false,false),"use","NONE",()->groundChanged(false,false,false,false));
+        add("adventure permitted tool use",()->adventure(false,true),"use","NONE",()->groundChanged(false,true,true,true));
+        add("adventure mining denied",()->adventure(true,false),"mine","NONE",()->blocks(false,false,false));
+        add("adventure permitted mining",()->adventure(true,true),"mine","2 extra blocks",()->blocks(true,true,true));
         add("master switch off",()->{seed(false);UltimineConfig.ENABLED.set(false);},"disabled","NONE",()->blocks(true,false,false));
         add("require item empty hand",()->{seed(false);UltimineConfig.REQUIRE_TOOL.set(true);p().setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);},"empty","NONE",()->blocks(true,false,false));
         add("durability stop display",()->survivalStop(false),"mine","tool durability",()->blocks(true,false,false));
