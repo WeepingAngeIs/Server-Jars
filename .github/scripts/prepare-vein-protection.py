@@ -22,6 +22,10 @@ injection = ''.join(f"namespace['DEPENDENCIES'][{name!r}] = {version!r}\n" for n
 source=source.replace(needle,"source=source.replace(\"namespace['main']()\", "+repr(injection)+")\n"+needle)
 exec(compile(source,'vein_preparation','exec'),{'__file__':str(ROOT/'.github/scripts/prepare-party-confirmation.py')})
 shutil.copy2(ROOT / '.github/vein-protection/AcceptanceCases.java', ROOT / 'dist/vein-harness/src/main/java/dev/unyielding/bundlesmoke/AcceptanceCases.java')
+# Cobblemon's public party API exposes Kotlin collection marker interfaces.
+# Compile against the standard library; the installed Kotlin mod owns runtime.
+build = ROOT / 'dist/vein-harness/build.gradle'
+build.write_text(build.read_text(encoding='utf-8') + "\ndependencies { compileOnly files('../../unyielding-quests/libs/kotlin-stdlib.jar') }\n", encoding='utf-8')
 # Reproduce only the observed, non-sensitive HUD placement. No waypoints/maps/config
 # contents from the user's profile are copied into this disposable environment.
 for directory in ('run', 'run-visitor'):
