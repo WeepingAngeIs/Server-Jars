@@ -30,6 +30,21 @@ import net.neoforged.neoforge.network.PacketDistributor;
 @EventBusSubscriber(modid="uq_bundle_smoke")
 @SuppressWarnings({"rawtypes","unchecked"})
 public final class SessionBridge {
+    public static void trace(String event,ServerPlayer p){
+        if(!Boolean.getBoolean("uq.sessionDiagnostic"))return;
+        var c=p==null?null:connections.get(p.getUUID());
+        System.out.println("JAIL_LIFECYCLE event="+event+" thread="+Thread.currentThread().getName()
+            +" owner="+(p==null?"none":p.getUUID())+" player="+System.identityHashCode(p)
+            +" listener="+(p==null?0:System.identityHashCode(p.connection))
+            +" tick="+(p==null?-1:p.tickCount)+" prepared="+prepared
+            +" leased="+(c!=null)+" samePlayer="+(c!=null&&c.player==p));
+    }
+    @SubscribeEvent(priority=net.neoforged.bus.api.EventPriority.HIGHEST)
+    public static void diagnosticSync(net.neoforged.neoforge.event.OnDatapackSyncEvent e){trace("datapack-event-highest",e.getPlayer());}
+    @SubscribeEvent
+    public static void diagnosticLogin(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e){
+        if(e.getEntity() instanceof ServerPlayer p)trace("logged-in-event",p);
+    }
     static final String MANAGER="com.cobblemon.mod.common.api.storage.PokemonStoreManager#";
     static final Gson GSON=new GsonBuilder().setPrettyPrinting().create();
     static final UUID VISITOR=UUID.nameUUIDFromBytes("OfflinePlayer:Visitor".getBytes(StandardCharsets.UTF_8));
@@ -111,6 +126,7 @@ public final class SessionBridge {
         flag("global_pre_enrollment_queued_write_refused");flag("global_source_and_staged_return_exact");prepared=true;
     }
     static void hello(ServerPlayer p,JsonObject request)throws Exception {
+        trace("custom-hello",p);
         if(!p.getUUID().equals(VISITOR)||!p.getGameProfile().getName().equals("Visitor")){flag("unrelated_connection_cannot_claim_target");send(p,"DENIED",label(request),null);return;}
         if(p.tickCount<100||GlobalProfile.manager()==null){send(p,"WAIT",label(request),null);return;}
         if(!prepared)prepare(p);
@@ -187,8 +203,9 @@ public final class SessionBridge {
         r.addProperty("swap_other",c.session.stores.party().get(5).getUuid().toString());r.addProperty("name",target(c).getNickname().getString());r.addProperty("joins",visitorConnections);send(c.player,"SNAPSHOT",q,r);flag("full_state_snapshot_sent_after_receipt");
     }
     public static Object invoke(Object receiver,String key,Object[] args,NativeFence.Call original)throws Throwable {
+        if(key.startsWith(MANAGER)&&args.length==1&&args[0] instanceof ServerPlayer p)trace(key,p);
         if(enabled()&&key.startsWith(MANAGER)&&args.length==1&&args[0] instanceof ServerPlayer p&&GlobalProfile.manager()!=null&&receiver==GlobalProfile.manager()&&enrolled(p.getUUID())){
-            if(key.contains("#onPlayerDataSync(")){flag("native_sync_deferred_no_empty_party_substitute");return null;}
+            if(key.contains("#onPlayerDataSync(")&&!Boolean.getBoolean("uq.sessionDiagnostic")){flag("native_sync_deferred_no_empty_party_substitute");return null;}
             if(key.contains("#onPlayerDisconnect(")){
                 ConnectionLease c=connections.remove(p.getUUID());
                 if(c!=null){require(c.player==p&&c.listener==p.connection,"Stale disconnect cannot retire current connection");c.valid=false;retired=c;disconnects++;}

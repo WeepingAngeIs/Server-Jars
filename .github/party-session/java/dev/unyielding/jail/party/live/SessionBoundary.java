@@ -43,6 +43,7 @@ public final class SessionBoundary {
     public static boolean blockNative(ServerPlayer p,String handler){return SessionBridge.blockNative(p,handler);}
     public static boolean blockFixturePartyPacket(net.minecraft.server.level.ServerPlayer recipient,
             com.cobblemon.mod.common.api.net.NetworkPacket<?> packet){
+        if(Boolean.getBoolean("uq.sessionDiagnostic"))return false;
         if(!SessionBridge.enabled()||!(packet instanceof com.cobblemon.mod.common.net.messages.client.storage.party.SetPartyPokemonPacket set))return false;
         // This detached-snapshot fixture never authorizes ordinary party synchronization.
         // Select the synthetic store before seeding, not a possibly revoked native object.
@@ -52,7 +53,7 @@ public final class SessionBoundary {
         SessionBridge.flag("unrelated_native_party_packet_not_deferred");return false;
     }
     public static java.util.List<ServerPlayer> periodicPlayers(java.util.List<ServerPlayer> players){
-        if(!SessionBridge.enabled())return players;
+        if(Boolean.getBoolean("uq.sessionDiagnostic")||!SessionBridge.enabled())return players;
         java.util.List<ServerPlayer> allowed=new java.util.ArrayList<>();
         for(ServerPlayer p:players){
             if(blockCosmetic(p))SessionBridge.flag("enrolled_periodic_party_deferred_before_lookup");
@@ -61,7 +62,7 @@ public final class SessionBoundary {
         return java.util.List.copyOf(allowed);
     }
     public static boolean blockMolang(ServerPlayer p){
-        if(!SessionBridge.enabled())return false;
+        if(Boolean.getBoolean("uq.sessionDiagnostic")||!SessionBridge.enabled())return false;
         if(blockCosmetic(p)){
             SessionBridge.flag("enrolled_molang_tick_deferred_before_context");return true;
         }
@@ -69,7 +70,7 @@ public final class SessionBoundary {
     }
     /** Defer an inspected periodic cosmetic consumer BEFORE it reads or changes quarantined state. */
     public static boolean blockCosmetic(ServerPlayer p){
-        if(!SessionBridge.enabled())return false;
+        if(Boolean.getBoolean("uq.sessionDiagnostic")||!SessionBridge.enabled())return false;
         try{
             if(!SessionBridge.enrolled(p.getUUID()))return false;
             SessionBridge.flag("quarantined_callback_deferred_before_lookup");return true;

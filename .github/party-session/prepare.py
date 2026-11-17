@@ -112,6 +112,14 @@ manifest['extra_hooks']['SessionOutgoingBoundary']=hashlib.sha256(callback_sourc
 inspected=subprocess.check_output(['javap','-p','-c','-s','-classpath',str(jar),'com.cobblemon.mod.common.CobblemonNetwork'],text=True)
 assert '(Lnet/minecraft/server/level/ServerPlayer;Lcom/cobblemon/mod/common/api/net/NetworkPacket;)V' in inspected
 (d/'session-outgoing-caller.javap').write_text(inspected)
+callback=package/'mixin/SessionLoginTrace.java'
+callback_source=callback.read_text()
+(d/'live-wrapper-source'/callback.name).write_text(callback_source)
+config['mixins'].append('SessionLoginTrace')
+manifest['extra_hooks']['SessionLoginTrace']=hashlib.sha256(callback_source.encode()).hexdigest()
+inspected=subprocess.check_output(['javap','-p','-c','-s','-classpath',str(jar),'com.cobblemon.mod.common.Cobblemon'],text=True)
+assert 'preInitialize$lambda$0(net.minecraft.server.level.ServerPlayer)' in inspected
+(d/'session-login-caller.javap').write_text(inspected)
 config_path.write_text(json.dumps(config,indent=2));manifest['session_packet_hooks']=packet_hooks
 (d/'session-wrapper-manifest.json').write_text(json.dumps(manifest,indent=2))
 for target in ['com.cobblemon.mod.common.net.messages.server.storage.party.SwapPartyPokemonPacket','com.cobblemon.mod.common.CobblemonNetwork']:

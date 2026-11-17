@@ -36,3 +36,10 @@ Those packets otherwise retain native Pokemon references across enrollment and
 correctly fail the custody fence during asynchronous encoding. Unrelated stores'
 packets are unchanged and observed. This is a test-profile restriction, not a fix
 for or certification of ordinary party UI synchronization.
+
+## Unsuppressed diagnostic checkpoint
+The current runner enables uq.sessionDiagnostic. Cosmetic, MoLang, periodic-player
+filtering, native party-packet dropping and onPlayerDataSync suppression are disabled.
+Ownership fences and native mutation refusal remain intact. Lifecycle tracing is
+observational only. Failures are expected evidence, not a reason to weaken callbacks.
+This checkpoint is not a certification run; stop after collecting its first blocker.
