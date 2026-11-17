@@ -11,3 +11,10 @@ Synchronization uses a custom test payload containing complete detached NBT plus
 The global factory's real autosave/disconnect/shutdown path remains enabled. Unrelated synthetic owners must continue saving, while quarantined entries are not falsely acknowledged. Two independent server starts must preserve edits and duplicate-action refusal. The previous crash/storage component evidence is reused, not counted as new tests.
 
 All tests run on GitHub-hosted disposable worlds and synthetic identities. The helper packets and integration classes are not built into either production JAR. Gameplay handback, normal UI/client-cache integration, death/respawn custody, generalized provider support, reservation retirement/reuse and private full-pack/old-save migration remain unproven. No deployment is authorized.
+
+The pinned pre-player MoLang callback (`CallbackHandler.setup$lambda$75`) is deferred
+only for enrolled synthetic identities before constructing its context or reading
+PC structures. This is test-only denial containment: native `getStruct` remains
+forbidden, and callbacks for unrelated players continue. The verifier requires
+both paths to be observed in each server phase. This does not certify normal
+Cobblemon gameplay or enable production admissions.

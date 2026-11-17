@@ -41,6 +41,13 @@ public final class SessionBoundary {
         return SessionBridge.invoke(receiver,key,args,operation);
     }
     public static boolean blockNative(ServerPlayer p,String handler){return SessionBridge.blockNative(p,handler);}
+    public static boolean blockMolang(ServerPlayer p){
+        if(!SessionBridge.enabled())return false;
+        if(blockCosmetic(p)){
+            SessionBridge.flag("enrolled_molang_tick_deferred_before_context");return true;
+        }
+        SessionBridge.flag("unrelated_molang_tick_not_deferred");return false;
+    }
     /** Defer an inspected periodic cosmetic consumer BEFORE it reads or changes quarantined state. */
     public static boolean blockCosmetic(ServerPlayer p){
         if(!SessionBridge.enabled())return false;
