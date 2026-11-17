@@ -59,6 +59,13 @@ if mode == 'vein':
                 for(String jarName:List.of("Minecraft-Jail-1.2.0.jar","Unyielding-1.2.0.jar")){var jarPath=Path.of(System.getenv(jarName.startsWith("Minecraft")?"UQ_JAIL_JAR":"UQ_BUNDLE_JAR"));pairProof.put(jarName,java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(jarPath))));}
                 Files.writeString(Path.of(System.getenv("UQ_VEIN_EVIDENCE")).resolve("paired-identity.json"),new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(pairProof));'''
     source.write_text(text.replace(old, new))
+    # A dry, uncropped farmland block may revert between the screenshot and
+    # server assertion. Hydrate the disposable plot without changing the action
+    # or expected transformations, including protected negative controls.
+    text = source.read_text()
+    old = 'static void ground(boolean hoe){seed(false);'
+    assert text.count(old) == 1
+    source.write_text(text.replace(old, old + 'if(hoe)server.overworld().setBlock(origin.south(),Blocks.WATER.defaultBlockState(),3);'))
     with Path(os.environ['GITHUB_ENV']).open('a') as output:
         output.write(f'UQ_JAIL_JAR={libs / "Minecraft-Jail-1.2.0.jar"}\n')
 (ROOT / 'dist/joint-preparation.json').write_text(json.dumps({'mode': mode, 'pinned_wallet_source': WALLET_SOURCE, 'jars': manifest['jars'], 'ongoing_custody_work_used': False}, indent=2)+'\n')

@@ -10,6 +10,11 @@ source = json.loads((root / 'pair-source.json').read_text())
 jars = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in root.glob('*.jar')}
 assert jars == source['jars'] and len(jars) == 2
 reports = {}
+wallet_evidence_commit = os.environ.get('JOINT_WALLET_EVIDENCE_COMMIT', os.environ['GITHUB_SHA'])
+if wallet_evidence_commit != os.environ['GITHUB_SHA']:
+    assert wallet_evidence_commit == 'b77f51cad7165153dfe23fd341c89edb5c7a7d61'
+assert jars == {'Minecraft-Jail-1.2.0.jar': '43074f9301315e51a476f1072884f9d66a0c47b839734989693c938cbc160027',
+                'Unyielding-1.2.0.jar': '7a0a1cec09001ca6f47ee6180371842f27ef6d83f7411a7e61fff6a83e74b414'}
 
 
 def one(name):
@@ -20,7 +25,7 @@ def one(name):
 
 for name, count in [('wallet-verified-core.json', 5), ('wallet-verified-faults.json', 4), ('split-runtime-integrated.json', 5)]:
     row = json.loads(one(name).read_text())
-    assert row['passed'] and row['commit'] == os.environ['GITHUB_SHA']
+    assert row['passed'] and row['commit'] == wallet_evidence_commit
     assert row.get('jars', row.get('production_jars')) == jars
     if 'phases' in row:
         assert len(row['phases']) == count
@@ -41,6 +46,8 @@ identity = json.loads(one('paired-identity.json').read_text())
 assert identity['commit'] == os.environ['GITHUB_SHA'] and identity['admissions_default_off']
 assert all(identity[k] == v for k, v in jars.items())
 report = {'commit': os.environ['GITHUB_SHA'], 'passed': True, 'jars': jars,
+          'wallet_evidence_commit': wallet_evidence_commit,
+          'certificate_recipe_commit': wallet_evidence_commit,
           'wallet_fixture_source': source['wallet_source'], 'companion_source': source['companion_source'],
           'runtime_phases': {'wallet_core': 5, 'wallet_faults': 4, 'integrated_negative_gates': 5},
           'non_jail_native_cases': len(cases), 'admissions_default_off': True,

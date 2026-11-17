@@ -1,9 +1,6 @@
 name: Bounded wallet Jail and current Unyielding joint certification
 on:
   workflow_dispatch:
-  push:
-    branches: ['codex/joint-wallet-vein-certification']
-    paths: ['.github/joint-certification/**', '.github/workflows/joint-wallet-vein-certification.yml']
 permissions:
   contents: read
   actions: read
