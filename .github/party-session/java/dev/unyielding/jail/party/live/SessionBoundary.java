@@ -41,6 +41,15 @@ public final class SessionBoundary {
         return SessionBridge.invoke(receiver,key,args,operation);
     }
     public static boolean blockNative(ServerPlayer p,String handler){return SessionBridge.blockNative(p,handler);}
+    public static java.util.List<ServerPlayer> periodicPlayers(java.util.List<ServerPlayer> players){
+        if(!SessionBridge.enabled())return players;
+        java.util.List<ServerPlayer> allowed=new java.util.ArrayList<>();
+        for(ServerPlayer p:players){
+            if(blockCosmetic(p))SessionBridge.flag("enrolled_periodic_party_deferred_before_lookup");
+            else {allowed.add(p);SessionBridge.flag("unrelated_periodic_party_not_deferred");}
+        }
+        return java.util.List.copyOf(allowed);
+    }
     public static boolean blockMolang(ServerPlayer p){
         if(!SessionBridge.enabled())return false;
         if(blockCosmetic(p)){

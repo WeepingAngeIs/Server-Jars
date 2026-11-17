@@ -18,3 +18,9 @@ PC structures. This is test-only denial containment: native `getStruct` remains
 forbidden, and callbacks for unrelated players continue. The verifier requires
 both paths to be observed in each server phase. This does not certify normal
 Cobblemon gameplay or enable production admissions.
+
+The per-second `ServerTickHandler.onTick` consumer receives a temporary filtered
+player-list snapshot excluding enrolled identities before party lookup. The global
+player list and battle tick are unchanged. Non-enrolled players remain in that
+loop; both branches must be observed by each phase's verifier. This does not grant
+`onSecondPassed` mutation authority or claim playable party support.
