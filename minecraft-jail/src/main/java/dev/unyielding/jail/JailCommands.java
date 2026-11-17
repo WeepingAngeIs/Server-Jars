@@ -39,6 +39,7 @@ public final class JailCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         JailCustodyService.register(dispatcher);
         JailIntegrated.register(dispatcher);
+        JailRuntimeMigration.register(dispatcher);
         dispatcher.register(Commands.literal("jail").requires(JailCommands::mayManage)
                 .then(Commands.argument("player", EntityArgument.player()).executes(c -> jail(c.getSource(), EntityArgument.getPlayer(c, "player")))));
         dispatcher.register(Commands.literal("unjail").requires(JailCommands::mayManage)

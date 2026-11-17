@@ -156,7 +156,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         if (!attachments.contains(STORE,10)) throw new IOException("Missing serialized accessory holder: " + attachments.getAllKeys());
         CompoundTag holder=normalize(attachments.getCompound(STORE));
         CompoundTag body=new CompoundTag(); body.putInt("version",2); body.putString("dependencies",VERSIONS);
-        body.putString("policy",policy()); body.putString("runtime",JailHumanAudit.runtime(player)); body.putInt("selected",playerTag.getInt("SelectedItemSlot")); body.putByteArray("vanilla",vanillaView.inventory()); body.put("holder",holder);
+        body.putString("policy",policy()); body.putString("runtime",JailRuntimeMigration.receiptRuntime(player,transaction)); body.putInt("selected",playerTag.getInt("SelectedItemSlot")); body.putByteArray("vanilla",vanillaView.inventory()); body.put("holder",holder);
         boolean empty=vanillaView.empty();
         for (String name : holder.getCompound(CONTAINERS).getAllKeys()) {
             CompoundTag store=holder.getCompound(CONTAINERS).getCompound(name);

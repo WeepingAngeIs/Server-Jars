@@ -34,12 +34,20 @@ final class JailHumanAudit {
         var a=Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class);Hashed old=hashes.get(path);if(old!=null&&Objects.equals(old.key(),a.fileKey())&&old.size()==a.size()&&old.modified()==a.lastModifiedTime().toMillis())return old.hash();
         try{MessageDigest digest=MessageDigest.getInstance("SHA-512");try(var input=Files.newInputStream(path)){byte[] bytes=new byte[65536];for(int n;(n=input.read(bytes))>=0;)digest.update(bytes,0,n);}String value=HexFormat.of().formatHex(digest.digest());hashes.put(path,new Hashed(a.fileKey(),a.size(),a.lastModifiedTime().toMillis(),value));return value;}catch(java.security.NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
     }
-    static String runtime(ServerPlayer p)throws IOException {
+    static String runtime(ServerPlayer p)throws IOException {return runtimeWithArtifact(p,null);}
+    /** Migration proof only: the dependency certificate is checked exactly as for the current artifact. */
+    static String predecessorRuntime(ServerPlayer p)throws IOException {return runtimeWithArtifact(p,JailRuntimeMigration.OLD_SHA512);}
+    static String ownArtifact()throws IOException {
+        Path own=ModList.get().getModFileById(MinecraftJail.MODID).getFile().getFilePath().toAbsolutePath().normalize();
+        if(!Files.isRegularFile(own,LinkOption.NOFOLLOW_LINKS)||!own.equals(own.toRealPath()))throw new IOException("Unsafe implementation artifact");
+        return hash(own);
+    }
+    private static String runtimeWithArtifact(ServerPlayer p,String predecessor)throws IOException {
         JsonObject certificate;try(var stream=JailHumanAudit.class.getResourceAsStream("/assets/unyieldingquests/jail-certified-runtime.json")){if(stream==null)throw new IOException("Audit certificate missing");certificate=JsonParser.parseReader(new InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();}
         Set<String> allowed=new HashSet<>();certificate.getAsJsonArray("sha512").forEach(e->allowed.add(e.getAsString()));List<String> rows=new ArrayList<>();
         Path own=ModList.get().getModFileById(MinecraftJail.MODID).getFile().getFilePath().toAbsolutePath().normalize();
         if(!Files.isRegularFile(own)||!own.equals(own.toRealPath()))throw new IOException("Jail implementation must be an exact regular artifact");
-        rows.add(JailArtifactBinding.row(hash(own)));
+        rows.add(JailArtifactBinding.row(predecessor==null?hash(own):predecessor));
         for(var mod:ModList.get().getMods()){
             String id=mod.getModId(),version=mod.getVersion().toString();Path path=mod.getOwningFile().getFile().getFilePath().toAbsolutePath().normalize();
             if(path.equals(own))continue;
