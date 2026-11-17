@@ -19,7 +19,7 @@ for p in (R/'.github/party-session/java').rglob('*.java'):
 manifest=json.loads((d/'mutation-wrapper-manifest.json').read_text())
 for row in manifest['classes']:
  p=package/'mixin'/(row['mixin']+'.java');s=p.read_text();assert 'MutationGate.invoke(' in s
- s=s.replace('import dev.unyielding.jail.party.live.MutationGate;','import dev.unyielding.jail.party.live.SessionBridge;').replace('MutationGate.invoke(','SessionBridge.invoke(')
+ s=s.replace('import dev.unyielding.jail.party.live.MutationGate;','import dev.unyielding.jail.party.live.SessionBoundary;').replace('MutationGate.invoke(','SessionBoundary.invoke(')
  p.write_text(s);(d/'live-wrapper-source'/p.name).write_text(s);row['sha256']=hashlib.sha256(s.encode()).hexdigest()
 # Native gameplay remains denied at its caller boundary, not by swallowing arbitrary errors.
 jar=next(p for p in (h/'libs').glob('*.jar') if p.name.startswith('Cobblemon-'))
@@ -42,12 +42,21 @@ for target in sorted(targets):
    t,pos=typ(desc,pos);args.append(t)
   if args[-2:]==['net.minecraft.server.MinecraftServer','net.minecraft.server.level.ServerPlayer'] and len(args)==3 and desc[pos:]==')V':methods.append((desc,args))
  if not methods:continue
- name='SessionPacketBoundary'+str(len(packet_hooks));body=['package dev.unyielding.jail.party.live.mixin;','import org.spongepowered.asm.mixin.Mixin;','import org.spongepowered.asm.mixin.injection.*;','import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;','import dev.unyielding.jail.party.live.SessionBridge;','@Mixin(value='+target+'.class,remap=false)','public abstract class '+name+' {']
+ name='SessionPacketBoundary'+str(len(packet_hooks));body=['package dev.unyielding.jail.party.live.mixin;','import org.spongepowered.asm.mixin.Mixin;','import org.spongepowered.asm.mixin.injection.*;','import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;','import dev.unyielding.jail.party.live.SessionBoundary;','@Mixin(value='+target+'.class,remap=false)','public abstract class '+name+' {']
  for i,(desc,args) in enumerate(methods):
-  body+=[' @Inject(method="handle'+desc+'",at=@At("HEAD"),cancellable=true,remap=false)', ' private void deny'+str(i)+'('+','.join(t+' p'+str(k) for k,t in enumerate(args))+',CallbackInfo ci){if(SessionBridge.blockNative(p2,"'+target+'"))ci.cancel();}']
+  body+=[' @Inject(method="handle'+desc+'",at=@At("HEAD"),cancellable=true,remap=false)', ' private void deny'+str(i)+'('+','.join(t+' p'+str(k) for k,t in enumerate(args))+',CallbackInfo ci){if(SessionBoundary.blockNative(p2,"'+target+'"))ci.cancel();}']
  body+=['}'];source='\n'.join(body)+'\n';(package/'mixin'/(name+'.java')).write_text(source);(d/'live-wrapper-source'/(name+'.java')).write_text(source)
  config['mixins'].append(name);packet_hooks.append({'class':target,'mixin':name,'methods':[desc for desc,args in methods],'sha256':hashlib.sha256(source.encode()).hexdigest()})
 assert any('SwapPartyPokemonHandler' in r['class'] for r in packet_hooks)
+callback=package/'mixin/SessionCosmeticBoundary.java'
+callback_source=callback.read_text()
+(d/'live-wrapper-source'/callback.name).write_text(callback_source)
+config['mixins'].append('SessionCosmeticBoundary')
+manifest['extra_hooks']['SessionCosmeticBoundary']=hashlib.sha256(callback_source.encode()).hexdigest()
+companion=h/'libs/Unyielding-1.2.0.jar'
+inspected=subprocess.check_output(['javap','-p','-c','-s','-classpath',str(companion),'dev.mawonna.GhostJirachiEyeAspect'],text=True)
+assert 'afterPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent$Post)' in inspected
+(d/'session-cosmetic-caller.javap').write_text(inspected)
 config_path.write_text(json.dumps(config,indent=2));manifest['session_packet_hooks']=packet_hooks
 (d/'session-wrapper-manifest.json').write_text(json.dumps(manifest,indent=2))
 for target in ['com.cobblemon.mod.common.net.messages.server.storage.party.SwapPartyPokemonPacket','com.cobblemon.mod.common.CobblemonNetwork']:

@@ -24,7 +24,7 @@ public final class SessionWire {
     @SubscribeEvent public static void register(RegisterPayloadHandlersEvent event){
         if(!Boolean.getBoolean("uq.partySession"))return;
         var registrar=event.registrar("jail-session-test-1");
-        registrar.playToServer(Request.TYPE,Request.CODEC,(payload,context)->SessionBridge.request((net.minecraft.server.level.ServerPlayer)context.player(),payload.json()));
+        registrar.playToServer(Request.TYPE,Request.CODEC,(payload,context)->SessionBoundary.request((net.minecraft.server.level.ServerPlayer)context.player(),payload.json()));
         registrar.playToClient(Reply.TYPE,Reply.CODEC,(payload,context)->SessionClient.receive(payload.json()));
     }
 }
