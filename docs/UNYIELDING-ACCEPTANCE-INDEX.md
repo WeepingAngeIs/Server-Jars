@@ -2,7 +2,7 @@
 
 This reconciles the [implementation checklist](../unyielding-quests/IMPROVEMENTS-STATUS.md) with retained acceptance evidence. It is not a release, deployment instruction or exhaustive every-feature test plan. Historical report statements about the "next" gap apply to their date and binary; later checkpoints below supersede those gap labels without rewriting the old evidence.
 
-The current completed independent checkpoint is the meeting-provider candidate **1.2.0**, SHA-256 `216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504`. Five home/warp cases are now pending against that verified baseline. A pending test is not a pass.
+The current completed candidate remains **1.2.0**, SHA-256 `216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504`. The latest independent checkpoint passed five real-client home/warp cases on that byte-identical JAR. It repeated no production build or unit tests; the 69-unit result remains tied to the earlier meeting-provider build.
 
 ## Completed evidence and exact scope
 
@@ -15,9 +15,12 @@ The current completed independent checkpoint is the meeting-provider candidate *
 | [Reward token/UI baseline](UNYIELDING-REWARD-CLIENT-ACCEPTANCE-RESULTS.md) | [44022982101](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44022982101), `1afb007025daf8a0d2f85102210bf9d465e44ee0` | Twelve token/UI cases passed within a 15-pass/one-failure baseline. Starter flag with nonempty party, native button payout, replay/foreign/empty/forged/stale tokens, real reconnect, early reel closing and balance gates. The undefined Claim mode defect failed separately. These twelve remain exact `be397290...` evidence. |
 | [Reward claim fix and redemption](UNYIELDING-REWARD-CLIENT-ACCEPTANCE-RESULTS.md) | [44024899650](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44024899650), `b33d642bc9ccd03b9dbdf5944c1c290f98b7fdc7` | Five focused connected-client Claim/ownership/redemption cases passed on `744be06c...`. Its production build passed 69 units in run `44023859209`; that run executed zero native acceptance cases because startup timed out. The final retry did not repeat builds/units or the twelve baseline token cases. |
 | [Meeting provider/lifecycle fix](UNYIELDING-PARTY-PROVIDER-ACCEPTANCE-RESULTS.md) | [44031631588](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44031631588), `ca64738fadd86304ac2bf79d1696cc2fd1045191` | Ten real-client cases and 69 units. Normally selected synthetic permission provider with actual OPAC: deny/exception/grant/revocation, one ordered reentrant leave, setter disconnect/new session and role lifecycle, disabled-point retention and mounted refusal. Candidate `216de93c...`. Generated policy is not live policy; no server restart/death test is claimed here. |
+| [Destination privacy and selection](UNYIELDING-DESTINATION-ACCEPTANCE-RESULTS.md) | [44036656345](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44036656345), `231098017c86fac72fc7d09c44c54041caf0e723` | Five real-client cases passed: requester-only home payloads without broadcasting private rows, same-name home buttons bound to each caller, repeat cooldown refusal, refusal of another player's private home name, and stale home/warp rows obeying a later disabled feature. Actual screens/buttons and existing native commands were used. Candidate `216de93c...` is byte-identical to the prior verified JAR; no production build or units were rerun. |
 | [Historical tutorial/config validation](../releases/Unyielding-1.1.7-Validation.txt), [access PASS fields](../releases/Unyielding-1.1.7-Verification/uq-tutorial-access-passed.json) and [history/config PASS fields](../releases/Unyielding-1.1.7-Verification/uq-config-editor-passed.json) | [42572733078](https://github.com/WeepingAngeIs/unyielding-mod/actions/runs/42572733078), tested Server-Jars `3158fde09c69aa46189bfaa79635e1268e066d68`; verifier `8df0c3c7a8eeb29ec18bfbabccd30b381d5426c5` | Historical assembled-JAR real connected-player command/rank filtering, tutorial dismissal/history/manual replay and config coverage on `876595a2...`. Tutorial-history lifecycle checks call logout/login and manager stop/start hooks and round-trip SavedData in one process; the PASS field does not establish a real server-JVM tutorial restart. This is not a fresh tutorial run on `216de93c...`. |
 
 Counts describe each cited build/fixture and must not be summed into a unique overall test count or relabeled as runs on the latest binary. The detailed reports retain failed attempts, fixture corrections, artifacts, checksums and limitations. Source-file or JAR-entry equality can preserve implementation context, but does not turn historical runtime evidence into a new run.
+
+The destination checkpoint's job is `133881042798`, artifact `14307985889`. Its downloaded ZIP SHA-256 independently matched published `4ee18032eaca3115b6fda3c81aa3a04d20439f11b19462cfc1e398127683d285`; the native ModList path/hash and saved JAR matched the exact `216de93c...` candidate. This is a five-case fixture-only result, not another 69-unit build.
 
 ## Candidate SHA-256 registry
 
@@ -28,12 +31,12 @@ Counts describe each cited build/fixture and must not be summed into a unique ov
 | Vein acceptance | `7a0a1cec09001ca6f47ee6180371842f27ef6d83f7411a7e61fff6a83e74b414` |
 | Ground and reward-token baseline | `be397290bfbac8d8f0b1010d04daded458673eca2f97b6e0eff59272e2eec886` |
 | Reward-input fix | `744be06c8fa5ad6001f1ba214608c4f7c1dde59664afe2bf8bf33405063512d8` |
-| Meeting-provider fix / current completed checkpoint | `216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504` |
+| Meeting-provider fix and destination acceptance / current completed candidate | `216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504` |
 | Historical 1.1.7 tutorial/config validation | `876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b` |
 
-## Remaining public-input acceptance work
+## Public-input acceptance status
 
-The selected next task is **five bounded real-client home/warp cases**, pending on the current verified baseline. Existing `DestinationPolicyTest` exercises pure owner scoping, payload bounds and command sanitization. Meeting fixtures preserve home/back sentinels, but neither establishes native destination-screen payload privacy or stale-selection behavior. The new scope is two synthetic players' own destination payloads, normal selection through existing commands, and refusal after current command/feature/cooldown conditions change. It requires no live player homes, coordinates or rank assignments. This entry must be updated only from its actual result report; it is not a pass yet.
+The selected **five bounded real-client home/warp cases are complete** in the [destination checkpoint](UNYIELDING-DESTINATION-ACCEPTANCE-RESULTS.md), with zero failures and no production change. They close the chosen native payload/privacy, caller-bound selection, repeat-cooldown and later feature-disable boundaries using two synthetic players. They complement the pure `DestinationPolicyTest` helpers and earlier home/back preservation sentinels. This does not certify arbitrary rank changes, every destination mutation or the authoritative live permission stack; those were not these five cases. No completed destination case needs another run without a regression reason.
 
 A separate public/synthetic gap remains for **native config-audit/undo behavior**. `ConfigAuditPolicyTest` covers the pure allowlist, current-value comparison and paging policy. A dedicated native proof of actor authorization, audit recording and compare-current undo through the actual implementation was not located. Earlier config-editor runtime passes do not automatically cover this later audit feature. This is an available bounded follow-up, not a request to add new audit features or immediately test it alongside destinations.
 
@@ -50,7 +53,7 @@ Generic crate/loot credits remain on the legacy path, and RETURNED payouts are n
 | Real old-save migration or backup restoration | A consistent, authoritative old-save/backup set containing the relevant world SavedData, player data, journals and associated stores, with explicit disposable-copy scope. Synthetic legacy fields and native saved restarts do not certify an unknown real old save. No live restoration is performed here. |
 | Physical power-loss / cross-store prize durability | A defined recovery contract and evidence spanning the independently saved journal, inventory and Cobblemon storage. Successful method return and ordinary JVM restart do not establish atomic durability across those stores. |
 
-These input gaps do not erase the remaining public destination and config-audit gaps, and they are not a reason to repeat completed tests while waiting.
+These input gaps do not erase the remaining public config-audit gap, and they are not a reason to repeat completed destination or other tests while waiting.
 
 ## Preservation and separate Jail evidence
 

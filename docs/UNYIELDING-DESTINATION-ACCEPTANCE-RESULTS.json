@@ -1,0 +1,47 @@
+{
+  "version": "1.2.0",
+  "branch": "codex/unyielding-destination-acceptance",
+  "tested_source": "231098017c86fac72fc7d09c44c54041caf0e723",
+  "candidate_sha256": "216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504",
+  "candidate_raw_sha512": "349284d438561c34d7005899cec9a80025ccd6bd3589f9b51c8768303cb22e60275ebf4ba7cb31acd2023bbaf9dabc414c5313db4ed0ee6856c167c8ae5c3ef2",
+  "run_id": 44036656345,
+  "job_id": 133881042798,
+  "artifact_id": 14307985889,
+  "artifact_zip_sha256": "4ee18032eaca3115b6fda3c81aa3a04d20439f11b19462cfc1e398127683d285",
+  "native_passed": 5,
+  "failures": 0,
+  "cases": [
+    "passed: two native home selectors expose only the requester and do not broadcast private rows",
+    "passed: same-name native home buttons resolve each caller and current cooldown refuses a repeat",
+    "passed: another player's private home name cannot select that player's location",
+    "passed: an open allowed home menu cannot bypass a later disabled feature",
+    "passed: public warp selector uses native commands and stale allowed rows obey the disabled feature"
+  ],
+  "candidate_byte_identical_to_prior_verified_file": true,
+  "production_changed": false,
+  "production_build_repeated": false,
+  "new_unit_result_files": 0,
+  "unchanged_binary_unit_evidence": {
+    "run_id": 44031631588,
+    "tests": 69,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "private_or_live_data_used": false,
+  "jail_loaded_or_modified": false,
+  "jail_certificate_updated_or_required": false,
+  "installed_or_deployed": false,
+  "heavy_runtime_location": "GitHub-hosted disposable clients/world",
+  "remaining_public_input_gap": "Native config-audit/undo authorization, recording and compare-current implementation proof",
+  "limits": [
+    "Synthetic home/warp data and feature settings are not authoritative live rank/provider policy",
+    "Native screen data and Button callbacks are checked, not manual mouse layout or a full resolution/font matrix",
+    "Public warps have no private-home ownership claim",
+    "Full-pack compatibility, third-party protection/teleport providers and actual old-save migration remain unverified",
+    "General failed teleport reasons are not certified to preserve cooldown; nonexistent-dimension failure is outside this scope",
+    "Preserved physical coins and spin balances do not certify every external bank currency",
+    "No repeat of ground/reward/meeting/vein/confirmation/tutorial suites or basic Mawile feeding",
+    "No new unit run or production build; earlier 69-unit evidence belongs to the identical candidate"
+  ]
+}
