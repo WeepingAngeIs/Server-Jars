@@ -1,0 +1,46 @@
+{
+  "baseline_report": "f5f68940ede91e7217af700c17379640416cf275",
+  "unchanged_production_checkpoint": "8e9716d94a932fe5110ae84abdc90adfe0017974",
+  "audit_commit": "be4c6a336207ec62d9d668b8f5f9205dc3c56dbe",
+  "audit_run": 43997255522,
+  "tested_commit": "3353a43526130126ed8e3c097b8025a77c261373",
+  "runtime_run": 43999123113,
+  "runtime_conclusion": "success",
+  "backend_suites": ["nbt", "json"],
+  "jvm_phases_per_backend": 2,
+  "server_startups": 4,
+  "required_boolean_observations_per_backend": 14,
+  "nonempty_party_admission_enabled": false,
+  "end_to_end_party_custody_proven": false,
+  "power_loss_durability_proven": false,
+  "production_modified": false,
+  "wallet_default_off_preserved": true,
+  "observed_primary_factory": "com.cobblemon.mod.common.api.storage.factory.FileBackedPokemonStoreFactory",
+  "observed_primary_adapter": "com.cobblemon.mod.common.api.storage.adapter.flatfile.NBTStoreAdapter",
+  "observed_child_adapter": "com.cobblemon.mod.common.api.storage.adapter.conversions.ReforgedConversion",
+  "findings_reproduced_for_both_scratch_backends": [
+    "complete_native_sample_roundtrip",
+    "save_returns_before_worker_write",
+    "queue_sentinel_success_does_not_propagate_prior_write_failure",
+    "failed_write_clears_dirty_flag_and_saveAll_does_not_retry_it",
+    "previous_populated_backup_recovers_after_successful_empty_save_and_current_corruption",
+    "hard_halt_before_queued_empty_write_reloads_original_party",
+    "deliberately_cloned_uuid_coexists_in_party_and_pc_after_restart",
+    "native_set_overwrites_occupied_destination",
+    "independent_factory_selection_for_party_and_pc"
+  ],
+  "production_sha256": {
+    "Minecraft-Jail-1.2.0.jar": "5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e",
+    "Unyielding-1.2.0.jar": "61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7"
+  },
+  "cobblemon_sha512": "060579fb8ac67ddd131c9cc9076ef512cda9e66e7a584c7c82326be9ef0cbb69ce6c99ff772aa78f990dc1b771bac02f3bbba68a9c7ff68c557009c64f733d04",
+  "artifacts": [
+    {"id": 14290606961, "scope": "api-audit", "sha256": "09c1dec93067e3ea41218ad7fc1f9bba9655380c731771229e16a4f128a133ed"},
+    {"id": 14290973191, "scope": "native-nbt-runtime", "sha256": "cdadc32358b496b22106e0972892667e6eb43315d04ff2dea3c70c518c7c7690"},
+    {"id": 14291551898, "scope": "native-json-runtime", "sha256": "3a000ee8ef314d8ecf21550e70059e8585252e7ca7ae8b7c4cce653076981037"}
+  ],
+  "excluded_incomplete_runtime_run": 43998437915,
+  "full_pack_migration_run": false,
+  "private_saves_used": false,
+  "deployment_performed": false
+}
