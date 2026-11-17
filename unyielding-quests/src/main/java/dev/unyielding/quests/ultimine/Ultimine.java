@@ -16,6 +16,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -56,7 +59,7 @@ public final class Ultimine {
             ACTIVE.remove(e.getEntity().getUUID());
         }
 
-        @SubscribeEvent
+        @SubscribeEvent(priority = EventPriority.LOWEST)
         public void onBreak(BlockEvent.BreakEvent e) {
             if (!(e.getPlayer() instanceof ServerPlayer p) || ACTIVE.contains(p.getUUID())) return;
             State st = active(p);
@@ -73,6 +76,7 @@ public final class Ultimine {
                 String stop = "finished";
                 for (BlockPos pos : list) {
                     if (pos.equals(origin)) continue;
+                    if (!level.mayInteract(p, pos)) continue;
                     ItemStack tool = p.getMainHandItem();
                     int keep = UltimineConfig.PREVENT_TOOL_BREAK.get();
                     if (tool.isDamageableItem() && tool.getMaxDamage() - tool.getDamageValue() <= Math.max(1, keep)) { stop = "tool durability"; break; }
@@ -89,9 +93,10 @@ public final class Ultimine {
             }
         }
 
-        @SubscribeEvent
+        @SubscribeEvent(priority = EventPriority.LOWEST)
         public void onUse(PlayerInteractEvent.RightClickBlock e) {
-            if (!(e.getEntity() instanceof ServerPlayer p) || e.getHand() != InteractionHand.MAIN_HAND || ACTIVE.contains(p.getUUID())) return;
+            if (!(e.getEntity() instanceof ServerPlayer p) || e.getHand() != InteractionHand.MAIN_HAND || ACTIVE.contains(p.getUUID())
+                    || p.isSpectator() || e.getUseItem() == TriState.FALSE) return;
             State st = active(p);
             if (st == null || !(p.level() instanceof ServerLevel level)) return;
             ItemStack stack = p.getMainHandItem();
@@ -101,14 +106,19 @@ public final class Ultimine {
             else if (stack.getItem() instanceof ShovelItem && UltimineConfig.RIGHT_CLICK_SHOVEL.get()) sameLayer = true;
             else return;
             BlockPos origin = e.getPos();
+            if (!level.mayInteract(p, origin) || p.blockActionRestricted(level, origin, p.gameMode.getGameModeForPlayer())) return;
             List<BlockPos> list = Shapes.compute(level, origin, e.getFace() == null ? Direction.UP : e.getFace(), Shapes.Shape.SHAPELESS, UltimineConfig.MAX_BLOCKS.get());
             ACTIVE.add(p.getUUID());
             try {
                 for (BlockPos pos : list) {
                     if (pos.equals(origin) || sameLayer && pos.getY() != origin.getY()) continue;
                     if (stack.isEmpty()) break;
+                    if (!level.mayInteract(p, pos) || p.blockActionRestricted(level, pos, p.gameMode.getGameModeForPlayer())) continue;
                     Direction f = e.getFace() == null ? Direction.UP : e.getFace();
                     BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos).relative(f, 0.5), f, pos, false);
+                    // Keep this item-only action, but give protection listeners each target.
+                    var permission = CommonHooks.onRightClickBlock(p, InteractionHand.MAIN_HAND, pos, hit);
+                    if (permission.isCanceled() || permission.getUseItem() == TriState.FALSE) continue;
                     stack.useOn(new UseOnContext(level, p, InteractionHand.MAIN_HAND, stack, hit));
                 }
             } finally {

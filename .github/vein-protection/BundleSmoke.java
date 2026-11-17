@@ -32,6 +32,8 @@ public final class BundleSmoke {
     public static final class LateProtection {
         @SubscribeEvent(priority=EventPriority.LOW)
         public void deny(BlockEvent.BreakEvent e){if(cancel.equals("origin")&&e.getPos().equals(origin)||cancel.equals("extra")&&!e.getPos().equals(origin))e.setCanceled(true);}
+        @SubscribeEvent(priority=EventPriority.LOW)
+        public void denyUse(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock e){if(cancel.equals("use_origin")&&e.getPos().equals(origin)||cancel.equals("use_extra")&&!e.getPos().equals(origin))e.setUseItem(net.neoforged.neoforge.common.util.TriState.FALSE);}
     }
     static ServerPlayer p(){return server.getPlayerList().getPlayerByName("Dev");}
     static ServerPlayer v(){return server.getPlayerList().getPlayerByName("Visitor");}
@@ -62,6 +64,8 @@ public final class BundleSmoke {
         require(ModList.get().isLoaded("openpartiesandclaims"),"OPAC missing");
         EssConfig.ADMIN_CLAIM_BYPASS.set(false);server.getPlayerList().deop(p().getGameProfile());server.getPlayerList().op(v().getGameProfile());
         server.overworld().setDefaultSpawnPos(new BlockPos(0,80,0),0);
+        server.setDifficulty(net.minecraft.world.Difficulty.NORMAL,true);
+        add("loaded area and preview warmup",()->seed(false),"preview","NONE",()->blocks(false,false,false));
         add("unclaimed allowed feedback",()->seed(false),"mine","2 extra blocks",()->blocks(true,true,true));
         add("feedback off",()->{seed(false);UltimineConfig.COMPACT_FEEDBACK.set(false);},"mine","NONE",()->blocks(true,true,true));
         add("OPAC foreign boundary denied extras",()->{seed(false);claim(v().getUUID());require(!access(),"foreign claim fixture not protected");},"mine","0 extra blocks",()->blocks(true,false,false));
@@ -78,6 +82,9 @@ public final class BundleSmoke {
         add("OPAC connected tilling denied extras",()->{ground(true);claim(v().getUUID());},"use","NONE",()->groundChanged(true,true,false,false));
         add("connected paths allowed",()->ground(false),"use","NONE",()->groundChanged(false,true,true,true));
         add("OPAC connected paths denied extras",()->{ground(false);claim(v().getUUID());},"use","NONE",()->groundChanged(false,true,false,false));
+        add("late item-use origin denied",()->{ground(false);cancel="use_origin";},"use","NONE",()->groundChanged(false,false,false,false));
+        add("item-use extras denied",()->{ground(false);cancel="use_extra";},"use","NONE",()->groundChanged(false,true,false,false));
+        add("spectator tool use denied",()->{seed(true);p().setGameMode(GameType.SPECTATOR);},"use","NONE",()->stripped(false,false,false));
         add("master switch off",()->{seed(false);UltimineConfig.ENABLED.set(false);},"disabled","NONE",()->blocks(true,false,false));
         add("require item empty hand",()->{seed(false);UltimineConfig.REQUIRE_TOOL.set(true);p().setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);},"empty","NONE",()->blocks(true,false,false));
         add("durability stop display",()->survivalStop(false),"mine","tool durability",()->blocks(true,false,false));
