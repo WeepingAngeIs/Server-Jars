@@ -28,17 +28,17 @@ public final class PublicationGate {
     private static final boolean ENABLED=Boolean.getBoolean("uq.partyHandback")&&FMLEnvironment.dist==Dist.DEDICATED_SERVER;
     private static final String FACTORY="com.cobblemon.mod.common.api.storage.factory.FileBackedPokemonStoreFactory#";
     private static final String MANAGER="com.cobblemon.mod.common.api.storage.PokemonStoreManager#";
-    private static final IdentityHashMap<Object,Context> CONTEXTS=new IdentityHashMap<>();
+    private static final Map<Object,Context> CONTEXTS=Collections.synchronizedMap(new IdentityHashMap<>());
     private static final Map<UUID,Session> ACTIVE=new HashMap<>();
     private static final IdentityHashMap<Object,Session> OBJECTS=new IdentityHashMap<>();
     private static final ThreadLocal<Construction> CONSTRUCT=new ThreadLocal<>();
     private static final ThreadLocal<Session> VERIFY=new ThreadLocal<>();
-    private static final Map<String,Long> COUNTS=new TreeMap<>();
+    private static final Map<String,Long> COUNTS=new ConcurrentSkipListMap<>();
     private static final int MAGIC=0x48504231;
     private PublicationGate(){}
     public static final class Context {
         final PokemonStoreManager manager; final FileBackedPokemonStoreFactory factory; final OneToOneFileStoreAdapter adapter;
-        final RegistryAccess registries; final Thread thread; final String provider; boolean closed;
+        final RegistryAccess registries; final Thread thread; final String provider; volatile boolean closed;
         private Context(PokemonStoreManager m,FileBackedPokemonStoreFactory f,OneToOneFileStoreAdapter a,RegistryAccess r)throws Exception {
             manager=m;factory=f;adapter=a;registries=r;thread=Thread.currentThread();provider=HandoffCoordinator.providerIdentity(a);
         }
@@ -93,7 +93,7 @@ public final class PublicationGate {
     public static void born(Object object){Construction b=CONSTRUCT.get();if(ENABLED&&b!=null)b.born.add(object);}
     private static boolean constructionMethod(String name){
         return name.startsWith("get")||name.startsWith("set")||name.startsWith("is")||name.startsWith("has")
-            ||Set.of("loadFromNBT","loadFrom","saveToNBT","saveTo","removeDuplicates","initialize","iterator","size","get","set","remove","rebuildPokemonByUuid","updateAspects","updateForm","updateAbility","checkGender","validateMoveset","recalculateCharacteristic","initializeScale","onChange","notify","onPokemonChanged","self","heldItem","heldItemNoCopy$common","cosmeticItem").contains(name);
+            ||Set.of("loadFromNBT","loadFrom","saveToNBT","saveTo","removeDuplicates","initialize","iterator","size","get","set","remove","rebuildPokemonByUuid","updateAspects","updateForm","updateAbility","checkGender","validateMoveset","recalculateCharacteristic","initializeScale","refreshOriginalTrainer","onChange","notify","onPokemonChanged","self","heldItem","heldItemNoCopy$common","cosmeticItem").contains(name);
     }
     private static boolean inspectMethod(String name){return name.startsWith("get")||name.startsWith("is")||name.startsWith("has")
         ||Set.of("saveToNBT","saveTo","iterator","size","get","heldItem","heldItemNoCopy$common","cosmeticItem","self").contains(name);}
@@ -111,7 +111,8 @@ public final class PublicationGate {
                 ||!nbt(s.original.party()).equals(s.stores.party().saveToNBT(new CompoundTag(),s.context.registries))
                 ||!nbt(s.original.pc()).equals(s.stores.pc().saveToNBT(new CompoundTag(),s.context.registries)))throw new IOException("Published native state changed");
             Set<UUID> ids=new HashSet<>();for(Pokemon p:s.stores.party())if(!s.graph.contains(p)||!ids.add(p.getUuid()))throw new IOException("Foreign or duplicate native object");
-            if(!ids.equals(s.original.partyIds())||s.stores.pc().getBoxes().size()!=1||s.stores.pc().iterator().hasNext()||s.stores.pc().getBackupStore().iterator().hasNext())throw new IOException("Identity or PC topology changed");
+            if(!ids.equals(s.original.partyIds())||s.stores.pc().getBoxes().size()!=1||s.stores.pc().iterator().hasNext()||s.stores.pc().getBackupStore().iterator().hasNext()
+                    ||!s.stores.party().getObserverUUIDs().equals(List.of(s.original.owner())))throw new IOException("Identity, observer or PC topology changed");
         }finally{VERIFY.remove();}
     }
     private static void validate(Session s,boolean caches)throws Exception {
@@ -121,6 +122,9 @@ public final class PublicationGate {
             NativeFence.verifySource(NativeFence.entry(s.original.owner()).transaction(),s.original);s.custody.verifyNative(s.original);exactGraph(s);
             if(caches&&(cache(s.context,PlayerPartyStore.class).get(s.original.owner())!=s.stores.party()||cache(s.context,PCStore.class).get(s.original.owner())!=s.stores.pc()))throw new IOException("Native cache ownership changed");
         }catch(Exception fail){withdraw(s);count("integrity-quarantine");throw fail;}
+    }
+    private static void validateAccess(Session s)throws Exception {
+        try{validate(s,true);}catch(IOException uncertain){deny("uncertain-generation-or-native-state");}
     }
     private static void withdraw(Session s){s.live=false;ACTIVE.remove(s.original.owner(),s);for(Object o:s.graph)OBJECTS.remove(o,s);}
     private static byte[] state(PartyCustodyGuard.Snapshot source,GenerationJournal.Receipt custody,long epoch,Phase phase)throws IOException {
@@ -151,7 +155,7 @@ public final class PublicationGate {
                 try {
                     stores=new CobblemonSnapshotCodec(c.registries).decode(source);stores.party().initialize();stores.pc().initialize();
                     s=new Session(c,custody,j,source,epoch,stores);
-                    if(!build.born.containsAll(s.graph)||!stores.party().getObserverUUIDs().isEmpty())throw new IOException("Graph was not freshly constructed or has observers");
+                    if(!build.born.containsAll(s.graph)||!stores.party().getObserverUUIDs().equals(List.of(source.owner())))throw new IOException("Graph was not freshly constructed or has foreign observers");
                     c.factory.track(stores.party());c.factory.track(stores.pc());
                 }finally{CONSTRUCT.remove();}
                 s.phase=Phase.PREPARED;s.receipt=j.receipt();exactGraph(s);
@@ -174,7 +178,7 @@ public final class PublicationGate {
         catch(NativeFence.Denied denied){count("request-denied-without-fallback");return new Access(false,null,"quarantined or unsupported");}
     }
     private static Object read(Session s,Object receiver,String name,Object[] args,NativeFence.Call operation)throws Throwable {
-        validate(s,true);if(!s.live||Thread.currentThread()!=s.context.thread)deny("inactive-or-wrong-thread");
+        validateAccess(s);if(!s.live||Thread.currentThread()!=s.context.thread)deny("inactive-or-wrong-thread");
         if(receiver==s.stores.party()&&(name.equals("get")||name.equals("size")||name.equals("isEmpty"))){
             if(args.length>1||args.length==1&&!(args[0] instanceof Integer||args[0] instanceof PartyPosition))deny("unsupported-read-arguments");return operation.run();
         }
@@ -182,7 +186,7 @@ public final class PublicationGate {
         if(receiver==s.stores.party()&&name.equals("iterator")&&args.length==0){
             List<Pokemon> copy=new ArrayList<>();VERIFY.set(s);try{for(Pokemon p:s.stores.party())copy.add(p);}finally{VERIFY.remove();}
             Iterator<Pokemon> it=List.copyOf(copy).iterator();return new Iterator<Pokemon>(){
-                private void check(){try{NativeFence.exclusive(()->{if(!s.live)deny("revoked-iterator");validate(s,true);return null;});}catch(RuntimeException e){throw e;}catch(Exception e){throw new NativeFence.Denied("Iterator authority failed: "+e);}}
+                private void check(){try{NativeFence.exclusive(()->{if(!s.live)deny("revoked-iterator");validateAccess(s);return null;});}catch(RuntimeException e){throw e;}catch(Exception e){throw new NativeFence.Denied("Iterator authority failed: "+e);}}
                 public boolean hasNext(){check();return it.hasNext();}public Pokemon next(){check();return it.next();}
             };
         }
@@ -191,6 +195,9 @@ public final class PublicationGate {
     private static Object route(Object receiver,String key,Object[] args,NativeFence.Call operation)throws Throwable {
         String name=method(key);Construction build=CONSTRUCT.get();Session verify=VERIFY.get();
         if(build!=null){
+            if(build.born.contains(receiver)&&receiver instanceof PCStore pc&&name.equals("tryRestoreBackedUpPokemon")&&args.length==0){
+                if(pc.getBackupStore().iterator().hasNext())deny("nonempty-construction-backup");return operation.run();
+            }
             if(build.born.contains(receiver)&&constructionMethod(name)){noForeignNative(args,build.born);return operation.run();}
             if(receiver==build.context.factory&&name.equals("track")&&args.length==1&&build.born.contains(args[0]))return operation.run();
             return NativeFence.invoke(receiver,key,args,operation);
@@ -207,11 +214,11 @@ public final class PublicationGate {
             }
             if(name.equals("save")&&args.length==2&&args[0] instanceof PokemonStore<?> store&&fenced(store.getUuid())){
                 Session s=ACTIVE.get(store.getUuid());if(s==null||s.context!=c||!s.graph.contains(store))deny("revoked-save");
-                validate(s,true);dirty(c).remove(store);count("unchanged-read-only-save-verified");return null;
+                validateAccess(s);dirty(c).remove(store);count("unchanged-read-only-save-verified");return null;
             }
         }
         if(c!=null&&(key.startsWith(FACTORY)||key.startsWith(MANAGER))&&args.length>=1&&args[0] instanceof UUID owner&&fenced(owner)){
-            Session s=ACTIVE.get(owner);if(s==null||s.context!=c||!s.live)deny("owner-unpublished");validate(s,true);
+            Session s=ACTIVE.get(owner);if(s==null||s.context!=c||!s.live)deny("owner-unpublished");validateAccess(s);
             if(args.length!=2||args[1]!=c.registries)deny("unbound-registry");
             if(name.equals("getParty")||name.equals("getPlayerParty"))return s.stores.party();if(name.equals("getPC"))return s.stores.pc();deny("unsupported-manager-access");
         }
@@ -232,13 +239,13 @@ public final class PublicationGate {
     }
     /** A denied old queued write has a rejection outcome, never a successful save receipt. */
     public static void worker(FileBackedPokemonStoreFactory factory,List<SerializedStore> writes,NativeFence.Call fallback)throws Throwable {
-        if(!ENABLED||!CONTEXTS.containsKey(factory)){fallback.run();return;}Context c=CONTEXTS.get(factory);
+        Context c=ENABLED?CONTEXTS.get(factory):null;if(c==null){fallback.run();return;}
         for(SerializedStore write:writes){try{c.adapter.save(write.getStoreClass(),write.getUuid(),write.getSerializedForm());}
             catch(NativeFence.Denied denied){NativeFence.exclusive(()->{count("queued-write-rejected-no-receipt");return null;});}}
     }
     /** Never hold the native method lock while the native executor is being joined. */
     public static void shutdown(FileBackedPokemonStoreFactory factory,NativeFence.Call original)throws Throwable {
-        if(!ENABLED||!CONTEXTS.containsKey(factory)){original.run();return;}Context c=CONTEXTS.get(factory);
+        Context c=ENABLED?CONTEXTS.get(factory):null;if(c==null){original.run();return;}
         NativeFence.exclusive(()->{for(Session s:new ArrayList<>(ACTIVE.values()))if(s.context==c)suspend(s);return null;});
         try{original.run();}finally{c.closed=true;}
         ExecutorService e=(ExecutorService)HandoffCoordinator.field(factory,"saveExecutor");if(!e.isTerminated())throw new IOException("Native executor still running");
