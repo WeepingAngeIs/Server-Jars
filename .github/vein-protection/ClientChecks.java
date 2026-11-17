@@ -20,17 +20,22 @@ import java.nio.file.*;
 
 @EventBusSubscriber(modid="uq_bundle_smoke",value=Dist.CLIENT)
 public final class ClientChecks {
-    static String seen="";static String[] command;static int delay;static BlockPos target;
+    static String seen="";static String[] command;static int delay;static BlockPos target;static boolean actionSent;
     static final Path ROOT=Path.of("/tmp/uq-vein-controls");
     static Object field(Object target,String name)throws Exception{for(Class<?> type=target.getClass();type!=null;type=type.getSuperclass()){try{var f=type.getDeclaredField(name);f.setAccessible(true);return f.get(target);}catch(NoSuchFieldException ignored){}}throw new NoSuchFieldException(name);}
     @SubscribeEvent public static void tick(ClientTickEvent.Post e){
         if(!"true".equals(System.getenv("GITHUB_ACTIONS")))return;var mc=Minecraft.getInstance();if(mc.player==null||!mc.player.getGameProfile().getName().equals("Dev"))return;
         try{
-            if(command!=null){aim(mc,target);if(--delay==25){
+            if(command!=null){UltimineClient.KEY.setDown(true);aim(mc,target);if(!actionSent){
+                    String[] expected=command[7].split(",");double dx=mc.player.getX()-Double.parseDouble(expected[0]),dy=mc.player.getY()-Double.parseDouble(expected[1]),dz=mc.player.getZ()-Double.parseDouble(expected[2]);
+                    if(dx*dx+dy*dy+dz*dz>.25||!net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(mc.player.getMainHandItem().getItem()).toString().equals(command[5])||!mc.gameMode.getPlayerMode().name().equals(command[6]))return;
+                    Files.writeString(ROOT.resolve("Dev.holding"),command[0]);
+                    Path ready=ROOT.resolve("Dev.ready");if(!Files.exists(ready)||!Files.readString(ready).equals(command[0]))return;
                     var hit=new BlockHitResult(Vec3.atCenterOf(target).add(0,.5,0),Direction.UP,target,false);
                     if(command[1].equals("mine")||command[1].equals("disabled")||command[1].equals("empty"))mc.getConnection().send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,target,Direction.UP,0));
                     if(command[1].equals("use"))mc.getConnection().send(new ServerboundUseItemOnPacket(InteractionHand.MAIN_HAND,hit,0));
-                }if(delay>0)return;String verdict="passed";
+                    actionSent=true;return;
+                }if(--delay>0)return;String verdict="passed";
                 try{String text=((Component)field(mc.gui,"overlayMessageString")).getString();Files.writeString(Path.of(System.getenv("UQ_VEIN_EVIDENCE")).resolve(command[4]+".txt"),text+"\n");if(command[3].equals("NONE")){if(text.startsWith("Vein mining:"))throw new IllegalStateException("unexpected action bar: "+text);}else if(!text.contains(command[3]))throw new IllegalStateException("wrong action bar: "+text);
                     if(command[1].startsWith("preview")){if(!(boolean)fieldClass(UltimineClient.class,"held"))throw new IllegalStateException("held overlay inactive");if(((java.util.List<?>)fieldClass(UltimineClient.class,"preview")).size()!=3)throw new IllegalStateException("wrong preview size");}
                     if(command[1].equals("menu")&&(boolean)fieldClass(UltimineClient.class,"held"))throw new IllegalStateException("menu retained held mining state");
@@ -44,7 +49,7 @@ public final class ClientChecks {
             UltimineClient.KEY.setDown(true);Net.sendToServer(new Net.UltimineState(true,0));
             aim(mc,pos);
             if(command[1].equals("menu"))mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
-            delay=35;
+            delay=25;actionSent=false;
         }catch(Throwable bad){bad.printStackTrace();try{Files.writeString(ROOT.resolve("Dev.ack"),(command==null?"0":command[0])+"\tfailed: client "+bad);}catch(Exception ignored){}command=null;}
     }
     static Object fieldClass(Class<?> type,String name)throws Exception{var f=type.getDeclaredField(name);f.setAccessible(true);return f.get(null);}

@@ -34,10 +34,13 @@ public final class BundleSmoke {
         public void deny(BlockEvent.BreakEvent e){if(cancel.equals("origin")&&e.getPos().equals(origin)||cancel.equals("extra")&&!e.getPos().equals(origin))e.setCanceled(true);}
         @SubscribeEvent(priority=EventPriority.LOW)
         public void denyUse(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock e){if(cancel.equals("use_origin")&&e.getPos().equals(origin)||cancel.equals("use_extra")&&!e.getPos().equals(origin))e.setUseItem(net.neoforged.neoforge.common.util.TriState.FALSE);}
+        @SubscribeEvent(priority=EventPriority.LOWEST,receiveCanceled=true)
+        public void observe(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock e){if(e.getEntity() instanceof ServerPlayer player&&player.getGameProfile().getName().equals("Dev"))System.out.println("VEIN USE TRACE: pos="+e.getPos()+" held="+held()+" item="+player.getMainHandItem()+" cancelled="+e.isCanceled()+" useItem="+e.getUseItem());}
     }
     static ServerPlayer p(){return server.getPlayerList().getPlayerByName("Dev");}
     static ServerPlayer v(){return server.getPlayerList().getPlayerByName("Visitor");}
     static void require(boolean ok,String why){if(!ok)throw new IllegalStateException(why);}
+    static boolean held(){try{var f=dev.unyielding.quests.ultimine.Ultimine.class.getDeclaredField("STATES");f.setAccessible(true);return ((Map<?,?>)f.get(null)).containsKey(p().getUUID());}catch(Exception bad){throw new IllegalStateException(bad);}}
     static Object api()throws Exception {return Class.forName("xaero.pac.common.server.api.OpenPACServerAPI").getMethod("get",MinecraftServer.class).invoke(null,server);}
     static Object manager()throws Exception{return Class.forName("xaero.pac.common.server.api.OpenPACServerAPI").getMethod("getServerClaimsManager").invoke(api());}
     static void claim(UUID id){try{Class.forName("xaero.pac.common.server.claims.api.IServerClaimsManagerAPI").getMethod("claim",ResourceLocation.class,UUID.class,int.class,int.class,int.class,boolean.class).invoke(manager(),ResourceLocation.parse("minecraft:overworld"),id,0,33,32,false);}catch(Exception bad){throw new IllegalStateException(bad);}}
@@ -106,7 +109,7 @@ public final class BundleSmoke {
     }
     static void send(Case c)throws Exception{
         dev.unyielding.quests.settings.AdminSettings.sync(p(),false,"",false);
-        sequence++;Files.writeString(ROOT.resolve("Dev.txt"),sequence+"\t"+c.action()+"\t"+origin.getX()+","+origin.getY()+","+origin.getZ()+"\t"+c.expected()+"\t"+c.name().replace(' ','_'));
+        sequence++;Files.writeString(ROOT.resolve("Dev.txt"),sequence+"\t"+c.action()+"\t"+origin.getX()+","+origin.getY()+","+origin.getZ()+"\t"+c.expected()+"\t"+c.name().replace(' ','_')+"\t"+net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(p().getMainHandItem().getItem())+"\t"+p().gameMode.getGameModeForPlayer().name()+"\t"+p().getX()+","+p().getY()+","+p().getZ());
     }
     void tick(ServerTickEvent.Post e){
         if(done||!"true".equals(System.getenv("GITHUB_ACTIONS"))||!"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT")))return;
@@ -119,6 +122,8 @@ public final class BundleSmoke {
             Case c=cases.peek();
             if(start==0){System.out.println("VEIN CASE START: "+c.name());c.setup().run();send(c);start=tick;}
             if(tick-start>900)throw new IllegalStateException("client timeout: "+c.name());
+            Path holding=ROOT.resolve("Dev.holding");boolean needsHeld=!c.action().equals("disabled")&&!c.action().equals("empty")&&!c.action().equals("menu");
+            if(Files.exists(holding)&&Files.readString(holding).equals(""+sequence)&&(!needsHeld||held()))Files.writeString(ROOT.resolve("Dev.ready"),""+sequence);
             Path ack=ROOT.resolve("Dev.ack");if(tick-start<40||!Files.exists(ack)||!Files.readString(ack).startsWith(sequence+"\t"))return;
             List<String> failures=new ArrayList<>();String client=Files.readString(ack);if(!client.equals(sequence+"\tpassed"))failures.add(client);
             try{c.check().run();}catch(Throwable bad){failures.add(bad.toString());}
