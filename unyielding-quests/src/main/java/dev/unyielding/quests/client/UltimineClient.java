@@ -63,9 +63,9 @@ public final class UltimineClient {
         if (!held && !feedback) return;
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.screen != null || mc.options.hideGui) return;
-        // Leave the wide startup toast area and right-hand minimap clear, even
-        // at Minecraft's minimum GUI width. Keep the panel above recent chat.
-        int width = Math.max(64, Math.min(150, g.guiWidth() - 242));
+        // Below the top toast, beside the left party column, above recent chat,
+        // and clear of the right-hand minimap at the minimum GUI width.
+        int width = Math.max(64, Math.min(150, g.guiWidth() - 152));
         List<net.minecraft.util.FormattedCharSequence> lines = new java.util.ArrayList<>();
         List<Integer> colors = new java.util.ArrayList<>();
         var heading = mc.font.split(net.minecraft.network.chat.Component.literal("Ultimine"), width);
@@ -85,7 +85,7 @@ public final class UltimineClient {
             var hint = mc.font.split(net.minecraft.network.chat.Component.literal("Scroll to change"), width);
             lines.addAll(hint); for (var ignored : hint) colors.add(0xFF8A94A8);
         }
-        int x = 4, y = 4, bottom = y + lines.size() * 9;
+        int x = 72, y = 36, bottom = y + lines.size() * 9;
         g.fill(x - 2, y - 2, x + width + 2, bottom + 2, 0xB0000000);
         for (int i = 0; i < lines.size(); i++) g.drawString(mc.font, lines.get(i), x, y + i * 9, colors.get(i), true);
         lastHudBounds = new int[]{x - 2, y - 2, x + width + 2, bottom + 2};

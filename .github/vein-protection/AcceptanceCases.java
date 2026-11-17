@@ -29,8 +29,9 @@ final class AcceptanceCases {
     static void crowd(){
         BundleSmoke.seed(false);
         var party=Cobblemon.INSTANCE.getStorage().getParty(BundleSmoke.p());
-        if(party.size()==0)for(int i=0;i<6;i++){var props=new PokemonProperties();props.setSpecies("eevee");props.setLevel(5);BundleSmoke.require(party.add(props.create(BundleSmoke.p())),"cannot seed disposable party");}
-        BundleSmoke.require(party.size()==6,"populated party HUD fixture missing");
+        if(party.occupied()==0)for(int i=0;i<6;i++){var props=new PokemonProperties();props.setSpecies("eevee");props.setLevel(5);BundleSmoke.require(party.add(props.create(BundleSmoke.p())),"cannot seed disposable party");}
+        BundleSmoke.require(party.occupied()==6,"populated party HUD fixture missing");
+        party.sendTo(BundleSmoke.p());
         for(int i=0;i<10;i++)BundleSmoke.p().sendSystemMessage(net.minecraft.network.chat.Component.literal("Startup notice "+i+": disposable acceptance fixture"));
     }
     static void verifyDurability(String caseName){

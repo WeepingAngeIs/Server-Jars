@@ -40,6 +40,11 @@ public final class ClientChecks {
                     String status="position="+mc.player.position()+" expected="+command[7]+" item="+item+" expected="+command[5]+" mode="+mc.gameMode.getPlayerMode()+" expected="+command[6]+" blocksReady="+blocksReady+" eligible="+eligible+" screen="+(mc.screen==null?"none":mc.screen.getClass().getName())+" key="+UltimineClient.KEY.isDown()+" localEnabled="+dev.unyielding.quests.ultimine.UltimineConfig.ENABLED.get()+" serverEnabled="+dev.unyielding.quests.client.ClientData.ultimineEnabled+" requiresItem="+dev.unyielding.quests.client.ClientData.ultimineRequiresItem;
                     Files.writeString(ROOT.resolve("Dev.status"),status);
                     if(dx*dx+dy*dy+dz*dz>.25||!item.equals(command[5])||!mc.gameMode.getPlayerMode().name().equals(command[6])||!blocksReady)return;
+                    if(command[4].contains("populated")||command[1].equals("cycle")){
+                        var party=com.cobblemon.mod.common.client.CobblemonClient.INSTANCE.getStorage().getParty();
+                        if(party==null||party.getSlots().stream().filter(java.util.Objects::nonNull).count()!=6)return;
+                        if(!com.cobblemon.mod.common.client.gui.PartyOverlay.Companion.canRender())throw new IllegalStateException("party overlay hidden");
+                    }
                     Files.writeString(ROOT.resolve("Dev.holding"),command[0]);
                     Path ready=ROOT.resolve("Dev.ready");if(!natural&&(!Files.exists(ready)||!Files.readString(ready).equals(command[0])))return;
                     if(natural){
@@ -67,7 +72,13 @@ public final class ClientChecks {
                     if(command[1].startsWith("preview")){if(!(boolean)fieldClass(UltimineClient.class,"held"))throw new IllegalStateException("held overlay inactive");if(((java.util.List<?>)fieldClass(UltimineClient.class,"preview")).size()!=3)throw new IllegalStateException("wrong preview size");}
                     if(command[1].equals("menu")&&(boolean)fieldClass(UltimineClient.class,"held"))throw new IllegalStateException("menu retained held mining state");
                     if((command[1].equals("disabled")||command[1].equals("empty"))&&(boolean)fieldClass(UltimineClient.class,"held"))throw new IllegalStateException("server-disabled overlay remained held");
-                    try{int[] bounds=(int[])fieldClass(UltimineClient.class,"lastHudBounds");if(bounds!=null&&(bounds[2]>mc.getWindow().getGuiScaledWidth()-234||bounds[3]>60))throw new IllegalStateException("vein panel intrudes on reserved startup/party HUD area");}catch(NoSuchFieldException oldBuild){}
+                    try{int[] bounds=(int[])fieldClass(UltimineClient.class,"lastHudBounds");
+                        boolean hidden=mc.options.hideGui||mc.screen!=null;
+                        if(hidden&&bounds!=null)throw new IllegalStateException("vein panel rendered over hidden HUD/menu");
+                        if(!hidden&&(boolean)fieldClass(UltimineClient.class,"held")&&bounds==null)throw new IllegalStateException("held vein panel missing");
+                        if(bounds!=null&&(bounds[0]<70||bounds[1]<34||bounds[2]>mc.getWindow().getGuiScaledWidth()-80||bounds[3]>105))throw new IllegalStateException("vein panel intrudes on reserved startup/party HUD area");
+                        Files.writeString(Path.of(System.getenv("UQ_VEIN_EVIDENCE")).resolve(command[4]+".hud.txt"),"bounds="+java.util.Arrays.toString(bounds)+" gui="+mc.getWindow().getGuiScaledWidth()+"x"+mc.getWindow().getGuiScaledHeight()+" shape="+fieldClass(UltimineClient.class,"shape")+" hidden="+hidden+"\n");
+                    }catch(NoSuchFieldException oldBuild){}
                 }catch(Throwable bad){verdict="failed: "+bad+"; hit="+mc.hitResult+" position="+mc.player.position()+" target="+mc.level.getBlockState(target)+" destroying="+field(mc.gameMode,"isDestroying");}
                 Screenshot.grab(Path.of(System.getenv("UQ_VEIN_EVIDENCE")).toFile(),command[4]+".png",mc.getMainRenderTarget(),c->{});
                 Files.writeString(ROOT.resolve("Dev.ack"),command[0]+"\t"+verdict);UltimineClient.KEY.setDown(false);mc.options.keyAttack.setDown(false);if(!natural)Net.sendToServer(new Net.UltimineState(false,0));command=null;return;
