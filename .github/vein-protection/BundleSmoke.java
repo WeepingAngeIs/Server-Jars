@@ -30,6 +30,8 @@ public final class BundleSmoke {
     static final Deque<Case> cases=new ArrayDeque<>();static final List<String> outcomes=new ArrayList<>();
     public BundleSmoke(){NeoForge.EVENT_BUS.addListener(this::tick);NeoForge.EVENT_BUS.register(new LateProtection());}
     public static final class LateProtection {
+        @SubscribeEvent(priority=EventPriority.LOWEST,receiveCanceled=true)
+        public void observeBreak(BlockEvent.BreakEvent e){if(e.getPlayer() instanceof ServerPlayer player&&player.getGameProfile().getName().equals("Dev"))System.out.println("VEIN BREAK TRACE: pos="+e.getPos()+" held="+held()+" cancelled="+e.isCanceled());}
         @SubscribeEvent(priority=EventPriority.LOW)
         public void deny(BlockEvent.BreakEvent e){if(cancel.equals("origin")&&e.getPos().equals(origin)||cancel.equals("extra")&&!e.getPos().equals(origin))e.setCanceled(true);}
         @SubscribeEvent(priority=EventPriority.LOW)

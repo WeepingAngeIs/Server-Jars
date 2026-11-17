@@ -39,6 +39,14 @@ public final class UltimineClient {
     private static boolean held;
     private static int shape;
     private static List<BlockPos> preview = List.of();
+    private static String feedbackText = "";
+    private static long feedbackUntil;
+    private static int[] lastHudBounds;
+
+    public static void acceptFeedback(String text) {
+        feedbackText = text == null ? "" : text;
+        feedbackUntil = feedbackText.isEmpty() ? 0 : System.currentTimeMillis() + 3000;
+    }
 
     private UltimineClient() {
     }
@@ -50,23 +58,41 @@ public final class UltimineClient {
     }
 
     private static void drawOverlay(GuiGraphics g, net.minecraft.client.DeltaTracker dt) {
-        if (!held) return;
+        lastHudBounds = null;
+        boolean feedback = !feedbackText.isEmpty() && System.currentTimeMillis() < feedbackUntil;
+        if (!held && !feedback) return;
         Minecraft mc = Minecraft.getInstance();
-        if (mc.screen != null || mc.options.hideGui) return;
-        int y = 4;
-        g.drawString(mc.font, "Ultimine - scroll to change shape", 4, y, 0xFFFFD23C, true);
-        y += 11;
-        for (Shapes.Shape s : Shapes.Shape.values()) {
-            boolean sel = s.ordinal() == shape;
-            g.drawString(mc.font, (sel ? "> " : "  ") + s.label, 4, y, sel ? 0xFFFFFFFF : 0xFF8A94A8, true);
-            y += 10;
+        if (mc.player == null || mc.screen != null || mc.options.hideGui) return;
+        // Leave the wide startup toast area and right-hand minimap clear, even
+        // at Minecraft's minimum GUI width. Keep the panel above recent chat.
+        int width = Math.max(64, Math.min(150, g.guiWidth() - 242));
+        List<net.minecraft.util.FormattedCharSequence> lines = new java.util.ArrayList<>();
+        List<Integer> colors = new java.util.ArrayList<>();
+        var heading = mc.font.split(net.minecraft.network.chat.Component.literal("Ultimine"), width);
+        lines.addAll(heading); for (var ignored : heading) colors.add(0xFFFFD23C);
+        if (held) {
+            var selected = mc.font.split(net.minecraft.network.chat.Component.literal("> " + Shapes.Shape.of(shape).label), width);
+            lines.addAll(selected); for (var ignored : selected) colors.add(0xFFFFFFFF);
         }
+        if (feedback) {
+            String body = feedbackText.startsWith("Vein mining: ") ? feedbackText.substring("Vein mining: ".length()) : feedbackText;
+            for (String part : body.split("; ")) {
+                String label = part.startsWith("durability ") ? "Tool " + part.substring("durability ".length()) : part;
+                var wrapped = mc.font.split(net.minecraft.network.chat.Component.literal(label), width);
+                lines.addAll(wrapped); for (var ignored : wrapped) colors.add(0xFFE8ECF2);
+            }
+        } else {
+            var hint = mc.font.split(net.minecraft.network.chat.Component.literal("Scroll to change"), width);
+            lines.addAll(hint); for (var ignored : hint) colors.add(0xFF8A94A8);
+        }
+        int x = 4, y = 4, bottom = y + lines.size() * 9;
+        g.fill(x - 2, y - 2, x + width + 2, bottom + 2, 0xB0000000);
+        for (int i = 0; i < lines.size(); i++) g.drawString(mc.font, lines.get(i), x, y + i * 9, colors.get(i), true);
+        lastHudBounds = new int[]{x - 2, y - 2, x + width + 2, bottom + 2};
     }
 
     public static final class Events {
-        @SubscribeEvent
-        public void onTick(ClientTickEvent.Post e) {
-            Minecraft mc = Minecraft.getInstance();
+        private static void syncHeld(Minecraft mc) {
             boolean now = mc.player != null && mc.screen == null && KEY.isDown()
                     && UltimineConfig.ENABLED.get() && ClientData.ultimineEnabled
                     && (!ClientData.ultimineRequiresItem || !mc.player.getMainHandItem().isEmpty());
@@ -74,6 +100,18 @@ public final class UltimineClient {
                 held = now;
                 Net.sendToServer(new Net.UltimineState(held, shape));
             }
+        }
+
+        @SubscribeEvent
+        public void onInteraction(InputEvent.InteractionKeyMappingTriggered e) {
+            // Send a changed held state before vanilla sends a same-frame action.
+            if (e.isAttack() || e.isUseItem()) syncHeld(Minecraft.getInstance());
+        }
+
+        @SubscribeEvent
+        public void onTick(ClientTickEvent.Post e) {
+            Minecraft mc = Minecraft.getInstance();
+            syncHeld(mc);
             preview = List.of();
             if (held && mc.level != null && mc.hitResult instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
                 preview = Shapes.compute(mc.level, hit.getBlockPos(), hit.getDirection(), Shapes.Shape.of(shape), UltimineConfig.MAX_BLOCKS.get());
@@ -110,6 +148,8 @@ public final class UltimineClient {
         public void onLogout(ClientPlayerNetworkEvent.LoggingOut e) {
             held = false;
             preview = List.of();
+            acceptFeedback("");
+            lastHudBounds = null;
         }
     }
 }

@@ -127,7 +127,7 @@ public final class Net {
         }
     }
 
-    /** kind 0 = quest completed (id = quest), 1 = message. */
+    /** kind 0 = quest completed (id = quest), 1 = message, 2 = vein result. */
     public record Notify(int kind, long id, String text) implements CustomPacketPayload {
         public static final Type<Notify> TYPE = mkType("notify");
         public static final StreamCodec<RegistryFriendlyByteBuf, Notify> CODEC = StreamCodec.composite(

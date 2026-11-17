@@ -3,7 +3,6 @@ package dev.unyielding.quests.ultimine;
 import dev.unyielding.quests.net.Net;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -22,6 +21,8 @@ import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,6 +38,8 @@ public final class Ultimine {
 
     private static final Map<UUID, State> STATES = new HashMap<>();
     private static final Set<UUID> ACTIVE = new HashSet<>();
+    private record Feedback(int mined, String stop) {}
+    private static final Map<UUID, Feedback> FEEDBACK = new HashMap<>();
 
     private Ultimine() {
     }
@@ -57,6 +60,30 @@ public final class Ultimine {
         public void onLogout(PlayerEvent.PlayerLoggedOutEvent e) {
             STATES.remove(e.getEntity().getUUID());
             ACTIVE.remove(e.getEntity().getUUID());
+            FEEDBACK.remove(e.getEntity().getUUID());
+        }
+
+        @SubscribeEvent
+        public void onTick(ServerTickEvent.Post e) {
+            // BreakEvent runs before vanilla applies the starting block's wear.
+            // Only delay the readout; mining and protection keep their ordering.
+            var pending = Map.copyOf(FEEDBACK);
+            FEEDBACK.clear();
+            if (!UltimineConfig.COMPACT_FEEDBACK.get()) return;
+            pending.forEach((id, result) -> {
+                ServerPlayer p = e.getServer().getPlayerList().getPlayer(id);
+                if (p == null) return;
+                ItemStack tool = p.getMainHandItem();
+                String durability = tool.isDamageableItem() ? "; durability " + (tool.getMaxDamage() - tool.getDamageValue()) + "/" + tool.getMaxDamage() : "";
+                Net.sendTo(p, new Net.Notify(2, 0, "Vein mining: " + result.mined() + " extra blocks" + durability + "; " + result.stop()));
+            });
+        }
+
+        @SubscribeEvent
+        public void onStopping(ServerStoppingEvent e) {
+            FEEDBACK.clear();
+            STATES.clear();
+            ACTIVE.clear();
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -84,9 +111,7 @@ public final class Ultimine {
                     if (p.gameMode.destroyBlock(pos)) { mined++; p.causeFoodExhaustion(exhaustion); }
                 }
                 if (UltimineConfig.COMPACT_FEEDBACK.get()) {
-                    ItemStack tool = p.getMainHandItem();
-                    String durability = tool.isDamageableItem() ? "; durability " + (tool.getMaxDamage() - tool.getDamageValue()) + "/" + tool.getMaxDamage() : "";
-                    p.displayClientMessage(Component.literal("Vein mining: " + mined + " extra blocks" + durability + "; " + stop), true);
+                    FEEDBACK.put(p.getUUID(), new Feedback(mined, stop));
                 }
             } finally {
                 ACTIVE.remove(p.getUUID());

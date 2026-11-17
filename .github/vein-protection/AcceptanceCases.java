@@ -57,5 +57,6 @@ final class AcceptanceCases {
         },"mine","0 extra blocks",()->BundleSmoke.blocks(true,false,false));
         BundleSmoke.add("crowded startup populated HUD",AcceptanceCases::crowd,"mine","2 extra blocks",()->BundleSmoke.blocks(true,true,true));
         BundleSmoke.add("populated party shape HUD",AcceptanceCases::crowd,"preview","NONE",()->BundleSmoke.blocks(false,false,false));
+        BundleSmoke.add("six shape scroll cycle",AcceptanceCases::crowd,"cycle","NONE",()->BundleSmoke.blocks(false,false,false));
     }
 }
