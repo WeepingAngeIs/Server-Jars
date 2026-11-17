@@ -67,25 +67,31 @@ public final class PartyMeetings {
         if (error != null) return Essentials.fail(source, error);
         long remaining = Essentials.cooldownRemaining(player, "partymeet");
         if (remaining > 0) return Essentials.fail(source, "Wait " + remaining + "s before another meeting teleport.");
-        // Re-read all mutable authorization state on the server thread immediately before
-        // movement. The built-in teleport commands have no delayed warmup.
-        Team current = TeamManager.teamOf(player.getUUID());
+        // Provider queries may call public party APIs. Read their answers before taking
+        // the final membership/rank/point snapshot, rather than assuming query purity.
+        boolean callerPermission = hasPermission(player);
         ServerPlayer setter = player.server.getPlayerList().getPlayer(point.setter());
-        Team setterTeam = TeamManager.teamOf(point.setter());
-        Team.Rank currentSetterRank = current == null ? null : current.rankOf(point.setter());
-        if (!PartyMeetingPolicy.executionAuthorized(
-                EssConfig.PARTY_MEET_ENABLED.get(), hasPermission(player),
-                current != null && current.isParty() && current.id.equals(party.id)
-                        && current.isMember(player.getUUID()),
-                setter != null && hasPermission(setter),
-                setterTeam != null && setterTeam.id.equals(party.id)
-                        && currentSetterRank != null && currentSetterRank.atLeast(Team.Rank.OFFICER),
-                data.points.get(party.id) == point))
+        boolean setterPermission = setter != null && hasPermission(setter);
+        if (!callerPermission || !setterPermission)
             return Essentials.fail(source, "Meeting access could not be verified. Ask a current officer to check the meeting point.");
         error = validate(player, point.location(), point.setter());
         if (error != null) return Essentials.fail(source, error);
         remaining = Essentials.cooldownRemaining(player, "partymeet");
         if (remaining > 0) return Essentials.fail(source, "Wait " + remaining + "s before another meeting teleport.");
+        // No external permission/claim query follows this final authority snapshot.
+        Team current = TeamManager.teamOf(player.getUUID());
+        setter = player.server.getPlayerList().getPlayer(point.setter());
+        Team setterTeam = TeamManager.teamOf(point.setter());
+        Team.Rank currentSetterRank = current == null ? null : current.rankOf(point.setter());
+        if (!PartyMeetingPolicy.executionAuthorized(
+                EssConfig.PARTY_MEET_ENABLED.get(), callerPermission,
+                current != null && current.isParty() && current.id.equals(party.id)
+                        && current.isMember(player.getUUID()),
+                setter != null && setterPermission,
+                setterTeam != null && setterTeam.id.equals(party.id)
+                        && currentSetterRank != null && currentSetterRank.atLeast(Team.Rank.OFFICER),
+                data.points.get(party.id) == point))
+            return Essentials.fail(source, "Meeting access could not be verified. Ask a current officer to check the meeting point.");
         // Direct safe destination only; no search, chunk ticket, forced load or private /back entry.
         if (!point.location().teleport(player)
                 || !player.level().dimension().location().toString().equals(point.location().dim())

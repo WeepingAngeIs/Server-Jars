@@ -20,7 +20,13 @@ Checks compare location, cooldown, meeting point, private home/back history and 
 
 ## Verification record
 
-Native verification pending. The workflow reuses the exact verified candidate and skips production builds/unit tests while production is unchanged. It loads no Jail and invokes no separate Jail build or certificate prerequisite.
+Baseline source `9d2a3e3266805f932f5dfe4c472c68cfe346b21f`, [run 44030348339](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44030348339), job `133860513816`, ran all ten cases against the exact `744be...` candidate: **nine passed and one failed**. No production build or unit suite was repeated. Artifact `14304882521` downloaded ZIP SHA-256 independently matched published `a01119f1173bc803ca4e8ff1dba8f7c8c463823ea86083f5b007dc071cae6d6e`. The selected native provider identifier was `uq_bundle_smoke:meeting_contract`; a real setter disconnect and new connected player session were observed.
+
+The single failure reproduced the ordered reentrant boundary. The provider trace records Visitor's two ALLOW queries, followed by Dev's setter-permission query invoking public TeamManager.leave(Visitor), which returned success. Visitor was then in its personal team, but had still moved from x=138.5 to the meeting at x=132.5 and received a new partymeet cooldown. Inventory/progress/home/point preservation checks ran before the cooldown assertion failed. This demonstrates stale membership during this explicit synthetic provider callback, not that the live provider performs such a callback.
+
+The narrow production fix changes only PartyMeetings: obtain both permission answers, retain the second claim/destination validation and cooldown check, then take the final current membership, setter role, enabled-state and point-identity snapshot immediately before travel. No external permission/claim query follows that snapshot. A provider-triggered leave can no longer reuse the earlier membership boolean. Permission nodes/defaults, saved data, cooldown duration and opt-in configuration are unchanged.
+
+The follow-up reruns the ten affected meeting cases because the execution-order change touches allowed and refused provider/lifecycle paths. It builds and runs the existing unit checks only because production changed. Ground, reward, vein and old destructive-confirmation suites are not rerun. Follow-up results pending. No Jail runtime or separate Jail build/certificate prerequisite is invoked.
 
 ## Preservation and limits
 
