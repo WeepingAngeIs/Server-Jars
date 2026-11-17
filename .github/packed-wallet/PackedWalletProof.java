@@ -89,7 +89,8 @@ public final class PackedWalletProof {
         bad=good.copy();bad.set(DataComponents.CUSTOM_DATA,CustomData.of(new CompoundTag()));p.getInventory().setItem(SLOT,bad);refuse("unknown_wallet_component");
         bad=good.copy();bad.setCount(2);p.getInventory().setItem(SLOT,bad);refuse("wallet_stack_count");
         p.getInventory().setItem(SLOT,good.copy());require(p.getInventory().getItem(33).isEmpty(),"Extra fixture slot occupied");p.getInventory().setItem(33,good.copy());refuse("multiple_wallets");p.getInventory().setItem(33,ItemStack.EMPTY);
-        require(p.getInventory().getItem(8).isEmpty(),"Hotbar fixture slot occupied");p.getInventory().setItem(SLOT,ItemStack.EMPTY);p.getInventory().setItem(8,good.copy());refuse("hotbar_wallet");p.getInventory().setItem(8,ItemStack.EMPTY);p.getInventory().setItem(SLOT,good.copy());
+        int hotbar=-1;for(int i=0;i<9;i++)if(p.getInventory().getItem(i).isEmpty()){hotbar=i;break;}
+        require(hotbar>=0,"No empty synthetic hotbar destination");p.getInventory().setItem(SLOT,ItemStack.EMPTY);p.getInventory().setItem(hotbar,good.copy());refuse("hotbar_wallet");p.getInventory().setItem(hotbar,ItemStack.EMPTY);p.getInventory().setItem(SLOT,good.copy());
         p.totalExperience=1;refuse("retained_xp_combination");p.totalExperience=0;
         var store=Cobblemon.INSTANCE.getStorage().getParty(p);var pokemon=PokemonProperties.Companion.parse("eevee level=7 shiny=yes"," ","=").create(p);require(store.add(pokemon),"Synthetic party setup failed");refuse("nonempty_party");require(store.remove(pokemon),"Synthetic party cleanup failed");
         // Native provider remains unapproved while equipped. Use native setters only on synthetic data.
