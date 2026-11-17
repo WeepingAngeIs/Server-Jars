@@ -1,0 +1,56 @@
+committed-halt","edit_commit_not_exposed_before_validation");flag("hard_halt_after_edit_commit_before_publication");finish(97);}});
+        throw new IllegalStateException("Expected halt97");
+    }
+    static void thirdStart()throws Exception {
+        shared=fixture("shared");context=bind(shared);
+        try(var h=recovered(shared,"committed-halt");var s=publish(h,"committed-halt",false)){
+            exact(s,"Committed Before Stop");flag("complete_committed_edit_revalidated_as_fresh_graph");
+            rejected("committed_command_not_replayed",s,s.lease(),current(s),owner("committed-action"),"Replay");
+            denied("sendout_still_unsupported",()->current(s).sendOut(player.serverLevel(),player.position(),null,p->kotlin.Unit.INSTANCE));
+        }
+        try(var h=staged("changed-current")){
+            var s=publish(h,"changed-current",true);var lease=s.lease();var target=current(s);Path file=current(shared,"changed-current");
+            Files.writeString(file,"synthetic-changed-destination");force(file);byte[] changed=Files.readAllBytes(file);
+            var result=MutationGate.requestRename(s,lease,target,owner("changed-request"),"Do Not Write");
+            require(!result.accepted()&&s.receipt().equals(lease.generation())&&Arrays.equals(changed,Files.readAllBytes(file)),"Changed destination overwritten or generation advanced");
+            flag("changed_current_file_blocks_edit_without_advancing_receipt");requestDenied(context,"changed-current","changed_current_withdraws_access");s.close();
+        }
+        primary=recovered(shared,"primary");session=publish(primary,"primary",false);exact(session,"Returned Two");
+        session=rename(session,"edit-three","Final Durable Name");exact(session,"Final Durable Name");flag("post_restart_native_mutation_commits_new_generation");
+        var control=shared.factory.getPlayerParty(owner("control"),player.registryAccess());control.get(0).setNickname(Component.literal("final-control"));
+        var expected=control.saveToNBT(new CompoundTag(),player.registryAccess()).copy();dirty(shared).add(control);
+        shared.factory.shutdown(player.registryAccess());require(executor(shared).isTerminated()&&!session.live(),"Mixed shutdown incomplete");
+        session.close();primary.close();checkedCurrent(shared,"control",expected);flag("mixed_native_shutdown_preserves_mutated_and_unrelated");finish(0);done=true;
+    }
+    static void fourthStart()throws Exception {
+        shared=fixture("shared");context=bind(shared);primary=recovered(shared,"primary");session=publish(primary,"primary",false);exact(session,"Final Durable Name");flag("graceful_restart_preserves_final_full_state");
+        for(String command:List.of("edit-one","edit-two","edit-three"))rejected("persistent_replay_refusal_"+command,session,session.lease(),current(session),owner(command),"Replay");
+        for(String label:List.of("pending-halt","after-write","temp-conflict"))try(var h=recovered(shared,label)){
+            refused("later_restart_quarantine_"+label,()->publish(h,label,false));var access=MutationGate.requestParty(context,owner(label));require(!access.available()&&access.party()==null,"Ambiguous owner exposed");
+        }
+        var control=shared.factory.getPlayerParty(owner("control"),player.registryAccess());require(control.get(0).getNickname().getString().equals("final-control")&&control.get(5).getLevel()==23,"Unrelated final save missing");flag("unrelated_owner_survives_final_restart");
+        denied("returned_direct_native_mutations_remain_blocked",()->current(session).setNickname(Component.literal("Bypass")));
+        shared.factory.shutdown(player.registryAccess());require(executor(shared).isTerminated()&&!session.live(),"Final executor/access remains active");session.close();primary.close();
+        flag("no_admission_or_playable_release_enabled");finish(0);done=true;
+    }
+    static void force(Path path)throws IOException{try(var channel=FileChannel.open(path,StandardOpenOption.WRITE)){channel.force(true);}}
+    static void finish(int halt)throws Exception {
+        proof.put("commit",System.getenv("GITHUB_SHA"));proof.put("backend",backend);proof.put("phase",phase);proof.put("jail_sha256",System.getenv("UQ_JAIL_SHA256"));proof.put("companion_sha256",System.getenv("UQ_BUNDLE_SHA256"));proof.put("counters",MutationGate.counters());
+        proof.put("admission_enabled",false);proof.put("playable_handback_verified",false);proof.put("bounded_mutation_verified",true);proof.put("production_changed",false);proof.put("expected_exit",halt);
+        Path report=Path.of(System.getenv("GITHUB_WORKSPACE"),"dist/packaged-smoke/mutation-"+backend+"-phase"+phase+".json");Files.writeString(report,new GsonBuilder().setPrettyPrinting().create().toJson(proof));force(report);
+        Path marker=Path.of("/tmp/uq-mutation-result");Files.writeString(marker,"passed: bounded mutation "+backend+" phase "+phase+"\n");force(marker);
+        if(halt!=0){System.out.println("MUTATION_PLANNED_HALT_"+halt);System.out.flush();Runtime.getRuntime().halt(halt);}
+    }
+    @SubscribeEvent public static void tick(ServerTickEvent.Post event){
+        if(!Boolean.getBoolean("uq.partyMutation")||done)return;
+        try {
+            if(stage==1){if(++ticks>=5){stage=2;finishFirstAfterAutosave();}return;}
+            if(stage!=0)return;
+            var p=event.getServer().getPlayerList().getPlayerByName("Visitor");var admin=event.getServer().getPlayerList().getPlayerByName("Dev");if(p==null||admin==null||p.tickCount<100||event.getServer().getTickCount()<120)return;
+            stage=2;player=p;backend=System.getProperty("uq.liveBackend");phase=Integer.getInteger("uq.livePhase");require(List.of("nbt","json").contains(backend),"Unknown backend");
+            Path world=event.getServer().getWorldPath(LevelResource.ROOT).toRealPath();require(world.getFileName().toString().equals("jail_integrated_smoke"),"Not disposable world");root=world.resolve("party-live");Files.createDirectories(root);NativeFence.boot();
+            require(!JailConfig.JAIL_PACKED_WALLETS.get(),"Wallet default changed");flag("wallet_default_off");
+            if(phase==1)firstStart();else if(phase==2)secondStart();else if(phase==3)thirdStart();else if(phase==4)fourthStart();else throw new IOException("Unknown phase");
+        }catch(Throwable failure){done=true;failure.printStackTrace();try{Files.writeString(Path.of("/tmp/uq-mutation-result"),"failed: "+failure+"\n");}catch(IOException ignored){}}
+    }
+}
