@@ -1,0 +1,37 @@
+{
+  "baseline_report_commit": "87b2d81d714f5660c3e6bdac93db2fab2a785f00",
+  "reused_native_fence_commit": "87c2b6383ea528b1d604f415c0ffab49131884ac",
+  "reused_native_fence_run": 44019522739,
+  "initial_implementation_commit": "43ee15af798507f00fd239173a214d987cc5ed15",
+  "failed_attempt_commit": "3b3af3fafaa9fd8743f13040bdadd13abe3a2519",
+  "failed_attempt_run": 44023508274,
+  "tested_commit": "549ca5db231446e3cb9802345e53a4055b7fa3bf",
+  "successful_run": 44024694485,
+  "run_attempt": 1,
+  "runtime_phases": 6,
+  "required_phase_observations_per_backend": 52,
+  "unique_python_evidence_tests": 10,
+  "read_only_native_publication": true,
+  "playable_handback_verified": false,
+  "admission_enabled": false,
+  "production_changed": false,
+  "full_modpack_tested": false,
+  "old_save_migration_tested": false,
+  "model_settings_changed": false,
+  "deployed": false,
+  "jail_sha256": "5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e",
+  "companion_sha256": "61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7",
+  "artifacts": [
+    {"id": 14301959471, "backend": "nbt", "sha256": "86a3648813856986772560b7b33c09e0cd98ecd459166956e36076e21c7c1587"},
+    {"id": 14302837562, "backend": "json", "sha256": "5514f7253a6237f22eb9745c3bc505e8f2b86f2e5e8ee8ad3a44277f859753ea"},
+    {"id": 14302573563, "backend": "final-gate", "sha256": "d313598f8e6ddf9a4d66fb92c55c0255cee8d6ef227dbbe0de029dca436c5e78"}
+  ],
+  "limitations": [
+    "Restricted server-side reads only, not a playable party or client UI",
+    "Native disconnect callback with a synthetic player, not network custody logout",
+    "Original identity tombstones retained; unrestricted retirement/reuse absent",
+    "Normal mutable post-release saves and global player/session integration unproven",
+    "Synthetic exact-provider sample, not arbitrary data/modpack compatibility",
+    "Process exits are not physical power-loss certification"
+  ]
+}
