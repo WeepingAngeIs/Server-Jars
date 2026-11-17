@@ -1,0 +1,61 @@
+    static String old="0c992e69bcd694b0121653879a2b3395902c374db47653dc743eba1df8fa2c5ca37b6c8b02013e56f2a53b9c972e5e539d9832b58a1dd08009b1e457da9f79a6";
+    static Class<?> migration()throws Exception{return Class.forName("dev.unyielding.jail.JailRuntimeMigration");}
+    static Object invoke(String name,Class<?>[] types,Object... args)throws Exception{return migration().getMethod(name,types).invoke(null,args);}
+    static String prepare()throws Exception{return (String)invoke("prepare",new Class[]{ServerPlayer.class,String.class,String.class},p(),old,System.getenv("MIGRATION_CANDIDATE_SHA512"));}
+    static String proposal()throws Exception{return (String)invoke("proposal",new Class[]{net.minecraft.server.MinecraftServer.class,UUID.class},p().server,CertifiedJailSmoke.last);}
+    static void commit(String receipt)throws Exception{invoke("commit",new Class[]{net.minecraft.server.MinecraftServer.class,UUID.class,String.class},p().server,CertifiedJailSmoke.last,receipt);}
+    static void checkpoint(String boundary)throws Exception {
+        Class<?> type=Class.forName("dev.unyielding.jail.JailRuntimeMigration$Checkpoint");
+        Object proxy=java.lang.reflect.Proxy.newProxyInstance(type.getClassLoader(),new Class[]{type},(o,m,a)->{if(m.getName().equals("at")&&a[0].equals(boundary))throw new IOException("synthetic interruption "+boundary);return null;});
+        invoke("disposableCheckpoint",new Class[]{ServerPlayer.class,type},p(),proxy);
+    }
+    interface Attempt {void run()throws Exception;}
+    static void refused(Attempt a,String label)throws Exception{boolean refused=false;try{a.run();}catch(java.lang.reflect.InvocationTargetException e){require(e.getCause() instanceof IOException,"Unexpected failure "+e);refused=true;}require(refused,label+" did not refuse");flag(label);}
+    static Path transition(){return file("jail-runtime-transitions-v1/"+CertifiedJailSmoke.last);}
+    static void migrate()throws Exception{
+        require(!JailConfig.JAIL_CERTIFIED_ADMISSIONS.get(),"Admissions enabled during migration");
+        if(phase==2){
+            require(cmd("unjail Visitor")==0,"Old receipt accepted without transition");flag("unapproved_old_receipt_refused");
+            checkpoint("PREPARED");refused(()->prepare(),"prepared_interruption");
+            require(Files.exists(transition().resolve("proposal.nbt")),"Prepared evidence missing");
+            Files.writeString(file("proposal-digest"),proposal());pass();return;
+        }
+        if(phase==3){
+            require(prepare().equals(Files.readString(file("proposal-digest"))),"Repeated prepare changed proposal");flag("prepared_restart_idempotent");
+            Path backup=transition().resolve("backup/integrated-jail-v1/escrow.v1");byte[] original=Files.readAllBytes(backup),bad=original.clone();bad[bad.length-1]^=1;
+            try{Files.write(backup,bad);refused(()->commit(proposal()),"tampered_backup_refused");}finally{Files.write(backup,original);}
+            refused(()->commit("0".repeat(64)),"wrong_proposal_refused");
+            checkpoint("BEFORE_COMMIT");refused(()->commit(proposal()),"before_commit_interruption");pass();return;
+        }
+        if(phase==4){
+            commit(proposal());commit(proposal());flag("commit_restart_and_repeated_commit_safe");held();
+            firstDeaths=deaths();corpse=p();p().setInvulnerable(false);CertifiedJailSmoke.cross();require(!p().isAlive()&&deaths()==firstDeaths+1,"Migrated escape did not kill player");stage=1;deadline=p().server.getTickCount()+240;return;
+        }
+        if(phase==5){held();require(cmd("unjail Visitor")==1,"Release after committed migration/restart failed");returned();flag("exact_return_after_migration_restart");require(cmd("unjail Visitor")==0,"Repeated release accepted");returned();flag("no_duplicate_return");pass();return;}
+        throw new IOException("Unknown migration phase");
+    }
+    static void afterAutomatic()throws Exception{
+        if(!p().isAlive())return;
+        require(p()!=corpse&&ProductionObserver.automaticCompletions==1&&ProductionObserver.clientRespawnRequests==0,"Native autorespawn not completed without button");held();
+        var j=JailData.get(p().server).assignment(p().getUUID()).jail();require(p().distanceToSqr(j.x(),j.y(),j.z())<0.0001,"Respawn outside cell");
+        flag("migrated_escape_native_autorespawn_without_button");save();pass();
+    }
+    static void pass()throws Exception{
+        require(ProductionObserver.clientRespawnRequests==0,"Unexpected respawn request");save();
+        proof.put("phase",phase);proof.put("commit",System.getenv("GITHUB_SHA"));proof.put("jail_sha256",System.getenv("UQ_JAIL_SHA256"));proof.put("pokemon_modified",false);
+        Files.writeString(Path.of(System.getenv("GITHUB_WORKSPACE"),"dist/packaged-smoke/migration-phase"+phase+".json"),new GsonBuilder().setPrettyPrinting().create().toJson(proof));
+        Files.writeString(Path.of("/tmp/uq-player-only-result"),"passed: occupied migration phase "+phase+"\n");done=true;
+    }
+    @SubscribeEvent(priority=EventPriority.LOWEST) public static void tick(ServerTickEvent.Post event){
+        if(!ProductionObserver.enabled()||done)return;
+        try{
+            var a=event.getServer().getPlayerList().getPlayerByName("Dev");var target=event.getServer().getPlayerList().getPlayerByName("Visitor");if(a==null||target==null)return;
+            CertifiedJailSmoke.admin=a;CertifiedJailSmoke.target=target;
+            if(!started){if(event.getServer().getTickCount()<120||target.tickCount<100)return;started=true;phase=Integer.getInteger("uq.playerOnlyPhase");CertifiedJailSmoke.phase=phase;CertifiedJailSmoke.world=event.getServer().getWorldPath(LevelResource.ROOT);require(CertifiedJailSmoke.world.toRealPath().getFileName().toString().equals("jail_certified_smoke"),"Wrong disposable world");
+                ProductionObserver.identity();if(phase==1){setup();return;}
+                CertifiedJailSmoke.original=Files.readAllBytes(file("expected-equipment.nbt"));CertifiedJailSmoke.last=UUID.fromString(Files.readString(file("active-player-only")));migrate();return;
+            }
+            if(stage==1){if(event.getServer().getTickCount()>deadline)throw new IOException("Autorespawn timed out");afterAutomatic();}
+        }catch(Throwable failure){done=true;failure.printStackTrace();try{Files.writeString(Path.of("/tmp/uq-player-only-result"),"failed: "+failure+"\n");}catch(IOException ignored){}}
+    }
+}
