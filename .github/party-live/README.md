@@ -5,7 +5,7 @@ This test-only increment continues a43219a6 and reuses the immutable guard and
 certificates, wallet settings or native test fixtures are edited.
 
 The dedicated disposable test mod instruments exact public method descriptors
-from the checksum-pinned Cobblemon binary. Every native method is wrapped for its
+from the checksum-pinned Cobblemon binary. Every selected native method is wrapped for its
 whole execution under one reentrant lock; owner/UUID/input/output checks occur at
 the actual native methods, not merely voluntarily at a wrapper service. Immutable
 UUID getters and adapter filename resolution are excluded for classification.
@@ -35,10 +35,13 @@ through the audited entry points. This is not a hostile-code sandbox. Arbitrary
 reflection, raw filesystem writes, direct third-party providers, saved BattlePokemon
 objects, fabricated new UUIDs, packets and all gameplay action paths are NOT certified.
 
-The internal codec scope reconstructs detached objects only; it does not initialize
-or send them. The IO scope is bound to one adapter, owner, exact payload and current
-or temporary file. It is not inherited by writer threads. These scopes are not
-public bypass APIs. Complete callback containment remains integration work.
+Native NBT/JSON write payloads are fully prepared and natively round-trip checked
+BEFORE enrollment, then stored with source/empty snapshot hashes in the same durable
+fence catalog. After fencing, only inert NBT/JSON parsing occurs: no native Pokemon
+reconstruction or privileged cleanup callbacks are allowed. The IO scope is bound
+to one adapter, owner, exact payload and current/temporary file and is not inherited
+by writer threads. It is not a public bypass API. Complete callback/action
+containment remains integration work.
 
 Both JSON and NBT suites use initialized synthetic file-backed stores, existing
 mutable references, a real queued native writer, native .old files, native IO

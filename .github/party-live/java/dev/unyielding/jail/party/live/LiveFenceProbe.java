@@ -103,6 +103,10 @@ public final class LiveFenceProbe {
             denied("manager_party_denied",()->manager.getParty(owner("primary"),player.registryAccess()));
             denied("manager_pc_denied",()->manager.getPC(owner("primary"),player.registryAccess()));
             denied("manager_parties_denied",()->manager.getParties(owner("primary"),player.registryAccess()));
+            var converter=new com.cobblemon.mod.common.api.storage.adapter.conversions.ReforgedConversion(root.resolve("converter"));
+            denied("direct_conversion_provider_load_denied",()->converter.load(PlayerPartyStore.class,owner("primary"),player.registryAccess()));
+            denied("retained_identity_rewrite_denied",()->oldMon.setUuid(UUID.randomUUID()));
+            denied("retained_sendout_denied",()->oldMon.sendOut(player.serverLevel(),player.position(),null,e->{throw new IllegalStateException("No send-out callback should run");}));
             denied("direct_cached_factory_denied",()->x.factory.getPlayerParty(owner("primary"),player.registryAccess()));
             denied("direct_native_current_load_denied",()->x.adapter.load(PlayerPartyStore.class,owner("primary"),player.registryAccess()));
             File backup=new File(file("primary",x.adapter)+".old");require(backup.isFile(),"Native backup absent");

@@ -24,11 +24,10 @@ public final class HandoffCoordinator implements AutoCloseable {
     private final RegistryAccess registries;
     private final OneToOneFileStoreAdapter adapter;
     private final PartyCustodyGuard guard;
-    private final CobblemonSnapshotCodec codec;
     private final Path current;
     private PartyCustodyGuard.Snapshot original,empty;
     private HandoffCoordinator(UUID tx,UUID owner,String provider,RegistryAccess registries,OneToOneFileStoreAdapter adapter,PartyCustodyGuard guard) {
-        this.tx=tx;this.owner=owner;this.provider=provider;this.registries=registries;this.adapter=adapter;this.guard=guard;this.codec=new CobblemonSnapshotCodec(registries);
+        this.tx=tx;this.owner=owner;this.provider=provider;this.registries=registries;this.adapter=adapter;this.guard=guard;
         this.current=adapter.getFile(PlayerPartyStore.class,owner).toPath().toAbsolutePath().normalize();
     }
     public static HandoffCoordinator start(Path directory,String binding,UUID tx,RegistryAccess registries,FileBackedPokemonStoreFactory factory,OneToOneFileStoreAdapter adapter,PlayerPartyStore party,PCStore pc,Fault fault)throws Exception {
@@ -42,7 +41,9 @@ public final class HandoffCoordinator implements AutoCloseable {
             if(!empty.pcIds().isEmpty())throw new IOException("Initial live fence increment requires one empty PC box");
             List<Object> aliases=new ArrayList<>();aliases.add(party);aliases.add(pc);for(var p:party)aliases.add(p);aliases.addAll(pc.getBoxes());
             // Never erase a source until the independent ownership tombstone and full snapshot both commit.
-            NativeFence.enroll(tx,source,aliases.toArray());fault.hit(Step.FENCE_DURABLE);
+            var prepared=new NativeFence.Payloads(NativeFence.hash(source),NativeFence.hash(empty),adapter.getClass()==NBTStoreAdapter.class,
+                    preparePayload(registries,adapter,source,false),preparePayload(registries,adapter,empty,false),preparePayload(registries,adapter,source,true));
+            NativeFence.enroll(tx,source,empty,prepared,aliases.toArray());fault.hit(Step.FENCE_DURABLE);
             PartyCustodyGuard guard=PartyCustodyGuard.create(directory,binding);
             var c=new HandoffCoordinator(tx,owner,provider,registries,adapter,guard);c.original=source;c.empty=empty;
             try {
@@ -82,12 +83,16 @@ public final class HandoffCoordinator implements AutoCloseable {
             return null;
         });
     }
-    private Object payload(PartyCustodyGuard.Snapshot expected,boolean pc)throws Exception {
-        return NativeFence.inspect(owner,()->{
-            var stores=codec.decode(expected);
-            var store=pc?stores.pc():stores.party();
-            return adapter.getClass()==NBTStoreAdapter.class?store.saveToNBT(new CompoundTag(),registries):store.saveToJSON(new JsonObject(),registries);
-        });
+    private Object payload(PartyCustodyGuard.Snapshot expected,boolean pc)throws Exception {return NativeFence.payload(expected,pc);}
+    /** Prepare, natively verify and freeze the IO payload before any owner is fenced. */
+    private static byte[] preparePayload(RegistryAccess registries,OneToOneFileStoreAdapter adapter,PartyCustodyGuard.Snapshot snapshot,boolean pc)throws Exception {
+        var stores=new CobblemonSnapshotCodec(registries).decode(snapshot);var store=pc?stores.pc():stores.party();
+        if(adapter.getClass()==NBTStoreAdapter.class){
+            var tag=store.saveToNBT(new CompoundTag(),registries);var bytes=new ByteArrayOutputStream();try(var out=new DataOutputStream(bytes)){NbtIo.write(tag,out);}
+            byte[] result=bytes.toByteArray();try(var in=new DataInputStream(new ByteArrayInputStream(result))){if(!tag.equals(NbtIo.read(in,NbtAccounter.create(4L*1024*1024)))||in.available()!=0)throw new IOException("Native payload roundtrip failed");}return result;
+        }
+        var json=store.saveToJSON(new JsonObject(),registries);byte[] bytes=json.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        if(!JsonParser.parseString(new String(bytes,java.nio.charset.StandardCharsets.UTF_8)).equals(json))throw new IOException("Native JSON roundtrip failed");return bytes;
     }
     private void writeExact(PartyCustodyGuard.Snapshot expected)throws Exception {
         Object payload=payload(expected,false);

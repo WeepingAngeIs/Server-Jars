@@ -10,6 +10,7 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 import net.minecraft.nbt.*;
+import java.nio.charset.StandardCharsets;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.loading.FMLEnvironment;
 
@@ -17,8 +18,14 @@ import net.neoforged.fml.loading.FMLEnvironment;
 public final class NativeFence {
     public static final class Denied extends RuntimeException { public Denied(String message){super(message);} }
     @FunctionalInterface public interface Call { Object run() throws Throwable; }
-    public record Entry(UUID owner, UUID transaction, String provider, String sourceHash, Set<UUID> ids) {
-        public Entry { ids=Set.copyOf(ids); }
+    public record Payloads(String sourceHash,String emptyHash,boolean nbt,byte[] originalParty,byte[] emptyParty,byte[] pc) {
+        public Payloads {originalParty=originalParty.clone();emptyParty=emptyParty.clone();pc=pc.clone();}
+        @Override public byte[] originalParty(){return originalParty.clone();}
+        @Override public byte[] emptyParty(){return emptyParty.clone();}
+        @Override public byte[] pc(){return pc.clone();}
+    }
+    public record Entry(UUID owner,UUID transaction,String provider,Set<UUID> ids,Payloads payloads) {
+        public Entry {ids=Set.copyOf(ids);}
     }
     private static final boolean ENABLED=Boolean.getBoolean("uq.partyLiveFence") && FMLEnvironment.dist==Dist.DEDICATED_SERVER;
     private static final ReentrantLock LOCK=new ReentrantLock(true);
@@ -29,8 +36,8 @@ public final class NativeFence {
     private static final ThreadLocal<Scope> SCOPE=new ThreadLocal<>();
     private static GenerationJournal catalog;
     private static boolean ready, attempted;
-    private static final int MAGIC=0x4e465831;
-    private record Scope(UUID owner,Object adapter,Path current,Object payload,boolean inspect) {}
+    private static final int MAGIC=0x4e465832;
+    private record Scope(UUID owner,Object adapter,Path current,Object payload) {}
     private NativeFence() {}
 
     private static void initialize(Path root,String binding,boolean fresh)throws IOException {
@@ -43,10 +50,12 @@ public final class NativeFence {
                 if(in.readInt()!=MAGIC)throw new IOException("Unknown fence catalog");
                 int n=in.readInt();if(n<1||n>16)throw new IOException("Fence bound");
                 for(int i=0;i<n;i++){
-                    UUID owner=uuid(in),tx=uuid(in);String provider=in.readUTF(),hash=in.readUTF();int m=in.readInt();
-                    if(m<1||m>36||!hash.matches("[0-9a-f]{64}"))throw new IOException("Invalid identity manifest");
+                    UUID owner=uuid(in),tx=uuid(in);String provider=in.readUTF();int m=in.readInt();
+                    if(m<1||m>36)throw new IOException("Invalid identity manifest");
                     Set<UUID> ids=new HashSet<>();for(int j=0;j<m;j++)if(!ids.add(uuid(in)))throw new IOException("Duplicate identity");
-                    Entry e=new Entry(owner,tx,provider,hash,ids);install(e);
+                    String sourceHash=in.readUTF(),emptyHash=in.readUTF();boolean nbt=in.readBoolean();
+                    if(!sourceHash.matches("[0-9a-f]{64}")||!emptyHash.matches("[0-9a-f]{64}"))throw new IOException("Invalid payload binding");
+                    Entry e=new Entry(owner,tx,provider,ids,new Payloads(sourceHash,emptyHash,nbt,bytes(in),bytes(in),bytes(in)));install(e);
                 }
                 if(in.available()!=0)throw new IOException("Trailing fence state");
             }
@@ -57,11 +66,12 @@ public final class NativeFence {
         if(OWNERS.containsKey(e.owner())||e.ids().stream().anyMatch(IDS::containsKey))throw new IOException("Conflicting fence ownership");
         OWNERS.put(e.owner(),e);for(UUID id:e.ids())IDS.put(id,e.owner());
     }
-    public static GenerationJournal.Receipt enroll(UUID tx,PartyCustodyGuard.Snapshot original,Object... oldReferences)throws IOException {
+    public static GenerationJournal.Receipt enroll(UUID tx,PartyCustodyGuard.Snapshot original,PartyCustodyGuard.Snapshot empty,Payloads payloads,Object... oldReferences)throws IOException {
         LOCK.lock();try {
             ensure();catalog.verify(catalog.receipt());
             Set<UUID> ids=new HashSet<>(original.partyIds());ids.addAll(original.pcIds());
-            Entry e=new Entry(original.owner(),tx,original.provider(),hash(original),ids);
+            if(!payloads.sourceHash().equals(hash(original))||!payloads.emptyHash().equals(hash(empty))||!empty.partyIds().isEmpty()||!Arrays.equals(original.pc(),empty.pc()))throw new IOException("Native payload/source binding mismatch");
+            Entry e=new Entry(original.owner(),tx,original.provider(),ids,payloads);
             if(OWNERS.size()>=16||OWNERS.containsKey(e.owner())||ids.isEmpty()||ids.stream().anyMatch(IDS::containsKey))throw new IOException("Identity/owner already enrolled or out of bounds");
             var all=new ArrayList<>(OWNERS.values());all.add(e);
             GenerationJournal.Receipt receipt;
@@ -74,7 +84,7 @@ public final class NativeFence {
         LOCK.lock();try{ensure();catalog.verify(catalog.receipt());Entry e=OWNERS.get(owner);if(e==null)throw new IOException("Owner not fenced");return e;}finally{LOCK.unlock();}
     }
     public static void verifySource(UUID tx,PartyCustodyGuard.Snapshot original)throws IOException {
-        Entry e=entry(original.owner());if(!e.transaction().equals(tx)||!e.provider().equals(original.provider())||!e.sourceHash().equals(hash(original)))throw new IOException("Fence and custody source disagree");
+        Entry e=entry(original.owner());if(!e.transaction().equals(tx)||!e.provider().equals(original.provider())||!e.payloads().sourceHash().equals(hash(original)))throw new IOException("Fence and custody source disagree");
     }
     public static Map<String,Long> denials(){LOCK.lock();try{return Map.copyOf(DENIALS);}finally{LOCK.unlock();}}
     public static boolean ready(){return ready;}
@@ -106,13 +116,6 @@ public final class NativeFence {
     private static boolean allowed(Object receiver,String key,Object[] args,UUID owner) {
         Scope s=SCOPE.get();if(s==null||!s.owner().equals(owner))return false;
         String method=key.substring(key.indexOf('#')+1,key.indexOf('('));
-        if(s.inspect()) {
-            // Controlled codec work only. This does not authorize native IO, publication or gameplay.
-            if(key.contains("Factory#")||key.contains("Adapter#")||key.contains("Manager#"))return false;
-            if(method.startsWith("send")||method.startsWith("recall")||method.startsWith("tryRecall")||method.equals("initialize")||method.contains("Battle")||method.contains("trade")||method.contains("Trade"))return false;
-            if(ALIASES.containsKey(receiver))return method.startsWith("get")||method.startsWith("is")||method.equals("iterator")||method.equals("saveToNBT")||method.equals("saveToJSON");
-            return method.startsWith("get")||method.startsWith("is")||method.startsWith("set")||method.startsWith("update")||method.startsWith("load")||method.startsWith("save")||method.equals("iterator");
-        }
         if(receiver!=s.adapter())return false;
         if(!(method.equals("save")||method.equals("load")||method.equals("provide")))return false;
         for(Object arg:args){
@@ -122,8 +125,7 @@ public final class NativeFence {
         return true;
     }
     /** No public bypass scope. HandoffCoordinator is the only internal scope caller. */
-    static Object inspect(UUID owner,Call call)throws Exception{return scope(new Scope(owner,null,null,null,true),call);}
-    static Object write(UUID owner,Object adapter,Path current,Object payload,Call call)throws Exception{return scope(new Scope(owner,adapter,current.toAbsolutePath().normalize(),payload,false),call);}
+    static Object write(UUID owner,Object adapter,Path current,Object payload,Call call)throws Exception{return scope(new Scope(owner,adapter,current.toAbsolutePath().normalize(),payload),call);}
     private static Object scope(Scope scope,Call call)throws Exception {
         LOCK.lock();try {
             ensure();entry(scope.owner());if(SCOPE.get()!=null)throw new IOException("Nested privileged scope refused");
@@ -156,9 +158,25 @@ public final class NativeFence {
     static String hash(PartyCustodyGuard.Snapshot s) {
         try{var digest=java.security.MessageDigest.getInstance("SHA-256");digest.update(java.nio.ByteBuffer.allocate(8).putInt(s.party().length).putInt(s.pc().length).array());digest.update(s.owner().toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));digest.update(s.provider().getBytes(java.nio.charset.StandardCharsets.UTF_8));digest.update(s.party());digest.update(s.pc());return HexFormat.of().formatHex(digest.digest());}catch(java.security.NoSuchAlgorithmException e){throw new AssertionError(e);}
     }
-    private static byte[] encode(List<Entry> entries)throws IOException {
-        var bytes=new ByteArrayOutputStream();try(var out=new DataOutputStream(bytes)){out.writeInt(MAGIC);out.writeInt(entries.size());for(Entry e:entries){uuid(out,e.owner());uuid(out,e.transaction());out.writeUTF(e.provider());out.writeUTF(e.sourceHash());out.writeInt(e.ids().size());for(UUID id:new TreeSet<>(e.ids()))uuid(out,id);}}return bytes.toByteArray();
+    /** Return fresh inert NBT/JSON only. No native Pokemon deserialization occurs after fencing. */
+    static Object payload(PartyCustodyGuard.Snapshot snapshot,boolean pc)throws Exception {
+        Entry e=entry(snapshot.owner());if(!e.provider().equals(snapshot.provider()))throw new IOException("Wrong native payload provider");
+        Payloads p=e.payloads();String hash=hash(snapshot);
+        boolean original=hash.equals(p.sourceHash());if(!original&&!hash.equals(p.emptyHash()))throw new IOException("Unknown native generation payload");
+        byte[] bytes=pc?p.pc():(original?p.originalParty():p.emptyParty());
+        if(p.nbt())try(var in=new DataInputStream(new ByteArrayInputStream(bytes))){CompoundTag tag=NbtIo.read(in,NbtAccounter.create(4L*1024*1024));if(tag==null||in.available()!=0)throw new IOException("Invalid stored native NBT");return tag;}
+        return JsonParser.parseString(new String(bytes,StandardCharsets.UTF_8)).getAsJsonObject();
     }
+    private static byte[] encode(List<Entry> entries)throws IOException {
+        var bytes=new ByteArrayOutputStream();try(var out=new DataOutputStream(bytes)){
+            out.writeInt(MAGIC);out.writeInt(entries.size());for(Entry e:entries){
+                uuid(out,e.owner());uuid(out,e.transaction());out.writeUTF(e.provider());out.writeInt(e.ids().size());for(UUID id:new TreeSet<>(e.ids()))uuid(out,id);
+                Payloads p=e.payloads();out.writeUTF(p.sourceHash());out.writeUTF(p.emptyHash());out.writeBoolean(p.nbt());bytes(out,p.originalParty());bytes(out,p.emptyParty());bytes(out,p.pc());
+            }
+        }return bytes.toByteArray();
+    }
+    private static byte[] bytes(DataInputStream in)throws IOException {int length=in.readInt();if(length<1||length>4*1024*1024)throw new IOException("Native payload bounds");byte[] result=in.readNBytes(length);if(result.length!=length)throw new IOException("Truncated native payload");return result;}
+    private static void bytes(DataOutputStream out,byte[] bytes)throws IOException {if(bytes.length<1||bytes.length>4*1024*1024)throw new IOException("Native payload bounds");out.writeInt(bytes.length);out.write(bytes);}
     private static UUID uuid(DataInputStream in)throws IOException{return new UUID(in.readLong(),in.readLong());}
     private static void uuid(DataOutputStream out,UUID id)throws IOException{out.writeLong(id.getMostSignificantBits());out.writeLong(id.getLeastSignificantBits());}
 }
