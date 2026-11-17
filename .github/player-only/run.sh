@@ -2,6 +2,7 @@
 set -euo pipefail
 [[ "${GITHUB_ACTIONS:-}" == true && "${RUNNER_ENVIRONMENT:-}" == github-hosted ]]
 python3 .github/player-only/isolate.py
+python3 .github/player-only/escape_damage.py
 export UQ_PACKAGED_JAIL_SMOKE=1 LIBGL_ALWAYS_SOFTWARE=true ALSOFT_DRIVERS=null
 export UQ_WORLD_NAME=jail_certified_smoke UQ_RESULT_FILE=/tmp/uq-player-only-result
 for phase in 1 2 3; do
