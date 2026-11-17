@@ -104,6 +104,14 @@ assert 'onTick(net.minecraft.server.MinecraftServer)' in inspected
 assert 'PlayerList.getPlayers:()Ljava/util/List;' in inspected
 assert 'PlayerPartyStore.onSecondPassed:(Lnet/minecraft/server/level/ServerPlayer;)V' in inspected
 (d/'session-periodic-caller.javap').write_text(inspected)
+callback=package/'mixin/SessionOutgoingBoundary.java'
+callback_source=callback.read_text()
+(d/'live-wrapper-source'/callback.name).write_text(callback_source)
+config['mixins'].append('SessionOutgoingBoundary')
+manifest['extra_hooks']['SessionOutgoingBoundary']=hashlib.sha256(callback_source.encode()).hexdigest()
+inspected=subprocess.check_output(['javap','-p','-c','-s','-classpath',str(jar),'com.cobblemon.mod.common.CobblemonNetwork'],text=True)
+assert '(Lnet/minecraft/server/level/ServerPlayer;Lcom/cobblemon/mod/common/api/net/NetworkPacket;)V' in inspected
+(d/'session-outgoing-caller.javap').write_text(inspected)
 config_path.write_text(json.dumps(config,indent=2));manifest['session_packet_hooks']=packet_hooks
 (d/'session-wrapper-manifest.json').write_text(json.dumps(manifest,indent=2))
 for target in ['com.cobblemon.mod.common.net.messages.server.storage.party.SwapPartyPokemonPacket','com.cobblemon.mod.common.CobblemonNetwork']:

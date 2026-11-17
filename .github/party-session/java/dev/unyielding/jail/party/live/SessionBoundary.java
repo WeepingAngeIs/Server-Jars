@@ -41,6 +41,16 @@ public final class SessionBoundary {
         return SessionBridge.invoke(receiver,key,args,operation);
     }
     public static boolean blockNative(ServerPlayer p,String handler){return SessionBridge.blockNative(p,handler);}
+    public static boolean blockFixturePartyPacket(net.minecraft.server.level.ServerPlayer recipient,
+            com.cobblemon.mod.common.api.net.NetworkPacket<?> packet){
+        if(!SessionBridge.enabled()||!(packet instanceof com.cobblemon.mod.common.net.messages.client.storage.party.SetPartyPokemonPacket set))return false;
+        // This detached-snapshot fixture never authorizes ordinary party synchronization.
+        // Select the synthetic store before seeding, not a possibly revoked native object.
+        if(SessionBridge.VISITOR.equals(set.getStoreID())){
+            SessionBridge.flag("fixture_native_party_packet_deferred_before_enqueue");return true;
+        }
+        SessionBridge.flag("unrelated_native_party_packet_not_deferred");return false;
+    }
     public static java.util.List<ServerPlayer> periodicPlayers(java.util.List<ServerPlayer> players){
         if(!SessionBridge.enabled())return players;
         java.util.List<ServerPlayer> allowed=new java.util.ArrayList<>();

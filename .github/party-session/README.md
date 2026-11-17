@@ -29,3 +29,10 @@ The native swap denial probe uses the pinned 1.8.4 constructor with both actual
 Pokemon UUIDs and positions (0 and 5), not an obsolete positions-only signature.
 The compiler checks this API; the server must still reject the real packet before
 mutation, and subsequent complete-state checks remain mandatory.
+
+The detached-snapshot fixture defers native SetPartyPokemon packets for its exact
+synthetic Visitor store before Netty enqueue, including initial source seeding.
+Those packets otherwise retain native Pokemon references across enrollment and
+correctly fail the custody fence during asynchronous encoding. Unrelated stores'
+packets are unchanged and observed. This is a test-profile restriction, not a fix
+for or certification of ordinary party UI synchronization.
