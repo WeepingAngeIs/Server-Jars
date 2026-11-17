@@ -353,21 +353,31 @@ public final class BundleSmoke {
         diagnostics.put("scope","Real connected-client in-process authorization and native delivery; RETURNED is not a cross-store durable receipt. No power-cut or prize-durability claim.");
         diagnostics.put("status_refresh_contract","Every status rotates the caller token; stale and invalid attempts also consume/rotate that caller token.");
     }
+    static Map<String,Object> readiness() {
+        var result=new LinkedHashMap<String,Object>();result.put("server_tick",tick);
+        for(String name:List.of("Dev","Visitor")) {
+            var p=player(name);var state=new LinkedHashMap<String,Object>();state.put("server_present",p!=null);state.put("server_player_ticks",p==null?-1:p.tickCount);
+            Path ready=CONTROL.resolve(name+".ready");state.put("ready_file_present",Files.isRegularFile(ready));
+            try{if(Files.isRegularFile(ready))state.put("ready_file_content",Files.readString(ready));}catch(java.io.IOException bad){state.put("ready_file_error",bad.toString());}
+            result.put(name,state);
+        }
+        return result;
+    }
     static void completed()throws Exception {
-        done=true;Files.createDirectories(evidence());long failed=outcomes.stream().filter(s->s.startsWith("failed:")).count();boolean passed=failed==0&&outcomes.size()==EXPECTED_CASES&&(CLAIMS_ONLY||realDisconnect);
+        done=true;Files.createDirectories(evidence());long failed=outcomes.stream().filter(s->s.startsWith("failed:")).count();long executed=outcomes.stream().filter(s->!s.startsWith("failed: fixture =>")).count();boolean passed=failed==0&&executed==EXPECTED_CASES&&(CLAIMS_ONLY||realDisconnect);
         try{diagnostics.put("final_native_state",observed());}catch(Exception bad){diagnostics.put("final_native_state_error",bad.toString());}
-        var report=new LinkedHashMap<String,Object>();report.put("commit",System.getenv("GITHUB_SHA"));report.put("phase",1);report.put("scope",SCOPE);report.put("expected_case_count",EXPECTED_CASES);report.put("passed",passed);report.put("case_count",outcomes.size());report.put("failures",failed);report.put("cases",outcomes);report.put("diagnostics",diagnostics);report.put("real_disconnect_seen",realDisconnect);report.put("real_disconnect_required",!CLAIMS_ONLY);report.put("private_or_live_data_used",false);report.put("jars",diagnostics.get("jars"));
+        var report=new LinkedHashMap<String,Object>();report.put("commit",System.getenv("GITHUB_SHA"));report.put("phase",1);report.put("scope",SCOPE);report.put("expected_case_count",EXPECTED_CASES);report.put("passed",passed);report.put("case_count",executed);report.put("failures",failed);report.put("cases",outcomes);report.put("diagnostics",diagnostics);report.put("real_disconnect_seen",realDisconnect);report.put("real_disconnect_required",!CLAIMS_ONLY);report.put("private_or_live_data_used",false);report.put("jars",diagnostics.get("jars"));
         Files.writeString(evidence().resolve("reward-client-phase-1.json"),new GsonBuilder().setPrettyPrinting().create().toJson(report)+"\n");
         Files.writeString(evidence().resolve("cases-phase-1.txt"),String.join("\n",outcomes)+"\n");
         if(Files.isDirectory(CONTROL)){Path copy=evidence().resolve("client-controls");Files.createDirectories(copy);try(var files=Files.list(CONTROL)){for(var file:files.filter(Files::isRegularFile).filter(p->!p.getFileName().toString().endsWith(".tmp")).toList())Files.copy(file,copy.resolve(file.getFileName()),StandardCopyOption.REPLACE_EXISTING);}}
-        Files.writeString(RESULT,(passed?"passed: ":"failed: ")+outcomes.size()+" reward client cases, "+failed+" failures; scope "+SCOPE+"\n");
+        Files.writeString(RESULT,(passed?"passed: ":"failed: ")+executed+" reward client cases, "+failed+" failures; scope "+SCOPE+"\n");
     }
     void tick(ServerTickEvent.Post event) {
         if(done||!"true".equals(System.getenv("GITHUB_ACTIONS"))||!"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT")))return;
         server=event.getServer();tick++;
         try {
             if(!initialized) {
-                require(tick<1800,"Real clients did not become loaded-world ready");
+                if(tick>=6000){diagnostics.put("readiness_timeout",readiness());throw new IllegalStateException("Real clients did not become loaded-world ready within 6000 server ticks");}
                 if(dev()==null||visitor()==null||tick<120||dev().tickCount<100||visitor().tickCount<100)return;
                 for(var p:players()){var ready=CONTROL.resolve(p.getGameProfile().getName()+".ready");if(!Files.exists(ready)||!Files.readString(ready).startsWith(p.getUUID()+"\t"))return;}
                 initialized=true;initialize();initializedAt=tick;return;
