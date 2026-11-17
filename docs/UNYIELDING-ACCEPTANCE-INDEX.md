@@ -1,0 +1,61 @@
+# Unyielding acceptance index
+
+This reconciles the [implementation checklist](../unyielding-quests/IMPROVEMENTS-STATUS.md) with retained acceptance evidence. It is not a release, deployment instruction or exhaustive every-feature test plan. Historical report statements about the "next" gap apply to their date and binary; later checkpoints below supersede those gap labels without rewriting the old evidence.
+
+The current completed independent checkpoint is the meeting-provider candidate **1.2.0**, SHA-256 `216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504`. Five home/warp cases are now pending against that verified baseline. A pending test is not a pass.
+
+## Completed evidence and exact scope
+
+| Area and report | Exact passing run / tested source | What was established |
+| --- | --- | --- |
+| [Named quest-credit recovery](UNYIELDING-REWARD-RECOVERY-RESULTS.md) | [43973062479](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/43973062479), `1ffad55f5387c3accea3d199a2447cb1dc0c09d5` | Six native server phases across five actual JVM restarts, plus 69 units. A NeoForge fake player exercises named-credit/reset/recovery paths; this is not connected-client UI proof. Candidate `61f6add6...`. |
+| [Party confirmations](UNYIELDING-PARTY-CONFIRMATION-RESULTS.md) | [43979575601](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/43979575601), `09074d4789294c5b1e7946e21835edc83de0a39e` | 27 native cases with two actual clients, requester reconnect and a saved server restart, plus 69 units. Disband/ownership confirmation, authority changes and progress preservation; not a meeting-travel matrix. Candidate `fb8378e9...`. |
+| [Vein protection and presentation](UNYIELDING-VEIN-ACCEPTANCE-RESULTS.md) | [44003918234](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44003918234), `51c23f468fa2af1510d93834946269298b7c83f6` | 42 native cases, 69 units and 48 screenshots. Bounded cold input, hold-to-break, durability, protection/addon and compact HUD scenarios. Candidate `7a0a1cec...`; the earlier [31-case protection report](UNYIELDING-VEIN-PROTECTION-RESULTS.md) is preserved. |
+| [Ground cleanup](UNYIELDING-GROUND-ACCEPTANCE-RESULTS.md) | [44019741055](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44019741055), `b27836ca718f71dc24f9b4e66d2f4775f02f8589` | 17 native cases across two real-client server phases, including a saved restart: merging, drop/pickup/redrop, fresh-age grace, preview authorization and reconnect/restart refusal. Its unchanged production fix passed 69 units earlier in run `44017869818`, not again in this fixture-only final run. Candidate `be397290...`. |
+| [Reward token/UI baseline](UNYIELDING-REWARD-CLIENT-ACCEPTANCE-RESULTS.md) | [44022982101](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44022982101), `1afb007025daf8a0d2f85102210bf9d465e44ee0` | Twelve token/UI cases passed within a 15-pass/one-failure baseline. Starter flag with nonempty party, native button payout, replay/foreign/empty/forged/stale tokens, real reconnect, early reel closing and balance gates. The undefined Claim mode defect failed separately. These twelve remain exact `be397290...` evidence. |
+| [Reward claim fix and redemption](UNYIELDING-REWARD-CLIENT-ACCEPTANCE-RESULTS.md) | [44024899650](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44024899650), `b33d642bc9ccd03b9dbdf5944c1c290f98b7fdc7` | Five focused connected-client Claim/ownership/redemption cases passed on `744be06c...`. Its production build passed 69 units in run `44023859209`; that run executed zero native acceptance cases because startup timed out. The final retry did not repeat builds/units or the twelve baseline token cases. |
+| [Meeting provider/lifecycle fix](UNYIELDING-PARTY-PROVIDER-ACCEPTANCE-RESULTS.md) | [44031631588](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44031631588), `ca64738fadd86304ac2bf79d1696cc2fd1045191` | Ten real-client cases and 69 units. Normally selected synthetic permission provider with actual OPAC: deny/exception/grant/revocation, one ordered reentrant leave, setter disconnect/new session and role lifecycle, disabled-point retention and mounted refusal. Candidate `216de93c...`. Generated policy is not live policy; no server restart/death test is claimed here. |
+| [Historical tutorial/config validation](../releases/Unyielding-1.1.7-Validation.txt), [access PASS fields](../releases/Unyielding-1.1.7-Verification/uq-tutorial-access-passed.json) and [history/config PASS fields](../releases/Unyielding-1.1.7-Verification/uq-config-editor-passed.json) | [42572733078](https://github.com/WeepingAngeIs/unyielding-mod/actions/runs/42572733078), tested Server-Jars `3158fde09c69aa46189bfaa79635e1268e066d68`; verifier `8df0c3c7a8eeb29ec18bfbabccd30b381d5426c5` | Historical assembled-JAR real connected-player command/rank filtering, tutorial dismissal/history/manual replay and config coverage on `876595a2...`. Tutorial-history lifecycle checks call logout/login and manager stop/start hooks and round-trip SavedData in one process; the PASS field does not establish a real server-JVM tutorial restart. This is not a fresh tutorial run on `216de93c...`. |
+
+Counts describe each cited build/fixture and must not be summed into a unique overall test count or relabeled as runs on the latest binary. The detailed reports retain failed attempts, fixture corrections, artifacts, checksums and limitations. Source-file or JAR-entry equality can preserve implementation context, but does not turn historical runtime evidence into a new run.
+
+## Candidate SHA-256 registry
+
+| Candidate scope | Exact SHA-256 |
+| --- | --- |
+| Named-credit recovery | `61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7` |
+| Party confirmations | `fb8378e987afacc0aadeeb09bee3ed3e5fd8c1ea4f2f45b1a4862281899593a9` |
+| Vein acceptance | `7a0a1cec09001ca6f47ee6180371842f27ef6d83f7411a7e61fff6a83e74b414` |
+| Ground and reward-token baseline | `be397290bfbac8d8f0b1010d04daded458673eca2f97b6e0eff59272e2eec886` |
+| Reward-input fix | `744be06c8fa5ad6001f1ba214608c4f7c1dde59664afe2bf8bf33405063512d8` |
+| Meeting-provider fix / current completed checkpoint | `216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504` |
+| Historical 1.1.7 tutorial/config validation | `876595a2d8bc79589bfde81c7253354e76e042eb9eefdb7db847d3968f85c09b` |
+
+## Remaining public-input acceptance work
+
+The selected next task is **five bounded real-client home/warp cases**, pending on the current verified baseline. Existing `DestinationPolicyTest` exercises pure owner scoping, payload bounds and command sanitization. Meeting fixtures preserve home/back sentinels, but neither establishes native destination-screen payload privacy or stale-selection behavior. The new scope is two synthetic players' own destination payloads, normal selection through existing commands, and refusal after current command/feature/cooldown conditions change. It requires no live player homes, coordinates or rank assignments. This entry must be updated only from its actual result report; it is not a pass yet.
+
+A separate public/synthetic gap remains for **native config-audit/undo behavior**. `ConfigAuditPolicyTest` covers the pure allowlist, current-value comparison and paging policy. A dedicated native proof of actor authorization, audit recording and compare-current undo through the actual implementation was not located. Earlier config-editor runtime passes do not automatically cover this later audit feature. This is an available bounded follow-up, not a request to add new audit features or immediately test it alongside destinations.
+
+Other implementation-only checklist entries, such as roster/search/status-filter presentation, must retain that status if no dedicated native evidence is cited. Missing per-feature evidence does not automatically create a mandatory exhaustive UI matrix. Tutorial has historical evidence, so its passed cases should not be gratuitously repeated. The connected-client reward proof is item-only; it does not certify every Pokemon/PC prize path. A future public-input test should identify a specific meaningful boundary or regression reason rather than loop through every prize or feature.
+
+Generic crate/loot credits remain on the legacy path, and RETURNED payouts are not atomic durable inventory/PC receipts. Those are documented design/coverage limits; this index does not authorize implementing a new journal integration or promise exactly-once cross-store delivery.
+
+## Gaps requiring authoritative inputs
+
+| Gap | Inputs needed for that claim |
+| --- | --- |
+| Actual server permission/rank/claim policy | The active server permission provider, authoritative player/rank assignments and world-specific OPAC/claim restrictions. Matching generated rank definitions or client-side config files do not establish those inputs. Public synthetic contracts remain separately useful. |
+| Complete pack behavior and HUD/protection integration | The exact reproducible server/client pack, resolved dependency versions and relevant configurations/resources, followed by a bounded agreed scenario. Existing representative-addon results do not certify arbitrary item components, tools, dimensions, fonts, shaders, HUD arrangements or third-party protection/teleport providers. This is not a demand for exhaustive permutations. |
+| Real old-save migration or backup restoration | A consistent, authoritative old-save/backup set containing the relevant world SavedData, player data, journals and associated stores, with explicit disposable-copy scope. Synthetic legacy fields and native saved restarts do not certify an unknown real old save. No live restoration is performed here. |
+| Physical power-loss / cross-store prize durability | A defined recovery contract and evidence spanning the independently saved journal, inventory and Cobblemon storage. Successful method return and ordinary JVM restart do not establish atomic durability across those stores. |
+
+These input gaps do not erase the remaining public destination and config-audit gaps, and they are not a reason to repeat completed tests while waiting.
+
+## Preservation and separate Jail evidence
+
+Anya's 2026-11-16 firsthand Mawile observation records basic dropped-food pursuit/eating working. The threshold is Spice of Life Onion Diversity >= 8, inclusive, not hunger. It remains a user-observed basic pass, with no needless repeat absent a new regression reason.
+
+The earlier [bounded exact-pair Jail certificate](https://github.com/WeepingAngeIs/Server-Jars/blob/e4bdecaa5cfa4d8ca89e532d3c38804d6ed207cc/docs/JOINT-WALLET-UNYIELDING-CERTIFICATION.md) remains separate and unchanged. It describes its recorded older pair and does not certify a different Unyielding candidate. Jail development, builds and certificates are not prerequisites for independent jail-free acceptance. No gate or allowance is bypassed or rewritten.
+
+No installation or deployment is authorized by these records. Installed files, live worlds, private data, settings, art and prior artifacts remain preserved. Heavy builds/runtime checks belong on GitHub-hosted disposable inputs; document reconciliation and light evidence inspection do not rerun game tests.
