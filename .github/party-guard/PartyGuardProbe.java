@@ -18,7 +18,7 @@ public final class PartyGuardProbe {
     interface Action{void run()throws Exception;}
     static void deny(Action action)throws Exception{try{action.run();}catch(IOException|IllegalArgumentException expected){return;}throw new IllegalStateException("Guard accepted unsafe request");}
     static CobblemonSnapshotCodec codec(){return new CobblemonSnapshotCodec(player.registryAccess());}
-    static PCStore pc(UUID id){var pc=new PCStore(id);pc.resize(1,false,null);return pc;}
+    static PCStore pc(UUID id){var pc=new PCStore(id);pc.resize(1,true,p->{throw new IllegalStateException("Unexpected synthetic PC overflow");});return pc;}
     static PartyCustodyGuard.Snapshot source()throws Exception{
         UUID id=owner("fallback");var party=new PlayerPartyStore(id);party.loadFromNBT(expected("fallback-original"),player.registryAccess());
         return codec().capture(id,PROVIDER,party,pc(id));
