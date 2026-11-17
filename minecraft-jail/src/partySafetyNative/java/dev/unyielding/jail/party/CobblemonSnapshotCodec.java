@@ -28,10 +28,23 @@ public final class CobblemonSnapshotCodec {
             throw new IOException("Native full snapshot roundtrip changed state");
         return result;
     }
-    /** Derive empty-state bytes from a detached verified clone, never clear player-owned stores. */
+    /** Derive a private empty view without initializing stores, sending recalls or touching live data. */
     public PartyCustodyGuard.Snapshot empty(PartyCustodyGuard.Snapshot original)throws IOException {
-        Stores clone=decode(original);clone.party.clearParty();
-        return capture(original.owner(),original.provider(),clone.party,clone.pc);
+        Stores clone=decode(original);CompoundTag tag=decodeNBT(original.party());
+        // A deserialized, uninitialized clone has no native store coordinates: clearParty may do nothing.
+        // Match each complete native Pokemon payload to exactly one stored top-level slot tag.
+        // Ambiguous/unknown layouts are refused; unrelated party metadata is retained byte-for-byte.
+        for(Pokemon pokemon:clone.party){
+            CompoundTag payload=pokemon.saveToNBT(registries,new CompoundTag());List<String> matches=new ArrayList<>();
+            for(String key:tag.getAllKeys())if(tag.get(key) instanceof CompoundTag value&&value.equals(payload))matches.add(key);
+            if(matches.size()!=1)throw new IOException("Cannot uniquely identify native snapshot slot");
+            tag.remove(matches.getFirst());
+        }
+        var detached=new PlayerPartyStore(original.owner());detached.loadFromNBT(tag,registries);
+        var result=capture(original.owner(),original.provider(),detached,clone.pc);
+        if(!result.partyIds().isEmpty()||!Arrays.equals(result.party(),encode(tag))||!Arrays.equals(result.pc(),original.pc()))
+            throw new IOException("Empty view changed metadata/PC or retained Pokemon");
+        return result;
     }
     public Stores decode(PartyCustodyGuard.Snapshot snapshot)throws IOException {
         Stores result=decodeUnchecked(snapshot);
