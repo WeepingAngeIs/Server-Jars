@@ -41,6 +41,7 @@ public final class ClientChecks {
             else if(a[1].equals("drop_all")){if(!mc.player.drop(true))throw new IllegalStateException("native drop returned false");}
             else if(a[1].equals("reconnect")){mc.getConnection().getConnection().disconnect(Component.literal("Disposable ground reconnect"));reconnect=60;}
             else throw new IllegalArgumentException("Unknown ground action "+a[1]);
+            if(!a[1].equals("reconnect"))Net.sendToServer(new BundleSmoke.Barrier(token));
             Files.writeString(ROOT.resolve(name+".ack"),token+"\tpassed");
         }catch(Throwable bad){bad.printStackTrace();try{Files.writeString(ROOT.resolve(name+".ack"),token+"\tfailed: "+bad);}catch(Exception ignored){}}
     }

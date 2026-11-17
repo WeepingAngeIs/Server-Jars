@@ -38,12 +38,23 @@ public final class BundleSmoke {
     static String marker;static ItemEntity a,b;static UUID oldA,oldB;static CompoundTag expected,expectedSecond;
     static int rememberedEpoch;static ServerPlayer oldPlayer;static long reconnectDeadline;
     static final Map<String,String> commands=new HashMap<>();static final Map<String,Integer> commandTicks=new HashMap<>();
+    static final Map<String,Integer> processedTicks=new HashMap<>();
     static final Map<String,Object> diagnostics=new LinkedHashMap<>();static final List<String> outcomes=new ArrayList<>();
     static final List<ItemEntity> joined=new ArrayList<>();
     interface Body{void tick()throws Exception;}
     record Case(String name,Body body){}
     static final Deque<Case> cases=new ArrayDeque<>();
-    public BundleSmoke(){NeoForge.EVENT_BUS.addListener(this::tick);NeoForge.EVENT_BUS.addListener(this::joined);}
+    public record Barrier(String token) implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
+        public static final Type<Barrier> TYPE=new Type<>(ResourceLocation.parse("uq_bundle_smoke:ground_barrier"));
+        public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf,Barrier> CODEC=net.minecraft.network.codec.StreamCodec.composite(net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8,Barrier::token,Barrier::new);
+        public Type<? extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> type(){return TYPE;}
+    }
+    public BundleSmoke(net.neoforged.bus.api.IEventBus modBus){
+        NeoForge.EVENT_BUS.addListener(this::tick);NeoForge.EVENT_BUS.addListener(this::joined);
+        modBus.addListener((net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent e)->e.registrar("1").playToServer(Barrier.TYPE,Barrier.CODEC,(payload,context)->{
+            try{Files.writeString(CONTROL.resolve(context.player().getGameProfile().getName()+".processed"),payload.token());}catch(java.io.IOException bad){throw new IllegalStateException(bad);}
+        }));
+    }
     void joined(EntityJoinLevelEvent event){if(!event.getLevel().isClientSide&&event.getEntity() instanceof ItemEntity item&&fixture(item.getItem()))joined.add(item);}
     static void require(boolean value,String message){if(!value)throw new IllegalStateException(message);}
     static ServerPlayer player(String name){return server.getPlayerList().getPlayerByName(name);}
@@ -81,7 +92,7 @@ public final class BundleSmoke {
     static boolean elapsed(int n){return tick-stageTick>=n;}
     static void request(String who,String action,String... args)throws Exception{String token=phase+"-"+(++sequence);commands.put(who,token);commandTicks.put(who,tick);Files.writeString(CONTROL.resolve(who+".txt"),token+"\t"+action+(args.length==0?"":"\t"+String.join("\t",args)));}
     static void action(String who,String key,int value)throws Exception{request(who,"ground_"+key,""+value);}
-    static boolean ack(String who)throws Exception{var path=CONTROL.resolve(who+".ack");String token=commands.get(who);if(token==null||!Files.exists(path))return false;String text=Files.readString(path);if(!text.startsWith(token+"\t"))return false;require(text.equals(token+"\tpassed"),"Client action failed: "+text);return tick-commandTicks.get(who)>=5;}
+    static boolean ack(String who)throws Exception{var path=CONTROL.resolve(who+".ack");String token=commands.get(who);if(token==null||!Files.exists(path))return false;String text=Files.readString(path);if(!text.startsWith(token+"\t"))return false;require(text.equals(token+"\tpassed"),"Client action failed: "+text);var processed=CONTROL.resolve(who+".processed");if(!Files.exists(processed)||!Files.readString(processed).equals(token))return false;return tick-processedTicks.computeIfAbsent(token,k->tick)>=2;}
     static void preview(String who)throws Exception{action(who,"preview",0);}
     static void confirm(String who)throws Exception{action(who,"confirm",0);}
     static void function(String name){var function=server.getFunctions().get(ResourceLocation.parse("cui_cleanup:"+name));require(function.isPresent(),"Missing cleanup function "+name);server.getFunctions().execute(function.get(),server.getFunctions().getGameLoopSender());}
@@ -111,7 +122,12 @@ public final class BundleSmoke {
     static void phaseOne(){
         add("native merge original UUID survives",()->mergeCase(Items.COOKED_MUTTON,5,1,true,false,false));
         add("native Nether burger merge fresh UUID survives",()->mergeCase(item("mynethersdelight:nether_burger"),1,5,false,false,false));
-        add("native partial merge preserves fresh remainder",()->mergeCase(Items.COOKED_MUTTON,60,8,true,true,false));
+        add("native overfull pair refuses merge and protects fresh stack",()->{
+            if(step==0){reset();a=spawn(stack(Items.COOKED_MUTTON,60),1300,0);preview("Dev");next();}
+            else if(step==1&&ack("Dev")){require(stamp(a)==score("cui_candidate","preview_epoch"),"Original overfull stack not previewed");b=spawn(stack(Items.COOKED_MUTTON,8),0,0);next();}
+            else if(step==2&&elapsed(100)){require(!a.isRemoved()&&!b.isRemoved()&&a.getItem().getCount()==60&&b.getItem().getCount()==8,"Native overfull merge refusal changed");conservation(68);confirm("Dev");next();}
+            else if(step==3&&ack("Dev")){require(a.isRemoved()&&!b.isRemoved()&&b.getItem().getCount()==8&&b.getAge()<1200,"Overfull pair confirmation deleted fresh items or retained approved old stack");finish();}
+        });
         add("native old merge invalidates preview count",()->mergeCase(Items.COOKED_MUTTON,5,1,true,false,true));
         add("two admin previews supersede safely",()->{
             if(step==0){basicFood();server.getPlayerList().op(visitor().getGameProfile());preview("Dev");next();}
