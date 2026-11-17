@@ -15,5 +15,6 @@ a=setup.index('        // Fixture setup only.'); b=setup.index('        require(
 header=s[:s.index('    static void setup()')]
 # Keep the existing generic helpers and stimuli; no Cobblemon fixture mutation.
 s=header+setup+(R/'.github/occupied-migration/phases.java.txt').read_text()
+s=s.replace('nonempty_party_player_admitted_with_wallet_and_equipment','synthetic_player_admitted_with_wallet_and_equipment')
 assert 'com.cobblemon' not in s
 p.write_text(s)

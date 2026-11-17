@@ -10,7 +10,13 @@
         invoke("disposableCheckpoint",new Class[]{ServerPlayer.class,type},p(),proxy);
     }
     interface Attempt {void run()throws Exception;}
-    static void refused(Attempt a,String label)throws Exception{boolean refused=false;try{a.run();}catch(java.lang.reflect.InvocationTargetException e){require(e.getCause() instanceof IOException,"Unexpected failure "+e);refused=true;}require(refused,label+" did not refuse");flag(label);}
+    static void refused(Attempt a,String label)throws Exception{boolean refused=false;try{a.run();}catch(java.lang.reflect.InvocationTargetException e){require(e.getCause() instanceof IOException,"Unexpected failure "+e);
+        String reason=e.getCause().getMessage();
+        if(label.equals("prepared_interruption"))require(reason.equals("synthetic interruption PREPARED"),"Wrong prepared failure: "+reason);
+        if(label.equals("before_commit_interruption"))require(reason.equals("synthetic interruption BEFORE_COMMIT"),"Wrong commit failure: "+reason);
+        if(label.equals("tampered_backup_refused"))require(reason.startsWith("Recovery copy changed:"),"Wrong tamper failure: "+reason);
+        if(label.equals("wrong_proposal_refused"))require(reason.equals("Exact proposal receipt mismatch"),"Wrong receipt failure: "+reason);
+        refused=true;}require(refused,label+" did not refuse");flag(label);}
     static Path transition(){return file("jail-runtime-transitions-v1/"+CertifiedJailSmoke.last);}
     static void migrate()throws Exception{
         require(!JailConfig.JAIL_CERTIFIED_ADMISSIONS.get(),"Admissions enabled during migration");
@@ -42,6 +48,11 @@
     }
     static void pass()throws Exception{
         require(ProductionObserver.clientRespawnRequests==0,"Unexpected respawn request");save();
+        if(phase>=2){
+            Path out=Path.of(System.getenv("GITHUB_WORKSPACE"),"dist/packaged-smoke");
+            Files.copy(transition().resolve("history/escrow.v1"),out.resolve("migration-history-phase"+phase+".bin"));
+            Files.copy(transition().resolve("proposal.nbt"),out.resolve("migration-proposal-phase"+phase+".nbt"));
+        }
         proof.put("phase",phase);proof.put("commit",System.getenv("GITHUB_SHA"));proof.put("jail_sha256",System.getenv("UQ_JAIL_SHA256"));proof.put("pokemon_modified",false);
         Files.writeString(Path.of(System.getenv("GITHUB_WORKSPACE"),"dist/packaged-smoke/migration-phase"+phase+".json"),new GsonBuilder().setPrettyPrinting().create().toJson(proof));
         Files.writeString(Path.of("/tmp/uq-player-only-result"),"passed: occupied migration phase "+phase+"\n");done=true;
