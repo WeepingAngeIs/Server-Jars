@@ -1,0 +1,125 @@
+name: Implement and verify bounded packed-wallet custody
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/jail-standalone-extraction']
+    paths:
+      - '.github/packed-wallet/**'
+      - '.github/workflows/jail-packed-wallet.yml'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: packed-wallet-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  scope:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - run: |
+          git fetch --no-tags --depth=1 origin 9fc1f509000254a81ac3d6fc79a1dac4f51d323e
+          python3 .github/packed-wallet/check.py
+          python3 -m py_compile .github/packed-wallet/*.py
+  build:
+    needs: scope
+    uses: ./.github/workflows/jail-standalone-build.yml
+  runtime:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        slice: [core, faults, integrated]
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            unyielding-quests/*.gradle
+            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
+            combined-unyielding/smoke-harness/*.gradle
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-split-code-only-${{ github.sha }}
+          path: dist/jail-split/
+      - name: Stage the assembled pair without modifying production binaries
+        run: |
+          set -euo pipefail
+          (cd dist/jail-split && sha256sum -c SHA256SUMS)
+          printf '%s\n' '61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7  dist/jail-split/Unyielding-1.2.0.jar' | sha256sum -c -
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp dist/jail-split/Unyielding-1.2.0.jar dist/120-release/
+          cp dist/jail-split/Minecraft-Jail-1.2.0.jar minecraft-jail/build/libs/
+          python3 .github/scripts/fetch-build-dependencies.py
+          if [[ '${{ matrix.slice }}' == integrated ]]; then
+            python3 .github/scripts/prepare-split-server.py
+          else
+            python3 .github/packed-wallet/prepare.py
+          fi
+      - name: Prepare isolated client displays on the disposable runner
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Actual custody, conflict, restart and no-replay tests
+        run: |
+          if [[ '${{ matrix.slice }}' == integrated ]]; then
+            bash .github/scripts/run-split-runtime.sh integrated
+          else
+            bash .github/packed-wallet/run.sh '${{ matrix.slice }}'
+          fi
+      - name: Preserve synthetic evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: packed-wallet-${{ matrix.slice }}-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/
+            dist/packaged-harness/build/reports/
+            dist/packaged-harness/run-server/crash-reports/
+          if-no-files-found: error
+          retention-days: 30
+  verified:
+    needs: [build, runtime]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-split-code-only-${{ github.sha }}
+          path: dist/delivery/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: packed-wallet-*-${{ github.sha }}
+          path: dist/evidence/
+      - name: Require exact-commit runtime reports before delivering any candidate
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          root=Path('dist/delivery');sha=os.environ['GITHUB_SHA']
+          jars={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in root.glob('*.jar')}
+          assert jars['Unyielding-1.2.0.jar']=='61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7'
+          reports={}
+          for name in ('wallet-verified-core.json','wallet-verified-faults.json','split-runtime-integrated.json'):
+              paths=list(Path('dist/evidence').rglob(name));assert len(paths)==1,(name,paths)
+              row=json.loads(paths[0].read_text());assert row['passed'] and row['commit']==sha
+              assert row.get('jars',row.get('production_jars'))==jars
+              reports[name]=row
+          (root/'packed-wallet-runtime.json').write_text(json.dumps({'commit':sha,'passed':True,'jars':jars,'reports':reports},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: packed-wallet-verified-${{ github.sha }}
+          path: dist/delivery/
+          if-no-files-found: error
+          retention-days: 30
