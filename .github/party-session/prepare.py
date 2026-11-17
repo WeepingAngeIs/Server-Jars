@@ -14,8 +14,32 @@ assert before.count(needle)==1 and s!=before
 s=s.replace(needle,needle+'        if(Boolean.getBoolean("uq.partySession"))return GlobalProfile.identity(adapter);\n',1);p.write_text(s)
 (d/'session-handoff-copy.json').write_text(json.dumps({'original_sha256':hashlib.sha256(before.encode()).hexdigest(),'test_copy_sha256':hashlib.sha256(s.encode()).hexdigest(),'copy_only':True},indent=2))
 (d/'session-HandoffCoordinator.java').write_text(s)
+# Match only the configured native spelling, and retain every preceding owner/payload/descriptor check.
+copy_hashes={}
+for name,old,new in [
+ ('NativeFence.java','return requested.equals(requested.normalize())&&requested.equals(Path.of(s.current()+".temp"));','return GlobalProfile.isNativeTemporary(s.adapter(),owner,s.current(),requested);'),
+ ('MutationGate.java','var p=f.toPath().toAbsolutePath();return p.equals(p.normalize())&&p.equals(java.nio.file.Path.of(s.current()+".temp"));','var p=f.toPath().toAbsolutePath();return GlobalProfile.isNativeTemporary(receiver,s.owner(),s.current(),p);')]:
+ p=package/name;before=p.read_text();assert before.count(old)==1,name
+ after=before.replace(old,new,1)
+ if name=='MutationGate.java':
+  needle='    private static java.nio.file.Path checkedPath(Context c,Class<?> type,UUID owner)throws Exception {\n'
+  assert after.count(needle)==1
+  after=after.replace(needle,needle+'        if(Boolean.getBoolean("uq.partySession"))return GlobalProfile.checkedFile(c.adapter,type,owner);\n',1)
+ p.write_text(after);(d/('session-'+name)).write_text(after)
+ copy_hashes[name]={'original_sha256':hashlib.sha256(before.encode()).hexdigest(),'test_copy_sha256':hashlib.sha256(after.encode()).hexdigest()}
+(d/'session-scope-copies.json').write_text(json.dumps(copy_hashes,indent=2))
 for p in (R/'.github/party-session/java').rglob('*.java'):
  dst=java/p.relative_to(R/'.github/party-session/java');dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dst)
+# Exercise the actual global writer's negative boundary before the staged return.
+p=package/'SessionBridge.java';before=p.read_text();needle='            custody.stageReturn(step->{});'
+assert before.count(needle)==1
+p.write_text(before.replace(needle,'            SessionWriteProbe.verify(custody,reg);\n'+needle,1))
+(d/'session-SessionBridge.java').write_text(p.read_text())
+# Small filesystem policy tests run on the hosted runner, without Minecraft or private files.
+classes=d/'path-test-classes';classes.mkdir(exist_ok=True)
+subprocess.run(['javac','-d',str(classes),str(package/'NativePathPolicy.java'),str(R/'.github/party-session/tests/NativePathPolicyTest.java')],check=True)
+with (d/'native-path-tests.txt').open('w') as log:
+ subprocess.run(['java','-cp',str(classes),'dev.unyielding.jail.party.live.NativePathPolicyTest'],check=True,stdout=log,stderr=subprocess.STDOUT)
 manifest=json.loads((d/'mutation-wrapper-manifest.json').read_text())
 for row in manifest['classes']:
  p=package/'mixin'/(row['mixin']+'.java');s=p.read_text();assert 'MutationGate.invoke(' in s

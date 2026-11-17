@@ -21,7 +21,7 @@ public final class GlobalProfile {
     private static NBTStoreAdapter adapter;
     private static Object child;
     private static Path world,root;
-    private static String layout,identity;
+    private static String layout,identity,rawRoot;
     private GlobalProfile(){}
     public static void bind(MinecraftServer server)throws Exception {
         if(!Boolean.getBoolean("uq.partySession")||!"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT")))throw new IOException("Disposable session profile required");
@@ -39,7 +39,7 @@ public final class GlobalProfile {
         if(!r.startsWith(world)||r.equals(world))throw new IOException("Native root is outside disposable world: "+r);
         // Existing native access creates its own directories. This code does not relocate the provider.
         if(!Files.isDirectory(r,LinkOption.NOFOLLOW_LINKS)||!r.equals(r.toRealPath()))throw new IOException("Native root absent or noncanonical: "+r);
-        manager=m;factory=f;adapter=n;child=children.getFirst();root=r;layout=layout(n);
+        manager=m;factory=f;adapter=n;child=children.getFirst();root=r;layout=layout(n);rawRoot=(String)HandoffCoordinator.field(n,"rootFolder");
         identity="GlobalNBT:"+HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(layout.getBytes(StandardCharsets.UTF_8)));
         require(n);
     }
@@ -47,10 +47,23 @@ public final class GlobalProfile {
         return a.getClass().getName()+":"+Path.of((String)HandoffCoordinator.field(a,"rootFolder")).toAbsolutePath().normalize()+":"+HandoffCoordinator.field(a,"fileExtension")+":"+HandoffCoordinator.field(a,"useNestedFolders")+":"+HandoffCoordinator.field(a,"folderPerClass")+":ReforgedConversion-denied-for-enrolled";
     }
     public static void require(Object a)throws Exception {
-        if(manager==null||a!=adapter||Cobblemon.INSTANCE.getStorage()!=manager||HandoffCoordinator.field(factory,"adapter")!=adapter||!layout.equals(layout(adapter))||!root.equals(root.toRealPath()))throw new IOException("Global provider binding changed");
+        if(manager==null||a!=adapter||Cobblemon.INSTANCE.getStorage()!=manager||HandoffCoordinator.field(factory,"adapter")!=adapter||!layout.equals(layout(adapter))||!rawRoot.equals(HandoffCoordinator.field(adapter,"rootFolder"))||!root.equals(root.toRealPath()))throw new IOException("Global provider binding changed");
         List<?> children=(List<?>)HandoffCoordinator.field(adapter,"children");if(children.size()!=1||children.getFirst()!=child)throw new IOException("Conversion identity changed");
         List<Object> fs=new ArrayList<>();for(Object f:(Iterable<?>)HandoffCoordinator.field(manager,"factories"))fs.add(f);
         if(fs.size()!=1||fs.getFirst()!=factory)throw new IOException("Global provider order changed");
+    }
+    /** Exact configured provider only; caller still checks owner, payload, descriptor and scope. */
+    public static Path checkedFile(Object a,Class<?> type,UUID owner)throws Exception {
+        require(a);
+        if(owner==null||(type!=PlayerPartyStore.class&&type!=PCStore.class))throw new IOException("Unknown native store identity");
+        return NativePathPolicy.checkedFile((type==PlayerPartyStore.class?adapter.getFile(PlayerPartyStore.class,owner):adapter.getFile(PCStore.class,owner)).toPath());
+    }
+    public static boolean isNativeTemporary(Object a,UUID owner,Path current,Path requested) {
+        try {
+            require(a);
+            if(owner==null)return false;
+            return NativePathPolicy.temporary(current,adapter.getFile(PlayerPartyStore.class,owner).toPath(),requested);
+        }catch(Exception refusal){return false;}
     }
     public static boolean reviewed(Object a)throws Exception {require(a);return true;}
     public static String identity(OneToOneFileStoreAdapter<?> a)throws Exception {require(a);return identity;}
