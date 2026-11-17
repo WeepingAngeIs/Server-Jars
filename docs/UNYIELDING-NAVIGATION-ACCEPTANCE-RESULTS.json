@@ -1,0 +1,175 @@
+{
+  "version": "1.2.0",
+  "branch": "codex/unyielding-navigation-acceptance",
+  "tested_source": "68658ef16d547dd884bc82c7d029f7f974e3f1f1",
+  "candidate_sha256": "216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504",
+  "candidate_raw_sha512": "349284d438561c34d7005899cec9a80025ccd6bd3589f9b51c8768303cb22e60275ebf4ba7cb31acd2023bbaf9dabc414c5313db4ed0ee6856c167c8ae5c3ef2",
+  "run_id": 44061079937,
+  "job_id": 133962818875,
+  "artifact_id": 14318597401,
+  "artifact_zip_sha256": "bf9dc56f2226fc5607a37c58a44472b77c56ff365df936deda0261dc28d41016",
+  "native_passed": 8,
+  "failures": 0,
+  "cases": [
+    "passed: party roster native first/middle/last pages and disabled boundary arrows",
+    "passed: member search trims and ignores case resets page and clears to the original roster",
+    "passed: ordinary member roster has no management controls and a readable empty search result",
+    "passed: visible quest title search and Next cross chapters wrap and skip hidden personal quests",
+    "passed: native status selector covers All Locked Available Started Done Claim and resets navigation",
+    "passed: owner pins a visible informational goal and ordinary member opens its synchronized detail",
+    "passed: ordinary party member can replace and unpin the shared informational goal",
+    "passed: goal visibility is personal hidden viewer cannot open or forge its pin and owner can unpin"
+  ],
+  "production_changed": false,
+  "production_build_repeated": false,
+  "new_unit_result_files": 0,
+  "candidate_byte_identical_to_prior_verified_file": true,
+  "unchanged_binary_unit_evidence": {
+    "run_id": 44031631588,
+    "tests": 69,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_viewport": {
+    "framebuffer_width": 1024,
+    "framebuffer_height": 768,
+    "gui_scale": 2,
+    "gui_width": 512,
+    "gui_height": 384
+  },
+  "screenshots": [
+    {
+      "name": "01-roster-first.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "9926b25f3b6553c0f0d6146ade0b630cd13ac072d84e4e5646570c2d952adc0d"
+    },
+    {
+      "name": "01-roster-last.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "b547cf1865029832d5be8596152cae104c1aaa7392bb7545f060d365335efa2f"
+    },
+    {
+      "name": "02-roster-search.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "46ade37772cfbe95de772ad7b19fc3847ab555d19a452e786e7400e366bacb8a"
+    },
+    {
+      "name": "03-roster-no-match.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "9059f56bb224b4c2e0b60c969a23ec8dc2db48f51a0266507e72557b9914c661"
+    },
+    {
+      "name": "04-quest-cross-chapter.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "a5b375c245fc7cea47c3cae5df32bff5cd6c11994f140ffc828cd2c7c8c35338"
+    },
+    {
+      "name": "05-status-claim.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "a74a19777c14de17e74088abe0b13bb078e8ef43c4170beb4883ba9127bc8aab"
+    },
+    {
+      "name": "05-status-started.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "7388da2e4713a8a1e67365643bae0ed407378c1543c5987efe395c43272cf23f"
+    },
+    {
+      "name": "06-member-party-goal.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "7ad70275c389f9a5b6917fc58b25173b8e3e72b560fa36d6b9d48a773cfc57a6"
+    },
+    {
+      "name": "07-owner-member-pinned-goal.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "5a0f4a5164a661c0439c8a12fda63efe4ca5d929edc0ce811893a55704bbd0f8"
+    },
+    {
+      "name": "08-hidden-goal-unavailable.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "4e6d483c07fe40009bb8c97133c17383d77096a4f81395f6c95b460bea31e5e3"
+    },
+    {
+      "name": "08-hidden-search-empty.png",
+      "width": 1024,
+      "height": 768,
+      "sha256": "d4110a02665529563b62604e568e5e72f617f31e5039c2a0e5fc61e9911e708b"
+    }
+  ],
+  "screenshot_count": 11,
+  "all_screenshots_visually_inspected": true,
+  "visual_review": {
+    "readable": [
+      "roster names/search results/no-match message",
+      "complete STARTED status selector with detail closed",
+      "CLAIM detail/task/reward",
+      "member available goal and owner distinct 4/10 counter",
+      "hidden-goal unavailable and hidden-search no-match notices"
+    ],
+    "incidental_occlusion": "Native onboarding/advancement/recipe toasts overlap early upper-right controls. First-page arrow state is native assertion evidence, not unobstructed screenshot evidence; later last/search arrows are visible. Normal detail panels partially cover sidebar.",
+    "images_edited": false,
+    "minimum_resolution_or_notification_free_certification": false
+  },
+  "fixture_seed": {
+    "actual_clients": 2,
+    "online_players": [
+      "Dev",
+      "Visitor"
+    ],
+    "party_members": 14,
+    "offline_synthetic_entries": 12,
+    "synthetic_quests": 8,
+    "chapters": 2,
+    "sharing_enabled": false,
+    "native_personal_progress_distinct": true
+  },
+  "contract": {
+    "pin_authority": "Any PARTY member",
+    "goal": "Informational; viewer-specific progress and visibility",
+    "status_order": [
+      "All",
+      "LOCKED",
+      "AVAILABLE",
+      "STARTED",
+      "DONE",
+      "CLAIM"
+    ],
+    "status_selection_navigates_automatically": false,
+    "next_wraps": true,
+    "hidden_packet_boundary": "Existing pinned id requested by actor lacking visibility; explicit server refusal, not different-ID replacement proof"
+  },
+  "preservation": {
+    "full_native_quest_data": true,
+    "personal_task_counters_keys_claims_epochs": true,
+    "full_daily_login_data_and_debit_credit_history": true,
+    "native_inventory_components_xp": true,
+    "team_data_except_only_fixture_party_pinnedQuest": true,
+    "sharing_remained_disabled": true,
+    "final_pinned_quest": 0,
+    "reward_claim_or_task_completion_ui_pressed": false
+  },
+  "private_or_live_data_used": false,
+  "jail_loaded_or_modified": false,
+  "jail_certificate_updated_or_required": false,
+  "installed_or_deployed": false,
+  "heavy_runtime_location": "GitHub-hosted disposable server and two clients",
+  "limits": [
+    "Eight bounded native UI cases, not exhaustive roles/paging/layout/localization or full pack",
+    "One running server; no server restart or crash recovery",
+    "No authoritative live provider/rank/claim policy or real old-save migration inputs",
+    "No cross-store atomic delivery or physical power-loss claim",
+    "Roster assertions calculate visible slice; readability is separate human image inspection, not OCR",
+    "No repeat of prior passed suites or basic Mawile feeding; no new unit/build run",
+    "No further acceptance target selected after this pass"
+  ]
+}
