@@ -27,18 +27,18 @@ jobs:
           cache-dependency-path: unyielding-quests/*.gradle
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: unyielding-vein-protection
-          run-id: 44003918234
+          name: unyielding-ground-acceptance
+          run-id: 44017869818
           github-token: ${{ github.token }}
           path: dist/baseline-artifact
       - name: Stage exact current candidate; build only if production changes
         run: |
-          git fetch --no-tags --depth=1 origin 37da182759caacfa2346a0c4cd1e187056a753a7
+          git fetch --no-tags --depth=1 origin 662310d8ad42069c92250e0ec1b4982e567dfc9d
           python3 .github/scripts/fetch-build-dependencies.py
           mkdir -p dist/120-release
           cp dist/baseline-artifact/dist/120-release/Unyielding-1.2.0.jar dist/120-release/
-          printf '%s\n' '7a0a1cec09001ca6f47ee6180371842f27ef6d83f7411a7e61fff6a83e74b414  dist/120-release/Unyielding-1.2.0.jar' | sha256sum -c -
-          if ! git diff --quiet 37da182759caacfa2346a0c4cd1e187056a753a7 HEAD -- unyielding-quests/src/main .github/scripts/assemble-118-followup.py; then
+          printf '%s\n' 'be397290bfbac8d8f0b1010d04daded458673eca2f97b6e0eff59272e2eec886  dist/120-release/Unyielding-1.2.0.jar' | sha256sum -c -
+          if ! git diff --quiet 662310d8ad42069c92250e0ec1b4982e567dfc9d HEAD -- unyielding-quests/src/main .github/scripts/assemble-118-followup.py; then
             (cd unyielding-quests && ./gradlew --no-daemon --console=plain build)
             python3 .github/scripts/assemble-118-followup.py
           fi
