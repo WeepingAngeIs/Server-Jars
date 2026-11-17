@@ -26,11 +26,16 @@ public final class ClientChecks {
     @SubscribeEvent public static void tick(ClientTickEvent.Post e){
         if(!"true".equals(System.getenv("GITHUB_ACTIONS")))return;var mc=Minecraft.getInstance();if(mc.player==null||!mc.player.getGameProfile().getName().equals("Dev"))return;
         try{
-            if(command!=null){UltimineClient.KEY.setDown(true);aim(mc,target);if(!actionSent){
+            if(command!=null){
+                if(!command[1].equals("menu")&&mc.screen!=null)mc.setScreen(null);
+                UltimineClient.KEY.setDown(true);aim(mc,target);
+                boolean eligible=mc.screen==null&&UltimineClient.KEY.isDown()&&dev.unyielding.quests.ultimine.UltimineConfig.ENABLED.get()&&dev.unyielding.quests.client.ClientData.ultimineEnabled&&(!dev.unyielding.quests.client.ClientData.ultimineRequiresItem||!mc.player.getMainHandItem().isEmpty());
+                if(eligible)Net.sendToServer(new Net.UltimineState(true,0));
+                if(!actionSent){
                     String[] expected=command[7].split(",");double dx=mc.player.getX()-Double.parseDouble(expected[0]),dy=mc.player.getY()-Double.parseDouble(expected[1]),dz=mc.player.getZ()-Double.parseDouble(expected[2]);
                     String item=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(mc.player.getMainHandItem().getItem()).toString();boolean blocksReady=true;
                     for(String block:command[8].split(";")){String[] data=block.split("=",2),xyz=data[0].split(",");var pos=new BlockPos(Integer.parseInt(xyz[0]),Integer.parseInt(xyz[1]),Integer.parseInt(xyz[2]));if(!net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(mc.level.getBlockState(pos).getBlock()).toString().equals(data[1]))blocksReady=false;}
-                    String status="position="+mc.player.position()+" expected="+command[7]+" item="+item+" expected="+command[5]+" mode="+mc.gameMode.getPlayerMode()+" expected="+command[6]+" blocksReady="+blocksReady;
+                    String status="position="+mc.player.position()+" expected="+command[7]+" item="+item+" expected="+command[5]+" mode="+mc.gameMode.getPlayerMode()+" expected="+command[6]+" blocksReady="+blocksReady+" eligible="+eligible+" screen="+(mc.screen==null?"none":mc.screen.getClass().getName())+" key="+UltimineClient.KEY.isDown()+" localEnabled="+dev.unyielding.quests.ultimine.UltimineConfig.ENABLED.get()+" serverEnabled="+dev.unyielding.quests.client.ClientData.ultimineEnabled+" requiresItem="+dev.unyielding.quests.client.ClientData.ultimineRequiresItem;
                     Files.writeString(ROOT.resolve("Dev.status"),status);
                     if(dx*dx+dy*dy+dz*dz>.25||!item.equals(command[5])||!mc.gameMode.getPlayerMode().name().equals(command[6])||!blocksReady)return;
                     Files.writeString(ROOT.resolve("Dev.holding"),command[0]);
