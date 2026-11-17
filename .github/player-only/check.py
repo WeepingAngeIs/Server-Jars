@@ -22,6 +22,8 @@ for phase,keys in required.items():
  assert all(identity[k] is True for k in ['separate_jars_loaded','non_jail_mods_loaded','old_jail_classes_absent','escape_reward_empty'])
  rows.append(r)
 c=json.loads((D/'player-only-client-Visitor-1.json').read_text());assert c['observed_dead'] and c['alive_after_death'] and c['respawn_actions_sent']==0 and c['replacement_objects']>=1
+assert len(c['verified_respawns'])==1
+for event in c['verified_respawns']:assert event['alive'] and event['screen_cleared'] and event['dead_player_object']!=event['alive_player_object'] and event['respawn_actions_sent']==0
 s=json.loads((D/'player-only-source.json').read_text());assert s['other_admission_checks_preserved'] and not s['old_party_test_mods_loaded'] and not s['production_changed']
 for p,digest in s['source_sha256'].items():assert hashlib.sha256((R/p).read_bytes()).hexdigest()==digest,p
 report={'commit':os.environ['GITHUB_SHA'],'server_starts':3,'verified_automatic_respawns':2,'client_respawn_requests':0,'required_observations':sum(map(len,required.values())),'test_mod_only':True,'production_changed':False,'pokemon_custody_installed':False,'rows':rows,'client':c,'source':s}
