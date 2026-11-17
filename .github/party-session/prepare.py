@@ -115,7 +115,7 @@ assert '(Lnet/minecraft/server/level/ServerPlayer;Lcom/cobblemon/mod/common/api/
 callback=package/'mixin/SessionLoginTrace.java'
 callback_source=callback.read_text()
 (d/'live-wrapper-source'/callback.name).write_text(callback_source)
-config['mixins'].append('SessionLoginTrace')
+# Controlled diagnostic: do not transform the broad Cobblemon singleton.
 manifest['extra_hooks']['SessionLoginTrace']=hashlib.sha256(callback_source.encode()).hexdigest()
 inspected=subprocess.check_output(['javap','-p','-c','-s','-classpath',str(jar),'com.cobblemon.mod.common.Cobblemon'],text=True)
 assert 'preInitialize$lambda$0(net.minecraft.server.level.ServerPlayer)' in inspected
