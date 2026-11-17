@@ -82,7 +82,7 @@ public final class BundleSmoke {
     static void reset()throws Exception{
         for(var e:items())e.discard();
         for(var p:List.of(dev(),visitor())){for(int i=0;i<p.getInventory().getContainerSize();i++)if(fixture(p.getInventory().getItem(i)))p.getInventory().setItem(i,ItemStack.EMPTY);p.setGameMode(GameType.SURVIVAL);p.setInvulnerable(true);p.getFoodData().setFoodLevel(20);p.inventoryMenu.broadcastFullState();}
-        server.getPlayerList().op(dev().getGameProfile());server.getPlayerList().deop(visitor().getGameProfile());away(dev(),102.5);away(visitor(),105.5);
+        server.getPlayerList().op(dev().getGameProfile());server.getPlayerList().deop(visitor().getGameProfile());away(dev(),118.5);away(visitor(),116.5);
         set("enabled",0);set("interval",12000);set("last_interval",12000);set("timer",0);set("grace",1200);set("clear_food",1);set("clear_gear",0);set("clear_other",0);
         set("dim_overworld",1);set("dim_nether",0);set("dim_end",0);set("dim_custom",0);
         int epoch=score("cui_candidate","preview_epoch");set("cui_candidate","preview_epoch",epoch==Integer.MAX_VALUE?0:epoch+1);
@@ -105,10 +105,10 @@ public final class BundleSmoke {
     static long pendingExpiry(UUID owner)throws Exception{var f=dev.unyielding.quests.settings.GroundSettings.class.getDeclaredField("PENDING");f.setAccessible(true);Object pending=((Map<?,?>)f.get(null)).get(owner);require(pending!=null,"Native server did not retain preview");var method=pending.getClass().getDeclaredMethod("expires");method.setAccessible(true);return (long)method.invoke(pending);}
     static void mergeCase(Item mergeItem,int oldCount,int freshCount,boolean oldWins,boolean partial,boolean bothOld)throws Exception{
         if(step==0){reset();a=spawn(stack(mergeItem,oldCount),1300,0);oldA=a.getUUID();expected=encoded(a.getItem());expected.remove("count");preview("Dev");next();return;}
-        if(step==1&&ack("Dev")){require(stamp(a)==score("cui_candidate","preview_epoch"),"Original not previewed");b=spawn(stack(mergeItem,freshCount),bothOld?1300:0,0);oldB=b.getUUID();next();return;}
+        if(step==1&&ack("Dev")){require(stamp(a)==score("cui_candidate","preview_epoch"),"Original not previewed");if(a.tickCount<2){require(!elapsed(140),"Original plot item never ticked");return;}b=spawn(stack(mergeItem,freshCount),bothOld?1300:0,0);oldB=b.getUUID();next();return;}
         if(step==2){
             int total=oldCount+freshCount;boolean merged=partial?(!a.isRemoved()&&!b.isRemoved()&&a.getItem().getCount()==64&&b.getItem().getCount()==total-64):(oldWins?(!a.isRemoved()&&b.isRemoved()):(!b.isRemoved()&&a.isRemoved()));
-            if(!merged){require(!elapsed(140),"Real tick merge did not reach expected survivor/partial state");return;}
+            if(!merged){require(!elapsed(140),"Real tick merge did not reach expected survivor/partial state; a="+a.getUUID()+":"+a.isRemoved()+":"+a.getItem().getCount()+":"+a.tickCount+":"+a.position()+" b="+b.getUUID()+":"+b.isRemoved()+":"+b.getItem().getCount()+":"+b.tickCount+":"+b.position());return;}
             conservation(total);for(var e:matching()){if(!bothOld)require(e.getAge()<1200,"Native merge lost fresh grace");var current=encoded(e.getItem());current.remove("count");require(current.equals(expected),"Native merge changed item/components");}
             diagnostics.put(cases.peek().name(),Map.of("original_uuid",oldA.toString(),"added_uuid",oldB.toString(),"survivors",matching().stream().map(e->e.getUUID()+":"+e.getItem().getCount()+":"+e.getAge()).toList()));confirm("Dev");next();return;
         }
@@ -125,7 +125,7 @@ public final class BundleSmoke {
         add("native overfull pair refuses merge and protects fresh stack",()->{
             if(step==0){reset();a=spawn(stack(Items.COOKED_MUTTON,60),1300,0);preview("Dev");next();}
             else if(step==1&&ack("Dev")){require(stamp(a)==score("cui_candidate","preview_epoch"),"Original overfull stack not previewed");b=spawn(stack(Items.COOKED_MUTTON,8),0,0);next();}
-            else if(step==2&&elapsed(100)){require(!a.isRemoved()&&!b.isRemoved()&&a.getItem().getCount()==60&&b.getItem().getCount()==8,"Native overfull merge refusal changed");conservation(68);confirm("Dev");next();}
+            else if(step==2&&elapsed(100)){require(a.tickCount>=80&&b.tickCount>=80,"Overfull merge pair did not receive natural ticks");require(!a.isRemoved()&&!b.isRemoved()&&a.getItem().getCount()==60&&b.getItem().getCount()==8,"Native overfull merge refusal changed");conservation(68);confirm("Dev");next();}
             else if(step==3&&ack("Dev")){require(a.isRemoved()&&!b.isRemoved()&&b.getItem().getCount()==8&&b.getAge()<1200,"Overfull pair confirmation deleted fresh items or retained approved old stack");finish();}
         });
         add("native old merge invalidates preview count",()->mergeCase(Items.COOKED_MUTTON,5,1,true,false,true));
@@ -157,8 +157,8 @@ public final class BundleSmoke {
         });
         add("two native player drops merge and keep scheduled fresh grace",()->{
             if(step==0){reset();away(dev(),128.5);giveHand(dev(),stack(Items.COOKED_BEEF,5));drop("Dev",5);next();}
-            else if(step==1&&ack("Dev")){if(matching().isEmpty())return;require(matching().size()==1&&groundCount()==5,"First native drop count wrong");a=matching().getFirst();oldA=a.getUUID();expected=encoded(a.getItem());expected.remove("count");a.setNoGravity(true);a.setDeltaMovement(Vec3.ZERO);a.setPos(128.5,81.2,128.5);a.setPickUpDelay(1000);age(a,1300);away(dev(),102.5);away(visitor(),128.5);giveHand(visitor(),stack(Items.COOKED_BEEF,1));drop("Visitor",1);next();}
-            else if(step==2&&ack("Visitor")){var added=joined.stream().filter(e->!e.getUUID().equals(oldA)).findFirst();if(added.isEmpty())return;b=added.get();oldB=b.getUUID();away(visitor(),105.5);if(!b.isRemoved()){b.setNoGravity(true);b.setDeltaMovement(Vec3.ZERO);b.setPos(128.7,81.2,128.5);b.setPickUpDelay(1000);}next();}
+            else if(step==1&&ack("Dev")){if(matching().isEmpty())return;require(matching().size()==1&&groundCount()==5,"First native drop count wrong");a=matching().getFirst();oldA=a.getUUID();expected=encoded(a.getItem());expected.remove("count");a.setNoGravity(true);a.setDeltaMovement(Vec3.ZERO);a.setPos(128.5,81.2,128.5);a.setPickUpDelay(1000);age(a,1300);away(dev(),118.5);away(visitor(),128.5);giveHand(visitor(),stack(Items.COOKED_BEEF,1));drop("Visitor",1);next();}
+            else if(step==2&&ack("Visitor")){var added=joined.stream().filter(e->!e.getUUID().equals(oldA)).findFirst();if(added.isEmpty())return;b=added.get();oldB=b.getUUID();away(visitor(),116.5);if(!b.isRemoved()){b.setNoGravity(true);b.setDeltaMovement(Vec3.ZERO);b.setPos(128.7,81.2,128.5);b.setPickUpDelay(1000);}next();}
             else if(step==3){if(a.isRemoved()||!b.isRemoved()||a.getItem().getCount()!=6){require(!elapsed(140),"Actual two-player drops did not merge into expected original UUID");return;}require(a.getAge()<1200,"Actual fresh drop did not rejuvenate merged age");var current=encoded(a.getItem());current.remove("count");require(current.equals(expected),"Actual player drop merge changed components");conservation(6);diagnostics.put(cases.peek().name(),Map.of("original_drop_uuid",oldA.toString(),"fresh_drop_uuid",oldB.toString(),"merged_uuid",a.getUUID().toString(),"merged_age",a.getAge(),"count",6));set("interval",100);set("last_interval",100);set("timer",99);set("enabled",1);next();}
             else if(step==4&&elapsed(5)){set("enabled",0);require(score("timer")<20,"Automatic cleanup did not run");require(!a.isRemoved()&&groundCount()==6,"Scheduled cleanup removed actual fresh merged drops");conservation(6);finish();}
         });
@@ -166,7 +166,7 @@ public final class BundleSmoke {
             if(step==0){basicFood();expected=encoded(a.getItem());oldA=a.getUUID();preview("Dev");next();}
             else if(step==1&&ack("Dev")){a.setPickUpDelay(0);away(visitor(),128.5);next();}
             else if(step==2){if(!a.isRemoved()||heldCount(visitor())!=2){require(!elapsed(140),"Native player pickup did not complete");return;}int slot=-1;for(int i=0;i<9;i++)if(named(visitor().getInventory().getItem(i)))slot=i;require(slot>=0,"Picked-up item not in hotbar");visitor().getInventory().selected=slot;visitor().inventoryMenu.broadcastFullState();visitor().connection.send(new ClientboundSetCarriedItemPacket(slot));require(encoded(visitor().getMainHandItem()).equals(expected),"Native pickup changed stack/components");drop("Visitor",2);next();}
-            else if(step==3&&ack("Visitor")){if(matching().isEmpty())return;require(matching().size()==1,"Redrop duplicated entity");b=matching().getFirst();require(!b.getUUID().equals(oldA)&&b.getAge()<1200,"Redrop reused old UUID/age");require(encoded(b.getItem()).equals(expected),"Native redrop changed stack/components");away(visitor(),105.5);confirm("Dev");next();}
+            else if(step==3&&ack("Visitor")){if(matching().isEmpty())return;require(matching().size()==1,"Redrop duplicated entity");b=matching().getFirst();require(!b.getUUID().equals(oldA)&&b.getAge()<1200,"Redrop reused old UUID/age");require(encoded(b.getItem()).equals(expected),"Native redrop changed stack/components");away(visitor(),116.5);confirm("Dev");next();}
             else if(step==4&&ack("Dev")){require(!b.isRemoved()&&groundCount()==2,"Old preview cleared redropped stack");conservation(2);finish();}
         });
         add("native addon foods and protected wallet edible gear",()->{
@@ -213,7 +213,7 @@ public final class BundleSmoke {
         try{Class.forName("dev.unyielding.quests.jail.JailData");throw new IllegalStateException("Integrated Jail present");}catch(ClassNotFoundException expected){}
         String sha=HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(jar)));diagnostics.put("jars",Map.of(jar.getFileName().toString(),sha));diagnostics.put("jail_loaded",false);
         for(int x=100;x<=142;x++)for(int z=120;z<=140;z++)server.overworld().setBlock(new BlockPos(x,80,z),Blocks.STONE.defaultBlockState(),2);
-        server.getPlayerList().op(dev().getGameProfile());server.getPlayerList().deop(visitor().getGameProfile());away(dev(),102.5);away(visitor(),105.5);for(var p:List.of(dev(),visitor())){p.setGameMode(GameType.SURVIVAL);p.setInvulnerable(true);p.getFoodData().setFoodLevel(20);}
+        server.getPlayerList().op(dev().getGameProfile());server.getPlayerList().deop(visitor().getGameProfile());away(dev(),118.5);away(visitor(),116.5);for(var p:List.of(dev(),visitor())){p.setGameMode(GameType.SURVIVAL);p.setInvulnerable(true);p.getFoodData().setFoodLevel(20);}
         if(phase==1){require(score("enabled")==1&&score("interval")==12000&&score("clear_food")==1&&score("clear_gear")==0&&score("clear_other")==0&&score("grace")==1200,"Fresh cleanup defaults drifted");set("enabled",0);phaseOne();}else{require(score("enabled")==0,"Restart did not retain disabled automatic setting");phaseTwo();}
     }
     static void completed()throws Exception{

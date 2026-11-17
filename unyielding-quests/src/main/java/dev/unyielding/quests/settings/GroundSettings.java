@@ -1,6 +1,7 @@
 package dev.unyielding.quests.settings;
 
 import dev.unyielding.quests.net.Net;
+import dev.unyielding.quests.UnyieldingQuests;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -12,12 +13,25 @@ import net.minecraft.world.scores.ScoreHolder;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraft.world.scores.Objective;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 
 /** Server-authoritative editor for the existing cleanup scoreboard. */
+@EventBusSubscriber(modid = UnyieldingQuests.MODID)
 public final class GroundSettings {
     private GroundSettings() {}
     private record Pending(net.minecraft.server.MinecraftServer server, long expires, java.util.List<Integer> settings, int epoch, int stacks, int items) {}
     private static final java.util.Map<java.util.UUID, Pending> PENDING = new java.util.HashMap<>();
+    @SubscribeEvent
+    public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        PENDING.remove(event.getEntity().getUUID());
+    }
+    @SubscribeEvent
+    public static void onServerStopping(ServerStoppingEvent event) {
+        PENDING.values().removeIf(preview -> preview.server() == event.getServer());
+    }
     private static java.util.List<Integer> fingerprint(Scoreboard b, Objective o) {
         return java.util.List.of(get(b,o,"clear_gear",0),get(b,o,"clear_food",1),get(b,o,"clear_other",0),get(b,o,"grace",1200),get(b,o,"dim_overworld",1),get(b,o,"dim_nether",1),get(b,o,"dim_end",1));
     }
