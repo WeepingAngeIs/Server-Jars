@@ -12,4 +12,6 @@ This is a development checklist, not a release or installation instruction. Exis
 
 Ground cleanup has an operator screen, item-age grace, category and dimension settings, countdown, warnings and manual preview. Manual clear covers selected vanilla dimensions, not arbitrary custom-dimension overrides. Do not enable a separate cleanup datapack with conflicting functions. Test real modpack item merging and multiplayer behavior before deployment.
 
+Bounded joint certification is recorded separately in [the wallet-only pair report](../docs/JOINT-WALLET-UNYIELDING-CERTIFICATION.md): unchanged current Unyielding SHA-256 `7a0a1cec...` with the proven wallet-only Jail plus exactly one companion-certificate pin (Jail `43074f93...`). Fourteen native custody/recovery phases, thirteen unsupported-wallet/party admission cases and 42 non-jail game cases passed. Both admission options remain default-off. This does not cover the ongoing Pokémon-custody implementation, live rank/claim policy, the full addon pack or old-save migration; no installed files or live admissions changed, and deployment stays held.
+
 GitHub compilation and isolated smoke tests do not establish physical power-loss behavior, complete modpack compatibility or exactly-once delivery across independently saved systems.
