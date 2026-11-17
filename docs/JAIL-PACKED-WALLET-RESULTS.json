@@ -1,0 +1,22 @@
+{
+  "baseline": "9fc1f509000254a81ac3d6fc79a1dac4f51d323e",
+  "implementation_commit": "372d8fa8812309550ffc63f388476d60b20de3a9",
+  "tested_commit": "8e9716d94a932fe5110ae84abdc90adfe0017974",
+  "run_id": 43991171187,
+  "passed": true,
+  "runtime_phases": {"core": 5, "faults": 4, "integrated": 5},
+  "negative_admission_cases": 13,
+  "junit": {"minecraft-jail": 65, "unyielding-quests": 69, "original-reference": 119, "failures": 0, "errors": 0, "skipped": 0},
+  "python_tests": 15,
+  "jars": {"Minecraft-Jail-1.2.0.jar": "5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e", "Unyielding-1.2.0.jar": "61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7"},
+  "artifacts": {"verified_pair": 14287794515, "core": 14287393525, "faults": 14287374523, "integrated": 14288093985, "build_evidence": 14287957306},
+  "contract": "native-packed-wallet-v1",
+  "new_admissions_default": false,
+  "scope": "One packed leather wallet containing ordinary physical gold coins, six slots, no bonus slots or auto-exchange, empty native/equipped wallet backing, main inventory slots 9-35, existing reviewed native profile, no retained XP",
+  "blocked": ["nonempty Pokemon parties", "equipped wallets", "other wallet variants or denominations", "upgrades", "auto-exchange", "bank or external account links", "retained-XP plus wallet", "unknown profiles", "unreceipted ambiguous recovery"],
+  "companion_unchanged": true,
+  "certificate_unchanged": true,
+  "full_modpack_tested": false,
+  "old_save_migration_tested": false,
+  "installed_or_live_data_modified": false
+}
