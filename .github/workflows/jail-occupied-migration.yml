@@ -1,7 +1,7 @@
 name: Jail occupied artifact transition
 on:
   push:
-    branches: [codex/jail-occupied-artifact-migration]
+    branches: [codex/jail-occupied-migration-validation]
     paths: ['minecraft-jail/**', '.github/workflows/jail-occupied-migration.yml']
 permissions:
   contents: read
@@ -50,7 +50,7 @@ jobs:
         if: always()
         run: |
           mkdir -p dist/migration-build
-          git archive --format=zip -o dist/migration-build/source.zip HEAD minecraft-jail .github/occupied-migration .github/workflows/jail-occupied-migration.yml
+          git archive --format=zip -o dist/migration-build/source.zip HEAD minecraft-jail .github/workflows/jail-occupied-migration.yml
           git rev-parse HEAD > dist/migration-build/commit.txt
           cp minecraft-jail/build/libs/*.jar dist/migration-build/ 2>/dev/null || true
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
