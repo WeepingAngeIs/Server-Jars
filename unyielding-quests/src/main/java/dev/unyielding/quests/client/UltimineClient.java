@@ -65,7 +65,7 @@ public final class UltimineClient {
         if (mc.player == null || mc.screen != null || mc.options.hideGui) return;
         // Below the top toast, beside the left party column, above recent chat,
         // and clear of the right-hand minimap at the minimum GUI width.
-        int width = Math.max(64, Math.min(150, g.guiWidth() - 152));
+        int width = Math.max(64, Math.min(150, g.guiWidth() - 236));
         List<net.minecraft.util.FormattedCharSequence> lines = new java.util.ArrayList<>();
         List<Integer> colors = new java.util.ArrayList<>();
         var heading = mc.font.split(net.minecraft.network.chat.Component.literal("Ultimine"), width);

@@ -76,7 +76,7 @@ public final class ClientChecks {
                         boolean hidden=mc.options.hideGui||mc.screen!=null;
                         if(hidden&&bounds!=null)throw new IllegalStateException("vein panel rendered over hidden HUD/menu");
                         if(!hidden&&(boolean)fieldClass(UltimineClient.class,"held")&&bounds==null)throw new IllegalStateException("held vein panel missing");
-                        if(bounds!=null&&(bounds[0]<70||bounds[1]<34||bounds[2]>mc.getWindow().getGuiScaledWidth()-80||bounds[3]>105))throw new IllegalStateException("vein panel intrudes on reserved startup/party HUD area");
+                        if(bounds!=null&&(bounds[0]<70||bounds[1]<34||bounds[2]>mc.getWindow().getGuiScaledWidth()-162||bounds[3]>105))throw new IllegalStateException("vein panel intrudes on reserved startup/party HUD area");
                         Files.writeString(Path.of(System.getenv("UQ_VEIN_EVIDENCE")).resolve(command[4]+".hud.txt"),"bounds="+java.util.Arrays.toString(bounds)+" gui="+mc.getWindow().getGuiScaledWidth()+"x"+mc.getWindow().getGuiScaledHeight()+" shape="+fieldClass(UltimineClient.class,"shape")+" hidden="+hidden+"\n");
                     }catch(NoSuchFieldException oldBuild){}
                 }catch(Throwable bad){verdict="failed: "+bad+"; hit="+mc.hitResult+" position="+mc.player.position()+" target="+mc.level.getBlockState(target)+" destroying="+field(mc.gameMode,"isDestroying");}
