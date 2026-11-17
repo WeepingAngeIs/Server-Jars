@@ -1,0 +1,135 @@
+name: Jail global player session boundary
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/jail-standalone-extraction]
+    paths: ['.github/party-session/**', '.github/workflows/jail-party-session.yml']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: jail-party-session-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            unyielding-quests/*.gradle
+            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
+            combined-unyielding/smoke-harness/*.gradle
+      - name: Enforce Jail-only test scope and preserve prior passing source
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin 2d30c42261e1d09cc10e1e2a4e4e21ae7eec02e2
+          python3 - <<'PY'
+          import subprocess
+          changed=subprocess.check_output(['git','diff','--name-only','2d30c42261e1d09cc10e1e2a4e4e21ae7eec02e2','HEAD'],text=True).splitlines()
+          assert changed and all(p.startswith(('.github/party-session/','.github/workflows/jail-party-session.yml','docs/JAIL-PARTY-SESSION-')) for p in changed),changed
+          print('\n'.join(changed))
+          PY
+          git diff --check 2d30c42261e1d09cc10e1e2a4e4e21ae7eec02e2 HEAD
+          python3 -m py_compile .github/party-session/prepare.py .github/party-session/check.py
+          bash -n .github/party-session/run.sh
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: party-live-verified-87c2b6383ea528b1d604f415c0ffab49131884ac-attempt-1
+          run-id: 44019522739
+          github-token: ${{ github.token }}
+          path: dist/reused-live/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: party-handback-verified-549ca5db231446e3cb9802345e53a4055b7fa3bf-attempt-1
+          run-id: 44024694485
+          github-token: ${{ github.token }}
+          path: dist/reused-handback/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: party-mutation-verified-a512e532bc105ff8ccfcf913ace9ca28873ea7ca-attempt-1
+          run-id: 44039907489
+          github-token: ${{ github.token }}
+          path: dist/reused-mutation/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: packed-wallet-verified-8e9716d94a932fe5110ae84abdc90adfe0017974
+          run-id: 43991171187
+          github-token: ${{ github.token }}
+          path: dist/original-verified/
+      - name: Prepare independent global-session test mod around exact unchanged binaries
+        run: |
+          set -euo pipefail
+          cd dist/original-verified
+          printf '%s\n' '5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e  Minecraft-Jail-1.2.0.jar' '61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7  Unyielding-1.2.0.jar' | sha256sum -c -
+          cd ../..
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp dist/original-verified/Unyielding-1.2.0.jar dist/120-release/
+          cp dist/original-verified/Minecraft-Jail-1.2.0.jar minecraft-jail/build/libs/
+          python3 .github/scripts/fetch-build-dependencies.py
+          python3 .github/party-session/prepare.py
+      - name: Prepare isolated graphical clients
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Real global sessions, network reconnect, receipts and native shutdown
+        run: bash .github/party-session/run.sh
+      - name: Preserve exact source and evidence even on failure
+        if: always()
+        run: |
+          mkdir -p dist/session-source
+          git rev-parse HEAD > dist/session-source/commit.txt
+          git archive --format=zip -o dist/session-source/source.zip HEAD .github/party-session .github/workflows/jail-party-session.yml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: party-session-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: |
+            dist/packaged-smoke/
+            dist/session-source/
+            dist/reused-live/
+            dist/reused-handback/
+            dist/reused-mutation/
+            dist/packaged-harness/run/crash-reports/
+            dist/packaged-harness/run-server/crash-reports/
+            dist/packaged-harness/run-visitor/crash-reports/
+          if-no-files-found: error
+          retention-days: 30
+  verified:
+    needs: native
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: party-session-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: evidence/
+      - name: Require actual client and global-provider evidence without gameplay authorization
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          r=json.loads(Path('evidence/packaged-smoke/session-verification.json').read_text())
+          assert r['commit']==os.environ['GITHUB_SHA'] and r['server_starts']==2 and r['visitor_connections']==3 and r['actual_network_reconnects']==1
+          assert all(r[k] is False for k in ('playable_custody_verified','production_changed','admission_enabled'))
+          assert r['baseline_mutation_commit']=='a512e532bc105ff8ccfcf913ace9ca28873ea7ca'
+          for i,row in enumerate(r['rows'],1):
+              for section,file in [('server',f'session-phase{i}.json'),('client',f'session-client-Visitor-phase{i}.json'),('control_client',f'session-client-Dev-phase{i}.json'),('shutdown',f'session-phase{i}-shutdown.json')]:
+                  assert json.loads((Path('evidence/packaged-smoke')/file).read_text())==row[section]
+          Path('session-verification.json').write_text(json.dumps(r,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: party-session-verified-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: session-verification.json
+          if-no-files-found: error
+          retention-days: 30
