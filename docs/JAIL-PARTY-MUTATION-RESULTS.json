@@ -1,0 +1,46 @@
+{
+  "baseline_report_commit": "9e9f8571e211f1dcf94029272c6de055efe2417d",
+  "baseline_handback_commit": "549ca5db231446e3cb9802345e53a4055b7fa3bf",
+  "tested_commit": "a512e532bc105ff8ccfcf913ace9ca28873ea7ca",
+  "run_id": 44039907489,
+  "attempt": 1,
+  "conclusion": "success",
+  "contract": "Test-mod-only plain nickname transaction; exact session/epoch/receipt/object, persistent action UUID, full-state generation, frozen synchronous native write and fresh publication",
+  "runtime_phases": 8,
+  "backends": ["nbt", "json"],
+  "required_phase_observations_per_backend": 67,
+  "unique_python_evidence_tests": 10,
+  "planned_exit_codes_per_backend": [96, 97],
+  "incremental_source_files": 9,
+  "independent_verification_passed": true,
+  "production_changed": false,
+  "nonempty_party_admission_enabled": false,
+  "playable_handback_verified": false,
+  "permanent_identity_reservations_retired": false,
+  "json_repair_commit": "bf307314595fe35a5335b0bc95d1f942cb730de",
+  "policy_sha256": "9d481491d292871dd20281dd53b8553d5ec118a56f586797035dd5cb3a4ca26a",
+  "failed_first_runtime": {
+    "run_id": 44038406332,
+    "commit": "5aa9591bb0b121b663dc46b03355104329e3ff05",
+    "nbt": "four phases passed, excluded from final totals",
+    "json": "first publication refused; constructor-tracked private capability lacked JSON codec calls"
+  },
+  "unchanged_binaries": {
+    "Minecraft-Jail-1.2.0.jar": "5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e",
+    "Unyielding-1.2.0.jar": "61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7"
+  },
+  "artifacts": {
+    "nbt": {"id": 14309447172, "sha256": "76aeea356d83118f0ba04b59f8f8f4974d467bcb8a785b04f61e2ab06198fd99"},
+    "json": {"id": 14309735656, "sha256": "6aee93c89b4cd8ce9a25df62be7462ded7ff7e24e2e0dbbcd969f4979fca35d2"},
+    "verified": {"id": 14310215024, "sha256": "2545280d64ef348aed1cd13ef5f534a32a4fd67c85eeb42c5a1d578bb05e6201"}
+  },
+  "remaining": [
+    "unrestricted gameplay mutation/save contract",
+    "global player-provider/network-session/client synchronization",
+    "battle/trade/riding/packet and callback ordering",
+    "safe permanent reservation retirement and reuse",
+    "ambiguous intent recovery",
+    "complete nonempty-party jail admission/release/death/respawn/network disconnect",
+    "private full-pack and occupied old-save migration"
+  ]
+}
