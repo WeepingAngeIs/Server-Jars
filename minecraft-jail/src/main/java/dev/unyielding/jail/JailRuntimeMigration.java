@@ -76,7 +76,14 @@ public final class JailRuntimeMigration {
             byte[] copy=JailMigrationIO.read(JailMigrationIO.regular(dir,"backup/"+name));require(files.getString(name).equals(JailMigrationIO.hash(copy)),"Recovery copy changed: "+name);
             // Live player bytes can advance after a legitimate reconnect. Native receipt/state equality
             // is separately required by escapeContext; historical custody files may not change pre-commit.
-            if(unchangedSources&&!name.startsWith("playerdata/"))require(Arrays.equals(copy,JailMigrationIO.read(source(s,name))),"Pre-migration source changed: "+name);
+            if(unchangedSources&&!name.startsWith("playerdata/")){
+                byte[] live=JailMigrationIO.read(source(s,name));
+                if(name.equals("custody-interface-v1/custody.v1")){
+                    JailCustodyService.ledger(s).verifyDisk();
+                    require(JailCustodyService.physical(s,JailCustodyService.ledger(s).get(tx)),"Custody interface must be loaded and intact");
+                    JailMigrationIO.quarantineExtension(copy,live,tx);
+                }else require(Arrays.equals(copy,live),"Pre-migration source changed: "+name);
+            }
         }
     }
     private static void validate(ServerPlayer p,CompoundTag m)throws IOException {

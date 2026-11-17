@@ -23,4 +23,29 @@ class JailMigrationIOTest {
  @Test void symbolicFileRefuses()throws Exception {Files.write(root.resolve("data"),new byte[]{1});Files.createSymbolicLink(root.resolve("link"),root.resolve("data"));assertThrows(IOException.class,()->JailMigrationIO.regular(root,"link"));}
  @Test void linkedFileRefuses()throws Exception {Files.write(root.resolve("data"),new byte[]{1});Files.createLink(root.resolve("link"),root.resolve("data"));assertThrows(IOException.class,()->JailMigrationIO.regular(root,"data"));}
  @Test void exactArtifactPin() {assertEquals(128,JailRuntimeMigration.OLD_SHA512.length());assertTrue(JailRuntimeMigration.OLD_SHA512.startsWith("0c992e69"));}
+ @Test void onlyNativeQuarantineAppendAccepted()throws Exception {
+  Path dir=root.resolve("custody");JailCustodyLedger.provisionNew(dir);UUID tx=UUID.randomUUID(),owner=UUID.randomUUID();
+  try(var ledger=new JailCustodyLedger(dir)){
+   var first=ledger.bind(tx,owner,"a/items","a/origins",new byte[32],new JailCustodyLedger.Anchor("minecraft:overworld",1,2,3),"console");
+   byte[] before=Files.readAllBytes(dir.resolve("custody.v1"));
+   JailMigrationIO.quarantineExtension(before,before,tx);
+   var next=ledger.transition(tx,first.revision(),JailCustodyLedger.State.QUARANTINED,"server","Interface block or chunk unavailable; escrow retained");
+   byte[] after=Files.readAllBytes(dir.resolve("custody.v1"));JailMigrationIO.quarantineExtension(before,after,tx);
+   byte[] bad=after.clone();bad[bad.length-1]^=1;assertThrows(IOException.class,()->JailMigrationIO.quarantineExtension(before,bad,tx));
+   assertThrows(IOException.class,()->JailMigrationIO.quarantineExtension(before,after,UUID.randomUUID()));
+   ledger.transition(tx,next.revision(),JailCustodyLedger.State.RELEASED,"server","Interface block or chunk unavailable; escrow retained");
+   assertThrows(IOException.class,()->JailMigrationIO.quarantineExtension(before,Files.readAllBytes(dir.resolve("custody.v1")),tx));
+  }
+ }
+ @Test void administratorAndRelocationAppendRefused()throws Exception {
+  Path dir=root.resolve("custody");JailCustodyLedger.provisionNew(dir);UUID tx=UUID.randomUUID(),owner=UUID.randomUUID();
+  try(var ledger=new JailCustodyLedger(dir)){
+   var first=ledger.bind(tx,owner,"a/items","a/origins",new byte[32],new JailCustodyLedger.Anchor("minecraft:overworld",1,2,3),"console");
+   byte[] before=Files.readAllBytes(dir.resolve("custody.v1"));
+   var next=ledger.transition(tx,first.revision(),JailCustodyLedger.State.QUARANTINED,"console","Explicit administrator hold; review required");
+   assertThrows(IOException.class,()->JailMigrationIO.quarantineExtension(before,Files.readAllBytes(dir.resolve("custody.v1")),tx));
+   byte[] held=Files.readAllBytes(dir.resolve("custody.v1"));ledger.relocate(tx,next.revision(),new JailCustodyLedger.Anchor("minecraft:overworld",4,2,3),"server");
+   assertThrows(IOException.class,()->JailMigrationIO.quarantineExtension(held,Files.readAllBytes(dir.resolve("custody.v1")),tx));
+  }
+ }
 }

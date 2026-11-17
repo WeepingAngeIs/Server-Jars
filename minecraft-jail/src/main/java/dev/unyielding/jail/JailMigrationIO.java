@@ -45,6 +45,32 @@ final class JailMigrationIO {
         }
         return List.copyOf(rows.values());
     }
+    /** Only the native unavailable-chunk quarantine audit may extend a prepared ledger.
+     * Original bytes stay an exact prefix; no relocation, release, actor override or new owner. */
+    static void quarantineExtension(byte[] original,byte[] current,UUID transaction)throws IOException {
+        if(current.length<original.length||!Arrays.equals(original,Arrays.copyOf(current,original.length)))throw new IOException("Custody ledger prefix changed");
+        var in=new DataInputStream(new ByteArrayInputStream(current));
+        if(in.readInt()!=0x55435631||in.readInt()!=1)throw new IOException("Unknown custody history");
+        byte[] chain=new byte[32],identity=null;long sequence=0;boolean boundary=original.length==8;
+        while(in.available()>0){
+            int offset=current.length-in.available();int n=in.readInt();
+            if(n<1||n>16384||n>in.available()-32)throw new IOException("Truncated custody frame");
+            byte[] payload=in.readNBytes(n),checksum=in.readNBytes(32),joined=Arrays.copyOf(chain,chain.length+n);System.arraycopy(payload,0,joined,chain.length,n);
+            if(!MessageDigest.isEqual(checksum,JailOriginTransaction.hash(joined)))throw new IOException("Custody chain changed");chain=checksum;
+            var row=new DataInputStream(new ByteArrayInputStream(payload));if(row.readLong()!=++sequence)throw new IOException("Custody sequence changed");
+            UUID tx=new UUID(row.readLong(),row.readLong());row.readLong();row.readLong();row.readUTF();row.readUTF();row.readNBytes(32);row.readUTF();row.readInt();row.readInt();row.readInt();
+            byte[] binding=Arrays.copyOfRange(payload,8,payload.length-row.available());int state=row.readUnsignedByte();String actor=row.readUTF(),reason=row.readUTF();
+            if(row.available()!=0||state>2)throw new IOException("Malformed custody audit");
+            if(offset<original.length){
+                if(current.length-in.available()>original.length)throw new IOException("Original ledger ends inside frame");
+                if(tx.equals(transaction))identity=binding;
+            }else{
+                if(!boundary||identity==null||!tx.equals(transaction)||!Arrays.equals(identity,binding)||state!=0||!actor.equals("server")||!reason.equals("Interface block or chunk unavailable; escrow retained"))throw new IOException("Unapproved custody change during prepared transition");
+            }
+            if(current.length-in.available()==original.length)boundary=true;
+        }
+        if(!boundary||identity==null)throw new IOException("Missing original custody transaction");
+    }
     private static boolean terminal(JailEscrowJournal.State s){return s==JailEscrowJournal.State.COMPLETE||s==JailEscrowJournal.State.CANCELLED;}
     private static boolean transition(JailEscrowJournal.State a,JailEscrowJournal.State b){return switch(a){
         case PREPARED->b==JailEscrowJournal.State.REMOVAL_STARTED||b==JailEscrowJournal.State.CANCELLED;
