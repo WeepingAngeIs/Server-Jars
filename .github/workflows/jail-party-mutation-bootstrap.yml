@@ -1,0 +1,51 @@
+name: Jail mutation staged-source recovery
+on:
+  push:
+    branches: [codex/jail-standalone-extraction]
+    paths: [.github/workflows/jail-party-mutation-bootstrap.yml]
+permissions:
+  contents: read
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Export complete text records from verified prefix only
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64, hashlib, json, pathlib, subprocess, zlib
+          root=pathlib.Path('dist/recovered-mutation');root.mkdir(parents=True)
+          pins=['9a7696205972457c3c884d518f06d4460d15695e','121aaf7543567be8aeee879bdd19fcaeceaf4a81','fd413ec478a6d09b1475a443d2a2c465a45bccbf']
+          parts=[]
+          for i,pin in enumerate(pins,1):
+              p=pathlib.Path(f'.github/party-mutation-import/part{i}.b64')
+              assert subprocess.check_output(['git','hash-object',str(p)],text=True).strip()==pin
+              parts.append(p.read_bytes())
+          prefix=zlib.decompressobj().decompress(base64.b64decode(b''.join(parts),validate=True))
+          (root/'prefix.json.txt').write_bytes(prefix)
+          text=prefix.decode('utf-8');decoder=json.JSONDecoder();pos=1;files={}
+          assert text.startswith('{')
+          while True:
+              try:
+                  while text[pos] in ' \n,':pos+=1
+                  key,pos=decoder.raw_decode(text,pos)
+                  while text[pos] in ' \n:':pos+=1
+                  value,end=decoder.raw_decode(text,pos)
+              except (ValueError,IndexError):break
+              assert isinstance(key,str) and isinstance(value,str)
+              p=pathlib.PurePosixPath(key)
+              assert '..' not in p.parts and not p.is_absolute()
+              assert key.startswith('.github/party-mutation/') or key=='.github/workflows/jail-party-mutation.yml'
+              target=root/'source'/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(value)
+              files[key]=hashlib.sha256(value.encode()).hexdigest();pos=end
+          report={'complete_files':files,'prefix_bytes':len(prefix),'prefix_sha256':hashlib.sha256(prefix).hexdigest(),'executed':False}
+          (root/'recovery.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: mutation-staged-source-${{ github.sha }}
+          path: dist/recovered-mutation/
+          if-no-files-found: error
+          retention-days: 30
