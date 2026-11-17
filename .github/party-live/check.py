@@ -20,7 +20,12 @@ for phase,flags in required.items():
  assert raw['world']=='jail_integrated_smoke' and raw['phase']==str(phase) and raw['probe']=='normal'
  for k in ('escape_reward_empty','non_jail_mods_loaded','old_jail_classes_absent','separate_jars_loaded'):assert raw[k] is True,(ident,k)
  logs=(root/f'party-live-{backend}-phase{phase}-logs/server.log').read_text()
- if phase in (1,2):assert f'PARTY_LIVE_PLANNED_HALT_{91+phase}' in logs
+ if phase in (1,2):
+  assert f'PARTY_LIVE_PLANNED_HALT_{91+phase}' in logs.splitlines()
+  halt=json.loads((root/f'party-live-{backend}-phase{phase}-logs/planned-halt.json').read_text())
+  assert halt=={'commit':sha,'phase':phase,'backend':backend,'expected_exit':91+phase,'actual_exit':91+phase,'planned_halt_verified':True,'graceful_save_used':False}
+ else:
+  assert (root/f'party-live-{backend}-phase{phase}-logs/shutdown-ready.txt').is_file()
  rows.append(r)
 manifest=json.loads((root/'live-wrapper-manifest.json').read_text());assert len(manifest['classes'])==13 and manifest['method_count']>100
 summary={'commit':sha,'backend':backend,'phases':3,'required_assertions':sum(map(len,required.values())),'rows':rows,'native_method_count':manifest['method_count'],'production_changed':False,'admission_verified':False,'player_handback_verified':False,'source_hashes':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in Path('.github/party-live').rglob('*') if p.is_file() and '__pycache__' not in str(p)}}

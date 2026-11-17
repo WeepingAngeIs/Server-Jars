@@ -47,3 +47,10 @@ Both JSON and NBT suites use initialized synthetic file-backed stores, existing
 mutable references, a real queued native writer, native .old files, native IO
 failure and two abrupt JVM halts followed by independent restarts. No real player
 is jailed with a nonempty party. Nonempty admission and player handback stay blocked.
+
+The planned hard-stop phases use an inspected COPY of the existing two-client
+launcher. It awaits the owned process group and verifies exit codes 92/93,
+exact current-phase completion/log markers and commit-bound reports before
+restarting. It does not request graceful-save readiness from a dead JVM. The
+ordinary third phase retains the original readiness and world-lock checks.
+Seven small launcher-evidence tests reject wrong/stale/ordinary exit proofs.

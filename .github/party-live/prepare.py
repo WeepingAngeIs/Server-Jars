@@ -20,3 +20,5 @@ meta=h/'src/main/resources/META-INF/neoforge.mods.toml'
 assert meta.exists();meta.write_text(meta.read_text()+'\n[[mixins]]\nconfig="party-live.mixins.json"\n')
 for name,digest in [('Minecraft-Jail-1.2.0.jar','5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e'),('Unyielding-1.2.0.jar','61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7')]:
  assert hashlib.sha256((h/'libs'/name).read_bytes()).hexdigest()==digest
+
+subprocess.run(['python3','.github/party-live/prepare_driver.py'],cwd=R,check=True)
