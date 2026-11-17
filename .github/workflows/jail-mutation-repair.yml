@@ -1,0 +1,72 @@
+name: Jail checked mutation source repair
+on:
+  push:
+    branches: [codex/jail-standalone-extraction]
+    paths: [.github/workflows/jail-mutation-repair.yml]
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - name: Patch exact new test-policy source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          p=Path('.github/party-mutation/java/dev/unyielding/jail/party/live/MutationGate.java')
+          s=p.read_text();assert hashlib.sha256(s.encode()).hexdigest()=='5530ce6c297046c96470e270fe640c34cfb795dcefcc16ca4b5158768f2ca827'
+          start=s.index('    private static Object payload(Context context,PartyCustodyGuard.Snapshot snapshot,boolean pc)throws Exception {')
+          end=s.index('    private static void verifyFile(',start)
+          replacement='''    private static Object payload(Context context,PartyCustodyGuard.Snapshot snapshot,boolean pc)throws Exception {
+                  if(context.adapter.getClass()==NBTStoreAdapter.class)return decodeTag(pc?snapshot.pc():snapshot.party());
+                  // Native JSON serialization and wire reconstruction stay within the same
+                  // non-inheritable capability and may touch constructor-tracked objects only.
+                  Construction build=new Construction(context);CONSTRUCT.set(build);
+                  try {
+                      var stores=new CobblemonSnapshotCodec(context.registries).decode(snapshot);
+                      var store=pc?stores.pc():stores.party();
+                      var gson=(com.google.gson.Gson)HandoffCoordinator.field(context.adapter,"gson");
+                      var tree=store.saveToJSON(new com.google.gson.JsonObject(),context.registries);
+                      String wire=gson.toJson(tree);
+                      var parsed=com.google.gson.JsonParser.parseString(wire).getAsJsonObject();
+                      HandoffCoordinator.requireJsonRoundTrip(store,parsed,context.registries);
+                      if(!gson.toJson(parsed).equals(wire))throw new IOException("Native JSON wire encoding changed");
+                      return parsed;
+                  }finally{CONSTRUCT.remove();}
+              }
+          '''
+          s=s[:start]+replacement+s[end:]
+          needle='"iterator","get","getFirstAvailablePosition","saveToNBT","removeDuplicates",'
+          assert s.count(needle)==1
+          s=s.replace(needle,'"iterator","get","getFirstAvailablePosition","saveToNBT","saveToJSON","removeDuplicates",')
+          needle='if(!latest.commands().equals(s.commands)||!latest.snapshot().same(s.original))throw new IOException("Lost mutation metadata");'
+          assert s.count(needle)==1
+          s=s.replace(needle,needle+'\n                if(s.epoch>=64)throw new IOException("Publication epoch limit; no implicit reset");')
+          p.write_text(s)
+          print('Repaired new-policy SHA256:',hashlib.sha256(s.encode()).hexdigest())
+          PY
+          git diff --check
+          test "$(git diff --name-only)" = '.github/party-mutation/java/dev/unyielding/jail/party/live/MutationGate.java'
+          actual=$(git ls-remote origin refs/heads/codex/jail-standalone-extraction | cut -f1)
+          test "$actual" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/party-mutation/java/dev/unyielding/jail/party/live/MutationGate.java
+          git commit -m 'Keep native JSON wire verification inside newborn construction capability; refuse epoch exhaustion before commit'
+          git push origin HEAD:refs/heads/codex/jail-standalone-extraction
+          mkdir -p dist/mutation-repair
+          git rev-parse HEAD > dist/mutation-repair/commit.txt
+          git show --format=fuller HEAD > dist/mutation-repair/source.patch
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: mutation-repair-${{ github.sha }}
+          path: dist/mutation-repair/
+          if-no-files-found: error
+          retention-days: 30
