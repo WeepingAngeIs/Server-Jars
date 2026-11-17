@@ -1,51 +1,84 @@
-name: Jail mutation staged-source recovery
+name: Jail mutation checked source import
 on:
   push:
     branches: [codex/jail-standalone-extraction]
     paths: [.github/workflows/jail-party-mutation-bootstrap.yml]
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: jail-mutation-source-import
+  cancel-in-progress: false
 jobs:
   recover:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-      - name: Export complete text records from verified prefix only
+        with:
+          ref: ${{ github.sha }}
+      - name: Materialize only checked source records and the readable test suffix
         shell: bash
         run: |
+          set -euo pipefail
           python3 - <<'PY'
-          import base64, hashlib, json, pathlib, subprocess, zlib
-          root=pathlib.Path('dist/recovered-mutation');root.mkdir(parents=True)
+          import base64, hashlib, json, pathlib, shutil, subprocess, zlib
+          staging=pathlib.Path('.github/party-mutation-import')
           pins=['9a7696205972457c3c884d518f06d4460d15695e','121aaf7543567be8aeee879bdd19fcaeceaf4a81','fd413ec478a6d09b1475a443d2a2c465a45bccbf']
           parts=[]
           for i,pin in enumerate(pins,1):
-              p=pathlib.Path(f'.github/party-mutation-import/part{i}.b64')
+              p=staging/f'part{i}.b64'
               assert subprocess.check_output(['git','hash-object',str(p)],text=True).strip()==pin
               parts.append(p.read_bytes())
           prefix=zlib.decompressobj().decompress(base64.b64decode(b''.join(parts),validate=True))
-          (root/'prefix.json.txt').write_bytes(prefix)
-          text=prefix.decode('utf-8');decoder=json.JSONDecoder();pos=1;files={}
-          assert text.startswith('{')
-          while True:
-              try:
-                  while text[pos] in ' \n,':pos+=1
-                  key,pos=decoder.raw_decode(text,pos)
-                  while text[pos] in ' \n:':pos+=1
-                  value,end=decoder.raw_decode(text,pos)
-              except (ValueError,IndexError):break
-              assert isinstance(key,str) and isinstance(value,str)
-              p=pathlib.PurePosixPath(key)
-              assert '..' not in p.parts and not p.is_absolute()
-              assert key.startswith('.github/party-mutation/') or key=='.github/workflows/jail-party-mutation.yml'
-              target=root/'source'/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(value)
-              files[key]=hashlib.sha256(value.encode()).hexdigest();pos=end
-          report={'complete_files':files,'prefix_bytes':len(prefix),'prefix_sha256':hashlib.sha256(prefix).hexdigest(),'executed':False}
-          (root/'recovery.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))
+          assert hashlib.sha256(prefix).hexdigest()=='f1cc56f5bf7eaa809d984656626f51da8a3cec8e503bf49e74ab91c75ab8ea85'
+          expected={
+            '.github/party-mutation/README.md':'aa16be78249832c5b9d5058bafb7d9c73cf22ee6043d317c7ead7ae9dccfd6ac',
+            '.github/party-mutation/check.py':'08906f105a89fd05e1886fefabe8c3bfb46287259254dcec393e0f6a63c0b31d',
+            '.github/party-mutation/check_halt.py':'2cb173c9706060c2c4ee18e535b59134d0a77c80e1d9a0cf0758520e7f56feb5',
+            '.github/party-mutation/java/dev/unyielding/jail/party/live/MutationGate.java':'5530ce6c297046c96470e270fe640c34cfb795dcefcc16ca4b5158768f2ca827'}
+          text=prefix.decode();dec=json.JSONDecoder();pos=1;files={}
+          for key_expected in sorted(expected):
+              while text[pos] in ' \n,':pos+=1
+              key,pos=dec.raw_decode(text,pos)
+              while text[pos] in ' \n:':pos+=1
+              value,pos=dec.raw_decode(text,pos)
+              assert key==key_expected and hashlib.sha256(value.encode()).hexdigest()==expected[key]
+              files[key]=value
+          while text[pos] in ' \n,':pos+=1
+          key,pos=dec.raw_decode(text,pos)
+          assert key=='.github/party-mutation/java/dev/unyielding/jail/party/live/MutationProbe.java'
+          while text[pos] in ' \n:':pos+=1
+          partial=json.loads(text[pos:]+'"')
+          assert len(partial)==17993 and partial.endswith('requestDenied(context,"')
+          tail=(staging/'probe-tail.txt').read_text()
+          assert tail.startswith('committed-halt","edit_commit_not_exposed_before_validation");') and tail.endswith('\n}\n')
+          files[key]=partial+tail
+          for path,content in files.items():
+              p=pathlib.Path(path);assert not p.exists();p.parent.mkdir(parents=True,exist_ok=True);p.write_text(content)
+          shutil.rmtree(staging)
+          out=pathlib.Path('dist/mutation-import');out.mkdir(parents=True)
+          (out/'source-hashes.json').write_text(json.dumps({p:hashlib.sha256(c.encode()).hexdigest() for p,c in files.items()},indent=2))
+          print((out/'source-hashes.json').read_text())
           PY
+          git diff --check
+          git add .github/party-mutation .github/party-mutation-import
+          python3 - <<'PY'
+          import subprocess
+          paths=subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines()
+          assert paths and all(p.startswith(('.github/party-mutation/','.github/party-mutation-import/')) for p in paths),paths
+          PY
+          actual=$(git ls-remote origin refs/heads/codex/jail-standalone-extraction | cut -f1)
+          test "$actual" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Materialize recovered test-only nickname mutation contract and native probe; remove inert staging fragments'
+          git push origin HEAD:refs/heads/codex/jail-standalone-extraction
+          git rev-parse HEAD > dist/mutation-import/commit.txt
+          git archive --format=zip -o dist/mutation-import/source.zip HEAD .github/party-mutation
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
         with:
-          name: mutation-staged-source-${{ github.sha }}
-          path: dist/recovered-mutation/
+          name: mutation-import-${{ github.sha }}
+          path: dist/mutation-import/
           if-no-files-found: error
           retention-days: 30
