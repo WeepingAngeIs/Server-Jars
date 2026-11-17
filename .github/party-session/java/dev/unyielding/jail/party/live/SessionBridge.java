@@ -184,7 +184,7 @@ public final class SessionBridge {
         JsonObject r=new JsonObject();r.addProperty("owner",s.owner().toString());r.addProperty("provider",s.provider());r.addProperty("nonce",c.nonce.toString());
         r.addProperty("epoch",c.session.epoch());r.addProperty("receipt",receipt(c.session));r.addProperty("hash",NativeFence.hash(s));
         r.addProperty("party",Base64.getEncoder().encodeToString(s.party()));r.addProperty("pc",Base64.getEncoder().encodeToString(s.pc()));r.addProperty("pokemon",target(c).getUuid().toString());
-        r.addProperty("name",target(c).getNickname().getString());r.addProperty("joins",visitorConnections);send(c.player,"SNAPSHOT",q,r);flag("full_state_snapshot_sent_after_receipt");
+        r.addProperty("swap_other",c.session.stores.party().get(5).getUuid().toString());r.addProperty("name",target(c).getNickname().getString());r.addProperty("joins",visitorConnections);send(c.player,"SNAPSHOT",q,r);flag("full_state_snapshot_sent_after_receipt");
     }
     public static Object invoke(Object receiver,String key,Object[] args,NativeFence.Call original)throws Throwable {
         if(enabled()&&key.startsWith(MANAGER)&&args.length==1&&args[0] instanceof ServerPlayer p&&GlobalProfile.manager()!=null&&receiver==GlobalProfile.manager()&&enrolled(p.getUUID())){

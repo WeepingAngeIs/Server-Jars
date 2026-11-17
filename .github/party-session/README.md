@@ -24,3 +24,8 @@ player-list snapshot excluding enrolled identities before party lookup. The glob
 player list and battle tick are unchanged. Non-enrolled players remain in that
 loop; both branches must be observed by each phase's verifier. This does not grant
 `onSecondPassed` mutation authority or claim playable party support.
+
+The native swap denial probe uses the pinned 1.8.4 constructor with both actual
+Pokemon UUIDs and positions (0 and 5), not an obsolete positions-only signature.
+The compiler checks this API; the server must still reject the real packet before
+mutation, and subsequent complete-state checks remain mandatory.

@@ -103,9 +103,14 @@ public final class SessionClient {
         }catch(Throwable failure){failure(failure);}
     }
     static void nativeSwap()throws Exception {
-        Class<?> position=Class.forName("com.cobblemon.mod.common.api.storage.party.PartyPosition");
-        Object packet=Class.forName("com.cobblemon.mod.common.net.messages.server.storage.party.SwapPartyPokemonPacket").getConstructor(position,position).newInstance(position.getConstructor(int.class).newInstance(0),position.getConstructor(int.class).newInstance(5));
-        packet.getClass().getMethod("sendToServer").invoke(packet);flag("actual_native_swap_packet_sent");
+        UUID first=UUID.fromString(latest.get("pokemon").getAsString());
+        UUID second=UUID.fromString(latest.get("swap_other").getAsString());
+        require(!first.equals(second),"Native swap fixture needs two distinct existing Pokemon");
+        var packet=new com.cobblemon.mod.common.net.messages.server.storage.party.SwapPartyPokemonPacket(
+            first,new com.cobblemon.mod.common.api.storage.party.PartyPosition(0),
+            second,new com.cobblemon.mod.common.api.storage.party.PartyPosition(5));
+        require(first.equals(packet.getPokemon1ID())&&second.equals(packet.getPokemon2ID()),"Native packet identity mismatch");
+        packet.sendToServer();flag("actual_native_swap_packet_sent");
     }
     static void connect()throws Exception {
         Minecraft mc=Minecraft.getInstance();ServerData data=new ServerData("Jail disposable","127.0.0.1:25565",ServerData.Type.OTHER);
