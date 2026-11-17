@@ -67,7 +67,7 @@ public final class PartyStorageBoundaryProbe {
     static void same(CompoundTag wanted,PokemonStore<?> actual,String label)throws Exception{
         require(actual!=null,"Native load returned null: "+label);
         CompoundTag got=snapshot(actual);
-        if(!wanted.equals(got)){Files.writeString(scratch.resolve(label+"-expected.snbt"),wanted.toString());Files.writeString(scratch.resolve(label+"-actual.snbt"),got.toString());throw new IllegalStateException("Complete native state differs: "+label);}
+        if(!wanted.equals(got)){Path out=Path.of(System.getenv("GITHUB_WORKSPACE"),"dist/packaged-smoke");Files.writeString(out.resolve(backend+"-"+label+"-expected.snbt"),wanted.toString());Files.writeString(out.resolve(backend+"-"+label+"-actual.snbt"),got.toString());throw new IllegalStateException("Complete native state differs: "+label);}
     }
     static void close(FileBackedPokemonStoreFactory f)throws Exception{f.shutdown(player.registryAccess());require(executor(f).isTerminated(),"Synthetic save executor did not terminate");}
     static void identity()throws Exception{
@@ -122,6 +122,8 @@ public final class PartyStorageBoundaryProbe {
     static int count(PokemonStore<?> store,UUID id){int n=0;for(Pokemon p:store)if(p!=null&&p.getUuid().equals(id))n++;return n;}
     static void ownership()throws Exception{
         var a=adapter("ownership");var f=factory(a,true);UUID id=owner("ownership");var party=f.getPlayerParty(id,player.registryAccess());var pc=f.getPC(id,player.registryAccess());seed(party);
+        // A new native PCStore has zero boxes until resized. Give this synthetic store one real box.
+        require(pc.getBoxes().isEmpty(),"Synthetic PC unexpectedly populated");pc.resize(1,true,p->{throw new IllegalStateException("Unexpected synthetic PC overflow");});require(pc.getBoxes().size()==1,"Synthetic native PC has no capacity");
         Pokemon original=party.get(0);Pokemon copy=Pokemon.Companion.loadFromNBT(player.registryAccess(),original.saveToNBT(player.registryAccess(),new CompoundTag()));
         require(copy!=original&&copy.getUuid().equals(original.getUuid()),"Native codec did not preserve UUID");require(pc.add(copy),"Native PC rejected fixture unexpectedly");
         require(count(party,original.getUuid())==1&&count(pc,original.getUuid())==1,"Expected independent same-UUID store entries absent");
@@ -166,6 +168,6 @@ public final class PartyStorageBoundaryProbe {
             backend=System.getProperty("uq.partyStorageBackend");phase=Integer.getInteger("uq.partyStoragePhase",0);require(Set.of("nbt","json").contains(backend),"Unknown backend");scratch=world.resolve("party-storage-probe");
             if(phase==1){require(!Files.exists(scratch),"Refuse reused synthetic state");Files.createDirectory(scratch);}else require(Files.isDirectory(scratch),"Missing first-phase synthetic state");
             identity();if(phase==1){queuedAndFailedSave();prepareFallback();ownership();queuedHalt();}else if(phase==2)afterRestart();else throw new IllegalStateException("Invalid phase");
-        }catch(Throwable failure){done=true;failure.printStackTrace();try{Files.writeString(Path.of(MARKER),"failed: "+failure+"\n");}catch(Exception ignored){}}
+        }catch(Throwable failure){done=true;failure.printStackTrace();try{evidence.put("completed",false);evidence.put("failure",failure.toString());evidence.put("commit",System.getenv("GITHUB_SHA"));evidence.put("backend",backend);evidence.put("phase",phase);Files.writeString(Path.of(System.getenv("GITHUB_WORKSPACE"),"dist/packaged-smoke/party-storage-"+backend+"-phase"+phase+"-partial.json"),new GsonBuilder().setPrettyPrinting().create().toJson(evidence));Files.writeString(Path.of(MARKER),"failed: "+failure+"\n");}catch(Exception ignored){}}
     }
 }
