@@ -45,6 +45,7 @@ public final class BundleSmoke {
         cancel="";unclaim();origin=new BlockPos(527,80,520);
         UltimineConfig.ENABLED.set(true);UltimineConfig.REQUIRE_TOOL.set(false);UltimineConfig.COMPACT_FEEDBACK.set(true);UltimineConfig.MAX_BLOCKS.set(8);UltimineConfig.PREVENT_TOOL_BREAK.set(0);
         p().setGameMode(GameType.CREATIVE);p().setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(logs?Items.IRON_AXE:Items.IRON_PICKAXE));
+        p().getFoodData().setFoodLevel(20);
         for(int x=526;x<=530;x++)for(int y=79;y<=83;y++)for(int z=519;z<=521;z++)server.overworld().setBlock(new BlockPos(x,y,z),Blocks.AIR.defaultBlockState(),3);
         for(int x=0;x<3;x++)server.overworld().setBlock(origin.offset(x,0,0),(logs?Blocks.OAK_LOG:Blocks.IRON_ORE).defaultBlockState(),3);
         p().teleportTo(server.overworld(),origin.getX()+.5,81,origin.getZ()+2.5,180,75);
@@ -54,6 +55,7 @@ public final class BundleSmoke {
     static void stripped(boolean a,boolean b,boolean c){boolean[] expected={a,b,c};for(int i=0;i<3;i++)require(server.overworld().getBlockState(origin.offset(i,0,0)).is(Blocks.STRIPPED_OAK_LOG)==expected[i],"unexpected log transformation at "+origin.offset(i,0,0));}
     static void ground(boolean hoe){seed(false);p().setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(hoe?Items.IRON_HOE:Items.IRON_SHOVEL));for(int i=0;i<3;i++)server.overworld().setBlock(origin.offset(i,0,0),Blocks.DIRT.defaultBlockState(),3);}
     static void groundChanged(boolean hoe,boolean a,boolean b,boolean c){boolean[] expected={a,b,c};for(int i=0;i<3;i++)require(server.overworld().getBlockState(origin.offset(i,0,0)).is(hoe?Blocks.FARMLAND:Blocks.DIRT_PATH)==expected[i],"unexpected ground transformation at "+origin.offset(i,0,0));}
+    static void survivalStop(boolean hungry){seed(false);for(int i=0;i<3;i++)server.overworld().setBlock(origin.offset(i,0,0),Blocks.SLIME_BLOCK.defaultBlockState(),3);p().setGameMode(GameType.SURVIVAL);if(hungry)p().getFoodData().setFoodLevel(0);else p().getMainHandItem().setDamageValue(249);server.overworld().setBlock(new BlockPos(527,80,522),Blocks.BEDROCK.defaultBlockState(),3);}
     static void add(String name,Runnable setup,String action,String expected,Runnable check){cases.add(new Case(name,setup,action,expected,check));}
     static void setup(){
         require(!UltimineConfig.COMPACT_FEEDBACK.get(),"compact feedback default changed");
@@ -76,13 +78,16 @@ public final class BundleSmoke {
         add("OPAC connected tilling denied extras",()->{ground(true);claim(v().getUUID());},"use","NONE",()->groundChanged(true,true,false,false));
         add("connected paths allowed",()->ground(false),"use","NONE",()->groundChanged(false,true,true,true));
         add("OPAC connected paths denied extras",()->{ground(false);claim(v().getUUID());},"use","NONE",()->groundChanged(false,true,false,false));
-        add("master switch off",()->{seed(false);UltimineConfig.ENABLED.set(false);},"mine","NONE",()->blocks(true,false,false));
-        add("require item empty hand",()->{seed(false);UltimineConfig.REQUIRE_TOOL.set(true);p().setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);},"mine","NONE",()->blocks(true,false,false));
+        add("master switch off",()->{seed(false);UltimineConfig.ENABLED.set(false);},"disabled","NONE",()->blocks(true,false,false));
+        add("require item empty hand",()->{seed(false);UltimineConfig.REQUIRE_TOOL.set(true);p().setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);},"empty","NONE",()->blocks(true,false,false));
+        add("durability stop display",()->survivalStop(false),"mine","tool durability",()->blocks(true,false,false));
+        add("hunger stop display",()->survivalStop(true),"mine","out of hunger",()->blocks(true,false,false));
         add("held display and shape preview",()->seed(false),"preview","NONE",()->blocks(false,false,false));
         add("hidden HUD display",()->seed(false),"preview_hidden","NONE",()->blocks(false,false,false));
         add("inventory stops held display",()->seed(false),"menu","NONE",()->blocks(false,false,false));
     }
     static void send(Case c)throws Exception{
+        dev.unyielding.quests.settings.AdminSettings.sync(p(),false,"",false);
         sequence++;Files.writeString(ROOT.resolve("Dev.txt"),sequence+"\t"+c.action()+"\t"+origin.getX()+","+origin.getY()+","+origin.getZ()+"\t"+c.expected()+"\t"+c.name().replace(' ','_'));
     }
     void tick(ServerTickEvent.Post e){
