@@ -1,0 +1,51 @@
+name: Jail checked migration source import
+on:
+  push:
+    branches: [codex/jail-occupied-artifact-migration]
+    paths: [.github/workflows/jail-migration-import.yml]
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - name: Verify and apply only the exact source diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64,hashlib,pathlib,subprocess,zlib
+          root=pathlib.Path('.github/occupied-migration')
+          a=(root/'import-part-1.b64').read_bytes()
+          b=(root/'import-part-2.b64').read_bytes()
+          assert hashlib.sha256(a).hexdigest()=='8d46b5edf0b548167c63614e5a1f5584d65fb640ce2d0a10dac68b95576ff894'
+          # Correct one known transport omission, then require the original full-byte digest.
+          if hashlib.sha256(b).hexdigest()!='637f8df3150ed704dc484975b9d1c577c4f33c8340e024db940db961631571f4':
+              assert subprocess.check_output(['git','hash-object',str(root/'import-part-2.b64')],text=True).strip()=='be1a87404b7769c4a9a9255b39921bbed80695a6'
+              assert b.count(b'frB1U9vKBd')==1
+              b=b.replace(b'frB1U9vKBd',b'frB1U9YvKBd')
+          assert hashlib.sha256(b).hexdigest()=='637f8df3150ed704dc484975b9d1c577c4f33c8340e024db940db961631571f4'
+          packed=base64.b64decode(a+b,validate=True)
+          assert hashlib.sha256(packed).hexdigest()=='2a4829f9ff46d8e300ee8c01ca30b0490b939edc51d5a4d6edfcd143cd6aa5b1'
+          patch=zlib.decompress(packed)
+          assert hashlib.sha256(patch).hexdigest()=='fd97f0aaa3f85a82738b65754d9efe3b28f7155826ad82c0b4a9dc1acef9aa18'
+          allowed={'minecraft-jail/src/main/java/dev/unyielding/jail/'+n+'.java' for n in ('JailHumanAudit','JailEquipmentPort','JailCertifiedOriginPort','JailCommands','JailMigrationIO','JailRuntimeMigration')}
+          allowed.add('minecraft-jail/src/test/java/dev/unyielding/jail/JailMigrationIOTest.java')
+          paths={l[6:].decode() for l in patch.splitlines() if l.startswith(b'+++ b/')}
+          assert paths==allowed,paths
+          subprocess.run(['git','apply','--check','-'],input=patch,check=True)
+          subprocess.run(['git','apply','-'],input=patch,check=True)
+          for p in root.glob('import-part-*.b64'):p.unlink()
+          pathlib.Path('.github/workflows/jail-migration-import.yml').unlink()
+          subprocess.run(['git','diff','--check'],check=True)
+          print('Imported exact source diff; not a test or migration approval')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add minecraft-jail .github/occupied-migration .github/workflows/jail-migration-import.yml
+          git commit -m 'feat(jail): add explicit receipt-bound occupied artifact transition with immutable recovery evidence'
+          git push origin HEAD:refs/heads/codex/jail-occupied-artifact-migration
