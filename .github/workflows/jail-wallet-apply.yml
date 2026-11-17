@@ -33,7 +33,7 @@ jobs:
       - name: Preserve history and commit only the reviewed increment
         run: |
           set -euo pipefail
-          git add minecraft-jail/src/main/java/dev/unyielding/jail/ minecraft-jail/src/test/java/dev/unyielding/jail/PackedWalletPolicyTest.java .github/packed-wallet/ .github/scripts/verify-jail-source.py .github/workflows/jail-packed-wallet.yml docs/JAIL-PACKED-WALLET-IMPLEMENTATION.md
+          git add minecraft-jail/src/main/java/dev/unyielding/jail/ minecraft-jail/src/test/java/dev/unyielding/jail/PackedWalletPolicyTest.java .github/packed-wallet/ .github/scripts/verify-jail-source.py docs/JAIL-PACKED-WALLET-IMPLEMENTATION.md
           git diff --cached --check
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
