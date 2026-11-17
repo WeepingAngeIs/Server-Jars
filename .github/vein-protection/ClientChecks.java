@@ -28,7 +28,11 @@ public final class ClientChecks {
         try{
             if(command!=null){UltimineClient.KEY.setDown(true);aim(mc,target);if(!actionSent){
                     String[] expected=command[7].split(",");double dx=mc.player.getX()-Double.parseDouble(expected[0]),dy=mc.player.getY()-Double.parseDouble(expected[1]),dz=mc.player.getZ()-Double.parseDouble(expected[2]);
-                    if(dx*dx+dy*dy+dz*dz>.25||!net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(mc.player.getMainHandItem().getItem()).toString().equals(command[5])||!mc.gameMode.getPlayerMode().name().equals(command[6]))return;
+                    String item=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(mc.player.getMainHandItem().getItem()).toString();boolean blocksReady=true;
+                    for(String block:command[8].split(";")){String[] data=block.split("=",2),xyz=data[0].split(",");var pos=new BlockPos(Integer.parseInt(xyz[0]),Integer.parseInt(xyz[1]),Integer.parseInt(xyz[2]));if(!net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(mc.level.getBlockState(pos).getBlock()).toString().equals(data[1]))blocksReady=false;}
+                    String status="position="+mc.player.position()+" expected="+command[7]+" item="+item+" expected="+command[5]+" mode="+mc.gameMode.getPlayerMode()+" expected="+command[6]+" blocksReady="+blocksReady;
+                    Files.writeString(ROOT.resolve("Dev.status"),status);
+                    if(dx*dx+dy*dy+dz*dz>.25||!item.equals(command[5])||!mc.gameMode.getPlayerMode().name().equals(command[6])||!blocksReady)return;
                     Files.writeString(ROOT.resolve("Dev.holding"),command[0]);
                     Path ready=ROOT.resolve("Dev.ready");if(!Files.exists(ready)||!Files.readString(ready).equals(command[0]))return;
                     var hit=new BlockHitResult(Vec3.atCenterOf(target).add(0,.5,0),Direction.UP,target,false);

@@ -108,8 +108,10 @@ public final class BundleSmoke {
         add("inventory stops held display",()->seed(false),"menu","NONE",()->blocks(false,false,false));
     }
     static void send(Case c)throws Exception{
+        p().inventoryMenu.broadcastFullState();
         dev.unyielding.quests.settings.AdminSettings.sync(p(),false,"",false);
-        sequence++;Files.writeString(ROOT.resolve("Dev.txt"),sequence+"\t"+c.action()+"\t"+origin.getX()+","+origin.getY()+","+origin.getZ()+"\t"+c.expected()+"\t"+c.name().replace(' ','_')+"\t"+net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(p().getMainHandItem().getItem())+"\t"+p().gameMode.getGameModeForPlayer().name()+"\t"+p().getX()+","+p().getY()+","+p().getZ());
+        String blocks=dev.unyielding.quests.ultimine.Shapes.compute(server.overworld(),origin,net.minecraft.core.Direction.UP,dev.unyielding.quests.ultimine.Shapes.Shape.SHAPELESS,8).stream().map(pos->pos.getX()+","+pos.getY()+","+pos.getZ()+"="+net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(server.overworld().getBlockState(pos).getBlock())).collect(java.util.stream.Collectors.joining(";"));
+        sequence++;Files.writeString(ROOT.resolve("Dev.txt"),sequence+"\t"+c.action()+"\t"+origin.getX()+","+origin.getY()+","+origin.getZ()+"\t"+c.expected()+"\t"+c.name().replace(' ','_')+"\t"+net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(p().getMainHandItem().getItem())+"\t"+p().gameMode.getGameModeForPlayer().name()+"\t"+p().getX()+","+p().getY()+","+p().getZ()+"\t"+blocks);
     }
     void tick(ServerTickEvent.Post e){
         if(done||!"true".equals(System.getenv("GITHUB_ACTIONS"))||!"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT")))return;
@@ -121,13 +123,13 @@ public final class BundleSmoke {
             if(cases.isEmpty()){done=true;Files.writeString(Path.of(System.getenv("UQ_VEIN_EVIDENCE")).resolve("cases.txt"),String.join("\n",outcomes)+"\n");long failures=outcomes.stream().filter(x->x.startsWith("failed:")).count();Files.writeString(RESULT,(failures==0?"passed: ":"failed: ")+outcomes.size()+" cases, "+failures+" failures\n");return;}
             Case c=cases.peek();
             if(start==0){System.out.println("VEIN CASE START: "+c.name());c.setup().run();send(c);start=tick;}
-            if(tick-start>900)throw new IllegalStateException("client timeout: "+c.name());
+            if(tick-start>900)throw new IllegalStateException("client timeout: "+c.name()+"; "+(Files.exists(ROOT.resolve("Dev.status"))?Files.readString(ROOT.resolve("Dev.status")):"no client status"));
             Path holding=ROOT.resolve("Dev.holding");boolean needsHeld=!c.action().equals("disabled")&&!c.action().equals("empty")&&!c.action().equals("menu");
             if(Files.exists(holding)&&Files.readString(holding).equals(""+sequence)&&(!needsHeld||held()))Files.writeString(ROOT.resolve("Dev.ready"),""+sequence);
             Path ack=ROOT.resolve("Dev.ack");if(tick-start<40||!Files.exists(ack)||!Files.readString(ack).startsWith(sequence+"\t"))return;
             List<String> failures=new ArrayList<>();String client=Files.readString(ack);if(!client.equals(sequence+"\tpassed"))failures.add(client);
             try{c.check().run();}catch(Throwable bad){failures.add(bad.toString());}
             String result=(failures.isEmpty()?"passed: ":"failed: ")+c.name()+(failures.isEmpty()?"":" => "+String.join("; ",failures));outcomes.add(result);System.out.println("VEIN CASE "+result);cancel="";cases.remove();start=0;
-        }catch(Throwable bad){done=true;bad.printStackTrace();try{Files.writeString(RESULT,"failed: fixture "+bad+"\n");}catch(Exception ignored){}}
+        }catch(Throwable bad){done=true;bad.printStackTrace();try{Files.writeString(Path.of(System.getenv("UQ_VEIN_EVIDENCE")).resolve("cases.txt"),String.join("\n",outcomes)+"\nfailed: fixture "+bad+"\n");Files.writeString(RESULT,"failed: fixture "+bad+"\n");}catch(Exception ignored){}}
     }
 }
