@@ -1,0 +1,30 @@
+name: Jail player-only automatic respawn
+on:
+  push:
+    branches: [codex/jail-player-only-autorespawn]
+    paths: ['.github/player-only/**', '.github/workflows/jail-player-only.yml']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: jail-player-only-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Preserve exact current source without building or running Minecraft
+        run: |
+          mkdir -p dist/player-only-source
+          git rev-parse HEAD > dist/player-only-source/commit.txt
+          git ls-tree -r HEAD > dist/player-only-source/tree.txt
+          git archive --format=zip -o dist/player-only-source/source.zip HEAD minecraft-jail .github combined-unyielding/smoke-harness docs AGENTS.md
+          sha256sum dist/player-only-source/source.zip > dist/player-only-source/SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: player-only-source-${{ github.sha }}
+          path: dist/player-only-source/
+          if-no-files-found: error
+          retention-days: 30
