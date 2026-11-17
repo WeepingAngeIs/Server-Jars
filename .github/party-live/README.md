@@ -9,6 +9,9 @@ from the checksum-pinned Cobblemon binary. Every native method is wrapped for it
 whole execution under one reentrant lock; owner/UUID/input/output checks occur at
 the actual native methods, not merely voluntarily at a wrapper service. Immutable
 UUID getters and adapter filename resolution are excluded for classification.
+Lifecycle shutdown/unregister methods are not held under the method lock while
+waiting for the save worker; actual native load/write methods remain fenced.
+Array arguments are forwarded as one argument rather than expanded as varargs.
 
 A separate monotonic GenerationJournal catalog commits permanent owner/identity
 fences BEFORE a custody reservation or source change. Startup loads it lazily at
@@ -19,8 +22,9 @@ store/Pokemon references are fenced for enrolled synthetic owners.
 
 HandoffCoordinator binds a concrete reviewed adapter to its real factory and
 cached party/PC, refuses conversion children, unknown classes and populated PCs,
-then reserves full state in the unchanged guard. Its synchronous native empty
-write is forced and read back before SEALED. Return refuses changed native bytes,
+binds its canonical root and layout to the provider identity, then reserves full
+state in the unchanged guard. Its synchronous native empty
+write is forced and read back before SEALED. Return refuses changed native party OR PC bytes,
 commits the exact original generation, writes and checks that generation, and
 LEAVES THE FENCE CLOSED. This is staged native storage handoff, not player release.
 

@@ -37,7 +37,7 @@ public final class LiveFenceProbe {
     static UUID owner(String label){return UUID.nameUUIDFromBytes(("native-fence:"+backend+":"+label).getBytes(java.nio.charset.StandardCharsets.UTF_8));}
     static UUID tx(String label){return owner(label+"-tx");}
     static String binding(){return System.getenv("UQ_JAIL_SHA256")+":"+System.getenv("UQ_BUNDLE_SHA256")+":"+backend;}
-    static String provider(){return (backend.equals("nbt")?"NBTStoreAdapter":"JSONStoreAdapter")+":GenerationJournal";}
+    static String provider(String label)throws Exception{return HandoffCoordinator.providerIdentity(adapter(label));}
     static void flag(String name){proof.put(name,true);}
     static void denied(String label,Action action)throws Exception {
         try{action.run();}catch(NativeFence.Denied expected){flag(label);return;}
@@ -68,7 +68,7 @@ public final class LiveFenceProbe {
         party.set(5,PokemonProperties.Companion.parse("pikachu level=23"," ","=").create(player));
         f.save(party,player.registryAccess());f.save(pc,player.registryAccess());drain(f);
         f.save(party,player.registryAccess());drain(f);
-        var s=new CobblemonSnapshotCodec(player.registryAccess()).capture(owner(label),provider(),party,pc);
+        var s=new CobblemonSnapshotCodec(player.registryAccess()).capture(owner(label),HandoffCoordinator.providerIdentity(a),party,pc);
         Files.write(root.resolve(label+".party"),s.party());Files.write(root.resolve(label+".pc"),s.pc());
         Files.copy(a.getFile(PlayerPartyStore.class,owner(label)).toPath(),root.resolve(label+".original-native"));
         return new Fixture(a,f,party,pc);
@@ -76,7 +76,7 @@ public final class LiveFenceProbe {
     static Path file(String label,OneToOneFileStoreAdapter a){return a.getFile(PlayerPartyStore.class,owner(label)).toPath();}
     static Path journal(String label){return root.resolve(label+"-custody");}
     static void full(String label,PartyCustodyGuard.Snapshot s)throws Exception {
-        require(s.owner().equals(owner(label))&&s.provider().equals(provider())&&Arrays.equals(s.party(),Files.readAllBytes(root.resolve(label+".party")))&&Arrays.equals(s.pc(),Files.readAllBytes(root.resolve(label+".pc"))),"Complete original snapshot differs");
+        require(s.owner().equals(owner(label))&&s.provider().equals(provider(label))&&Arrays.equals(s.party(),Files.readAllBytes(root.resolve(label+".party")))&&Arrays.equals(s.pc(),Files.readAllBytes(root.resolve(label+".pc"))),"Complete original snapshot differs");
     }
     static void ordinaryControl(String label)throws Exception {
         var x=seed(label);var before=x.party.saveToNBT(new CompoundTag(),player.registryAccess());
@@ -84,7 +84,7 @@ public final class LiveFenceProbe {
         require(manager.getParty(owner(label),player.registryAccess())==x.party,"Unenrolled provider altered");
         x.factory.save(x.party,player.registryAccess());drain(x.factory);
         var loaded=(PlayerPartyStore)x.adapter.load(PlayerPartyStore.class,owner(label),player.registryAccess());
-        require(before.equals(loaded.saveToNBT(new CompoundTag(),player.registryAccess())),"Unenrolled source changed");closeFactory(x.factory);flag("unrelated_native_owner_unchanged");
+        require(before.equals(loaded.saveToNBT(new CompoundTag(),player.registryAccess())),"Unenrolled source changed");x.factory.shutdown(player.registryAccess());require(executor(x.factory).isTerminated(),"Native shutdown blocked by method lock");flag("unrelated_native_owner_unchanged");
     }
     static void first()throws Exception {
         var x=seed("primary");var oldMon=x.party.get(0);var iterator=x.party.iterator();var oldBox=x.pc.getBoxes().getFirst();
@@ -137,12 +137,18 @@ public final class LiveFenceProbe {
     }
     static void second()throws Exception {
         require(NativeFence.enrolled()==3,"Catalog did not recover before access");flag("durable_fence_recovered_before_native_lookup");
+        ioDenied("same_class_different_root_recovery_refused",()->HandoffCoordinator.open(journal("primary"),binding(),owner("primary"),player.registryAccess(),adapter("alternate")));
         var a=adapter("primary");denied("restart_load_denied_before_fallback",()->a.load(PlayerPartyStore.class,owner("primary"),player.registryAccess()));
         try(var c=HandoffCoordinator.open(journal("primary"),binding(),owner("primary"),player.registryAccess(),a)) {
             require(c.phase()==PartyCustodyGuard.Phase.SEALED,"Unexpected phase after halt");c.verifyNative(c.owned());
             byte[] empty=Files.readAllBytes(file("primary",a));var receipt=c.receipt();Files.write(file("primary",a),Files.readAllBytes(root.resolve("primary.original-native")));
             try{ioDenied("occupied_native_destination_refused",()->c.stageReturn(step->{}));require(c.receipt().equals(receipt),"Conflict advanced generation");require(Arrays.equals(Files.readAllBytes(file("primary",a)),Files.readAllBytes(root.resolve("primary.original-native"))),"Conflict overwritten");}
             finally{Files.write(file("primary",a),empty);}
+            Path pcFile=a.getFile(PCStore.class,owner("primary")).toPath();byte[] originalPC=Files.readAllBytes(pcFile);
+            if(backend.equals("nbt")){var nbt=net.minecraft.nbt.NbtIo.readCompressed(pcFile,net.minecraft.nbt.NbtAccounter.unlimitedHeap());nbt.putString("synthetic_destination_conflict","must remain untouched");net.minecraft.nbt.NbtIo.writeCompressed(nbt,pcFile);}
+            else {var json=JsonParser.parseString(Files.readString(pcFile)).getAsJsonObject();json.addProperty("synthetic_destination_conflict","must remain untouched");Files.writeString(pcFile,json.toString());}
+            byte[] changedPC=Files.readAllBytes(pcFile);
+            try{ioDenied("changed_native_pc_destination_refused",()->c.stageReturn(step->{}));require(c.receipt().equals(receipt)&&Arrays.equals(changedPC,Files.readAllBytes(pcFile)),"PC conflict overwritten or advanced");}finally{Files.write(pcFile,originalPC);}
             c.stageReturn(step->{});full("primary",c.owned());c.verifyNative(c.owned());require(c.receipt().generation()==3,"Return generation missing");flag("exact_return_staged_before_any_unlock");
             denied("staged_return_not_player_accessible",()->a.load(PlayerPartyStore.class,owner("primary"),player.registryAccess()));
             ioDenied("repeat_return_refused",()->c.stageReturn(step->{}));

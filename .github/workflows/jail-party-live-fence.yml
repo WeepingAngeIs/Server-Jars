@@ -117,7 +117,7 @@ jobs:
           for backend in ('nbt','json'):
               paths=list(Path('evidence').rglob(f'party-live-{backend}-summary.json'));assert len(paths)==1
               s=json.loads(paths[0].read_text());assert s['commit']==os.environ['GITHUB_SHA'] and s['phases']==3
-              assert s['required_assertions']==45 and s['native_method_count']>100
+              assert s['required_assertions']==47 and s['native_method_count']>100
               assert s['production_changed'] is False and s['admission_verified'] is False and s['player_handback_verified'] is False
               rows.append(s)
           assert rows[0]['source_hashes']==rows[1]['source_hashes']

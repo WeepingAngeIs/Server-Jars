@@ -94,10 +94,10 @@ public final class NativeFence {
         if(!ENABLED)return operation.run();
         boot();
         LOCK.lock();try {
-            ensure();UUID affected=affected(receiver);for(Object arg:arguments){UUID found=affected(arg);if(found!=null)affected=found;}
-            if(affected!=null&&!allowed(receiver,key,arguments,affected))deny(key);
-            Object result=operation.run();UUID output=affected(result);
-            if(output!=null&&!allowed(receiver,key,arguments,output))deny(key+":return");
+            ensure();Set<UUID> affected=new HashSet<>();collect(receiver,affected);for(Object arg:arguments)collect(arg,affected);
+            for(UUID owner:affected)if(!allowed(receiver,key,arguments,owner))deny(key);
+            Object result=operation.run();Set<UUID> output=new HashSet<>();collect(result,output);
+            for(UUID owner:output)if(!allowed(receiver,key,arguments,owner))deny(key+":return");
             return result;
         }finally{LOCK.unlock();}
     }
@@ -134,27 +134,27 @@ public final class NativeFence {
     static Object exclusive(Call call)throws Exception {
         LOCK.lock();try{ensure();try{return call.run();}catch(Exception e){throw e;}catch(Throwable e){throw new IOException(e);}}finally{LOCK.unlock();}
     }
-    private static UUID affected(Object value) {
-        if(value==null)return null;
-        UUID alias=ALIASES.get(value);if(alias!=null)return alias;
-        if(value instanceof UUID id)return OWNERS.containsKey(id)?id:IDS.get(id);
-        if(value instanceof Pokemon p)return IDS.get(p.getUuid());
-        if(value instanceof PokemonStore<?> store)return OWNERS.containsKey(store.getUuid())?store.getUuid():null;
-        if(value instanceof PCBox box)return affected(box.getPc());
-        if(value instanceof File file){
-            String name=file.getName();if(name.length()>=36)try{return affected(UUID.fromString(name.substring(0,36)));}catch(IllegalArgumentException ignored){}return null;
-        }
-        if(value instanceof CompoundTag tag){for(String key:tag.getAllKeys()){UUID found=affected(tag.get(key));if(found!=null)return found;}}
-        else if(value instanceof ListTag list){for(Tag tag:list){UUID found=affected(tag);if(found!=null)return found;}}
-        else if(value instanceof StringTag tag){try{return affected(UUID.fromString(tag.getAsString()));}catch(IllegalArgumentException ignored){}}
-        else if(value instanceof IntArrayTag tag&&tag.getAsIntArray().length==4){int[] a=tag.getAsIntArray();return affected(new UUID(((long)a[0]<<32)|(a[1]&0xffffffffL),((long)a[2]<<32)|(a[3]&0xffffffffL)));}
-        else if(value instanceof JsonObject json){for(var entry:json.entrySet()){UUID found=affected(entry.getValue());if(found!=null)return found;}}
-        else if(value instanceof JsonArray array){for(JsonElement item:array){UUID found=affected(item);if(found!=null)return found;}}
-        else if(value instanceof JsonPrimitive p&&p.isString()){try{return affected(UUID.fromString(p.getAsString()));}catch(IllegalArgumentException ignored){}}
-        return null;
+    private static void collect(Object value,Set<UUID> result) {
+        if(value==null)return;
+        UUID alias=ALIASES.get(value);if(alias!=null)result.add(alias);
+        if(value instanceof UUID id){if(OWNERS.containsKey(id))result.add(id);if(IDS.containsKey(id))result.add(IDS.get(id));}
+        else if(value instanceof Pokemon p){UUID id=IDS.get(p.getUuid());if(id!=null)result.add(id);}
+        else if(value instanceof PokemonStore<?> store){if(OWNERS.containsKey(store.getUuid()))result.add(store.getUuid());}
+        else if(value instanceof PCBox box)collect(box.getPc(),result);
+        else if(value instanceof File file){String name=file.getName();if(name.length()>=36)try{collect(UUID.fromString(name.substring(0,36)),result);}catch(IllegalArgumentException ignored){}}
+        else if(value instanceof CompoundTag tag){for(String key:tag.getAllKeys())collect(tag.get(key),result);}
+        else if(value instanceof ListTag list){for(Tag tag:list)collect(tag,result);}
+        else if(value instanceof StringTag tag){try{collect(UUID.fromString(tag.getAsString()),result);}catch(IllegalArgumentException ignored){}}
+        else if(value instanceof IntArrayTag tag&&tag.getAsIntArray().length==4){int[] a=tag.getAsIntArray();collect(new UUID(((long)a[0]<<32)|(a[1]&0xffffffffL),((long)a[2]<<32)|(a[3]&0xffffffffL)),result);}
+        else if(value instanceof JsonObject json){for(var entry:json.entrySet())collect(entry.getValue(),result);}
+        else if(value instanceof JsonArray array){for(JsonElement item:array)collect(item,result);}
+        else if(value instanceof JsonPrimitive p&&p.isString()){try{collect(UUID.fromString(p.getAsString()),result);}catch(IllegalArgumentException ignored){}}
+        else if(value instanceof Object[] array){for(Object item:array)collect(item,result);}
+        else if(value instanceof Collection<?> collection){for(Object item:collection)collect(item,result);}
+        else if(value instanceof Map<?,?> map){for(var entry:map.entrySet()){collect(entry.getKey(),result);collect(entry.getValue(),result);}}
     }
     static String hash(PartyCustodyGuard.Snapshot s) {
-        try{var digest=java.security.MessageDigest.getInstance("SHA-256");digest.update(s.party());digest.update(s.pc());return HexFormat.of().formatHex(digest.digest());}catch(java.security.NoSuchAlgorithmException e){throw new AssertionError(e);}
+        try{var digest=java.security.MessageDigest.getInstance("SHA-256");digest.update(java.nio.ByteBuffer.allocate(8).putInt(s.party().length).putInt(s.pc().length).array());digest.update(s.owner().toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));digest.update(s.provider().getBytes(java.nio.charset.StandardCharsets.UTF_8));digest.update(s.party());digest.update(s.pc());return HexFormat.of().formatHex(digest.digest());}catch(java.security.NoSuchAlgorithmException e){throw new AssertionError(e);}
     }
     private static byte[] encode(List<Entry> entries)throws IOException {
         var bytes=new ByteArrayOutputStream();try(var out=new DataOutputStream(bytes)){out.writeInt(MAGIC);out.writeInt(entries.size());for(Entry e:entries){uuid(out,e.owner());uuid(out,e.transaction());out.writeUTF(e.provider());out.writeUTF(e.sourceHash());out.writeInt(e.ids().size());for(UUID id:new TreeSet<>(e.ids()))uuid(out,id);}}return bytes.toByteArray();

@@ -44,7 +44,7 @@ for index,target in enumerate(classes):
  for i,line in enumerate(lines):
   if not re.match(r'  (public) ',line) or '(' not in line or ' static ' in line or ' abstract ' in line:continue
   name=line.split('(')[0].split()[-1]
-  if name==target or name in ('getUuid','getPlayerUUID','getPc','getFile') or name.endswith('$default'):continue
+  if name==target or name in ('getUuid','getPlayerUUID','getPc','getFile','shutdown','unregisterFactory','unregisterAll') or name.endswith('$default'):continue
   desc=lines[i+1].strip().removeprefix('descriptor: ');assert desc.startswith('('),line
   args,ret=signature(desc)
   methods.append((name,desc,args,ret))
@@ -62,7 +62,8 @@ for index,target in enumerate(classes):
   parameters+=['Operation<'+boxed.get(ret,ret)+'> original']
   body+=[' @WrapMethod(method="'+method+desc+'", remap=false)',
          ' private '+ret+' intercept'+str(n)+'('+','.join(parameters)+') throws Throwable {']
-  run='() -> original.call('+call+')' if ret!='void' else '() -> { original.call('+call+'); return null; }'
+  invocation='original.call(new Object[]{'+call+'})'
+  run='() -> '+invocation if ret!='void' else '() -> { '+invocation+'; return null; }'
   expr='NativeFence.invoke(this,"'+target+'#'+method+desc+'",new Object[]{'+call+'},'+run+')'
   body+=['  '+(expr+';' if ret=='void' else 'return ('+boxed.get(ret,ret)+')'+expr+';'), ' }']
  body+=['}'];code='\n'.join(body)+'\n';(out/(name+'.java')).write_text(code);(evidence/(name+'.java')).write_text(code)
