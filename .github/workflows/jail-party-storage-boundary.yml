@@ -1,0 +1,80 @@
+name: Pokemon custody persistence and ownership boundary
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/jail-standalone-extraction']
+    paths: ['.github/party-storage/**', '.github/workflows/jail-party-storage-boundary.yml']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: jail-party-storage-boundary-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native-boundary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [nbt, json]
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            unyielding-quests/*.gradle
+            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
+            combined-unyielding/smoke-harness/*.gradle
+      - name: Prove production source and private-copy tooling are unchanged
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin f5f68940ede91e7217af700c17379640416cf275
+          git diff --exit-code f5f68940ede91e7217af700c17379640416cf275 HEAD -- minecraft-jail unyielding-quests combined-unyielding currency-bridge iv-substitute-update model-hotfix riding-update settings-update tutorial-update tools
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: packed-wallet-verified-8e9716d94a932fe5110ae84abdc90adfe0017974
+          run-id: 43991171187
+          github-token: ${{ github.token }}
+          path: dist/original-verified/
+      - name: Stage exact approved pair and synthetic-only harness
+        run: |
+          set -euo pipefail
+          cd dist/original-verified
+          printf '%s\n' '5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e  Minecraft-Jail-1.2.0.jar' '61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7  Unyielding-1.2.0.jar' | sha256sum -c -
+          cd ../..
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp dist/original-verified/Unyielding-1.2.0.jar dist/120-release/
+          cp dist/original-verified/Minecraft-Jail-1.2.0.jar minecraft-jail/build/libs/
+          python3 .github/scripts/fetch-build-dependencies.py
+          python3 .github/party-storage/prepare.py
+      - name: Prepare disposable client displays
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Test native save completion failure rollback and ownership with actual restart
+        run: bash .github/party-storage/run.sh '${{ matrix.backend }}'
+      - name: Preserve synthetic evidence and exact test source
+        if: always()
+        run: |
+          mkdir -p dist/party-storage-source
+          git rev-parse HEAD > dist/party-storage-source/commit.txt
+          git diff --name-only f5f68940ede91e7217af700c17379640416cf275 HEAD > dist/party-storage-source/changed-files.txt
+          git archive --format=zip -o dist/party-storage-source/test-source.zip HEAD .github/party-storage .github/workflows/jail-party-storage-boundary.yml .github/workflows/jail-party-storage-audit.yml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: jail-party-storage-${{ matrix.backend }}-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/
+            dist/party-storage-source/
+            dist/packaged-harness/run-server/crash-reports/
+          retention-days: 30
+          if-no-files-found: error
