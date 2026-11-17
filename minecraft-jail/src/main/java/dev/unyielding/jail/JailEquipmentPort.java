@@ -26,6 +26,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     final JailVanillaPort vanilla;
     final UUID transaction;
     final boolean certified;
+    final boolean packedWallet;
     record Layout(Map<String,Object> canonical, Map<String,Container> normal, Map<String,Container> cosmetic,
                   List<AccessoryCustodyPolicy.Slot> slots) {}
     record Row(AccessoryCustodyPolicy.Slot id, ItemStack stack) {}
@@ -33,6 +34,11 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         this(player,transaction,retired,false);
     }
     public JailEquipmentPort(ServerPlayer player, UUID transaction, UUID retired,boolean certified) throws IOException {
+        this(player,transaction,retired,certified,false);
+    }
+    public JailEquipmentPort(ServerPlayer player, UUID transaction, UUID retired,boolean certified,boolean packedWallet) throws IOException {
+        if(packedWallet&&!certified)throw new IOException("Packed wallets require the certified coordinator");
+        this.packedWallet=packedWallet;
         this.player=player;this.transaction=transaction;this.vanilla=new JailVanillaPort(player,transaction,retired);
         this.certified=certified;
         JailHumanAudit.runtime(player);
@@ -46,7 +52,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     }
     private static Object call(String api,Object target,String method) throws IOException { return call(api,target,method,new Class<?>[0]); }
     @Override public UUID owner() { return player.getUUID(); }
-    private String policy(){return certified?"native-default-equipment-packed-coins-v2":"native-default-equipment-v1";}
+    private String policy(){return packedWallet?"native-default-equipment-packed-wallet-v1":certified?"native-default-equipment-packed-coins-v2":"native-default-equipment-v1";}
     @Override public boolean online() { return vanilla.online(); }
     private void versions() throws IOException {
         for (String row : VERSIONS.split(";")) {
@@ -112,7 +118,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     }
     @Override public void validateRemoval() throws IOException {
         if (!online()) throw new IOException("Player offline");
-        JailEquipmentEffects.supported(player,certified);
+        JailEquipmentEffects.supported(player,certified,packedWallet);
         Layout layout=layout();
         for (int slot=36;slot<=40;slot++) if (EnchantmentHelper.has(player.getInventory().getItem(slot),EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) throw new IOException("Bound vanilla equipment");
         for (Object c : layout.canonical().values()) if (!((Map<?,?>)call("io.wispforest.accessories.api.AccessoriesContainer",c,"getModifiers")).isEmpty()) throw new IOException("Unaudited slot modifiers");

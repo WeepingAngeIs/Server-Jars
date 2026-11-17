@@ -33,8 +33,9 @@ public final class JailIntegrated {
     }
     public static void stopped(MinecraftServer s){JailXp.stopped();var p=plans.remove(s);if(p!=null)try{p.close();}catch(IOException ignored){}checkpoint=b->{};}
     static final String EXPANDED="native-equipment-luck-v1";
+    static final String PACKED_WALLET="native-packed-wallet-v1";
     static final String SUPPORTED="native-supported-v2", RETAINED_XP="native-retained-xp-v3";
-    static boolean audited(String contract){return contract.equals(SUPPORTED)||contract.equals(RETAINED_XP);}
+    static boolean audited(String contract){return contract.equals(SUPPORTED)||contract.equals(RETAINED_XP)||contract.equals(PACKED_WALLET);}
     private static boolean equipped(String contract){return contract.equals(EXPANDED)||audited(contract);}
     private record Ports(JailVanillaCustody.InventoryPort inventory,JailOriginTransaction.Port origin,String contract){
         byte[] stable()throws IOException{return origin instanceof JailNativeOriginPort nativePort?nativePort.stableState():origin.current().state();}
@@ -42,10 +43,10 @@ public final class JailIntegrated {
     private static Ports ports(MinecraftServer server,ServerPlayer player,UUID id,UUID retired,String contract)throws IOException {
         if(contract.equals("human-empty-v1"))return new Ports(new JailVanillaPort(player,id,retired),new JailHumanPort(player,id,retired),contract);
         if(!equipped(contract))throw new IOException("Unsupported custody contract");
-        var inventory=new JailEquipmentPort(player,id,retired,audited(contract));byte[] existing=null;
+        var inventory=new JailEquipmentPort(player,id,retired,audited(contract),contract.equals(PACKED_WALLET));byte[] existing=null;
         Path path=root(server).resolve(id.toString()).resolve("origins");
         if(Files.exists(path,LinkOption.NOFOLLOW_LINKS))try(var origins=new JailEscrowJournal(JailCustodyService.journalPath(server,relative(id,"origins")))){if(origins.read(id)!=null)existing=JailOriginTransaction.intentForReview(origins,id,player.getUUID());}
-        return new Ports(inventory,contract.equals(RETAINED_XP)?new JailXpOriginPort(player,inventory,id,retired,existing):contract.equals(SUPPORTED)?new JailCertifiedOriginPort(player,inventory,id,retired,existing):new JailNativeOriginPort(player,inventory,id,retired,existing),contract);
+        return new Ports(inventory,contract.equals(RETAINED_XP)?new JailXpOriginPort(player,inventory,id,retired,existing):(contract.equals(SUPPORTED)||contract.equals(PACKED_WALLET))?new JailCertifiedOriginPort(player,inventory,id,retired,existing):new JailNativeOriginPort(player,inventory,id,retired,existing),contract);
     }
     private static UUID retired(MinecraftServer s,UUID owner)throws IOException {UUID result=null;for(var p:plans(s).list())if(p.owner().equals(owner)&&p.state()==JailEscrowJournal.State.COMPLETE)result=p.id();return result;}
     private static JailEscrowJournal.Entry outstanding(MinecraftServer s,UUID owner)throws IOException {
@@ -164,7 +165,7 @@ public final class JailIntegrated {
         return new EscapeContext(e.id(),ports.inventory(),ports.origin(),assignment(plan),b.digest());
     }
     static JailCustodyService.VerifiedAdapter adapter(MinecraftServer s,JailCustodyLedger.Binding b)throws IOException {
-        var e=plans(s).read(b.id());if(e==null||!e.owner().equals(b.owner())||!binding(s,e).equals(b)||!Set.of("human-empty-v1",EXPANDED,SUPPORTED,RETAINED_XP).contains(JailNbt.decode(e.snapshot()).getString("contract")))throw new IOException("No audited integrated command binding");
+        var e=plans(s).read(b.id());if(e==null||!e.owner().equals(b.owner())||!binding(s,e).equals(b)||!Set.of("human-empty-v1",EXPANDED,SUPPORTED,RETAINED_XP,PACKED_WALLET).contains(JailNbt.decode(e.snapshot()).getString("contract")))throw new IOException("No audited integrated command binding");
         ServerPlayer p=s.getPlayerList().getPlayer(b.owner());if(p==null)throw new IOException("Player offline; custody retained");CompoundTag plan=JailNbt.decode(e.snapshot());UUID retired=plan.hasUUID("retired")?plan.getUUID("retired"):null;
         final Ports ports=ports(s,p,b.id(),retired,plan.getString("contract"));
         return new JailCustodyService.VerifiedAdapter(){

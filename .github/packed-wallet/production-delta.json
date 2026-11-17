@@ -1,0 +1,29 @@
+{
+  "base": "9fc1f509000254a81ac3d6fc79a1dac4f51d323e",
+  "changed": {
+    "minecraft-jail/src/main/java/dev/unyielding/jail/JailEquipmentPort.java": {
+      "before": "5b55990811fb3bd130dbdc0d7374280a846f15fa7133b56360c17693ce98a102",
+      "after": "87e0e19789f47e40c9ae6bf5706f92b4e3bb392b68c75723271d578440421a77"
+    },
+    "minecraft-jail/src/main/java/dev/unyielding/jail/JailConfig.java": {
+      "before": "bf635097cecea7563741a1129806533bb5c72752899d40337ee93e44419c4429",
+      "after": "17d2a8b99244e05d0518b80b3b596d38bf66a1d23a56d776d513ef48fc7fa3e7"
+    },
+    "minecraft-jail/src/main/java/dev/unyielding/jail/JailIntegrated.java": {
+      "before": "8d00f62ae5255ba33a6572deec67ee0c6915006d40d82a252458dadcdd5c6dc4",
+      "after": "39f7e1a55a167fc0e08108c8047ab1cc7823efcaa4ce28cb1511ca5d0e08d669"
+    },
+    "minecraft-jail/src/main/java/dev/unyielding/jail/JailAdmissions.java": {
+      "before": "577b971ffe62c166a7dac52f3520e8b1f042c0681df87daa97abce0aa2444be5",
+      "after": "33c981c9ae4390e900583c27f2eb00d059808e46f2894312013bebd73679af63"
+    },
+    "minecraft-jail/src/main/java/dev/unyielding/jail/JailEquipmentEffects.java": {
+      "before": "df5fcfd52ac147a904fb60003766481d71519c0fb8dedebaa6629c8a8b714f43",
+      "after": "577ab52d02c9ee6331e25192e2d53add40949eba51754955831244ac0e5c0934"
+    }
+  },
+  "added": {
+    "minecraft-jail/src/main/java/dev/unyielding/jail/PackedWalletPolicy.java": "a6983197c99a5364b52343492052115c07dc3140307f7a1fb4af7fd522f53387",
+    "minecraft-jail/src/main/java/dev/unyielding/jail/JailPackedWallet.java": "efac26aaeb8fc7d4d826aeb3f77998a083e54a0a2f590ef1d22b760b4e95e616"
+  }
+}

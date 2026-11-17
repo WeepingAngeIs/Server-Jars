@@ -25,6 +25,17 @@ for source, target in manifest['moves']:
     expected = old(source)
     if source.endswith('.java'):
         expected = relocated_source(expected.decode('utf-8')).encode('utf-8')
+    # Explicit reviewed production deltas from the verified split. Never skip
+    # comparison for a whole directory or accept an arbitrary changed file.
+    delta_path = root / '.github/packed-wallet/production-delta.json'
+    if delta_path.exists():
+        import hashlib
+        delta = json.loads(delta_path.read_text())['changed'].get(target)
+        if delta is not None:
+            assert hashlib.sha256(expected).hexdigest() == delta['before'], f'Wrong increment base: {target}'
+            candidate = (root / target).read_bytes()
+            assert hashlib.sha256(candidate).hexdigest() == delta['after'], f'Unreviewed increment: {target}'
+            expected = candidate
     if target.endswith(CERTIFICATE):
         validate_extension(expected, (root / target).read_bytes())
     else:
