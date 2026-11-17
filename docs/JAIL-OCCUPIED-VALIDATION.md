@@ -35,6 +35,24 @@ assertions also require exact injected interruption errors, and preserve raw
 transition evidence per phase. Those additional assertions require their own run;
 the earlier green result must not be described as having run them.
 
+## Final strengthened run: verified
+
+Source `0bd7f3297d47b7de5e17ae79cba3b95c52b14f97`, Actions run
+https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44120884857 is green.
+The same candidate JAR SHA-256 was independently verified. All 89 unit tests and
+five native sessions passed, including the exact injected-error assertions.
+The stale party label is absent from the final report; Pokémon were not touched.
+
+Independent verification replayed checksums in the preserved raw journal frames:
+phase 2 PREPARED, phase 3 PREPARED → REMOVAL_STARTED, phase 4 PREPARED →
+REMOVAL_STARTED → HELD, phase 5 unchanged. The proposal bytes were identical in
+all four phases. Thus the interruption locations and absence of a duplicate
+commit are now confirmed from journal evidence, not merely a generic exception.
+
+Final artifact ZIP digests independently checked:
+- runtime artifact 14347015982: `8f64de0cb9625b3358a02b4106284a3ef5adeee4e7705f70c0d43b7588b1acbe`
+- build artifact 14343924764: `90b13f5d806d63b2eecd0031636c403648af3b6fdd083bdf5cefbf107aa5d050`
+
 ## Limits
 
 This is ONLY the explicitly pinned, artifact-bound c04a0564 predecessor. It does
