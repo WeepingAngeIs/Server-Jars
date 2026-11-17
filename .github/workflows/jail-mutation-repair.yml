@@ -22,35 +22,15 @@ jobs:
           import hashlib
           p=Path('.github/party-mutation/java/dev/unyielding/jail/party/live/MutationGate.java')
           s=p.read_text();assert hashlib.sha256(s.encode()).hexdigest()=='5530ce6c297046c96470e270fe640c34cfb795dcefcc16ca4b5158768f2ca827'
-          start=s.index('    private static Object payload(Context context,PartyCustodyGuard.Snapshot snapshot,boolean pc)throws Exception {')
-          end=s.index('    private static void verifyFile(',start)
-          replacement='''    private static Object payload(Context context,PartyCustodyGuard.Snapshot snapshot,boolean pc)throws Exception {
-                  if(context.adapter.getClass()==NBTStoreAdapter.class)return decodeTag(pc?snapshot.pc():snapshot.party());
-                  // Native JSON serialization and wire reconstruction stay within the same
-                  // non-inheritable capability and may touch constructor-tracked objects only.
-                  Construction build=new Construction(context);CONSTRUCT.set(build);
-                  try {
-                      var stores=new CobblemonSnapshotCodec(context.registries).decode(snapshot);
-                      var store=pc?stores.pc():stores.party();
-                      var gson=(com.google.gson.Gson)HandoffCoordinator.field(context.adapter,"gson");
-                      var tree=store.saveToJSON(new com.google.gson.JsonObject(),context.registries);
-                      String wire=gson.toJson(tree);
-                      var parsed=com.google.gson.JsonParser.parseString(wire).getAsJsonObject();
-                      HandoffCoordinator.requireJsonRoundTrip(store,parsed,context.registries);
-                      if(!gson.toJson(parsed).equals(wire))throw new IOException("Native JSON wire encoding changed");
-                      return parsed;
-                  }finally{CONSTRUCT.remove();}
-              }
-          '''
-          s=s[:start]+replacement+s[end:]
-          needle='"iterator","get","getFirstAvailablePosition","saveToNBT","removeDuplicates",'
+          needle='"loadFromNBT","loadFrom","saveToNBT","saveTo","removeDuplicates"'
           assert s.count(needle)==1
-          s=s.replace(needle,'"iterator","get","getFirstAvailablePosition","saveToNBT","saveToJSON","removeDuplicates",')
-          needle='if(!latest.commands().equals(s.commands)||!latest.snapshot().same(s.original))throw new IOException("Lost mutation metadata");'
+          s=s.replace(needle,'"loadFromNBT","loadFromJSON","loadFrom","saveToNBT","saveToJSON","saveTo","removeDuplicates"')
+          needle='                verifyCurrent(c,source);\n                j.commit(j.receipt(),state(source,origin,custody.receipt(),epoch,Phase.PREPARED'
           assert s.count(needle)==1
-          s=s.replace(needle,needle+'\n                if(s.epoch>=64)throw new IOException("Publication epoch limit; no implicit reset");')
+          s=s.replace(needle,'                if(epoch>=64)throw new IOException("Publication epoch limit; no implicit reset");\n'+needle)
+          assert hashlib.sha256(s.encode()).hexdigest()=='9d481491d292871dd20281dd53b8553d5ec118a56f586797035dd5cb3a4ca26a'
           p.write_text(s)
-          print('Repaired new-policy SHA256:',hashlib.sha256(s.encode()).hexdigest())
+          print('Verified exact repaired policy SHA256')
           PY
           git diff --check
           test "$(git diff --name-only)" = '.github/party-mutation/java/dev/unyielding/jail/party/live/MutationGate.java'
@@ -59,7 +39,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add .github/party-mutation/java/dev/unyielding/jail/party/live/MutationGate.java
-          git commit -m 'Keep native JSON wire verification inside newborn construction capability; refuse epoch exhaustion before commit'
+          git commit -m 'Permit native JSON codec operations only for private constructor-tracked objects; refuse epoch exhaustion before commit'
           git push origin HEAD:refs/heads/codex/jail-standalone-extraction
           mkdir -p dist/mutation-repair
           git rev-parse HEAD > dist/mutation-repair/commit.txt
