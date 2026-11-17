@@ -62,10 +62,13 @@ public final class PackedWalletProof {
             var record=journal.read(id);require(record!=null&&record.owner().equals(p.getUUID()),"Foreign/missing item owner");
             require(record.state()==JailEscrowJournal.State.HELD&&Arrays.equals(record.snapshot(),CertifiedJailSmoke.original),"Full wallet escrow snapshot changed");
         }
-        try(var plans=new JailEscrowJournal(CertifiedJailSmoke.world.resolve("integrated-jail-v1"))){
-            var plan=OriginCustodyPort.decode(plans.read(id).snapshot());
-            require("native-packed-wallet-v1".equals(plan.getString("contract")),"Wallet mislabelled as old custody contract");
-        }
+        // The coordinator already owns the exclusive command-journal lock. Read
+        // through that owner; never close it or create a second writer in a test.
+        var cache=JailIntegrated.class.getDeclaredField("plans");cache.setAccessible(true);
+        Object owned=((Map<?,?>)cache.get(null)).get(p.server);
+        require(owned instanceof JailEscrowJournal,"Coordinator command journal not owned");
+        var plan=OriginCustodyPort.decode(((JailEscrowJournal)owned).read(id).snapshot());
+        require("native-packed-wallet-v1".equals(plan.getString("contract")),"Wallet mislabelled as old custody contract");
         evidence.put("complete_wallet_owned_by_bound_escrow",true);
     }
     static void refuse(String label)throws Exception{
