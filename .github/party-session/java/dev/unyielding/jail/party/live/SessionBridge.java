@@ -50,6 +50,7 @@ public final class SessionBridge {
     static final UUID VISITOR=UUID.nameUUIDFromBytes("OfflinePlayer:Visitor".getBytes(StandardCharsets.UTF_8));
     static final UUID CONTROL=UUID.nameUUIDFromBytes("OfflinePlayer:Dev".getBytes(StandardCharsets.UTF_8));
     static final UUID QUARANTINE=UUID.nameUUIDFromBytes("jail-session-quarantine".getBytes(StandardCharsets.UTF_8));
+    static ServerPlayer callbackPlayer;static JsonObject callbackRequest;
     static final Map<String,Object> proof=new LinkedHashMap<>();
     static final Map<UUID,ConnectionLease> connections=new HashMap<>();
     static final List<Map<String,Object>> connectionHistory=new ArrayList<>();
@@ -110,6 +111,7 @@ public final class SessionBridge {
         control.set(0,PokemonProperties.Companion.parse("pikachu level=31"," ","=").create(visitor));control.get(0).setNickname(Component.literal("control-original"));
         var q=f.getPlayerParty(QUARANTINE,reg);var qp=f.getPC(QUARANTINE,reg);require(q.isEmpty()&&!qp.iterator().hasNext(),"Unexpected quarantine source");
         qp.resize(1,true,p->{throw new IllegalStateException("Overflow");});q.set(0,PokemonProperties.Companion.parse("eevee level=9"," ","=").create(visitor));
+        if(Boolean.getBoolean("uq.callbackContract"))SessionCallbackProbe.baseline(visitor);
         for(PokemonStore<?> store:List.of(sourceParty,pc,control,q,qp))f.save(store,reg);drain();
         CountDownLatch entered=new CountDownLatch(1),release=new CountDownLatch(1);
         executor().execute(()->{entered.countDown();try{release.await();}catch(InterruptedException e){Thread.currentThread().interrupt();}});
@@ -129,6 +131,9 @@ public final class SessionBridge {
         trace("custom-hello",p);
         if(!p.getUUID().equals(VISITOR)||!p.getGameProfile().getName().equals("Visitor")){flag("unrelated_connection_cannot_claim_target");send(p,"DENIED",label(request),null);return;}
         if(p.tickCount<100||GlobalProfile.manager()==null){send(p,"WAIT",label(request),null);return;}
+        if(!prepared&&Boolean.getBoolean("uq.callbackContract")&&p.serverLevel().getGameTime()%20!=0){
+            callbackPlayer=p;callbackRequest=request.deepCopy();send(p,"WAIT",label(request),null);return;
+        }
         if(!prepared)prepare(p);
         if(context==null){context=MutationGate.bind(GlobalProfile.manager(),GlobalProfile.factory(),GlobalProfile.adapter(),p.registryAccess());custody=HandoffCoordinator.open(state("custody"),binding(),VISITOR,p.registryAccess(),GlobalProfile.adapter());}
         ConnectionLease c=connections.get(p.getUUID());
@@ -138,6 +143,7 @@ public final class SessionBridge {
         connectionHistory.add(Map.of("index",visitorConnections,"nonce",c.nonce.toString(),"epoch",s.epoch(),"player_object",System.identityHashCode(p),"listener_object",System.identityHashCode(p.connection)));
         require(GlobalProfile.manager().getParty(p)==GlobalProfile.factory().getPlayerParty(p.getUUID(),p.registryAccess()),"Global manager/cache disagree");s.assertIntegrity();
         flag("global_player_overload_returns_only_current_graph");flag("actual_network_hello_received");
+        if(Boolean.getBoolean("uq.callbackContract"))SessionCallbackProbe.enrolled(p,s);
         if(retired!=null){
             require(!retired.valid&&retired.player!=p&&retired.listener!=p.connection&&!retired.nonce.equals(c.nonce),"Network identity reused");
             try{GlobalProfile.manager().getParty(retired.player);throw new IOException("Old ServerPlayer acquired current party");}catch(NativeFence.Denied expected){flag("old_serverplayer_reference_refused");}
@@ -228,6 +234,10 @@ public final class SessionBridge {
     @SubscribeEvent public static void tick(ServerTickEvent.Post event){
         if(!enabled()||done||server==null)return;
         try{
+            if(callbackPlayer!=null&&callbackPlayer.serverLevel().getGameTime()%20==0){
+                var p=callbackPlayer;var r=callbackRequest;callbackPlayer=null;callbackRequest=null;
+                SessionBoundary.request(p,r.toString());if(done)return;
+            }
             if(server.getTickCount()>6000)throw new IOException("Network fixture timeout");
             if(doneTick<0||server.getTickCount()-doneTick<8)return;
             drain();require(MutationGate.counters().getOrDefault("mixed-save-complete",0L)>autoBefore,"Global native autosave did not run");

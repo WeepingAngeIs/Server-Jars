@@ -43,3 +43,12 @@ filtering, native party-packet dropping and onPlayerDataSync suppression are dis
 Ownership fences and native mutation refusal remain intact. Lifecycle tracing is
 observational only. Failures are expected evidence, not a reason to weaken callbacks.
 This checkpoint is not a certification run; stop after collecting its first blocker.
+
+## Matched callback contract probe
+The callbackContract diagnostic executes the actual active player_tick_pre callbacks
+on the same server tick and exact captured party/PC state before and after enrollment.
+It records active resource hashes, biome, state digests and the first failure.
+A baseline mutation stops the experiment before enrollment because durable mutation
+semantics need a separate design. An enrolled outcome is recorded and stops the run;
+it is not a successful session/reconnect certification. No callback is canceled and
+no authority is widened. This is the first natural-biome fixture, not all biome cases.
