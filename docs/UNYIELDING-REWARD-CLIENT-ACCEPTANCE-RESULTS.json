@@ -1,0 +1,73 @@
+{
+  "version": "1.2.0",
+  "branch": "codex/unyielding-reward-client-acceptance",
+  "production_fix_source": "525277615acf927a29cce6a6069dc04a8c0f8ba1",
+  "tested_source": "b33d642bc9ccd03b9dbdf5944c1c290f98b7fdc7",
+  "candidate_sha256": "744be06c8fa5ad6001f1ba214608c4f7c1dde59664afe2bf8bf33405063512d8",
+  "candidate_raw_sha512": "08e0fcd861a42e5ef59333c344f0d937518cb46938396810bbed8e00ba6cc37f127f94fdf66f77e4eaeabc89b1bf1ecc04156af14bf3cfdd7599e763d1db776c",
+  "baseline": {
+    "source": "1afb007025daf8a0d2f85102210bf9d465e44ee0",
+    "sha256": "be397290bfbac8d8f0b1010d04daded458673eca2f97b6e0eff59272e2eec886",
+    "run_id": 44022982101,
+    "job_id": 133836521063,
+    "artifact_id": 14302555521,
+    "artifact_zip_sha256": "bb88cb1f30eab52273452d982ebdc83225aff827282f8b3d25f1e7b6fcccd543",
+    "native_passed": 15,
+    "native_failed": 1,
+    "real_disconnect_verified": true,
+    "failure": "Undefined Claim mode acted as claim-all for the caller's eligible quest"
+  },
+  "unit_build": {
+    "run_id": 44023859209,
+    "job_id": 133839402906,
+    "artifact_id": 14301743208,
+    "artifact_zip_sha256": "05e3dcbe950c142d4b34954432c46ae37816c101a9848b974559e27aaa86a493",
+    "passed": 69,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "native_cases_executed": 0,
+    "native_setup_failure": "Clients joined near the original 1800-tick startup limit"
+  },
+  "focused_native": {
+    "run_id": 44024899650,
+    "job_id": 133842767697,
+    "artifact_id": 14301829248,
+    "artifact_zip_sha256": "c5ce2818d1bdbd13effc75c570f118967d0379ae4ef5d34e75f32c7a20822c63",
+    "passed": 5,
+    "failures": 0,
+    "scope": "claims",
+    "build_and_units_repeated": false,
+    "real_disconnect_test_repeated": false,
+    "cases": [
+      "Incomplete, private and unknown quest/reward claim refusal",
+      "Individual and duplicate cross-mode claims grant one native reward and private credit",
+      "Undefined modes -1 and 3 have no reward effects",
+      "Valid modes 1 and 2 preserve personal credits and ownership",
+      "Real quest credit to native UI redemption and both token/claim replay refusal"
+    ]
+  },
+  "jar_entry_comparison_to_ground_baseline": {
+    "added": [],
+    "removed": [],
+    "changed": [
+      "dev/unyielding/quests/quest/QuestManager$1.class",
+      "dev/unyielding/quests/quest/QuestManager.class"
+    ]
+  },
+  "unchanged_token_ui_baseline_passes": 12,
+  "private_or_live_data_used": false,
+  "jail_loaded_or_modified": false,
+  "jail_certificate_updated_or_required": false,
+  "installed_or_deployed": false,
+  "heavy_runtime_location": "GitHub-hosted runners",
+  "limits": [
+    "Twelve token/UI passes are exact baseline evidence, not reruns on the changed candidate",
+    "Connected-client prizes are deterministic native items, not all Pokemon/PC delivery paths",
+    "Native server starter flags are controlled; starter selection UI is not completed",
+    "RETURNED is not an atomic durable inventory/PC receipt across crashes",
+    "No authoritative private rank/provider or live-server policy verification",
+    "No full-pack or actual old-save migration certification",
+    "No repeated basic Mawile feeding test; user-observed Diversity >= 8 behavior remains separately recorded"
+  ]
+}
