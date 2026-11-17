@@ -125,8 +125,9 @@ public class TeamScreen extends Screen {
                     create.active = ClientData.canCreateParty;
                     addRenderableWidget(create);
                 } else {
-                    memberSearchBox = box(px + 14, y + 28, 130, "Search members", memberSearch, 32);
-                    addRenderableWidget(new SpriteButton(px + 148, y + 28, 48, 20, Component.literal("Find"), null, Ui.Style.NORMAL, x -> searchMembers()));
+                    int searchWidth = Math.min(130, pw - 182);
+                    memberSearchBox = box(px + 14, y + 28, searchWidth, "Search members", memberSearch, 32);
+                    addRenderableWidget(new SpriteButton(px + 18 + searchWidth, y + 28, 48, 20, Component.literal("Find"), null, Ui.Style.NORMAL, x -> searchMembers()));
                     int pageCount = memberPageCount(mine);
                     memberPage = Math.max(0, Math.min(memberPage, pageCount - 1));
                     SpriteButton prev = addRenderableWidget(new SpriteButton(px + pw - 110, y + 28, 42, 20, Component.literal("<"), null, Ui.Style.NORMAL, x -> { memberPage--; rebuildWidgets(); }));
@@ -135,14 +136,16 @@ public class TeamScreen extends Screen {
                     next.active = memberPage + 1 < pageCount;
                     buildMemberButtons(mine, y + 52);
                     int by = py + ph - 30;
-                    inviteBox = box(px + 14, by, 130, "Player name", "", 32);
-                    addRenderableWidget(new SpriteButton(px + 150, by, 60, 20, Component.literal("Invite"), Ui.ICON_JOIN, Ui.Style.ACCENT, x -> {
+                    boolean owner = mine.rankOf(me()) == Team.Rank.OWNER;
+                    int leaveX = px + pw - 14 - 58 - (owner ? 66 : 0);
+                    int inviteX = mine.type == Team.Type.PARTY ? Math.min(px + 150, leaveX - 68) : px + 150;
+                    inviteBox = box(px + 14, by, inviteX - px - 20, "Player name", "", 32);
+                    addRenderableWidget(new SpriteButton(inviteX, by, 60, 20, Component.literal("Invite"), Ui.ICON_JOIN, Ui.Style.ACCENT, x -> {
                         send("invite", inviteBox.getValue(), "");
                         inviteBox.setValue("");
                     }));
-                    boolean owner = mine.rankOf(me()) == Team.Rank.OWNER;
                     if (mine.type == Team.Type.PARTY) {
-                        addRenderableWidget(new SpriteButton(px + pw - 14 - 58 - (owner ? 66 : 0), by, 58, 20, Component.literal("Leave"), null, Ui.Style.NORMAL,
+                        addRenderableWidget(new SpriteButton(leaveX, by, 58, 20, Component.literal("Leave"), null, Ui.Style.NORMAL,
                                 x -> send("leave", "", "")));
                         if (owner) {
                             addRenderableWidget(new SpriteButton(px + pw - 14 - 62, by, 62, 20, Component.literal("Disband"), null, Ui.Style.ACCENT,
