@@ -1,0 +1,32 @@
+{
+  "initial_checkpoint": "1887533647c85f76b052516bccbd22e6f591b3d1",
+  "prior_report": "a43219a6c89317bd4fb5167a96ae7ed363c7836a",
+  "diagnostic_commit": "f22ac63a6519afdf2521ae5c8c5d9bb0680aadd8",
+  "native_repair_commit": "35ce816e9659647765894c9fce025d84410af31b",
+  "tested_commit": "87c2b6383ea528b1d604f415c0ffab49131884ac",
+  "run_id": 44019522739,
+  "attempt": 1,
+  "conclusion": "success",
+  "runtime_phases": 6,
+  "required_observations_per_backend": 61,
+  "extra_json_observations": 2,
+  "unique_harness_tests": 7,
+  "earlier_guard_tests_reused_not_rerun": 34,
+  "production_changed": false,
+  "nonempty_admission_enabled": false,
+  "player_handback_verified": false,
+  "artifacts": {
+    "nbt": {"id": 14300392531, "sha256": "15fe519ae2777b6a04ad578b48c7de0f1a77feacda238cd378ccd7686be6c6d7"},
+    "json": {"id": 14299894902, "sha256": "f63d6aca4cb8718dfe2649a6543396f230c73de8eff81c402a83a5169c092ba5"},
+    "gate": {"id": 14300397954, "sha256": "15c4d2ff9cc032582fe0b3ef0750d65664433c7b761cab9997a4713d5f45b812"}
+  },
+  "jail_sha256": "5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e",
+  "companion_sha256": "61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7",
+  "remaining": [
+    "Fresh-object player handback and safe fence retirement",
+    "Gameplay actions, callbacks, packets and preexisting battle/trade/riding objects",
+    "Mixed-owner autosave/shutdown and safe player-facing denial handling",
+    "Actual admission/release/death/respawn/disconnect-custody",
+    "Private full-pack and occupied old-save migration"
+  ]
+}
