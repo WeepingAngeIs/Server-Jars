@@ -27,6 +27,9 @@ public final class ClientChecks {
             if(reconnect>0){if(--reconnect==0)ConnectScreen.startConnecting(new TitleScreen(),mc,ServerAddress.parseString("127.0.0.1:25565"),new ServerData("Ground fixture","127.0.0.1:25565",ServerData.Type.OTHER),false,null);return;}
             if(mc.player==null)return;name=mc.player.getGameProfile().getName();
             if(!name.equals("Dev")&&!name.equals("Visitor"))return;
+            if(mc.level==null||mc.player.tickCount<100)return;
+            Files.createDirectories(ROOT);
+            Files.writeString(ROOT.resolve(name+".ready"),mc.player.getUUID().toString());
             Path file=ROOT.resolve(name+".txt");if(!Files.exists(file))return;
             String value=Files.readString(file);if(value.equals(seen))return;
             String[] a=value.split("\t",-1);token=a[0];mc.setScreen(null);

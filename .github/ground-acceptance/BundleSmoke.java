@@ -35,6 +35,7 @@ public final class BundleSmoke {
     static final AABB AREA=new AABB(95,70,115,150,95,145);
     static MinecraftServer server;static int tick,start,step,stageTick,sequence,phase;
     static boolean initialized,done,realDisconnect;
+    static boolean plotReady;static int initializedAt,probeAt;static ItemEntity readinessProbe;
     static String marker;static ItemEntity a,b;static UUID oldA,oldB;static CompoundTag expected,expectedSecond;
     static int rememberedEpoch;static ServerPlayer oldPlayer;static long reconnectDeadline;
     static final Map<String,String> commands=new HashMap<>();static final Map<String,Integer> commandTicks=new HashMap<>();
@@ -224,7 +225,16 @@ public final class BundleSmoke {
     void tick(ServerTickEvent.Post event){
         if(done||!"true".equals(System.getenv("GITHUB_ACTIONS"))||!"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT")))return;server=event.getServer();tick++;
         try{
-            if(!initialized){if(dev()==null||visitor()==null||tick<120)return;initialized=true;initialize();}
+            if(!initialized){if(dev()==null||visitor()==null||tick<120||dev().tickCount<100||visitor().tickCount<100)return;
+                for(var p:List.of(dev(),visitor())){var ready=CONTROL.resolve(p.getGameProfile().getName()+".ready");if(!Files.exists(ready)||!Files.readString(ready).equals(p.getUUID().toString()))return;}
+                initialized=true;initialize();initializedAt=tick;}
+            if(!plotReady){
+                require(tick-initializedAt<500,"Fixture plot did not become entity-ticking");
+                if(tick-initializedAt<40)return;
+                if(readinessProbe==null){marker="readiness probe";readinessProbe=spawn(stack(Items.STONE,1),0,0);probeAt=tick;return;}
+                if(readinessProbe.tickCount>=5&&items().contains(readinessProbe)){readinessProbe.discard();plotReady=true;diagnostics.put("plot_ready_after_ticks",tick-initializedAt);return;}
+                if(tick-probeAt>60){readinessProbe.discard();readinessProbe=null;}return;
+            }
             if(cases.isEmpty()){completed();return;}
             var current=cases.peek();if(start==0){if(dev()==null||visitor()==null)return;start=tick;stageTick=tick;step=0;System.out.println("GROUND START "+current.name());}
             try{require(tick-start<500,"Case timed out at step "+step);current.body().tick();}
