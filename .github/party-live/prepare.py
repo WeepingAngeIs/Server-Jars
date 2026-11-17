@@ -10,11 +10,11 @@ for base in [R/'minecraft-jail/src/partySafety/java',R/'minecraft-jail/src/party
  for p in base.rglob('*.java'):
   target=dst/p.relative_to(base);target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target)
 subprocess.run(['python3','.github/party-live/generate.py'],cwd=R,check=True)
-# Preserve the pinned writer's string-concatenation recipes, absent from the earlier
-# non-verbose audit. Do not guess a temporary-file suffix or broaden the IO scope.
+# Capture and assert the actual pinned native temporary and backup filename recipes.
 jar=next(p for p in (h/'libs').glob('*.jar') if p.name.startswith('Cobblemon-'))
 layout=subprocess.check_output(['javap','-p','-c','-v','-classpath',str(jar),'com.cobblemon.mod.common.api.storage.adapter.flatfile.OneToOneFileStoreAdapter'],text=True)
 (R/'dist/packaged-smoke/native-file-layout.javap').write_text(layout)
+assert r'\u0001.temp' in layout and r'\u0001.old' in layout
 print('PINNED NATIVE FILE RECIPES\n'+layout[layout.index('BootstrapMethods:'):])
 meta=h/'src/main/resources/META-INF/neoforge.mods.toml'
 assert meta.exists();meta.write_text(meta.read_text()+'\n[[mixins]]\nconfig="party-live.mixins.json"\n')

@@ -66,6 +66,7 @@ public final class LiveFenceProbe {
         require(party.isEmpty(),"Refuse re-seeding existing native party");pc.resize(1,true,p->{throw new IllegalStateException("Unexpected overflow");});
         party.set(0,PokemonProperties.Companion.parse("eevee level=17 shiny=yes"," ","=").create(player));
         party.set(5,PokemonProperties.Companion.parse("pikachu level=23"," ","=").create(player));
+        party.get(0).setScaleModifier(1.1f); // deterministic float32 wire/native equality regression
         f.save(party,player.registryAccess());f.save(pc,player.registryAccess());drain(f);
         f.save(party,player.registryAccess());drain(f);
         var s=new CobblemonSnapshotCodec(player.registryAccess()).capture(owner(label),HandoffCoordinator.providerIdentity(a),party,pc);
@@ -86,10 +87,47 @@ public final class LiveFenceProbe {
         var loaded=(PlayerPartyStore)x.adapter.load(PlayerPartyStore.class,owner(label),player.registryAccess());
         require(before.equals(loaded.saveToNBT(new CompoundTag(),player.registryAccess())),"Unenrolled source changed");x.factory.shutdown(player.registryAccess());require(executor(x.factory).isTerminated(),"Native shutdown blocked by method lock");flag("unrelated_native_owner_unchanged");
     }
+    static void payloadRegression(Fixture x)throws Exception {
+        if(!backend.equals("json")){flag("payload_native_state_regression");return;}
+        Gson gson=(Gson)HandoffCoordinator.field(x.adapter,"gson");
+        JsonObject nativeTree=x.party.saveToJSON(new JsonObject(),player.registryAccess());
+        JsonObject wire=JsonParser.parseString(gson.toJson(nativeTree)).getAsJsonObject();
+        proof.put("json_tree_representation_differs",!nativeTree.equals(wire));
+        HandoffCoordinator.requireJsonRoundTrip(x.party,wire,player.registryAccess());
+        var foreign=new PlayerPartyStore(owner("json-negative"));
+        ioDenied("json_changed_state_refused",()->HandoffCoordinator.requireJsonRoundTrip(x.party,foreign.saveToJSON(new JsonObject(),player.registryAccess()),player.registryAccess()));
+        require(Float.floatToIntBits(x.party.get(0).getScaleModifier())==Float.floatToIntBits(1.1f),"Native float changed");
+        flag("payload_native_state_regression");
+    }
+    static void scopeRegression(PartyCustodyGuard.Snapshot state,Fixture x)throws Exception {
+        Path current=file("primary",x.adapter);byte[] before=Files.readAllBytes(current);
+        Object exact=NativeFence.payload(state,false);
+        Object changed;
+        if(exact instanceof CompoundTag tag){var copy=tag.copy();copy.putString("unexpected","do not write");changed=copy;}
+        else {var copy=((JsonObject)exact).deepCopy();copy.addProperty("unexpected","do not write");changed=copy;}
+        ioDenied("unfrozen_payload_refused",()->NativeFence.write(state,x.adapter,current,changed,()->{throw new AssertionError("Unfrozen operation ran");}));
+        var other=adapter("scope-other");AtomicReference<Future<?>> worker=new AtomicReference<>();
+        NativeFence.write(state,x.adapter,current,exact,()->{
+            denied("scope_does_not_allow_native_load",()->x.adapter.load(PlayerPartyStore.class,state.owner(),player.registryAccess()));
+            denied("scope_refuses_wrong_temporary_path",()->x.adapter.save(new File(current+".tmp"),exact));
+            denied("scope_refuses_backup_write",()->x.adapter.save(new File(current+".old"),exact));
+            denied("scope_refuses_wrong_owner",()->x.adapter.save(PlayerPartyStore.class,UUID.randomUUID(),exact));
+            denied("scope_refuses_mutated_payload",()->x.adapter.save(new File(current+".temp"),changed));
+            denied("scope_refuses_other_adapter",()->other.save(new File(current+".temp"),exact));
+            worker.set(executor(x.factory).submit(()->x.adapter.save(PlayerPartyStore.class,state.owner(),exact)));
+            return null;
+        });
+        try{worker.get().get(20,TimeUnit.SECONDS);throw new IllegalStateException("Worker inherited IO privilege");}
+        catch(ExecutionException expected){require(expected.getCause() instanceof NativeFence.Denied,"Wrong asynchronous failure");flag("scope_not_inherited_by_worker");}
+        denied("scope_removed_after_use",()->x.adapter.save(PlayerPartyStore.class,state.owner(),exact));
+        require(Arrays.equals(before,Files.readAllBytes(current))&&!Files.exists(Path.of(current+".temp"))&&!Files.exists(Path.of(current+".tmp")),"Negative scope probe changed source");
+        flag("scope_probes_preserve_native_bytes");
+    }
     static void first()throws Exception {
         var x=seed("primary");var oldMon=x.party.get(0);var iterator=x.party.iterator();var oldBox=x.pc.getBoxes().getFirst();
         CompoundTag rawData=(CompoundTag)oldMon.getClass().getMethod("getPersistentData").invoke(oldMon);
         var manager=new PokemonStoreManager();manager.registerFactory(Priority.HIGHEST,x.factory);
+        payloadRegression(x);
         CountDownLatch entered=new CountDownLatch(1),release=new CountDownLatch(1),failed=new CountDownLatch(1);AtomicReference<Throwable> workerError=new AtomicReference<>();
         executor(x.factory).submit(()->Thread.currentThread().setUncaughtExceptionHandler((t,e)->{workerError.set(e);failed.countDown();})).get();
         executor(x.factory).execute(()->{entered.countDown();try{release.await();}catch(InterruptedException e){Thread.currentThread().interrupt();}});
@@ -100,6 +138,7 @@ public final class LiveFenceProbe {
             require(handoff.owned().partyIds().isEmpty(),"Managed source not empty");handoff.verifyNative(handoff.owned());flag("fence_reserve_native_empty_then_seal_order");
             release.countDown();drain(x.factory);require(failed.await(10,TimeUnit.SECONDS)&&workerError.get() instanceof NativeFence.Denied,"Stale native worker did not hit actual fence");
             handoff.verifyNative(handoff.owned());flag("pre_enrollment_queued_write_denied_at_execution");
+            scopeRegression(handoff.owned(),x);
             denied("manager_party_denied",()->manager.getParty(owner("primary"),player.registryAccess()));
             denied("manager_pc_denied",()->manager.getPC(owner("primary"),player.registryAccess()));
             denied("manager_parties_denied",()->manager.getParties(owner("primary"),player.registryAccess()));

@@ -1,5 +1,6 @@
 package dev.unyielding.jail.party.live;
 
+import com.cobblemon.mod.common.api.storage.PokemonStore;
 import com.cobblemon.mod.common.api.storage.adapter.flatfile.*;
 import com.cobblemon.mod.common.api.storage.factory.FileBackedPokemonStoreFactory;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
@@ -91,12 +92,30 @@ public final class HandoffCoordinator implements AutoCloseable {
             var tag=store.saveToNBT(new CompoundTag(),registries);var bytes=new ByteArrayOutputStream();try(var out=new DataOutputStream(bytes)){NbtIo.write(tag,out);}
             byte[] result=bytes.toByteArray();try(var in=new DataInputStream(new ByteArrayInputStream(result))){if(!tag.equals(NbtIo.read(in,NbtAccounter.create(4L*1024*1024)))||in.available()!=0)throw new IOException("Native payload roundtrip failed");}return result;
         }
-        var json=store.saveToJSON(new JsonObject(),registries);byte[] bytes=json.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8);
-        if(!JsonParser.parseString(new String(bytes,java.nio.charset.StandardCharsets.UTF_8)).equals(json))throw new IOException("Native JSON roundtrip failed");return bytes;
+        var json=store.saveToJSON(new JsonObject(),registries);
+        // Freeze the actual native writer's representation, not a differently configured Gson.
+        Gson gson=(Gson)field(adapter,"gson");String wire=gson.toJson(json);
+        JsonObject parsed=JsonParser.parseString(wire).getAsJsonObject();
+        requireJsonRoundTrip(store,parsed,registries);
+        if(!gson.toJson(parsed).equals(wire))throw new IOException("Native JSON wire encoding is not stable");
+        return wire.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+    }
+    /** Before enrollment only: numeric representations may differ, native state may not. */
+    static void requireJsonRoundTrip(PokemonStore<?> original,JsonObject wire,RegistryAccess registries)throws IOException {
+        try {
+            PokemonStore<?> restored;
+            if(original.getClass()==PlayerPartyStore.class)restored=new PlayerPartyStore(original.getUuid());
+            else if(original.getClass()==PCStore.class)restored=new PCStore(original.getUuid());
+            else throw new IOException("Unknown JSON store type");
+            restored.loadFromJSON(wire.deepCopy(),registries);
+            if(!original.getUuid().equals(restored.getUuid())
+                    ||!original.saveToNBT(new CompoundTag(),registries).equals(restored.saveToNBT(new CompoundTag(),registries)))
+                throw new IOException("Native JSON reconstruction changed complete state or identity");
+        }catch(IOException e){throw e;}catch(RuntimeException e){throw new IOException("Native JSON reconstruction failed",e);}
     }
     private void writeExact(PartyCustodyGuard.Snapshot expected)throws Exception {
         Object payload=payload(expected,false);
-        NativeFence.write(owner,adapter,current,payload,()->{adapter.save(PlayerPartyStore.class,owner,payload);return null;});
+        NativeFence.write(expected,adapter,current,payload,()->{adapter.save(PlayerPartyStore.class,owner,payload);return null;});
         // This is synchronous reviewed adapter IO under the global method lock, NOT the native queue's void save.
         try(var channel=FileChannel.open(current,StandardOpenOption.WRITE)){channel.force(true);}
         try(var directory=FileChannel.open(current.getParent(),StandardOpenOption.READ)){directory.force(true);}

@@ -1,6 +1,8 @@
 package dev.unyielding.jail.party.live;
 
 import com.cobblemon.mod.common.api.storage.PokemonStore;
+import com.cobblemon.mod.common.api.storage.adapter.flatfile.*;
+import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.api.storage.pc.PCBox;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.google.gson.*;
@@ -105,8 +107,12 @@ public final class NativeFence {
         boot();
         LOCK.lock();try {
             ensure();Set<UUID> affected=new HashSet<>();collect(receiver,affected);for(Object arg:arguments)collect(arg,affected);
+            Scope active=SCOPE.get();
+            if(active!=null&&!allowed(receiver,key,arguments,active.owner()))deny(key+":scope");
             for(UUID owner:affected)if(!allowed(receiver,key,arguments,owner))deny(key);
-            Object result=operation.run();Set<UUID> output=new HashSet<>();collect(result,output);
+            Object result=operation.run();
+            if(active!=null&&!allowed(receiver,key,arguments,active.owner()))deny(key+":changed-input");
+            Set<UUID> output=new HashSet<>();collect(result,output);
             for(UUID owner:output)if(!allowed(receiver,key,arguments,owner))deny(key+":return");
             return result;
         }finally{LOCK.unlock();}
@@ -114,18 +120,37 @@ public final class NativeFence {
     private static void ensure(){if(!ready||catalog==null)throw new Denied("Native fence not initialized or uncertain; no fallthrough");}
     private static void deny(String key){DENIALS.merge(key,1L,Long::sum);throw new Denied("Native custody ownership fence: "+key);}
     private static boolean allowed(Object receiver,String key,Object[] args,UUID owner) {
-        Scope s=SCOPE.get();if(s==null||!s.owner().equals(owner))return false;
-        String method=key.substring(key.indexOf('#')+1,key.indexOf('('));
-        if(receiver!=s.adapter())return false;
-        if(!(method.equals("save")||method.equals("load")||method.equals("provide")))return false;
-        for(Object arg:args){
-            if(arg instanceof File file){Path p=file.toPath().toAbsolutePath().normalize();String base=s.current().toString();if(!p.toString().equals(base)&&!p.toString().equals(base+".tmp"))return false;}
-            if((arg instanceof CompoundTag||arg instanceof JsonObject)&&!arg.equals(s.payload()))return false;
-        }
-        return true;
+        Scope s=SCOPE.get();if(s==null||!s.owner().equals(owner)||receiver!=s.adapter())return false;
+        // Only the pinned synchronous writer and its two bridge/typed save calls.
+        // No native load, reconstruction, provider lookup or cleanup is privileged.
+        String prefix="com.cobblemon.mod.common.api.storage.adapter.flatfile.";
+        if(key.equals(prefix+"OneToOneFileStoreAdapter#save(Ljava/lang/Class;Ljava/util/UUID;Ljava/lang/Object;)V"))
+            return args.length==3&&args[0]==PlayerPartyStore.class&&owner.equals(args[1])&&s.payload().equals(args[2]);
+        String adapter=s.adapter().getClass()==NBTStoreAdapter.class?"NBTStoreAdapter":"JSONStoreAdapter";
+        String type=adapter.equals("NBTStoreAdapter")?"Lnet/minecraft/nbt/CompoundTag;":"Lcom/google/gson/JsonObject;";
+        if(!key.equals(prefix+adapter+"#save(Ljava/io/File;Ljava/lang/Object;)V")
+                &&!key.equals(prefix+adapter+"#save(Ljava/io/File;"+type+")V"))return false;
+        if(args.length!=2||!(args[0] instanceof File file)||!s.payload().equals(args[1]))return false;
+        Path requested=file.toPath().toAbsolutePath();
+        // Pinned bytecode recipe is current + ".temp", NOT ".tmp". No wildcard.
+        return requested.equals(requested.normalize())&&requested.equals(Path.of(s.current()+".temp"));
     }
-    /** No public bypass scope. HandoffCoordinator is the only internal scope caller. */
-    static Object write(UUID owner,Object adapter,Path current,Object payload,Call call)throws Exception{return scope(new Scope(owner,adapter,current.toAbsolutePath().normalize(),payload),call);}
+    /** Only an exact frozen catalog payload may enter the non-inheritable write scope. */
+    static Object write(PartyCustodyGuard.Snapshot expected,Object adapter,Path current,Object candidate,Call call)throws Exception {
+        if(!(adapter instanceof OneToOneFileStoreAdapter<?> nativeAdapter))throw new IOException("Unknown native adapter");
+        Object frozen=payload(expected,false); // fresh inert copy, independent of mutable IO input
+        if(!frozen.equals(candidate)||!expected.provider().equals(HandoffCoordinator.providerIdentity(nativeAdapter)))
+            throw new IOException("Unfrozen payload or foreign provider");
+        Path path=current.toAbsolutePath().normalize();
+        if(!path.equals(nativeAdapter.getFile(PlayerPartyStore.class,expected.owner()).toPath().toAbsolutePath().normalize())
+                ||!Files.isRegularFile(path,LinkOption.NOFOLLOW_LINKS)||!path.equals(path.toRealPath())
+                ||!path.getParent().equals(path.getParent().toRealPath()))throw new IOException("Foreign or unsafe native path");
+        Path temp=Path.of(path+".temp"),old=Path.of(path+".old");
+        if(Files.exists(temp,LinkOption.NOFOLLOW_LINKS))throw new IOException("Uncertain preexisting native temporary file");
+        if(Files.exists(old,LinkOption.NOFOLLOW_LINKS)&&(!Files.isRegularFile(old,LinkOption.NOFOLLOW_LINKS)||!old.equals(old.toRealPath())))
+            throw new IOException("Unsafe native backup destination");
+        return scope(new Scope(expected.owner(),adapter,path,frozen),call);
+    }
     private static Object scope(Scope scope,Call call)throws Exception {
         LOCK.lock();try {
             ensure();entry(scope.owner());if(SCOPE.get()!=null)throw new IOException("Nested privileged scope refused");
