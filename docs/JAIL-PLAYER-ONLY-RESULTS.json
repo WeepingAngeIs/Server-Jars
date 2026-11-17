@@ -1,0 +1,29 @@
+{
+  "baseline_shared_commit": "5948ccabbfc24f81e620f7e3504e0906e4a50108",
+  "branch": "codex/jail-player-only-autorespawn",
+  "runtime_implementation_commit": "933195877deecb73570edf0fc4280f4d2f463eff",
+  "tested_commit": "9f0058f27ef0495ec8fab67a998b07c82e9c252d",
+  "run_id": 44092346048,
+  "attempt": 1,
+  "conclusion": "success",
+  "server_starts": 3,
+  "required_runtime_observations": 19,
+  "automatic_respawns": 2,
+  "client_respawn_requests": 0,
+  "jail_unit_tests": {"tests": 65, "failures": 0, "errors": 0, "skipped": 0},
+  "independent_verification_passed": true,
+  "test_mod_only": true,
+  "production_changed": false,
+  "shared_branch_modified": false,
+  "pokemon_custody_installed": false,
+  "deployed": false,
+  "unchanged_binaries": {
+    "Minecraft-Jail-1.2.0.jar": "5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e",
+    "Unyielding-1.2.0.jar": "61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7"
+  },
+  "artifacts": {
+    "runtime": {"id": 14332911505, "sha256": "38d5412aabd3b472436831f206fb9e2865a9556524c9c2b9b6d7777ecbbe8dbe"},
+    "verified": {"id": 14332227948, "sha256": "5f3b0399b53ec4a133292dd84647636e1f8b5dd4c109297cdb0e0fb917fee8d8"}
+  },
+  "limits": ["production inclusion not authorized", "full private modpack and old-save migration not run", "existing bounded origin/equipment/wallet restrictions preserved", "hardcore refused", "ambiguous death remains quarantined", "ordinary Pokemon behavior untouched"]
+}
