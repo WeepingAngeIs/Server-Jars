@@ -1,0 +1,153 @@
+{
+  "version": "1.2.0",
+  "branch": "codex/unyielding-compact-navigation",
+  "tested_source": "cdd1ea8c874730193453c816b2ebc6b753f1995a",
+  "run_id": 44080965102,
+  "job_id": 134031126935,
+  "artifact_id": 14326653733,
+  "artifact_zip_sha256": "9d2524e404758a03eb7fcb7ed52b19f9da1e8dd5a7d01ba4d79b65fabe76a570",
+  "candidate_sha256": "9975ec46f65bcab44fb819f00adb854a10071b6158c56b1ac78f7695af634a40",
+  "candidate_raw_sha512": "eb725e37dc0bd8a27f4cff60f29c27613d92cc8be4ddcdc862a3c3e0a39bb32247e8ef437ebba40513278e9d07171fb6e56d6bf4c3208e81e9bc8ddd3fddc228",
+  "native_passed": 3,
+  "native_failures": 0,
+  "cases": [
+    "passed: compact owner roster first/last/search controls are bounded disjoint and readable",
+    "passed: compact native quest search and one STARTED filter remain accessible and readable",
+    "passed: compact Pin Party goal Unpin and close preserve distinct personal counters"
+  ],
+  "units": {
+    "tests": 69,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "unit_result_files": 15,
+  "baseline": {
+    "source": "f0cacad89288fc7d83d277c5de6e9033ac1f35e0",
+    "run_id": 44079788061,
+    "job_id": 134027070228,
+    "artifact_id": 14327026420,
+    "artifact_zip_sha256": "6165a43ae56f0ac1bc6407e95d18e80788bce6f244711340bd7cf03ca49fe959",
+    "candidate_sha256": "216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504",
+    "native_passed": 2,
+    "native_failures": 1,
+    "production_rebuilt": false,
+    "cases": [
+      "failed: compact owner roster first/last/search controls are bounded disjoint and readable at step 1 => java.lang.IllegalStateException: Native compact action failed after evidence and ordered receipt: 1\tfailed: first page: overlapping native controls Rect[label=Find, x=156, y=94, w=48, h=20] / Rect[label=<, x=202, y=94, w=42, h=20]; first page: overlapping native controls Rect[label=Invite, x=158, y=202, w=60, h=20] / Rect[label=Leave, x=174, y=202, w=58, h=20]; last page: overlapping native controls Rect[label=Find, x=156, y=94, w=48, h=20] / Rect[label=<, x=202, y=94, w=42, h=20]; last page: overlapping native controls Rect[label=Invite, x=158, y=202, w=60, h=20] / Rect[label=Leave, x=174, y=202, w=58, h=20]; search result: overlapping native controls Rect[label=Find, x=156, y=94, w=48, h=20] / Rect[label=<, x=202, y=94, w=42, h=20]; search result: overlapping native controls Rect[label=Invite, x=158, y=202, w=60, h=20] / Rect[label=Leave, x=174, y=202, w=58, h=20]",
+      "passed: compact native quest search and one STARTED filter remain accessible and readable",
+      "passed: compact Pin Party goal Unpin and close preserve distinct personal counters"
+    ],
+    "reproduced_gui_overlaps": {
+      "Find_previous_page_pixels": 2,
+      "Invite_Leave_pixels": 44
+    }
+  },
+  "production_change": "Only responsive widths/positions in TeamScreen for compact roster search and invite footer; callbacks and roles unchanged",
+  "art_phase_or_asset_changes": false,
+  "changed_jar_entries": [
+    "dev/unyielding/quests/client/TeamScreen$1.class",
+    "dev/unyielding/quests/client/TeamScreen.class"
+  ],
+  "added_or_removed_jar_entries": [],
+  "all_other_jar_entry_bytes_preserved": true,
+  "compiler_companion_review": {
+    "class": "TeamScreen$1.class",
+    "byte_count": 821,
+    "different_bytes": 1,
+    "offset_zero_based": 742,
+    "difference": "LineNumberTable source line370 ->373",
+    "executable_code_sha256_before_and_after": "eaf2905718b636ee2d87bbc9af62ec4f64889d769048af30cfab8736576b396d",
+    "all_other_attributes_constants_exceptions_identical": true
+  },
+  "fixture_unchanged_between_baseline_and_fix": true,
+  "viewport": {
+    "framebuffer": [
+      640,
+      480
+    ],
+    "gui_scale": 2,
+    "gui": [
+      320,
+      240
+    ]
+  },
+  "screenshots": [
+    {
+      "name": "01-owner-roster-first.png",
+      "width": 640,
+      "height": 480,
+      "sha256": "43ac15c7ec1637d5e0e586e51146fbbe98968e4f51e1016c6351a4a4e2f86563"
+    },
+    {
+      "name": "01-owner-roster-last.png",
+      "width": 640,
+      "height": 480,
+      "sha256": "e6f53136b7454b02b9d47abfbe4b0f83716a8dc7d8b592f35cfe7f8bd8573b49"
+    },
+    {
+      "name": "01-owner-roster-search.png",
+      "width": 640,
+      "height": 480,
+      "sha256": "13faf9acc64a7f179cfe3fb97a4c79a8df6aeb46cb329453db959a67c830d11f"
+    },
+    {
+      "name": "02-compact-search-prompt.png",
+      "width": 640,
+      "height": 480,
+      "sha256": "453ca6e3c281f4127c70bad479f123da9c0de4d9718df825c3e57d4d556911c8"
+    },
+    {
+      "name": "02-compact-started-filter.png",
+      "width": 640,
+      "height": 480,
+      "sha256": "4acc6632bdc5ac675228fd3e8f1fc10ea28140df4af2efdcb50bf113df53e7a2"
+    },
+    {
+      "name": "03-member-goal-detail.png",
+      "width": 640,
+      "height": 480,
+      "sha256": "2c93dcf1c1b85e44fc02d1669aaeae18a13a5a46af4ff27fdf30530555695e30"
+    },
+    {
+      "name": "03-owner-pin-detail.png",
+      "width": 640,
+      "height": 480,
+      "sha256": "78c584028b291af01ae5315c26e285f21cd0ad155dc5b8cecddc51943bbca5aa"
+    }
+  ],
+  "all_seven_fixed_screenshots_visually_inspected": true,
+  "screenshots_edited": false,
+  "notification_readiness": {
+    "native_toasts_cleared_reset_or_hidden": false,
+    "hud_visible": true,
+    "normal_world_frames_required": true,
+    "quiet_ticks_before_capture": 20,
+    "visible_and_queued_toasts_empty": true,
+    "synthetic_before_baseline": "One ordinary owned Eevee and selected-starter state through supported Cobblemon APIs; normal PartyOverlay dismisses its persistent starter prompt"
+  },
+  "preservation": {
+    "full_native_quest_data_and_claims": true,
+    "daily_login_balances_and_credit_debit_history": true,
+    "inventory_components_and_xp": true,
+    "team_data_except_fixture_pin": true,
+    "sharing_stayed_disabled": true,
+    "personal_progress_distinct": true,
+    "starter_selected_and_owned_pokemon_count": true,
+    "full_pokemon_stat_serialization_compared": false,
+    "final_pinned_quest": 0
+  },
+  "ready_for": "Disposable compact-UI user test at640x480 GUI2 with matching dependencies",
+  "installed_or_deployed": false,
+  "private_or_live_data_used": false,
+  "jail_loaded_modified_or_required": false,
+  "basic_mawile_or_unrelated_suites_repeated": false,
+  "heavy_work_location": "GitHub-hosted disposable runtime/build",
+  "limits": [
+    "Three compact presentation/access cases; earlier eight logic cases remain scoped to216de93 candidate",
+    "Existing long-label shortening and modal sidebar coverage remain; no all-text/all-overlay/resolution matrix",
+    "Public pinned dependency setup, not the full pack or authoritative live rank/provider/claim policy",
+    "One running server; no restart/crash/physical-power-loss/cross-store atomic delivery or real old-save migration proof",
+    "Full-pack checks require exact pack/resources/configuration; live policy requires authoritative server settings; real migration requires consistent authorized disposable backup",
+    "Pass ends here; no further acceptance target selected"
+  ]
+}
