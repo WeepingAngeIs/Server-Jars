@@ -622,7 +622,8 @@ public final class QuestManager {
     }
 
     public static void onClaim(ServerPlayer p, Net.Claim c) {
-        if (data == null) return;
+        // Only the three defined claim modes may reach reward or progress handling.
+        if (data == null || c.mode() < 0 || c.mode() > 2) return;
         QuestFile f = file;
         UUID tid = progressId(p.getUUID());
         TeamProgress tp = data.get(tid);

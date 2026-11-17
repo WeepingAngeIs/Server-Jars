@@ -12,7 +12,11 @@ Bounded coverage targets starter readiness despite a nonempty party; valid singl
 
 ## Verification record
 
-Native verification pending. The workflow reuses the exact verified candidate and skips rebuilding/repeating unit tests while production is unchanged. Only a reproduced production defect permits a narrow source fix and the corresponding build checks.
+Baseline test source `1afb007025daf8a0d2f85102210bf9d465e44ee0`, [run 44022982101](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44022982101), job `133836521063`, ran all sixteen native cases against the exact `be397...` candidate: **fifteen passed, one failed**. The workflow did not rebuild unchanged production or repeat its passing unit tests. Artifact `14302555521` was downloaded; its ZIP SHA-256 independently matched published `bb88cb1f30eab52273452d982ebdc83225aff827282f8b3d25f1e7b6fcccd543`.
+
+The failure is a reproduced input-validation defect. A real network client sent Claim modes -1 and 3 for an eligible completed quest. QuestManager treated the undefined mode as claim-all: Dev's earned balance increased from 6 to 7, two native marked diamonds were delivered, and the quest-credit/claim records changed. Visitor's rewards remained unchanged. This is unintended caller reward claiming, not a demonstrated cross-player privilege escalation. The real disconnect/reconnect was observed, and all starter, token, native delivery, daily priority, empty/disabled balance and legitimate/private claim cases passed.
+
+The narrow production fix rejects modes outside 0, 1 and 2 before reward or progress handling. No token, prize-selection, journal, starter, packet format or save schema change is needed. The follow-up builds because production changed, and targets the four Claim network cases plus a new complete quest-credit-to-redemption/replay path. The twelve passing unchanged token cases are preserved as evidence on their exact baseline binary, not relabeled as new checks on the changed candidate. Follow-up results pending.
 
 ## Separation and limits
 

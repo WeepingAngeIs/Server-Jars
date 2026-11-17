@@ -40,7 +40,10 @@ public final class BundleSmoke {
     static final Path CONTROL=Path.of("/tmp/uq-reward-client-controls"),RESULT=Path.of("/tmp/uq-reward-client-result");
     static final Set<String> RECEIPTS=ConcurrentHashMap.newKeySet();
     static final String MARKER="uq_reward_client_marker";
-    static final long QUEST=8_410_001L,COMMON=8_410_002L,ALL_A=8_410_003L,ALL_B=8_410_004L,INVALID=8_410_005L,REWARD=8_420_001L,INVALID_REWARD=8_420_002L;
+    static final long QUEST=8_410_001L,COMMON=8_410_002L,ALL_A=8_410_003L,ALL_B=8_410_004L,INVALID=8_410_005L,CREDIT_TO_PAYOUT=8_410_006L,REWARD=8_420_001L,INVALID_REWARD=8_420_002L;
+    static final String SCOPE=System.getenv().getOrDefault("UQ_REWARD_CLIENT_SCOPE","full");
+    static final boolean CLAIMS_ONLY=SCOPE.equals("claims");
+    static final int EXPECTED_CASES=CLAIMS_ONLY?5:16;
     static MinecraftServer server;
     static int tick,initializedAt,start,step,stageTick,sequence;
     static boolean initialized,done,realDisconnect;
@@ -303,6 +306,16 @@ public final class BundleSmoke {
             else if(step==2&&ack("Dev")){check(List.of(),List.of(new Credit("Visitor",COMMON),new Credit("Dev",COMMON),new Credit("Dev",ALL_A),new Credit("Dev",ALL_B)),"",0);require(!quests().isClaimed(visitor().getUUID(),LuckySpin.spinId(ALL_A))&&!quests().isClaimed(visitor().getUUID(),LuckySpin.spinId(ALL_B)),"Claim-all leaked private claims");finish();}
         });
     }
+    static void creditToPayoutCase() {
+        add("Net Claim credit redeems once through native Spin UI and resists both replays",()->{
+            if(step==0){base();daily().players.get(dev().getUUID())[3]=0;daily().setDirty();addQuest(CREDIT_TO_PAYOUT,true,false,false);before=snapshot();claims("Dev",claim(LuckySpin.spinId(CREDIT_TO_PAYOUT),0));next();}
+            else if(step==1&&ack("Dev")){check(List.of(),List.of(new Credit("Dev",CREDIT_TO_PAYOUT)),"",0);require(daily().players.get(dev().getUUID())[3]==1,"Native claim did not earn exactly one spendable credit");status("Dev","credit-to-payout");next();}
+            else if(step==2&&ack("Dev")){var s=screen("Dev","credit-to-payout");require(s.getBoolean("ready")&&s.getBoolean("fixtureButtonActive")&&s.getLong("count")==1,"Native UI did not expose the newly earned credit");request("Dev","click");next();}
+            else if(step==3&&ack("Dev")){check(List.of(new Debit("Dev",3)),List.of(new Credit("Dev",CREDIT_TO_PAYOUT)),"",0);spin("Dev","Dev","credit-to-payout",1);next();}
+            else if(step==4&&ack("Dev")){check(List.of(new Debit("Dev",3)),List.of(new Credit("Dev",CREDIT_TO_PAYOUT)),"",0);claims("Dev",claim(LuckySpin.spinId(CREDIT_TO_PAYOUT),0),claim(CREDIT_TO_PAYOUT,1),claim(0,2));next();}
+            else if(step==5&&ack("Dev")){check(List.of(new Debit("Dev",3)),List.of(new Credit("Dev",CREDIT_TO_PAYOUT)),"",0);require(daily().players.get(dev().getUUID())[3]==0,"Credit or token replay restored/spent balance");finish();}
+        });
+    }
     static Map<String,Object> observed()throws Exception {
         var state=new LinkedHashMap<String,Object>();
         state.put("players",players().stream().map(p->{var values=new LinkedHashMap<String,Object>();values.put("name",p.getGameProfile().getName());values.put("uuid",p.getUUID().toString());values.put("balance",daily().players.get(p.getUUID()).clone());values.put("nether_stars",account(p).stars());values.put("marked_diamonds",account(p).markers());values.put("party",party(p));values.put("claimed",Set.copyOf(quests().claimedRewards.getOrDefault(p.getUUID(),Set.of())));return values;}).toList());
@@ -312,6 +325,7 @@ public final class BundleSmoke {
     }
     static void initialize()throws Exception {
         require("1".equals(System.getenv().getOrDefault("UQ_REWARD_CLIENT_PHASE","1")),"This bounded fixture is one phase");
+        require(SCOPE.equals("full")||CLAIMS_ONLY,"Unknown reward client scope: "+SCOPE);
         Files.createDirectories(CONTROL);Files.createDirectories(evidence());
         Path jar=Path.of(System.getenv("UQ_BUNDLE_JAR")).toRealPath();String hash=HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(jar)));
         require(hash.equals(System.getenv("UQ_BUNDLE_SHA256")),"Wrong candidate SHA-256");
@@ -331,18 +345,22 @@ public final class BundleSmoke {
             var party=Cobblemon.INSTANCE.getStorage().getParty(p);
             require(party.occupied()==0,"Unexpected existing Pokemon in disposable account");var props=new PokemonProperties();props.setSpecies("eevee");props.setLevel(5);require(party.add(props.create(p)),"Cannot seed native nonempty party");party.sendTo(p);
         }
-        base();cases();require(cases.size()==16,"Bounded acceptance case count drifted");
+        base();cases();require(cases.size()==16,"Full acceptance case count drifted");
+        if(CLAIMS_ONLY){cases.removeIf(c->!c.name().contains("Net Claim"));require(cases.size()==4,"Focused native Claim case count drifted");creditToPayoutCase();}
+        require(cases.size()==EXPECTED_CASES,"Selected acceptance case count drifted");
+        diagnostics.put("selected_scope",SCOPE);diagnostics.put("omitted_unchanged_token_cases",CLAIMS_ONLY?12:0);
+        diagnostics.put("reconnect_required",!CLAIMS_ONLY);
         diagnostics.put("scope","Real connected-client in-process authorization and native delivery; RETURNED is not a cross-store durable receipt. No power-cut or prize-durability claim.");
         diagnostics.put("status_refresh_contract","Every status rotates the caller token; stale and invalid attempts also consume/rotate that caller token.");
     }
     static void completed()throws Exception {
-        done=true;Files.createDirectories(evidence());long failed=outcomes.stream().filter(s->s.startsWith("failed:")).count();boolean passed=failed==0&&outcomes.size()==16&&realDisconnect;
+        done=true;Files.createDirectories(evidence());long failed=outcomes.stream().filter(s->s.startsWith("failed:")).count();boolean passed=failed==0&&outcomes.size()==EXPECTED_CASES&&(CLAIMS_ONLY||realDisconnect);
         try{diagnostics.put("final_native_state",observed());}catch(Exception bad){diagnostics.put("final_native_state_error",bad.toString());}
-        var report=new LinkedHashMap<String,Object>();report.put("commit",System.getenv("GITHUB_SHA"));report.put("phase",1);report.put("passed",passed);report.put("case_count",outcomes.size());report.put("failures",failed);report.put("cases",outcomes);report.put("diagnostics",diagnostics);report.put("real_disconnect_seen",realDisconnect);report.put("private_or_live_data_used",false);report.put("jars",diagnostics.get("jars"));
+        var report=new LinkedHashMap<String,Object>();report.put("commit",System.getenv("GITHUB_SHA"));report.put("phase",1);report.put("scope",SCOPE);report.put("expected_case_count",EXPECTED_CASES);report.put("passed",passed);report.put("case_count",outcomes.size());report.put("failures",failed);report.put("cases",outcomes);report.put("diagnostics",diagnostics);report.put("real_disconnect_seen",realDisconnect);report.put("real_disconnect_required",!CLAIMS_ONLY);report.put("private_or_live_data_used",false);report.put("jars",diagnostics.get("jars"));
         Files.writeString(evidence().resolve("reward-client-phase-1.json"),new GsonBuilder().setPrettyPrinting().create().toJson(report)+"\n");
         Files.writeString(evidence().resolve("cases-phase-1.txt"),String.join("\n",outcomes)+"\n");
         if(Files.isDirectory(CONTROL)){Path copy=evidence().resolve("client-controls");Files.createDirectories(copy);try(var files=Files.list(CONTROL)){for(var file:files.filter(Files::isRegularFile).filter(p->!p.getFileName().toString().endsWith(".tmp")).toList())Files.copy(file,copy.resolve(file.getFileName()),StandardCopyOption.REPLACE_EXISTING);}}
-        Files.writeString(RESULT,(passed?"passed: ":"failed: ")+outcomes.size()+" reward client cases, "+failed+" failures\n");
+        Files.writeString(RESULT,(passed?"passed: ":"failed: ")+outcomes.size()+" reward client cases, "+failed+" failures; scope "+SCOPE+"\n");
     }
     void tick(ServerTickEvent.Post event) {
         if(done||!"true".equals(System.getenv("GITHUB_ACTIONS"))||!"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT")))return;
