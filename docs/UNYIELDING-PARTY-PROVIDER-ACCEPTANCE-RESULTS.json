@@ -1,0 +1,82 @@
+{
+  "version": "1.2.0",
+  "branch": "codex/unyielding-party-provider-acceptance",
+  "tested_source": "ca64738fadd86304ac2bf79d1696cc2fd1045191",
+  "candidate_sha256": "216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504",
+  "candidate_raw_sha512": "349284d438561c34d7005899cec9a80025ccd6bd3589f9b51c8768303cb22e60275ebf4ba7cb31acd2023bbaf9dabc414c5313db4ed0ee6856c167c8ae5c3ef2",
+  "baseline": {
+    "source": "9d2a3e3266805f932f5dfe4c472c68cfe346b21f",
+    "candidate_sha256": "744be06c8fa5ad6001f1ba214608c4f7c1dde59664afe2bf8bf33405063512d8",
+    "run_id": 44030348339,
+    "job_id": 133860513816,
+    "artifact_id": 14304882521,
+    "artifact_zip_sha256": "a01119f1173bc803ca4e8ff1dba8f7c8c463823ea86083f5b007dc071cae6d6e",
+    "native_passed": 9,
+    "native_failed": 1,
+    "failure": "Ordered synthetic setter-permission callback removed caller, but travel and cooldown still occurred"
+  },
+  "verified": {
+    "run_id": 44031631588,
+    "job_id": 133864726468,
+    "artifact_id": 14305363144,
+    "artifact_zip_sha256": "2bd25265cd3c24c706aee5fef33790c13d154ff2cb5ac3f235a4994e4920c0d3",
+    "native_passed": 10,
+    "native_failed": 0,
+    "unit_tests": 69,
+    "unit_failures": 0,
+    "unit_errors": 0,
+    "unit_skipped": 0,
+    "real_setter_disconnect_verified": true,
+    "cases": [
+      "passed: provider DENY overrides operator and public defaults for go, set and clear",
+      "passed: caller RuntimeException and LinkageError fail closed without reward or cooldown effects",
+      "passed: setter DENY and provider exceptions refuse an otherwise permitted caller",
+      "passed: explicit provider ALLOW grants a nonoperator access while public default is false",
+      "passed: provider revocation between first check and execution denies travel",
+      "passed: ordered synthetic setter-provider callback removes caller before movement",
+      "passed: actual setter logout and reconnect preserve point while revalidating online permission",
+      "passed: native setter leave and rejoin as member require restored officer rights",
+      "passed: disabled feature preserves stored point and re-enabling revalidates access",
+      "passed: native passenger cannot travel or consume a meeting cooldown"
+    ]
+  },
+  "jar_entry_comparison_to_reward_baseline": {
+    "added": [],
+    "removed": [],
+    "changed": [
+      "dev/unyielding/quests/essentials/PartyMeetings.class"
+    ]
+  },
+  "permission_provider": {
+    "identifier": "uq_bundle_smoke:meeting_contract",
+    "registration": "Normal PermissionGatherEvent.Handler and server permissionHandler selection",
+    "synthetic_contract": true,
+    "authoritative_live_policy": false,
+    "opac_version_id": "yWmXD7GW"
+  },
+  "preserved_measured_state": [
+    "Exact native inventory/components including physical gold coins",
+    "XP",
+    "Seeded daily and earned spin balances",
+    "Personal completed quests/tasks and claimed reward identities",
+    "Private homes/back history",
+    "Meeting points and cooldowns on refusal",
+    "Unrelated party data"
+  ],
+  "old_reports_and_artifacts_preserved": true,
+  "jail_loaded_or_modified": false,
+  "jail_build_or_certificate_required": false,
+  "private_or_live_data_used": false,
+  "installed_or_deployed": false,
+  "heavy_runtime_location": "GitHub-hosted runners",
+  "limits": [
+    "Generated provider policy and its one reentrant callback are synthetic, not authoritative live policy",
+    "No full-pack or actual old-save migration certification",
+    "Other teleport restriction mods need separate verification",
+    "One phase: no new server-restart, death or respawn proof",
+    "Expected membership and lastSeen lifecycle changes excluded from unchanged assertions",
+    "Measured economy scope does not certify every external bank currency",
+    "Completed ground, reward, vein and destructive-party-confirmation suites not rerun",
+    "Basic Mawile feeding remains separately user-observed; no needless feeding retest"
+  ]
+}

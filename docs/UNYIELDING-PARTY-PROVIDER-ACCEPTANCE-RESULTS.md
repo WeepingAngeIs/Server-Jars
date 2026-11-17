@@ -26,7 +26,37 @@ The single failure reproduced the ordered reentrant boundary. The provider trace
 
 The narrow production fix changes only PartyMeetings: obtain both permission answers, retain the second claim/destination validation and cooldown check, then take the final current membership, setter role, enabled-state and point-identity snapshot immediately before travel. No external permission/claim query follows that snapshot. A provider-triggered leave can no longer reuse the earlier membership boolean. Permission nodes/defaults, saved data, cooldown duration and opt-in configuration are unchanged.
 
-The follow-up reruns the ten affected meeting cases because the execution-order change touches allowed and refused provider/lifecycle paths. It builds and runs the existing unit checks only because production changed. Ground, reward, vein and old destructive-confirmation suites are not rerun. Follow-up results pending. No Jail runtime or separate Jail build/certificate prerequisite is invoked.
+The follow-up reruns the ten affected meeting cases because the execution-order change touches allowed and refused provider/lifecycle paths. It builds and runs the existing unit checks only because production changed. Ground, reward, vein and old destructive-confirmation suites are not rerun. No Jail runtime or separate Jail build/certificate prerequisite is invoked.
+
+## Final verified checkpoint
+
+Verified 2026-11-17 UTC. Source `ca64738fadd86304ac2bf79d1696cc2fd1045191`, [run 44031631588](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44031631588), job `133864726468`, passed **all 69 unit tests and all ten native meeting-provider cases**, zero failures/errors/skips. Two real clients used native commands, the normally selected provider and actual public OPAC. Runtime assertions verified the actual assembled JAR path/hash, absence of Jail, and no private/live data use.
+
+[Artifact 14305363144](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44031631588/artifacts/14305363144) downloaded ZIP SHA-256 independently matched published `2bd25265cd3c24c706aee5fef33790c13d154ff2cb5ac3f235a4994e4920c0d3`. Unit XML was independently totaled as 69 tests with zero failures, errors or skipped tests. The downloaded JAR hash matched the native runtime record.
+
+| Exact run | Candidate | Result |
+| --- | --- | --- |
+| `44030348339`, source `9d2a3e3...` | `744be...` | 9/10 native cases; stale membership callback reproduced; no build/unit rerun |
+| `44031631588`, source `ca64738...` | `216de93...` | 69/69 units and 10/10 native provider/lifecycle cases |
+
+The final cases verify explicit provider DENY overriding operator/public defaults for go/set/clear; caller and setter provider RuntimeException/LinkageError refusing safely; explicit provider ALLOW for a nonoperator while the public default is false; and caller permission revocation between the first query and execution. Refusals preserve native position, existing points, cooldown state and measured unrelated data.
+
+The reentrant callback still successfully removes Visitor through public TeamManager.leave. After the fix, Visitor remains at the start x=138.5 with no cooldown keys, rather than moving to x=132.5; the point remains unchanged. This is the exact previously failing synthetic contract, without weakening its assertion.
+
+Lifecycle cases observe a real setter disconnect, offline travel refusal and a new connected ServerPlayer session using the retained point with current rights. An actual setter leave/rejoin as a member grants no stale officer authority; restored officer rights and a fresh set work. Disabling/re-enabling the feature retains the point and applies current authorization. An actual native boat passenger stays mounted and unmoved with no consumed cooldown after refusal. This one-phase fixture does not claim another server restart or death/respawn test.
+
+Preservation comparisons cover full native inventory/components (including physical Lightman's Currency gold coins), XP, seeded earned/daily spins, personal quest/task completion and claims, private homes/back history and an unrelated party. Expected membership and lastSeen lifecycle changes are excluded from unchanged-state assertions. No claim is made about every external bank currency.
+
+## Candidate integrity
+
+The candidate remains version **1.2.0**:
+
+- SHA-256: `216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504`
+- Raw SHA-512: `349284d438561c34d7005899cec9a80025ccd6bd3589f9b51c8768303cb22e60275ebf4ba7cb31acd2023bbaf9dabc414c5313db4ed0ee6856c167c8ae5c3ef2`
+
+Every JAR entry was compared with the exact verified `744be...` reward baseline. No entries were added or removed. Only `dev/unyielding/quests/essentials/PartyMeetings.class` differs. All other entries, including the reward-input fix, cleanup, editor, token/journal classes, art and models, remain byte-identical. The new fixture, synthetic provider and generated policy are separate test code and are not shipped inside the candidate.
+
+The [machine-readable results](UNYIELDING-PARTY-PROVIDER-ACCEPTANCE-RESULTS.json) record the same exact sources, hashes, test scopes and limits. The workflow now pins this verified candidate so later fixture-only changes do not repeat its completed production build/unit suite.
 
 ## Preservation and limits
 
