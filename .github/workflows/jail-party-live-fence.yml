@@ -1,0 +1,131 @@
+name: Jail native party quarantine fence
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/jail-standalone-extraction']
+    paths: ['.github/party-live/**', '.github/workflows/jail-party-live-fence.yml']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: jail-party-live-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [nbt, json]
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            unyielding-quests/*.gradle
+            unyielding-quests/gradle/wrapper/gradle-wrapper.properties
+            combined-unyielding/smoke-harness/*.gradle
+      - name: Enforce test-only scope and preserve the passing safeguards
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin a43219a6c89317bd4fb5167a96ae7ed363c7836a
+          python3 - <<'PYCODE'
+          import subprocess
+          changed=subprocess.check_output(['git','diff','--name-only','a43219a6c89317bd4fb5167a96ae7ed363c7836a','HEAD'],text=True).splitlines()
+          assert changed and all(p.startswith(('.github/party-live/','.github/workflows/jail-party-live-fence.yml','docs/JAIL-PARTY-LIVE-')) for p in changed),changed
+          print('\n'.join(changed))
+          PYCODE
+          git diff --check a43219a6c89317bd4fb5167a96ae7ed363c7836a HEAD
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: party-guard-verified-a41634908aa5b5d6d45833867a4f04646769a68a-attempt-1
+          run-id: 44006642234
+          github-token: ${{ github.token }}
+          path: dist/reused-guard/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: packed-wallet-verified-8e9716d94a932fe5110ae84abdc90adfe0017974
+          run-id: 43991171187
+          github-token: ${{ github.token }}
+          path: dist/original-verified/
+      - name: Stage exact unchanged pair and generate required native wrappers
+        run: |
+          set -euo pipefail
+          cd dist/original-verified
+          printf '%s\n' '5c2653a9c14d3199581fdd67e05d055b334ec2746fe7047e3c80454eb732474e  Minecraft-Jail-1.2.0.jar' '61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7  Unyielding-1.2.0.jar' | sha256sum -c -
+          cd ../..
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp dist/original-verified/Unyielding-1.2.0.jar dist/120-release/
+          cp dist/original-verified/Minecraft-Jail-1.2.0.jar minecraft-jail/build/libs/
+          python3 .github/scripts/fetch-build-dependencies.py
+          python3 .github/party-live/prepare.py
+          python3 - <<'PYCODE'
+          import json,hashlib
+          from pathlib import Path
+          r=json.loads(Path('dist/reused-guard/guard-verification.json').read_text())
+          assert r['commit']=='a41634908aa5b5d6d45833867a4f04646769a68a' and r['unit']['passed']==34 and r['runtime_phases']==6
+          for p,d in r['unit']['source_hashes'].items():assert hashlib.sha256(Path(p).read_bytes()).hexdigest()==d
+          PYCODE
+      - name: Prepare isolated clients on disposable runner
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Native entry points, queued writes, revoked aliases and staged handoffs
+        run: bash .github/party-live/run.sh '${{ matrix.backend }}'
+      - name: Preserve exact source and reports
+        if: always()
+        run: |
+          mkdir -p dist/live-source
+          git rev-parse HEAD > dist/live-source/commit.txt
+          git archive --format=zip -o dist/live-source/source.zip HEAD .github/party-live .github/workflows/jail-party-live-fence.yml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: party-live-${{ matrix.backend }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: |
+            dist/packaged-smoke/
+            dist/live-source/
+            dist/reused-guard/
+            dist/packaged-harness/run/crash-reports/
+            dist/packaged-harness/run-server/crash-reports/
+            dist/packaged-harness/run-visitor/crash-reports/
+          if-no-files-found: error
+          retention-days: 30
+  verified:
+    needs: native
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: party-live-*-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: evidence/
+      - name: Require complete exact-commit evidence without approving admissions
+        run: |
+          python3 - <<'PYCODE'
+          import json,os
+          from pathlib import Path
+          rows=[]
+          for backend in ('nbt','json'):
+              paths=list(Path('evidence').rglob(f'party-live-{backend}-summary.json'));assert len(paths)==1
+              s=json.loads(paths[0].read_text());assert s['commit']==os.environ['GITHUB_SHA'] and s['phases']==3
+              assert s['required_assertions']==45 and s['native_method_count']>100
+              assert s['production_changed'] is False and s['admission_verified'] is False and s['player_handback_verified'] is False
+              rows.append(s)
+          assert rows[0]['source_hashes']==rows[1]['source_hashes']
+          Path('live-verification.json').write_text(json.dumps({'commit':os.environ['GITHUB_SHA'],'runtime_phases':6,'native':rows,'admissions_enabled':False,'player_handback_verified':False,'production_changed':False},indent=2)+'\n')
+          PYCODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: party-live-verified-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: live-verification.json
+          if-no-files-found: error
+          retention-days: 30
