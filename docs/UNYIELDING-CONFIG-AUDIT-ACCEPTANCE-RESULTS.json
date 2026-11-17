@@ -1,0 +1,61 @@
+{
+  "version": "1.2.0",
+  "branch": "codex/unyielding-config-audit-acceptance",
+  "tested_source": "486ad52fef82fb840fadb22fd687dad399843e10",
+  "candidate_sha256": "216de93ca87cc9e0a54f0f0991c675a1058ee95de3247c8efbebffc664f0c504",
+  "candidate_raw_sha512": "349284d438561c34d7005899cec9a80025ccd6bd3589f9b51c8768303cb22e60275ebf4ba7cb31acd2023bbaf9dabc414c5313db4ed0ee6856c167c8ae5c3ef2",
+  "run_id": 44043593748,
+  "job_id": 133903776370,
+  "artifact_id": 14311265884,
+  "artifact_zip_sha256": "957b6104f785a34e5ad5dbae433c1ad513b350fbb3295f45bf2f5191a693b1bc",
+  "native_passed": 8,
+  "failures": 0,
+  "cases": [
+    "passed: empty global audit can be viewed by an operator and undo changes nothing",
+    "passed: numeric Double edit and undo persist exact values and each reverse becomes the new latest",
+    "passed: representative Int cooldown edit and native undo preserve other settings and readable audit output",
+    "passed: nonoperator and revoked operator cannot edit open audit details or undo an eligible latest value",
+    "passed: stale expected edits and unmanaged conflicting values refuse without overwriting or extending audit",
+    "passed: unsupported Boolean and no-op latest entries block undo instead of skipping older eligible edits",
+    "passed: two administrators undo the global latest key while the earlier independent key remains changed",
+    "passed: native text edits are minimized in audit storage and display and remain ineligible for undo"
+  ],
+  "candidate_byte_identical_to_prior_verified_file": true,
+  "production_changed": false,
+  "production_build_repeated": false,
+  "new_unit_result_files": 0,
+  "unchanged_binary_unit_evidence": {
+    "run_id": 44031631588,
+    "tests": 69,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "private_or_live_data_used": false,
+  "jail_loaded_or_modified": false,
+  "jail_certificate_updated_or_required": false,
+  "installed_or_deployed": false,
+  "heavy_runtime_location": "GitHub-hosted disposable clients/world/configurations",
+  "audit_contract": {
+    "scope": "global latest entry, not per actor",
+    "command": "/configaudit undo",
+    "successful_undo_appends_reverse_entry": true,
+    "repeated_undo_can_reverse_previous_undo": true,
+    "entry_id_or_token_protocol": false
+  },
+  "persistence_evidence": {
+    "memory": "All exposed ConfigEditor values",
+    "disk": "Parsed values in three generated module TOML files",
+    "audit": "Native SavedData.save NBT snapshot in one running world",
+    "reloaded_audit_file_or_server_restart": false
+  },
+  "limits": [
+    "Synthetic native operator roles do not establish authoritative live rank/provider/claim policy",
+    "No full-pack or actual old-save migration certification without authoritative inputs",
+    "No server restart, physical power loss, IO-failure rollback or atomic cross-store durability claim",
+    "Representative Double and Int undo plus String redaction are tested, not every setting or every audit retention/paging permutation",
+    "Semantic disk preservation covers three generated module config files, not every third-party config file or whole-file formatting bytes",
+    "Native inventory, physical coins and spin preservation do not certify every external bank currency",
+    "No repeat of completed suites or basic Mawile feeding and no new unit/build run"
+  ]
+}
