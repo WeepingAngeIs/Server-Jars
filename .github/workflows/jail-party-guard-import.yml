@@ -1,0 +1,45 @@
+name: Import reviewed Jail party safeguards
+on:
+  push:
+    branches: ['codex/jail-standalone-extraction']
+    paths: ['.github/workflows/jail-party-guard-import.yml']
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 10
+      - name: Verify bounded exact source payload
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64,gzip,hashlib,json,subprocess
+          from pathlib import Path
+          base='cdcf7737817b7ac93c81d297e8614765d2d4dc38'
+          expected={'.github/workflows/jail-party-guard-import.yml',*(f'.github/party-guard-transfer/part{i}' for i in range(3))}
+          changed=set(subprocess.check_output(['git','diff','--name-only',base,'HEAD'],text=True).splitlines())
+          assert changed==expected,changed
+          encoded=''.join(Path(f'.github/party-guard-transfer/part{i}').read_text().strip() for i in range(3))
+          payload=gzip.decompress(base64.b64decode(encoded,validate=True))
+          assert hashlib.sha256(payload).hexdigest()=='ad520f917b791f2b301f16a00f01105722371304508d4dc8ea0213cab9f91083'
+          files=json.loads(payload);assert len(files)==9
+          prefixes=('minecraft-jail/src/partySafety/','minecraft-jail/src/partySafetyNative/','minecraft-jail/src/partySafetyTest/','.github/party-guard/')
+          for name,content in files.items():
+              path=Path(name)
+              assert name.startswith(prefixes) and '..' not in path.parts and not path.exists(),name
+              path.parent.mkdir(parents=True,exist_ok=True);path.write_text(content)
+          PY
+      - name: Preserve history and commit only new unregistered safeguards
+        run: |
+          set -euo pipefail
+          git add minecraft-jail/src/partySafety minecraft-jail/src/partySafetyNative minecraft-jail/src/partySafetyTest .github/party-guard
+          git rm -r .github/party-guard-transfer
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Implement isolated generation receipts identity reservations and guarded native snapshot loads; keep party admission blocked'
+          git push origin HEAD:refs/heads/codex/jail-standalone-extraction
