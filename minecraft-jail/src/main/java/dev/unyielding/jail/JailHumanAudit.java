@@ -38,6 +38,8 @@ final class JailHumanAudit {
         JsonObject certificate;try(var stream=JailHumanAudit.class.getResourceAsStream("/assets/unyieldingquests/jail-certified-runtime.json")){if(stream==null)throw new IOException("Audit certificate missing");certificate=JsonParser.parseReader(new InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();}
         Set<String> allowed=new HashSet<>();certificate.getAsJsonArray("sha512").forEach(e->allowed.add(e.getAsString()));List<String> rows=new ArrayList<>();
         Path own=ModList.get().getModFileById(MinecraftJail.MODID).getFile().getFilePath().toAbsolutePath().normalize();
+        if(!Files.isRegularFile(own)||!own.equals(own.toRealPath()))throw new IOException("Jail implementation must be an exact regular artifact");
+        rows.add(JailArtifactBinding.row(hash(own)));
         for(var mod:ModList.get().getMods()){
             String id=mod.getModId(),version=mod.getVersion().toString();Path path=mod.getOwningFile().getFile().getFilePath().toAbsolutePath().normalize();
             if(path.equals(own))continue;

@@ -17,6 +17,7 @@ public final class JailAdmissions {
     static String auditedContract(ServerPlayer p){return JailXp.nonzero(p)?JailIntegrated.RETAINED_XP:JailPackedWallet.present(p)?JailIntegrated.PACKED_WALLET:JailIntegrated.SUPPORTED;}
     static void boundary(ServerPlayer p)throws IOException {boundary(p,false);}
     static void boundary(ServerPlayer p,boolean retainXp)throws IOException {
+        if(p.server.getWorldData().isHardcore())throw new IOException("Hardcore player respawn is not supported");
         if(retainXp)JailXp.live(p);
         if(!retainXp&&(p.totalExperience!=0||p.experienceLevel!=0||p.experienceProgress!=0))throw new IOException("Player carries XP; XP custody is not certified. XP was left untouched");
         if(!p.getActiveEffects().isEmpty()||p.getAbsorptionAmount()!=0)throw new IOException("Wait for active effects/absorption to end before certified admission");
@@ -25,7 +26,6 @@ public final class JailAdmissions {
         if(!Set.of("neoorigins:origin_data","neoorigins:resource_state","accessories:inventory_holder","curios:inventory","lightmanscurrency:wallet","lightmanscurrency:event_unlocks").containsAll(attachments.getAllKeys()))throw new IOException("An attached death store is not certified: "+attachments.getAllKeys());
         if(!attachments.getCompound("neoorigins:resource_state").isEmpty())throw new IOException("Origin resource state is active; its death lifecycle is not certified");
         if(attachments.contains("lightmanscurrency:wallet")){var wallet=attachments.getCompound("lightmanscurrency:wallet");if(!Set.of("Wallet","Visible").containsAll(wallet.getAllKeys())||!wallet.contains("Wallet",10)||!wallet.getCompound("Wallet").isEmpty())throw new IOException("Equipped wallet custody is not certified. Move the wallet to safe storage first; it was not changed");}
-        for(var pokemon:com.cobblemon.mod.common.Cobblemon.INSTANCE.getStorage().getParty(p))if(pokemon!=null)throw new IOException("A nonempty Pokemon party is not certified for jail death. Deposit the party in a PC first; no Pokemon were moved");
     }
     /** Guard a pending certified transaction even before item removal or during uncertain recovery. */
     public static boolean protectedCustody(ServerPlayer p){

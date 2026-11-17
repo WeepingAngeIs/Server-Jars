@@ -112,6 +112,7 @@ public final class JailEnforcement {
     }
     private static void enforce(ServerPlayer player) {
         if (player.server == null) return;
+        JailAutoRespawn.outside(player);
         var assignment = JailData.get(player.server).assignment(player.getUUID());
         if (assignment == null) { WARNED.remove(player.getUUID()); return; }
         if (!player.isAlive()) return;

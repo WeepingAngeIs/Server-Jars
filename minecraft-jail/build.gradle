@@ -24,6 +24,8 @@ dependencies {
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
 tasks.withType(Test).configureEach { useJUnitPlatform() }
 jar {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
     exclude '**/devtest/**', '**/legacySmoke/**'
     manifest { attributes('Implementation-Title': 'Minecraft Jail', 'Implementation-Version': project.version) }
 }

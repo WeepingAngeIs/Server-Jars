@@ -50,7 +50,7 @@ public final class JailEscapeCustody {
             if(!Set.of("Wallet","Visible").containsAll(wallet.getAllKeys())||!wallet.contains("Wallet",10)||!wallet.getCompound("Wallet").isEmpty())throw new IOException("Occupied or unknown currency wallet; no wallet custody adapter");
         }
     }
-    /** Only called from a validated accepted movement crossing. Never called on ticks/login/respawn. */
+    /** Called only by accepted movement crossing or verified fully-outside player enforcement. */
     static void attempt(ServerPlayer p){
         try{
             if(!JailData.get(p.server).integratedCustodyInitialized())return;UUID active=JailIntegrated.activeTransaction(p.server,p.getUUID());
@@ -68,9 +68,10 @@ public final class JailEscapeCustody {
                 if(!JailEnforcement.teleportAuthorized(p,c.assignment().jail()))throw new IOException("Escape containment transfer refused");
                 c.inventory().persistAndVerify();c.origin().persistAndVerify();atJail(p,c);
                 j.transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.REMOVAL_STARTED);
-                // Respect invulnerability, damage and death cancellation hooks. No retry if they stop it.
+                // Preflight above still refuses invulnerability. Native kill damage handles respawn
+                // grace for repeat escapes; damage/death cancellation remains honored. No replay.
                 if(retainXp)JailXp.begin(p,t.getCompound("xp"));
-                UUID previous=OWN_DAMAGE.get();OWN_DAMAGE.set(p.getUUID());try{p.hurt(p.damageSources().generic(),1000.0F);}finally{
+                UUID previous=OWN_DAMAGE.get();OWN_DAMAGE.set(p.getUUID());try{p.hurt(p.damageSources().genericKill(),1000.0F);}finally{
                     if(previous==null)OWN_DAMAGE.remove();else OWN_DAMAGE.set(previous);
                     if(retainXp)JailXp.end(p,p.getHealth()<=0&&!p.isAlive()&&p.getStats().getValue(net.minecraft.stats.Stats.CUSTOM.get(net.minecraft.stats.Stats.DEATHS))==deaths+1);
                 }
