@@ -44,6 +44,11 @@ jobs:
           LIBGL_ALWAYS_SOFTWARE: 'true'
           ALSOFT_DRIVERS: 'null'
         run: bash .github/scripts/vein-protection.sh
+      - name: Record generated-default fingerprints and public rank API
+        if: always()
+        run: |
+          python3 .github/scripts/audit-generated-policy.py
+          javap -classpath dist/vein-harness/libs/Unyielding-1.2.0.jar -p dev.unyielding.ranks.CuRanks > dist/vein-protection/rank-api.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:

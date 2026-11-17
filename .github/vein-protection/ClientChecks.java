@@ -20,7 +20,7 @@ import java.nio.file.*;
 
 @EventBusSubscriber(modid="uq_bundle_smoke",value=Dist.CLIENT)
 public final class ClientChecks {
-    static String seen="";static String[] command;static int delay;static BlockPos target;static boolean actionSent;
+    static String seen="";static String[] command;static int delay;static BlockPos target;static boolean actionSent;static int naturalWait;
     static final Path ROOT=Path.of("/tmp/uq-vein-controls");
     static Object field(Object target,String name)throws Exception{for(Class<?> type=target.getClass();type!=null;type=type.getSuperclass()){try{var f=type.getDeclaredField(name);f.setAccessible(true);return f.get(target);}catch(NoSuchFieldException ignored){}}throw new NoSuchFieldException(name);}
     @SubscribeEvent public static void tick(ClientTickEvent.Post e){
@@ -28,9 +28,11 @@ public final class ClientChecks {
         try{
             if(command!=null){
                 if(!command[1].equals("menu")&&mc.screen!=null)mc.setScreen(null);
-                UltimineClient.KEY.setDown(true);aim(mc,target);
+                boolean natural=command[1].startsWith("natural_");
+                UltimineClient.KEY.setDown(!natural||actionSent||naturalWait>0);aim(mc,target);
                 boolean eligible=mc.screen==null&&UltimineClient.KEY.isDown()&&dev.unyielding.quests.ultimine.UltimineConfig.ENABLED.get()&&dev.unyielding.quests.client.ClientData.ultimineEnabled&&(!dev.unyielding.quests.client.ClientData.ultimineRequiresItem||!mc.player.getMainHandItem().isEmpty());
-                if(eligible)Net.sendToServer(new Net.UltimineState(true,0));
+                if(eligible&&!natural)Net.sendToServer(new Net.UltimineState(true,0));
+                if(natural&&actionSent)mc.options.keyAttack.setDown(!mc.level.getBlockState(target).isAir());
                 if(!actionSent){
                     String[] expected=command[7].split(",");double dx=mc.player.getX()-Double.parseDouble(expected[0]),dy=mc.player.getY()-Double.parseDouble(expected[1]),dz=mc.player.getZ()-Double.parseDouble(expected[2]);
                     String item=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(mc.player.getMainHandItem().getItem()).toString();boolean blocksReady=true;
@@ -39,7 +41,12 @@ public final class ClientChecks {
                     Files.writeString(ROOT.resolve("Dev.status"),status);
                     if(dx*dx+dy*dy+dz*dz>.25||!item.equals(command[5])||!mc.gameMode.getPlayerMode().name().equals(command[6])||!blocksReady)return;
                     Files.writeString(ROOT.resolve("Dev.holding"),command[0]);
-                    Path ready=ROOT.resolve("Dev.ready");if(!Files.exists(ready)||!Files.readString(ready).equals(command[0]))return;
+                    Path ready=ROOT.resolve("Dev.ready");if(!natural&&(!Files.exists(ready)||!Files.readString(ready).equals(command[0])))return;
+                    if(natural){
+                        if(command[1].equals("natural_warm")&&naturalWait==0){naturalWait=11;UltimineClient.KEY.setDown(true);return;}
+                        if(naturalWait>1){naturalWait--;return;}
+                        UltimineClient.KEY.setDown(true);mc.options.keyAttack.setDown(true);net.minecraft.client.KeyMapping.click(mc.options.keyAttack.getKey());actionSent=true;delay=80;return;
+                    }
                     var hit=new BlockHitResult(Vec3.atCenterOf(target).add(0,.5,0),Direction.UP,target,false);
                     if(command[1].equals("mine")||command[1].equals("disabled")||command[1].equals("empty"))mc.getConnection().send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,target,Direction.UP,0));
                     if(command[1].equals("use"))mc.getConnection().send(new ServerboundUseItemOnPacket(InteractionHand.MAIN_HAND,hit,0));
@@ -51,14 +58,14 @@ public final class ClientChecks {
                     if((command[1].equals("disabled")||command[1].equals("empty"))&&(boolean)fieldClass(UltimineClient.class,"held"))throw new IllegalStateException("server-disabled overlay remained held");
                 }catch(Throwable bad){verdict="failed: "+bad;}
                 Screenshot.grab(Path.of(System.getenv("UQ_VEIN_EVIDENCE")).toFile(),command[4]+".png",mc.getMainRenderTarget(),c->{});
-                Files.writeString(ROOT.resolve("Dev.ack"),command[0]+"\t"+verdict);UltimineClient.KEY.setDown(false);Net.sendToServer(new Net.UltimineState(false,0));command=null;return;
+                Files.writeString(ROOT.resolve("Dev.ack"),command[0]+"\t"+verdict);UltimineClient.KEY.setDown(false);mc.options.keyAttack.setDown(false);if(!natural)Net.sendToServer(new Net.UltimineState(false,0));command=null;return;
             }
             Path path=ROOT.resolve("Dev.txt");if(!Files.exists(path))return;String value=Files.readString(path);if(value.equals(seen))return;seen=value;command=value.split("\t",-1);mc.setScreen(null);mc.options.hideGui=command[1].equals("preview_hidden");mc.gui.setOverlayMessage(Component.empty(),false);
             String[] xyz=command[2].split(",");var pos=new BlockPos(Integer.parseInt(xyz[0]),Integer.parseInt(xyz[1]),Integer.parseInt(xyz[2]));target=pos;var hit=new BlockHitResult(Vec3.atCenterOf(pos).add(0,.5,0),Direction.UP,pos,false);mc.hitResult=hit;
-            UltimineClient.KEY.setDown(true);Net.sendToServer(new Net.UltimineState(true,0));
+            boolean natural=command[1].startsWith("natural_");UltimineClient.KEY.setDown(!natural);if(!natural)Net.sendToServer(new Net.UltimineState(true,0));
             aim(mc,pos);
             if(command[1].equals("menu"))mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
-            delay=25;actionSent=false;
+            delay=25;actionSent=false;naturalWait=0;
         }catch(Throwable bad){bad.printStackTrace();try{Files.writeString(ROOT.resolve("Dev.ack"),(command==null?"0":command[0])+"\tfailed: client "+bad);}catch(Exception ignored){}command=null;}
     }
     static Object fieldClass(Class<?> type,String name)throws Exception{var f=type.getDeclaredField(name);f.setAccessible(true);return f.get(null);}

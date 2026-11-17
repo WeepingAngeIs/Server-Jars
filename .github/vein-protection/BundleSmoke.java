@@ -106,6 +106,7 @@ public final class BundleSmoke {
         add("held display and shape preview",()->seed(false),"preview","NONE",()->blocks(false,false,false));
         add("hidden HUD display",()->seed(false),"preview_hidden","NONE",()->blocks(false,false,false));
         add("inventory stops held display",()->seed(false),"menu","NONE",()->blocks(false,false,false));
+        AcceptanceCases.extend();
     }
     static void send(Case c)throws Exception{
         p().inventoryMenu.broadcastFullState();
@@ -124,7 +125,7 @@ public final class BundleSmoke {
             Case c=cases.peek();
             if(start==0){System.out.println("VEIN CASE START: "+c.name());c.setup().run();send(c);start=tick;}
             if(tick-start>900)throw new IllegalStateException("client timeout: "+c.name()+"; "+(Files.exists(ROOT.resolve("Dev.status"))?Files.readString(ROOT.resolve("Dev.status")):"no client status"));
-            Path holding=ROOT.resolve("Dev.holding");boolean needsHeld=!c.action().equals("disabled")&&!c.action().equals("empty")&&!c.action().equals("menu");
+            Path holding=ROOT.resolve("Dev.holding");boolean needsHeld=!c.action().equals("disabled")&&!c.action().equals("empty")&&!c.action().equals("menu")&&!c.action().startsWith("natural_");
             if(Files.exists(holding)&&Files.readString(holding).equals(""+sequence)&&(!needsHeld||held()))Files.writeString(ROOT.resolve("Dev.ready"),""+sequence);
             Path ack=ROOT.resolve("Dev.ack");if(tick-start<40||!Files.exists(ack)||!Files.readString(ack).startsWith(sequence+"\t"))return;
             List<String> failures=new ArrayList<>();String client=Files.readString(ack);if(!client.equals(sequence+"\tpassed"))failures.add(client);
