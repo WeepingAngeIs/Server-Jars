@@ -101,7 +101,7 @@ public final class MutationGate {
     public static void born(Object object){Construction b=CONSTRUCT.get();if(ENABLED&&b!=null)b.born.add(object);}
     private static boolean constructionMethod(String name){
         return name.startsWith("get")||name.startsWith("set")||name.startsWith("is")||name.startsWith("has")
-            ||Set.of("loadFromNBT","loadFrom","saveToNBT","saveTo","removeDuplicates","initialize","iterator","size","get","set","remove","rebuildPokemonByUuid","updateAspects","updateForm","updateAbility","checkGender","validateMoveset","recalculateCharacteristic","initializeScale","refreshOriginalTrainer","onChange","notify","onPokemonChanged","self","heldItem","heldItemNoCopy$common","cosmeticItem").contains(name);
+            ||Set.of("loadFromNBT","loadFromJSON","loadFrom","saveToNBT","saveToJSON","saveTo","removeDuplicates","initialize","iterator","size","get","set","remove","rebuildPokemonByUuid","updateAspects","updateForm","updateAbility","checkGender","validateMoveset","recalculateCharacteristic","initializeScale","refreshOriginalTrainer","onChange","notify","onPokemonChanged","self","heldItem","heldItemNoCopy$common","cosmeticItem").contains(name);
     }
     private static boolean inspectMethod(String name){return name.startsWith("get")||name.startsWith("is")||name.startsWith("has")
         ||Set.of("saveToNBT","saveTo","iterator","size","get","heldItem","heldItemNoCopy$common","cosmeticItem","self").contains(name);}
@@ -168,6 +168,7 @@ public final class MutationGate {
             try {
                 Set<UUID> commands=Set.of();long epoch=1;
                 if(!fresh){Record prior=record(j,origin,custody.receipt());if(!(prior.phase()==Phase.READ_ONLY||prior.phase()==Phase.SUSPENDED))throw new IOException("Ambiguous mutation/publication; no replay");source=prior.snapshot();commands=prior.commands();epoch=prior.epoch()+1;}
+                if(epoch>=64)throw new IOException("Publication epoch limit; no implicit reset");
                 verifyCurrent(c,source);
                 j.commit(j.receipt(),state(source,origin,custody.receipt(),epoch,Phase.PREPARED,commands,NativeFence.hash(source)));fault.hit(Step.PREPARED_DURABLE);
                 if(CONSTRUCT.get()!=null||VERIFY.get()!=null)throw new IOException("Nested construction refused");Construction build=new Construction(c);CONSTRUCT.set(build);
