@@ -57,7 +57,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: party-guard-unit-${{ github.sha }}
+          name: party-guard-unit-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: |
             dist/party-guard-unit/*.json
             dist/party-guard-unit/*.log
@@ -113,10 +113,12 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: party-guard-native-${{ matrix.backend }}-${{ github.sha }}
+          name: party-guard-native-${{ matrix.backend }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: |
             dist/packaged-smoke/
             dist/packaged-harness/run-server/crash-reports/
+            dist/packaged-harness/run/crash-reports/
+            dist/packaged-harness/run-visitor/crash-reports/
           if-no-files-found: error
           retention-days: 30
   verified:
@@ -126,7 +128,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          pattern: party-guard-*-${{ github.sha }}
+          pattern: party-guard-*-${{ github.sha }}-attempt-*
           path: evidence/
       - name: Require complete exact-commit unit and native evidence
         run: |
@@ -134,11 +136,22 @@ jobs:
           from pathlib import Path
           import json,os
           root=Path('evidence');sha=os.environ['GITHUB_SHA']
-          units=list(root.rglob('unit-summary.json'));assert len(units)==1
+          def attempt_root(prefix):
+              # Retain failed attempts. Select the newest attempt for each job, never fall back
+              # to an older success when the newest evidence is incomplete or failed.
+              candidates=[]
+              for path in root.glob(prefix+sha+'-attempt-*'):
+                  number=path.name.rsplit('-attempt-',1)[1]
+                  assert path.is_dir() and number.isdecimal(),path
+                  candidates.append((int(number),path))
+              assert candidates,prefix
+              candidates.sort();assert len({n for n,p in candidates})==len(candidates)
+              return candidates[-1][1]
+          units=list(attempt_root('party-guard-unit-').rglob('unit-summary.json'));assert len(units)==1
           unit=json.loads(units[0].read_text());assert unit['commit']==sha and unit['passed']==34 and unit['failed']==0
           summaries=[]
           for backend in ('nbt','json'):
-              paths=list(root.rglob(f'party-guard-{backend}-summary.json'));assert len(paths)==1
+              paths=list(attempt_root(f'party-guard-native-{backend}-').rglob(f'party-guard-{backend}-summary.json'));assert len(paths)==1
               s=json.loads(paths[0].read_text());assert s['commit']==sha and s['phases']==3 and s['guard_flags']==15 and s['legacy_counterexample_flags']==14
               assert s['admission_verified'] is False and s['global_native_hooks_installed'] is False and s['production_jar_changed'] is False
               for path,digest in unit['source_hashes'].items():assert s['sources'][path]==digest
@@ -147,7 +160,7 @@ jobs:
           PY
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: party-guard-verified-${{ github.sha }}
+          name: party-guard-verified-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: guard-verification.json
           if-no-files-found: error
           retention-days: 30
