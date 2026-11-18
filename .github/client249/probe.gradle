@@ -1,0 +1,15 @@
+allprojects {
+    plugins.withId('java') {
+        def probeDir = rootProject.file('../.github/client249')
+        def probe = sourceSets.create('privatePackClientProbe') {
+            java.srcDir new File(probeDir, 'java')
+            resources.srcDir new File(probeDir, 'resources')
+            compileClasspath += sourceSets.main.compileClasspath
+        }
+        tasks.register('privatePackClientProbeJar', Jar) {
+            from probe.output
+            destinationDirectory = rootProject.layout.buildDirectory.dir('probe')
+            archiveFileName = 'jail-client-test.jar'
+        }
+    }
+}

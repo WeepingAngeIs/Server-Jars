@@ -12,6 +12,7 @@ python3 "$src/provision.py" --side server --dest "$server"
 curl -fLsS --retry 3 -o installer.jar https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.249/neoforge-21.1.249-installer.jar
 echo 'd88b448eab73cd65bdf1720844a4828262de30a15fc71bd04dd81acc61c5399a  installer.jar' | sha256sum --check
 java -jar installer.jar --installServer > "$evidence/install.log" 2>&1
+if [[ "${PACK249_INSTALL_ONLY:-0}" == 1 ]]; then exit 0; fi
 mkdir -p probe/META-INF
 # Compile the read-only census against the same actual FML/NeoForge jars used by the server.
 javac -proc:none -cp "$(find libraries -name '*.jar' | paste -sd:)" -d probe "$src/PackCensus.java"

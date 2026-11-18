@@ -47,7 +47,10 @@ def populate(dest, side, cache):
     mods = dest / "mods"
     mods.mkdir(exist_ok=True)
     excluded = json.loads((ROOT / "server-exclusions.json").read_text())
-    selected = [r for r in PACK["mods"] if side == "client" or r["side"] != "unsupported" and r["name"] not in excluded]
+    # Simply More declares Simply Tooltips required on BOTH sides in its shipped NeoForge metadata.
+    server_dependencies = {"SimplyTooltips-neoforge-0.1.5.jar"}
+    selected = [r for r in PACK["mods"] if side == "client" or
+                (r["side"] != "unsupported" or r["name"] in server_dependencies) and r["name"] not in excluded]
     def install(row):
         name = row["name"]
         assert name == Path(name).name and name.endswith(".jar")
