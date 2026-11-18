@@ -217,7 +217,14 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
             CompoundTag claimsTag;
             try(var input=Files.newInputStream(claimsFile())){claimsTag=NbtIo.readCompressed(input,NbtAccounter.create(16L*1024*1024));}
             if(!claimsTag.contains("data",10)) throw new IOException("Malformed origin claim persistence");
-            savedClaims=call(CLAIMS,null,"load",new Class<?>[]{CompoundTag.class,HolderLookup.Provider.class},claimsTag.getCompound("data"),player.registryAccess());
+            CompoundTag raw=claimsTag.getCompound("data");
+            savedClaims=call(CLAIMS,null,"load",new Class<?>[]{CompoundTag.class,HolderLookup.Provider.class},raw,player.registryAccess());
+            if (JailHumanAudit.hasPackStateContract(player)) {
+                // The provider's forgiving reader drops malformed resource IDs/owners. Such a
+                // record cannot prove a truly empty native history or justify acquiring a lease.
+                Object encoded=call(CLAIMS,savedClaims,"save",new Class<?>[]{CompoundTag.class,HolderLookup.Provider.class},new CompoundTag(),player.registryAccess());
+                if (!raw.equals(encoded)) throw new IOException("Native claims history did not round-trip exactly");
+            }
         }
         return view(saved,savedClaims,inventory.durable());
     }

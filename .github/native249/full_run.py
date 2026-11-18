@@ -115,6 +115,8 @@ for phase in (1,2):
             cli=subprocess.Popen(["xvfb-run","-a","-s","-screen 0 800x600x24",sys.executable,
                                   str(root/".github/client249/launch.py"),str(client),"--join","127.0.0.1:25565","--name","Visitor"],
                                  cwd=root,env=env,stdout=clientlog,stderr=subprocess.STDOUT,start_new_session=True)
+            last_state=""
+            since=time.monotonic()
             for attempt in range(600):
                 check_alive(srv,"Server",logs/"server.log")
                 check_alive(cli,"Client",logs/"client.log")
@@ -126,6 +128,17 @@ for phase in (1,2):
                     live=(report/f"client249-phase{phase}-status.txt")
                     screen=live.read_text().strip() if live.exists() else "waiting for first observed client tick"
                     print(f"Full .249 phase {phase} at {2*attempt}s: {screen}",flush=True)
+                    if screen!=last_state:
+                        last_state=screen
+                        since=time.monotonic()
+                    age=time.monotonic()-since
+                    if phase==1 and not (report/"full249-onboarding-complete.txt").exists() and screen.startswith("screen=") and "overlay=none" in screen:
+                        name=screen.split()[0].removeprefix("screen=").rsplit(".",1)[-1]
+                        loading={"GenericMessageScreen","ReceivingLevelScreen","ConnectScreen","ProgressScreen","LoadingOverlay","LevelLoadingScreen"}
+                        if name=="none" and "world=true" in screen and age>=180:
+                            raise RuntimeError("Joined world but first-join onboarding did not finish within three idle minutes: "+screen)
+                        if name not in loading and name!="none" and age>=100:
+                            raise RuntimeError("Stable client screen blocked normal login/onboarding: "+screen)
                     for message in ("ModLoadingErrorScreen", "LoadingErrorScreen", "ModLoadingFailedScreen",
                                     "This channel is missing on the server side, but required on the client", "Failed to complete lifecycle event CONSTRUCT", "Crash report saved to:", "java.lang.OutOfMemoryError"):
                         if message in client_tail or message in game_tail or message in screen:

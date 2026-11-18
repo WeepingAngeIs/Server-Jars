@@ -8,9 +8,11 @@ import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.resolver.ServerAddress;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.CommonComponents;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,7 +25,7 @@ public final class FullPackClientWatch {
     private static long next;
     private static final Set<String> chosen=new LinkedHashSet<>();
     private static int titleTicks,clearTicks;
-    private static boolean joined,tutorial,complete;
+    private static boolean joined,tutorial,complete,declinedXaero;
     private FullPackClientWatch() {}
     @SubscribeEvent public static void tick(ClientTickEvent.Post event) throws Exception {
         if (!Boolean.getBoolean("uq.playerOnly") || !"github-hosted".equals(System.getenv("RUNNER_ENVIRONMENT"))) return;
@@ -31,6 +33,19 @@ public final class FullPackClientWatch {
         String screen=game.screen==null?"none":game.screen.getClass().getName();
         int phase=Integer.getInteger("uq.playerOnlyPhase");
         Path folder=Path.of(System.getenv("GITHUB_WORKSPACE"),"dist/packaged-smoke");
+        if (!joined && game.level==null && game.player==null && game.getConnection()==null
+                && !declinedXaero && screen.equals("xaero.lib.client.gui.GuiUpdateAll")) {
+            // This is Xaero's stock ConfirmScreen. Only No declines both its
+            // updater and external mod pages without changing update settings.
+            for (var widget:game.screen.children()) {
+                if (widget instanceof Button no && no.visible && no.active && CommonComponents.GUI_NO.equals(no.getMessage())) {
+                    declinedXaero=true;
+                    System.out.println("FULL249_ONBOARDING declined pre-title Xaero update offer");
+                    no.onPress();
+                    break;
+                }
+            }
+        }
         if (!joined && game.screen instanceof TitleScreen title && game.getOverlay()==null) {
             if (++titleTicks>=60) {
                 joined=true;
@@ -79,7 +94,8 @@ public final class FullPackClientWatch {
                         "native picker confirms="+chosen+"; tutorial Later=1; no further UI actions\n");
             }
         }
-        String status="screen="+screen+" world="+(game.level!=null)+" player="+(game.player!=null)+" connection="+(game.getConnection()!=null);
+        String overlay=game.getOverlay()==null?"none":game.getOverlay().getClass().getName();
+        String status="screen="+screen+" world="+(game.level!=null)+" player="+(game.player!=null)+" connection="+(game.getConnection()!=null)+" overlay="+overlay;
         long now=System.nanoTime();
         if (status.equals(previous) && now<next) return;
         next=now+20_000_000_000L;
