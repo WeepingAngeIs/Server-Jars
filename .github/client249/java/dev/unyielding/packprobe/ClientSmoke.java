@@ -18,10 +18,17 @@ import net.neoforged.neoforge.common.NeoForge;
 @Mod("uq_pack249_client_probe")
 public final class ClientSmoke {
     private boolean finished;
+    private String lastScreen = "";
     public ClientSmoke() { NeoForge.EVENT_BUS.addListener(this::tick); }
 
     private void tick(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
+        String screen = (mc.screen == null ? "none" : mc.screen.getClass().getName())
+                + " / " + (mc.getOverlay() == null ? "none" : mc.getOverlay().getClass().getName());
+        if (!lastScreen.equals(screen)) {
+            com.mojang.logging.LogUtils.getLogger().info("Jail client test screen {}", screen);
+            lastScreen = screen;
+        }
         if (finished || !(mc.screen instanceof TitleScreen) || mc.getOverlay() != null) return;
         finished = true;
         try {

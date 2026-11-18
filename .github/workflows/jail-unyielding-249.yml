@@ -50,6 +50,11 @@ jobs:
           retention-days: 30
 
   pack-server:
+    if: "!contains(github.event.head_commit.message, '[client-probe]')"
+    strategy:
+      fail-fast: false
+      matrix:
+        boot: [a, b]
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -70,11 +75,11 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: pack249-server-${{ github.sha }}
+          name: pack249-server-${{ matrix.boot }}-${{ github.sha }}
           path: dist/pack249
           retention-days: 10
   custody:
-    if: "!contains(github.event.head_commit.message, '[pack-probe]')"
+    if: "!contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -136,6 +141,7 @@ jobs:
           python3 -m pip install --disable-pip-version-check minecraft-launcher-lib==8.0
           sudo apt-get update -qq
           sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1
+          bash .github/client249/memory.sh
           game="$RUNNER_TEMP/client249-game"
           mkdir -p "$game" dist/client249
           python3 .github/pack249/provision.py --side client --dest "$game"
@@ -158,6 +164,7 @@ jobs:
           retention-days: 10
 
   pack-custody:
+    if: "!contains(github.event.head_commit.message, '[client-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -191,6 +198,7 @@ jobs:
       - name: Prepare exact client and matching dedicated server on loopback
         run: |
           python3 -m pip install --disable-pip-version-check minecraft-launcher-lib==8.0
+          bash .github/client249/memory.sh
           PACK249_INSTALL_ONLY=1 bash .github/pack249/server.sh
           python3 .github/pack249/provision.py --side client --dest "$RUNNER_TEMP/pack249-client-native"
           python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
