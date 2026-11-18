@@ -88,6 +88,7 @@ public class JailCertifiedOriginPort extends JailNativeOriginPort {
         if (JailAttributeView.applies(player)) verifyNeutralAttributes();
     }
     private void verifyNeutralAttributes() throws IOException {
+        var food=new JailFoodProgress.ModifierAudit(player);
         var defaults=DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);Set<String> modifiers=new HashSet<>();declared.forEach(e->modifiers.add(e.modifier().toString()));
         CompoundTag neutral=JailNbt.decode(JailEquipmentEffects.neutral(player));
         for(Tag raw:neutral.getList("attributes",10)){
@@ -98,7 +99,7 @@ public class JailCertifiedOriginPort extends JailNativeOriginPort {
                 throw new IOException("Nondefault base attribute "+attributeName+" is not certified for respawn");
             for(Tag m:row.getList("modifiers",10)){
                 CompoundTag mod=(CompoundTag)m;
-                if (!modifiers.contains(mod.getString("id")) && !JailPackState.intrinsic(player,attributeName,mod.getString("id"),mod.getDouble("amount"),mod.getString("operation")))
+                if (!modifiers.contains(mod.getString("id")) && !JailPackState.intrinsic(player,food,attributeName,mod.getString("id"),mod.getDouble("amount"),mod.getString("operation")))
                     throw new IOException("Additional attribute modifier "+mod.getString("id")+" is not certified for neutral custody");
             }
         }

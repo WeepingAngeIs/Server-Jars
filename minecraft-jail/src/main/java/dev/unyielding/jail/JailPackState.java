@@ -40,9 +40,10 @@ final class JailPackState {
 
     private static void verifyAttachments(ServerPlayer player, CompoundTag attachments, boolean beforeDeath) throws IOException {
         verifyWalletAndResources(attachments);
-        boolean food = JailHumanAudit.hasItems249Contract(player);
+        boolean fullPack = JailHumanAudit.hasPackStateContract(player);
+        boolean food = fullPack || JailHumanAudit.hasItems249Contract(player);
         if (food) JailFoodProgress.validate(player,beforeDeath);
-        if (!JailHumanAudit.hasPackStateContract(player)) {
+        if (!fullPack) {
             if (attachments.getAllKeys().stream().anyMatch(key -> !BASE_ATTACHMENTS.contains(key) && !(food && JailFoodProgress.attachment(key))))
                 throw new IOException("An attached death store is outside the certified runtime");
             return;
@@ -237,8 +238,8 @@ final class JailPackState {
         return false;
     }
 
-    static boolean intrinsic(ServerPlayer player, String attribute, String modifier, double amount, String operation) throws IOException {
-        if (JailFoodProgress.candidate(modifier)) return JailFoodProgress.owns(player,attribute,modifier,amount,operation);
+    static boolean intrinsic(ServerPlayer player, JailFoodProgress.ModifierAudit food, String attribute, String modifier, double amount, String operation) throws IOException {
+        if (JailFoodProgress.candidate(modifier)) return food.owns(attribute,modifier,amount,operation);
         if (!reviewedIntrinsic(attribute,modifier,amount,operation) || !JailHumanAudit.hasPackStateContract(player))
             return false;
         boolean shard=modifier.equals("aether:life_shard_max_health");

@@ -20,6 +20,7 @@ public final class BackpackClaims {
     private BackpackClaims(){}
 
     static UUID get(UUID bag){return bag==null?null:held.get(bag);}
+    static boolean any(){return !held.isEmpty();}
     static void stopped(){held=Map.of();}
 
     private static Path directory(MinecraftServer server){return JailIntegrated.root(server).resolve("backpack-locks");}

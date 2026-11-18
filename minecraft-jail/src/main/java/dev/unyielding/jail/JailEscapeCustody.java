@@ -49,11 +49,12 @@ public final class JailEscapeCustody {
         if(!retainXp&&(p.totalExperience!=0||p.experienceLevel!=0||p.experienceProgress!=0)||!p.getActiveEffects().isEmpty()||p.getAbsorptionAmount()!=0)throw new IOException("Escape XP/potion custody unsupported; no lethal damage applied");
         var abilities=p.getAbilities();if(abilities.mayfly||abilities.flying||abilities.instabuild||abilities.invulnerable||!abilities.mayBuild||abilities.getFlyingSpeed()!=0.05F||abilities.getWalkingSpeed()!=0.1F)throw new IOException("Nondefault flight/creative abilities are not certified for death");
         var defaults=net.minecraft.world.entity.ai.attributes.DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);
+        var food=new JailFoodProgress.ModifierAudit(p);
         for(var raw:p.getAttributes().save()){
             var row=(CompoundTag)raw;var holder=net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.getHolder(net.minecraft.resources.ResourceLocation.parse(row.getString("id"))).orElseThrow();var live=p.getAttribute(holder);
             if(live==null||!defaults.hasAttribute(holder)||Double.compare(live.getBaseValue(),defaults.getBaseValue(holder))!=0)throw new IOException("Nondefault base attribute has no death custody adapter");
             for (var modifier:live.getModifiers()) {
-                if (!JailPackState.intrinsic(p,row.getString("id"),modifier.id().toString(),modifier.amount(),modifier.operation().name()))
+                if (!JailPackState.intrinsic(p,food,row.getString("id"),modifier.id().toString(),modifier.amount(),modifier.operation().name()))
                     throw new IOException("Unaudited modifier "+modifier.id()+" on "+row.getString("id"));
             }
         }

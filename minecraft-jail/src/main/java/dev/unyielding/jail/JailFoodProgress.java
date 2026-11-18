@@ -100,6 +100,7 @@ public final class JailFoodProgress {
         var history = new CompoundTag();
         history.put("foods",food);
         history.put("benefits",active);
+        history.putBoolean("applied_attribute_map",attachments.getCompound(BENEFIT).contains("att"));
         var modifiers = new CompoundTag();
         for (Tag tag : saved.getList("attributes",Tag.TAG_COMPOUND)) {
             var row = (CompoundTag)tag;
@@ -137,10 +138,18 @@ public final class JailFoodProgress {
                 "A prior ordinary death is awaiting native food-cycle cleanup");
     }
 
-    static boolean owns(ServerPlayer player, String attribute, String id, double amount, String operation) throws IOException {
-        if (!candidate(id) || !operation.equals("ADD_VALUE") || !JailHumanAudit.hasItems249Contract(player)) return false;
-        var mods = capture(player).getCompound("modifiers").getCompound(attribute);
-        return mods.contains(id) && Double.compare(amount,mods.getCompound(id).getDouble("amount"))==0;
+    // One immutable observation per synchronous audit. Established players may have many cycles.
+    static final class ModifierAudit {
+        private final ServerPlayer player;
+        private CompoundTag modifiers;
+        ModifierAudit(ServerPlayer player) { this.player=player; }
+        boolean owns(String attribute, String id, double amount, String operation) throws IOException {
+            if (!operation.equals("ADD_VALUE")) return false;
+            if (modifiers==null) modifiers=JailHumanAudit.hasItems249Contract(player)
+                    ? capture(player).getCompound("modifiers") : new CompoundTag();
+            var mods = modifiers.getCompound(attribute);
+            return mods.contains(id) && Double.compare(amount,mods.getCompound(id).getDouble("amount"))==0;
+        }
     }
 
     static void record(ServerPlayer player, CompoundTag attempt) throws IOException {
@@ -153,10 +162,8 @@ public final class JailFoodProgress {
     static void endKill() { KILL.remove(); }
     public static boolean protectsScore(ServerPlayer player) { return KILL.get()==player && JailEscapeCustody.ownDamage(player); }
 
-    static void beginClone(ServerPlayer old, CompoundTag attempt) throws IOException {
-        if (!attempt.contains(RECEIPT)) return;
-        require(attempt.getCompound(RECEIPT).equals(capture(old)), "Corpse food state differs from its escape receipt");
-        CLONE.set(old);
+    static void beginClone(ServerPlayer old, boolean food) {
+        if (food) CLONE.set(old);
     }
     static void endClone() { CLONE.remove(); }
     public static boolean protectsClone(PlayerEvent.Clone event) {
@@ -164,7 +171,8 @@ public final class JailFoodProgress {
                 && event.getEntity() instanceof ServerPlayer next && next.server==old.server && next.getUUID().equals(old.getUUID());
     }
     public static boolean awaitVerifiedRespawn(ServerPlayer player) {
-        return !player.isAlive() && !JailAutoRespawn.isAutomaticInvocation(player) && JailEscapeCustody.pendingFoodDeath(player);
+        return !player.isAlive() && !JailAutoRespawn.isAutomaticInvocation(player)
+                && JailData.get(player.server).assignment(player.getUUID())!=null && JailEscapeCustody.pendingFoodDeath(player);
     }
 
     static void copyModifiers(ServerPlayer old, ServerPlayer next, CompoundTag attempt) throws IOException {

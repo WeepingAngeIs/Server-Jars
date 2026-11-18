@@ -1,6 +1,6 @@
 # Rosecourt Detention Center
 
-Minecraft Jail 1.3.0-beta.1 adds one six-cell facility per world save. Rosecourt occupies 19 blocks east to west, 30 north to south and 10 vertically. Cells 01/02, 03/04 and 05/06 face each other across a vaulted hall. A skylight runs along its ridge. Staff approach the six custody lockers from the hall. The south courtyard has two permanent cherry sculptures and benches. Confinement uses each prisoner's own cell as its boundary. The hall and courtyard are staff-accessible spaces.
+Rosecourt occupies 19 blocks east to west, 30 north to south and 10 vertically. Each world save supports one facility. Cells 01/02, 03/04 and 05/06 face each other across a vaulted hall. A skylight runs along its ridge. Staff can inspect each cell's custody chest from the hall. The south courtyard has two permanent cherry sculptures and benches. Each prisoner is confined to their assigned cell.
 
 | Custom block | Use in the building |
 |---|---|
@@ -16,7 +16,7 @@ These twelve decorative blocks have inventory items in Building Blocks. The exis
 
 ## Using a disposable, certified installation
 
-Install matching Jail builds on the test server and clients. The target is Java 21, Minecraft 1.21.1, NeoForge 21.1.255 and Cobblemon 1.8.4. Custody additionally checks the exact loaded mod files, permissions, claim access, origin data, inventory and wallet. See the compatibility report for the private profiles.
+Install matching Jail builds on the test server and clients. Beta 3 targets Cobblemon Unyielding 1.0.14, Java 21, Minecraft 1.21.1, NeoForge 21.1.249 and Cobblemon 1.8.4. Custody checks the loaded mod files, permissions, claim access, origin data, inventory and wallet. Check the GitHub results for the revision used to build your JAR.
 
 1. As a staff player, stand facing a clear, supported area and run `/jailbuild preview`. Review the corners and `/jailbuild details [page]`, then use `/jailbuild place`. The build keeps its north–south orientation. Facing determines which side of you the preview appears on.
 2. For a fresh test world only, initialize the histories from console with `jailcustody init` and `jailintegrated init`. Admissions default off. Check an online player with `jailintegrated check <player>`. The console command `jailintegrated mode supported` enables eligible admissions. The packed-wallet option is a separate opt-in for the existing narrow wallet contract.

@@ -19,6 +19,7 @@ public final class JailBackpacks {
     static final String RECORDS = "backpack_records";
     static final String STORAGE = "net.p3pp3rf1y.sophisticatedbackpacks.backpack.BackpackStorage";
     static final String COMPONENT = "sophisticatedcore:storage_uuid";
+    private static final ResourceLocation UUID_COMPONENT = ResourceLocation.parse(COMPONENT);
     private static final String ITEM = "net.p3pp3rf1y.sophisticatedbackpacks.backpack.BackpackItem";
     private static final Set<String> TIERS = Set.of("backpack", "copper_backpack", "iron_backpack",
             "gold_backpack", "diamond_backpack", "netherite_backpack");
@@ -31,8 +32,17 @@ public final class JailBackpacks {
     }
 
     public static UUID identity(ItemStack stack) {
-        var type = BuiltInRegistries.DATA_COMPONENT_TYPE.get(ResourceLocation.parse(COMPONENT));
-        return type != null && stack.get(type) instanceof UUID id ? id : null;
+        if(stack.isEmpty())return null;
+        var type = BuiltInRegistries.DATA_COMPONENT_TYPE.get(UUID_COMPONENT);
+        if(type!=null && stack.get(type) instanceof UUID id)return id;
+        if(isBag(stack)){
+            var data=stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+            if(data!=null){
+                CompoundTag legacy=data.copyTag();
+                if(legacy.hasUUID("contentsUuid"))return legacy.getUUID("contentsUuid");
+            }
+        }
+        return null;
     }
 
     static boolean accepts(ServerPlayer player, ItemStack stack) throws IOException {
@@ -50,6 +60,7 @@ public final class JailBackpacks {
             if (!Set.of(COMPONENT, "sophisticatedcore:main_color", "sophisticatedcore:accent_color",
                     "sophisticatedcore:number_of_inventory_slots", "sophisticatedcore:number_of_upgrade_slots",
                     "sophisticatedcore:render_info_tag", "sophisticatedcore:open_tab_id", "sophisticatedcore:sort_by",
+                    "sophisticatedbackpacks:columns_taken",
                     "minecraft:custom_name", "minecraft:lore", "minecraft:enchantments",
                     "minecraft:repair_cost").contains(key)) throw new IOException("Unreviewed backpack component: "+key);
         }
@@ -85,9 +96,19 @@ public final class JailBackpacks {
             Object row = JailHumanAudit.call(STORAGE,storage,"getBackpackContents",new Class<?>[]{UUID.class},id);
             if (!(row instanceof Optional<?> option) || !(option.orElse(null) instanceof CompoundTag record))
                 throw new IOException("Missing native backpack backing record for "+id);
+            var accessLogs=(Map<?,?>)JailHumanAudit.call(STORAGE,storage,"getAccessLogs");
+            if (!persistsOnLoad(record,accessLogs.containsKey(id)))
+                throw new IOException("Provider would discard this unclaimed empty backpack backing on restart");
             result.put(id.toString(),record.copy());
         }
         return result;
+    }
+
+    // BackpackStorage.load filters out unlogged, uninitialized inventory-only records.
+    static boolean persistsOnLoad(CompoundTag record,boolean logged) {
+        return logged || !Set.of("inventory","upgradeInventory").containsAll(record.getAllKeys())
+                || !record.getCompound("inventory").getList("Items",Tag.TAG_COMPOUND).isEmpty()
+                || !record.getCompound("upgradeInventory").getList("Items",Tag.TAG_COMPOUND).isEmpty();
     }
 
     static CompoundTag fromDisk(CompoundTag data, Set<UUID> ids) throws IOException {
@@ -151,6 +172,9 @@ public final class JailBackpacks {
             List<ItemStack> stacks = new ArrayList<>();
             var inv=p.getInventory();
             for (int i=0;i<inv.getContainerSize();i++) stacks.add(inv.getItem(i));
+            var ender=p.getEnderChestInventory();
+            for(int i=0;i<ender.getContainerSize();i++)if(matches(ids,ender.getItem(i))||nested(p,ender.getItem(i),ids))
+                throw new IOException("A duplicate backpack is in an online player's ender chest");
             Object cap=((Optional<?>)JailHumanAudit.call("io.wispforest.accessories.api.AccessoriesCapability",null,
                     "getOptionally",new Class<?>[]{LivingEntity.class},p)).orElseThrow(()->new IOException("Missing Accessories capability"));
             var stores=(Map<?,?>)JailHumanAudit.call("io.wispforest.accessories.api.AccessoriesCapability",cap,"getContainers");
@@ -165,11 +189,13 @@ public final class JailBackpacks {
                     var uuid=(Optional<?>)JailHumanAudit.call("net.p3pp3rf1y.sophisticatedcore.api.IStorageWrapper",wrapper,"getContentsUuid");
                     if (uuid.isPresent() && ids.contains(uuid.get())) throw new IOException("Someone still has this backpack open");
                 }
-                for (var slot : p.containerMenu.slots) if (slot.container!=inv && ids.contains(identity(slot.getItem())))
+                for (var slot : p.containerMenu.slots) if (slot.container!=inv
+                        && (matches(ids,slot.getItem()) || nested(p,slot.getItem(),ids)))
                     throw new IOException("A second backpack handle is visible in an open menu");
             }
             stacks.add(p.containerMenu.getCarried());
             for (ItemStack stack : stacks) {
+                if(nested(p,stack,ids))throw new IOException("A second backpack handle is nested inside another item");
                 UUID id=identity(stack);
                 if(id==null || !ids.contains(id))continue;
                 if(p!=subject || !carried || owned.merge(id,1,Integer::sum)!=1)
@@ -177,16 +203,37 @@ public final class JailBackpacks {
             }
         }
         for (var level : subject.server.getAllLevels()) for (var entity : level.getAllEntities()) {
-            if (entity instanceof ItemEntity item && ids.contains(identity(item.getItem())))
+            if (entity instanceof ItemEntity item && (matches(ids,item.getItem()) || nested(subject,item.getItem(),ids)))
                 throw new IOException("A duplicate backpack is on the ground");
         }
         if (carried && !owned.keySet().equals(ids)) throw new IOException("Backpack source handle changed");
+    }
+    private static boolean matches(Set<UUID> ids,ItemStack stack){
+        UUID id=identity(stack);
+        return id!=null&&ids.contains(id);
+    }
+    private static boolean nested(ServerPlayer p,ItemStack stack,Set<UUID> ids){
+        if(stack.isEmpty()||stack.getComponentsPatch().isEmpty())return false;
+        return nestedHandle(((CompoundTag)stack.save(p.registryAccess())).getCompound("components"),ids);
+    }
+    static boolean nestedHandle(Tag tag,Set<UUID> ids){
+        if(tag instanceof CompoundTag n){
+            if(n.getString("id").startsWith("sophisticatedbackpacks:")){
+                var components=n.getCompound("components");
+                if(components.hasUUID(COMPONENT)&&ids.contains(components.getUUID(COMPONENT)))return true;
+                var legacy=components.getCompound("minecraft:custom_data");
+                if(legacy.hasUUID("contentsUuid")&&ids.contains(legacy.getUUID("contentsUuid")))return true;
+            }
+            for(String key:n.getAllKeys())if(nestedHandle(n.get(key),ids))return true;
+        }else if(tag instanceof ListTag list)for(Tag child:list)if(nestedHandle(child,ids))return true;
+        return false;
     }
 
     /** Guard the provider's normal wrapper and UUID recovery commands while the handle is in custody. */
     public static boolean locked(UUID id) {
         return BackpackClaims.get(id)!=null;
     }
+    public static boolean locked(ItemStack stack){return BackpackClaims.any()&&locked(identity(stack));}
 
     public static Object unavailableWrapper() {
         try {return Class.forName("net.p3pp3rf1y.sophisticatedbackpacks.backpack.wrapper.IBackpackWrapper$Noop")

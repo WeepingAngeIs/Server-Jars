@@ -32,7 +32,8 @@ public final class JailAutoRespawn {
         // ordinary cancellable damage and dead-player save verification. Never bypass it.
         JailEscapeCustody.attempt(p);
     }
-    private static JailIntegrated.EscapeContext verify(ServerPlayer p)throws Exception {
+    private record VerifiedDeath(JailIntegrated.EscapeContext context,boolean food) {}
+    private static VerifiedDeath verify(ServerPlayer p)throws Exception {
         require(p.server.isSameThread()&&p.server.getPlayerList().getPlayer(p.getUUID())==p&&!p.hasDisconnected(),"Dead player is not current/connected");
         require(!p.server.getWorldData().isHardcore(),"Hardcore respawn is not authorized");
         require(!p.isAlive()&&p.getHealth()<=0,"Not a dead player");
@@ -48,13 +49,14 @@ public final class JailAutoRespawn {
             CompoundTag disk=JailVanillaPort.readSavedPlayer(p),data=disk.getCompound("NeoForgeData");
             require(disk.getFloat("Health")<=0&&data.hasUUID(JailVanillaPort.REMOVED)&&data.getUUID(JailVanillaPort.REMOVED).equals(c.transaction())&&!data.contains(JailVanillaPort.RESTORED)&&data.getCompound(JailNativeOriginPort.RECEIPT).equals(t.getCompound("origin_receipt")),"Saved corpse or custody receipts disagree");
             if(JailXp.retained(t))JailXp.verify(p,t);
-            JailFoodProgress.beginClone(p,t);
+            JailFoodProgress.verifyClone(p,t,disk);
+            return new VerifiedDeath(c,t.contains(JailFoodProgress.RECEIPT));
         }
-        return c;
     }
     /** A single native invocation after full durable-death verification; never retried in this session. */
     static void respawn(ServerPlayer p)throws Exception {
-        var c=verify(p);ATTEMPTED.add(p);
+        var proof=verify(p);var c=proof.context();ATTEMPTED.add(p);
+        JailFoodProgress.beginClone(p,proof.food());
         AUTOMATIC.set(p);
         try{p.connection.handleClientCommand(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));}
         finally{AUTOMATIC.remove();JailFoodProgress.endClone();}

@@ -15,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -66,11 +65,8 @@ final class Items249Proof {
         require(visitor.getInventory().getItem(CARRIED).isEmpty() && back(visitor).getItem(0).isEmpty(),"Bag destinations already occupied");
         visitor.getInventory().setItem(CARRIED,carried);
         back(visitor).setItem(0,worn);
-        var plain=BuiltInRegistries.ITEM.stream().filter(i->{
-            var id=BuiltInRegistries.ITEM.getKey(i);
-            return List.of("sophisticatedbackpacks","sophisticatedcore","neoorigins").contains(id.getNamespace()) &&
-                    (i.getClass()==Item.class || i.getClass()==BlockItem.class);
-        }).sorted(java.util.Comparator.comparing(i->BuiltInRegistries.ITEM.getKey(i).toString())).findFirst().orElseThrow();
+        var plain=BuiltInRegistries.ITEM.getOptional(ResourceLocation.parse("neoorigins:gold_orb")).orElseThrow();
+        require(plain.getClass()==Item.class,"NeoOrigins gold orb is not its native plain item");
         var ordinary=new ItemStack(plain,1);
         ordinary.set(DataComponents.CUSTOM_NAME,Component.literal("Ordinary sealed modded item"));
         visitor.getInventory().setItem(ORDINARY,ordinary);
@@ -131,6 +127,23 @@ final class Items249Proof {
     }
     static void held(ServerPlayer p,String phase) throws Exception {
         require(p.getInventory().getItem(CARRIED).isEmpty() && back(p).getItem(0).isEmpty(),"Bag remains accessible during custody");
+        Object unavailable=Class.forName("net.p3pp3rf1y.sophisticatedbackpacks.backpack.wrapper.IBackpackWrapper$Noop").getField("INSTANCE").get(null);
+        var storage=BackpackStorage.get(p.server.overworld());
+        for (String name:List.of("carried","worn")) {
+            var gold=golden(p,name);
+            var stale=ItemStack.parse(p.registryAccess(),gold.getCompound("stack")).orElseThrow();
+            require(BackpackWrapper.fromStack(stale)==unavailable,"Provider still opens a held backpack's UUID");
+            UUID id=gold.getUUID("id");
+            var writable=storage.getOrCreateBackpackContents(id);
+            require(writable.isEmpty(),"Provider exposed the held writable inventory");
+            writable.putString("fixture","detached");
+            var inspected=storage.getBackpackContents(id).orElseThrow();
+            inspected.putString("fixture","defensive copy");
+            storage.setBackpackContents(id,new CompoundTag());
+            storage.removeBackpackContents(id);
+        }
+        var unrelated=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("sophisticatedbackpacks:gold_backpack")));
+        require(BackpackWrapper.fromStack(unrelated)!=unavailable,"Unrelated backpacks were globally disabled");
         checkNativeStores(p);
         Items249Food.verify(p,!phase.equals("admission"));
         flag("intact_native_bags_and_food_"+phase);
