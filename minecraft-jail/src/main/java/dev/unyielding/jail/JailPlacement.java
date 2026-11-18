@@ -287,6 +287,8 @@ public final class JailPlacement {
     /** Never creates chunk tickets or searches for a replacement location. */
     public static boolean intact(MinecraftServer server, Loc loc) {
         JailData data = JailData.get(server);
+        if (data.geometry() == DetentionCenter.GEOMETRY && DetentionCenter.number(data.location(), loc) != 0)
+            return intact(server, loc, DetentionCenter.GEOMETRY);
         int version = loc != null && loc.equals(data.location()) ? data.geometry() : JailData.LEGACY_GEOMETRY;
         return intact(server, loc, version);
     }
