@@ -119,6 +119,7 @@ public final class PlayerOnlySmoke {
         try { view=JsonParser.parseString(Files.readString(report)).getAsJsonObject(); }
         catch (RuntimeException incomplete) { return; }
         if (view.getAsJsonArray("verified_respawns").isEmpty()) return;
+        if (view.get("kill_packets").getAsInt()!=1 || view.get("respawn_packets_after_kill").getAsInt()!=1) return;
         require(view.get("respawn_actions_sent").getAsInt()==0, "Client sent a respawn action");
         cell(dev,1);
         cell(visitor,6);
