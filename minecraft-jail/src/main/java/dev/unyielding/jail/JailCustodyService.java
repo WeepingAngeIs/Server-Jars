@@ -85,8 +85,13 @@ public final class JailCustodyService {
     }
     private static VerifiedAdapter adapter(MinecraftServer server,JailCustodyLedger.Binding b)throws IOException {items(server,b);var adapter=fixtureFactory==null?JailIntegrated.adapter(server,b):fixtureFactory.open(server,b);if(adapter==null||adapter.descriptor()==null||adapter.descriptor().isBlank())throw new IOException("Unsupported custody adapter");return adapter;}
     public static void open(ServerPlayer player,BlockPos pos){
-        try{if(!manager(player))throw new IOException("Administrator permission required; quarantine has no player bypass");var ledger=ledger(player.server);var b=ledger.at(new JailCustodyLedger.Anchor(player.level().dimension().location().toString(),pos.getX(),pos.getY(),pos.getZ()));if(b==null)throw new IOException("Unbound custody interface; no inventory is stored here");if(!valid(player,b))throw new IOException("Interface, range, permissions or claim access changed");
-            var rows=JailCustodyMenu.previews(player,items(player.server,b).snapshot());player.openMenu(new SimpleMenuProvider((id,inventory,ignored)->new JailCustodyMenu(id,inventory,b,rows),Component.literal("Custody "+b.owner().toString().substring(0,8)+" · "+b.state())));
+        try{if(!manager(player))throw new IOException("Administrator permission required; quarantine has no player bypass");var ledger=ledger(player.server);var b=ledger.at(new JailCustodyLedger.Anchor(player.level().dimension().location().toString(),pos.getX(),pos.getY(),pos.getZ()));if(b==null)throw new IOException("This custody chest has no assigned inventory");if(!valid(player,b))throw new IOException("Interface, range, permissions or claim access changed");
+            var rows=JailCustodyMenu.previews(player,items(player.server,b).snapshot());
+            var jail=JailData.get(player.server);
+            var assignment=jail.assignment(b.owner());
+            int cell=assignment!=null && assignment.geometry()==DetentionCenter.GEOMETRY ? DetentionCenter.number(jail.location(),assignment.jail()) : 0;
+            String title=cell>0?"Cell %02d custody chest".formatted(cell):"Custody chest";
+            player.openMenu(new SimpleMenuProvider((id,inventory,ignored)->new JailCustodyMenu(id,inventory,b,rows),Component.literal(title+" · "+b.state())));
         }catch(IOException|RuntimeException bad){player.sendSystemMessage(Component.literal("Custody: "+reason(bad)));}
     }
     private static String reason(Throwable bad){String s=bad.getMessage()==null?bad.getClass().getSimpleName():bad.getMessage();return s.replaceAll("[\\p{Cntrl}]"," ").substring(0,Math.min(s.replaceAll("[\\p{Cntrl}]"," ").length(),400));}

@@ -11,12 +11,18 @@ final class JailRuntimeProfile {
     static final String PACK_KERNEL = "21.1.249";
 
     private static final String BOUNDED_249 = "268c942530f240efea4b34bfce591d07da5c23a3f49360bf6d15a63965d696c8";
+    // The bounded runtime plus the pack's exact Sophisticated Backpacks, Core, SOL Onion and CreativeCore.
+    private static final String FOCUSED_ITEMS_249 = "681fb2244140c28863053b222ae32aeedd0c1b4379d8023b4a0e867a57fdf871";
 
     private JailRuntimeProfile() {}
 
     static String seal(Collection<String> files) {
         String canonical = String.join("\n", files.stream().sorted().toList());
         return HexFormat.of().formatHex(JailOriginTransaction.hash(canonical.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    static boolean focusedItems(String kernel, Collection<String> files, boolean hostedItemsFixture) {
+        return hostedItemsFixture && PACK_KERNEL.equals(kernel) && matches(seal(files), FOCUSED_ITEMS_249);
     }
 
     static boolean check(String kernel, String originalKernel, Collection<String> files, String unsupported) throws IOException {

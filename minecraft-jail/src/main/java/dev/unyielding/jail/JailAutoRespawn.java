@@ -48,6 +48,7 @@ public final class JailAutoRespawn {
             CompoundTag disk=JailVanillaPort.readSavedPlayer(p),data=disk.getCompound("NeoForgeData");
             require(disk.getFloat("Health")<=0&&data.hasUUID(JailVanillaPort.REMOVED)&&data.getUUID(JailVanillaPort.REMOVED).equals(c.transaction())&&!data.contains(JailVanillaPort.RESTORED)&&data.getCompound(JailNativeOriginPort.RECEIPT).equals(t.getCompound("origin_receipt")),"Saved corpse or custody receipts disagree");
             if(JailXp.retained(t))JailXp.verify(p,t);
+            JailFoodProgress.beginClone(p,t);
         }
         return c;
     }
@@ -56,7 +57,7 @@ public final class JailAutoRespawn {
         var c=verify(p);ATTEMPTED.add(p);
         AUTOMATIC.set(p);
         try{p.connection.handleClientCommand(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));}
-        finally{AUTOMATIC.remove();}
+        finally{AUTOMATIC.remove();JailFoodProgress.endClone();}
         ServerPlayer next=p.server.getPlayerList().getPlayer(p.getUUID());
         require(next!=null&&next!=p&&next.connection.player==next&&next.isAlive()&&!next.hasDisconnected(),"Native replacement was not rebound");
         var jail=c.assignment().jail();

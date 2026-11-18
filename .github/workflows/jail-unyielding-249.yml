@@ -2,7 +2,7 @@ name: Cobblemon Unyielding 21.1.249 verification
 on:
   push:
     branches: [codex/jail-unyielding-249]
-    paths: ['minecraft-jail/**', '.github/client249/**', '.github/native249/**', '.github/pack249/**', '.github/detention/**', '.github/workflows/jail-unyielding-249.yml']
+    paths: ['minecraft-jail/**', '.github/client249/**', '.github/native249/**', '.github/pack249/**', '.github/detention/**', '.github/items249/**', '.github/workflows/jail-unyielding-249.yml']
 permissions:
   contents: read
   actions: read
@@ -35,7 +35,7 @@ jobs:
         if: always()
         run: |
           mkdir -p dist/migration-build
-          git archive --format=zip -o dist/migration-build/source.zip HEAD minecraft-jail unyielding-quests/gradlew unyielding-quests/gradle/wrapper unyielding-quests/src/main/java/dev/unyielding/quests/devtest combined-unyielding/prepare_smoke.py combined-unyielding/smoke-harness .github/scripts/fetch-build-dependencies.py .github/scripts/meeting-two-player.sh .github/scripts/meeting-two-player.gradle .github/scripts/prepare-split-server.py .github/scripts/prepare-packaged-server.py .github/scripts/install-origin-test-runtime.py .github/packed-wallet/PackedWalletProof.java .github/packaged-smoke/BundleSmoke.java .github/player-only/PlayerOnlySmoke.java .github/player-only/PlayerOnlyClient.java .github/jail-production .github/split-smoke .github/workflows/jail-unyielding-249.yml .github/detention .github/occupied-migration .github/pack249 .github/native249 .github/client249
+          git archive --format=zip -o dist/migration-build/source.zip HEAD minecraft-jail unyielding-quests/gradlew unyielding-quests/gradle/wrapper unyielding-quests/src/main/java/dev/unyielding/quests/devtest combined-unyielding/prepare_smoke.py combined-unyielding/smoke-harness .github/scripts/fetch-build-dependencies.py .github/scripts/meeting-two-player.sh .github/scripts/meeting-two-player.gradle .github/scripts/prepare-split-server.py .github/scripts/prepare-packaged-server.py .github/scripts/install-origin-test-runtime.py .github/packed-wallet/PackedWalletProof.java .github/packaged-smoke/BundleSmoke.java .github/player-only/PlayerOnlySmoke.java .github/player-only/PlayerOnlyClient.java .github/jail-production .github/split-smoke .github/workflows/jail-unyielding-249.yml .github/detention .github/occupied-migration .github/pack249 .github/native249 .github/client249 .github/items249 .github/workflows/jail-items249.yml
           git rev-parse HEAD > dist/migration-build/commit.txt
           cp minecraft-jail/build/probe/*.jar dist/migration-build/ 2>/dev/null || true
           cp minecraft-jail/build/libs/*.jar dist/migration-build/ 2>/dev/null || true
@@ -50,7 +50,7 @@ jobs:
           retention-days: 30
 
   pack-server:
-    if: "!contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
+    if: "!contains(github.event.head_commit.message, '[items-probe]') && !contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     strategy:
       fail-fast: false
       matrix:
@@ -71,7 +71,7 @@ jobs:
           name: jail-249-build-${{ github.sha }}
           path: candidate
       - name: Start the published pack on a disposable dedicated server
-        run: bash .github/pack249/server.sh "$PWD/candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar"
+        run: bash .github/pack249/server.sh "$PWD/candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.3.jar"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -79,7 +79,7 @@ jobs:
           path: dist/pack249
           retention-days: 10
   custody:
-    if: "!contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
+    if: "!contains(github.event.head_commit.message, '[items-probe]') && !contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -105,7 +105,7 @@ jobs:
         run: |
           mkdir -p dist/120-release minecraft-jail/build/libs
           cp baseline/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
-          cp candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          cp candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.3.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
           python3 .github/scripts/fetch-build-dependencies.py
           python3 .github/native249/prepare.py
           sudo apt-get update -qq
@@ -120,7 +120,7 @@ jobs:
           retention-days: 10
 
   pack-client:
-    if: "!contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[pack-probe]')"
+    if: "!contains(github.event.head_commit.message, '[items-probe]') && !contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[pack-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -164,7 +164,7 @@ jobs:
           retention-days: 10
 
   pack-custody:
-    if: "!contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
+    if: "!contains(github.event.head_commit.message, '[items-release]') && !contains(github.event.head_commit.message, '[items-probe]') && !contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 85
@@ -190,7 +190,7 @@ jobs:
         run: |
           mkdir -p dist/120-release minecraft-jail/build/libs
           cp baseline/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
-          cp candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          cp candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.3.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
           python3 .github/scripts/fetch-build-dependencies.py
           python3 .github/native249/full_prepare.py
           sudo apt-get update -qq
@@ -204,7 +204,7 @@ jobs:
           python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
       - name: Admit a packed wallet and verify the automatic escape respawn
         timeout-minutes: 30
-        run: bash .github/native249/game-scope.sh 1 candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar
+        run: bash .github/native249/game-scope.sh 1 candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.3.jar
       - name: Save first-session evidence before the restart
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -218,7 +218,7 @@ jobs:
           retention-days: 10
       - name: Reconnect and verify the exact wallet and inventory return
         timeout-minutes: 30
-        run: bash .github/native249/game-scope.sh 2 candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar
+        run: bash .github/native249/game-scope.sh 2 candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.3.jar
       - name: Preserve server and client diagnostics
         if: always()
         run: |
@@ -239,7 +239,7 @@ jobs:
           retention-days: 10
 
   migration:
-    if: "!contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
+    if: "!contains(github.event.head_commit.message, '[items-probe]') && !contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     name: Occupied save ${{ matrix.suite }}
     strategy:
       fail-fast: false
@@ -286,14 +286,14 @@ jobs:
           set -euo pipefail
           mkdir -p dist/120-release minecraft-jail/build/libs
           cp old-evidence/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
-          cp candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          cp candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.3.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
           python3 .github/scripts/fetch-build-dependencies.py
           python3 .github/occupied-migration/prepare.py
           sudo apt-get update -qq
           sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
       - name: Exact predecessor occupied save, interruptions, tampering, restart, native escape and return
         env:
-          MIGRATION_CANDIDATE: candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar
+          MIGRATION_CANDIDATE: candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.3.jar
           MIGRATION_PREDECESSOR: attached/dist/migration-build/Minecraft-Jail-1.2.0.jar
           MIGRATION_OLD_SHA256: 5e2b40e36f2c6036005bed46c62f5da6b5faa7b8f77becec2ec334aa83990cd8
         run: |

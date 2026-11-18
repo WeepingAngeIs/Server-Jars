@@ -18,6 +18,17 @@ public final class JailEscapeCustody {
     private static final ThreadLocal<UUID> OWN_DAMAGE=new ThreadLocal<>();
     static boolean ownDamage(ServerPlayer p){return p.getUUID().equals(OWN_DAMAGE.get());}
     static boolean acceptedCorpse(ServerPlayer p){try{UUID tx=JailIntegrated.activeTransaction(p.server,p.getUUID());if(tx==null)return false;try(var j=journal(p.server,tx)){var e=pending(j);return e!=null&&(e.state()==JailEscrowJournal.State.HELD||e.state()==JailEscrowJournal.State.RESTORE_STARTED);}}catch(IOException bad){return true;}}
+    static boolean pendingFoodDeath(ServerPlayer player) {
+        try {
+            UUID tx=JailIntegrated.activeTransaction(player.server,player.getUUID());
+            if(tx==null)return false;
+            try(var journal=journal(player.server,tx)) {
+                var entry=pending(journal);
+                return entry!=null && entry.owner().equals(player.getUUID())
+                        && JailNbt.decode(entry.snapshot()).contains(JailFoodProgress.RECEIPT);
+            }
+        } catch(IOException uncertain) { return true; }
+    }
     @FunctionalInterface public interface Checkpoint {void saved()throws IOException;}
     private static Checkpoint checkpoint=()->{};
     public static void disposableCheckpoint(ServerPlayer p,Checkpoint value)throws IOException {if(!JailHumanAudit.disposable(p))throw new IOException("Escape fault hook unavailable");checkpoint=Objects.requireNonNull(value);}
@@ -71,7 +82,9 @@ public final class JailEscapeCustody {
                 // Preflight above still refuses invulnerability. Native kill damage handles respawn
                 // grace for repeat escapes; damage/death cancellation remains honored. No replay.
                 if(retainXp)JailXp.begin(p,t.getCompound("xp"));
-                UUID previous=OWN_DAMAGE.get();OWN_DAMAGE.set(p.getUUID());try{p.hurt(p.damageSources().genericKill(),1000.0F);}finally{
+                JailFoodProgress.beginKill(p,t);
+                UUID previous=OWN_DAMAGE.get();OWN_DAMAGE.set(p.getUUID());try{p.hurt(p.damageSources().genericKill(),Math.max(1000.0F,p.getMaxHealth()+1));}finally{
+                    JailFoodProgress.endKill();
                     if(previous==null)OWN_DAMAGE.remove();else OWN_DAMAGE.set(previous);
                     if(retainXp)JailXp.end(p,p.getHealth()<=0&&!p.isAlive()&&p.getStats().getValue(net.minecraft.stats.Stats.CUSTOM.get(net.minecraft.stats.Stats.DEATHS))==deaths+1);
                 }
@@ -100,6 +113,7 @@ public final class JailEscapeCustody {
                     j.transition(e.id(),JailEscrowJournal.State.HELD,JailEscrowJournal.State.RESTORE_STARTED);
                     JailXp.at(next,JailXp.Boundary.BEFORE_COPY);JailXp.cloneTo(old,next,e.id(),t);
                 }
+                JailFoodProgress.copyModifiers(old,next,t);
                 // Native NeoOrigins copyOnDeath owns its attachment. We copy no attachment or stack.
                 for(String key:List.of(JailVanillaPort.REMOVED,JailNativeOriginPort.RECEIPT))dest.put(key,source.get(key).copy());
                 next.getInventory().selected=t.getInt("selected");dest.putUUID(RESPAWN,e.id());

@@ -43,8 +43,12 @@ final class JailHumanAudit {
         if(!Files.isRegularFile(own,LinkOption.NOFOLLOW_LINKS)||!own.equals(own.toRealPath()))throw new IOException("Unsafe implementation artifact");
         return hash(own);
     }
-    private record RuntimeIdentity(String fingerprint, boolean unyielding249) {}
+    private record RuntimeIdentity(String fingerprint, boolean unyielding249, boolean focusedItems) {}
     static boolean hasPackStateContract(ServerPlayer player) throws IOException {return runtimeWithArtifact(player,null).unyielding249();}
+    static boolean hasItems249Contract(ServerPlayer player) throws IOException {
+        RuntimeIdentity runtime = runtimeWithArtifact(player,null);
+        return runtime.unyielding249() || runtime.focusedItems();
+    }
     private static RuntimeIdentity runtimeWithArtifact(ServerPlayer p,String predecessor)throws IOException {
         JsonObject certificate;try(var stream=JailHumanAudit.class.getResourceAsStream("/assets/unyieldingquests/jail-certified-runtime.json")){if(stream==null)throw new IOException("Audit certificate missing");certificate=JsonParser.parseReader(new InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();}
         Set<String> allowed=new HashSet<>();
@@ -82,9 +86,13 @@ final class JailHumanAudit {
             files.add(row);
             if(unsupported==null&&!allowed.contains(digest))unsupported=row;
         }
-        boolean fullPack=JailRuntimeProfile.check(kernel,certificate.get("neoforge").getAsString(),files,unsupported);
+        boolean itemsFixture=Boolean.getBoolean("uq.items249") && disposable(p) && ModList.get().isLoaded("uq_bundle_smoke")
+                && "WeepingAngeIs/Server-Jars".equalsIgnoreCase(System.getenv("GITHUB_REPOSITORY"))
+                && Boolean.getBoolean("uq.playerOnly") && Boolean.getBoolean("uq.certifiedJail");
+        boolean focusedItems=JailRuntimeProfile.focusedItems(kernel,files,itemsFixture);
+        boolean fullPack=!focusedItems && JailRuntimeProfile.check(kernel,certificate.get("neoforge").getAsString(),files,unsupported);
         rows.addAll(files);
-        Collections.sort(rows);return new RuntimeIdentity(HexFormat.of().formatHex(JailOriginTransaction.hash(String.join("\n",rows).getBytes(java.nio.charset.StandardCharsets.UTF_8))),fullPack);
+        Collections.sort(rows);return new RuntimeIdentity(HexFormat.of().formatHex(JailOriginTransaction.hash(String.join("\n",rows).getBytes(java.nio.charset.StandardCharsets.UTF_8))),fullPack,focusedItems);
     }
     @SuppressWarnings("unchecked") static Result inspect(ServerPlayer p)throws IOException {
         if(!p.server.isSameThread()||!p.isAlive()||p.hasDisconnected()||p.server.getPlayerList().getPlayer(p.getUUID())!=p)throw new IOException("Subject offline, dead or not authoritative");

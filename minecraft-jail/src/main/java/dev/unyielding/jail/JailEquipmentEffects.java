@@ -27,7 +27,10 @@ final class JailEquipmentEffects {
         for(int i=0;i<player.getInventory().getContainerSize();i++){
             ItemStack stack=player.getInventory().getItem(i);if(stack.isEmpty())continue;
             boolean vanilla=BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("minecraft")&&stack.getItem().getClass().getName().startsWith("net.minecraft.world.item.");
-            if ((!vanilla && !((packedCoins && JailPackedItems.coin(player,i,stack)) || (packedWallet && JailPackedWallet.accepts(player,i,stack)))) || stack.getCount()<1 || stack.getCount()>stack.getMaxStackSize()) throw new IOException("Unsupported item provider in slot "+i+": "+BuiltInRegistries.ITEM.getKey(stack.getItem())+". Requires vanilla equipment or an explicitly reviewed packed-item contract");
+            boolean reviewed=vanilla || packedCoins && (JailPackedItems.coin(player,i,stack)
+                    || JailBackpacks.accepts(player,stack) || JailOrdinaryItem.accepts(player,stack))
+                    || packedWallet && JailPackedWallet.accepts(player,i,stack);
+            if (!reviewed || stack.getCount()<1 || stack.getCount()>stack.getMaxStackSize()) throw new IOException("Unsupported item provider in slot "+i+": "+BuiltInRegistries.ITEM.getKey(stack.getItem()));
             if(EnchantmentHelper.has(stack,EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE))throw new IOException("Bound equipment is not admitted");
         }
         settled(player);neutral(player);

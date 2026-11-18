@@ -13,6 +13,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerGamePacketListenerImpl.class)
 public abstract class CustodyPacketMixin {
     @Shadow public ServerPlayer player;
+    @Inject(method="handleClientCommand",at=@At("HEAD"),cancellable=true)
+    private void awaitFoodClone(net.minecraft.network.protocol.game.ServerboundClientCommandPacket packet,CallbackInfo ci) {
+        if(player.server.isSameThread() && packet.getAction()==net.minecraft.network.protocol.game.ServerboundClientCommandPacket.Action.PERFORM_RESPAWN
+                && dev.unyielding.jail.JailFoodProgress.awaitVerifiedRespawn(player))ci.cancel();
+    }
     @Inject(method={"handleContainerClick","handleSetCreativeModeSlot","handlePlayerAction","handleUseItem","handleUseItemOn","handleInteract","handleSetCarriedItem","handlePlaceRecipe","handleContainerButtonClick","handlePickItem"},at=@At("HEAD"),cancellable=true)
     private void custodyFence(CallbackInfo ci){
         if(!player.server.isSameThread())return;

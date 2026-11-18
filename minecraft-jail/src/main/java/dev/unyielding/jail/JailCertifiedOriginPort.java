@@ -122,7 +122,10 @@ public class JailCertifiedOriginPort extends JailNativeOriginPort {
             CompoundTag row=(CompoundTag)raw;var matching=declared.stream().filter(e->e.attribute().toString().equals(row.getString("id"))).toList();if(matching.isEmpty())continue;var e=matching.getFirst();ListTag mods=new ListTag();
             for(Tag m:row.getList("modifiers",10))if(!((CompoundTag)m).getString("id").equals(e.modifier().toString()))mods.add(m.copy());
             if(!temporary){CompoundTag m=new CompoundTag();m.putString("id",e.modifier().toString());m.putDouble("amount",e.amount());m.putString("operation","add_value");mods.add(m);}
-            if(mods.isEmpty())row.remove("modifiers");else row.put("modifiers",mods);
+            if(mods.isEmpty())row.remove("modifiers");else {
+                mods.sort(Comparator.comparing(m -> ((CompoundTag)m).getString("id")));
+                row.put("modifiers",mods);
+            }
         }
         body.putFloat("health",JailHealthShift.apply(player.getHealth(),healthBonus(),temporary));body.put("receipt",receipt(tx,temporary?JailOriginTransaction.Receipt.TEMPORARY:JailOriginTransaction.Receipt.ORIGINAL));return new JailOriginTransaction.View(encode(body),tx,temporary?JailOriginTransaction.Receipt.TEMPORARY:JailOriginTransaction.Receipt.ORIGINAL);
     }

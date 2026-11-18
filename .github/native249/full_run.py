@@ -202,7 +202,6 @@ for phase in phases:
         respawn, = client_view["verified_respawns"]
         assert respawn["alive"] and respawn["no_modal_ticks"]>=20 and respawn["dead_player_object"]!=respawn["alive_player_object"]
     for check in (["refused_equipped_wallet","refused_multiple_wallets","refused_auto_exchange_wallet","refused_twilight_pending_charm_inventory",
-                   "refused_nonzero_so_bonus","refused_nonzero_so_cycle",
                    "preview_place_undo_and_six_intact_cells","escape_native_respawn_in_cell_six_without_client_action"]
                   if phase==1 else ["occupied_return_kept_conflict_and_escrow","full_wallet_and_equipment_return_after_restart","native_persisted_progress_survived_clone_and_restart"]):
         assert proof[check],check

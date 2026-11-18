@@ -22,6 +22,7 @@ public final class JailIntegrated {
     @FunctionalInterface public interface Checkpoint {void at(Boundary boundary)throws IOException;}
     private static Checkpoint checkpoint=b->{};
     private static final Map<MinecraftServer,JailEscrowJournal> plans=new WeakHashMap<>();
+    static JailEscrowJournal backpackPlans(MinecraftServer server)throws IOException{return plans(server);}
     public static void disposableCheckpoint(ServerPlayer p,Checkpoint value)throws IOException {if(!JailHumanAudit.disposable(p))throw new IOException("Fault hook unavailable");checkpoint=Objects.requireNonNull(value);}
     static Path root(MinecraftServer s){return s.getWorldPath(LevelResource.ROOT).resolve("integrated-jail-v1");}
     private static JailEscrowJournal plans(MinecraftServer s)throws IOException {
@@ -31,7 +32,7 @@ public final class JailIntegrated {
         if(!Files.exists(root(s),LinkOption.NOFOLLOW_LINKS))return plans.containsKey(s)||JailData.get(s).integratedCustodyInitialized();
         try{return plans(s).list().stream().anyMatch(e->e.owner().equals(owner)&&e.state()!=JailEscrowJournal.State.COMPLETE&&e.state()!=JailEscrowJournal.State.CANCELLED);}catch(IOException bad){return true;}
     }
-    public static void stopped(MinecraftServer s){JailXp.stopped();var p=plans.remove(s);if(p!=null)try{p.close();}catch(IOException ignored){}checkpoint=b->{};}
+    public static void stopped(MinecraftServer s){BackpackClaims.stopped();JailXp.stopped();var p=plans.remove(s);if(p!=null)try{p.close();}catch(IOException ignored){}checkpoint=b->{};}
     static final String EXPANDED="native-equipment-luck-v1";
     static final String PACKED_WALLET="native-packed-wallet-v1";
     static final String SUPPORTED="native-supported-v2", RETAINED_XP="native-retained-xp-v3";
@@ -44,6 +45,10 @@ public final class JailIntegrated {
         if(contract.equals("human-empty-v1"))return new Ports(new JailVanillaPort(player,id,retired),new JailHumanPort(player,id,retired),contract);
         if(!equipped(contract))throw new IOException("Unsupported custody contract");
         var inventory=new JailEquipmentPort(player,id,retired,audited(contract),contract.equals(PACKED_WALLET));byte[] existing=null;
+        if(JailData.get(server).integratedCustodyInitialized()){
+            var entry=plans(server).read(id);
+            if(entry!=null)inventory.bindBackpacks(JailNbt.decode(entry.snapshot()).getCompound(JailBackpacks.RECORDS));
+        }
         Path path=root(server).resolve(id.toString()).resolve("origins");
         if(Files.exists(path,LinkOption.NOFOLLOW_LINKS))try(var origins=new JailEscrowJournal(JailCustodyService.journalPath(server,relative(id,"origins")))){if(origins.read(id)!=null)existing=JailOriginTransaction.intentForReview(origins,id,player.getUUID());}
         return new Ports(inventory,contract.equals(RETAINED_XP)?new JailXpOriginPort(player,inventory,id,retired,existing):(contract.equals(SUPPORTED)||contract.equals(PACKED_WALLET))?new JailCertifiedOriginPort(player,inventory,id,retired,existing):new JailNativeOriginPort(player,inventory,id,retired,existing),contract);
@@ -161,7 +166,11 @@ public final class JailIntegrated {
         CompoundTag plan=new CompoundTag();plan.putString("contract",contract);plan.put("prior",prior.toTag());plan.put("jail",dest.toTag());plan.putInt("geometry",geometry);plan.putByteArray("digest",JailOriginTransaction.hash(source.inventory()));plan.putByteArray("human",human.state());if(retired!=null)plan.putUUID("retired",retired);
         plan.putInt("x",anchor.getX());plan.putInt("y",anchor.getY());plan.putInt("z",anchor.getZ());plan.putString("actor",actor.getTextName());
         plan.putByteArray("origin_before",stable);
-        records.begin(id,target.getUUID(),JailNbt.encode(plan));checkpoint.at(Boundary.PLAN_DURABLE);
+        if(inventory instanceof JailEquipmentPort equipment && !equipment.backpackHashes().isEmpty())
+            plan.put(JailBackpacks.RECORDS,equipment.backpackHashes());
+        records.begin(id,target.getUUID(),JailNbt.encode(plan));
+        BackpackClaims.reserve(s,JailBackpacks.ids(plan.getCompound(JailBackpacks.RECORDS)),id);
+        checkpoint.at(Boundary.PLAN_DURABLE);
         // Plan itself quarantines, even if binding or journal provisioning fails.
         Path directory=root(s).resolve(id.toString());Files.createDirectory(directory);
         // Force the UUID directory's name in its parent before any source removal.
@@ -294,7 +303,8 @@ public final class JailIntegrated {
                 if(items.read(b.id()).state()!=JailEscrowJournal.State.COMPLETE||!originComplete(origins,items))throw new IOException("Native returns incomplete; restrictions retained");requireAssignment(s,b.owner(),plan,true);
                 Loc prior=assignment(plan).prior();if(!JailCommands.safe(p,prior)||actor.getEntity() instanceof ServerPlayer staff&&!JailCommands.claimAccess(staff,prior))throw new IOException("Return location unavailable or claim denied; items returned but quarantine retained");
                 moveSaved(p,prior,inventory);checkpoint.at(Boundary.RETURN_POSITION_DURABLE);authority();JailData.get(s).remove(b.owner());saveAssignments(s);checkpoint.at(Boundary.ASSIGNMENT_REMOVED);
-                plans(s).transition(b.id(),JailEscrowJournal.State.RESTORE_STARTED,JailEscrowJournal.State.COMPLETE);checkpoint.at(Boundary.COMPLETE);
+                plans(s).transition(b.id(),JailEscrowJournal.State.RESTORE_STARTED,JailEscrowJournal.State.COMPLETE);
+                BackpackClaims.release(s,b.id());checkpoint.at(Boundary.COMPLETE);
             }
             public void confirmSaved()throws IOException {
                 authority();boolean confirmed=false;
@@ -356,6 +366,7 @@ public final class JailIntegrated {
                 journal.transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.CANCELLED);
             }
         }
-        if(e.state()==JailEscrowJournal.State.PREPARED)plans(s).transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.CANCELLED);var binding=JailCustodyService.ledger(s).get(id);if(binding!=null&&binding.state()!=JailCustodyLedger.State.RELEASED)JailCustodyService.ledger(s).transition(id,binding.revision(),JailCustodyLedger.State.RELEASED,"console","Unchanged admission cancelled; no items or origin were transferred");
+        if(e.state()==JailEscrowJournal.State.PREPARED)plans(s).transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.CANCELLED);
+        BackpackClaims.release(s,id);var binding=JailCustodyService.ledger(s).get(id);if(binding!=null&&binding.state()!=JailCustodyLedger.State.RELEASED)JailCustodyService.ledger(s).transition(id,binding.revision(),JailCustodyLedger.State.RELEASED,"console","Unchanged admission cancelled; no items or origin were transferred");
     }
 }

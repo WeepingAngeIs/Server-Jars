@@ -27,6 +27,15 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     final UUID transaction;
     final boolean certified;
     final boolean packedWallet;
+    private CompoundTag backpackHashes = new CompoundTag();
+    private boolean backpackBaseline;
+
+    void bindBackpacks(CompoundTag hashes) throws IOException {
+        JailBackpacks.ids(hashes);
+        backpackHashes=hashes.copy();
+        backpackBaseline=true;
+    }
+    CompoundTag backpackHashes(){return backpackHashes.copy();}
     record Layout(Map<String,Object> canonical, Map<String,Container> normal, Map<String,Container> cosmetic,
                   List<AccessoryCustodyPolicy.Slot> slots) {}
     record Row(AccessoryCustodyPolicy.Slot id, ItemStack stack) {}
@@ -107,12 +116,20 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         }
     }
     void flush() throws IOException { JailEquipmentEffects.reconcile(player); call("io.wispforest.accessories.impl.AccessoriesEventHandler",null,"onLivingEntityTick",new Class<?>[]{LivingEntity.class},player); }
-    private void supported(ItemStack stack) throws IOException {
+    private void supported(AccessoryCustodyPolicy.Slot slot,ItemStack stack) throws IOException {
         if (stack.isEmpty()) return;
         Object accessory = call("io.wispforest.accessories.api.AccessoriesAPI",null,"getOrDefaultAccessory",new Class<?>[]{ItemStack.class},stack);
+        if(certified && JailBackpacks.accepts(player,stack)) {
+            if(slot.cosmetic() || !slot.name().equals("back")
+                    || !accessory.getClass().getName().equals("net.p3pp3rf1y.sophisticatedbackpacks.compat.accessories.AccessoriesCompat$1")
+                    || EnchantmentHelper.has(stack,EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE))
+                throw new IOException("Unsupported or bound backpack equipment slot");
+            return;
+        }
         Object expected;try{expected=type("io.wispforest.accessories.api.AccessoriesAPI").getField("DEFAULT").get(null);}catch(ReflectiveOperationException bad){throw new IOException("Default provider unavailable",bad);}
         if(accessory!=expected||!accessory.getClass().getName().equals("io.wispforest.accessories.api.AccessoriesAPI$1")||stack.getCount()!=1)throw new IOException("Unaudited native accessory provider/count");
-        if(!net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("minecraft"))throw new IOException("Accessory item provider not audited");
+        if(!net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("minecraft")
+                && !(certified && JailOrdinaryItem.accepts(player,stack)))throw new IOException("Accessory item provider not audited");
         for(var component:stack.getComponents())if(net.minecraft.core.registries.BuiltInRegistries.DATA_COMPONENT_TYPE.getKey(component.type()).getNamespace().equals("accessories"))throw new IOException("Accessory component effects need a separate audit");
         if (EnchantmentHelper.has(stack,EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) throw new IOException("Bound accessory");
     }
@@ -122,8 +139,31 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         Layout layout=layout();
         for (int slot=36;slot<=40;slot++) if (EnchantmentHelper.has(player.getInventory().getItem(slot),EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) throw new IOException("Bound vanilla equipment");
         for (Object c : layout.canonical().values()) if (!((Map<?,?>)call("io.wispforest.accessories.api.AccessoriesContainer",c,"getModifiers")).isEmpty()) throw new IOException("Unaudited slot modifiers");
-        for (var id : layout.slots()) supported(container(layout,id).getItem(id.index()));
+        Set<UUID> bags=new HashSet<>();
+        for (int i=0;i<player.getInventory().getContainerSize();i++) collectBag(bags,player.getInventory().getItem(i));
+        for (var id : layout.slots()) {
+            ItemStack stack=container(layout,id).getItem(id.index());
+            supported(id,stack);
+            collectBag(bags,stack);
+        }
+        if(!bags.isEmpty() || !backpackHashes.isEmpty()) {
+            for(UUID id:bags) {
+                UUID claim=BackpackClaims.get(id);
+                if(claim!=null&&!claim.equals(transaction))throw new IOException("Backpack belongs to another custody transaction");
+            }
+            JailBackpacks.verifyCopies(player,bags,true);
+            CompoundTag records=JailBackpacks.live(player,bags);
+            JailBackpacks.selfContained(records);
+            CompoundTag observed=JailBackpacks.digests(records);
+            if(backpackBaseline&&!backpackHashes.equals(observed))throw new IOException("Backpack identities or contents changed");
+            bindBackpacks(observed);
+        }
         settled(layout);
+    }
+    private static void collectBag(Set<UUID> found,ItemStack stack)throws IOException {
+        if(!JailBackpacks.isBag(stack))return;
+        UUID id=JailBackpacks.identity(stack);
+        if(id!=null&&!found.add(id))throw new IOException("Two backpacks point to the same inventory");
     }
     static byte[] encode(CompoundTag tag) throws IOException {
         var output = new ByteArrayOutputStream(); var data = new DataOutputStream(output);
@@ -151,12 +191,19 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         // identity and stack component; native player saves retain current UI.
         CompoundTag equipment=new CompoundTag(); equipment.put(CONTAINERS,stores); return equipment;
     }
-    private JailVanillaCustody.View view(JailVanillaCustody.View vanillaView,CompoundTag playerTag) throws IOException {
+    private JailVanillaCustody.View view(JailVanillaCustody.View vanillaView,CompoundTag playerTag,boolean disk) throws IOException {
         CompoundTag attachments=playerTag.getCompound("neoforge:attachments");
         if (!attachments.contains(STORE,10)) throw new IOException("Missing serialized accessory holder: " + attachments.getAllKeys());
         CompoundTag holder=normalize(attachments.getCompound(STORE));
         CompoundTag body=new CompoundTag(); body.putInt("version",2); body.putString("dependencies",VERSIONS);
         body.putString("policy",policy()); body.putString("runtime",JailRuntimeMigration.receiptRuntime(player,transaction)); body.putInt("selected",playerTag.getInt("SelectedItemSlot")); body.putByteArray("vanilla",vanillaView.inventory()); body.put("holder",holder);
+        if(!backpackHashes.isEmpty()) {
+            Set<UUID> ids=JailBackpacks.ids(backpackHashes);
+            CompoundTag records=disk?JailBackpacks.disk(player,ids):JailBackpacks.live(player,ids);
+            if(!backpackHashes.equals(JailBackpacks.digests(records)))
+                throw new IOException("Backpack backing changed; exact contents retained in the custody journal");
+            body.put(JailBackpacks.RECORDS,records);
+        }
         boolean empty=vanillaView.empty();
         for (String name : holder.getCompound(CONTAINERS).getAllKeys()) {
             CompoundTag store=holder.getCompound(CONTAINERS).getCompound(name);
@@ -165,15 +212,20 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
         return new JailVanillaCustody.View(encode(body),empty,vanillaView.removedBy(),vanillaView.restoredBy());
     }
     @Override public JailVanillaCustody.View current() throws IOException {
-        layout(); var v=vanilla.current(); var serialized=player.saveWithoutId(new CompoundTag()); layout(); return view(v,serialized);
+        layout(); var v=vanilla.current(); var serialized=player.saveWithoutId(new CompoundTag()); layout(); return view(v,serialized,false);
     }
     @Override public JailVanillaCustody.View durable() throws IOException {
         try (var input=Files.newInputStream(player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner()+".dat"))) {
-            return view(vanilla.durable(),NbtIo.readCompressed(input,NbtAccounter.create(16L*1024*1024)));
+            return view(vanilla.durable(),NbtIo.readCompressed(input,NbtAccounter.create(16L*1024*1024)),true);
         }
     }
     @Override public void persistAndVerify() throws IOException {
-        settled(layout()); JailEquipmentEffects.settled(player); byte[] neutral=JailEquipmentEffects.neutral(player); var before=current(); vanilla.persistAndVerify(); var saved=durable();
+        settled(layout()); JailEquipmentEffects.settled(player); byte[] neutral=JailEquipmentEffects.neutral(player); var before=current();
+        if(!backpackHashes.isEmpty()) {
+            JailBackpacks.verifyCopies(player,JailBackpacks.ids(backpackHashes),before.removedBy()==null);
+            JailBackpacks.save(player);
+        }
+        vanilla.persistAndVerify(); var saved=durable();
         if(!Arrays.equals(neutral,JailEquipmentEffects.neutral(player)))throw new IOException("Player save changed undeclared equipment effects");
         if (!Arrays.equals(before.inventory(),saved.inventory()) || !Arrays.equals(before.inventory(),current().inventory())
                 || !Objects.equals(before.removedBy(),saved.removedBy()) || !Objects.equals(before.restoredBy(),saved.restoredBy())) throw new IOException("Accessory player save mismatch");
@@ -232,7 +284,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
                 CompoundTag row=(CompoundTag)raw; int index=row.getInt("Slot");
                 var id=new AccessoryCustodyPolicy.Slot(name,cosmetic,index);
                 if (!layout.slots().contains(id) || !used.add(id)) throw new IOException("Missing or duplicate accessory destination");
-                ItemStack stack=ItemStack.parseOptional(player.registryAccess(),row); supported(stack);
+                ItemStack stack=ItemStack.parseOptional(player.registryAccess(),row); supported(id,stack);
                 if (stack.isEmpty()) throw new IOException("Unreadable accessory stack");
                 CompoundTag encoded=new CompoundTag(); encoded.putInt("Slot",index);
                 if (!row.equals(stack.save(player.registryAccess(),encoded))) throw new IOException("Accessory component loss on decode");
@@ -281,8 +333,12 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
     @Override public JailVanillaCustody.View planRestore(byte[] snapshot,UUID id) throws IOException {
         Layout layout=layout(); settled(layout);
         if (!current().empty() || !id.equals(current().removedBy())) throw new IOException("Accessory destination occupied or changed");
+        if(!backpackHashes.isEmpty()){
+            JailBackpacks.verifyCopies(player,JailBackpacks.ids(backpackHashes),false);
+            if(!Arrays.equals(current().inventory(),durable().inventory()))throw new IOException("Backpack custody differs from the saved world");
+        }
         rows(snapshot,layout);
-        vanilla.planRestore(decode(snapshot).getByteArray("vanilla"),id);
+        vanilla.stage(decode(snapshot).getByteArray("vanilla"),id,true);
         return new JailVanillaCustody.View(snapshot,false,null,id);
     }
     @Override public void restoreExact(byte[] snapshot,UUID id) throws IOException {
@@ -302,7 +358,7 @@ public final class JailEquipmentPort implements JailVanillaCustody.InventoryPort
             menuSlot(now,row.id()).set(row.stack().copy());
             expected=changedSlot(expected,row,false); unchanged(layout,expected);
         }
-        vanilla.restoreExact(decode(snapshot).getByteArray("vanilla"),id); flush(); settled(layout());
+        vanilla.restoreExact(decode(snapshot).getByteArray("vanilla"),id,true); flush(); settled(layout());
         if(!Arrays.equals(neutral,JailEquipmentEffects.neutral(player)))throw new IOException("Equip callback changed undeclared native state");
         if (!Arrays.equals(snapshot,current().inventory())) throw new IOException("Equip lifecycle changed restored state");
     }

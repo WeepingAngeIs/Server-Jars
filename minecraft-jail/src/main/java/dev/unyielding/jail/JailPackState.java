@@ -11,7 +11,6 @@ import java.util.UUID;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.scores.criteria.ObjectiveCriteria;
 
 /** Read-only checks for neutral auxiliary state in the separately fingerprinted full pack. */
 final class JailPackState {
@@ -41,33 +40,18 @@ final class JailPackState {
 
     private static void verifyAttachments(ServerPlayer player, CompoundTag attachments, boolean beforeDeath) throws IOException {
         verifyWalletAndResources(attachments);
+        boolean food = JailHumanAudit.hasItems249Contract(player);
+        if (food) JailFoodProgress.validate(player,beforeDeath);
         if (!JailHumanAudit.hasPackStateContract(player)) {
-            if (!BASE_ATTACHMENTS.containsAll(attachments.getAllKeys()))
+            if (attachments.getAllKeys().stream().anyMatch(key -> !BASE_ATTACHMENTS.contains(key) && !(food && JailFoodProgress.attachment(key))))
                 throw new IOException("An attached death store is outside the certified runtime");
             return;
         }
         currencyEventUnlocks(attachments);
-        if (beforeDeath) verifyFoodCycles(player);
         verifyDeathProviders(player);
         for (String key : attachments.getAllKeys()) {
-            if (!BASE_ATTACHMENTS.contains(key) && !neutral(REVIEWED.getAsJsonObject("attachments"), key, attachments.get(key)))
+            if (!BASE_ATTACHMENTS.contains(key) && !(food && JailFoodProgress.attachment(key)) && !neutral(REVIEWED.getAsJsonObject("attachments"), key, attachments.get(key)))
                 throw new IOException("Unreviewed or active attached death state: " + key);
-        }
-    }
-
-    // The installed SOL Onion datapack clears these native scores on death, even when
-    // today's food list is empty. Reading a score must not allocate an entry.
-    private static void verifyFoodCycles(ServerPlayer player) throws IOException {
-        var scores=player.server.getScoreboard();
-        for(String name:List.of("so_cycle","so_bonus","so_lock","so_death")) {
-            var objective=scores.getObjective(name);
-            if(objective==null) continue;
-            var expected=name.equals("so_death")?ObjectiveCriteria.DEATH_COUNT:ObjectiveCriteria.DUMMY;
-            if(objective.getCriteria()!=expected)
-                throw new IOException("Unexpected SOL Onion objective type: "+name);
-            var score=scores.getPlayerScoreInfo(player,objective);
-            if(score!=null && score.value()!=0)
-                throw new IOException("SOL Onion has an active or banked food cycle. Custody would clear "+name);
         }
     }
 
@@ -172,6 +156,7 @@ final class JailPackState {
     }
 
     static void recordClone(ServerPlayer player, CompoundTag attempt) throws IOException {
+        JailFoodProgress.record(player,attempt);
         if (!JailHumanAudit.hasPackStateContract(player)) return;
         CompoundTag attachments = player.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments");
         attempt.putByteArray("pack_currency_clone", currencyCloneDigest(attachments));
@@ -184,6 +169,7 @@ final class JailPackState {
     }
 
     static void verifyClone(ServerPlayer player, CompoundTag attempt, CompoundTag disk) throws IOException {
+        JailFoodProgress.verifyClone(player,attempt,disk);
         if (!JailHumanAudit.hasPackStateContract(player)) return;
         CompoundTag attachments = disk.getCompound("neoforge:attachments");
         verifyAttachments(player, attachments, false);
@@ -252,6 +238,7 @@ final class JailPackState {
     }
 
     static boolean intrinsic(ServerPlayer player, String attribute, String modifier, double amount, String operation) throws IOException {
+        if (JailFoodProgress.candidate(modifier)) return JailFoodProgress.owns(player,attribute,modifier,amount,operation);
         if (!reviewedIntrinsic(attribute,modifier,amount,operation) || !JailHumanAudit.hasPackStateContract(player))
             return false;
         boolean shard=modifier.equals("aether:life_shard_max_health");
