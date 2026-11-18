@@ -25,3 +25,8 @@ fi
 swapon --show
 echo 'MALLOC_ARENA_MAX=2' >> "$GITHUB_ENV"
 echo 'LP_NUM_THREADS=2' >> "$GITHUB_ENV"
+if [[ ${GITHUB_JOB:-} == pack-custody ]]; then
+    # Once one game has loaded, let it release idle heap while its peer starts.
+    # The following workflow step starts both JVMs with their own heap limits.
+    echo "JDK_JAVA_OPTIONS=${JDK_JAVA_OPTIONS:+$JDK_JAVA_OPTIONS }-XX:+UseG1GC -XX:G1PeriodicGCInterval=30000 -XX:MinHeapFreeRatio=25 -XX:MaxHeapFreeRatio=40 -Xlog:gc" >> "$GITHUB_ENV"
+fi
