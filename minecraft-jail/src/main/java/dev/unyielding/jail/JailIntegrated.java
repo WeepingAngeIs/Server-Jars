@@ -226,7 +226,13 @@ public final class JailIntegrated {
             if(!live.empty()||!e.id().equals(live.removedBy())||live.restoredBy()!=null||!ports.origin().isTemporary(intent,e.id(),ports.origin().current()))throw new IOException("Escape requires empty marked stores and verified temporary Human");
             if(persist){ports.inventory().persistAndVerify();ports.origin().persistAndVerify();}
             var disk=ports.inventory().durable();var nativeLive=ports.origin().current();var nativeDisk=ports.origin().durable();
-            if(!disk.empty()||!e.id().equals(disk.removedBy())||disk.restoredBy()!=null||!Arrays.equals(live.inventory(),disk.inventory())||!Arrays.equals(nativeLive.state(),nativeDisk.state())||!ports.origin().isTemporary(intent,e.id(),nativeDisk))throw new IOException("Escape native saves/claims are ambiguous");
+            if(!disk.empty()||!e.id().equals(disk.removedBy())||disk.restoredBy()!=null||!Arrays.equals(live.inventory(),disk.inventory()))
+                throw new IOException("Escape saved inventory or its custody receipt differs");
+            if(!Arrays.equals(nativeLive.state(),nativeDisk.state())) {
+                String field=JailNbt.mismatch(JailNbt.decode(nativeLive.state()),JailNbt.decode(nativeDisk.state()),"player");
+                throw new IOException("Escape live and saved player data differ at "+(field==null?"encoded representation":field));
+            }
+            if(!ports.origin().isTemporary(intent,e.id(),nativeDisk))throw new IOException("Escape saved origin or claims differ from the custody receipt");
         }
         return new EscapeContext(e.id(),ports.inventory(),ports.origin(),assignment(plan),b.digest());
     }

@@ -19,6 +19,7 @@ final class JailPackState {
             "neoorigins:origin_data", "neoorigins:resource_state", "accessories:inventory_holder",
             "curios:inventory", "lightmanscurrency:wallet", "lightmanscurrency:event_unlocks");
 
+    private static final String REFORGE_SEED = "apoth_reforge_seed";
     private static final String MANA = "ars_nouveau:mana_cap";
     private static final String DEFAULTS = "/assets/minecraftjail/unyielding-249-neutral.json";
     private static final JsonObject REVIEWED = defaults();
@@ -92,6 +93,10 @@ final class JailPackState {
     // data outside Jail receipts needs a known neutral shape before lethal custody.
     static void verifyPersistent(CompoundTag data, JsonObject approved) throws IOException {
         for (String key : data.getAllKeys()) {
+            if (key.equals(REFORGE_SEED)) {
+                if (!data.contains(key,Tag.TAG_INT)) throw new IOException("Malformed native reforging seed");
+                continue;
+            }
             if (Set.of("PlayerPersisted", JailVanillaPort.REMOVED, JailVanillaPort.RESTORED,
                     JailNativeOriginPort.RECEIPT, JailXp.RECEIPT, "uq_jail_escape_respawn").contains(key)) continue;
             if (!neutral(approved, key, data.get(key)))
@@ -124,10 +129,21 @@ final class JailPackState {
         return value.getString("Unlocked");
     }
 
+    // Apotheosis AdventureEvents.clone reads the old getInt and always writes putInt on
+    // the new player (absent -> 0). Jail neither creates nor updates the provider's seed.
+    static byte[] reforgeDigest(CompoundTag data, boolean replacement) throws IOException {
+        if ((replacement || data.contains(REFORGE_SEED)) && !data.contains(REFORGE_SEED,Tag.TAG_INT))
+            throw new IOException("Missing or malformed native reforging seed");
+        var digestInput=new CompoundTag();
+        digestInput.putInt("seed",data.getInt(REFORGE_SEED));
+        return JailOriginTransaction.hash(JailNbt.encode(digestInput));
+    }
+
     static void recordClone(ServerPlayer player, CompoundTag attempt) throws IOException {
         if (!JailHumanAudit.hasPackStateContract(player)) return;
         CompoundTag attachments = player.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments");
         attempt.putByteArray("pack_currency_clone", currencyCloneDigest(attachments));
+        attempt.putByteArray("pack_reforge_clone",reforgeDigest(player.getPersistentData(),false));
         if (attachments.contains(MANA)) {
             if (!neutral(REVIEWED.getAsJsonObject("attachments"), MANA, attachments.get(MANA)))
                 throw new IOException("Mana progression changed before escape");
@@ -139,6 +155,10 @@ final class JailPackState {
         if (!JailHumanAudit.hasPackStateContract(player)) return;
         CompoundTag attachments = disk.getCompound("neoforge:attachments");
         verifyAttachments(player, attachments, false);
+        byte[] reforge=attempt.getByteArray("pack_reforge_clone");
+        if (!java.util.Arrays.equals(reforge,reforgeDigest(player.getPersistentData(),true))
+                || !java.util.Arrays.equals(reforge,reforgeDigest(disk.getCompound("NeoForgeData"),true)))
+            throw new IOException("Native respawn did not preserve the original reforging seed");
         if (!java.util.Arrays.equals(attempt.getByteArray("pack_currency_clone"), currencyCloneDigest(attachments)))
             throw new IOException("Currency unlock progress or wallet visibility changed during native respawn");
         if (attempt.contains("pack_mana_charge") != attachments.contains(MANA) ||

@@ -138,6 +138,28 @@ class JailRuntimeProfileTest {
         }
     }
 
+    @Test void nativeReforgeCloneMustRetainEveryIntAndOnlyMaterializeAnAbsentSourceAsZero() throws Exception {
+        String key="apoth_reforge_seed";
+        var source=new CompoundTag();
+        var replacement=new CompoundTag();
+        assertThrows(IOException.class,()->JailPackState.reforgeDigest(replacement,true));
+        replacement.putInt(key,0);
+        assertArrayEquals(JailPackState.reforgeDigest(source,false),JailPackState.reforgeDigest(replacement,true));
+        assertFalse(source.contains(key));
+        for(int seed:List.of(Integer.MIN_VALUE,-1,0,1,Integer.MAX_VALUE)) {
+            source.putInt(key,seed);
+            replacement.putInt(key,seed);
+            JailPackState.verifyPersistent(source,null);
+            assertArrayEquals(JailPackState.reforgeDigest(source,false),JailPackState.reforgeDigest(replacement,true));
+            replacement.putInt(key,~seed);
+            assertFalse(java.util.Arrays.equals(JailPackState.reforgeDigest(source,false),JailPackState.reforgeDigest(replacement,true)));
+        }
+        source.putLong(key,1L);
+        assertThrows(IOException.class,()->JailPackState.verifyPersistent(source,null));
+        assertThrows(IOException.class,()->JailPackState.reforgeDigest(source,false));
+        assertThrows(IOException.class,()->JailPackState.reforgeDigest(source,true));
+    }
+
     @Test void nativeCurrencyProgressAndWalletVisibilityMustSurviveTheClone() throws Exception {
         CompoundTag attachments=new CompoundTag();
         byte[] fresh=JailPackState.currencyCloneDigest(attachments);
