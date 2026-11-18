@@ -82,7 +82,13 @@ public class JailCertifiedOriginPort extends JailNativeOriginPort {
     }
     float healthBonus(){return (float)declared.stream().filter(e->e.attribute().equals(Attributes.MAX_HEALTH.unwrapKey().orElseThrow().location())).mapToDouble(Effect::amount).sum();}
     void neutralBase()throws IOException {
-        audit();effects();var defaults=DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);Set<String> modifiers=new HashSet<>();declared.forEach(e->modifiers.add(e.modifier().toString()));
+        audit();effects();verifyNeutralAttributes();
+    }
+    @Override protected void verifyCallbackAttributes() throws IOException {
+        if (JailAttributeView.applies(player)) verifyNeutralAttributes();
+    }
+    private void verifyNeutralAttributes() throws IOException {
+        var defaults=DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);Set<String> modifiers=new HashSet<>();declared.forEach(e->modifiers.add(e.modifier().toString()));
         CompoundTag neutral=JailNbt.decode(JailEquipmentEffects.neutral(player));
         for(Tag raw:neutral.getList("attributes",10)){
             CompoundTag row=(CompoundTag)raw;

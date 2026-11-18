@@ -41,6 +41,7 @@ final class JailEquipmentEffects {
     }
     static void reconcile(ServerPlayer p)throws IOException {((JailEquipmentAccess)p).uq$detectEquipmentUpdates();settled(p);}
     static byte[] neutral(ServerPlayer p)throws IOException {
+        boolean fullPack=JailAttributeView.applies(p);
         Map<Key,AttributeModifier> equipment=new HashMap<>();List<String> rejected=new ArrayList<>();
         Set<String> allowed=Set.of("armor","armor_toughness","knockback_resistance","attack_damage","attack_speed","movement_speed");
         for(EquipmentSlot slot:EquipmentSlot.values())p.getItemBySlot(slot).forEachModifier(slot,(attribute,modifier)->{
@@ -52,7 +53,14 @@ final class JailEquipmentEffects {
         List<CompoundTag> sorted=new ArrayList<>();
         for(Tag raw:p.getAttributes().save()){
             CompoundTag saved=(CompoundTag)raw;ResourceLocation id=ResourceLocation.parse(saved.getString("id"));var holder=BuiltInRegistries.ATTRIBUTE.getHolder(id).orElseThrow(()->new IOException("Unknown attribute"));var live=p.getAttribute(holder);if(live==null)throw new IOException("Missing live attribute");
-            CompoundTag row=new CompoundTag();row.putString("id",id.toString());row.putDouble("base",live.getBaseValue());ListTag mods=new ListTag();
+            if(fullPack) {
+                for(Tag tag:saved.getList("modifiers",Tag.TAG_COMPOUND)) {
+                    CompoundTag m=(CompoundTag)tag;
+                    if(!m.getAllKeys().equals(Set.of("id","amount","operation")))
+                        throw new IOException("Unknown native equipment modifier fields on "+id);
+                }
+            }
+            CompoundTag row=fullPack?saved.copy():new CompoundTag();row.putString("id",id.toString());row.putDouble("base",live.getBaseValue());ListTag mods=new ListTag();
             for(AttributeModifier modifier:live.getModifiers().stream().sorted(Comparator.comparing(m->m.id().toString())).toList()){
                 Key key=new Key(id,modifier.id());var expected=equipment.get(key);
                 if(expected!=null){if(!expected.equals(modifier)||!seen.add(key))throw new IOException("Equipment modifier is not the declared value");continue;}
@@ -60,7 +68,8 @@ final class JailEquipmentEffects {
             }
             row.put("modifiers",mods);sorted.add(row);
         }
-        if(!seen.equals(equipment.keySet()))throw new IOException("Declared equipment effects are not settled");sorted.sort(Comparator.comparing(t->t.getString("id")));attributes.addAll(sorted);all.put("attributes",attributes);
+        if(!seen.equals(equipment.keySet()))throw new IOException("Declared equipment effects are not settled");sorted.sort(Comparator.comparing(t->t.getString("id")));attributes.addAll(sorted);
+        all.put("attributes",fullPack?JailAttributeView.complete(attributes,true):attributes);
         CompoundTag saved=p.saveWithoutId(new CompoundTag());for(String key:List.of("XpP","XpLevel","XpTotal","Score","foodLevel","foodSaturationLevel","foodExhaustionLevel"))if(saved.contains(key))all.put(key,saved.get(key).copy());all.putFloat("health",p.getHealth());all.put("effects",saved.getList("active_effects",10).copy());all.put("abilities",saved.getCompound("abilities").copy());
         CompoundTag persistent=p.getPersistentData().copy();persistent.remove(JailVanillaPort.REMOVED);persistent.remove(JailVanillaPort.RESTORED);all.put("persistent",persistent);
         return JailNbt.encode(all);

@@ -102,10 +102,19 @@ public final class FullPackDiagnostics {
         try {
             var report=new java.util.LinkedHashMap<String,Object>();
             report.put("stage",stage);
+            var changedFields=new ArrayList<String>();
+            var keys=new TreeSet<>(expected.getAllKeys());
+            keys.addAll(observed.getAllKeys());
+            for (String key:keys)
+                if (!java.util.Objects.equals(expected.get(key),observed.get(key)))
+                    changedFields.add(key.matches("[a-z_]{1,30}") ? key : "(other field)");
+            report.put("changed_top_level_fields",changedFields);
             var paths=new ArrayList<String>();
             differences(expected,observed,"root",paths);
             report.put("paths_and_types",paths);
             var attributes=new ArrayList<String>();
+            var nonDefaultAdditions=new ArrayList<String>();
+            var defaults=net.minecraft.world.entity.ai.attributes.DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);
             var expectedIds=new java.util.HashSet<String>();
             for (var tag:expected.getList("attributes",Tag.TAG_COMPOUND)) {
                 var before=(CompoundTag)tag;
@@ -130,10 +139,23 @@ public final class FullPackDiagnostics {
             for (var row:observed.getList("attributes",Tag.TAG_COMPOUND)) {
                 var after=(CompoundTag)row;
                 String id=after.getString("id");
-                if (!expectedIds.contains(id) && !id.contains("poke") && !id.contains("cobble"))
-                    attributes.add(id+" appeared, base "+after.getDouble("base"));
+                if (expectedIds.contains(id) || id.contains("poke") || id.contains("cobble")) continue;
+                attributes.add(id+" appeared, base "+after.getDouble("base"));
+                var holder=net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.getHolder(net.minecraft.resources.ResourceLocation.parse(id)).orElseThrow();
+                if (!defaults.hasAttribute(holder) || Double.compare(after.getDouble("base"),defaults.getBaseValue(holder))!=0)
+                    nonDefaultAdditions.add(id+" with nondefault base "+after.getDouble("base"));
+                if (!java.util.Set.of("id","base").equals(after.getAllKeys())) {
+                    nonDefaultAdditions.add(id+" extra row fields "+after.getAllKeys());
+                    for (Tag entry:after.getList("modifiers",Tag.TAG_COMPOUND)) {
+                        var m=(CompoundTag)entry;
+                        String modifier=m.getString("id");
+                        if (!modifier.contains("cobble") && !modifier.contains("poke"))
+                            nonDefaultAdditions.add(id+" "+modifier+" "+m.getDouble("amount")+" "+m.getString("operation"));
+                    }
+                }
             }
             report.put("changed_attribute_rows",attributes);
+            report.put("new_rows_with_nondefault_state",nonDefaultAdditions);
             if (expected.contains("health",Tag.TAG_FLOAT) && observed.contains("health",Tag.TAG_FLOAT))
                 report.put("health_expected_observed",List.of(expected.getFloat("health"),observed.getFloat("health")));
             Files.writeString(PlayerOnlySmoke.results.resolve("full249-origin-differences.json"),new GsonBuilder().setPrettyPrinting().create().toJson(report));

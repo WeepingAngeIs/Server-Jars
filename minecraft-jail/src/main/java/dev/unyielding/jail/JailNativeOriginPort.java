@@ -197,7 +197,9 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
     protected void augmentView(CompoundTag saved,CompoundTag body)throws IOException {}
     private JailOriginTransaction.View view(CompoundTag saved,Object claims,JailVanillaCustody.View itemView)throws IOException {
         CompoundTag body=new CompoundTag();body.putString("dependencies",DEPS);body.putString("definitions",audit());body.put("origin_data",attachment(saved));body.put("claims",claimState(claims));
-        body.put("all_claims",allClaims(claims));body.putByteArray("inventory",itemView.inventory());body.put("accessories",accessoryState(saved));body.put("attributes",attributes(saved));body.putFloat("health",saved.getFloat("Health"));
+        body.put("all_claims",allClaims(claims));body.putByteArray("inventory",itemView.inventory());body.put("accessories",accessoryState(saved));boolean fullPack=JailAttributeView.applies(player);
+        if(fullPack && !(saved.get("attributes") instanceof ListTag))throw new IOException("Missing stored player attributes");
+        body.put("attributes",fullPack?JailAttributeView.complete((ListTag)saved.get("attributes"),false):attributes(saved));body.putFloat("health",saved.getFloat("Health"));
         CompoundTag r=saved.getCompound("NeoForgeData").getCompound(RECEIPT).copy();
         if(r.hasUUID("transaction")&&!transaction.equals(r.getUUID("transaction"))){if(!r.getUUID("transaction").equals(retired)||!r.getString("phase").equals("ORIGINAL"))throw new IOException("Foreign native origin receipt");r=new CompoundTag();}body.put("receipt",r);
         body.put("effects",saved.getList("active_effects",10).copy());body.put("abilities",saved.getCompound("abilities").copy());
@@ -283,6 +285,8 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
     @Override public JailOriginTransaction.View planOriginal(byte[] intent,UUID id)throws IOException{return plan(intent,id,false);}
     protected void expectedNativeHealth(CompoundTag expected,float previousHealth,float previousMax)throws IOException {}
     protected void finishDeclaredHealth(CompoundTag expected)throws IOException {}
+    protected void verifyCallbackAttributes() throws IOException {}
+
     static void requireCallbackState(CompoundTag expected, CompoundTag observed, String stage) throws IOException {
         String difference=JailNbt.mismatch(expected,observed,"root");
         if(difference!=null) throw new IOException("Origin callback changed undeclared state "+stage+" at "+difference);
@@ -307,6 +311,7 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         if(!beforeLeaseRelease.getCompound("receipt").equals(receiptBefore))throw new IOException("Origin callback changed custody receipt");
         expectedBeforeRelease.put("claims",expectedClaims(true));expectedBeforeRelease.put("all_claims",expectedAllClaims(true));beforeLeaseRelease.put("receipt",expectedBeforeRelease.getCompound("receipt").copy());
         expectedNativeHealth(expectedBeforeRelease,previousHealth,previousMax);
+        verifyCallbackAttributes();
         requireCallbackState(expectedBeforeRelease,beforeLeaseRelease,"before lease release");
         if(!temporary&&intent.getCompound("claims_before").getBoolean("unique")&&!intent.getBoolean("human_preowned")){
             if(!owner().equals(owner(claims,human)))throw new IOException("Temporary Human claim changed; not releasing another owner");
@@ -315,6 +320,7 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         // Receipt is written only after the entire declared callback effect set
         // matches. Unexpected state is retained; no rollback/replay is attempted.
         CompoundTag expected=decode(planned.state());finishDeclaredHealth(expected);CompoundTag observed=decode(current().state());observed.put("receipt",expected.getCompound("receipt").copy());
+        verifyCallbackAttributes();
         requireCallbackState(expected,observed,"before receipt");
         player.getPersistentData().put(RECEIPT,expected.getCompound("receipt").copy());
     }
