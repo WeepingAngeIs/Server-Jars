@@ -23,7 +23,7 @@ fi
 
 unit="jailpack249-${GITHUB_RUN_ID:?}-${GITHUB_RUN_ATTEMPT:?}-p${phase}-$$.scope"
 group="$cgroups/system.slice/$unit"
-high=$(( 23 * 1024 * 1024 * 1024 / 2 ))
+high=$(( 25 * 1024 * 1024 * 1024 / 2 ))
 maximum=$(( 13 * 1024 * 1024 * 1024 ))
 
 sample() {

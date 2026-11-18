@@ -4,9 +4,16 @@ set -eu
 df -h "$RUNNER_TEMP"
 free -h
 # NeoForge, Mesa's software GPU and the full resource reload share one hosted VM.
-if (( $(df --output=avail -k "$RUNNER_TEMP" | tail -1) > 16000000 )); then
+available_kib=$(df --output=avail -k "$RUNNER_TEMP" | tail -1)
+swap_gib=6
+if [[ ${GITHUB_JOB:-} == pack-custody ]] && (( available_kib >= 59*1024*1024 )); then
+    # Full JEI registration on login exhausted 9 GiB of swap. This runner has room
+    # for both installations and a larger swapfile on its disposable disk.
+    swap_gib=24
+fi
+if (( available_kib > (swap_gib+10)*1024*1024 )); then
     swapfile="$RUNNER_TEMP/jail-client-swap"
-    sudo fallocate -l 6G "$swapfile"
+    sudo fallocate -l "${swap_gib}G" "$swapfile"
     sudo chmod 600 "$swapfile"
     sudo mkswap "$swapfile"
     sudo swapon "$swapfile"
