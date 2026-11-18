@@ -54,6 +54,16 @@ public final class FullPackDiagnostics {
         collecting=true;
         try {
             probe(results,"native_claims",()->FullPackSession.noClaims(player));
+            probe(results,"puffish_native_live_and_saved_defaults",()->{
+                var id=net.minecraft.resources.ResourceLocation.parse("puffish_attributes:armor_shred");
+                var holder=net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.getHolder(id).orElseThrow();
+                if (!holder.value().getClass().getName().equals("net.puffish.attributesmod.api.DynamicEntityAttribute"))
+                    throw new IllegalStateException("Wrong dynamic attribute provider");
+                var defaults=net.minecraft.world.entity.ai.attributes.DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);
+                var detached=defaults.createInstance(ignored->{},holder);
+                if (!Double.isNaN(detached.getBaseValue()) || Double.doubleToRawLongBits(detached.save().getDouble("base"))!=0L)
+                    throw new IllegalStateException("Unexpected live or saved dynamic attribute representation");
+            });
             probe(results,"native_accessory_and_vanilla_slots",port::current);
             probe(results,"native_origin_choices_effects_and_claims",()->new JailCertifiedOriginPort(
                     player,port,UUID.randomUUID(),null,null).current());
