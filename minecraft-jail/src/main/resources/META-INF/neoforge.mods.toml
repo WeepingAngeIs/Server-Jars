@@ -16,7 +16,7 @@ config = "minecraftjail.mixins.json"
 [[dependencies.minecraftjail]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.1.255,21.2)"
+versionRange = "[21.1.249,21.2)"
 ordering = "NONE"
 side = "BOTH"
 
