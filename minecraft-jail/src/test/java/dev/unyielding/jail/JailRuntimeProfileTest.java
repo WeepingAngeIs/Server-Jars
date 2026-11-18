@@ -70,6 +70,13 @@ class JailRuntimeProfileTest {
         assertFalse(JailPackState.neutral(reviewed,"carryon:carry_on_data",carry));
     }
 
+    @Test void aetherLifeShardPermissionIsExactlyZeroOnMaxHealth() {
+        assertTrue(JailPackState.reviewedIntrinsic("minecraft:generic.max_health","aether:life_shard_max_health",0d,"ADD_VALUE"));
+        assertFalse(JailPackState.reviewedIntrinsic("minecraft:generic.max_health","aether:life_shard_max_health",2d,"ADD_VALUE"));
+        assertFalse(JailPackState.reviewedIntrinsic("minecraft:generic.armor","aether:life_shard_max_health",0d,"ADD_VALUE"));
+        assertFalse(JailPackState.reviewedIntrinsic("minecraft:generic.max_health","aether:life_shard_max_health",0d,"ADD_MULTIPLIED_BASE"));
+    }
+
     @Test void onlyExactStarterArsModifiersMatchTheDeclaredTuples() {
         String regen="ars_nouveau:ars_nouveau.perk.mana_regen", max="ars_nouveau:ars_nouveau.perk.max_mana";
         String regenId="ars_nouveau:max_regen_mod",maxId="ars_nouveau:max_mana_mod";

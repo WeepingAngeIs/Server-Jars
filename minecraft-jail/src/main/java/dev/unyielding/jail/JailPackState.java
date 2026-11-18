@@ -206,11 +206,21 @@ final class JailPackState {
     static boolean intrinsic(ServerPlayer player, String attribute, String modifier, double amount, String operation) throws IOException {
         if (!reviewedIntrinsic(attribute,modifier,amount,operation) || !JailHumanAudit.hasPackStateContract(player))
             return false;
-        if (!modifier.equals("ars_nouveau:max_mana_mod") && !modifier.equals("ars_nouveau:max_regen_mod")) return true;
-        // ManaUtil adds these two transient bonuses for the starter book tier and glyph count.
-        // Check the exact source configuration and native state as well as the observed tuple.
-        var mana=player.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments").get(MANA);
-        if (!neutral(REVIEWED.getAsJsonObject("attachments"),MANA,mana)) return false;
+        boolean shard=modifier.equals("aether:life_shard_max_health");
+        if (!shard && !modifier.equals("ars_nouveau:max_mana_mod") && !modifier.equals("ars_nouveau:max_regen_mod")) return true;
+        // Aether and Ars apply these modifiers transiently. A persistent replacement
+        // with the same identifier and amount must not inherit their starter-state approval.
+        CompoundTag serialized=player.saveWithoutId(new CompoundTag());
+        String attachment=shard ? "aether:aether_player" : MANA;
+        if (!neutral(REVIEWED.getAsJsonObject("attachments"),attachment,
+                serialized.getCompound("neoforge:attachments").get(attachment))) return false;
+        for (Tag tag:serialized.getList("attributes",Tag.TAG_COMPOUND)) {
+            CompoundTag row=(CompoundTag)tag;
+            if (!attribute.equals(row.getString("id"))) continue;
+            for (Tag savedModifier:row.getList("modifiers",Tag.TAG_COMPOUND))
+                if (modifier.equals(((CompoundTag)savedModifier).getString("id"))) return false;
+        }
+        if (shard) return true; // The exact accepted Aether projection has integer life_shard_count=0.
         try {
             var config=Class.forName("com.hollingsworth.arsnouveau.setup.config.ServerConfig",false,JailPackState.class.getClassLoader());
             return config.getField("INIT_MANA_REGEN").get(null) instanceof net.neoforged.neoforge.common.ModConfigSpec.IntValue regen && regen.get()==5

@@ -29,6 +29,12 @@
       "id": "ars_nouveau:max_regen_mod",
       "operation": "ADD_VALUE",
       "amount": 5.0
+    },
+    {
+      "attribute": "minecraft:generic.max_health",
+      "id": "aether:life_shard_max_health",
+      "operation": "ADD_VALUE",
+      "amount": 0.0
     }
   ],
   "attachments": {
