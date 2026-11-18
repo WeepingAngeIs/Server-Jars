@@ -4,6 +4,8 @@ import dev.unyielding.jail.JailConfig;
 import java.nio.file.Files;
 import java.util.Set;
 import net.minecraft.nbt.Tag;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameRules;
@@ -50,6 +52,26 @@ public final class FullPackSession {
         result.put("observed_neutral",data);
         result.put("shapes",shapes);
         result.put("attributes",nbt.getList("attributes",Tag.TAG_COMPOUND).copy());
+        if (stage.equals("fresh")) {
+            var live = new net.minecraft.nbt.ListTag();
+            for (var row : player.getAttributes().save()) {
+                var attribute = ResourceLocation.parse(((CompoundTag)row).getString("id"));
+                var holder = BuiltInRegistries.ATTRIBUTE.getHolder(attribute).orElseThrow();
+                var instance = player.getAttribute(holder);
+                if (instance == null) continue;
+                for (var modifier : instance.getModifiers()) {
+                    var namespaces = Set.of("spell_power","apotheosis","apothic_attributes");
+                    if (!namespaces.contains(attribute.getNamespace()) && !namespaces.contains(modifier.id().getNamespace())) continue;
+                    var value = new CompoundTag();
+                    value.putString("attribute",attribute.toString());
+                    value.putString("id",modifier.id().toString());
+                    value.putDouble("amount",modifier.amount());
+                    value.putString("operation",modifier.operation().name());
+                    live.add(value);
+                }
+            }
+            result.put("live_modifiers",live);
+        }
         var persisted = player.getPersistentData();
         var keyNames = new net.minecraft.nbt.ListTag();
         for (String key : persisted.getAllKeys()) {
@@ -102,6 +124,11 @@ public final class FullPackSession {
         Custody249Proof.refused(player, "twilight_pending_charm_inventory");
         require(pending.equals(persistent.getCompound("PlayerPersisted")), "Refusal consumed the Twilight recovery");
         if (alreadyPersisted) persistent.put("PlayerPersisted",original); else persistent.remove("PlayerPersisted");
+        String marker = java.util.UUID.randomUUID().toString();
+        var progression = original.copy();
+        progression.putString("uq_disposable_progress",marker);
+        persistent.put("PlayerPersisted",progression);
+        Files.writeString(evidence(player,"progress"),marker);
 
         require(cmd("jail Visitor 6")==1,"Supported packed-wallet admission refused");
         remember(player);
@@ -117,6 +144,10 @@ public final class FullPackSession {
     }
     static void resumed(ServerPlayer player) throws Exception {
         snapshot(player,"reconnect");
+        require(Files.readString(evidence(player,"progress")).equals(
+                player.getPersistentData().getCompound("PlayerPersisted").getString("uq_disposable_progress")),
+                "Native player progression lost during escape/restart");
+        flag("native_persisted_progress_survived_clone_and_restart");
         Custody249Proof.runtime();
         require(!JailConfig.JAIL_CERTIFIED_ADMISSIONS.get(), "Restart enabled admission");
         cell(player,6);

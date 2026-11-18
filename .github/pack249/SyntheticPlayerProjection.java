@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.UUID;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ClientInformation;
@@ -48,6 +50,23 @@ final class SyntheticPlayerProjection {
         output.putString("provenance","synthetic unconnected ServerPlayer; constructor state only");
         output.put("observed_neutral",selected);
         output.put("attributes",nbt.getList("attributes",Tag.TAG_COMPOUND).copy());
+        var modifiers=new ListTag();
+        for(var attribute : BuiltInRegistries.ATTRIBUTE.holders().toList()) {
+            var attributeId=attribute.key().location();
+            var instance=player.getAttribute(attribute);
+            if(instance==null) continue;
+            for(var modifier : instance.getModifiers()) {
+                var allowed=Set.of("spell_power","apotheosis","apothic_attributes");
+                if(!allowed.contains(attributeId.getNamespace()) && !allowed.contains(modifier.id().getNamespace())) continue;
+                var entry=new CompoundTag();
+                entry.putString("attribute",attributeId.toString());
+                entry.putString("id",modifier.id().toString());
+                entry.putString("operation",modifier.operation().name());
+                entry.putDouble("amount",modifier.amount());
+                modifiers.add(entry);
+            }
+        }
+        output.put("live_modifiers",modifiers);
         Files.writeString(destination,output.toString());
     }
     private SyntheticPlayerProjection() {}

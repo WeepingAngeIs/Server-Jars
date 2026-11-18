@@ -123,7 +123,7 @@ for phase in (1,2):
                     screen=live.read_text().strip() if live.exists() else "waiting for first observed client tick"
                     print(f"Full .249 phase {phase} at {2*attempt}s: {screen}",flush=True)
                     for message in ("ModLoadingErrorScreen", "LoadingErrorScreen", "ModLoadingFailedScreen",
-                                    "Failed to complete lifecycle event CONSTRUCT", "Crash report saved to:", "java.lang.OutOfMemoryError"):
+                                    "This channel is missing on the server side, but required on the client", "Failed to complete lifecycle event CONSTRUCT", "Crash report saved to:", "java.lang.OutOfMemoryError"):
                         if message in client_tail or message in game_tail or message in screen:
                             raise RuntimeError("Client mod loading failure: "+message+"; see full client log")
                     if "DisconnectedScreen" in screen or "QuickPlayErrorScreen" in screen:
@@ -166,6 +166,6 @@ for phase in (1,2):
         assert respawn["alive"] and respawn["no_modal_ticks"]>=20 and respawn["dead_player_object"]!=respawn["alive_player_object"]
     for check in (["refused_equipped_wallet","refused_multiple_wallets","refused_auto_exchange_wallet","refused_twilight_pending_charm_inventory",
                    "preview_place_undo_and_six_intact_cells","escape_native_respawn_in_cell_six_without_client_action"]
-                  if phase==1 else ["occupied_return_kept_conflict_and_escrow","full_wallet_and_equipment_return_after_restart"]):
+                  if phase==1 else ["occupied_return_kept_conflict_and_escrow","full_wallet_and_equipment_return_after_restart","native_persisted_progress_survived_clone_and_restart"]):
         assert proof[check],check
 print("Exact current full-pack production client and dedicated server passed both native custody sessions.")

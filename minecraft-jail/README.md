@@ -1,4 +1,12 @@
-# Minecraft Jail: extracted implementation
+# Rosecourt Detention Center
+
+Minecraft Jail 1.3.0-beta.2 adds a six-cell detention center to Minecraft 1.21.1 and targets the Cobblemon Unyielding 1.0.14 profile on NeoForge 21.1.249. The original .255 custody checks are retained for their original setup. Use the GitHub verification run at the revision that produced your JAR to check the tested pack, physical building, inventories, wallets, escape and save-migration results.
+
+Staff can preview and place the building with `/jailbuild preview` and `/jailbuild place`, choose a cell with `/jail <player> <1–6>`, and inspect availability with `/jailcells`. An offline prisoner retains their cell. Admissions default off. A supported wallet must be packed in inventory with the wallet option enabled. Unrecognized player state or a changed server mod set can block custody. Existing held transactions bind to the exact game setup and their creating JAR. Resolve occupied custody on its original verified installation before changing loaders.
+
+[GitHub verification runs](https://github.com/WeepingAngeIs/Server-Jars/actions/workflows/jail-unyielding-249.yml)
+
+## Historical extraction notes
 
 This module continues the jail implementation from `Server-Jars` commit
 `dc3699ab04e775bd772c38b9ff24646e0791f81a`. It is not a replacement implementation.

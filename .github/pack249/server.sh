@@ -13,14 +13,15 @@ curl -fLsS --retry 3 -o installer.jar https://maven.neoforged.net/releases/net/n
 echo 'd88b448eab73cd65bdf1720844a4828262de30a15fc71bd04dd81acc61c5399a  installer.jar' | sha256sum --check
 java -jar installer.jar --installServer > "$evidence/install.log" 2>&1
 if [[ "${PACK249_INSTALL_ONLY:-0}" == 1 ]]; then exit 0; fi
-mkdir -p probe/META-INF
-# Compile the read-only census against the same actual FML/NeoForge jars used by the server.
-# Package a private copy so census can run without Jail and does not shadow its classes.
+# The production installer contains both unmapped and patched jars. Use the matching
+# NeoForge development classpath to compile; execute only the finished independent probe here.
+mkdir -p probe-src
+cp "$src/PackCensus.java" "$src/SyntheticPlayerProjection.java" probe-src/
 sed 's/^package dev.unyielding.jail;/package dev.unyielding.pack249;/' \
-    "$root/minecraft-jail/src/main/java/dev/unyielding/jail/RuntimeFileIdentity.java" > RuntimeFileIdentity.java
-javac -proc:none -cp "$(find libraries -name '*.jar' | paste -sd:)" -d probe "$src/PackCensus.java" "$src/SyntheticPlayerProjection.java" RuntimeFileIdentity.java
-cp "$src/probe.mods.toml" probe/META-INF/neoforge.mods.toml
-jar --create --file mods/pack249-census.jar -C probe .
+    "$root/minecraft-jail/src/main/java/dev/unyielding/jail/RuntimeFileIdentity.java" > probe-src/RuntimeFileIdentity.java
+sh "$root/minecraft-jail/gradlew" --no-daemon --console=plain -I "$src/probe.gradle" \
+    "-PcensusSources=$server/probe-src" pack249CensusJar > "$evidence/census-build.log" 2>&1 || { tail -80 "$evidence/census-build.log"; exit 1; }
+cp "$root/minecraft-jail/build/census/pack249-census.jar" mods/
 if [[ -n "$candidate" ]]; then cp "$candidate" mods/; fi
 export PACK_CENSUS="$evidence/loaded-rows.txt"
 echo eula=true > eula.txt

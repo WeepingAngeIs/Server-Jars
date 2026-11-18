@@ -1,0 +1,19 @@
+allprojects {
+    plugins.withId('java') {
+        def fixture = rootProject.file('../.github/pack249')
+        def prepared = providers.gradleProperty('censusSources').get()
+        def source = sourceSets.create('pack249Census') {
+            java.srcDirs = [file(prepared)]
+            compileClasspath += sourceSets.main.compileClasspath
+        }
+        tasks.register('pack249CensusJar', Jar) {
+            from source.output
+            from(new File(fixture, 'probe.mods.toml')) {
+                into 'META-INF'
+                rename { 'neoforge.mods.toml' }
+            }
+            archiveFileName = 'pack249-census.jar'
+            destinationDirectory = rootProject.layout.buildDirectory.dir('census')
+        }
+    }
+}

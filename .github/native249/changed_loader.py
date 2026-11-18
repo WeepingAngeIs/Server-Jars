@@ -13,7 +13,7 @@ if os.environ.get("RUNNER_ENVIRONMENT") != "github-hosted":
 evidence = root/"dist/packaged-smoke"
 project = root/"dist/packaged-harness"
 snapshot = root/"occupied/packaged-smoke/synthetic-old-save.tar.gz"
-if hashlib.sha256(snapshot.read_bytes()).hexdigest() != "cdea675d5e15e9ca1009c8aa661c51d2e2cbaa7dcd13e28218141c9b10e4b148":
+if hashlib.sha256(snapshot.read_bytes()).hexdigest() != "39816c7a1f085e1c0722c5d4451a1e3e9a0c3a557cbb830ceab689e06ce74aa1":
     sys.exit("Unexpected occupied world")
 world = project/"run-server/jail_certified_smoke"
 if world.exists():
