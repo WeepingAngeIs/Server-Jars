@@ -40,17 +40,21 @@ final class JailNbt {
         } else tag.write(out);
     }
 
+    private static String type(Tag value) { return value==null?"absent":value.getType().getName(); }
+
     // Logical NBT equality includes every key, list type and ordered element, array and
     // primitive. Compare the complete floating payload (including NaN sign and payload bits).
     // Never include the values or private player-provided field names in error reports.
     static String mismatch(Tag source, Tag decoded, String path) {
-        if(source==null || decoded==null || source.getId()!=decoded.getId())return path+" (type)";
+        if (source==null || decoded==null || source.getId()!=decoded.getId())
+            return path+" (expected "+type(source)+", observed "+type(decoded)+")";
         if(source instanceof CompoundTag a && decoded instanceof CompoundTag b){
-            if (!a.getAllKeys().equals(b.getAllKeys())) return path+" (keys)";
+            var keys=new TreeSet<>(a.getAllKeys());
+            keys.addAll(b.getAllKeys());
             int index=0;
-            for(String key:new TreeSet<>(a.getAllKeys())){
+            for(String key:keys){
                 String field=switch(key){
-                    case "attributes","abilities","persistent","effects","base","amount","modifiers","id","operation","health","PlayerPersisted","insanelib","nbt_tags" -> key;
+                    case "origin_data","claims","all_claims","accessories","other_persistent","receipt","inventory","definitions","attributes","abilities","persistent","effects","base","amount","modifiers","id","operation","health","PlayerPersisted","insanelib","nbt_tags" -> key;
                     default -> "field["+index+"]";
                 };
                 String child=mismatch(a.get(key),b.get(key),path+"."+field);
@@ -60,7 +64,7 @@ final class JailNbt {
             return null;
         }
         if(source instanceof ListTag a && decoded instanceof ListTag b){
-            if (a.getElementType()!=b.getElementType() || a.size()!=b.size())return path+" (list shape)";
+            if (a.getElementType()!=b.getElementType() || a.size()!=b.size())return path+" (expected list "+a.getElementType()+"/"+a.size()+", observed "+b.getElementType()+"/"+b.size()+")";
             for(int i=0;i<a.size();i++){
                 String child=mismatch(a.get(i),b.get(i),path+"["+i+"]");
                 if(child!=null)return child;

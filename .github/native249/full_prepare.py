@@ -18,10 +18,11 @@ def replace(path, old, new):
 
 for name in ("FullPackSession.java", "FullPackClientWatch.java", "FullPackDiagnostics.java"):
     shutil.copy2(Path(__file__).with_name(name),src)
-shutil.copy2(Path(__file__).with_name("NeutralSerializationObserver.java"),src/"proof")
+for name in ("NeutralSerializationObserver.java","OriginSerializationObserver.java"):
+    shutil.copy2(Path(__file__).with_name(name),src/"proof")
 observer_config=project/"src/main/resources/jail-production-observers.mixins.json"
 mixins=json.loads(observer_config.read_text())
-mixins["mixins"].append("NeutralSerializationObserver")
+mixins["mixins"].extend(["NeutralSerializationObserver","OriginSerializationObserver"])
 observer_config.write_text(json.dumps(mixins,indent=2))
 tick = src/"PlayerOnlySmoke.java"
 replace(tick, 'dev = server.getPlayerList().getPlayerByName("Dev")',

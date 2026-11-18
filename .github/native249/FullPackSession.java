@@ -276,7 +276,12 @@ public final class FullPackSession {
         persistent.put("PlayerPersisted",progression);
         Files.writeString(evidence(player,"progress"),marker);
 
-        require(cmd("jail Visitor 6")==1,"Supported packed-wallet admission refused");
+        FullPackDiagnostics.tracingOrigin=true;
+        try {
+            require(cmd("jail Visitor 6")==1,"Supported packed-wallet admission refused");
+        } finally {
+            FullPackDiagnostics.tracingOrigin=false;
+        }
         noClaims(player);
         flag("native_human_warrior_selection_without_unique_claims");
         remember(player);
@@ -303,7 +308,12 @@ public final class FullPackSession {
         focus(player);
         PackedWalletProof.occupiedDestination(player);
         flag("occupied_return_kept_conflict_and_escrow");
-        release(player);
+        FullPackDiagnostics.tracingOrigin=true;
+        try {
+            release(player);
+        } finally {
+            FullPackDiagnostics.tracingOrigin=false;
+        }
         noClaims(player);
         flag("full_wallet_and_equipment_return_after_restart");
         pass();

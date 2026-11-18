@@ -283,6 +283,10 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
     @Override public JailOriginTransaction.View planOriginal(byte[] intent,UUID id)throws IOException{return plan(intent,id,false);}
     protected void expectedNativeHealth(CompoundTag expected,float previousHealth,float previousMax)throws IOException {}
     protected void finishDeclaredHealth(CompoundTag expected)throws IOException {}
+    static void requireCallbackState(CompoundTag expected, CompoundTag observed, String stage) throws IOException {
+        String difference=JailNbt.mismatch(expected,observed,"root");
+        if(difference!=null) throw new IOException("Origin callback changed undeclared state "+stage+" at "+difference);
+    }
     private void mutate(byte[] bytes,UUID tx,boolean temporary)throws IOException {
         var planned=temporary?planTemporary(bytes,tx):planOriginal(bytes,tx);float previousHealth=player.getHealth(),previousMax=player.getMaxHealth();CompoundTag receiptBefore=decode(current().state()).getCompound("receipt").copy();Object data=data();int version=(int)call(DATA,data,"version");Object claims=claims();
         CompoundTag expectedBefore=temporary?intent.getCompound("claims_before"):expectedClaims(true);if(!claimState(claims).equals(expectedBefore))throw new IOException("Claim ownership changed before mutation");
@@ -303,7 +307,7 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         if(!beforeLeaseRelease.getCompound("receipt").equals(receiptBefore))throw new IOException("Origin callback changed custody receipt");
         expectedBeforeRelease.put("claims",expectedClaims(true));expectedBeforeRelease.put("all_claims",expectedAllClaims(true));beforeLeaseRelease.put("receipt",expectedBeforeRelease.getCompound("receipt").copy());
         expectedNativeHealth(expectedBeforeRelease,previousHealth,previousMax);
-        if(!beforeLeaseRelease.equals(expectedBeforeRelease))throw new IOException("Origin callback changed undeclared state before lease release");
+        requireCallbackState(expectedBeforeRelease,beforeLeaseRelease,"before lease release");
         if(!temporary&&intent.getCompound("claims_before").getBoolean("unique")&&!intent.getBoolean("human_preowned")){
             if(!owner().equals(owner(claims,human)))throw new IOException("Temporary Human claim changed; not releasing another owner");
             if(!Boolean.TRUE.equals(call(CLAIMS,claims,"releaseIfOwner",new Class<?>[]{ResourceLocation.class,ResourceLocation.class,UUID.class},layer,human,owner())))throw new IOException("Human lease release failed");
@@ -311,7 +315,7 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         // Receipt is written only after the entire declared callback effect set
         // matches. Unexpected state is retained; no rollback/replay is attempted.
         CompoundTag expected=decode(planned.state());finishDeclaredHealth(expected);CompoundTag observed=decode(current().state());observed.put("receipt",expected.getCompound("receipt").copy());
-        if(!observed.equals(expected))throw new IOException("Origin callback changed undeclared state");
+        requireCallbackState(expected,observed,"before receipt");
         player.getPersistentData().put(RECEIPT,expected.getCompound("receipt").copy());
     }
     @Override public void makeTemporary(byte[] b,UUID id)throws IOException{mutate(b,id,true);}

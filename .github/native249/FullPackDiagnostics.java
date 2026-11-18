@@ -24,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 public final class FullPackDiagnostics {
     private FullPackDiagnostics() {}
     private static boolean collecting;
+    static boolean tracingOrigin;
     @FunctionalInterface private interface Probe { void run() throws Exception; }
 
     private static void probe(Map<String,String> out,String label,Probe action) {
@@ -93,6 +94,51 @@ public final class FullPackDiagnostics {
             Files.writeString(PlayerOnlySmoke.results.resolve("full249-neutral-roundtrip.json"),new GsonBuilder().setPrettyPrinting().create().toJson(paths));
         } catch (Exception ex) {
             System.out.println("FULL249_DIAGNOSTIC neutral observer failed: "+ex.getClass().getSimpleName());
+        }
+    }
+
+    public static void originDifference(CompoundTag expected,CompoundTag observed,String stage) {
+        if (!tracingOrigin || expected.equals(observed)) return;
+        try {
+            var report=new java.util.LinkedHashMap<String,Object>();
+            report.put("stage",stage);
+            var paths=new ArrayList<String>();
+            differences(expected,observed,"root",paths);
+            report.put("paths_and_types",paths);
+            var attributes=new ArrayList<String>();
+            var expectedIds=new java.util.HashSet<String>();
+            for (var tag:expected.getList("attributes",Tag.TAG_COMPOUND)) {
+                var before=(CompoundTag)tag;
+                String id=before.getString("id");
+                expectedIds.add(id);
+                if (id.contains("cobble") || id.contains("poke")) continue;
+                CompoundTag after=null;
+                for (var row:observed.getList("attributes",Tag.TAG_COMPOUND))
+                    if (((CompoundTag)row).getString("id").equals(id)) { after=(CompoundTag)row; break; }
+                if (before.equals(after)) continue;
+                if (after==null) { attributes.add(id+" absent in observed"); continue; }
+                if (!java.util.Objects.equals(before.get("base"),after.get("base")))
+                    attributes.add(id+" base "+before.get("base")+" -> "+after.get("base"));
+                for (var pair:List.of(Map.entry("expected",before),Map.entry("observed",after)))
+                    for (var element:pair.getValue().getList("modifiers",Tag.TAG_COMPOUND)) {
+                        var m=(CompoundTag)element;
+                        String modifier=m.getString("id");
+                        if (modifier.contains("poke") || modifier.contains("cobble")) continue;
+                        attributes.add(id+" "+pair.getKey()+" "+modifier+" "+m.getString("operation")+" "+m.getDouble("amount"));
+                    }
+            }
+            for (var row:observed.getList("attributes",Tag.TAG_COMPOUND)) {
+                var after=(CompoundTag)row;
+                String id=after.getString("id");
+                if (!expectedIds.contains(id) && !id.contains("poke") && !id.contains("cobble"))
+                    attributes.add(id+" appeared, base "+after.getDouble("base"));
+            }
+            report.put("changed_attribute_rows",attributes);
+            if (expected.contains("health",Tag.TAG_FLOAT) && observed.contains("health",Tag.TAG_FLOAT))
+                report.put("health_expected_observed",List.of(expected.getFloat("health"),observed.getFloat("health")));
+            Files.writeString(PlayerOnlySmoke.results.resolve("full249-origin-differences.json"),new GsonBuilder().setPrettyPrinting().create().toJson(report));
+        } catch (Exception ex) {
+            System.out.println("FULL249_DIAGNOSTIC origin observer failed: "+ex.getClass().getSimpleName());
         }
     }
 

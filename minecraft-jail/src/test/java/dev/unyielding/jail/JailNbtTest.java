@@ -23,6 +23,19 @@ class JailNbtTest {
         assertNotNull(JailNbt.mismatch(nested,decoded,"root"));
     }
 
+    @Test void originCallbacksRetainExactNaNsAndRejectOneBitOrAnUnplannedField() throws Exception {
+        var plan=new CompoundTag();
+        plan.putDouble("base",Double.longBitsToDouble(0x7ff8000000000012L));
+        var actual=JailNbt.decode(JailNbt.encode(plan));
+        JailNativeOriginPort.requireCallbackState(plan,actual,"before lease release");
+        actual.putDouble("base",Double.longBitsToDouble(0x7ff8000000000013L));
+        assertThrows(java.io.IOException.class,()->JailNativeOriginPort.requireCallbackState(plan,actual,"before receipt"));
+        var extra=JailNbt.decode(JailNbt.encode(plan));
+        extra.putInt("private player data",1);
+        String error=assertThrows(java.io.IOException.class,()->JailNativeOriginPort.requireCallbackState(plan,extra,"before receipt")).getMessage();
+        assertTrue(error.contains("expected absent, observed INT")); assertFalse(error.contains("private player data"));
+    }
+
     @Test void wrongTypeOrderArrayKeyAndMissingDataCannotPassAnEqualityCheck() throws Exception {
         var source=TagParser.parseTag("{a:[1,2],b:[I;3,4],c:1.0d}");
         for (String changed:java.util.List.of("{a:[2,1],b:[I;3,4],c:1.0d}","{a:[1,2],b:[I;4,3],c:1.0d}",
