@@ -1,7 +1,9 @@
 """Fetch the three compile-only JARs, verifying their published checksums."""
 import hashlib
 import sys
+import time
 from pathlib import Path
+import urllib.error
 import urllib.request
 
 
@@ -30,13 +32,28 @@ destination = Path(sys.argv[1]) if len(sys.argv) == 2 else Path("unyielding-ques
 destination.mkdir(parents=True, exist_ok=True)
 for name, url, algorithm, expected in DEPENDENCIES:
     target = destination / name
-    request = urllib.request.Request(url, headers={"User-Agent": "UnyieldingQuests-Cloud-Build/1.0"})
-    digest = hashlib.new(algorithm)
-    with urllib.request.urlopen(request, timeout=120) as response, target.open("wb") as output:
-        while chunk := response.read(1024 * 1024):
-            output.write(chunk)
-            digest.update(chunk)
-    if digest.hexdigest() != expected:
-        target.unlink()
-        raise SystemExit(f"Published checksum mismatch for {name}")
+    urls = [url]
+    if name == "kotlin-stdlib.jar":
+        urls.append(url.replace("repo.maven.apache.org/maven2", "maven-central.storage-download.googleapis.com/maven2"))
+    partial = target.with_suffix(".part")
+    for attempt in range(5):
+        request = urllib.request.Request(urls[attempt % len(urls)], headers={"User-Agent": "UnyieldingQuests-Cloud-Build/1.0"})
+        digest = hashlib.new(algorithm)
+        try:
+            with urllib.request.urlopen(request, timeout=120) as response, partial.open("wb") as output:
+                while chunk := response.read(1024 * 1024):
+                    output.write(chunk)
+                    digest.update(chunk)
+            if digest.hexdigest() != expected:
+                raise SystemExit(f"Published checksum mismatch for {name}")
+            partial.replace(target)
+            break
+        except (urllib.error.URLError, TimeoutError) as error:
+            if isinstance(error, urllib.error.HTTPError) and error.code not in (408, 429, 500, 502, 503, 504):
+                raise
+            if attempt == 4:
+                raise
+            time.sleep(2 ** attempt)
+        finally:
+            partial.unlink(missing_ok=True)
     print(f"Verified {name} ({target.stat().st_size:,} bytes)")

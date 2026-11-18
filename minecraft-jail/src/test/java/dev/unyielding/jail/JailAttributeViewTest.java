@@ -13,7 +13,7 @@ class JailAttributeViewTest {
         var list=new ListTag();
         for(CompoundTag row:rows) list.add(row);
         var result=JailAttributeView.index(list);
-        JailAttributeView.addDefault(result,baseline,equipment);
+        JailAttributeView.addDefault(result,baseline,baseline.getDouble("base"),equipment);
         return result;
     }
 
@@ -23,6 +23,19 @@ class JailAttributeViewTest {
         var live=baseline.copy();live.put("modifiers",new ListTag());
         assertEquals(view(baseline,true),view(baseline,true,live));
         assertFalse(baseline.contains("modifiers"));
+    }
+
+    @Test void saveAndLiveProjectionKeepDistinctProviderDefaults() throws Exception {
+        var saved=TagParser.parseTag("{id:'puffish_attributes:armor_shred',base:0.0d}");
+        var disk=JailAttributeView.index(new ListTag());
+        JailAttributeView.addDefault(disk,saved,Double.NaN,false);
+        assertEquals(0L,Double.doubleToRawLongBits(disk.get("puffish_attributes:armor_shred").getDouble("base")));
+        var live=JailAttributeView.index(new ListTag());
+        JailAttributeView.addDefault(live,saved,Double.NaN,true);
+        CompoundTag expected=saved.copy();expected.putDouble("base",Double.NaN);expected.put("modifiers",new ListTag());
+        assertNull(JailNbt.mismatch(expected,live.get("puffish_attributes:armor_shred"),"attribute"));
+        expected.putDouble("base",0.0d);
+        assertNotNull(JailNbt.mismatch(expected,live.get("puffish_attributes:armor_shred"),"attribute"));
     }
 
     @Test void explicitBaseModifierUnknownFieldAndForeignAttributeRemainDistinct() throws Exception {

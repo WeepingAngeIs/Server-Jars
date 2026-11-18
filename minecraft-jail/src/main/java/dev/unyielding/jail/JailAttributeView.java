@@ -32,7 +32,7 @@ final class JailAttributeView {
             if(!id.equals(expected.getString("id")) || !expected.contains("base",Tag.TAG_DOUBLE)
                     || !expected.getAllKeys().equals(Set.of("id","base")))
                 throw new IOException("Unknown default player attribute representation: "+id);
-            addDefault(rows,expected,equipmentView);
+            addDefault(rows,expected,baseline.getBaseValue(),equipmentView);
         }
         ListTag result=new ListTag(); result.addAll(rows.values()); return result;
     }
@@ -65,9 +65,14 @@ final class JailAttributeView {
         return result;
     }
 
-    static void addDefault(Map<String,CompoundTag> rows,CompoundTag baseline,boolean equipmentView) {
+    static void addDefault(Map<String,CompoundTag> rows,CompoundTag baseline,double liveBase,boolean equipmentView) {
         CompoundTag copy=baseline.copy();
-        if(equipmentView) copy.put("modifiers",new ListTag());
+        if(equipmentView) {
+            // EquipmentEffects reads the live getter. A mod can intentionally serialize
+            // a different number (Puffish dynamic attributes expose NaN and save 0.0).
+            copy.putDouble("base",liveBase);
+            copy.put("modifiers",new ListTag());
+        }
         rows.putIfAbsent(copy.getString("id"),copy);
     }
 }
