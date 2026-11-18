@@ -35,7 +35,7 @@ jobs:
         if: always()
         run: |
           mkdir -p dist/migration-build
-          git archive --format=zip -o dist/migration-build/source.zip HEAD minecraft-jail unyielding-quests/gradlew unyielding-quests/gradle/wrapper .github/scripts/fetch-build-dependencies.py .github/workflows/jail-unyielding-249.yml .github/detention .github/occupied-migration .github/pack249 .github/native249 .github/client249
+          git archive --format=zip -o dist/migration-build/source.zip HEAD minecraft-jail unyielding-quests/gradlew unyielding-quests/gradle/wrapper combined-unyielding/prepare_smoke.py combined-unyielding/smoke-harness .github/scripts/fetch-build-dependencies.py .github/scripts/meeting-two-player.sh .github/scripts/meeting-two-player.gradle .github/scripts/prepare-split-server.py .github/scripts/prepare-packaged-server.py .github/scripts/install-origin-test-runtime.py .github/packed-wallet/PackedWalletProof.java .github/packaged-smoke/BundleSmoke.java .github/player-only/PlayerOnlySmoke.java .github/player-only/PlayerOnlyClient.java .github/jail-production .github/split-smoke .github/workflows/jail-unyielding-249.yml .github/detention .github/occupied-migration .github/pack249 .github/native249 .github/client249
           git rev-parse HEAD > dist/migration-build/commit.txt
           cp minecraft-jail/build/probe/*.jar dist/migration-build/ 2>/dev/null || true
           cp minecraft-jail/build/libs/*.jar dist/migration-build/ 2>/dev/null || true
@@ -50,7 +50,7 @@ jobs:
           retention-days: 30
 
   pack-server:
-    if: "!contains(github.event.head_commit.message, '[client-probe]')"
+    if: "!contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     strategy:
       fail-fast: false
       matrix:
@@ -79,7 +79,7 @@ jobs:
           path: dist/pack249
           retention-days: 10
   custody:
-    if: "!contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
+    if: "!contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -120,7 +120,7 @@ jobs:
           retention-days: 10
 
   pack-client:
-    if: "!contains(github.event.head_commit.message, '[pack-probe]')"
+    if: "!contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[pack-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -164,7 +164,7 @@ jobs:
           retention-days: 10
 
   pack-custody:
-    if: "!contains(github.event.head_commit.message, '[client-probe]')"
+    if: "!contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -220,3 +220,77 @@ jobs:
             dist/packaged-smoke/full249-*-logs
             dist/packaged-smoke/full-crashes
           retention-days: 10
+
+  migration:
+    if: "!contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
+    name: Occupied save ${{ matrix.suite }}
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [same-loader, changed-loader]
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-249-build-${{ github.sha }}
+          path: candidate/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-production-build-7b2f6b34412403b0839f1be9b82e136d1d893b20
+          run-id: 44099299150
+          github-token: ${{ github.token }}
+          path: old-evidence/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-migration-build-0bd7f3297d47b7de5e17ae79cba3b95c52b14f97
+          run-id: 44120884857
+          github-token: ${{ github.token }}
+          path: attached/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        if: matrix.suite == 'changed-loader'
+        with:
+          name: jail-detention-migration-d4b4dfd4dcb43a797d3c959bc5e8fba68ac0c31a
+          run-id: 44229735604
+          github-token: ${{ github.token }}
+          path: occupied/
+      - name: Prepare disposable exact-artifact runtime and unchanged companion
+        run: |
+          set -euo pipefail
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp old-evidence/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
+          cp candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          python3 .github/scripts/fetch-build-dependencies.py
+          python3 .github/occupied-migration/prepare.py
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Exact predecessor occupied save, interruptions, tampering, restart, native escape and return
+        env:
+          MIGRATION_CANDIDATE: candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar
+          MIGRATION_PREDECESSOR: attached/dist/migration-build/Minecraft-Jail-1.2.0.jar
+          MIGRATION_OLD_SHA256: 5e2b40e36f2c6036005bed46c62f5da6b5faa7b8f77becec2ec334aa83990cd8
+        run: |
+          if [[ '${{ matrix.suite }}' == same-loader ]]; then
+            bash .github/occupied-migration/run.sh
+          else
+            python3 .github/native249/changed_loader.py
+          fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: pack249-migration-${{ matrix.suite }}-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/
+            dist/packaged-harness/src/
+          if-no-files-found: error
+          retention-days: 30
