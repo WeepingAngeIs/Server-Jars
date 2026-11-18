@@ -50,7 +50,7 @@ jobs:
           retention-days: 30
 
   pack-server:
-    if: "!contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
+    if: "!contains(github.event.head_commit.message, '[pack-probe]') && !contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     strategy:
       fail-fast: false
       matrix:

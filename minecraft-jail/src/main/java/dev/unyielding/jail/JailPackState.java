@@ -204,13 +204,30 @@ final class JailPackState {
     }
 
     static boolean intrinsic(ServerPlayer player, String attribute, String modifier, double amount, String operation) throws IOException {
+        if (!reviewedIntrinsic(attribute,modifier,amount,operation) || !JailHumanAudit.hasPackStateContract(player))
+            return false;
+        if (!modifier.equals("ars_nouveau:max_mana_mod") && !modifier.equals("ars_nouveau:max_regen_mod")) return true;
+        // ManaUtil adds these two transient bonuses for the starter book tier and glyph count.
+        // Check the exact source configuration and native state as well as the observed tuple.
+        var mana=player.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments").get(MANA);
+        if (!neutral(REVIEWED.getAsJsonObject("attachments"),MANA,mana)) return false;
+        try {
+            var config=Class.forName("com.hollingsworth.arsnouveau.setup.config.ServerConfig",false,JailPackState.class.getClassLoader());
+            return config.getField("INIT_MANA_REGEN").get(null) instanceof net.neoforged.neoforge.common.ModConfigSpec.IntValue regen && regen.get()==5
+                    && config.getField("INIT_MAX_MANA").get(null) instanceof net.neoforged.neoforge.common.ModConfigSpec.IntValue max && max.get()==100;
+        } catch (ReflectiveOperationException | LinkageError failure) {
+            throw new IOException("Cannot verify Ars Nouveau starter mana settings",failure);
+        }
+    }
+
+    static boolean reviewedIntrinsic(String attribute, String modifier, double amount, String operation) {
         var list = REVIEWED.getAsJsonArray("modifiers");
         if (list == null || !Double.isFinite(amount)) return false;
         for (var item : list) {
             var spec = item.getAsJsonObject();
             if (spec.get("attribute").getAsString().equals(attribute) && spec.get("id").getAsString().equals(modifier)
                     && spec.get("operation").getAsString().equals(operation) && Double.compare(spec.get("amount").getAsDouble(), amount) == 0)
-                return JailHumanAudit.hasPackStateContract(player);
+                return true;
         }
         return false;
     }

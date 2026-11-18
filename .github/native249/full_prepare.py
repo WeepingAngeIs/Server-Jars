@@ -28,6 +28,8 @@ replace(tick, 'dev = server.getPlayerList().getPlayerByName("Dev")',
               'dev = server.getPlayerList().getPlayerByName("Visitor")')
 replace(tick, 'begin(dev,visitor); else if (phase==2) resumed(dev,visitor);',
               'FullPackSession.begin(visitor); else if (phase==2) FullPackSession.resumed(visitor);')
+replace(tick,"                require(server.getTickCount()<=deadline",
+        "                FullPackSession.traceEscape(visitor);\n                require(server.getTickCount()<=deadline")
 replace(tick,"                started=true;","""                CertifiedJailSmoke.world=server.getWorldPath(LevelResource.ROOT);
                 if (Integer.getInteger("uq.playerOnlyPhase")==1 && !FullPackSession.prepared(visitor)) return;
                 started=true;""")

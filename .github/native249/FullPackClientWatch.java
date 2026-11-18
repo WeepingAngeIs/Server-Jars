@@ -96,6 +96,9 @@ public final class FullPackClientWatch {
         }
         String overlay=game.getOverlay()==null?"none":game.getOverlay().getClass().getName();
         String status="screen="+screen+" world="+(game.level!=null)+" player="+(game.player!=null)+" connection="+(game.getConnection()!=null)+" overlay="+overlay;
+        if (PlayerOnlyClient.killPackets>0)
+            status+=" kill_packets="+PlayerOnlyClient.killPackets+" respawn_packets="+PlayerOnlyClient.respawnPackets+
+                    " clear_ticks="+Math.min(20,PlayerOnlyClient.clearTicks)+" alive="+(game.player!=null && game.player.isAlive());
         long now=System.nanoTime();
         if (status.equals(previous) && now<next) return;
         next=now+20_000_000_000L;

@@ -56,6 +56,12 @@ public final class FullPackDiagnostics {
             probe(results,"native_accessory_and_vanilla_slots",port::current);
             probe(results,"native_origin_choices_effects_and_claims",()->new JailCertifiedOriginPort(
                     player,port,UUID.randomUUID(),null,null).current());
+            probe(results,"origin_neutral_base_and_modifiers",()->{
+                var origin=new JailCertifiedOriginPort(player,port,UUID.randomUUID(),null,null);
+                var method=JailCertifiedOriginPort.class.getDeclaredMethod("neutralBase");
+                method.setAccessible(true);
+                method.invoke(origin);
+            });
             probe(results,"death_providers_and_attached_state",()->call("JailPackState","verifyAttachments",
                     new Class<?>[]{ServerPlayer.class,CompoundTag.class},player,
                     player.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments")));

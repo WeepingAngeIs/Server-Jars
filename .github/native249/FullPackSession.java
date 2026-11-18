@@ -21,6 +21,27 @@ import static dev.unyielding.bundlesmoke.PlayerOnlySmoke.*;
 public final class FullPackSession {
     private FullPackSession() { }
     private static boolean observedFresh;
+    private static int lastEscapeSample=Integer.MIN_VALUE;
+
+    static void traceEscape(ServerPlayer player) throws Exception {
+        int tick=player.server.getTickCount();
+        if (lastEscapeSample!=Integer.MIN_VALUE && tick-lastEscapeSample<40) return;
+        lastEscapeSample=tick;
+        var stats=new com.google.gson.JsonObject();
+        stats.addProperty("server_tick",tick);
+        stats.addProperty("wait_ticks_remaining",deadline-tick);
+        stats.addProperty("replacement",player!=corpse);
+        stats.addProperty("active_connection_player",player.connection.player==player);
+        stats.addProperty("alive",player.isAlive());
+        stats.addProperty("health",player.getHealth());
+        stats.addProperty("deaths_since_escape",deaths(player)-firstDeaths);
+        Files.writeString(results.resolve("full249-escape-server.json"),stats.toString());
+    }
+
+    private static boolean creature(String id) {
+        String lower=id.toLowerCase(java.util.Locale.ROOT);
+        return lower.contains("cobble") || lower.contains("poke");
+    }
 
     static boolean prepared(ServerPlayer player) throws Exception {
         if (!observedFresh) {
@@ -125,17 +146,38 @@ public final class FullPackSession {
         var result = new CompoundTag();
         result.put("observed_neutral",data);
         result.put("shapes",shapes);
-        result.put("attributes",nbt.getList("attributes",Tag.TAG_COMPOUND).copy());
-        if (stage.equals("fresh")) {
+        var serializedAttributes=new net.minecraft.nbt.ListTag();
+        for (Tag item:nbt.getList("attributes",Tag.TAG_COMPOUND)) {
+            var row=((CompoundTag)item).copy();
+            if (creature(row.getString("id"))) continue;
+            row.getList("modifiers",Tag.TAG_COMPOUND).removeIf(mod->creature(((CompoundTag)mod).getString("id")));
+            serializedAttributes.add(row);
+        }
+        result.put("attributes",serializedAttributes);
+        {
             var live = new net.minecraft.nbt.ListTag();
+            var bases=new net.minecraft.nbt.ListTag();
+            var defaults=net.minecraft.world.entity.ai.attributes.DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);
+            var equipment=new java.util.HashSet<java.util.List<ResourceLocation>>();
+            for (var slot:net.minecraft.world.entity.EquipmentSlot.values())
+                player.getItemBySlot(slot).forEachModifier(slot,(attribute,modifier)->
+                        equipment.add(java.util.List.of(attribute.unwrapKey().orElseThrow().location(),modifier.id())));
             for (var row : player.getAttributes().save()) {
                 var attribute = ResourceLocation.parse(((CompoundTag)row).getString("id"));
+                if (creature(attribute.toString())) continue;
                 var holder = BuiltInRegistries.ATTRIBUTE.getHolder(attribute).orElseThrow();
                 var instance = player.getAttribute(holder);
                 if (instance == null) continue;
+                boolean known=defaults.hasAttribute(holder);
+                if (!known || Double.compare(defaults.getBaseValue(holder),instance.getBaseValue())!=0) {
+                    var base=new CompoundTag();
+                    base.putString("attribute",attribute.toString());
+                    base.putDouble("observed",instance.getBaseValue());
+                    if (known) base.putDouble("default",defaults.getBaseValue(holder));
+                    bases.add(base);
+                }
                 for (var modifier : instance.getModifiers()) {
-                    var namespaces = Set.of("spell_power","apotheosis","apothic_attributes");
-                    if (!namespaces.contains(attribute.getNamespace()) && !namespaces.contains(modifier.id().getNamespace())) continue;
+                    if (creature(modifier.id().toString()) || equipment.contains(java.util.List.of(attribute,modifier.id()))) continue;
                     var value = new CompoundTag();
                     value.putString("attribute",attribute.toString());
                     value.putString("id",modifier.id().toString());
@@ -145,6 +187,7 @@ public final class FullPackSession {
                 }
             }
             result.put("live_modifiers",live);
+            result.put("nondefault_base_attributes",bases);
         }
         var persisted = player.getPersistentData();
         var keyNames = new net.minecraft.nbt.ListTag();
@@ -243,9 +286,10 @@ public final class FullPackSession {
         corpse=player;
         firstDeaths=deaths(player);
         player.setInvulnerable(false);
-        CertifiedJailSmoke.cross();
-        require(!player.isAlive() && deaths(player)==firstDeaths+1, "Escape did not cause exactly one death");
         deadline=player.server.getTickCount()+2400;
+        CertifiedJailSmoke.cross();
+        traceEscape(player);
+        require(!player.isAlive() && deaths(player)==firstDeaths+1, "Escape did not cause exactly one death");
     }
     static void resumed(ServerPlayer player) throws Exception {
         snapshot(player,"reconnect");

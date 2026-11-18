@@ -17,6 +17,18 @@
       "id": "apotheosis:haven/max_eterna",
       "operation": "ADD_VALUE",
       "amount": -70.0
+    },
+    {
+      "attribute": "ars_nouveau:ars_nouveau.perk.max_mana",
+      "id": "ars_nouveau:max_mana_mod",
+      "operation": "ADD_VALUE",
+      "amount": 100.0
+    },
+    {
+      "attribute": "ars_nouveau:ars_nouveau.perk.mana_regen",
+      "id": "ars_nouveau:max_regen_mod",
+      "operation": "ADD_VALUE",
+      "amount": 5.0
     }
   ],
   "attachments": {

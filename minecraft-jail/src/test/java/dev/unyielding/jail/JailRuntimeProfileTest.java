@@ -70,6 +70,18 @@ class JailRuntimeProfileTest {
         assertFalse(JailPackState.neutral(reviewed,"carryon:carry_on_data",carry));
     }
 
+    @Test void onlyExactStarterArsModifiersMatchTheDeclaredTuples() {
+        String regen="ars_nouveau:ars_nouveau.perk.mana_regen", max="ars_nouveau:ars_nouveau.perk.max_mana";
+        String regenId="ars_nouveau:max_regen_mod",maxId="ars_nouveau:max_mana_mod";
+        assertTrue(JailPackState.reviewedIntrinsic(regen,regenId,5,"ADD_VALUE"));
+        assertTrue(JailPackState.reviewedIntrinsic(max,maxId,100,"ADD_VALUE"));
+        assertFalse(JailPackState.reviewedIntrinsic(max,regenId,5,"ADD_VALUE"));
+        assertFalse(JailPackState.reviewedIntrinsic(regen,maxId,100,"ADD_VALUE"));
+        assertFalse(JailPackState.reviewedIntrinsic(regen,regenId,5.00001,"ADD_VALUE"));
+        assertFalse(JailPackState.reviewedIntrinsic(regen,regenId,5,"ADD_MULTIPLIED_BASE"));
+        assertFalse(JailPackState.reviewedIntrinsic(max,"ars_nouveau:equipment",100,"ADD_VALUE"));
+    }
+
     @Test void manaRegenCannotConcealProgressEquipmentOrOutOfRangeCharge() throws Exception {
         String key="ars_nouveau:mana_cap";
         var schema=net.minecraft.nbt.TagParser.parseTag("{book_tier:0,glyph:0,max:100,reserved:0.0f}");
