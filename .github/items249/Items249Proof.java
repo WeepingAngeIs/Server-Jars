@@ -19,12 +19,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.p3pp3rf1y.sophisticatedbackpacks.backpack.BackpackStorage;
 import net.p3pp3rf1y.sophisticatedbackpacks.backpack.wrapper.BackpackWrapper;
 import static dev.unyielding.bundlesmoke.PlayerOnlySmoke.*;
 
 final class Items249Proof {
     private static final int CARRIED=12,ORDINARY=13;
+    private static IItemHandler carriedHandlerBeforeAdmission;
     private Items249Proof() {}
     private static Container back(ServerPlayer player) throws Exception {
         Object cap=((java.util.Optional<?>)AccessoryCustodyPort.call("io.wispforest.accessories.api.AccessoriesCapability",null,
@@ -43,20 +45,39 @@ final class Items249Proof {
         mark.putUUID("fixture",UUID.randomUUID());
         contents.set(DataComponents.CUSTOM_DATA,CustomData.of(mark));
         contents.set(DataComponents.CUSTOM_NAME,Component.literal("Inside "+source));
-        wrapper.getInventoryHandler().setStackInSlot(4,contents);
+        var inventory=wrapper.getInventoryHandler();
+        inventory.setStackInSlot(4,contents);
+        if (source.equals("carried")) carriedHandlerBeforeAdmission=inventory;
         var id=wrapper.getContentsUuid().orElseThrow();
-        var nativeData=BackpackStorage.get(p.server.overworld()).getBackpackContents(id).orElseThrow().copy();
+        var storage=BackpackStorage.get(p.server.overworld());
+        var nativeData=storage.getBackpackContents(id).orElseThrow().copy();
         require(!nativeData.isEmpty() && ItemStack.matches(contents,wrapper.getInventoryHandler().getStackInSlot(4)),"Native item failed to fill");
         var golden=new CompoundTag();
         golden.putUUID("id",id);
         golden.put("stack",stack.save(p.registryAccess()));
         golden.put("native_store",nativeData);
+        var accessLog=storage.getAccessLogs().get(id);
+        if (accessLog!=null) golden.put("access_log",accessLog.serializeToNBT().copy());
         golden.put("inside",contents.save(p.registryAccess()));
         Files.write(evidence(p,"bag-"+source),OriginCustodyPort.encode(golden));
         return stack;
     }
     private static CompoundTag golden(ServerPlayer p,String source) throws Exception {
         return OriginCustodyPort.decode(Files.readAllBytes(evidence(p,"bag-"+source)));
+    }
+    static boolean matchesHeldWalletJournal(ServerPlayer p,byte[] journal,byte[] original) throws Exception {
+        var expected=OriginCustodyPort.decode(original);
+        require(!expected.contains("backpack_records"),"Unexpected backing in the physical-slot reference");
+        var records=new CompoundTag();
+        for (String name:List.of("carried","worn")) {
+            var gold=golden(p,name);
+            var row=new CompoundTag();
+            row.put("contents",gold.getCompound("native_store"));
+            if (gold.contains("access_log")) row.put("access_log",gold.getCompound("access_log"));
+            records.put(gold.getUUID("id").toString(),row);
+        }
+        expected.put("backpack_records",records);
+        return expected.equals(OriginCustodyPort.decode(journal));
     }
     static void seed(ServerPlayer visitor) throws Exception {
         var carried=createBag(visitor,"backpack","carried",Items.DIAMOND,13);
@@ -127,6 +148,16 @@ final class Items249Proof {
     }
     static void held(ServerPlayer p,String phase) throws Exception {
         require(p.getInventory().getItem(CARRIED).isEmpty() && back(p).getItem(0).isEmpty(),"Bag remains accessible during custody");
+        if (phase.equals("admission")) {
+            require(carriedHandlerBeforeAdmission!=null,"Missing original open backpack handler");
+            var proposed=new ItemStack(Items.GOLD_INGOT,9);
+            var expectedRemainder=proposed.copy();
+            require(carriedHandlerBeforeAdmission.getStackInSlot(4).isEmpty()
+                    && carriedHandlerBeforeAdmission.extractItem(4,1,false).isEmpty()
+                    && ItemStack.matches(carriedHandlerBeforeAdmission.insertItem(5,proposed,false),expectedRemainder),
+                    "The previously obtained native handler still exposes the held backpack");
+            flag("cached_native_handler_denied_without_mutating_backpack");
+        }
         Object unavailable=Class.forName("net.p3pp3rf1y.sophisticatedbackpacks.backpack.wrapper.IBackpackWrapper$Noop").getField("INSTANCE").get(null);
         var storage=BackpackStorage.get(p.server.overworld());
         for (String name:List.of("carried","worn")) {

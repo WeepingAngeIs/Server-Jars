@@ -30,13 +30,17 @@ class JailBackpacksTest {
         CompoundTag records=JailBackpacks.fromDisk(input,Set.of(BAG));
         CompoundTag snapshot=JailNbt.decode(JailNbt.encode(records));
         assertEquals(Set.of(BAG),JailBackpacks.ids(JailBackpacks.digests(snapshot)));
-        assertEquals(inventory(13),snapshot.getCompound(BAG.toString()));
+        assertEquals(inventory(13),snapshot.getCompound(BAG.toString()).getCompound("contents"));
         assertEquals(unchanged,input);
         var original=JailBackpacks.digests(records);
         var amountChanged=JailBackpacks.fromDisk(file(row(inventory(12))),Set.of(BAG));
         assertNotEquals(original,JailBackpacks.digests(amountChanged));
-        snapshot.getCompound(BAG.toString()).putString("display","different");
+        snapshot.getCompound(BAG.toString()).getCompound("contents").putString("display","different");
         assertNotEquals(original,JailBackpacks.digests(snapshot));
+        CompoundTag log=new CompoundTag();log.putUUID("backpackUuid",BAG);log.putString("playerName","Prisoner");
+        ListTag logs=new ListTag();logs.add(log);input.put("accessLogRecords",logs);
+        assertNotEquals(original,JailBackpacks.digests(JailBackpacks.fromDisk(input,Set.of(BAG))));
+        logs.add(log.copy());assertThrows(IOException.class,()->JailBackpacks.fromDisk(input,Set.of(BAG)));
     }
     @Test void missingDuplicatedAndMalformedBackingsAreRefused() {
         assertThrows(IOException.class,()->JailBackpacks.fromDisk(file(),Set.of(BAG)));

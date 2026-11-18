@@ -18,6 +18,7 @@ import net.minecraft.world.level.storage.LevelResource;
 public final class JailBackpacks {
     static final String RECORDS = "backpack_records";
     static final String STORAGE = "net.p3pp3rf1y.sophisticatedbackpacks.backpack.BackpackStorage";
+    private static final String LOG_RECORD = "net.p3pp3rf1y.sophisticatedbackpacks.backpack.AccessLogRecord";
     static final String COMPONENT = "sophisticatedcore:storage_uuid";
     private static final ResourceLocation UUID_COMPONENT = ResourceLocation.parse(COMPONENT);
     private static final String ITEM = "net.p3pp3rf1y.sophisticatedbackpacks.backpack.BackpackItem";
@@ -92,14 +93,21 @@ public final class JailBackpacks {
         CompoundTag result = new CompoundTag();
         if (ids.isEmpty()) return result;
         Object storage = JailHumanAudit.call(STORAGE,null,"get",new Class<?>[]{ServerLevel.class},player.server.overworld());
+        var accessLogs=(Map<?,?>)JailHumanAudit.call(STORAGE,storage,"getAccessLogs");
         for (UUID id : ids) {
             Object row = JailHumanAudit.call(STORAGE,storage,"getBackpackContents",new Class<?>[]{UUID.class},id);
             if (!(row instanceof Optional<?> option) || !(option.orElse(null) instanceof CompoundTag record))
                 throw new IOException("Missing native backpack backing record for "+id);
-            var accessLogs=(Map<?,?>)JailHumanAudit.call(STORAGE,storage,"getAccessLogs");
             if (!persistsOnLoad(record,accessLogs.containsKey(id)))
                 throw new IOException("Provider would discard this unclaimed empty backpack backing on restart");
-            result.put(id.toString(),record.copy());
+            CompoundTag evidence=new CompoundTag();evidence.put("contents",record.copy());
+            Object log=accessLogs.get(id);
+            if(log!=null){
+                var saved=(CompoundTag)JailHumanAudit.call(LOG_RECORD,log,"serializeToNBT");
+                if(!saved.hasUUID("backpackUuid")||!id.equals(saved.getUUID("backpackUuid")))throw new IOException("Foreign backpack metadata");
+                evidence.put("access_log",saved);
+            }
+            result.put(id.toString(),evidence);
         }
         return result;
     }
@@ -120,10 +128,23 @@ public final class JailBackpacks {
             UUID id = row.getUUID("uuid");
             if (ids.contains(id)) {
                 if (result.contains(id.toString())) throw new IOException("Duplicate saved backpack identity");
-                result.put(id.toString(),row.getCompound("contents"));
+                CompoundTag entry=new CompoundTag();entry.put("contents",row.getCompound("contents"));
+                result.put(id.toString(),entry);
             }
         }
         if (result.size()!=ids.size()) throw new IOException("Backpack backing is absent from the saved provider data");
+        if(data.contains("accessLogRecords")&&!data.contains("accessLogRecords",Tag.TAG_LIST))
+            throw new IOException("Malformed native backpack access logs");
+        for(Tag raw:data.getList("accessLogRecords",Tag.TAG_COMPOUND)){
+            var log=(CompoundTag)raw;
+            if(!log.hasUUID("backpackUuid"))throw new IOException("Malformed native backpack metadata");
+            UUID id=log.getUUID("backpackUuid");
+            if(ids.contains(id)){
+                var entry=result.getCompound(id.toString());
+                if(entry.contains("access_log"))throw new IOException("Duplicate native backpack access logs");
+                entry.put("access_log",log);
+            }
+        }
         return result;
     }
 
@@ -234,6 +255,13 @@ public final class JailBackpacks {
         return BackpackClaims.get(id)!=null;
     }
     public static boolean locked(ItemStack stack){return BackpackClaims.any()&&locked(identity(stack));}
+
+    public static UUID handlerIdentity(Object owner) {
+        String provider="net.p3pp3rf1y.sophisticatedbackpacks.backpack.wrapper.BackpackWrapper";
+        if(!owner.getClass().getName().equals(provider))return null;
+        try{return identity((ItemStack)JailHumanAudit.call(provider,owner,"getBackpack"));}
+        catch(IOException bad){throw new IllegalStateException("Native backpack inventory owner is unavailable",bad);}
+    }
 
     public static Object unavailableWrapper() {
         try {return Class.forName("net.p3pp3rf1y.sophisticatedbackpacks.backpack.wrapper.IBackpackWrapper$Noop")

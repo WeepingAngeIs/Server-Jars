@@ -65,3 +65,5 @@ checks=java/"CertifiedJailSmoke.java"
 replace(checks,"getValue()==20,","getValue()==Items249Food.expectedHealth(target,20),")
 replace(checks,"getValue()==22&&JailData.get","getValue()==Items249Food.expectedHealth(target,22)&&JailData.get")
 replace(checks,"returned(22);","returned(Items249Food.expectedHealth(target,22));")
+replace(java/"PackedWalletProof.java","Arrays.equals(record.snapshot(),CertifiedJailSmoke.original)",
+        "Items249Proof.matchesHeldWalletJournal(p,record.snapshot(),CertifiedJailSmoke.original)")
