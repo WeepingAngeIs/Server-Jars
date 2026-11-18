@@ -85,6 +85,13 @@ def check_alive(proc, name, log):
     if proc.poll() is not None:
         raise RuntimeError(f"{name} exited with {proc.returncode}. Read {log.name}")
 
+def tail(path, limit=24576):
+    if not path.exists():
+        return ""
+    with path.open("rb") as data:
+        data.seek(max(0,path.stat().st_size-limit))
+        return data.read().decode(errors="replace")
+
 for phase in (1,2):
     logs=report/f"full249-phase{phase}-logs"
     logs.mkdir()
@@ -93,7 +100,7 @@ for phase in (1,2):
     with (logs/"server.log").open("w") as serverlog,(logs/"client.log").open("w") as clientlog:
         srv=cli=None
         try:
-            srv=subprocess.Popen(["java","-Xms512m","-Xmx4G","@libraries/net/neoforged/neoforge/21.1.249/unix_args.txt","nogui"],
+            srv=subprocess.Popen(["java","-Xms512m","-Xmx3G","@libraries/net/neoforged/neoforge/21.1.249/unix_args.txt","nogui"],
                                  cwd=server,env=env,stdin=subprocess.PIPE,stdout=serverlog,stderr=subprocess.STDOUT,
                                  start_new_session=True,text=True)
             for attempt in range(450):
@@ -109,6 +116,20 @@ for phase in (1,2):
             for attempt in range(600):
                 check_alive(srv,"Server",logs/"server.log")
                 check_alive(cli,"Client",logs/"client.log")
+                if attempt % 15 == 0:
+                    client_tail=tail(logs/"client.log")
+                    game_tail=tail(client/"logs/latest.log")
+                    live=(report/f"client249-phase{phase}-status.txt")
+                    screen=live.read_text().strip() if live.exists() else "waiting for first observed client tick"
+                    print(f"Full .249 phase {phase} at {2*attempt}s: {screen}",flush=True)
+                    for message in ("ModLoadingErrorScreen", "LoadingErrorScreen", "ModLoadingFailedScreen",
+                                    "Failed to complete lifecycle event CONSTRUCT", "Crash report saved to:", "java.lang.OutOfMemoryError"):
+                        if message in client_tail or message in game_tail or message in screen:
+                            raise RuntimeError("Client mod loading failure: "+message+"; see full client log")
+                    if "DisconnectedScreen" in screen or "QuickPlayErrorScreen" in screen:
+                        raise RuntimeError("Official client disconnected or failed Quick Play: "+screen)
+                    if "Visitor lost connection:" in tail(logs/"server.log"):
+                        raise RuntimeError("Official client disconnected before fixture completion")
                 if marker.exists():
                     value=marker.read_text()
                     if value.startswith("failed:"):
@@ -138,6 +159,11 @@ for phase in (1,2):
     proof=json.loads((report/f"center-phase{phase}.json").read_text())
     assert proof["commit"]==os.environ["GITHUB_SHA"] and proof["jail_sha256"]==digest(candidate)
     assert proof["actual_neoforge_21_1_249"] and proof["companion_sha256"]==digest(companion)
+    if phase==1:
+        client_view=json.loads((report/"player-only-client-Visitor-1.json").read_text())
+        assert client_view["respawn_actions_sent"]==0 and client_view["kill_packets"]==client_view["respawn_packets_after_kill"]==1
+        respawn, = client_view["verified_respawns"]
+        assert respawn["alive"] and respawn["no_modal_ticks"]>=20 and respawn["dead_player_object"]!=respawn["alive_player_object"]
     for check in (["refused_equipped_wallet","refused_multiple_wallets","refused_auto_exchange_wallet","refused_twilight_pending_charm_inventory",
                    "preview_place_undo_and_six_intact_cells","escape_native_respawn_in_cell_six_without_client_action"]
                   if phase==1 else ["occupied_return_kept_conflict_and_escrow","full_wallet_and_equipment_return_after_restart"]):
