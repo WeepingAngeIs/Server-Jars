@@ -204,7 +204,7 @@ jobs:
           python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
       - name: Admit a packed wallet and verify the automatic escape respawn
         timeout-minutes: 30
-        run: python3 .github/native249/full_run.py candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar --phase 1
+        run: bash .github/native249/game-scope.sh 1 candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar
       - name: Save first-session evidence before the restart
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -214,10 +214,11 @@ jobs:
             dist/packaged-smoke/*.json
             dist/packaged-smoke/client249-phase1-status.txt
             dist/packaged-smoke/full249-phase1-logs
+            dist/packaged-smoke/full249-scope-logs
           retention-days: 10
       - name: Reconnect and verify the exact wallet and inventory return
         timeout-minutes: 30
-        run: python3 .github/native249/full_run.py candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar --phase 2
+        run: bash .github/native249/game-scope.sh 2 candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar
       - name: Preserve server and client diagnostics
         if: always()
         run: |
