@@ -69,6 +69,27 @@ public final class FullPackSession {
         Files.write(evidence(player,"equipment"),port.current().inventory());
     }
 
+    private static void refuseFoodHistory(ServerPlayer player,String name) throws Exception {
+        var board=player.server.getScoreboard();
+        var objective=board.getObjective(name);
+        require(objective!=null,"Published food datapack did not create objective "+name);
+        var original=board.getPlayerScoreInfo(player,objective);
+        require(original==null || original.value()==0,"Newly created player has active "+name+" progression");
+        boolean absent=original==null;
+        var score=board.getOrCreatePlayerScore(player,objective);
+        score.set(17);
+        try {
+            Custody249Proof.refused(player,"nonzero_"+name);
+            require(board.getObjective(name)==objective && board.getPlayerScoreInfo(player,objective).value()==17,
+                    "Refused custody changed the food objective or its score");
+        } finally {
+            if (absent) board.resetSinglePlayerScore(player,objective);
+            else score.set(0);
+        }
+        var restored=board.getPlayerScoreInfo(player,objective);
+        require(absent ? restored==null : restored!=null && restored.value()==0,"Fixture score was not restored");
+    }
+
     private static final Set<String> OBSERVED = Set.of(
         "aether:aether_player", "apotheosis:radial_mining_mode", "apotheosis:tier_augments_applied",
         "apotheosis:world_tier", "apothic_attributes:cooldowns", "ars_nouveau:mana_cap",
@@ -192,6 +213,8 @@ public final class FullPackSession {
         JailConfig.JAIL_PACKED_WALLETS.set(true);
         JailConfig.JAIL_PACKED_WALLETS.save();
         Custody249Proof.refusals(player);
+        refuseFoodHistory(player,"so_bonus");
+        refuseFoodHistory(player,"so_cycle");
         var persistent = player.getPersistentData();
         boolean alreadyPersisted = persistent.contains("PlayerPersisted");
         var original = persistent.getCompound("PlayerPersisted").copy();
