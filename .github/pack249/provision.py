@@ -78,7 +78,8 @@ def populate(dest, side, cache):
     mods.mkdir(exist_ok=True)
     excluded = json.loads((ROOT / "server-exclusions.json").read_text())
     # Simply More declares Simply Tooltips required on BOTH sides in its shipped NeoForge metadata.
-    server_dependencies = {"SimplyTooltips-neoforge-0.1.5.jar"}
+    # The exact client also requires the four Party Extras preset channels during login.
+    server_dependencies = {"SimplyTooltips-neoforge-0.1.5.jar", "cobblemon_party_extras-neoforge-1.8.15.jar"}
     selected = [r for r in PACK["mods"] if side == "client" or
                 (r["side"] != "unsupported" or r["name"] in server_dependencies) and r["name"] not in excluded]
     def install(row):
