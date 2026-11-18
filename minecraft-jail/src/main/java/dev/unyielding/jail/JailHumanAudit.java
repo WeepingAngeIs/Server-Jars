@@ -21,6 +21,7 @@ final class JailHumanAudit {
     record Result(ResourceLocation layer,ResourceLocation human,String runtime,CompoundTag slots){}
     private record Hashed(Object key,long size,long modified,String hash){}
     private static final Map<Path,Hashed> hashes=new HashMap<>();
+    private static final Map<String,String> embeddedHashes=new HashMap<>();
     static Object call(String type,Object target,String method,Class<?>[] signature,Object...args)throws IOException {try{return Class.forName(type).getMethod(method,signature).invoke(target,args);}catch(ReflectiveOperationException|RuntimeException e){throw new IOException("Unsupported audited API: "+type+"."+method,e);}}
     static Object call(String type,Object target,String method)throws IOException{return call(type,target,method,new Class<?>[0]);}
     static Object singleton(String type)throws IOException{try{return Class.forName(type).getField("INSTANCE").get(null);}catch(ReflectiveOperationException e){throw new IOException("Missing audited registry",e);}}
@@ -50,6 +51,9 @@ final class JailHumanAudit {
         certificate.getAsJsonArray("sha512").forEach(e->allowed.add(e.getAsString()));
         List<String> files=new ArrayList<>(), rows=new ArrayList<>();
         String unsupported=null, kernel=null;
+        // The prior certificate and the bounded 249 fixture use the literal archive bytes.
+        boolean full249 = ModList.get().isLoaded("twilightforest") && ModList.get().getMods().stream()
+                .anyMatch(m -> m.getModId().equals("neoforge") && m.getVersion().toString().equals(JailRuntimeProfile.PACK_KERNEL));
         Path own=ModList.get().getModFileById(MinecraftJail.MODID).getFile().getFilePath().toAbsolutePath().normalize();
         if(!Files.isRegularFile(own)||!own.equals(own.toRealPath()))throw new IOException("Jail implementation must be an exact regular artifact");
         rows.add(JailArtifactBinding.row(predecessor==null?hash(own):predecessor));
@@ -65,7 +69,16 @@ final class JailHumanAudit {
             if(id.equals("neoforge")){kernel=version;rows.add(id+"="+version);continue;}
             if(!Files.isRegularFile(path))throw new IOException("Uncertified mod path "+id+" "+path);
             String digest=hash(path);
-            String row=id+"="+version+":"+digest;
+            String identity=digest;
+            if (full249 && RuntimeFileIdentity.generated(id)) {
+                String cacheKey=id+":"+digest;
+                identity=embeddedHashes.get(cacheKey);
+                if (identity==null) {
+                    identity=RuntimeFileIdentity.digest(id,path,digest);
+                    embeddedHashes.put(cacheKey,identity);
+                }
+            }
+            String row=id+"="+version+":"+identity;
             files.add(row);
             if(unsupported==null&&!allowed.contains(digest))unsupported=row;
         }

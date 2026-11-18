@@ -15,7 +15,10 @@ java -jar installer.jar --installServer > "$evidence/install.log" 2>&1
 if [[ "${PACK249_INSTALL_ONLY:-0}" == 1 ]]; then exit 0; fi
 mkdir -p probe/META-INF
 # Compile the read-only census against the same actual FML/NeoForge jars used by the server.
-javac -proc:none -cp "$(find libraries -name '*.jar' | paste -sd:)" -d probe "$src/PackCensus.java"
+# Package a private copy so census can run without Jail and does not shadow its classes.
+sed 's/^package dev.unyielding.jail;/package dev.unyielding.pack249;/' \
+    "$root/minecraft-jail/src/main/java/dev/unyielding/jail/RuntimeFileIdentity.java" > RuntimeFileIdentity.java
+javac -proc:none -cp "$(find libraries -name '*.jar' | paste -sd:)" -d probe "$src/PackCensus.java" "$src/SyntheticPlayerProjection.java" RuntimeFileIdentity.java
 cp "$src/probe.mods.toml" probe/META-INF/neoforge.mods.toml
 jar --create --file mods/pack249-census.jar -C probe .
 if [[ -n "$candidate" ]]; then cp "$candidate" mods/; fi
