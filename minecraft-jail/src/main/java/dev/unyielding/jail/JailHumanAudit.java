@@ -44,18 +44,31 @@ final class JailHumanAudit {
     }
     private static String runtimeWithArtifact(ServerPlayer p,String predecessor)throws IOException {
         JsonObject certificate;try(var stream=JailHumanAudit.class.getResourceAsStream("/assets/unyieldingquests/jail-certified-runtime.json")){if(stream==null)throw new IOException("Audit certificate missing");certificate=JsonParser.parseReader(new InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();}
-        Set<String> allowed=new HashSet<>();certificate.getAsJsonArray("sha512").forEach(e->allowed.add(e.getAsString()));List<String> rows=new ArrayList<>();
+        Set<String> allowed=new HashSet<>();
+        certificate.getAsJsonArray("sha512").forEach(e->allowed.add(e.getAsString()));
+        List<String> files=new ArrayList<>(), rows=new ArrayList<>();
+        String unsupported=null, kernel=null;
         Path own=ModList.get().getModFileById(MinecraftJail.MODID).getFile().getFilePath().toAbsolutePath().normalize();
         if(!Files.isRegularFile(own)||!own.equals(own.toRealPath()))throw new IOException("Jail implementation must be an exact regular artifact");
         rows.add(JailArtifactBinding.row(predecessor==null?hash(own):predecessor));
         for(var mod:ModList.get().getMods()){
-            String id=mod.getModId(),version=mod.getVersion().toString();Path path=mod.getOwningFile().getFile().getFilePath().toAbsolutePath().normalize();
+            String id=mod.getModId(),version=mod.getVersion().toString();
+            Path path=mod.getOwningFile().getFile().getFilePath().toAbsolutePath().normalize();
             if(path.equals(own))continue;
             if(id.equals("uq_bundle_smoke")&&disposable(p)){rows.add("disposable-harness");continue;}
-            if(id.equals("minecraft")||id.equals("neoforge")){if(!certificate.get(id).getAsString().equals(version))throw new IOException("Uncertified kernel "+id+"="+version);rows.add(id+"="+version);continue;}
-            if(!Files.isRegularFile(path))throw new IOException("Uncertified mod path "+id+" "+path);String digest=hash(path);
-            if(!allowed.contains(digest))throw new IOException("Uncertified mod "+id+"="+version+" sha512="+digest);rows.add(id+"="+version+":"+digest);
+            if(id.equals("minecraft")){
+                if(!certificate.get("minecraft").getAsString().equals(version))throw new IOException("Uncertified Minecraft "+version);
+                rows.add(id+"="+version);continue;
+            }
+            if(id.equals("neoforge")){kernel=version;rows.add(id+"="+version);continue;}
+            if(!Files.isRegularFile(path))throw new IOException("Uncertified mod path "+id+" "+path);
+            String digest=hash(path);
+            String row=id+"="+version+":"+digest;
+            files.add(row);
+            if(unsupported==null&&!allowed.contains(digest))unsupported=row;
         }
+        JailRuntimeProfile.check(kernel,certificate.get("neoforge").getAsString(),files,unsupported);
+        rows.addAll(files);
         Collections.sort(rows);return HexFormat.of().formatHex(JailOriginTransaction.hash(String.join("\n",rows).getBytes(java.nio.charset.StandardCharsets.UTF_8)));
     }
     @SuppressWarnings("unchecked") static Result inspect(ServerPlayer p)throws IOException {

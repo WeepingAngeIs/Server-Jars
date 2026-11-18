@@ -1,0 +1,7 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="uq_pack249_census"
+version="1.0.0"
+displayName="Disposable pack census"
