@@ -29,3 +29,7 @@ jar {
     exclude '**/devtest/**', '**/legacySmoke/**'
     manifest { attributes('Implementation-Title': 'Minecraft Jail', 'Implementation-Version': project.version) }
 }
+
+// The geometry and migration tests use native BlockPos and NBT serialization.
+sourceSets.test.compileClasspath += sourceSets.main.compileClasspath
+sourceSets.test.runtimeClasspath += sourceSets.main.compileClasspath
