@@ -1,1 +1,4 @@
-{}
+{
+  "ssrcamerafixes-neoforge-1.21.1-2.1.1.jar": "Dedicated-server classloading of net.minecraft.client from the mod's startup (hosted run 44239698536).",
+  "distraction_free_recipes-neoforge-1.2.2-1.21.1.jar": "Dedicated-server classloading of net.minecraft.client from the mod's startup (hosted run 44239698536)."
+}

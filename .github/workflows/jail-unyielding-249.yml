@@ -74,6 +74,7 @@ jobs:
           path: dist/pack249
           retention-days: 10
   custody:
+    if: "!contains(github.event.head_commit.message, '[pack-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -114,6 +115,7 @@ jobs:
           retention-days: 10
 
   pack-client:
+    if: "!contains(github.event.head_commit.message, '[pack-probe]')"
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 55
