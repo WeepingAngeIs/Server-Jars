@@ -2,7 +2,7 @@ name: Detention center verification
 on:
   push:
     branches: [codex/jail-detention-center]
-    paths: ['minecraft-jail/**', '.github/occupied-migration/**', '.github/workflows/jail-detention.yml']
+    paths: ['minecraft-jail/**', '.github/occupied-migration/**', '.github/detention/**', '.github/workflows/jail-detention.yml']
 permissions:
   contents: read
   actions: read
@@ -48,3 +48,68 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+  runtime:
+    name: Native ${{ matrix.suite }}
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [migration, center]
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-migration-build-${{ github.sha }}
+          path: candidate/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-production-build-7b2f6b34412403b0839f1be9b82e136d1d893b20
+          run-id: 44099299150
+          github-token: ${{ github.token }}
+          path: old-evidence/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        if: matrix.suite == 'migration'
+        with:
+          name: jail-migration-build-0bd7f3297d47b7de5e17ae79cba3b95c52b14f97
+          run-id: 44120884857
+          github-token: ${{ github.token }}
+          path: attached/
+      - name: Prepare disposable exact-artifact runtime and unchanged companion
+        run: |
+          set -euo pipefail
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp old-evidence/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
+          cp candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.1.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          python3 .github/scripts/fetch-build-dependencies.py
+          if [[ '${{ matrix.suite }}' == migration ]]; then python3 .github/occupied-migration/prepare.py; else python3 .github/detention/center.py; fi
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+      - name: Exact predecessor occupied save, interruptions, tampering, restart, native escape and return
+        if: matrix.suite == 'migration'
+        env:
+          MIGRATION_CANDIDATE: candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.1.jar
+          MIGRATION_PREDECESSOR: attached/dist/migration-build/Minecraft-Jail-1.2.0.jar
+          MIGRATION_OLD_SHA256: 5e2b40e36f2c6036005bed46c62f5da6b5faa7b8f77becec2ec334aa83990cd8
+        run: bash .github/occupied-migration/run.sh
+      - name: Numbered cells, occupancy, custody and automatic respawn
+        if: matrix.suite == 'center'
+        run: bash .github/detention/center.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: jail-detention-${{ matrix.suite }}-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/
+            dist/packaged-harness/src/
+          if-no-files-found: error
+          retention-days: 30

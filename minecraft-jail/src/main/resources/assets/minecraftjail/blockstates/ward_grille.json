@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=z": {
+      "model": "minecraftjail:block/ward_grille"
+    },
+    "axis=x": {
+      "model": "minecraftjail:block/ward_grille",
+      "y": 90
+    }
+  }
+}

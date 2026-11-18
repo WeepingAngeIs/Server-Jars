@@ -36,7 +36,7 @@ final class JailHumanAudit {
     }
     static String runtime(ServerPlayer p)throws IOException {return runtimeWithArtifact(p,null);}
     /** Migration proof only: the dependency certificate is checked exactly as for the current artifact. */
-    static String predecessorRuntime(ServerPlayer p)throws IOException {return runtimeWithArtifact(p,JailRuntimeMigration.OLD_SHA512);}
+    static String predecessorRuntime(ServerPlayer p,String predecessor)throws IOException {return runtimeWithArtifact(p,predecessor);}
     static String ownArtifact()throws IOException {
         Path own=ModList.get().getModFileById(MinecraftJail.MODID).getFile().getFilePath().toAbsolutePath().normalize();
         if(!Files.isRegularFile(own,LinkOption.NOFOLLOW_LINKS)||!own.equals(own.toRealPath()))throw new IOException("Unsafe implementation artifact");

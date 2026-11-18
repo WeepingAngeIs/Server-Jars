@@ -52,11 +52,19 @@ public final class JailCustodyService {
     public static JailCustodyLedger ledger(MinecraftServer server)throws IOException {if(!server.isSameThread())throw new IOException("Custody action off server thread");Context c=context(server);if(c.unavailable!=null||c.ledger!=null&&!c.ledger.healthy())throw new IOException("Custody unavailable; preserve records and restore audited history: "+c.unavailable);if(c.ledger==null)throw new IOException("Custody index not initialized; console must explicitly initialize or recover history");return c.ledger;}
     public static boolean blocked(MinecraftServer server,UUID owner){if(server==null)return true;Context c=context(server);return JailIntegrated.blocked(server,owner)||c.unavailable!=null||c.ledger!=null&&(!c.ledger.healthy()||c.ledger.outstanding(owner));}
     public static boolean quarantined(ServerPlayer player){return player.server!=null&&blocked(player.server,player.getUUID());}
+    static boolean anyOutstanding(MinecraftServer server)throws IOException {
+        Context c=context(server);
+        if(c.ledger==null && c.unavailable==null && !JailData.get(server).integratedCustodyInitialized()
+                && Files.notExists(root(server),LinkOption.NOFOLLOW_LINKS))return false;
+        var ledger=ledger(server);
+        ledger.verifyDisk();
+        return ledger.list().stream().anyMatch(b->b.state()!=JailCustodyLedger.State.RELEASED);
+    }
     private static boolean manager(ServerPlayer player){return !quarantined(player)&&JailCommands.mayManage(player.createCommandSourceStack());}
     public static boolean physical(MinecraftServer server,JailCustodyLedger.Binding b){var a=b.anchor();ServerLevel level=server.getLevel(ResourceKey.create(Registries.DIMENSION,ResourceLocation.parse(a.dimension())));BlockPos pos=new BlockPos(a.x(),a.y(),a.z());return level!=null&&level.hasChunkAt(pos)&&level.getBlockState(pos).is(dev.unyielding.jail.JailRegistration.CUSTODY_VAULT.get());}
     public static boolean valid(ServerPlayer player,JailCustodyLedger.Binding selected){
         if(!player.server.isSameThread()||!manager(player)||player.hasDisconnected()||!player.isAlive())return false;
-        try{var current=ledger(player.server).get(selected.id());if(current==null||current.revision()!=selected.revision()||!current.owner().equals(selected.owner())||!physical(player.server,current))return false;
+        try{var index=ledger(player.server);var current=index.at(selected.anchor());if(current==null||!current.id().equals(selected.id())||current.revision()!=selected.revision()||!current.owner().equals(selected.owner())||!physical(player.server,current))return false;
             var a=current.anchor();return player.level().dimension().location().toString().equals(a.dimension())&&player.distanceToSqr(a.x()+0.5,a.y()+0.5,a.z()+0.5)<=64&&claim(player,(ServerLevel)player.level(),new BlockPos(a.x(),a.y(),a.z()));
         }catch(IOException|RuntimeException bad){return false;}
     }
@@ -77,7 +85,7 @@ public final class JailCustodyService {
     }
     private static VerifiedAdapter adapter(MinecraftServer server,JailCustodyLedger.Binding b)throws IOException {items(server,b);var adapter=fixtureFactory==null?JailIntegrated.adapter(server,b):fixtureFactory.open(server,b);if(adapter==null||adapter.descriptor()==null||adapter.descriptor().isBlank())throw new IOException("Unsupported custody adapter");return adapter;}
     public static void open(ServerPlayer player,BlockPos pos){
-        try{if(!manager(player))throw new IOException("Administrator permission required; quarantine has no player bypass");var ledger=ledger(player.server);var matches=ledger.list().stream().filter(b->b.anchor().equals(new JailCustodyLedger.Anchor(player.level().dimension().location().toString(),pos.getX(),pos.getY(),pos.getZ()))).toList();if(matches.size()!=1)throw new IOException("Unbound custody interface; no inventory is stored here");var b=matches.getFirst();if(!valid(player,b))throw new IOException("Interface, range, permissions or claim access changed");
+        try{if(!manager(player))throw new IOException("Administrator permission required; quarantine has no player bypass");var ledger=ledger(player.server);var b=ledger.at(new JailCustodyLedger.Anchor(player.level().dimension().location().toString(),pos.getX(),pos.getY(),pos.getZ()));if(b==null)throw new IOException("Unbound custody interface; no inventory is stored here");if(!valid(player,b))throw new IOException("Interface, range, permissions or claim access changed");
             var rows=JailCustodyMenu.previews(player,items(player.server,b).snapshot());player.openMenu(new SimpleMenuProvider((id,inventory,ignored)->new JailCustodyMenu(id,inventory,b,rows),Component.literal("Custody "+b.owner().toString().substring(0,8)+" · "+b.state())));
         }catch(IOException|RuntimeException bad){player.sendSystemMessage(Component.literal("Custody: "+reason(bad)));}
     }
@@ -89,7 +97,10 @@ public final class JailCustodyService {
         if(!JailCommands.mayManage(actor)||actor.getEntity() instanceof ServerPlayer player&&quarantined(player))throw new IOException("Administrator or console recovery permission required");
         MinecraftServer server=actor.getServer();var ledger=ledger(server);ledger.verifyDisk();var b=ledger.get(id);if(b==null||b.revision()!=revision)throw new IOException("Stale or cross-prisoner custody selection");
         String name=actor.getEntity()==null?"console:"+actor.getTextName():actor.getEntity().getUUID().toString();
-        if(action.equals("hold")){change(server,b,JailCustodyLedger.State.QUARANTINED,name,"Explicit administrator hold; review required");return;}
+        if(action.equals("hold")){
+            if(!ledger.at(b.anchor()).id().equals(id))throw new IOException("This archived transaction no longer owns the locker");
+            change(server,b,JailCustodyLedger.State.QUARANTINED,name,"Explicit administrator hold; review required");return;
+        }
         if(b.state()==JailCustodyLedger.State.RELEASED){if(action.equals("restore"))return;throw new IOException("This transaction was already returned; records retained");}
         try{
             var adapter=adapter(server,b);adapter.authorize(actor);

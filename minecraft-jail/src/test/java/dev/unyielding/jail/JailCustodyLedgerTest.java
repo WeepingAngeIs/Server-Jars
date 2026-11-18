@@ -10,6 +10,28 @@ import static org.junit.jupiter.api.Assertions.*;
 class JailCustodyLedgerTest {
     @TempDir Path temp;
     static final JailCustodyLedger.Anchor ANCHOR=new JailCustodyLedger.Anchor("minecraft:overworld",1000,5,1000);
+    @Test void detentionLockerRebindsOnlyAfterReleaseAndRetainsBothHistories()throws Exception {
+        Path path=temp.resolve("ledger");
+        JailCustodyLedger.provisionNew(path);
+        UUID first=UUID.randomUUID(),second=UUID.randomUUID(),owner=UUID.randomUUID(),nextOwner=UUID.randomUUID();
+        try(var ledger=new JailCustodyLedger(path)){
+            var b=ledger.bindLocker(first,owner,"a/items","a/origins",new byte[32],ANCHOR,"admin");
+            assertThrows(IOException.class,()->ledger.bindLocker(second,nextOwner,"b/items","b/origins",new byte[32],ANCHOR,"admin"));
+            b=ledger.transition(first,b.revision(),JailCustodyLedger.State.RELEASED,"admin","Verified return");
+            assertEquals(first,ledger.at(ANCHOR).id());
+            ledger.bindLocker(second,nextOwner,"b/items","b/origins",new byte[32],ANCHOR,"admin");
+            long revision=b.revision();
+            assertThrows(IOException.class,()->ledger.transition(first,revision,JailCustodyLedger.State.QUARANTINED,"admin","Stale hold"));
+        }
+        try(var ledger=new JailCustodyLedger(path)){
+            assertFalse(ledger.outstanding(owner));
+            assertTrue(ledger.outstanding(nextOwner));
+            assertEquals(2,ledger.audit(first).size());
+            assertEquals(second,ledger.at(ANCHOR).id());
+            assertEquals("a/items",ledger.get(first).items());
+            assertEquals("b/items",ledger.get(second).items());
+        }
+    }
     @Test void durablePointersQuarantineAuditAndCompletionSurviveRestart()throws Exception {
         Path path=temp.resolve("ledger");JailCustodyLedger.provisionNew(path);UUID id=UUID.randomUUID(),owner=UUID.randomUUID();byte[] hash=JailOriginTransaction.hash(new byte[]{1,2,3});
         try(var ledger=new JailCustodyLedger(path)){var b=ledger.bind(id,owner,"old-custody/items","old-custody/origins",hash,ANCHOR,"console");assertEquals(JailCustodyLedger.State.QUARANTINED,b.state());assertTrue(ledger.outstanding(owner));hash[0]^=1;assertFalse(Arrays.equals(hash,b.digest()));b=ledger.transition(id,b.revision(),JailCustodyLedger.State.REVIEWED,"admin","Native proof verified");assertTrue(ledger.outstanding(owner));ledger.transition(id,b.revision(),JailCustodyLedger.State.RELEASED,"admin","Native journal completion verified");}

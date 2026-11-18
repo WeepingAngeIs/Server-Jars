@@ -1,4 +1,4 @@
-    static String old="0c992e69bcd694b0121653879a2b3395902c374db47653dc743eba1df8fa2c5ca37b6c8b02013e56f2a53b9c972e5e539d9832b58a1dd08009b1e457da9f79a6";
+    static String old=System.getenv("MIGRATION_OLD_SHA512");
     static Class<?> migration()throws Exception{return Class.forName("dev.unyielding.jail.JailRuntimeMigration");}
     static Object invoke(String name,Class<?>[] types,Object... args)throws Exception{return migration().getMethod(name,types).invoke(null,args);}
     static String prepare()throws Exception{return (String)invoke("prepare",new Class[]{ServerPlayer.class,String.class,String.class},p(),old,System.getenv("MIGRATION_CANDIDATE_SHA512"));}

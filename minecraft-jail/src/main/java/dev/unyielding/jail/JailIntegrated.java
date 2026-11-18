@@ -76,6 +76,46 @@ public final class JailIntegrated {
     private static JailData.Assignment assignment(CompoundTag plan){return new JailData.Assignment(Loc.fromTag(plan.getCompound("jail")),Loc.fromTag(plan.getCompound("prior")),plan.getInt("geometry"));}
     private static void requireAssignment(MinecraftServer s,UUID owner,CompoundTag plan,boolean allowAbsent)throws IOException {var actual=JailData.get(s).assignment(owner);if(!(allowAbsent&&actual==null)&&!assignment(plan).equals(actual))throw new IOException("Assignment changed or missing; never overwrite another assignment");}
     private static String relative(UUID id,String kind){return "integrated-jail-v1/"+id+"/"+kind;}
+    private static List<JailEscrowJournal.Entry> facilityPlans(MinecraftServer server)throws IOException {
+        if(!JailData.get(server).integratedCustodyInitialized() && Files.notExists(root(server),LinkOption.NOFOLLOW_LINKS))
+            return List.of();
+        if(!Files.isRegularFile(root(server).resolve("escrow.v1"),LinkOption.NOFOLLOW_LINKS))
+            throw new IOException("Integrated custody journal is unavailable. Review history before changing the facility");
+        return plans(server).list();
+    }
+    static boolean facilityBusy(MinecraftServer server)throws IOException {
+        return JailData.get(server).hasPrisoners() || JailCustodyService.anyOutstanding(server)
+                || facilityPlans(server).stream().anyMatch(e -> !JailEscrowJournal.terminal(e.state()));
+    }
+    /** Cell coordinates in saved assignments and in-flight plans are the single source of truth. */
+    static JailCellRoster roster(MinecraftServer server)throws IOException {
+        JailData data=JailData.get(server);
+        Loc first=data.location();
+        if(data.geometry()!=DetentionCenter.GEOMETRY || first==null)
+            throw new IOException("Numbered cells require a placed detention center");
+        var roster=new JailCellRoster(DetentionCenter.CELL_COUNT);
+        for(var row:data.assignments().entrySet()){
+            var a=row.getValue();
+            if(a.geometry()!=DetentionCenter.GEOMETRY)throw new IOException("A legacy assignment requires review before new admission");
+            roster.record(DetentionCenter.number(first,a.jail()),row.getKey(),true);
+        }
+        for(var entry:facilityPlans(server)){
+            if(JailEscrowJournal.terminal(entry.state()))continue;
+            var a=assignment(JailNbt.decode(entry.snapshot()));
+            if(a.geometry()!=DetentionCenter.GEOMETRY)throw new IOException("A legacy transaction requires review before new admission");
+            roster.record(DetentionCenter.number(first,a.jail()),entry.owner(),false);
+        }
+        if(JailCustodyService.anyOutstanding(server)){
+            var index=JailCustodyService.ledger(server);
+            for(int n=1;n<=DetentionCenter.CELL_COUNT;n++){
+                for(BlockPos pos:DetentionCenter.vaultCandidates(first,n)){
+                    var holder=index.at(new JailCustodyLedger.Anchor(first.dim(),pos.getX(),pos.getY(),pos.getZ()));
+                    if(holder!=null && holder.state()!=JailCustodyLedger.State.RELEASED)roster.record(n,holder.owner(),false);
+                }
+            }
+        }
+        return roster;
+    }
     private static JailEscrowJournal journal(MinecraftServer s,UUID id,String kind)throws IOException{return new JailEscrowJournal(JailCustodyService.journalPath(s,relative(id,kind)));}
     private static JailCustodyLedger.Binding binding(MinecraftServer s,JailEscrowJournal.Entry entry)throws IOException {
         CompoundTag plan=JailNbt.decode(entry.snapshot());var b=JailCustodyService.ledger(s).get(entry.id());
@@ -92,16 +132,33 @@ public final class JailIntegrated {
         if(!Files.exists(root(s),LinkOption.NOFOLLOW_LINKS))return false;return outstanding(s,owner)!=null;
     }
     public static void admit(CommandSourceStack actor,ServerPlayer target)throws IOException {
+        admit(actor,target,0);
+    }
+    static void admit(CommandSourceStack actor,ServerPlayer target,int requestedCell)throws IOException {
         if(actor.getEntity()==target||JailCommands.protectedFromJail(target))throw new IOException("Administrators/self cannot be jailed");
         permitted(actor,target);String contract=JailAdmissions.contract(target);
         var s=target.server;var records=plans(s);if(outstanding(s,target.getUUID())!=null||JailCustodyService.blocked(s,target.getUUID())||JailData.get(s).assignment(target.getUUID())!=null)throw new IOException("Existing assignment/custody must be recovered first");
-        var data=JailData.get(s);Loc dest=data.location(),prior=Loc.of(target);if(data.geometry()!=JailData.INTERROGATION_CHAIR_GEOMETRY||dest==null||!JailPlacement.intact(s,dest,data.geometry())||!JailCommands.safe(target,dest)||!JailCommands.safe(target,prior)||actor.getEntity() instanceof ServerPlayer p&&!JailCommands.claimAccess(p,dest))throw new IOException("Jail/return location unavailable, unsafe or claim denied");
+        var data=JailData.get(s);Loc first=data.location(),prior=Loc.of(target);
+        int geometry=data.geometry();boolean numbered=geometry==DetentionCenter.GEOMETRY;
+        if(!numbered && requestedCell!=0)throw new IOException("Choose a numbered cell after placing a detention center");
+        int cell=numbered?roster(s).choose(requestedCell):0;
+        Loc dest=numbered?DetentionCenter.cell(first,cell):first;
+        if(!numbered&&geometry!=JailData.INTERROGATION_CHAIR_GEOMETRY||dest==null||!JailPlacement.intact(s,dest,geometry)||!JailCommands.safe(target,dest)||!JailCommands.safe(target,prior)||actor.getEntity() instanceof ServerPlayer p&&!JailCommands.claimAccess(p,dest))throw new IOException("Jail/return location unavailable, unsafe or claim denied");
         UUID id=UUID.randomUUID(),retired=retired(s,target.getUUID());
         var ports=ports(s,target,id,retired,contract);var inventory=ports.inventory();var nativePort=ports.origin();if(equipped(contract))inventory.validateRemoval();else auditItems(target);if(nativePort instanceof JailNativeOriginPort nativeOrigin)nativeOrigin.validateAdmission();if(audited(contract)){JailAdmissions.boundary(target,contract.equals(RETAINED_XP));((JailCertifiedOriginPort)nativePort).neutralBase();}var human=nativePort.current();byte[] stable=ports.stable();
         var source=inventory.current();if(source.empty())throw new IOException("Empty-inventory custody is not certified yet; no items or origin were changed");if(source.removedBy()!=null||source.restoredBy()!=null||human.transaction()!=null)throw new IOException("An earlier custody receipt requires review before a new admission");
         // Save/readback BEFORE the plan: no custody has started and no mutation occurred.
-        inventory.persistAndVerify();nativePort.persistAndVerify();saveAssignments(s);if(!Arrays.equals(source.inventory(),inventory.current().inventory())||!Arrays.equals(stable,ports.stable()))throw new IOException("Source changed during baseline save");BlockPos anchor=anchor(s,dest,prior);
-        CompoundTag plan=new CompoundTag();plan.putString("contract",contract);plan.put("prior",prior.toTag());plan.put("jail",dest.toTag());plan.putInt("geometry",data.geometry());plan.putByteArray("digest",JailOriginTransaction.hash(source.inventory()));plan.putByteArray("human",human.state());if(retired!=null)plan.putUUID("retired",retired);
+        inventory.persistAndVerify();nativePort.persistAndVerify();saveAssignments(s);if(!Arrays.equals(source.inventory(),inventory.current().inventory())||!Arrays.equals(stable,ports.stable()))throw new IOException("Source changed during baseline save");
+        if(!Objects.equals(first,data.location()) || geometry!=data.geometry())throw new IOException("Facility changed during admission");
+        BlockPos anchor;
+        if(numbered){
+            roster(s).choose(cell);
+            anchor=DetentionCenter.vaultCandidates(first,cell).getFirst();
+            var level=dest.level(s);
+            if(!level.hasChunkAt(anchor)||!level.getBlockState(anchor).is(JailRegistration.CUSTODY_VAULT.get()))
+                throw new IOException("The selected cell's custody locker is missing or unloaded");
+        }else anchor=anchor(s,dest,prior);
+        CompoundTag plan=new CompoundTag();plan.putString("contract",contract);plan.put("prior",prior.toTag());plan.put("jail",dest.toTag());plan.putInt("geometry",geometry);plan.putByteArray("digest",JailOriginTransaction.hash(source.inventory()));plan.putByteArray("human",human.state());if(retired!=null)plan.putUUID("retired",retired);
         plan.putInt("x",anchor.getX());plan.putInt("y",anchor.getY());plan.putInt("z",anchor.getZ());plan.putString("actor",actor.getTextName());
         plan.putByteArray("origin_before",stable);
         records.begin(id,target.getUUID(),JailNbt.encode(plan));checkpoint.at(Boundary.PLAN_DURABLE);
@@ -112,7 +169,10 @@ public final class JailIntegrated {
         try(var metadata=java.nio.channels.FileChannel.open(root(s),StandardOpenOption.READ)){metadata.force(true);}
         JailEscrowJournal.provisionNew(directory.resolve("items"));JailEscrowJournal.provisionNew(directory.resolve("origins"));
         if(equipped(contract))for(String effect:List.of("remove-effects","return-effects","escapes"))JailEscrowJournal.provisionNew(directory.resolve(effect));
-        JailCustodyService.ledger(s).bind(id,target.getUUID(),relative(id,"items"),relative(id,"origins"),plan.getByteArray("digest"),new JailCustodyLedger.Anchor(dest.dim(),anchor.getX(),anchor.getY(),anchor.getZ()),actor.getTextName());
+        var index=JailCustodyService.ledger(s);
+        var locker=new JailCustodyLedger.Anchor(dest.dim(),anchor.getX(),anchor.getY(),anchor.getZ());
+        if(numbered)index.bindLocker(id,target.getUUID(),relative(id,"items"),relative(id,"origins"),plan.getByteArray("digest"),locker,actor.getTextName());
+        else index.bind(id,target.getUUID(),relative(id,"items"),relative(id,"origins"),plan.getByteArray("digest"),locker,actor.getTextName());
         try(var items=journal(s,id,"items");var origins=journal(s,id,"origins")){
             permitted(actor,target);JailVanillaCustody.removeForDisposableTest(items,id,inventory,b->{permitted(actor,target);if(b==JailVanillaCustody.Boundary.MUTATED)checkpoint.at(Boundary.ITEMS_MUTATED);});checkpoint.at(Boundary.ITEMS_DURABLE);
             if(!Arrays.equals(stable,ports.stable()))throw new IOException("Human audit changed during removal");
@@ -120,12 +180,18 @@ public final class JailIntegrated {
         }
         records.transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.REMOVAL_STARTED);
         confine(actor,target,records.read(id),inventory);
-        actor.sendSuccess(()->net.minecraft.network.chat.Component.literal("Jailed "+target.getGameProfile().getName()+"; custody "+id),true);
+        actor.sendSuccess(()->net.minecraft.network.chat.Component.literal("Jailed "+target.getGameProfile().getName()+(numbered?" in cell "+cell:"")+"; custody "+id),true);
     }
     private static void confine(CommandSourceStack actor,ServerPlayer target,JailEscrowJournal.Entry entry,JailVanillaCustody.InventoryPort inventory)throws IOException {
         var s=target.server;var plan=JailNbt.decode(entry.snapshot());var intended=assignment(plan);permitted(actor,target);requireAssignment(s,target.getUUID(),plan,true);
         var b=binding(s,entry);BlockPos pos=new BlockPos(b.anchor().x(),b.anchor().y(),b.anchor().z());var level=intended.jail().level(s);
         if(!JailPlacement.intact(s,intended.jail(),intended.geometry())||!JailCommands.safe(target,intended.jail()))throw new IOException("Jail changed during admission");
+        if(intended.geometry()==DetentionCenter.GEOMETRY){
+            int cell=DetentionCenter.number(JailData.get(s).location(),intended.jail());
+            var occupant=roster(s).occupant(cell);
+            if(occupant==null || !occupant.player().equals(target.getUUID()) || !JailCustodyService.physical(s,b))
+                throw new IOException("Cell reservation or locker changed during admission");
+        }
         if(!JailCustodyService.physical(s,b)){if(!level.hasChunkAt(pos)||!level.getBlockState(pos).isAir()||!level.setBlock(pos,dev.unyielding.jail.JailRegistration.CUSTODY_VAULT.get().defaultBlockState(),3))throw new IOException("Custody anchor occupied or unavailable");}
         JailData.get(s).assign(target.getUUID(),intended);saveAssignments(s);checkpoint.at(Boundary.ASSIGNMENT_DURABLE);
         moveSaved(target,intended.jail(),inventory);checkpoint.at(Boundary.CONFINED);permitted(actor,target);plans(s).transition(entry.id(),JailEscrowJournal.State.REMOVAL_STARTED,JailEscrowJournal.State.HELD);

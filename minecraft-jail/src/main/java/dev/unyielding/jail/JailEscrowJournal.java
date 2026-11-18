@@ -95,7 +95,7 @@ public final class JailEscrowJournal implements AutoCloseable {
     }
     public synchronized Entry read(UUID id) throws IOException { check(); return entries.get(id); }
     public synchronized List<Entry> list() throws IOException { check(); return List.copyOf(entries.values()); }
-    private static boolean terminal(State state) { return state == State.COMPLETE || state == State.CANCELLED; }
+    static boolean terminal(State state) { return state == State.COMPLETE || state == State.CANCELLED; }
     private static boolean allowed(State from, State to) {
         return switch (from) {
             case PREPARED -> to == State.REMOVAL_STARTED || to == State.CANCELLED;

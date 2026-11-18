@@ -23,6 +23,29 @@ class JailMigrationIOTest {
  @Test void symbolicFileRefuses()throws Exception {Files.write(root.resolve("data"),new byte[]{1});Files.createSymbolicLink(root.resolve("link"),root.resolve("data"));assertThrows(IOException.class,()->JailMigrationIO.regular(root,"link"));}
  @Test void linkedFileRefuses()throws Exception {Files.write(root.resolve("data"),new byte[]{1});Files.createLink(root.resolve("link"),root.resolve("data"));assertThrows(IOException.class,()->JailMigrationIO.regular(root,"data"));}
  @Test void exactArtifactPin() {assertEquals(128,JailRuntimeMigration.OLD_SHA512.length());assertTrue(JailRuntimeMigration.OLD_SHA512.startsWith("0c992e69"));}
+ @Test void eitherReviewedPredecessorBindsToItsOwnArchive() throws IOException {
+     String target = "5".repeat(128);
+     for (String predecessor : List.of(JailRuntimeMigration.OLD_SHA512, JailRuntimeMigration.ATTACHED_SHA512)) {
+         JailRuntimeMigration.verifyArtifactPair(predecessor, target, predecessor, target);
+     }
+ }
+ @Test void anotherApprovedArchiveCannotStandInForTheRequestedOne() {
+     String target = "5".repeat(128);
+     assertThrows(IOException.class, () -> JailRuntimeMigration.verifyArtifactPair(
+             JailRuntimeMigration.ATTACHED_SHA512, target, JailRuntimeMigration.OLD_SHA512, target));
+ }
+ @Test void alteredOrUnknownPredecessorCannotAuthorizeHeldCustody() {
+     String unknown = "1" + JailRuntimeMigration.ATTACHED_SHA512.substring(1);
+     String target = "5".repeat(128);
+     assertThrows(IOException.class, () -> JailRuntimeMigration.verifyArtifactPair(unknown, target, unknown, target));
+ }
+ @Test void replayAgainstDifferentTargetOrSelfMigrationRefused() {
+     String predecessor = JailRuntimeMigration.ATTACHED_SHA512;
+     assertThrows(IOException.class, () -> JailRuntimeMigration.verifyArtifactPair(
+             predecessor, "5".repeat(128), predecessor, "6".repeat(128)));
+     assertThrows(IOException.class, () -> JailRuntimeMigration.verifyArtifactPair(
+             predecessor, predecessor, predecessor, predecessor));
+ }
  @Test void onlyNativeQuarantineAppendAccepted()throws Exception {
   Path dir=root.resolve("custody");JailCustodyLedger.provisionNew(dir);UUID tx=UUID.randomUUID(),owner=UUID.randomUUID();
   try(var ledger=new JailCustodyLedger(dir)){

@@ -14,11 +14,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.LevelResource;
 
-/** Explicit artifact transition for ONE reviewed predecessor. Original custody bytes are never rewritten.
+/** Explicit artifact transitions from reviewed predecessors. Original custody bytes are never rewritten.
  * The transition only selects the historical receipt namespace for its exact transaction.
  * All native restoration/death checks remain in their original coordinators. */
 public final class JailRuntimeMigration {
     public static final String OLD_SHA512="0c992e69bcd694b0121653879a2b3395902c374db47653dc743eba1df8fa2c5ca37b6c8b02013e56f2a53b9c972e5e539d9832b58a1dd08009b1e457da9f79a6";
+    static final String ATTACHED_SHA512="381284f166cb3eacf4de7342e6656a84521821ea083cc049987f00bfd80e0724a74966dd9821d5432c6f73a3f5a61f52909cd5364a160c5065389e2cf1851732";
     private static final String ROOT="jail-runtime-transitions-v1";
     private record Validation(MinecraftServer server,UUID owner,UUID transaction,String target,String previous){}
     private static final ThreadLocal<Validation> VALIDATION=new ThreadLocal<>();
@@ -61,10 +62,15 @@ public final class JailRuntimeMigration {
         out.putString("plan",JailMigrationIO.hash(plan.snapshot()));out.putString("items",JailMigrationIO.hash(item.snapshot()));out.putString("origins",JailMigrationIO.hash(origin.snapshot()));out.putString("effects",JailMigrationIO.hash(effect.snapshot()));
         out.putString("dimension",b.anchor().dimension());out.putInt("x",b.anchor().x());out.putInt("y",b.anchor().y());out.putInt("z",b.anchor().z());return out;
     }
+    static void verifyArtifactPair(String predecessor,String target,String archiveHash,String runningHash)throws IOException {
+        require(OLD_SHA512.equals(predecessor)||ATTACHED_SHA512.equals(predecessor),"Unapproved predecessor artifact");
+        require(target!=null&&target.matches("[0-9a-f]{128}")&&!predecessor.equals(target),"Invalid target artifact");
+        require(predecessor.equals(archiveHash),"Predecessor artifact copy mismatched");
+        require(target.equals(runningHash),"Target artifact does not match explicitly approved bytes");
+    }
     private static void pins(ServerPlayer p,String old,String target)throws IOException {
-        require(OLD_SHA512.equals(old)&&target.matches("[0-9a-f]{128}")&&!old.equals(target),"Unapproved old/new artifact transition");
-        require(target.equals(JailHumanAudit.ownArtifact()),"Target artifact does not match explicitly approved bytes");
-        Path archive=source(p.server,"jail-migration-inputs/old.jar");require(OLD_SHA512.equals(JailMigrationIO.sha512(archive)),"Predecessor artifact copy mismatched");
+        Path archive=source(p.server,"jail-migration-inputs/old.jar");
+        verifyArtifactPair(old,target,JailMigrationIO.sha512(archive),JailHumanAudit.ownArtifact());
         JailHumanAudit.runtime(p); // dependency certificate and exact companion remain mandatory
     }
     private static CompoundTag readManifest(MinecraftServer s,UUID tx)throws IOException {
@@ -91,7 +97,7 @@ public final class JailRuntimeMigration {
         require(m.getInt("version")==1&&m.getUUID("owner").equals(p.getUUID())&&identity(p.server,tx,p.getUUID(),true).equals(m.getCompound("identity")),"Transaction/owner/jail identity differs");
         require(p.isAlive()&&!p.hasDisconnected()&&p.server.getPlayerList().getPlayer(p.getUUID())==p,"Migration requires authoritative living online player");
         require(!JailConfig.JAIL_CERTIFIED_ADMISSIONS.get(),"Disable new admissions before migration");
-        String actual=JailHumanAudit.runtime(p),old=JailHumanAudit.predecessorRuntime(p);
+        String actual=JailHumanAudit.runtime(p),old=JailHumanAudit.predecessorRuntime(p,m.getString("old_artifact"));
         require(actual.equals(m.getString("new_runtime"))&&old.equals(m.getString("old_runtime")),"Artifact or dependency fingerprint differs");
         require(VALIDATION.get()==null,"Nested validation refused");VALIDATION.set(new Validation(p.server,p.getUUID(),tx,actual,old));
         try{
@@ -103,8 +109,12 @@ public final class JailRuntimeMigration {
     }
     public static String prepare(ServerPlayer p,String predecessor,String target)throws IOException {
         pins(p,predecessor,target);UUID tx=JailIntegrated.activeTransaction(p.server,p.getUUID());require(tx!=null,"No active transaction");Path dir=directory(p.server,tx);
-        if(Files.exists(dir,LinkOption.NOFOLLOW_LINKS)){CompoundTag existing=readManifest(p.server,tx);validate(p,existing);backups(p.server,tx,existing,true);return proposal(p.server,tx);}
-        CompoundTag m=new CompoundTag();m.putInt("version",1);m.putUUID("owner",p.getUUID());m.putUUID("transaction",tx);m.putString("old_artifact",predecessor);m.putString("new_artifact",target);m.putString("old_runtime",JailHumanAudit.predecessorRuntime(p));m.putString("new_runtime",JailHumanAudit.runtime(p));m.put("identity",identity(p.server,tx,p.getUUID(),true));
+        if(Files.exists(dir,LinkOption.NOFOLLOW_LINKS)){
+            CompoundTag existing=readManifest(p.server,tx);
+            require(predecessor.equals(existing.getString("old_artifact"))&&target.equals(existing.getString("new_artifact")),"Existing transition is bound to a different artifact pair");
+            validate(p,existing);backups(p.server,tx,existing,true);return proposal(p.server,tx);
+        }
+        CompoundTag m=new CompoundTag();m.putInt("version",1);m.putUUID("owner",p.getUUID());m.putUUID("transaction",tx);m.putString("old_artifact",predecessor);m.putString("new_artifact",target);m.putString("old_runtime",JailHumanAudit.predecessorRuntime(p,predecessor));m.putString("new_runtime",JailHumanAudit.runtime(p));m.put("identity",identity(p.server,tx,p.getUUID(),true));
         validate(p,m);
         List<String> names=new ArrayList<>(List.of("integrated-jail-v1/escrow.v1","custody-interface-v1/custody.v1","data/unyielding_jail.dat","data/neoorigins_origin_claims.dat","playerdata/"+p.getUUID()+".dat","jail-migration-inputs/old.jar"));
         for(String kind:List.of("items","origins","remove-effects","return-effects","escapes"))names.add(rel(tx,kind));
@@ -140,10 +150,13 @@ public final class JailRuntimeMigration {
         if(check!=null&&check.server()==p.server&&check.owner().equals(p.getUUID())&&check.transaction().equals(tx)&&check.target().equals(current))return check.previous();
         Path dir=directory(p.server,tx);if(!Files.exists(dir,LinkOption.NOFOLLOW_LINKS))return current;
         CompoundTag m=readManifest(p.server,tx);require(m.getInt("version")==1&&m.hasUUID("owner")&&m.getUUID("owner").equals(p.getUUID())&&m.getUUID("transaction").equals(tx),"Foreign transition owner/transaction");
-        require(OLD_SHA512.equals(m.getString("old_artifact"))&&JailHumanAudit.ownArtifact().equals(m.getString("new_artifact"))&&current.equals(m.getString("new_runtime")),"Transition does not approve these exact artifact/runtime bytes");
+        String predecessor=m.getString("old_artifact");
+        Path archived=JailMigrationIO.regular(dir,"backup/jail-migration-inputs/old.jar");
+        verifyArtifactPair(predecessor,m.getString("new_artifact"),JailMigrationIO.sha512(archived),JailHumanAudit.ownArtifact());
+        require(current.equals(m.getString("new_runtime")),"Transition does not approve this runtime");
         var e=entry(JailMigrationIO.regular(dir,"history/escrow.v1"),tx,p.getUUID());require(e.state()==JailEscrowJournal.State.HELD&&Arrays.equals(e.snapshot(),JailNbt.encode(m)),"Incomplete or mismatched transition; no receipt permission");
         require(identity(p.server,tx,p.getUUID(),false).equals(m.getCompound("identity")),"Historical binding changed");backups(p.server,tx,m,false);
-        String old=JailHumanAudit.predecessorRuntime(p);require(old.equals(m.getString("old_runtime")),"Historical runtime mismatch");return old;
+        String old=JailHumanAudit.predecessorRuntime(p,predecessor);require(old.equals(m.getString("old_runtime")),"Historical runtime mismatch");return old;
     }
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher){
         dispatcher.register(Commands.literal("jailmigration").requires(s->s.getEntity()==null&&s.hasPermission(2))

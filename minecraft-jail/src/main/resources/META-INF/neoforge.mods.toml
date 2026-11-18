@@ -8,7 +8,7 @@ version = "${file.jarVersion}"
 displayName = "Minecraft Jail"
 authors = "Cobblemon Unyielding"
 displayTest = "MATCH_VERSION"
-description = "The existing Unyielding jail, extracted into its own JAR. Admission remains fail-closed and disabled by default."
+description = "Rosecourt Detention Center with numbered cells and player custody. Admission is disabled by default."
 
 [[mixins]]
 config = "minecraftjail.mixins.json"

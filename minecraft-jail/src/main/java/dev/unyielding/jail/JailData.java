@@ -37,11 +37,12 @@ public final class JailData extends SavedData {
     public void setLocation(Loc location) { setLocation(location, LEGACY_GEOMETRY); }
     public void setLocation(Loc location, int geometry) { this.location = location; this.geometry = geometry; setDirty(); }
     public boolean hasPrisoners() { return !prisoners.isEmpty(); }
+    Map<UUID, Assignment> assignments() { return Map.copyOf(prisoners); }
     public Assignment assignment(UUID player) { return prisoners.get(player); }
     public void assign(UUID player, Assignment assignment) { prisoners.put(player, assignment); setDirty(); }
     public void remove(UUID player) { prisoners.remove(player); setDirty(); }
 
-    private static JailData load(CompoundTag tag, HolderLookup.Provider ignored) {
+    static JailData load(CompoundTag tag, HolderLookup.Provider ignored) {
         JailData data = new JailData();
         if (tag.contains("location", Tag.TAG_COMPOUND)) data.location = Loc.fromTag(tag.getCompound("location"));
         data.geometry = readGeometry(tag);

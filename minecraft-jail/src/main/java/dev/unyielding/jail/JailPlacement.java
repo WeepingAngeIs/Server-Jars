@@ -27,11 +27,12 @@ import net.neoforged.fml.ModList;
 /** Bounded placement with a durable before/after backup and explicit confirmation. */
 public final class JailPlacement {
     private record Preview(MinecraftServer server, ResourceLocation dimension, BlockPos min, long expires, List<net.minecraft.world.level.block.state.BlockState> before, List<net.minecraft.world.level.block.state.BlockState> after) {}
-    private record UndoPreview(MinecraftServer server, ResourceLocation dimension, long expires) {}
+    private record UndoPreview(MinecraftServer server, JailTerrainJournal.Backup backup, long expires) {}
     private static final Map<UUID, Preview> PREVIEWS = new HashMap<>();
     private static final Map<UUID, UndoPreview> UNDO_PREVIEWS = new HashMap<>();
     private static final long PREVIEW_MILLIS = 600_000;
-    private static final int WIDTH = 13, HEIGHT = 7, DEPTH = 7;
+    private static final JailTerrainJournal.Layout LAYOUT = JailTerrainJournal.Layout.ROSECOURT;
+    private static final int WIDTH = DetentionPlan.WIDTH, HEIGHT = DetentionPlan.HEIGHT, DEPTH = DetentionPlan.DEPTH;
     // These blocks can be player-built too: never label them natural, and require
     // inspection of every affected coordinate plus explicit confirmation.
     private static final Set<net.minecraft.world.level.block.Block> TERRAIN = Set.of(
@@ -58,11 +59,20 @@ public final class JailPlacement {
         source.sendFailure(Component.literal(message));
         return 0;
     }
+    private static boolean facilityBusy(MinecraftServer server) {
+        try { return JailIntegrated.facilityBusy(server); }
+        catch (java.io.IOException | RuntimeException e) {
+            MinecraftJail.LOGGER.warn("Unable to verify custody before changing the facility", e);
+            return true;
+        }
+    }
     private static int preview(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         ServerPlayer p = source.getPlayerOrException();
-        if (JailData.get(p.server).hasPrisoners()) return fail(source, "Release assigned players before moving the prison.");
+        if (facilityBusy(p.server)) return fail(source, "Resolve active custody and release assigned players before moving the prison.");
         if (JailTerrainJournal.exists(p.server)) return fail(source, "A jail placement backup already exists. Use /jailbuild undo to inspect recovery before placing another jail.");
-        BlockPos min = p.blockPosition().relative(p.getDirection(), 11).offset(-3, 0, -3).immutable();
+        var facing = p.getDirection();
+        int distance = (facing.getAxis() == net.minecraft.core.Direction.Axis.X ? WIDTH : DEPTH) / 2 + 4;
+        BlockPos min = p.blockPosition().relative(facing, distance).offset(-(WIDTH / 2), 0, -(DEPTH / 2)).immutable();
         String problem = validateSite(p, p.serverLevel(), min);
         if (problem != null) { PREVIEWS.remove(p.getUUID()); return fail(source, "Cannot preview " + p.serverLevel().dimension().location() + " from " + min.toShortString() + " to " + min.offset(WIDTH-1, HEIGHT-1, DEPTH-1).toShortString() + ": " + problem); }
         List<net.minecraft.world.level.block.state.BlockState> before = capture(p.serverLevel(), min), after = desired();
@@ -74,7 +84,7 @@ public final class JailPlacement {
             changed++; if (!before.get(i).isAir()) impact.merge(before.get(i).toString(), 1, Integer::sum);
         }
         int total = changed;
-        source.sendSuccess(() -> Component.literal("Jail preview: " + p.serverLevel().dimension().location() + " from " + min.toShortString() + " through " + min.offset(WIDTH-1, HEIGHT-1, DEPTH-1).toShortString() + " (13×7×7). " + total + " blocks will change. Non-air removed: " + (impact.isEmpty() ? "none" : impact) + ". Stone and soil may be player-built: inspect /jailbuild details before confirming. Inventories, ores, fluids, block entities and unlisted blocks are refused. A recovery backup is saved before edits. Preview lasts 10 minutes; /jailbuild place or /jailbuild cancel."), false);
+        source.sendSuccess(() -> Component.literal("Jail preview: " + p.serverLevel().dimension().location() + " from " + min.toShortString() + " through " + min.offset(WIDTH-1, HEIGHT-1, DEPTH-1).toShortString() + " (Rosecourt, 19×10×30, six cells). " + total + " blocks will change. Non-air removed: " + (impact.isEmpty() ? "none" : impact) + ". Stone and soil may be player-built: inspect /jailbuild details before confirming. Inventories, ores, fluids, block entities and unlisted blocks are refused. A recovery backup is saved before edits. Preview lasts 10 minutes; /jailbuild place or /jailbuild cancel."), false);
         return 1;
     }
     private static int details(CommandSourceStack source, int page) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
@@ -85,7 +95,7 @@ public final class JailPlacement {
         int pages = Math.max(1, (changed.size()+7)/8); if (page > pages) return fail(source, "Impact page must be between 1 and " + pages + ".");
         StringBuilder message = new StringBuilder("Jail impact page " + page + "/" + pages + ": ");
         for (int n=(page-1)*8; n<Math.min(page*8, changed.size()); n++) {
-            int index = changed.get(n); message.append(at(preview.min(), index).toShortString()).append(" ").append(preview.before().get(index)).append(" → ").append(preview.after().get(index)).append("; ");
+            int index = changed.get(n); message.append(LAYOUT.at(preview.min(), index).toShortString()).append(" ").append(preview.before().get(index)).append(" → ").append(preview.after().get(index)).append("; ");
         }
         if (changed.isEmpty()) message.append("no blocks changed.");
         source.sendSuccess(() -> Component.literal(message.toString()), false); return 1;
@@ -103,13 +113,13 @@ public final class JailPlacement {
         ServerLevel level = p.serverLevel();
         if (!level.dimension().location().equals(preview.dimension)) return fail(source, "Return to the preview dimension and preview again.");
         JailData data = JailData.get(p.server);
-        if (data.hasPrisoners()) return fail(source, "Release assigned players before moving the prison.");
+        if (facilityBusy(p.server)) return fail(source, "Resolve active custody and release assigned players before moving the prison.");
         BlockPos min = preview.min;
         if (JailTerrainJournal.exists(p.server)) return fail(source, "A recovery backup already exists. Use /jailbuild undo first.");
         String problem = validateSite(p, level, min);
         if (problem != null) return fail(source, problem);
         if (!capture(level, min).equals(preview.before())) return fail(source, "The previewed blocks changed. Preview again; nothing was placed.");
-        var backup = new JailTerrainJournal.Backup(level.dimension().location(), min, preview.before(), preview.after(), data.location(), data.geometry(), p.getUUID());
+        var backup = new JailTerrainJournal.Backup(LAYOUT, level.dimension().location(), min, preview.before(), preview.after(), data.location(), data.geometry(), p.getUUID());
         try {
             JailTerrainJournal.write(p.server, backup);
             dev.unyielding.jail.MinecraftJail.LOGGER.info("Jail: {} ({}) confirmed terrain edits at {} in {} with a recovery backup", p.getGameProfile().getName(), p.getUUID(), min, level.dimension().location());
@@ -118,33 +128,33 @@ public final class JailPlacement {
         }
         try {
             for (int i=0; i<preview.before().size(); i++) {
-                BlockPos pos = at(min, i); var old = preview.before().get(i); var next = preview.after().get(i);
+                BlockPos pos = LAYOUT.at(min, i); var old = preview.before().get(i); var next = preview.after().get(i);
                 if (!level.getBlockState(pos).equals(old) || level.getBlockEntity(pos) != null) throw new IllegalStateException("World changed at " + pos.toShortString());
                 if (!old.equals(next) && !level.setBlock(pos, next, net.minecraft.world.level.block.Block.UPDATE_CLIENTS | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE | net.minecraft.world.level.block.Block.UPDATE_SUPPRESS_DROPS))
                     throw new IllegalStateException("Could not edit " + pos.toShortString());
             }
-            data.setLocation(Loc.of(level, min.getX()+3.5, min.getY()+1, min.getZ()+3.5, 0, 0), JailData.INTERROGATION_CHAIR_GEOMETRY);
+            data.setLocation(Loc.of(level, min.getX()+3.5, min.getY()+1, min.getZ()+3.5, 0, 0), DetentionCenter.GEOMETRY);
             PREVIEWS.remove(p.getUUID());
         } catch (RuntimeException error) {
             PREVIEWS.remove(p.getUUID());
             return fail(source, "Placement was interrupted: " + error.getMessage() + ". The backup is retained. Use /jailbuild undo to inspect recovery; do not edit the affected area.");
         }
         dev.unyielding.jail.MinecraftJail.LOGGER.info("Jail: {} placed a prison in {} at {}", source.getTextName(), level.dimension().location(), min.toShortString());
-        source.sendSuccess(() -> Component.literal("Jail placed. A recovery backup is retained; /jailbuild undo previews restoration. The admin entrance is on the east wall."), true);
+        source.sendSuccess(() -> Component.literal("Jail placed. A recovery backup is retained; /jailbuild undo previews restoration. Rosecourt has six numbered cells. The staff entrance is centered on the north facade."), true);
         return 1;
     }
     private static int undoPreview(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         ServerPlayer player = source.getPlayerOrException();
-        if (JailData.get(player.server).hasPrisoners()) return fail(source, "Release assigned players before restoring the area.");
+        if (facilityBusy(player.server)) return fail(source, "Resolve active custody and release assigned players before restoring the area.");
         try {
             var backup = JailTerrainJournal.read(player.server);
             String error = validateRestore(player, backup);
             if (error != null) return fail(source, error);
-            UNDO_PREVIEWS.put(player.getUUID(), new UndoPreview(player.server, backup.dimension(), System.currentTimeMillis() + PREVIEW_MILLIS));
+            UNDO_PREVIEWS.put(player.getUUID(), new UndoPreview(player.server, backup, System.currentTimeMillis() + PREVIEW_MILLIS));
             int changed = 0; ServerLevel level = player.serverLevel();
-            for (int i=0; i<JailTerrainJournal.VOLUME; i++) if (!level.getBlockState(at(backup.min(), i)).equals(backup.before().get(i))) changed++;
+            for (int i=0; i<backup.layout().volume; i++) if (!level.getBlockState(backup.layout().at(backup.min(), i)).equals(backup.before().get(i))) changed++;
             int count = changed;
-            source.sendSuccess(() -> Component.literal("Undo preview: restore up to " + count + " blocks in " + backup.dimension() + " from " + backup.min().toShortString() + " through " + backup.min().offset(WIDTH-1, HEIGHT-1, DEPTH-1).toShortString() + ". Changes by other players are refused. Confirm with /jailbuild undo-confirm within 10 minutes, or /jailbuild cancel. The world will be saved before the backup is removed."), false);
+            source.sendSuccess(() -> Component.literal("Undo preview: restore up to " + count + " blocks in " + backup.dimension() + " from " + backup.min().toShortString() + " through " + backup.layout().max(backup.min()).toShortString() + ". Changes by other players are refused. Confirm with /jailbuild undo-confirm within 10 minutes, or /jailbuild cancel. The world will be saved before the backup is removed."), false);
             return 1;
         } catch (Exception error) { return fail(source, "Cannot read the placement backup; it was retained: " + error.getMessage()); }
     }
@@ -152,14 +162,14 @@ public final class JailPlacement {
         ServerPlayer player = source.getPlayerOrException(); UndoPreview preview = UNDO_PREVIEWS.get(player.getUUID());
         if (preview == null || preview.server() != player.server || preview.expires() < System.currentTimeMillis())
             return fail(source, "Undo preview expired. Use /jailbuild undo again; no blocks changed.");
-        if (JailData.get(player.server).hasPrisoners()) return fail(source, "Release assigned players before restoring the area.");
+        if (facilityBusy(player.server)) return fail(source, "Resolve active custody and release assigned players before restoring the area.");
         try {
             var backup = JailTerrainJournal.read(player.server);
-            if (!backup.dimension().equals(preview.dimension())) return fail(source, "The backup changed; preview the undo again.");
+            if (!backup.equals(preview.backup())) return fail(source, "The backup changed; preview the undo again.");
             String error = validateRestore(player, backup); if (error != null) return fail(source, error);
             ServerLevel level = player.serverLevel();
-            for (int i=0; i<JailTerrainJournal.VOLUME; i++) {
-                BlockPos pos = at(backup.min(), i); var current = level.getBlockState(pos); var before = backup.before().get(i); var after = backup.after().get(i);
+            for (int i=0; i<backup.layout().volume; i++) {
+                BlockPos pos = backup.layout().at(backup.min(), i); var current = level.getBlockState(pos); var before = backup.before().get(i); var after = backup.after().get(i);
                 if (level.getBlockEntity(pos) != null || !(current.equals(before) || current.equals(after))) throw new IllegalStateException("World changed at " + pos.toShortString());
                 if (!current.equals(before) && !level.setBlock(pos, before, net.minecraft.world.level.block.Block.UPDATE_CLIENTS | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE | net.minecraft.world.level.block.Block.UPDATE_SUPPRESS_DROPS))
                     throw new IllegalStateException("Could not restore " + pos.toShortString());
@@ -176,24 +186,29 @@ public final class JailPlacement {
     private static String validateRestore(ServerPlayer player, JailTerrainJournal.Backup backup) {
         ServerLevel level = player.serverLevel(); BlockPos min = backup.min();
         if (!level.dimension().location().equals(backup.dimension())) return "Run undo in the backup's dimension.";
-        if (min.getY() <= level.getMinBuildHeight() || min.getY()+HEIGHT-1 >= level.getMaxBuildHeight()) return "Backup is outside this dimension's height limits.";
-        AABB bounds = new AABB(min.getX(), min.getY(), min.getZ(), min.getX()+WIDTH, min.getY()+HEIGHT, min.getZ()+DEPTH);
+        if (min.getY() <= level.getMinBuildHeight() || min.getY()+backup.layout().height-1 >= level.getMaxBuildHeight()) return "Backup is outside this dimension's height limits.";
+        AABB bounds = new AABB(min.getX(), min.getY(), min.getZ(), min.getX()+backup.layout().width, min.getY()+backup.layout().height, min.getZ()+backup.layout().depth);
         if (!level.getWorldBorder().isWithinBounds(bounds)) return "Backup is outside the current world border.";
-        for (int x=min.getX()>>4; x<=(min.getX()+WIDTH-1)>>4; x++) for (int z=min.getZ()>>4; z<=(min.getZ()+DEPTH-1)>>4; z++) {
+        for (int x=min.getX()>>4; x<=(min.getX()+backup.layout().width-1)>>4; x++) for (int z=min.getZ()>>4; z<=(min.getZ()+backup.layout().depth-1)>>4; z++) {
             if (!level.hasChunk(x,z)) return "The backup area is not loaded; stand nearby first.";
             if (!claimAccess(player, level, x, z)) return "Open Parties claim access could not be verified for the backup area.";
         }
         if (!level.getEntities((Entity)null, bounds).isEmpty()) return "An entity or dropped item is inside the backup area. Move it out first.";
         Loc expected = Loc.of(level, min.getX()+3.5, min.getY()+1, min.getZ()+3.5, 0, 0), current = JailData.get(player.server).location();
-        if (!java.util.Objects.equals(current, expected) && !java.util.Objects.equals(current, backup.prior())) return "The saved jail location changed since this backup; admin review is required.";
+        int geometry = JailData.get(player.server).geometry();
+        int builtGeometry = backup.layout() == JailTerrainJournal.Layout.CLASSIC
+                ? JailData.INTERROGATION_CHAIR_GEOMETRY : DetentionCenter.GEOMETRY;
+        if (!(java.util.Objects.equals(current, expected) && (geometry == builtGeometry
+                || backup.layout() == JailTerrainJournal.Layout.CLASSIC && geometry == JailData.INTERROGATION_GEOMETRY))
+                && !(java.util.Objects.equals(current, backup.prior()) && geometry == backup.priorGeometry())) return "The saved jail location changed since this backup; admin review is required.";
         try {
             Class<?> api = Class.forName("xaero.pac.common.server.api.OpenPACServerAPI");
             Object instance = api.getMethod("get", MinecraftServer.class).invoke(null, player.server);
             Object protection = api.getMethod("getChunkProtection").invoke(instance);
             Class<?> contract = Class.forName("xaero.pac.common.server.claims.protection.api.IChunkProtectionAPI");
             var check = contract.getMethod("onEntityPlaceBlock", net.minecraft.world.level.block.state.BlockState.class, Entity.class, ServerLevel.class, BlockPos.class);
-            for (int i=0; i<JailTerrainJournal.VOLUME; i++) {
-                BlockPos pos = at(min, i); var state = level.getBlockState(pos); var before = backup.before().get(i); var after = backup.after().get(i);
+            for (int i=0; i<backup.layout().volume; i++) {
+                BlockPos pos = backup.layout().at(min, i); var state = level.getBlockState(pos); var before = backup.before().get(i); var after = backup.after().get(i);
                 if (level.getBlockEntity(pos) != null || !(state.equals(before) || state.equals(after))) return "A later edit at " + pos.toShortString() + " conflicts with the backup. Nothing was restored.";
                 if (!state.equals(before) && !Boolean.FALSE.equals(check.invoke(protection, before, player, level, pos))) return "Open Parties denied restoring " + pos.toShortString() + ".";
             }
@@ -207,8 +222,8 @@ public final class JailPlacement {
 
     /** The east wall has a two-block doorway for staff; the middle wall is barred. */
     static boolean newStructure(int x, int y, int z) {
-        if (x == WIDTH-1 && z == 3 && (y == 1 || y == 2)) return false;
-        return x == 0 || x == WIDTH-1 || y == 0 || y == HEIGHT-1 || z == 0 || z == DEPTH-1 || x == 6;
+        if (x == 12 && z == 3 && (y == 1 || y == 2)) return false;
+        return x == 0 || x == 12 || y == 0 || y == 6 || z == 0 || z == 6 || x == 6;
     }
     static net.minecraft.world.level.block.state.BlockState newTemplateState(int x, int y, int z) {
         if (x == 6 && y >= 1 && y <= 4 && z >= 1 && z <= 5) return Blocks.IRON_BARS.defaultBlockState();
@@ -228,18 +243,15 @@ public final class JailPlacement {
                     .setValue(net.minecraft.world.level.block.CrossCollisionBlock.SOUTH, true);
         return newTemplateState(x,y,z);
     }
-    private static BlockPos at(BlockPos min, int index) {
-        return min.offset(index / (HEIGHT * DEPTH), index / DEPTH % HEIGHT, index % DEPTH);
-    }
     private static List<net.minecraft.world.level.block.state.BlockState> capture(ServerLevel level, BlockPos min) {
-        var states = new ArrayList<net.minecraft.world.level.block.state.BlockState>(JailTerrainJournal.VOLUME);
-        for (int i=0; i<JailTerrainJournal.VOLUME; i++) states.add(level.getBlockState(at(min, i)));
+        var states = new ArrayList<net.minecraft.world.level.block.state.BlockState>(LAYOUT.volume);
+        for (int i=0; i<LAYOUT.volume; i++) states.add(level.getBlockState(LAYOUT.at(min, i)));
         return List.copyOf(states);
     }
     private static List<net.minecraft.world.level.block.state.BlockState> desired() {
-        var states = new ArrayList<net.minecraft.world.level.block.state.BlockState>(JailTerrainJournal.VOLUME);
+        var states = new ArrayList<net.minecraft.world.level.block.state.BlockState>(LAYOUT.volume);
         for (int x=0; x<WIDTH; x++) for (int y=0; y<HEIGHT; y++) for (int z=0; z<DEPTH; z++)
-            states.add(chairStructure(x,y,z) ? chairTemplateState(x,y,z) : Blocks.AIR.defaultBlockState());
+            states.add(DetentionCenter.state(x,y,z));
         return List.copyOf(states);
     }
 
@@ -281,12 +293,13 @@ public final class JailPlacement {
     /** Unknown geometry versions are deliberately rejected instead of guessed. */
     public static boolean intact(MinecraftServer server, Loc loc, int geometry) {
         if (loc == null || !Double.isFinite(loc.x()) || !Double.isFinite(loc.y()) || !Double.isFinite(loc.z())) return false;
+        if (geometry == DetentionCenter.GEOMETRY) return intactCell(server, loc);
         if (geometry != JailData.LEGACY_GEOMETRY && geometry != JailData.INTERROGATION_GEOMETRY && geometry != JailData.INTERROGATION_CHAIR_GEOMETRY) return false;
         ServerLevel level = loc.level(server);
         if (level == null) return false;
         BlockPos min = BlockPos.containing(loc.x(), loc.y(), loc.z()).offset(-3,-1,-3);
         if (min.getY() < level.getMinBuildHeight() || min.getY()+6 >= level.getMaxBuildHeight()) return false;
-        int width = geometry == JailData.LEGACY_GEOMETRY ? 7 : WIDTH;
+        int width = geometry == JailData.LEGACY_GEOMETRY ? 7 : 13;
         if (!level.getWorldBorder().isWithinBounds(new AABB(min.getX(), min.getY(), min.getZ(), min.getX()+width, min.getY()+7, min.getZ()+7))) return false;
         for (int x=min.getX()>>4; x<=(min.getX()+width-1)>>4; x++) for (int z=min.getZ()>>4; z<=(min.getZ()+6)>>4; z++) if (!level.hasChunk(x,z)) return false;
         for (int x=0; x<width; x++) for (int y=0; y<7; y++) for (int z=0; z<7; z++) {
@@ -299,6 +312,26 @@ public final class JailPlacement {
                 if (!state.is(newTemplateState(x,y,z).getBlock())) return false;
             } else if (x < 6 && !state.isAir()) return false;
         }
+        return true;
+    }
+    private static boolean intactCell(MinecraftServer server, Loc loc) {
+        JailData data = JailData.get(server);
+        if (data.geometry() != DetentionCenter.GEOMETRY) return false;
+        int cell = DetentionCenter.number(data.location(), loc);
+        if (cell == 0) return false;
+        ServerLevel level = loc.level(server);
+        if (level == null) return false;
+        int left = DetentionPlan.centerX(cell) - 3, north = DetentionPlan.centerZ(cell) - 3;
+        BlockPos min = BlockPos.containing(loc.x(), loc.y(), loc.z()).offset(-3, -1, -3);
+        if (min.getY() < level.getMinBuildHeight() || min.getY() + 6 >= level.getMaxBuildHeight()) return false;
+        if (!level.getWorldBorder().isWithinBounds(new AABB(min.getX(), min.getY(), min.getZ(),
+                min.getX()+7, min.getY()+7, min.getZ()+7))) return false;
+        for (int x = min.getX() >> 4; x <= (min.getX()+6) >> 4; x++)
+            for (int z = min.getZ() >> 4; z <= (min.getZ()+6) >> 4; z++)
+                if (!level.hasChunk(x,z)) return false;
+        // Only the assigned cell participates in its safety check. Other wings can be unloaded.
+        for (int x = 0; x < 7; x++) for (int y = 0; y < 7; y++) for (int z = 0; z < 7; z++)
+            if (!level.getBlockState(min.offset(x,y,z)).equals(DetentionCenter.state(left+x,y,north+z))) return false;
         return true;
     }
     private static boolean claimAccess(ServerPlayer player, ServerLevel level, int x, int z) {
@@ -322,7 +355,7 @@ public final class JailPlacement {
             var check = contract.getMethod("onEntityPlaceBlock", net.minecraft.world.level.block.state.BlockState.class, Entity.class, ServerLevel.class, BlockPos.class);
             var targets = desired();
             for (int i=0; i<targets.size(); i++) {
-                BlockPos pos = at(min, i); var next = targets.get(i);
+                BlockPos pos = LAYOUT.at(min, i); var next = targets.get(i);
                 if (!level.getBlockState(pos).equals(next) && !Boolean.FALSE.equals(check.invoke(protection, next, player, level, pos))) return false;
             }
             return true;

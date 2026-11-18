@@ -1,6 +1,7 @@
 package dev.unyielding.jail;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.unyielding.jail.JailText;
 import dev.unyielding.jail.Loc;
@@ -41,7 +42,11 @@ public final class JailCommands {
         JailIntegrated.register(dispatcher);
         JailRuntimeMigration.register(dispatcher);
         dispatcher.register(Commands.literal("jail").requires(JailCommands::mayManage)
-                .then(Commands.argument("player", EntityArgument.player()).executes(c -> jail(c.getSource(), EntityArgument.getPlayer(c, "player")))));
+                .then(Commands.argument("player", EntityArgument.player())
+                        .executes(c -> jail(c.getSource(), EntityArgument.getPlayer(c, "player"),0))
+                        .then(Commands.argument("cell", IntegerArgumentType.integer(1, DetentionCenter.CELL_COUNT))
+                                .executes(c -> jail(c.getSource(), EntityArgument.getPlayer(c,"player"),IntegerArgumentType.getInteger(c,"cell"))))));
+        dispatcher.register(Commands.literal("jailcells").requires(JailCommands::mayManage).executes(c->cells(c.getSource())));
         dispatcher.register(Commands.literal("unjail").requires(JailCommands::mayManage)
                 .then(Commands.argument("player", EntityArgument.player()).executes(c -> release(c.getSource(), EntityArgument.getPlayer(c, "player"), false)))
                 .then(Commands.literal("pardon").then(Commands.argument("player", EntityArgument.player())
@@ -59,10 +64,30 @@ public final class JailCommands {
         source.sendSuccess(() -> net.minecraft.network.chat.Component.literal("Removed jail assignment for " + player + " without moving the player."), true);
         return 1;
     }
-    private static int jail(CommandSourceStack source, ServerPlayer target) throws CommandSyntaxException {
+    private static int cells(CommandSourceStack source) {
+        try {
+            var roster=JailIntegrated.roster(source.getServer());
+            StringBuilder lines=new StringBuilder("Detention center");
+            for(int number=1;number<=DetentionCenter.CELL_COUNT;number++){
+                var occupant=roster.occupant(number);
+                lines.append("\nCell ").append(number).append("  ");
+                if(occupant==null)lines.append("Available");
+                else {
+                    var player=source.getServer().getPlayerList().getPlayer(occupant.player());
+                    lines.append(occupant.assigned()?"Occupied":"Reserved").append(" · ")
+                            .append(player==null?occupant.player()+" (offline)":player.getGameProfile().getName());
+                }
+            }
+            source.sendSuccess(()->net.minecraft.network.chat.Component.literal(lines.toString()),false);
+            return 1;
+        } catch(java.io.IOException | RuntimeException unavailable){
+            return JailText.fail(source,"Cannot verify cell occupancy: "+unavailable.getMessage());
+        }
+    }
+    private static int jail(CommandSourceStack source, ServerPlayer target,int cell) throws CommandSyntaxException {
         if (target == source.getEntity() || protectedFromJail(target))
             return JailText.fail(source, "Administrators cannot be jailed; console remains available for recovery.");
-        try { JailIntegrated.admit(source,target);return 1; }
+        try { JailIntegrated.admit(source,target,cell);return 1; }
         catch (java.io.IOException | RuntimeException unsafe) { return JailText.fail(source,"Jail: "+unsafe.getMessage()+". Records retained; no automatic replay."); }
     }
     private static int release(CommandSourceStack source, ServerPlayer target, boolean pardon) {

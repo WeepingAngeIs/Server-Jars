@@ -50,7 +50,7 @@ public final class JailCustodyLedger implements AutoCloseable {
         Binding old=bindings.get(id),now=new Binding(id,owner,items,origins,hash,anchor,state,next,reason);
         if(old==null&&state!=State.QUARANTINED)throw new IOException("New custody record was not quarantined");
         if(old!=null&&(!old.owner().equals(owner)||!old.items().equals(items)||!old.origins().equals(origins)||!MessageDigest.isEqual(old.digest(),hash)))throw new IOException("Custody identity changed");
-        for(Binding other:bindings.values())if(!other.id().equals(id)&&other.anchor().equals(anchor))throw new IOException("Another prisoner owns this interface");
+        requireAvailable(id,anchor);
         bindings.put(id,now);audit.add(new Audit(next,id,actor,reason,state));sequence=next;
     }
     public Binding get(UUID id){return bindings.get(id);}public List<Binding> list(){return List.copyOf(bindings.values());}public List<Audit> audit(UUID id){return audit.stream().filter(e->e.transaction().equals(id)).toList();}
@@ -64,7 +64,27 @@ public final class JailCustodyLedger implements AutoCloseable {
         }catch(IOException failed){poisoned=true;throw failed;}
     }
     public boolean outstanding(UUID owner){return bindings.values().stream().anyMatch(b->b.owner().equals(owner)&&b.state()!=State.RELEASED);}
+    /** Each active interface has one owner. Finished records remain accessible by transaction ID. */
+    Binding at(Anchor anchor){
+        Binding latest=null;
+        for(Binding b:bindings.values())if(b.anchor().equals(anchor)){
+            if(b.state()!=State.RELEASED)return b;
+            if(latest==null||b.revision()>latest.revision())latest=b;
+        }
+        return latest;
+    }
+    private void requireAvailable(UUID id,Anchor anchor)throws IOException {
+        Binding holder=at(anchor);
+        if(holder!=null&&!holder.id().equals(id)&&holder.state()!=State.RELEASED)
+            throw new IOException("Another prisoner owns this interface");
+    }
     public Binding bind(UUID id,UUID owner,String items,String origins,byte[] hash,Anchor anchor,String actor)throws IOException {
+        path(items);path(origins);
+        if(at(anchor)!=null)throw new IOException("Another transaction already used this interface");
+        return bindLocker(id,owner,items,origins,hash,anchor,actor);
+    }
+    /** Numbered, permanent lockers can serve a new transaction once the last one is released. */
+    Binding bindLocker(UUID id,UUID owner,String items,String origins,byte[] hash,Anchor anchor,String actor)throws IOException {
         if(bindings.containsKey(id))throw new IOException("Transaction already indexed; use its existing record");
         return append(new Binding(id,owner,items,origins,hash,anchor,State.QUARANTINED,sequence+1,"Imported custody; verified adapter review required"),actor);
     }
@@ -73,7 +93,7 @@ public final class JailCustodyLedger implements AutoCloseable {
     private Binding expected(UUID id,long revision)throws IOException{Binding b=get(id);if(b==null||b.revision()!=revision)throw new IOException("Stale or missing custody selection");return b;}
     private Binding append(Binding b,String actor)throws IOException {
         verifyDisk();text(actor,128);
-        for(Binding other:bindings.values())if(!other.id().equals(b.id())&&other.anchor().equals(b.anchor()))throw new IOException("Another prisoner owns this interface");
+        requireAvailable(b.id(),b.anchor());
         var bytes=new ByteArrayOutputStream();var out=new DataOutputStream(bytes);out.writeLong(sequence+1);out.writeLong(b.id().getMostSignificantBits());out.writeLong(b.id().getLeastSignificantBits());out.writeLong(b.owner().getMostSignificantBits());out.writeLong(b.owner().getLeastSignificantBits());out.writeUTF(b.items());out.writeUTF(b.origins());out.write(b.digest());out.writeUTF(b.anchor().dimension());out.writeInt(b.anchor().x());out.writeInt(b.anchor().y());out.writeInt(b.anchor().z());out.writeByte(b.state().ordinal());out.writeUTF(actor);out.writeUTF(b.reason());byte[] payload=bytes.toByteArray();if(payload.length>MAX)throw new IOException("Custody frame too large");byte[] checksum=digest(chain,payload);
         try{file.position(file.size());write(file,ByteBuffer.allocate(4).putInt(payload.length).flip());write(file,ByteBuffer.wrap(payload));write(file,ByteBuffer.wrap(checksum));file.force(true);apply(payload);chain=checksum;return get(b.id());}catch(Throwable failed){poisoned=true;if(failed instanceof IOException io)throw io;throw new IOException("Custody write outcome uncertain",failed);}
     }

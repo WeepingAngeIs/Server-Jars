@@ -3,10 +3,11 @@ set -euo pipefail
 [[ "${GITHUB_ACTIONS:-}" == true && "${RUNNER_ENVIRONMENT:-}" == github-hosted ]]
 export UQ_PACKAGED_JAIL_SMOKE=1 LIBGL_ALWAYS_SOFTWARE=true ALSOFT_DRIVERS=null
 export UQ_WORLD_NAME=jail_certified_smoke UQ_RESULT_FILE=/tmp/uq-player-only-result
-candidate="$GITHUB_WORKSPACE/candidate/dist/migration-build/Minecraft-Jail-1.2.0.jar"
-old="$GITHUB_WORKSPACE/old-evidence/dist/production-candidate/Minecraft-Jail-1.2.0.jar"
+candidate="${MIGRATION_CANDIDATE:-$GITHUB_WORKSPACE/candidate/dist/migration-build/Minecraft-Jail-1.2.0.jar}"
+old="${MIGRATION_PREDECESSOR:-$GITHUB_WORKSPACE/old-evidence/dist/production-candidate/Minecraft-Jail-1.2.0.jar}"
+export MIGRATION_OLD_SHA512=$(sha512sum "$old" | cut -d' ' -f1)
 export MIGRATION_CANDIDATE_SHA512=$(sha512sum "$candidate" | cut -d' ' -f1)
-[[ $(sha256sum "$old" | cut -d' ' -f1) == c04a0564022ffdcfd1e9c0710ffd024260994498ea786cbab68711159fdc2883 ]]
+[[ $(sha256sum "$old" | cut -d' ' -f1) == "${MIGRATION_OLD_SHA256:-c04a0564022ffdcfd1e9c0710ffd024260994498ea786cbab68711159fdc2883}" ]]
 for phase in 1 2 3 4 5; do
  if [[ "$phase" == 1 ]]; then cp "$old" "$UQ_JAIL_JAR"; else cp "$candidate" "$UQ_JAIL_JAR"; fi
  export UQ_JAIL_SHA256=$(sha256sum "$UQ_JAIL_JAR" | cut -d' ' -f1)
@@ -28,5 +29,5 @@ required={2:['unapproved_old_receipt_refused','prepared_interruption'],3:['prepa
 for n,keys in required.items():
  for k in keys: assert r[n-1].get(k) is True,(n,k)
 assert all(x['pokemon_modified'] is False for x in r)
-(p/'migration-summary.json').write_text(json.dumps({'phases':r,'scope':'synthetic c04a0564 predecessor only; legacy 5c2653a9 and private saves NOT VERIFIED','deployment':False},indent=2))
+(p/'migration-summary.json').write_text(json.dumps({'phases':r,'scope':'synthetic occupied predecessor only; private saves unverified','deployment':False},indent=2))
 PY

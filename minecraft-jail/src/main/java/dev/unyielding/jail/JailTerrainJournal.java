@@ -30,9 +30,17 @@ import net.minecraft.world.level.storage.LevelResource;
 
 /** One immutable before/after journal, forced before the first world write. */
 final class JailTerrainJournal {
-    static final int WIDTH = 13, HEIGHT = 7, DEPTH = 7, VOLUME = WIDTH * HEIGHT * DEPTH;
+    enum Layout {
+        CLASSIC(13, 7, 7), ROSECOURT(DetentionPlan.WIDTH, DetentionPlan.HEIGHT, DetentionPlan.DEPTH);
+        final int width, height, depth, volume;
+        Layout(int width, int height, int depth) {
+            this.width = width; this.height = height; this.depth = depth; this.volume = width * height * depth;
+        }
+        BlockPos at(BlockPos min, int i) { return min.offset(i / (height * depth), i / depth % height, i % depth); }
+        BlockPos max(BlockPos min) { return min.offset(width - 1, height - 1, depth - 1); }
+    }
     private static final int MAGIC = 0x554A4231, MAX_BYTES = 8 * 1024 * 1024;
-    record Backup(ResourceLocation dimension, BlockPos min, List<BlockState> before,
+    record Backup(Layout layout, ResourceLocation dimension, BlockPos min, List<BlockState> before,
                   List<BlockState> after, Loc prior, int priorGeometry, UUID actor) { }
     private JailTerrainJournal() { }
     private static Path path(MinecraftServer server) {
@@ -40,9 +48,9 @@ final class JailTerrainJournal {
     }
     static boolean exists(MinecraftServer server) { return Files.exists(path(server), LinkOption.NOFOLLOW_LINKS); }
     static void write(MinecraftServer server, Backup backup) throws IOException {
-        if (backup.before().size() != VOLUME || backup.after().size() != VOLUME) throw new IOException("Invalid backup volume");
+        if (backup.before().size() != backup.layout().volume || backup.after().size() != backup.layout().volume) throw new IOException("Invalid backup volume");
         CompoundTag root = new CompoundTag();
-        root.putInt("format", 1); root.putString("dimension", backup.dimension().toString());
+        root.putInt("format", 2); root.putString("layout", backup.layout().name()); root.putString("dimension", backup.dimension().toString());
         root.putIntArray("min", new int[]{backup.min().getX(), backup.min().getY(), backup.min().getZ()});
         root.putInt("priorGeometry", backup.priorGeometry());
         root.putUUID("actor", backup.actor());
@@ -68,7 +76,7 @@ final class JailTerrainJournal {
         catch (IOException | UnsupportedOperationException ignored) { }
         // Detect incomplete/corrupt backup before any world write.
         Backup verify = read(server);
-        if (!verify.dimension().equals(backup.dimension()) || !verify.min().equals(backup.min())
+        if (verify.layout() != backup.layout() || !verify.dimension().equals(backup.dimension()) || !verify.min().equals(backup.min())
                 || !verify.before().equals(backup.before()) || !verify.after().equals(backup.after()))
             throw new IOException("Backup verification failed; no blocks were changed");
     }
@@ -82,17 +90,18 @@ final class JailTerrainJournal {
         byte[] payload = new byte[length], digest = new byte[32]; bytes.get(payload); bytes.get(digest);
         if (!MessageDigest.isEqual(hash(payload), digest)) throw new IOException("Backup checksum mismatch");
         CompoundTag root = NbtIo.readCompressed(new ByteArrayInputStream(payload), NbtAccounter.create(16L * 1024 * 1024));
-        if (root.getInt("format") != 1 || !root.contains("dimension", Tag.TAG_STRING) || !root.contains("min", Tag.TAG_INT_ARRAY)
+        Layout layout = layout(root);
+        if (!root.contains("dimension", Tag.TAG_STRING) || !root.contains("min", Tag.TAG_INT_ARRAY)
                 || !root.contains("before", Tag.TAG_LIST) || !root.contains("after", Tag.TAG_LIST) || !root.contains("priorGeometry", Tag.TAG_INT) || !root.hasUUID("actor"))
             throw new IOException("Invalid placement backup");
         ResourceLocation dimension = ResourceLocation.tryParse(root.getString("dimension")); int[] min = root.getIntArray("min");
         if (dimension == null || min.length != 3) throw new IOException("Invalid backup location");
         ListTag beforeTags = root.getList("before", Tag.TAG_COMPOUND), afterTags = root.getList("after", Tag.TAG_COMPOUND);
-        if (beforeTags.size() != VOLUME || afterTags.size() != VOLUME) throw new IOException("Invalid backup volume");
+        if (beforeTags.size() != layout.volume || afterTags.size() != layout.volume) throw new IOException("Invalid backup volume");
         var registry = server.registryAccess().lookupOrThrow(Registries.BLOCK);
-        List<BlockState> before = new ArrayList<>(VOLUME), after = new ArrayList<>(VOLUME);
+        List<BlockState> before = new ArrayList<>(layout.volume), after = new ArrayList<>(layout.volume);
         try {
-            for (int i = 0; i < VOLUME; i++) {
+            for (int i = 0; i < layout.volume; i++) {
                 CompoundTag a = beforeTags.getCompound(i), b = afterTags.getCompound(i);
                 BlockState old = NbtUtils.readBlockState(registry, a), next = NbtUtils.readBlockState(registry, b);
                 if (!NbtUtils.writeBlockState(old).equals(a) || !NbtUtils.writeBlockState(next).equals(b)) throw new IOException("Unknown backup block state");
@@ -100,7 +109,16 @@ final class JailTerrainJournal {
             }
         } catch (RuntimeException invalid) { throw new IOException("Invalid backup block state", invalid); }
         Loc prior = root.contains("prior", Tag.TAG_COMPOUND) ? Loc.fromTag(root.getCompound("prior")) : null;
-        return new Backup(dimension, new BlockPos(min[0], min[1], min[2]), List.copyOf(before), List.copyOf(after), prior, root.getInt("priorGeometry"), root.getUUID("actor"));
+        return new Backup(layout, dimension, new BlockPos(min[0], min[1], min[2]), List.copyOf(before), List.copyOf(after), prior, root.getInt("priorGeometry"), root.getUUID("actor"));
+    }
+    static Layout layout(CompoundTag root) throws IOException {
+        if (!root.contains("format", Tag.TAG_INT)) throw new IOException("Missing terrain journal format");
+        if (root.getInt("format") == 1 && !root.contains("layout")) return Layout.CLASSIC;
+        if (root.getInt("format") == 2 && root.contains("layout", Tag.TAG_STRING)) {
+            try { return Layout.valueOf(root.getString("layout")); }
+            catch (IllegalArgumentException invalid) { throw new IOException("Unknown terrain journal layout", invalid); }
+        }
+        throw new IOException("Unknown terrain journal format");
     }
     static void remove(MinecraftServer server) throws IOException { Files.delete(path(server)); }
     private static byte[] hash(byte[] payload) {
