@@ -3,18 +3,70 @@ package dev.unyielding.bundlesmoke;
 import dev.unyielding.jail.JailConfig;
 import java.nio.file.Files;
 import java.util.Set;
+import java.util.Map;
+import java.util.UUID;
 import net.minecraft.nbt.Tag;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 
 import static dev.unyielding.bundlesmoke.PlayerOnlySmoke.*;
 
 /** One real full-pack client, to fit a production dedicated server and client on the same runner. */
 public final class FullPackSession {
     private FullPackSession() { }
+    private static boolean observedFresh;
+
+    static boolean prepared(ServerPlayer player) throws Exception {
+        if (!observedFresh) {
+            snapshot(player,"fresh");
+            noClaims(player);
+            Files.writeString(results.resolve("full249-onboarding-start.txt"),"Fresh player sampled.\n");
+            observedFresh=true;
+        }
+        return Files.isRegularFile(results.resolve("full249-onboarding-complete.txt"));
+    }
+
+    static void noClaims(ServerPlayer player) throws Exception {
+        var value=OriginCustodyPort.type("com.cyberday1.neoorigins.config.AdminConfig")
+                .getField("UNIQUE_ORIGIN_LAYERS").get(null);
+        require(((net.neoforged.neoforge.common.ModConfigSpec.ConfigValue<?>)value).get() instanceof java.util.List<?> layers && layers.isEmpty(),
+                "The pack's ordinary nonunique origin rules changed");
+        Object claims=OriginCustodyPort.call(OriginCustodyPort.CLAIMS,null,"get",
+                new Class<?>[]{net.minecraft.server.MinecraftServer.class},player.server);
+        var entries=(Map<?,?>)OriginCustodyPort.call(OriginCustodyPort.CLAIMS,claims,"view");
+        require(entries.values().stream().allMatch(row->row instanceof Map<?,?> m && m.isEmpty()),
+                "Fresh nonunique world contains unexpected origin claims");
+    }
+
+    static void seedEquipment(ServerPlayer player) throws Exception {
+        require(CertifiedJailSmoke.choices().equals(Map.of(
+                ResourceLocation.parse("neoorigins:origin"),ResourceLocation.parse("neoorigins:human"),
+                ResourceLocation.parse("neoorigins:class"),ResourceLocation.parse("neoorigins:class_warrior"))),
+                "Native onboarding did not select Human and Warrior");
+        noClaims(player);
+        // Test gear in the newly created player's vanilla slots. All accessory slots
+        // retain the pack's natural state and native tag/provider restrictions.
+        VanillaCustodySmoke.seed(player);
+        player.getInventory().selected=2;
+        var coin=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("lightmanscurrency:coin_gold")),7);
+        coin.set(DataComponents.CUSTOM_NAME,Component.literal("Exact packed coin stack"));
+        player.getInventory().setItem(23,coin);
+        require(player.getMaxHealth()==22,"Warrior was not applied by native origin selection");
+        player.setHealth(player.getMaxHealth());
+        PackedWalletProof.seed(player);
+        CertifiedJailSmoke.flush();
+        CertifiedJailSmoke.saved();
+        snapshot(player,"seeded-before-preflight");
+        var port=CertifiedJailSmoke.items(UUID.randomUUID(),null);
+        port.validateRemoval();
+        Files.write(evidence(player,"equipment"),port.current().inventory());
+    }
 
     private static final Set<String> OBSERVED = Set.of(
         "aether:aether_player", "apotheosis:radial_mining_mode", "apotheosis:tier_augments_applied",
@@ -80,10 +132,17 @@ public final class FullPackSession {
                 keyNames.add(net.minecraft.nbt.StringTag.valueOf(key));
         }
         result.put("persistent_keys",keyNames);
-        if (stage.equals("fresh")) {
+        if (stage.equals("fresh") || stage.equals("seeded-before-preflight") || stage.equals("seeded")) {
             if (persisted.contains("dangerous_first_join", Tag.TAG_ANY_NUMERIC))
                 result.put("dangerous_first_join",persisted.get("dangerous_first_join").copy());
             var insanity = persisted.getCompound("insanelib");
+            var sanityTypes = new CompoundTag();
+            for (String key : insanity.getAllKeys()) {
+                String lower = key.toLowerCase(java.util.Locale.ROOT);
+                if (!lower.contains("cobble") && !lower.contains("poke"))
+                    sanityTypes.putString(key,insanity.get(key).getType().getName());
+            }
+            result.put("insanelib_shapes",sanityTypes);
             var neutralInsanity = new CompoundTag();
             if (insanity.contains("in_combat",Tag.TAG_ANY_NUMERIC))
                 neutralInsanity.put("in_combat",insanity.get("in_combat").copy());
@@ -91,18 +150,25 @@ public final class FullPackSession {
             if (extra instanceof CompoundTag c && c.isEmpty() || extra instanceof net.minecraft.nbt.ListTag l && l.isEmpty())
                 neutralInsanity.put("nbt_tags",extra.copy());
             result.put("insanelib",neutralInsanity);
+            var carry = attachments.getCompound("carryon:carry_on_data");
+            var inputs = new CompoundTag();
+            for (String key : Set.of("tick", "selected", "keyPressed"))
+                if (carry.contains(key,Tag.TAG_ANY_NUMERIC)) inputs.put(key,carry.get(key).copy());
+            result.put("carryon_control_inputs",inputs);
+            var mana = attachments.getCompound("ars_nouveau:mana_cap");
+            if (mana.contains("current",Tag.TAG_ANY_NUMERIC))
+                result.put("ars_mana_current",mana.get("current").copy());
         }
         Files.writeString(results.resolve("synthetic-player-"+stage+".snbt"),result.toString());
     }
     static void begin(ServerPlayer player) throws Exception {
-        snapshot(player,"fresh");
         Custody249Proof.runtime();
         CenterBuildProof.place(player,player);
         flag("preview_place_undo_and_six_intact_cells");
         player.server.getPlayerList().deop(player.getGameProfile());
         require(!player.hasPermissions(2), "Still an administrator after fixture setup");
         require(!JailConfig.JAIL_CERTIFIED_ADMISSIONS.get() && !JailConfig.JAIL_PACKED_WALLETS.get(), "Admission defaults changed");
-        seed(player,true);
+        seedEquipment(player);
         snapshot(player,"seeded");
         require(cmd("jailcustody init")==1 && cmd("jailintegrated init")==1, "Cannot initialize fresh custody journals");
         require(cmd("jail Visitor 6")==0, "Default-disabled admission accepted");
@@ -131,6 +197,8 @@ public final class FullPackSession {
         Files.writeString(evidence(player,"progress"),marker);
 
         require(cmd("jail Visitor 6")==1,"Supported packed-wallet admission refused");
+        noClaims(player);
+        flag("native_human_warrior_selection_without_unique_claims");
         remember(player);
         cell(player,6);
         snapshot(player,"held");
@@ -155,6 +223,7 @@ public final class FullPackSession {
         PackedWalletProof.occupiedDestination(player);
         flag("occupied_return_kept_conflict_and_escrow");
         release(player);
+        noClaims(player);
         flag("full_wallet_and_equipment_return_after_restart");
         pass();
     }

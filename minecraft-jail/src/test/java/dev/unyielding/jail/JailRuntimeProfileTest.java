@@ -31,6 +31,21 @@ class JailRuntimeProfileTest {
         assertThrows(IOException.class,()->JailRuntimeProfile.check("21.1.249","21.1.255",List.of("new=1:aaa"),"new=1:aaa"));
     }
 
+    @Test void missingNativeLedgerCannotReplaceExistingUniqueOrDirtyHistory() throws Exception {
+        CompoundTag empty=new CompoundTag(),owners=new CompoundTag();
+        owners.putUUID("neoorigins:human",java.util.UUID.randomUUID());
+        JailNativeOriginPort.requireUnusedClaimLedger(List.of(),false,empty);
+        assertThrows(IOException.class,()->JailNativeOriginPort.requireUnusedClaimLedger(List.of("neoorigins:origin"),false,empty));
+        assertThrows(IOException.class,()->JailNativeOriginPort.requireUnusedClaimLedger(List.of(),true,empty));
+        assertThrows(IOException.class,()->JailNativeOriginPort.requireUnusedClaimLedger(List.of(),false,owners));
+        CompoundTag receipt=new CompoundTag(); // Historic intents always had a materialized ledger.
+        JailNativeOriginPort.requireObservedClaimFile(receipt,true);
+        assertThrows(IOException.class,()->JailNativeOriginPort.requireObservedClaimFile(receipt,false));
+        CompoundTag marker=new CompoundTag(); marker.putBoolean("unmaterialized",true);receipt.put("claims_before",marker);
+        JailNativeOriginPort.requireObservedClaimFile(receipt,false);
+        assertThrows(IOException.class,()->JailNativeOriginPort.requireObservedClaimFile(receipt,true));
+    }
+
     @Test void unknownOrNonNeutralAttachmentsRefuse() {
         JsonObject reviewed=new JsonObject();
         JsonArray values=new JsonArray();

@@ -112,12 +112,48 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         if(intent!=null&&!hash.equals(intent.getString("definitions")))throw new IOException("Origin definitions changed since custody");return hash;
     }
     private Path claimsFile(){return player.server.getWorldPath(LevelResource.ROOT).resolve("data/neoorigins_origin_claims.dat");}
-    Object claims()throws IOException {if(!Files.isRegularFile(claimsFile()))throw new IOException("Origin claim history missing");return call(CLAIMS,null,"get",new Class<?>[]{net.minecraft.server.MinecraftServer.class},player.server);}
-    UUID owner(Object claims,ResourceLocation origin)throws IOException{return (UUID)call(CLAIMS,claims,"getOwner",new Class<?>[]{ResourceLocation.class,ResourceLocation.class},layer,origin);}
+    private Object nativeClaims() throws IOException {
+        return call(CLAIMS,null,"get",new Class<?>[]{net.minecraft.server.MinecraftServer.class},player.server);
+    }
+
+    // A fresh nonunique server has no claim file. This is a distinct native state, and
+    // cannot stand in for a previously observed materialized ledger at any recovery stage.
+    private boolean claimsPresent() throws IOException {
+        Path file=claimsFile();
+        boolean present=Files.isRegularFile(file, LinkOption.NOFOLLOW_LINKS);
+        requireObservedClaimFile(intent, present);
+        if (present) return true;
+        if (!Files.notExists(file, LinkOption.NOFOLLOW_LINKS) || !JailHumanAudit.hasPackStateContract(player))
+            throw new IOException("Origin claim history missing or inaccessible");
+        Object config;
+        try { config=type("com.cyberday1.neoorigins.config.AdminConfig").getField("UNIQUE_ORIGIN_LAYERS").get(null); }
+        catch (ReflectiveOperationException bad) { throw new IOException("Cannot verify native unique layer configuration",bad); }
+        if (!(config instanceof net.neoforged.neoforge.common.ModConfigSpec.ConfigValue<?> option)
+                || !(option.get() instanceof List<?> layers))
+            throw new IOException("Cannot verify native unique layer configuration");
+        Object nativeData=nativeClaims();
+        if (!(nativeData instanceof net.minecraft.world.level.saveddata.SavedData state))
+            throw new IOException("Unaudited native claim ledger");
+        requireUnusedClaimLedger(layers, state.isDirty(), allClaims(nativeData));
+        return false;
+    }
+
+    static void requireObservedClaimFile(CompoundTag receipt, boolean present) throws IOException {
+        if (receipt!=null && receipt.getCompound("claims_before").getBoolean("unmaterialized")==present)
+            throw new IOException("Native origin claim file presence differs from the original custody record");
+    }
+
+    static void requireUnusedClaimLedger(List<?> uniqueLayers, boolean dirty, CompoundTag owners) throws IOException {
+        if (!uniqueLayers.isEmpty() || dirty || !owners.isEmpty())
+            throw new IOException("Missing on-disk origin claim history has a unique layer, live or pending claims");
+    }
+
+    Object claims()throws IOException {claimsPresent();return nativeClaims();}
+    UUID owner(Object claims,ResourceLocation origin)throws IOException{return claims==null?null:(UUID)call(CLAIMS,claims,"getOwner",new Class<?>[]{ResourceLocation.class,ResourceLocation.class},layer,origin);}
     boolean unique()throws IOException{return Boolean.TRUE.equals(call("com.cyberday1.neoorigins.config.AdminConfig",null,"isUniqueLayer",new Class<?>[]{ResourceLocation.class},layer));}
-    CompoundTag claimState(Object claims)throws IOException {CompoundTag result=new CompoundTag();result.putBoolean("unique",unique());UUID a=owner(claims,original),h=owner(claims,human);if(a!=null)result.putUUID("original",a);if(h!=null)result.putUUID("human",h);return result;}
+    CompoundTag claimState(Object claims)throws IOException {CompoundTag result=new CompoundTag();result.putBoolean("unique",unique());if(!claimsPresent())result.putBoolean("unmaterialized",true);UUID a=owner(claims,original),h=owner(claims,human);if(a!=null)result.putUUID("original",a);if(h!=null)result.putUUID("human",h);return result;}
     @SuppressWarnings("unchecked") private CompoundTag allClaims(Object claims)throws IOException {
-        CompoundTag result=new CompoundTag();Map<ResourceLocation,Map<ResourceLocation,UUID>> all=(Map<ResourceLocation,Map<ResourceLocation,UUID>>)call(CLAIMS,claims,"view");
+        CompoundTag result=new CompoundTag();if(claims==null)return result;Map<ResourceLocation,Map<ResourceLocation,UUID>> all=(Map<ResourceLocation,Map<ResourceLocation,UUID>>)call(CLAIMS,claims,"view");
         all.forEach((l,entries)->{CompoundTag nested=new CompoundTag();entries.forEach((o,owner)->nested.putUUID(o.toString(),owner));if(!nested.isEmpty())result.put(l.toString(),nested);});return result;
     }
     protected CompoundTag expectedAllClaims(boolean temporary)throws IOException {
@@ -175,9 +211,15 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
     @Override public JailOriginTransaction.View current()throws IOException {audit();effects();return view(player.saveWithoutId(new CompoundTag()),claims(),inventory.current());}
     @Override public JailOriginTransaction.View durable()throws IOException {
         CompoundTag saved;try(var input=Files.newInputStream(player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner()+".dat"))){saved=NbtIo.readCompressed(input,NbtAccounter.create(16L*1024*1024));}
-        CompoundTag claimsTag;try(var input=Files.newInputStream(claimsFile())){claimsTag=NbtIo.readCompressed(input,NbtAccounter.create(16L*1024*1024));}
-        if(!saved.hasUUID("UUID")||!owner().equals(saved.getUUID("UUID"))||!claimsTag.contains("data",10))throw new IOException("Malformed origin persistence");
-        Object savedClaims=call(CLAIMS,null,"load",new Class<?>[]{CompoundTag.class,HolderLookup.Provider.class},claimsTag.getCompound("data"),player.registryAccess());return view(saved,savedClaims,inventory.durable());
+        if(!saved.hasUUID("UUID")||!owner().equals(saved.getUUID("UUID")))throw new IOException("Malformed origin persistence");
+        Object savedClaims=null;
+        if (claimsPresent()) {
+            CompoundTag claimsTag;
+            try(var input=Files.newInputStream(claimsFile())){claimsTag=NbtIo.readCompressed(input,NbtAccounter.create(16L*1024*1024));}
+            if(!claimsTag.contains("data",10)) throw new IOException("Malformed origin claim persistence");
+            savedClaims=call(CLAIMS,null,"load",new Class<?>[]{CompoundTag.class,HolderLookup.Provider.class},claimsTag.getCompound("data"),player.registryAccess());
+        }
+        return view(saved,savedClaims,inventory.durable());
     }
     @Override public void validateCustody(JailEscrowJournal.Entry custody,boolean releaseStarted)throws IOException {
         if(custody.owner().equals(owner())) {
@@ -191,7 +233,14 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         if(!online())throw new IOException("Origin player offline");audit();effects();
         if(!original.equals(selections().get(layer)))throw new IOException("Expected original origin selection");
         if(current().receipt()!=JailOriginTransaction.Receipt.NONE)throw new IOException("Existing origin receipt requires review");
-        CompoundTag claims=claimState(claims());if(claims.getBoolean("unique")&&(!owned(claims,"original",owner())||(claims.hasUUID("human")&&!owned(claims,"human",owner()))))throw new IOException("Unique origin claim conflict");
+        Object ledger=claims();
+        CompoundTag all=allClaims(ledger);
+        if (!all.isEmpty() && JailHumanAudit.hasPackStateContract(player)) {
+            for(String storedLayer:all.getAllKeys())
+                if (!Boolean.TRUE.equals(call("com.cyberday1.neoorigins.config.AdminConfig",null,"isUniqueLayer",new Class<?>[]{ResourceLocation.class},id(storedLayer))))
+                    throw new IOException("Stale native claims on a nonunique origin layer");
+        }
+        CompoundTag claims=claimState(ledger);if(claims.getBoolean("unique")&&(!owned(claims,"original",owner())||(claims.hasUUID("human")&&!owned(claims,"human",owner()))))throw new IOException("Unique origin claim conflict");
     }
     @Override public byte[] prepareIntent(UUID transactionId,byte[] digest)throws IOException {
         validateAdmission();String fingerprint=audit();
@@ -268,7 +317,7 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         // SavedData.save queues its actual write in this NeoForge version.
         // Waiting only for DimensionDataStorage.save() is not a disk barrier.
         try{net.neoforged.neoforge.common.IOUtilities.waitUntilIOWorkerComplete();}catch(RuntimeException failed){throw new IOException("Native SavedData worker failed",failed);}
-        force(player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner()+".dat"));force(claimsFile());var disk=durable();var live=current();
+        force(player.server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(owner()+".dat"));if(claimsPresent())force(claimsFile());var disk=durable();var live=current();
         if(!Arrays.equals(before.state(),disk.state())||!Arrays.equals(before.state(),live.state())||before.receipt()!=disk.receipt()||!Objects.equals(before.transaction(),disk.transaction()))throw new IOException("Origin/player/claims persistence mismatch: disk="+differences(before,disk)+" live="+differences(before,live));
     }
     private static String differences(JailOriginTransaction.View expected,JailOriginTransaction.View observed)throws IOException{

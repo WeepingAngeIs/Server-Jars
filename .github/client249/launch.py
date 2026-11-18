@@ -32,7 +32,7 @@ options = utils.generate_test_options()
 options.update(username=args.name, executablePath=java, gameDirectory=str(game),
                jvmArguments=["-Xms512m", "-Xmx9G" if args.join else "-Xmx11G", "-XX:+UseG1GC", "-XX:ActiveProcessorCount=4"],
                customResolution=True, resolutionWidth="854", resolutionHeight="480")
-if args.join:
+if args.join and os.environ.get("UQ_TEST_JOIN_FROM_TITLE") != "1":
     options["quickPlayMultiplayer"] = args.join
 args_java = command.get_minecraft_command(version, str(launcher), options)
 # Forge can leave a graphical error screen open indefinitely after a loader crash.

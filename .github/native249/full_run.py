@@ -64,7 +64,9 @@ enable-query=false
 max-tick-time=-1
 """)
 (client/"options.txt").write_text("guiScale:2\nrenderDistance:2\nsimulationDistance:2\nmaxFps:30\nenableVsync:false\nonboardAccessibility:false\nsoundCategory_master:0.0\ntutorialStep:none\n")
-base_env=dict(os.environ,UQ_PACKAGED_JAIL_SMOKE="1",UQ_JAIL_JAR=str(server/"mods"/candidate.name),
+origin_config=server/"config/neoorigins/admin.toml"
+original_origin_config=digest(origin_config)
+base_env=dict(os.environ,UQ_PACKAGED_JAIL_SMOKE="1",UQ_TEST_JOIN_FROM_TITLE="1",UQ_JAIL_JAR=str(server/"mods"/candidate.name),
               UQ_BUNDLE_JAR=str(companion),UQ_JAIL_SHA256=digest(candidate),UQ_BUNDLE_SHA256=digest(companion),
               LIBGL_ALWAYS_SOFTWARE="true",ALSOFT_DRIVERS="null")
 
@@ -100,7 +102,7 @@ for phase in (1,2):
     with (logs/"server.log").open("w") as serverlog,(logs/"client.log").open("w") as clientlog:
         srv=cli=None
         try:
-            srv=subprocess.Popen(["java","-Xms512m","-Xmx3G","@libraries/net/neoforged/neoforge/21.1.249/unix_args.txt","nogui"],
+            srv=subprocess.Popen(["java","-Xms512m","-Xmx3G","-Dneoforge.readTimeout=180","@libraries/net/neoforged/neoforge/21.1.249/unix_args.txt","nogui"],
                                  cwd=server,env=env,stdin=subprocess.PIPE,stdout=serverlog,stderr=subprocess.STDOUT,
                                  start_new_session=True,text=True)
             for attempt in range(450):
@@ -117,6 +119,8 @@ for phase in (1,2):
                 check_alive(srv,"Server",logs/"server.log")
                 check_alive(cli,"Client",logs/"client.log")
                 if attempt % 15 == 0:
+                    memory = {line.split(":",1)[0]:line.split(":",1)[1].strip() for line in Path("/proc/meminfo").read_text().splitlines() if line.startswith(("MemAvailable:","SwapFree:"))}
+                    print("Hosted client/server memory", memory, flush=True)
                     client_tail=tail(logs/"client.log")
                     game_tail=tail(client/"logs/latest.log")
                     live=(report/f"client249-phase{phase}-status.txt")
@@ -159,7 +163,10 @@ for phase in (1,2):
     proof=json.loads((report/f"center-phase{phase}.json").read_text())
     assert proof["commit"]==os.environ["GITHUB_SHA"] and proof["jail_sha256"]==digest(candidate)
     assert proof["actual_neoforge_21_1_249"] and proof["companion_sha256"]==digest(companion)
+    assert digest(origin_config)==original_origin_config, "Origin admin config drifted"
     if phase==1:
+        assert proof["native_human_warrior_selection_without_unique_claims"]
+        assert (report/"full249-onboarding-complete.txt").is_file()
         client_view=json.loads((report/"player-only-client-Visitor-1.json").read_text())
         assert client_view["respawn_actions_sent"]==0 and client_view["kill_packets"]==client_view["respawn_packets_after_kill"]==1
         respawn, = client_view["verified_respawns"]

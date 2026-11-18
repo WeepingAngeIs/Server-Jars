@@ -42,7 +42,8 @@
       "{familiars:{size:0},glyphs:{size:0}}"
     ],
     "carryon:carry_on_data": [
-      "{}"
+      "{}",
+      "{keyPressed:0b}"
     ],
     "cataclysm:hook_falling": [
       "0b"

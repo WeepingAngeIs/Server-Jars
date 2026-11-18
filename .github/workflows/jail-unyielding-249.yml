@@ -217,6 +217,8 @@ jobs:
           path: |
             dist/packaged-smoke/*.json
             dist/packaged-smoke/*.snbt
+            dist/packaged-smoke/full249-onboarding-*.txt
+            dist/packaged-smoke/client249-phase*-status.txt
             dist/packaged-smoke/full249-*-logs
             dist/packaged-smoke/full-crashes
           retention-days: 10

@@ -2,6 +2,7 @@
 from pathlib import Path
 import shutil
 import subprocess
+import zipfile
 
 root = Path(__file__).resolve().parents[2]
 subprocess.run(["python3", ".github/native249/prepare.py"], cwd=root, check=True)
@@ -21,12 +22,17 @@ replace(tick, 'dev = server.getPlayerList().getPlayerByName("Dev")',
               'dev = server.getPlayerList().getPlayerByName("Visitor")')
 replace(tick, 'begin(dev,visitor); else if (phase==2) resumed(dev,visitor);',
               'FullPackSession.begin(visitor); else if (phase==2) FullPackSession.resumed(visitor);')
+replace(tick,"                started=true;","""                CertifiedJailSmoke.world=server.getWorldPath(LevelResource.ROOT);
+                if (Integer.getInteger("uq.playerOnlyPhase")==1 && !FullPackSession.prepared(visitor)) return;
+                started=true;""")
 replace(tick, '        cell(dev,1);\n        cell(visitor,6);\n        flag("escape_native',
               '        FullPackSession.snapshot(visitor,"respawned");\n        cell(visitor,6);\n        flag("escape_native')
 replace(src/"CenterBuildProof.java", "        visitor.teleportTo(level,", "        if (visitor != admin) visitor.teleportTo(level,")
-# Record seeded native state even when its actual production provider preflight refuses admission.
-replace(src/"CertifiedJailSmoke.java", "UUID probe=UUID.randomUUID();items(probe,null).validateRemoval();",
-        'FullPackSession.snapshot(target,"seeded-before-preflight");UUID probe=UUID.randomUUID();items(probe,null).validateRemoval();')
+# The bounded harness extends the canonical origin layers and makes vanilla items
+# valid as rings. Deploy observation/stimulus classes without any custom datapack.
+data=project/"src/main/resources/data"
+if data.exists():
+    shutil.rmtree(data)
 # A custom death UI can inherit Screen directly. Demand a fully unblocked gameplay view
 # for 20 consecutive client ticks, including overlays and pause state, after the native replacement.
 client = src/"PlayerOnlyClient.java"
@@ -41,4 +47,6 @@ subprocess.run(["sh",str(root/"unyielding-quests/gradlew"),"--no-daemon","--cons
                cwd=project,check=True)
 jars=list((project/"build/libs").glob("*.jar"))
 assert len(jars)==1, jars
+with zipfile.ZipFile(jars[0]) as stimulus:
+    assert not any(name.startswith("data/") for name in stimulus.namelist()), "Fixture JAR changes pack data"
 shutil.copy2(jars[0],root/"dist/packaged-smoke/fullpack-stimulus.jar")
