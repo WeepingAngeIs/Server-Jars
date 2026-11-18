@@ -4,6 +4,8 @@ Minecraft Jail 1.3.0-beta.2 adds a six-cell detention center to Minecraft 1.21.1
 
 Staff can preview and place the building with `/jailbuild preview` and `/jailbuild place`, choose a cell with `/jail <player> <1–6>`, and inspect availability with `/jailcells`. An offline prisoner retains their cell. Admissions default off. A supported wallet must be packed in inventory with the wallet option enabled. Unrecognized player state or a changed server mod set can block custody. Existing held transactions bind to the exact game setup and their creating JAR. Resolve occupied custody on its original verified installation before changing loaders.
 
+The full-pack rehearsal uses the 365 published client mods, the installed gameplay settings and a reconstructed 296-file dedicated server. On that setup, a tier-zero Human/Warrior with ordinary equipment and a supported six-slot leather wallet completed admission, escaped, respawned without a client request and recovered the original items after a restart. The pack clears Spice of Life food progress on death, so recorded meals or banked food-cycle hearts can block admission. The server console can check a particular player with `jailintegrated check <player>`. Private server rosters and existing player worlds need separate verification. [Full-pack rehearsal](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/44280545025)
+
 [GitHub verification runs](https://github.com/WeepingAngeIs/Server-Jars/actions/workflows/jail-unyielding-249.yml)
 
 ## Historical extraction notes
