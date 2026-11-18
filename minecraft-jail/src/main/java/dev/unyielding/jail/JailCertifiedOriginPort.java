@@ -84,7 +84,18 @@ public class JailCertifiedOriginPort extends JailNativeOriginPort {
     void neutralBase()throws IOException {
         audit();effects();var defaults=DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);Set<String> modifiers=new HashSet<>();declared.forEach(e->modifiers.add(e.modifier().toString()));
         CompoundTag neutral=JailNbt.decode(JailEquipmentEffects.neutral(player));
-        for(Tag raw:neutral.getList("attributes",10)){CompoundTag row=(CompoundTag)raw;var holder=attribute(id(row.getString("id")));if(!defaults.hasAttribute(holder)||Double.compare(defaults.getBaseValue(holder),row.getDouble("base"))!=0)throw new IOException("Nondefault base attribute "+row.getString("id")+" is not certified for respawn");for(Tag m:row.getList("modifiers",10))if(!modifiers.contains(((CompoundTag)m).getString("id")))throw new IOException("Additional attribute modifier "+((CompoundTag)m).getString("id")+" is not certified for neutral custody");}
+        for(Tag raw:neutral.getList("attributes",10)){
+            CompoundTag row=(CompoundTag)raw;
+            String attributeName=row.getString("id");
+            var holder=attribute(id(attributeName));
+            if(!defaults.hasAttribute(holder)||Double.compare(defaults.getBaseValue(holder),row.getDouble("base"))!=0)
+                throw new IOException("Nondefault base attribute "+attributeName+" is not certified for respawn");
+            for(Tag m:row.getList("modifiers",10)){
+                CompoundTag mod=(CompoundTag)m;
+                if (!modifiers.contains(mod.getString("id")) && !JailPackState.intrinsic(player,attributeName,mod.getString("id"),mod.getDouble("amount"),mod.getString("operation")))
+                    throw new IOException("Additional attribute modifier "+mod.getString("id")+" is not certified for neutral custody");
+            }
+        }
     }
     @Override protected void effects()throws IOException {
         var selected=selections().get(layer);if(!selected.equals(original)&&!selected.equals(human))throw new IOException("Selected layer changed outside custody");boolean active=selected.equals(original);Set<ResourceLocation> ids=new HashSet<>();

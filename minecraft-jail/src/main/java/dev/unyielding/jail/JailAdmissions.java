@@ -23,9 +23,7 @@ public final class JailAdmissions {
         if(!p.getActiveEffects().isEmpty()||p.getAbsorptionAmount()!=0)throw new IOException("Wait for active effects/absorption to end before certified admission");
         var a=p.getAbilities();if(a.mayfly||a.flying||a.instabuild||a.invulnerable||!a.mayBuild||a.getFlyingSpeed()!=0.05F||a.getWalkingSpeed()!=0.1F)throw new IOException("Creative/flight or nondefault abilities are not certified for jail respawn");
         CompoundTag attachments=p.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments");
-        if(!Set.of("neoorigins:origin_data","neoorigins:resource_state","accessories:inventory_holder","curios:inventory","lightmanscurrency:wallet","lightmanscurrency:event_unlocks").containsAll(attachments.getAllKeys()))throw new IOException("An attached death store is not certified: "+attachments.getAllKeys());
-        if(!attachments.getCompound("neoorigins:resource_state").isEmpty())throw new IOException("Origin resource state is active; its death lifecycle is not certified");
-        if(attachments.contains("lightmanscurrency:wallet")){var wallet=attachments.getCompound("lightmanscurrency:wallet");if(!Set.of("Wallet","Visible").containsAll(wallet.getAllKeys())||!wallet.contains("Wallet",10)||!wallet.getCompound("Wallet").isEmpty())throw new IOException("Equipped wallet custody is not certified. Move the wallet to safe storage first; it was not changed");}
+        JailPackState.verifyAttachments(p,attachments);
     }
     /** Guard a pending certified transaction even before item removal or during uncertain recovery. */
     public static boolean protectedCustody(ServerPlayer p){

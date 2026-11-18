@@ -34,15 +34,17 @@ final class JailHumanAudit {
         var a=Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class);Hashed old=hashes.get(path);if(old!=null&&Objects.equals(old.key(),a.fileKey())&&old.size()==a.size()&&old.modified()==a.lastModifiedTime().toMillis())return old.hash();
         try{MessageDigest digest=MessageDigest.getInstance("SHA-512");try(var input=Files.newInputStream(path)){byte[] bytes=new byte[65536];for(int n;(n=input.read(bytes))>=0;)digest.update(bytes,0,n);}String value=HexFormat.of().formatHex(digest.digest());hashes.put(path,new Hashed(a.fileKey(),a.size(),a.lastModifiedTime().toMillis(),value));return value;}catch(java.security.NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
     }
-    static String runtime(ServerPlayer p)throws IOException {return runtimeWithArtifact(p,null);}
+    static String runtime(ServerPlayer p)throws IOException {return runtimeWithArtifact(p,null).fingerprint();}
     /** Migration proof only: the dependency certificate is checked exactly as for the current artifact. */
-    static String predecessorRuntime(ServerPlayer p,String predecessor)throws IOException {return runtimeWithArtifact(p,predecessor);}
+    static String predecessorRuntime(ServerPlayer p,String predecessor)throws IOException {return runtimeWithArtifact(p,predecessor).fingerprint();}
     static String ownArtifact()throws IOException {
         Path own=ModList.get().getModFileById(MinecraftJail.MODID).getFile().getFilePath().toAbsolutePath().normalize();
         if(!Files.isRegularFile(own,LinkOption.NOFOLLOW_LINKS)||!own.equals(own.toRealPath()))throw new IOException("Unsafe implementation artifact");
         return hash(own);
     }
-    private static String runtimeWithArtifact(ServerPlayer p,String predecessor)throws IOException {
+    private record RuntimeIdentity(String fingerprint, boolean unyielding249) {}
+    static boolean hasPackStateContract(ServerPlayer player) throws IOException {return runtimeWithArtifact(player,null).unyielding249();}
+    private static RuntimeIdentity runtimeWithArtifact(ServerPlayer p,String predecessor)throws IOException {
         JsonObject certificate;try(var stream=JailHumanAudit.class.getResourceAsStream("/assets/unyieldingquests/jail-certified-runtime.json")){if(stream==null)throw new IOException("Audit certificate missing");certificate=JsonParser.parseReader(new InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();}
         Set<String> allowed=new HashSet<>();
         certificate.getAsJsonArray("sha512").forEach(e->allowed.add(e.getAsString()));
@@ -67,9 +69,9 @@ final class JailHumanAudit {
             files.add(row);
             if(unsupported==null&&!allowed.contains(digest))unsupported=row;
         }
-        JailRuntimeProfile.check(kernel,certificate.get("neoforge").getAsString(),files,unsupported);
+        boolean fullPack=JailRuntimeProfile.check(kernel,certificate.get("neoforge").getAsString(),files,unsupported);
         rows.addAll(files);
-        Collections.sort(rows);return HexFormat.of().formatHex(JailOriginTransaction.hash(String.join("\n",rows).getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+        Collections.sort(rows);return new RuntimeIdentity(HexFormat.of().formatHex(JailOriginTransaction.hash(String.join("\n",rows).getBytes(java.nio.charset.StandardCharsets.UTF_8))),fullPack);
     }
     @SuppressWarnings("unchecked") static Result inspect(ServerPlayer p)throws IOException {
         if(!p.server.isSameThread()||!p.isAlive()||p.hasDisconnected()||p.server.getPlayerList().getPlayer(p.getUUID())!=p)throw new IOException("Subject offline, dead or not authoritative");

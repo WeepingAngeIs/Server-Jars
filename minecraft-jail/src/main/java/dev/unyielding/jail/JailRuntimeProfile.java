@@ -17,14 +17,14 @@ final class JailRuntimeProfile {
         return HexFormat.of().formatHex(JailOriginTransaction.hash(canonical.getBytes(StandardCharsets.UTF_8)));
     }
 
-    static void check(String kernel, String originalKernel, Collection<String> files, String unsupported) throws IOException {
+    static boolean check(String kernel, String originalKernel, Collection<String> files, String unsupported) throws IOException {
         if (!originalKernel.equals(kernel) && !PACK_KERNEL.equals(kernel))
             throw new IOException("Uncertified NeoForge kernel " + kernel);
-        if (unsupported == null) return;
+        if (unsupported == null) return false;
         String observed = seal(files);
         if (PACK_KERNEL.equals(kernel)) {
             try (InputStream input = JailRuntimeProfile.class.getResourceAsStream("/assets/minecraftjail/unyielding-249-server.sha256")) {
-                if (input != null && matches(observed, new String(input.readAllBytes(), StandardCharsets.US_ASCII))) return;
+                if (input != null && matches(observed, new String(input.readAllBytes(), StandardCharsets.US_ASCII))) return true;
             }
         }
         throw new IOException("Uncertified mod " + unsupported + " (server file-set SHA-256 " + observed + ")");

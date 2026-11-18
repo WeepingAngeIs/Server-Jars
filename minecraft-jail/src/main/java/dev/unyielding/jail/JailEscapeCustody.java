@@ -40,15 +40,14 @@ public final class JailEscapeCustody {
         var defaults=net.minecraft.world.entity.ai.attributes.DefaultAttributes.getSupplier(net.minecraft.world.entity.EntityType.PLAYER);
         for(var raw:p.getAttributes().save()){
             var row=(CompoundTag)raw;var holder=net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.getHolder(net.minecraft.resources.ResourceLocation.parse(row.getString("id"))).orElseThrow();var live=p.getAttribute(holder);
-            if(live==null||!defaults.hasAttribute(holder)||Double.compare(live.getBaseValue(),defaults.getBaseValue(holder))!=0||!live.getModifiers().isEmpty())throw new IOException("Nondefault native attributes have no death custody adapter");
+            if(live==null||!defaults.hasAttribute(holder)||Double.compare(live.getBaseValue(),defaults.getBaseValue(holder))!=0)throw new IOException("Nondefault base attribute has no death custody adapter");
+            for (var modifier:live.getModifiers()) {
+                if (!JailPackState.intrinsic(p,row.getString("id"),modifier.id().toString(),modifier.amount(),modifier.operation().name()))
+                    throw new IOException("Unaudited modifier "+modifier.id()+" on "+row.getString("id"));
+            }
         }
         CompoundTag attachments=p.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments");
-        if(!Set.of("neoorigins:origin_data","neoorigins:resource_state","accessories:inventory_holder","curios:inventory","lightmanscurrency:wallet","lightmanscurrency:event_unlocks").containsAll(attachments.getAllKeys()))throw new IOException("Unknown attached death inventory; no lethal damage applied");
-        if(!attachments.getCompound("neoorigins:resource_state").isEmpty())throw new IOException("Active origin resource state is not certified for death");
-        if(attachments.contains("lightmanscurrency:wallet")){
-            CompoundTag wallet=attachments.getCompound("lightmanscurrency:wallet");
-            if(!Set.of("Wallet","Visible").containsAll(wallet.getAllKeys())||!wallet.contains("Wallet",10)||!wallet.getCompound("Wallet").isEmpty())throw new IOException("Occupied or unknown currency wallet; no wallet custody adapter");
-        }
+        JailPackState.verifyAttachments(p,attachments);
     }
     /** Called only by accepted movement crossing or verified fully-outside player enforcement. */
     static void attempt(ServerPlayer p){
