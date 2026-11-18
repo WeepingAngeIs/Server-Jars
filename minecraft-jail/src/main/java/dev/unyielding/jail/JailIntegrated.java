@@ -213,6 +213,19 @@ public final class JailIntegrated {
     }
     /** No callback replay. The same bound, empty native stores are required even during clone/respawn. */
     static EscapeContext escapeContext(ServerPlayer p,boolean persist,boolean authoritative)throws IOException {
+        return escapeContext(p,persist,authoritative,false);
+    }
+
+    // During native replacement the old player may have been removed from PlayerList.
+    // Only the exact corpse already bound to Jail's server-side invocation may qualify.
+    static EscapeContext corpseContext(ServerPlayer p,boolean authoritative) throws IOException {
+        boolean current=p.server.getPlayerList().getPlayer(p.getUUID())==p && !p.hasDisconnected();
+        boolean verified=p.server.isSameThread() && !p.isAlive() && p.getHealth()<=0
+                && (current || JailAutoRespawn.isAutomaticInvocation(p));
+        return escapeContext(p,false,authoritative,verified);
+    }
+
+    private static EscapeContext escapeContext(ServerPlayer p,boolean persist,boolean authoritative,boolean corpse) throws IOException {
         if(!JailData.get(p.server).integratedCustodyInitialized())return null;
         var e=outstanding(p.server,p.getUUID());if(e==null)return null;var plan=JailNbt.decode(e.snapshot());
         if(!equipped(plan.getString("contract")))return null;
@@ -228,7 +241,8 @@ public final class JailIntegrated {
             var disk=ports.inventory().durable();var nativeLive=ports.origin().current();var nativeDisk=ports.origin().durable();
             if(!disk.empty()||!e.id().equals(disk.removedBy())||disk.restoredBy()!=null||!Arrays.equals(live.inventory(),disk.inventory()))
                 throw new IOException("Escape saved inventory or its custody receipt differs");
-            if(!Arrays.equals(nativeLive.state(),nativeDisk.state())) {
+            if(!Arrays.equals(nativeLive.state(),nativeDisk.state()) && !(corpse && JailAttributeView.applies(p)
+                    && JailPackState.onlyCorpseLightingDiffers(nativeLive.state(),nativeDisk.state()))) {
                 String field=JailNbt.mismatch(JailNbt.decode(nativeLive.state()),JailNbt.decode(nativeDisk.state()),"player");
                 throw new IOException("Escape live and saved player data differ at "+(field==null?"encoded representation":field));
             }

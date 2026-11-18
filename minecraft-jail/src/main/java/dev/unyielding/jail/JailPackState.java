@@ -104,6 +104,38 @@ final class JailPackState {
         }
     }
 
+    // Compare isolated journal projections. InsaneLib recalculates both fields from the
+    // corpse's current block every other tick. Keep the entire saved byte representation,
+    // including native inventory, claims and receipts, as the final equality criterion.
+    static boolean onlyCorpseLightingDiffers(byte[] observed, byte[] saved) throws IOException {
+        CompoundTag liveCopy=JailNativeOriginPort.decode(observed);
+        CompoundTag diskCopy=JailNativeOriginPort.decode(saved);
+        CompoundTag live=completeLightCache(liveCopy),disk=completeLightCache(diskCopy);
+        if(live==null || disk==null || live.equals(disk)) return false;
+        live.putInt("sky_light",disk.getInt("sky_light"));
+        live.putInt("block_light",disk.getInt("block_light"));
+        return java.util.Arrays.equals(JailNativeOriginPort.encode(liveCopy),saved);
+    }
+
+    private static CompoundTag completeLightCache(CompoundTag snapshot) throws IOException {
+        if (!(snapshot.get("other_persistent") instanceof CompoundTag data)
+                || !(data.get("insanelib") instanceof CompoundTag owner)
+                || !owner.getAllKeys().equals(Set.of("nbt_tags"))
+                || !(owner.get("nbt_tags") instanceof CompoundTag light)
+                || !validLightPair(light)) return null;
+        if(data.contains("PlayerPersisted") && !data.contains("PlayerPersisted",Tag.TAG_COMPOUND)) return null;
+        verifyTwilightState(data.getCompound("PlayerPersisted"));
+        verifyPersistent(data,REVIEWED.getAsJsonObject("persistent"));
+        return light;
+    }
+
+    private static boolean validLightPair(CompoundTag light) {
+        if (!light.getAllKeys().equals(Set.of("sky_light","block_light"))) return false;
+        for (String name : light.getAllKeys())
+            if (!light.contains(name,Tag.TAG_INT) || light.getInt(name)<0 || light.getInt(name)>15) return false;
+        return true;
+    }
+
     static void verifyTwilightState(CompoundTag stored) throws IOException {
         if (stored.contains("TFCharmInventory") || stored.contains("CharmStack") || stored.contains("CasketDamage"))
             throw new IOException("A Twilight Forest charm or keepsake casket recovery is pending");
@@ -208,11 +240,7 @@ final class JailPackState {
             if (!owner.getAllKeys().equals(Set.of("nbt_tags")) || !owner.contains("nbt_tags", Tag.TAG_COMPOUND))
                 return false;
             CompoundTag light = owner.getCompound("nbt_tags");
-            if (!light.isEmpty()) {
-                if (!light.getAllKeys().equals(Set.of("sky_light","block_light"))) return false;
-                for (String name : light.getAllKeys())
-                    if (!light.contains(name,Tag.TAG_INT) || light.getInt(name)<0 || light.getInt(name)>15) return false;
-            }
+            if (!light.isEmpty() && !validLightPair(light)) return false;
             // The provider recomputes these two brightness readings every other entity tick.
             // Combat clocks, XP multipliers, ammo modifiers, or any other state remain ineligible.
             normalized = new CompoundTag();

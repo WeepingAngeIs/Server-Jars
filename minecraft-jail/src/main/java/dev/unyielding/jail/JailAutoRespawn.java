@@ -36,7 +36,7 @@ public final class JailAutoRespawn {
         require(p.server.isSameThread()&&p.server.getPlayerList().getPlayer(p.getUUID())==p&&!p.hasDisconnected(),"Dead player is not current/connected");
         require(!p.server.getWorldData().isHardcore(),"Hardcore respawn is not authorized");
         require(!p.isAlive()&&p.getHealth()<=0,"Not a dead player");
-        var c=JailIntegrated.escapeContext(p,false,true);require(c!=null,"No held player custody");
+        var c=JailIntegrated.corpseContext(p,true);require(c!=null,"No held player custody");
         var a=c.assignment();var j=a.jail();
         require(a.equals(JailData.get(p.server).assignment(p.getUUID()))&&JailPlacement.intact(p.server,j,a.geometry())&&JailCommands.safe(p,j)&&JailCommands.claimAccess(p,j),"Unsafe or changed respawn destination");
         require(p.level().dimension().location().toString().equals(j.dim())&&p.distanceToSqr(j.x(),j.y(),j.z())<0.0001,"Corpse is not at the verified jail");

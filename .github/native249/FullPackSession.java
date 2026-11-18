@@ -22,9 +22,20 @@ public final class FullPackSession {
     private FullPackSession() { }
     private static boolean observedFresh;
     private static int lastEscapeSample=Integer.MIN_VALUE;
+    private static int escapeTick;
+    private static long escapeStart;
+    private static boolean observedReplacement;
 
     static void traceEscape(ServerPlayer player) throws Exception {
         int tick=player.server.getTickCount();
+        if (!observedReplacement && player!=corpse && player.isAlive() && player.connection.player==player) {
+            observedReplacement=true;
+            var timing=new com.google.gson.JsonObject();
+            timing.addProperty("server_ticks",tick-escapeTick);
+            timing.addProperty("elapsed_ms",(System.nanoTime()-escapeStart)/1_000_000L);
+            Files.writeString(results.resolve("full249-respawn-timing.json"),timing.toString());
+            require(tick-escapeTick<=80,"Server waited more than four seconds of ticks to replace the dead player");
+        }
         if (lastEscapeSample!=Integer.MIN_VALUE && tick-lastEscapeSample<40) return;
         lastEscapeSample=tick;
         var stats=new com.google.gson.JsonObject();
@@ -292,6 +303,8 @@ public final class FullPackSession {
         firstDeaths=deaths(player);
         player.setInvulnerable(false);
         deadline=player.server.getTickCount()+2400;
+        escapeTick=player.server.getTickCount();
+        escapeStart=System.nanoTime();
         CertifiedJailSmoke.cross();
         traceEscape(player);
         require(!player.isAlive() && deaths(player)==firstDeaths+1, "Escape did not cause exactly one death");

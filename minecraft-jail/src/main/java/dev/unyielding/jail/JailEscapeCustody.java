@@ -86,7 +86,7 @@ public final class JailEscapeCustody {
     @SubscribeEvent public static void clone(PlayerEvent.Clone event){
         if(!event.isWasDeath()||!(event.getEntity() instanceof ServerPlayer next)||!(event.getOriginal() instanceof ServerPlayer old))return;
         try{
-            var c=JailIntegrated.escapeContext(old,false,false);if(c==null)return;
+            var c=JailIntegrated.corpseContext(old,false);if(c==null)return;
             try(var j=journal(old.server,c.transaction())){
                 var e=pending(j);if(e==null)return;bound(old,c,e);
                 if(e.state()!=JailEscrowJournal.State.HELD||old.isAlive()||!next.getInventory().isEmpty()||!next.getUUID().equals(old.getUUID()))throw new IOException("Unverified death clone; custody retained");

@@ -195,6 +195,8 @@ for phase in phases:
     if phase==1:
         assert proof["native_human_warrior_selection_without_unique_claims"]
         assert (report/"full249-onboarding-complete.txt").is_file()
+        timing=json.loads((report/"full249-respawn-timing.json").read_text())
+        assert 0 < timing["server_ticks"] <= 80 and timing["elapsed_ms"] > 0,timing
         client_view=json.loads((report/"player-only-client-Visitor-1.json").read_text())
         assert client_view["respawn_actions_sent"]==0 and client_view["kill_packets"]==client_view["respawn_packets_after_kill"]==1
         respawn, = client_view["verified_respawns"]
