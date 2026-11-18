@@ -92,6 +92,16 @@ class JailRuntimeProfileTest {
         assertFalse(JailPackState.neutral(profile,key,schema));
     }
 
+    @Test void onlyInsaneLibsRecomputedLightCacheIsNeutral() throws Exception {
+        var reviewed=new JsonObject(); var values=new JsonArray(); values.add("{}"); reviewed.add("insanelib",values);
+        for(String allowed:List.of("{}", "{nbt_tags:{}}", "{nbt_tags:{sky_light:0,block_light:15}}"))
+            assertTrue(JailPackState.neutral(reviewed,"insanelib",net.minecraft.nbt.TagParser.parseTag(allowed)));
+        for(String active:List.of("{nbt_tags:{sky_light:-1,block_light:0}}","{nbt_tags:{sky_light:0,block_light:16}}",
+                "{nbt_tags:{sky_light:0b,block_light:1}}","{nbt_tags:{sky_light:1}}","{nbt_tags:{xp_multiplier:1}}",
+                "{in_combat:{last_timestamp:1L},nbt_tags:{sky_light:1,block_light:2}}"))
+            assertFalse(JailPackState.neutral(reviewed,"insanelib",net.minecraft.nbt.TagParser.parseTag(active)));
+    }
+
     @Test void activeOrUnknownNonpersistedProgressRefusesBeforeCustody() throws Exception {
         var data=new CompoundTag(); data.put("PlayerPersisted",new CompoundTag());
         JailPackState.verifyPersistent(data,null);

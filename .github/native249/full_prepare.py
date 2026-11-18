@@ -1,5 +1,6 @@
 """Build only a disposable test JAR for loading in two separate production game installations."""
 from pathlib import Path
+import json
 import shutil
 import subprocess
 import zipfile
@@ -15,8 +16,13 @@ def replace(path, old, new):
         raise ValueError(f"Fixture drift in {path.name}: {old}")
     path.write_text(text.replace(old, new))
 
-for name in ("FullPackSession.java", "FullPackClientWatch.java"):
+for name in ("FullPackSession.java", "FullPackClientWatch.java", "FullPackDiagnostics.java"):
     shutil.copy2(Path(__file__).with_name(name),src)
+shutil.copy2(Path(__file__).with_name("NeutralSerializationObserver.java"),src/"proof")
+observer_config=project/"src/main/resources/jail-production-observers.mixins.json"
+mixins=json.loads(observer_config.read_text())
+mixins["mixins"].append("NeutralSerializationObserver")
+observer_config.write_text(json.dumps(mixins,indent=2))
 tick = src/"PlayerOnlySmoke.java"
 replace(tick, 'dev = server.getPlayerList().getPlayerByName("Dev")',
               'dev = server.getPlayerList().getPlayerByName("Visitor")')

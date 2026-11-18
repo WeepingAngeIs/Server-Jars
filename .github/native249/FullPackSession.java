@@ -64,6 +64,7 @@ public final class FullPackSession {
         CertifiedJailSmoke.saved();
         snapshot(player,"seeded-before-preflight");
         var port=CertifiedJailSmoke.items(UUID.randomUUID(),null);
+        FullPackDiagnostics.check(player,port);
         port.validateRemoval();
         Files.write(evidence(player,"equipment"),port.current().inventory());
     }
@@ -147,6 +148,19 @@ public final class FullPackSession {
             if (insanity.contains("in_combat",Tag.TAG_ANY_NUMERIC))
                 neutralInsanity.put("in_combat",insanity.get("in_combat").copy());
             var extra = insanity.get("nbt_tags");
+            if (extra instanceof CompoundTag tags) {
+                var tagTypes=new CompoundTag();
+                var lightSamples=new CompoundTag();
+                for (String key:tags.getAllKeys()) {
+                    String lower=key.toLowerCase(java.util.Locale.ROOT);
+                    if (lower.contains("cobble") || lower.contains("poke") || !key.matches("[a-zA-Z0-9_]{1,48}")) continue;
+                    tagTypes.putString(key,tags.get(key).getType().getName());
+                    if (Set.of("sky_light","block_light").contains(key) && tags.contains(key,Tag.TAG_INT))
+                        lightSamples.putInt(key,tags.getInt(key));
+                }
+                result.put("insanelib_nbt_tags_shapes",tagTypes);
+                result.put("insanelib_light_samples",lightSamples);
+            }
             if (extra instanceof CompoundTag c && c.isEmpty() || extra instanceof net.minecraft.nbt.ListTag l && l.isEmpty())
                 neutralInsanity.put("nbt_tags",extra.copy());
             result.put("insanelib",neutralInsanity);

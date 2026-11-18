@@ -331,6 +331,6 @@ public class JailNativeOriginPort implements JailOriginTransaction.Port {
         CompoundTag a=decode(expected.state()),b=decode(observed.state());List<String> result=new ArrayList<>();Set<String> keys=new TreeSet<>(a.getAllKeys());keys.addAll(b.getAllKeys());
         for(String key:keys)if(!Objects.equals(a.get(key),b.get(key)))result.add(key+" expected="+a.get(key)+" observed="+b.get(key));return result.toString();
     }
-    static byte[] encode(CompoundTag tag)throws IOException {var out=new ByteArrayOutputStream();var data=new DataOutputStream(out);data.writeByte(10);data.writeUTF("");JailNbt.payload(tag,data);byte[] bytes=out.toByteArray();if(!tag.equals(decode(bytes)))throw new IOException("Origin snapshot lost NBT");return bytes;}
+    static byte[] encode(CompoundTag tag)throws IOException {return JailNbt.encode(tag,16L*1024*1024); }
     static CompoundTag decode(byte[] bytes)throws IOException{return NbtIo.read(new DataInputStream(new ByteArrayInputStream(bytes)),NbtAccounter.create(16L*1024*1024));}
 }

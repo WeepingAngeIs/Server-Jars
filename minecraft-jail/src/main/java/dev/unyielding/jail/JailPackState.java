@@ -161,6 +161,19 @@ final class JailPackState {
             copy.remove("current");
             normalized = copy;
         }
+        if (key.equals("insanelib") && value instanceof CompoundTag owner && owner.contains("nbt_tags")) {
+            if (!owner.getAllKeys().equals(Set.of("nbt_tags")) || !owner.contains("nbt_tags", Tag.TAG_COMPOUND))
+                return false;
+            CompoundTag light = owner.getCompound("nbt_tags");
+            if (!light.isEmpty()) {
+                if (!light.getAllKeys().equals(Set.of("sky_light","block_light"))) return false;
+                for (String name : light.getAllKeys())
+                    if (!light.contains(name,Tag.TAG_INT) || light.getInt(name)<0 || light.getInt(name)>15) return false;
+            }
+            // The provider recomputes these two brightness readings every other entity tick.
+            // Combat clocks, XP multipliers, ammo modifiers, or any other state remain ineligible.
+            normalized = new CompoundTag();
+        }
         String canonical = normalized.toString();
         for (var signature : signatures.getAsJsonArray(key))
             if (signature.getAsString().equals(canonical)) return true;
