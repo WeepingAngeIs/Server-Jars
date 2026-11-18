@@ -57,7 +57,7 @@ public final class Custody249Proof {
         return snapshot;
     }
 
-    private static void refused(ServerPlayer player, String label) throws Exception {
+    static void refused(ServerPlayer player, String label) throws Exception {
         var before = inventory(player);
         int bindings = JailCustodyService.ledger(player.server).list().size();
         PlayerOnlySmoke.require(PlayerOnlySmoke.cmd("jail Visitor 6")==0, "Accepted unsupported " + label);

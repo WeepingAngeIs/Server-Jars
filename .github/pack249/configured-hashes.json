@@ -1,0 +1,8 @@
+{
+  "config/cubalance-common.toml": "980c18b689c7a1f27450d1be04c123aeeddc315a12e2c1077f59ad8b1ad34968",
+  "config/defaultoptions-common.toml": "36d8b02a047e44540cee541daab5155f43e0d11f4373f28f09a306b65e6ad046",
+  "config/defaultoptions/options.txt": "a400f2be297c44af50d4b0be64a0464a6e7f33f9dfb29227c901db8b24f3d9a5",
+  "config/infernalmobs.cfg": "060fa9d2a44a184d5be0463e49f75c433226cd85fbb41ae2941a0f8568d6d5ef",
+  "config/c2me.toml": "776bd591691d25538519c173f2e8ecd9d8c9dc6698354dc899f3c8395b62f66e",
+  "config/zfastnoise.mixin.properties": "bcc4c533cf3d4b7e5ef4587d3047ba5dbf172173c6dcd5f25ede328fab8cbdb3"
+}

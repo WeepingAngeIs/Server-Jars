@@ -3151,5 +3151,84 @@
       "project": "o6qsdrrQ",
       "modrinth": "https://cdn.modrinth.com/data/o6qsdrrQ/versions/Rh2ImJ86/zume-1.2.2.jar"
     }
+  ],
+  "additional_packs": [
+    {
+      "path": "datapacks/CobbleTowns-UnofficialUpdate1.21.1-CobbleDollars.zip",
+      "name": "CobbleTowns-UnofficialUpdate1.21.1-CobbleDollars.zip",
+      "sha512": "5396294c8612df49d8168ab4610cc363a4864934151e688af98906371309e0e73ce9b72ed3dc03eae744ecf15064e3a3ea4dcb8038eafffbea2889bc30fb0115",
+      "size": 631546,
+      "url": "https://mediafilez.forgecdn.net/files/8384/122/CobbleTowns-UnofficialUpdate1.21.1-CobbleDollars.zip"
+    },
+    {
+      "path": "datapacks/CR-Biome-Expanded-Spawns-6.3.1.zip",
+      "name": "CR-Biome-Expanded-Spawns-6.3.1.zip",
+      "sha512": "48f86652c7ec341d4d5dada8078d0f460fbd9426f0fd31e995a1290281b84a855076ba6f6636179599ebc7f852cf13296b8fac70ba9d375c18fddc5a8cd63c0c",
+      "size": 1516370,
+      "url": "https://mediafilez.forgecdn.net/files/9457/727/CR-Biome-Expanded-Spawns-6.3.1.zip"
+    },
+    {
+      "path": "datapacks/Frosthaven.zip",
+      "name": "Frosthaven.zip",
+      "sha512": "cdd86be06da0e0b8e6a1bc60b30f270b21e0f3c9c07c3ff7fac0fe91461a76c7fd9cf5af25bc97ecd73e9bb374af2df43cef598dcc92cf8c1cdae763dabbd8ab",
+      "size": 2451271,
+      "url": "https://mediafilez.forgecdn.net/files/6606/39/Frosthaven.zip"
+    },
+    {
+      "path": "datapacks/natures_tags-1.21.1.zip",
+      "name": "natures_tags-1.21.1.zip",
+      "sha512": "c0546f86ed5d08ca6df16e1c0311e8659649b1da2b3517b114d232424bd709eff7c6a2542ce330090a856dc727da7f006e5bf915b50ce820312b7ae4544265d7",
+      "size": 13507,
+      "url": "https://mediafilez.forgecdn.net/files/7279/779/natures_tags-1.21.1.zip"
+    },
+    {
+      "path": "datapacks/natures_waystones-1.21.1.zip",
+      "name": "natures_waystones-1.21.1.zip",
+      "sha512": "6d053e2198b2864da9193cb472a9b980fb38a4f3aef84ab679757ff644686bde0c86c01c923f8941581bbf282c35bcb0a842d12474146a87d38e40e2db70fe58",
+      "size": 26913,
+      "url": "https://mediafilez.forgecdn.net/files/7280/577/natures_waystones-1.21.1.zip"
+    },
+    {
+      "path": "datapacks/Sunken_Spires_1.21.zip",
+      "name": "Sunken_Spires_1.21.zip",
+      "sha512": "2fed4601325b932ba542d4721be6986110e71b655d7df1ff834926309f924c0abbc03fac9abfa3d9a7ee3a133e099c5099aa103668fb483af3a0e8521eb48c74",
+      "size": 415262,
+      "url": "https://mediafilez.forgecdn.net/files/7123/675/Sunken_Spires_1.21.zip"
+    },
+    {
+      "path": "resourcepacks/E19-Cobblemon-Minimap-Icons.zip",
+      "name": "E19-Cobblemon-Minimap-Icons.zip",
+      "sha512": "79904e038b93b040564b1e544f95121f8f6f2ff7f6fbed0421320e4eae66fb52a8394a4536ea91d1c48aee5e283002b1623aa9911e5d2b624442cb055d1daaa8",
+      "size": 53955450,
+      "url": "https://mediafilez.forgecdn.net/files/9506/114/E19-Cobblemon-Minimap-Icons.zip"
+    },
+    {
+      "path": "resourcepacks/FA+Player-v1.1.zip",
+      "name": "FA+Player-v1.1.zip",
+      "sha512": "d2a5c46ae53e4bb6355604a1ade253ab49f1deb205f5ee69085014965241d3c9623204951ab174a5dbdaf24d9b25ecae9a1638cc6a13d780b398a6d70d157a4e",
+      "size": 110203,
+      "url": "https://mediafilez.forgecdn.net/files/8245/230/FA%2bPlayer-v1.1.zip"
+    },
+    {
+      "path": "resourcepacks/FreshAnimations_v1.11.1_1.20+.zip",
+      "name": "FreshAnimations_v1.11.1_1.20+.zip",
+      "sha512": "641a03d55c36920cc9a70d891bcca3347b196968bcb5637781f21b417b1ff893ce60652abcf02be872872fc1130ccc6785155ea3b19a0ed484de714b6229c922",
+      "size": 743793,
+      "url": "https://mediafilez.forgecdn.net/files/9261/871/FreshAnimations_v1.11.1_1.20%2b.zip"
+    },
+    {
+      "path": "resourcepacks/LowOnFire 1.21.3.zip",
+      "name": "LowOnFire 1.21.3.zip",
+      "sha512": "2a6bcdd6963996af35474fc12cd4a57163d1435d2f8b61383eb269ca66297e80d6b687343fc7f151d4111719e05ae90020c3b4d1075bf9e1c33765cc3f68748f",
+      "size": 41582,
+      "url": "https://mediafilez.forgecdn.net/files/5944/547/LowOnFire%201.21.3.zip"
+    },
+    {
+      "path": "resourcepacks/RCT Trainers+ [1.7] v2.2.zip",
+      "name": "RCT Trainers+ [1.7] v2.2.zip",
+      "sha512": "7cd1493790d41e50caee7783f5ad88e859f9698920769b25e551b14f2e7403a42d6ae9c1dec14c7b58e821095c0ec2585eb11e2e8b2917cd7f6be58cb64f6357",
+      "size": 4893539,
+      "url": "https://mediafilez.forgecdn.net/files/8642/626/RCT%20Trainers%2b%20%5b1.7%5d%20v2.2.zip"
+    }
   ]
 }

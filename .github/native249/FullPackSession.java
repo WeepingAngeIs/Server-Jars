@@ -50,6 +50,26 @@ public final class FullPackSession {
         result.put("observed_neutral",data);
         result.put("shapes",shapes);
         result.put("attributes",nbt.getList("attributes",Tag.TAG_COMPOUND).copy());
+        var persisted = player.getPersistentData();
+        var keyNames = new net.minecraft.nbt.ListTag();
+        for (String key : persisted.getAllKeys()) {
+            if (!key.toLowerCase(java.util.Locale.ROOT).contains("poke")
+                    && !key.toLowerCase(java.util.Locale.ROOT).contains("cobble"))
+                keyNames.add(net.minecraft.nbt.StringTag.valueOf(key));
+        }
+        result.put("persistent_keys",keyNames);
+        if (stage.equals("fresh")) {
+            if (persisted.contains("dangerous_first_join", Tag.TAG_ANY_NUMERIC))
+                result.put("dangerous_first_join",persisted.get("dangerous_first_join").copy());
+            var insanity = persisted.getCompound("insanelib");
+            var neutralInsanity = new CompoundTag();
+            if (insanity.contains("in_combat",Tag.TAG_ANY_NUMERIC))
+                neutralInsanity.put("in_combat",insanity.get("in_combat").copy());
+            var extra = insanity.get("nbt_tags");
+            if (extra instanceof CompoundTag c && c.isEmpty() || extra instanceof net.minecraft.nbt.ListTag l && l.isEmpty())
+                neutralInsanity.put("nbt_tags",extra.copy());
+            result.put("insanelib",neutralInsanity);
+        }
         Files.writeString(results.resolve("synthetic-player-"+stage+".snbt"),result.toString());
     }
     static void begin(ServerPlayer player) throws Exception {
@@ -70,6 +90,19 @@ public final class FullPackSession {
         JailConfig.JAIL_PACKED_WALLETS.set(true);
         JailConfig.JAIL_PACKED_WALLETS.save();
         Custody249Proof.refusals(player);
+        var persistent = player.getPersistentData();
+        boolean alreadyPersisted = persistent.contains("PlayerPersisted");
+        var original = persistent.getCompound("PlayerPersisted").copy();
+        var pending = original.copy();
+        require(!pending.contains("TFCharmInventory"), "Fresh fixture already has pending Twilight items");
+        var savedSlots = new net.minecraft.nbt.ListTag();
+        savedSlots.add(PackedWalletProof.encoded(player, player.getInventory().getItem(PackedWalletProof.SLOT)));
+        pending.put("TFCharmInventory", savedSlots);
+        persistent.put("PlayerPersisted", pending.copy());
+        Custody249Proof.refused(player, "twilight_pending_charm_inventory");
+        require(pending.equals(persistent.getCompound("PlayerPersisted")), "Refusal consumed the Twilight recovery");
+        if (alreadyPersisted) persistent.put("PlayerPersisted",original); else persistent.remove("PlayerPersisted");
+
         require(cmd("jail Visitor 6")==1,"Supported packed-wallet admission refused");
         remember(player);
         cell(player,6);

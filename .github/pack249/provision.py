@@ -42,6 +42,36 @@ def retrieve(row, cache):
         time.sleep(attempt+1)
     raise RuntimeError(f"{row['name']}: {errors}")
 
+def active_settings(archive, dest):
+    # Reproduce the installed non-personal gameplay settings from the public files.
+    adjustments = {
+        "config/cubalance-common.toml": (b"armor_percent = 100.0", b"armor_percent = 50.0"),
+        "config/defaultoptions-common.toml": (b', "file/CobblemonMoreCosmetics Release v1.1.7-1.21.x.zip"', b''),
+        "config/defaultoptions/options.txt": (b',"file/CobblemonMoreCosmetics Release v1.1.7-1.21.x.zip"', b''),
+    }
+    expected = json.loads((ROOT / "configured-hashes.json").read_text())
+    for name, sha in expected.items():
+        data = archive.read("overrides/" + name)
+        if name in adjustments:
+            old, new = adjustments[name]
+            assert data.count(old) == 1
+            data = data.replace(old, new)
+        elif name == "config/infernalmobs.cfg":
+            registry = json.loads(data)
+            for key, value in [("permittedentities",True),("entitiesalwaysinfernal",False)]:
+                for entity in ("Maledictus_Entity","HydraEntity","StymphalianBirdEntity","The_Harbinger_Entity"):
+                    del registry[key][entity]
+                registry[key].update(PiglinBrute=value, Piglin=value)
+            for entity in ("StymphalianBirdEntity","HydraEntity","GhostEntity","ElderGuardian"):
+                del registry["entitybasehealth"][entity]
+            registry["entitybasehealth"].update(TheGatekeeper=175.0, PiglinBrute=25.0)
+            data = json.dumps(registry, ensure_ascii=False, indent=2).encode() + b"\r\n"
+        if hashlib.sha256(data).hexdigest() != sha:
+            raise ValueError(f"Published configuration reconstruction differs for {name}")
+        target = dest / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+
 def populate(dest, side, cache):
     dest.mkdir(parents=True, exist_ok=True)
     mods = dest / "mods"
@@ -63,10 +93,21 @@ def populate(dest, side, cache):
             os.link(source,target)
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
         list(pool.map(install, selected))
-    # Only byte-matched, publicly published declarative overrides. Never restore a world,
-    # remote addresses, private settings or executable modpack scripts.
+    for row in PACK["additional_packs"]:
+        name = Path(row["path"])
+        assert len(name.parts) == 2 and name.parts[0] in {"resourcepacks","datapacks"} and name.name == row["name"]
+        path = dest / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        source = retrieve(row, cache)
+        if not path.exists():
+            os.link(source, path)
+        elif digest(path, "sha512") != row["sha512"]:
+            raise ValueError(f"Conflicting pack at {path}")
+    # Public configuration, resources and audited data/battle packs. Saved worlds,
+    # addresses, user identities and generated player caches stay out of the fixture.
     overrides = json.loads((ROOT / "overrides.json").read_text())
     with ZipFile(retrieve(PACK["pack"],cache)) as archive:
+        active_settings(archive,dest)
         for name,expected in overrides.items():
             assert not Path(name).is_absolute() and ".." not in Path(name).parts
             body=archive.read("overrides/"+name)

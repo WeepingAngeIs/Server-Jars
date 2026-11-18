@@ -138,7 +138,7 @@ for phase in (1,2):
     proof=json.loads((report/f"center-phase{phase}.json").read_text())
     assert proof["commit"]==os.environ["GITHUB_SHA"] and proof["jail_sha256"]==digest(candidate)
     assert proof["actual_neoforge_21_1_249"] and proof["companion_sha256"]==digest(companion)
-    for check in (["refused_equipped_wallet","refused_multiple_wallets","refused_auto_exchange_wallet",
+    for check in (["refused_equipped_wallet","refused_multiple_wallets","refused_auto_exchange_wallet","refused_twilight_pending_charm_inventory",
                    "preview_place_undo_and_six_intact_cells","escape_native_respawn_in_cell_six_without_client_action"]
                   if phase==1 else ["occupied_return_kept_conflict_and_escrow","full_wallet_and_equipment_return_after_restart"]):
         assert proof[check],check

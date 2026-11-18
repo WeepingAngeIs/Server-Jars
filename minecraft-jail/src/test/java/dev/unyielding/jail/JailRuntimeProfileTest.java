@@ -24,6 +24,8 @@ class JailRuntimeProfileTest {
     }
 
     @Test void unknownKernelAndUnapprovedLoadedFilesRefuse() {
+        assertDoesNotThrow(()->JailRuntimeProfile.check("21.1.255","21.1.255",List.of(),null));
+        assertThrows(IOException.class,()->JailRuntimeProfile.check("21.1.249","21.1.255",List.of(),null));
         assertThrows(IOException.class,()->JailRuntimeProfile.check("21.1.248","21.1.255",List.of(),null));
         assertThrows(IOException.class,()->JailRuntimeProfile.check("21.1.255","21.1.255",List.of("new=1:aaa"),"new=1:aaa"));
         assertThrows(IOException.class,()->JailRuntimeProfile.check("21.1.249","21.1.255",List.of("new=1:aaa"),"new=1:aaa"));
@@ -51,6 +53,23 @@ class JailRuntimeProfileTest {
         assertFalse(JailPackState.neutral(reviewed,"carryon:carry_on_data",carry));
         carry.remove("tile");carry.putBoolean("keyPressed",true);
         assertFalse(JailPackState.neutral(reviewed,"carryon:carry_on_data",carry));
+    }
+
+    @Test void activeOrUnknownNonpersistedProgressRefusesBeforeCustody() throws Exception {
+        var data=new CompoundTag(); data.put("PlayerPersisted",new CompoundTag());
+        JailPackState.verifyPersistent(data,null);
+        data.putInt("test:bank_balance",100);
+        assertThrows(IOException.class,()->JailPackState.verifyPersistent(data,null));
+    }
+
+    @Test void twilightDeathRecoveryBlocksCustodyEvenWithAnEmptyLiveInventory() {
+        var stored=new CompoundTag();
+        assertDoesNotThrow(()->JailPackState.verifyTwilightState(stored));
+        for (var key:List.of("TFCharmInventory","CharmStack","CasketDamage")) {
+            stored.put(key,new CompoundTag());
+            assertThrows(IOException.class,()->JailPackState.verifyTwilightState(stored));
+            stored.remove(key);
+        }
     }
 
     @Test void occupiedOrMalformedWalletAndUnknownOriginStateRefuse() {
