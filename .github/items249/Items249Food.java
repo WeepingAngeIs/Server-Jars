@@ -33,7 +33,12 @@ final class Items249Food {
         var nativeData=p.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments");
         var saved=new CompoundTag();
         saved.put("history",nativeData.getList("solonion:foodlist",10).copy());
-        saved.put("benefits",nativeData.getCompound("solonion:benefit").copy());
+        var benefits=nativeData.getCompound("solonion:benefit").copy();
+        if (benefits.get("att") instanceof ListTag mappedAttributes) {
+            // SOL writes this map in unspecified order. Keep the entire rows and their types.
+            mappedAttributes.sort(java.util.Comparator.comparing(row->((CompoundTag)row).getString("att")));
+        }
+        saved.put("benefits",benefits);
         for (String key:List.of("so_cycle","so_bonus","so_death","so_lock")) saved.putInt(key,score(p,key));
         var modifiers=new ListTag();
         for (var attribute:List.of(Attributes.MAX_HEALTH,Attributes.ARMOR_TOUGHNESS)) {
@@ -70,10 +75,10 @@ final class Items249Food {
         require(score(player,"so_cycle")==0 && score(player,"so_death")==0,"Food fixture was already occupied");
         eat(player,64);
         require(state(player).getList("history",10).size()==64,"Native provider did not retain 64 meals");
-        cmd("function solcycle:tick");
+        runFoodCycle(player);
         require(score(player,"so_cycle")==1 && score(player,"so_bonus")>0,"Real food datapack did not bank the first cycle");
         eat(player,35);
-        cmd("function solcycle:tick");
+        runFoodCycle(player);
         var progress=state(player);
         require(progress.getList("history",10).size()==35 && !progress.getCompound("benefits").isEmpty(),"Active food history/benefit missing");
         var health=player.getAttribute(Attributes.MAX_HEALTH);
@@ -83,6 +88,10 @@ final class Items249Food {
         Files.write(evidence(player,"food"),OriginCustodyPort.encode(progress));
         Files.writeString(evidence(player,"max-health"),Float.toString(player.getMaxHealth()));
         Files.writeString(evidence(player,"control-deaths"),Integer.toString(score(player,CONTROL)));
+    }
+    private static void runFoodCycle(ServerPlayer player) {
+        // This native function schedules nested commands in Minecraft's command execution context.
+        player.server.getCommands().performPrefixedCommand(player.server.createCommandSourceStack(),"function solcycle:tick");
     }
     static float expectedHealth(ServerPlayer p,float defaultHealth) throws Exception {
         var saved=evidence(p,"max-health");
