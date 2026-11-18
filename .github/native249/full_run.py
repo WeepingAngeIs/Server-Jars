@@ -1,4 +1,5 @@
 """Run an ordinary current-pack client against a separate ordinary NeoForge dedicated server."""
+import argparse
 import hashlib
 import json
 import os
@@ -16,11 +17,16 @@ server = scratch/"pack249-server"
 client = scratch/"pack249-client-native"
 report = root/"dist/packaged-smoke"
 harness = report/"fullpack-stimulus.jar"
-candidate = Path(sys.argv[1]).resolve()
+args = argparse.ArgumentParser()
+args.add_argument('candidate', type=Path)
+args.add_argument('--phase', type=int, choices=[1,2])
+options = args.parse_args()
+candidate = options.candidate.resolve()
+phases = (options.phase,) if options.phase else (1,2)
 world = server/"jail_certified_smoke"
 marker = Path("/tmp/uq-player-only-result")
-if world.exists() or (server/"mods/pack249-census.jar").exists():
-    raise RuntimeError("Full-pack test requires a fresh hosted world and no census mod")
+if (server/"mods/pack249-census.jar").exists() or (phases[0]==1 and world.exists()):
+    raise RuntimeError("Full-pack admission requires a fresh hosted world and no census mod")
 if not (server/"libraries/net/neoforged/neoforge/21.1.249/unix_args.txt").is_file():
     raise RuntimeError("Provision the dedicated server with PACK249_INSTALL_ONLY=1")
 if not (client/"mods/Unyielding-1.2.0.jar").is_file():
@@ -43,10 +49,16 @@ companion = server/"mods/Unyielding-1.2.0.jar"
 assert digest(companion) == "ec3ae2c48399e40ffa615ddec85408bc29b2479c5a35eb7236c3e036ebdf762c"
 assert digest(client/"mods"/companion.name)==digest(companion)
 assert len(list((client/"mods").glob("*.jar"))) == 367, "Expected all 365 pack files plus candidate and test JAR"
+if phases[0]==2:
+    proof=json.loads((report/"center-phase1.json").read_text())
+    assert (world/"level.dat").is_file() and proof["commit"]==os.environ["GITHUB_SHA"]
+    assert proof["jail_sha256"]==digest(candidate) and proof["companion_sha256"]==digest(companion)
+    assert proof["escape_native_respawn_in_cell_six_without_client_action"]
+    checkpoint=json.loads((report/"full249-first-session-saved.json").read_text())
+    assert checkpoint=={"commit":os.environ["GITHUB_SHA"],"origin_config":digest(server/"config/neoorigins/admin.toml")}
 accepted = root/"dist/packaged-harness/run-server/eula.txt"
 assert "eula=true" in accepted.read_text(encoding="utf-8-sig").replace(" ","")
-shutil.copy2(accepted,server/"eula.txt")
-(server/"server.properties").write_text("""online-mode=false
+server_properties="""online-mode=false
 server-ip=127.0.0.1
 server-port=25565
 level-name=jail_certified_smoke
@@ -62,8 +74,11 @@ generate-structures=false
 enable-rcon=false
 enable-query=false
 max-tick-time=-1
-""")
-(client/"options.txt").write_text("guiScale:2\nrenderDistance:2\nsimulationDistance:2\nmaxFps:30\nenableVsync:false\nonboardAccessibility:false\nsoundCategory_master:0.0\ntutorialStep:none\n")
+"""
+if phases[0]==1:
+    shutil.copy2(accepted,server/"eula.txt")
+    (server/"server.properties").write_text(server_properties)
+    (client/"options.txt").write_text("guiScale:2\nrenderDistance:2\nsimulationDistance:2\nmaxFps:30\nenableVsync:false\nonboardAccessibility:false\nsoundCategory_master:0.0\ntutorialStep:none\n")
 origin_config=server/"config/neoorigins/admin.toml"
 original_origin_config=digest(origin_config)
 base_env=dict(os.environ,UQ_PACKAGED_JAIL_SMOKE="1",UQ_TEST_JOIN_FROM_TITLE="1",UQ_JAIL_JAR=str(server/"mods"/candidate.name),
@@ -94,7 +109,7 @@ def tail(path, limit=24576):
         data.seek(max(0,path.stat().st_size-limit))
         return data.read().decode(errors="replace")
 
-for phase in (1,2):
+for phase in phases:
     logs=report/f"full249-phase{phase}-logs"
     logs.mkdir()
     marker.unlink(missing_ok=True)
@@ -189,4 +204,6 @@ for phase in (1,2):
                    "preview_place_undo_and_six_intact_cells","escape_native_respawn_in_cell_six_without_client_action"]
                   if phase==1 else ["occupied_return_kept_conflict_and_escrow","full_wallet_and_equipment_return_after_restart","native_persisted_progress_survived_clone_and_restart"]):
         assert proof[check],check
-print("Exact current full-pack production client and dedicated server passed both native custody sessions.")
+    if phase==1:
+        (report/"full249-first-session-saved.json").write_text(json.dumps({"commit":os.environ["GITHUB_SHA"],"origin_config":original_origin_config}))
+    print(f"Exact current full-pack client and dedicated server passed native custody session {phase}.",flush=True)

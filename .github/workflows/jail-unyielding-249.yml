@@ -167,7 +167,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[migration-probe]') && !contains(github.event.head_commit.message, '[client-probe]')"
     needs: build
     runs-on: ubuntu-24.04
-    timeout-minutes: 55
+    timeout-minutes: 85
     env:
       UQ_ACCESSORY_INTEGRATION: '1'
     steps:
@@ -202,8 +202,22 @@ jobs:
           PACK249_INSTALL_ONLY=1 bash .github/pack249/server.sh
           python3 .github/pack249/provision.py --side client --dest "$RUNNER_TEMP/pack249-client-native"
           python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
-      - name: Verify the packed wallet and escape on the full pack
-        run: python3 .github/native249/full_run.py candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar
+      - name: Admit a packed wallet and verify the automatic escape respawn
+        timeout-minutes: 30
+        run: python3 .github/native249/full_run.py candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar --phase 1
+      - name: Save first-session evidence before the restart
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pack249-first-session-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/*.json
+            dist/packaged-smoke/client249-phase1-status.txt
+            dist/packaged-smoke/full249-phase1-logs
+          retention-days: 10
+      - name: Reconnect and verify the exact wallet and inventory return
+        timeout-minutes: 30
+        run: python3 .github/native249/full_run.py candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.2.jar --phase 2
       - name: Preserve server and client diagnostics
         if: always()
         run: |
