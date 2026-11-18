@@ -60,6 +60,7 @@ public final class JailEscapeCustody {
             try(var j=journal(p.server,c.transaction())){
                 if(pending(j)!=null)return;
                 CompoundTag t=new CompoundTag();t.putUUID("custody",c.transaction());t.putByteArray("digest",c.digest());t.put("jail",c.assignment().jail().toTag());t.putInt("selected",p.getInventory().selected);
+                JailPackState.recordClone(p,t);
                 t.put("origin_receipt",p.getPersistentData().getCompound(JailNativeOriginPort.RECEIPT).copy());
                 int deaths=p.getStats().getValue(net.minecraft.stats.Stats.CUSTOM.get(net.minecraft.stats.Stats.DEATHS));t.putInt("deaths_before",deaths);
                 if(retainXp){t.putString("xp_policy",JailXp.POLICY);t.put("xp",JailXp.encode(JailXp.live(p)));}
@@ -115,6 +116,7 @@ public final class JailEscapeCustody {
             if(e.state()==JailEscrowJournal.State.HELD)e=j.transition(e.id(),JailEscrowJournal.State.HELD,JailEscrowJournal.State.RESTORE_STARTED);
             if(e.state()!=JailEscrowJournal.State.RESTORE_STARTED)throw new IOException("Uncertain escape phase; no death replay");
             c.inventory().persistAndVerify();c.origin().persistAndVerify();var disk=JailVanillaPort.readSavedPlayer(p);
+            JailPackState.verifyClone(p,attempt,disk);
             var l=c.assignment().jail();var pos=disk.getList("Pos",6);
             if(disk.getFloat("Health")<=0||!disk.getCompound("NeoForgeData").hasUUID(RESPAWN)||!e.id().equals(disk.getCompound("NeoForgeData").getUUID(RESPAWN))||!disk.getString("Dimension").equals(l.dim())||pos.size()!=3||pos.getDouble(0)!=l.x()||pos.getDouble(1)!=l.y()||pos.getDouble(2)!=l.z())throw new IOException("Native respawn save not verified");
             if(JailXp.retained(attempt)){

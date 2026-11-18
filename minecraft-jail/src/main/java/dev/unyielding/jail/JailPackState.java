@@ -17,6 +17,7 @@ final class JailPackState {
             "neoorigins:origin_data", "neoorigins:resource_state", "accessories:inventory_holder",
             "curios:inventory", "lightmanscurrency:wallet", "lightmanscurrency:event_unlocks");
 
+    private static final String MANA = "ars_nouveau:mana_cap";
     private static final String DEFAULTS = "/assets/minecraftjail/unyielding-249-neutral.json";
     private static final JsonObject REVIEWED = defaults();
 
@@ -38,6 +39,7 @@ final class JailPackState {
                 throw new IOException("An attached death store is outside the certified runtime");
             return;
         }
+        currencyEventUnlocks(attachments);
         verifyDeathProviders(player);
         for (String key : attachments.getAllKeys()) {
             if (!BASE_ATTACHMENTS.contains(key) && !neutral(REVIEWED.getAsJsonObject("attachments"), key, attachments.get(key)))
@@ -79,6 +81,49 @@ final class JailPackState {
             throw new IOException("A Twilight Forest charm or keepsake casket recovery is pending");
     }
 
+    // Lightman's copies both attachments on native death. Keep only an equality digest in the
+    // escape record. A missing fresh attachment has its provider's normal initial value.
+    static byte[] currencyCloneDigest(CompoundTag attachments) throws IOException {
+        verifyWalletAndResources(attachments);
+        CompoundTag state = new CompoundTag();
+        CompoundTag wallet = attachments.getCompound("lightmanscurrency:wallet");
+        state.putString("unlocked", currencyEventUnlocks(attachments));
+        state.putBoolean("visible", !wallet.contains("Visible") || wallet.getBoolean("Visible"));
+        return JailOriginTransaction.hash(JailNbt.encode(state));
+    }
+
+    private static String currencyEventUnlocks(CompoundTag attachments) throws IOException {
+        String key = "lightmanscurrency:event_unlocks";
+        if (!attachments.contains(key)) return "";
+        CompoundTag value = attachments.getCompound(key);
+        if (!value.getAllKeys().equals(Set.of("Unlocked")) || !value.contains("Unlocked", Tag.TAG_STRING))
+            throw new IOException("Malformed currency event progress");
+        return value.getString("Unlocked");
+    }
+
+    static void recordClone(ServerPlayer player, CompoundTag attempt) throws IOException {
+        if (!JailHumanAudit.hasPackStateContract(player)) return;
+        CompoundTag attachments = player.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments");
+        attempt.putByteArray("pack_currency_clone", currencyCloneDigest(attachments));
+        if (attachments.contains(MANA)) {
+            if (!neutral(REVIEWED.getAsJsonObject("attachments"), MANA, attachments.get(MANA)))
+                throw new IOException("Mana progression changed before escape");
+            attempt.putDouble("pack_mana_charge", attachments.getCompound(MANA).getDouble("current"));
+        }
+    }
+
+    static void verifyClone(ServerPlayer player, CompoundTag attempt, CompoundTag disk) throws IOException {
+        if (!JailHumanAudit.hasPackStateContract(player)) return;
+        CompoundTag attachments = disk.getCompound("neoforge:attachments");
+        verifyAttachments(player, attachments);
+        if (!java.util.Arrays.equals(attempt.getByteArray("pack_currency_clone"), currencyCloneDigest(attachments)))
+            throw new IOException("Currency unlock progress or wallet visibility changed during native respawn");
+        if (attempt.contains("pack_mana_charge") != attachments.contains(MANA) ||
+                attempt.contains("pack_mana_charge") && Double.compare(attempt.getDouble("pack_mana_charge"),
+                        attachments.getCompound(MANA).getDouble("current")) != 0)
+            throw new IOException("Native respawn did not preserve the original mana charge");
+    }
+
     static void verifyWalletAndResources(CompoundTag attachments) throws IOException {
         if (attachments.contains("neoorigins:resource_state")
                 && (!attachments.contains("neoorigins:resource_state", Tag.TAG_COMPOUND)
@@ -104,6 +149,16 @@ final class JailPackState {
             CompoundTag copy = carry.copy();
             copy.remove("tick");
             copy.remove("selected");
+            normalized = copy;
+        }
+        if (key.equals(MANA)) {
+            if (!(value instanceof CompoundTag mana) || !mana.contains("current",Tag.TAG_DOUBLE)) return false;
+            double current = mana.getDouble("current");
+            if (!Double.isFinite(current) || current < 0 || current > 100) return false;
+            // Mana ticks regenerate charge. The provider uses NeoForge copyOnDeath. The full
+            // charge is separately bound to this escape and compared with the saved replacement.
+            CompoundTag copy = mana.copy();
+            copy.remove("current");
             normalized = copy;
         }
         String canonical = normalized.toString();

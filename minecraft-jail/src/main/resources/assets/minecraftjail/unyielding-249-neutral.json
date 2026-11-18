@@ -1,0 +1,119 @@
+{
+  "modifiers": [
+    {
+      "attribute": "spell_power:critical_chance",
+      "id": "spell_power:innate_bonus",
+      "operation": "ADD_MULTIPLIED_BASE",
+      "amount": 0.05000000074505806
+    },
+    {
+      "attribute": "spell_power:critical_damage",
+      "id": "spell_power:innate_bonus",
+      "operation": "ADD_MULTIPLIED_BASE",
+      "amount": 0.5
+    },
+    {
+      "attribute": "apothic_enchanting:max_eterna",
+      "id": "apotheosis:haven/max_eterna",
+      "operation": "ADD_VALUE",
+      "amount": -70.0
+    }
+  ],
+  "attachments": {
+    "aether:aether_player": [
+      "{can_get_portal:0b,can_spawn_in_aether:0b,life_shard_count:0,logins_until_patreon_message:-1,remedy_start_duration:0,saved_health:0.0f,seen_sun_spirit:0b,show_patreon_message:0b}"
+    ],
+    "apotheosis:radial_mining_mode": [
+      "\"require_not_sneaking\""
+    ],
+    "apotheosis:tier_augments_applied": [
+      "1b"
+    ],
+    "apotheosis:world_tier": [
+      "\"haven\""
+    ],
+    "apothic_attributes:cooldowns": [
+      "{entries:{}}"
+    ],
+    "ars_nouveau:mana_cap": [
+      "{book_tier:0,glyph:0,max:100,reserved:0.0f}"
+    ],
+    "ars_nouveau:player_cap": [
+      "{familiars:{size:0},glyphs:{size:0}}"
+    ],
+    "carryon:carry_on_data": [
+      "{}"
+    ],
+    "cataclysm:hook_falling": [
+      "0b"
+    ],
+    "eternal_starlight:abyssal_fire_ticks": [
+      "0"
+    ],
+    "eternal_starlight:guidebook_listening_namespaces": [
+      "[]"
+    ],
+    "eternal_starlight:in_ether": [
+      "0b"
+    ],
+    "eternal_starlight:in_ether_ticks": [
+      "0"
+    ],
+    "eternal_starlight:meteor_cooldown": [
+      "0"
+    ],
+    "eternal_starlight:numbness_damage": [
+      "0.0f"
+    ],
+    "eternal_starlight:special_item_cooldowns": [
+      "[]"
+    ],
+    "eternal_starlight:stranghoul_hiring_cooldown": [
+      "0"
+    ],
+    "iceandfire:chain_data": [
+      "{chainedTo:[]}"
+    ],
+    "iceandfire:misc_data": [
+      "{loveTicks:0,lungeTicks:0,targetedByScepters:[]}"
+    ],
+    "l2core:conditionals": [
+      "{data:{}}"
+    ],
+    "l2core:flags": [
+      "{flags:[]}"
+    ],
+    "solonion:benefit": [
+      "{}"
+    ],
+    "solonion:foodlist": [
+      "[]"
+    ],
+    "twilightforest:feather_fan_falling": [
+      "0b"
+    ],
+    "twilightforest:has_double_jump": [
+      "0b"
+    ],
+    "twilightforest:is_gradually_gliding": [
+      "0b"
+    ],
+    "twilightforest:last_damage_armor_time": [
+      "0L"
+    ],
+    "twilightforest:slimy_soles_bounce_info": [
+      "{}"
+    ],
+    "wands:player_data": [
+      "{}"
+    ]
+  },
+  "persistent": {
+    "dangerous_first_join": [
+      "1b"
+    ],
+    "insanelib": [
+      "{}"
+    ]
+  }
+}

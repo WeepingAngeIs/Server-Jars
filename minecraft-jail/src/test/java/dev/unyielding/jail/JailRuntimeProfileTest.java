@@ -55,6 +55,28 @@ class JailRuntimeProfileTest {
         assertFalse(JailPackState.neutral(reviewed,"carryon:carry_on_data",carry));
     }
 
+    @Test void manaRegenCannotConcealProgressEquipmentOrOutOfRangeCharge() throws Exception {
+        String key="ars_nouveau:mana_cap";
+        var schema=net.minecraft.nbt.TagParser.parseTag("{book_tier:0,glyph:0,max:100,reserved:0.0f}");
+        JsonObject profile=new JsonObject(); JsonArray defaults=new JsonArray();
+        defaults.add(schema.toString()); profile.add(key,defaults);
+        for (double valid:List.of(0d,25d,26.25d,100d)) {
+            schema.putDouble("current",valid); assertTrue(JailPackState.neutral(profile,key,schema));
+        }
+        for (double invalid:List.of(-1d,100.01d,Double.NaN,Double.POSITIVE_INFINITY)) {
+            schema.putDouble("current",invalid); assertFalse(JailPackState.neutral(profile,key,schema));
+        }
+        schema.putInt("current",25); assertFalse(JailPackState.neutral(profile,key,schema));
+        schema.putDouble("current",25d); schema.putFloat("reserved",1f);
+        assertFalse(JailPackState.neutral(profile,key,schema));
+        schema.putFloat("reserved",0f); schema.putInt("max",200);
+        assertFalse(JailPackState.neutral(profile,key,schema));
+        schema.putInt("max",100); schema.putInt("book_tier",1);
+        assertFalse(JailPackState.neutral(profile,key,schema));
+        schema.putInt("book_tier",0); schema.put("inventory",new CompoundTag());
+        assertFalse(JailPackState.neutral(profile,key,schema));
+    }
+
     @Test void activeOrUnknownNonpersistedProgressRefusesBeforeCustody() throws Exception {
         var data=new CompoundTag(); data.put("PlayerPersisted",new CompoundTag());
         JailPackState.verifyPersistent(data,null);
@@ -70,6 +92,23 @@ class JailRuntimeProfileTest {
             assertThrows(IOException.class,()->JailPackState.verifyTwilightState(stored));
             stored.remove(key);
         }
+    }
+
+    @Test void nativeCurrencyProgressAndWalletVisibilityMustSurviveTheClone() throws Exception {
+        CompoundTag attachments=new CompoundTag();
+        byte[] fresh=JailPackState.currencyCloneDigest(attachments);
+        CompoundTag wallet=new CompoundTag();
+        wallet.put("Wallet",new CompoundTag()); wallet.putBoolean("Visible",true);
+        CompoundTag eventProgress=new CompoundTag(); eventProgress.putString("Unlocked","");
+        attachments.put("lightmanscurrency:event_unlocks",eventProgress);
+        attachments.put("lightmanscurrency:wallet",wallet);
+        assertArrayEquals(fresh,JailPackState.currencyCloneDigest(attachments));
+        eventProgress.putString("Unlocked","summer;winter");
+        assertFalse(java.util.Arrays.equals(fresh,JailPackState.currencyCloneDigest(attachments)));
+        eventProgress.putString("Unlocked",""); wallet.putBoolean("Visible",false);
+        assertFalse(java.util.Arrays.equals(fresh,JailPackState.currencyCloneDigest(attachments)));
+        eventProgress.putInt("Unlocked",7);
+        assertThrows(IOException.class,()->JailPackState.currencyCloneDigest(attachments));
     }
 
     @Test void occupiedOrMalformedWalletAndUnknownOriginStateRefuse() {
