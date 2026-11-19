@@ -254,7 +254,7 @@ public final class SpinOddsScreen extends FormScreen {
                         minecraft.setScreen(this);
                         if (confirmed) submit(next);
                     }, Component.literal("Save these rounded percentages?"), Component.literal(
-                            "Your previous custom odds have more than two decimal places. Saving uses the percentages shown, including any 0% tiers. Use Config values to retain finer precision.")));
+                            "Your previous custom odds have more than two decimal places. Saving uses the percentages shown, including any 0% tiers. Use Configtopia to retain finer precision.")));
                     return;
                 }
                 submit(next);

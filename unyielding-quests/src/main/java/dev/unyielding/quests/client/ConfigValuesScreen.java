@@ -18,7 +18,7 @@ public final class ConfigValuesScreen extends FormScreen {
     private String filter = "";
     private boolean requestedModSettings;
     private ConfigValuesScreen(Screen parent, CompoundTag data) {
-        super(parent, "Config values");
+        super(parent, "Configtopia");
         this.data = data;
     }
     public static void requestOpen() {
@@ -70,6 +70,12 @@ public final class ConfigValuesScreen extends FormScreen {
         if (parent instanceof BalanceSettingsScreen balance) balance.updateRelatedSettings(data);
     }
     @Override protected void build() {
+        button(left(), innerWidth(), "Add Mod Settings", Ui.ICON_GEAR, Ui.Style.ACCENT, () -> {
+            if (!AdminSettingsScreen.canManage() || requestedModSettings) return;
+            requestedModSettings = true;
+            Net.sendToServer(new ConfigEditor.Action("__mod_settings", "", ""));
+        }).active = AdminSettingsScreen.canManage();
+        gap(26);
         note(font.plainSubstrByWidth(data.getString("message"), innerWidth()));
         gap(5);
         field("filter", left(), innerWidth() - 65, filter, "Search settings", s -> filter = s);
@@ -89,12 +95,6 @@ public final class ConfigValuesScreen extends FormScreen {
         button(left() + (innerWidth() + 4) / 2, (innerWidth() - 4) / 2, "Map icon size", null, Ui.Style.NORMAL,
                 () -> { filter = "quests.custom_pokemon.map_icon_scale"; scroll = 0; relayout(); });
         gap(26);
-        button(left(), innerWidth(), "Add Mod Settings", null, Ui.Style.NORMAL, () -> {
-            if (!AdminSettingsScreen.canManage()) return;
-            requestedModSettings = true;
-            Net.sendToServer(new ConfigEditor.Action("__mod_settings", "", ""));
-        }).active = AdminSettingsScreen.canManage();
-        gap(26);
         for (Tag raw : data.getList("rows", Tag.TAG_COMPOUND)) {
             CompoundTag row = (CompoundTag)raw;
             String key = row.getString("key");
@@ -107,6 +107,14 @@ public final class ConfigValuesScreen extends FormScreen {
         }
     }
     @Override protected String saveLabel() { return "Done"; }
+    @Override public void tick() {
+        super.tick();
+        if (!AdminSettingsScreen.canManage()) requestedModSettings = false;
+    }
+    @Override public void removed() {
+        requestedModSettings = false;
+        super.removed();
+    }
     @Override protected void save() { cancel(); }
 
     private static final class ValueScreen extends FormScreen {

@@ -100,7 +100,7 @@ public abstract class FormScreen extends Screen {
         }
         // footer buttons
         footer.add(addRenderableWidget(new SpriteButton(px + pw - 14 - 70, py + ph - 26, 70, 20, Component.literal(saveLabel()), Ui.ICON_CHECK, Ui.Style.ACCENT, b -> save())));
-        footer.add(addRenderableWidget(new SpriteButton(px + pw - 14 - 70 - 66, py + ph - 26, 62, 20, Component.literal("Cancel"), null, Ui.Style.NORMAL, b -> cancel())));
+        if (showCancelButton()) footer.add(addRenderableWidget(new SpriteButton(px + pw - 14 - 70 - 66, py + ph - 26, 62, 20, Component.literal("Cancel"), null, Ui.Style.NORMAL, b -> cancel())));
         footer.add(addRenderableWidget(SpriteButton.iconButton(px + pw - 24, py + 6, 18, Ui.ICON_CLOSE, Component.literal("Close"), b -> cancel())));
         setFocused(null);
         if (focusKey != null) {
@@ -116,6 +116,10 @@ public abstract class FormScreen extends Screen {
 
     protected String saveLabel() {
         return "Save";
+    }
+
+    protected boolean showCancelButton() {
+        return true;
     }
 
     protected abstract void build();
@@ -150,7 +154,11 @@ public abstract class FormScreen extends Screen {
     }
 
     protected void note(String text) {
-        texts.add(new Text(text, left(), cy, Theme.textMuted, false, 1f));
+        bodyLine(text, Theme.textMuted, false);
+    }
+
+    protected void bodyLine(String text, int color, boolean bold) {
+        texts.add(new Text(text, left(), cy, color, bold, 1f));
         cy += 10;
     }
 

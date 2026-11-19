@@ -14,6 +14,7 @@ import net.neoforged.fml.config.ModConfigs;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.HashSet;
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -43,7 +44,7 @@ final class ModSettingsMenu {
             case ADD -> {
                 if (mod.present() && action.expected().isEmpty() && ModSettings.UWU.equals(action.value())) {
                     if (selections.admins.add(player.getUUID())) selections.setDirty();
-                    sync(player, mod, true, false, "UwU Dimension added.");
+                    sync(player, mod, true, false, "");
                 } else sync(player, mod, added, false, "That mod is unavailable.");
             }
             default -> {
@@ -107,6 +108,22 @@ final class ModSettingsMenu {
         ListTag mods = new ListTag();
         mods.add(page);
         data.put("mods", mods);
+        if (open) {
+            // Identity only. Mods without a reviewed adapter are searchable, but cannot be added or edited.
+            ListTag installedMods = new ListTag();
+            ModList.get().getMods().stream()
+                    .filter(info -> !ModSettings.UWU.equals(info.getModId()))
+                    .sorted(Comparator.comparing(info -> info.getDisplayName(), String.CASE_INSENSITIVE_ORDER))
+                    .forEach(info -> {
+                        CompoundTag identity = new CompoundTag();
+                        identity.putString("id", info.getModId());
+                        identity.putString("name", info.getDisplayName());
+                        identity.putBoolean("installed", true);
+                        identity.putBoolean("unsupported", true);
+                        installedMods.add(identity);
+                    });
+            data.put("installedMods", installedMods);
+        }
         Net.sendTo(player, new ConfigEditor.Sync(data, open));
     }
 
@@ -125,7 +142,7 @@ final class ModSettingsMenu {
         row.putString("aliases", ModSettings.ALIASES);
         row.putString("scope", "Unverified");
         row.putString("apply", "Restart requirements unverified");
-        row.putString("status", mod.present() ? "Requires a supported UwU server integration."
+        row.putString("status", mod.present() ? "Waiting for UwU Dimension to provide the server control that reads and saves excavation."
                 : "UwU Dimension is missing from this server.");
         try {
             endpoint(player, mod).map(ModSettings.ExcavationEndpoint::read).ifPresent(state -> {
@@ -133,6 +150,7 @@ final class ModSettingsMenu {
                 row.putBoolean("value", state.enabled());
                 row.putString("scope", state.scope().label);
                 row.putString("apply", state.applies().label);
+                row.putString("activation", state.applies().name());
                 row.putString("status", "Available");
             });
         } catch (RuntimeException failure) {

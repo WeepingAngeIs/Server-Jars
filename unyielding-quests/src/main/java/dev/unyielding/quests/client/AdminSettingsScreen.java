@@ -112,7 +112,7 @@ public final class AdminSettingsScreen extends Screen {
                 Component.literal("Spin odds"), null, Ui.Style.ACCENT,
                 button -> SpinOddsScreen.requestOpen())));
         footer.add(addRenderableWidget(new SpriteButton(px + 18 + shortcutWidth, py + 32, shortcutWidth, 18,
-                Component.literal("Config values"), null, Ui.Style.NORMAL,
+                Component.literal("Configtopia"), null, Ui.Style.NORMAL,
                 button -> ConfigValuesScreen.requestOpen())));
         footer.add(addRenderableWidget(new SpriteButton(px + 22 + shortcutWidth * 2, py + 32, shortcutWidth, 18,
                 Component.literal("Loot tables"), null, Ui.Style.NORMAL,
