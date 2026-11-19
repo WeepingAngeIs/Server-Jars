@@ -65,7 +65,7 @@ public final class ConfigAudit extends SavedData {
             CompoundTag e = audit.entries.get(i);
             player.sendSystemMessage(Component.literal(Instant.ofEpochMilli(e.getLong("time")) + " " + e.getString("actor") + ": " + e.getString("key") + " " + ConfigAuditPolicy.display(e.getString("key"), e.getString("before")) + " → " + ConfigAuditPolicy.display(e.getString("key"), e.getString("after"))));
         }
-        player.sendSystemMessage(Component.literal("Undo the latest supported numeric edit: /configaudit undo"));
+        player.sendSystemMessage(Component.literal("Undo the latest supported edit: /configaudit undo"));
         if (pages > 1) player.sendSystemMessage(Component.literal("View another page: /configaudit <page>"));
         if (audit.entries.isEmpty()) player.sendSystemMessage(Component.literal("No individual config edits recorded yet."));
         return 1;

@@ -57,6 +57,7 @@ public final class ConfigEditor {
     }
     public static void handle(ServerPlayer player, Action action) {
         if (!player.hasPermissions(2)) return;
+        if (ModSettingsMenu.handles(action.key())) { ModSettingsMenu.handle(player, action); return; }
         if (action.key().equals("__open")) { sync(player, true, "Select a setting to edit."); return; }
         if (action.key().equals("__open_armor") || action.key().equals("__open_raid")) {
             syncPage(player, action.key().equals("__open_armor") ? "armor" : "raid");
@@ -120,12 +121,13 @@ public final class ConfigEditor {
                     + Objects.toString(error.getMessage(), "Invalid value."));
         }
     }
-    /** Undo only the latest safe numeric edit, provided its value has not changed since. */
+    /** Undo only the latest supported edit, provided its value has not changed since. */
     public static int undoLatest(ServerPlayer player) {
         if (!player.hasPermissions(2)) return 0;
         CompoundTag entry=ConfigAudit.latest(player);
         if(entry==null) { player.sendSystemMessage(net.minecraft.network.chat.Component.literal("No config edit is available to undo.")); return 0; }
         String key=entry.getString("key"), before=entry.getString("before"), after=entry.getString("after");
+        if (ModSettings.KEY.equals(key)) return ModSettingsMenu.undo(player, key, before, after);
         var value=VALUES.get(key);
         if(value==null || !ConfigAuditPolicy.undoable(key,before,after,JSON.toJson(value.getRaw()))) {
             player.sendSystemMessage(net.minecraft.network.chat.Component.literal("The latest edit cannot be safely undone, or its value has changed.")); return 0;

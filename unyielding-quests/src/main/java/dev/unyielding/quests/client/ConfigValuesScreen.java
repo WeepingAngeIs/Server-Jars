@@ -16,6 +16,7 @@ public final class ConfigValuesScreen extends FormScreen {
     private static final Gson JSON = new Gson();
     private CompoundTag data;
     private String filter = "";
+    private boolean requestedModSettings;
     private ConfigValuesScreen(Screen parent, CompoundTag data) {
         super(parent, "Config values");
         this.data = data;
@@ -31,6 +32,14 @@ public final class ConfigValuesScreen extends FormScreen {
     public static void receive(ConfigEditor.Sync sync) {
         Minecraft mc = Minecraft.getInstance();
         String page = sync.data().getString("page");
+        if (page.equals("mod_settings")) {
+            if (mc.screen instanceof ModSettingsScreen settings) settings.receive(sync.data());
+            else if (sync.open() && mc.screen instanceof ConfigValuesScreen list && list.requestedModSettings) {
+                list.requestedModSettings = false;
+                mc.setScreen(new ModSettingsScreen(list, sync.data()));
+            }
+            return;
+        }
         if (sync.open() && (page.equals("armor") || page.equals("raid"))) {
             if (mc.screen instanceof BalanceSettingsScreen balance) balance.receive(sync.data(), true);
             else mc.setScreen(new BalanceSettingsScreen(mc.screen, sync.data(), page.equals("raid")));
@@ -48,6 +57,10 @@ public final class ConfigValuesScreen extends FormScreen {
             else value.failed(reply);
         } else if (mc.screen instanceof ConfigValuesScreen list) {
             list.data = sync.data();
+            if (list.requestedModSettings && list.data.getString("message").equals("Unknown setting.")) {
+                list.requestedModSettings = false;
+                list.data.putString("message", "Add Mod Settings is unavailable on this server build.");
+            }
             list.updateOddsParent();
             list.relayout();
         }
@@ -75,6 +88,12 @@ public final class ConfigValuesScreen extends FormScreen {
                 () -> { filter = "essentials."; scroll = 0; relayout(); });
         button(left() + (innerWidth() + 4) / 2, (innerWidth() - 4) / 2, "Map icon size", null, Ui.Style.NORMAL,
                 () -> { filter = "quests.custom_pokemon.map_icon_scale"; scroll = 0; relayout(); });
+        gap(26);
+        button(left(), innerWidth(), "Add Mod Settings", null, Ui.Style.NORMAL, () -> {
+            if (!AdminSettingsScreen.canManage()) return;
+            requestedModSettings = true;
+            Net.sendToServer(new ConfigEditor.Action("__mod_settings", "", ""));
+        }).active = AdminSettingsScreen.canManage();
         gap(26);
         for (Tag raw : data.getList("rows", Tag.TAG_COMPOUND)) {
             CompoundTag row = (CompoundTag)raw;
