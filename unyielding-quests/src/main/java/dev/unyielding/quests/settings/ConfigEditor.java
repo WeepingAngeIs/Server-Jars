@@ -127,7 +127,7 @@ public final class ConfigEditor {
         CompoundTag entry=ConfigAudit.latest(player);
         if(entry==null) { player.sendSystemMessage(net.minecraft.network.chat.Component.literal("No config edit is available to undo.")); return 0; }
         String key=entry.getString("key"), before=entry.getString("before"), after=entry.getString("after");
-        if (ModSettings.KEY.equals(key)) return ModSettingsMenu.undo(player, key, before, after);
+        if (ModSettingsMenu.undoableKey(key)) return ModSettingsMenu.undo(player, key, before, after);
         var value=VALUES.get(key);
         if(value==null || !ConfigAuditPolicy.undoable(key,before,after,JSON.toJson(value.getRaw()))) {
             player.sendSystemMessage(net.minecraft.network.chat.Component.literal("The latest edit cannot be safely undone, or its value has changed.")); return 0;

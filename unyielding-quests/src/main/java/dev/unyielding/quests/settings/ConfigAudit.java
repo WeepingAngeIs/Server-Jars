@@ -38,11 +38,14 @@ public final class ConfigAudit extends SavedData {
         entry.putString("key", key);
         entry.putLong("time", System.currentTimeMillis());
         // Avoid persisting potentially sensitive or very large string/list configuration values.
-        entry.putString("before", ConfigAuditPolicy.printable(before));
-        entry.putString("after", ConfigAuditPolicy.printable(after));
+        entry.putString("before", snapshotValue(key, before));
+        entry.putString("after", snapshotValue(key, after));
         audit.entries.add(entry);
         while (audit.entries.size() > LIMIT) audit.entries.remove(0);
         audit.setDirty();
+    }
+    static String snapshotValue(String key, Object value) {
+        return NeoForgeSettings.modId(key).isEmpty() ? ConfigAuditPolicy.printable(value) : ConfigAuditPolicy.registeredValue(value);
     }
     static CompoundTag latest(ServerPlayer player) {
         ConfigAudit audit=get(player);

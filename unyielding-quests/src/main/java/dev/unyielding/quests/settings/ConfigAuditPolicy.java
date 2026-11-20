@@ -6,6 +6,12 @@ final class ConfigAuditPolicy {
     static String printable(Object value) {
         return value instanceof Number || value instanceof Boolean ? value.toString() : "[text or list omitted]";
     }
+    static String registeredValue(Object value) {
+        if (value instanceof Enum<?> choice && choice.name().matches("[A-Za-z_][A-Za-z_0-9]{0,63}")) {
+            return choice.name();
+        }
+        return printable(value);
+    }
     static String display(String key,String value) {
         if (DurationInput.applies(key)) {
             try { int seconds = Integer.parseInt(value); return seconds >= 0 ? DurationInput.format(seconds) : value; }

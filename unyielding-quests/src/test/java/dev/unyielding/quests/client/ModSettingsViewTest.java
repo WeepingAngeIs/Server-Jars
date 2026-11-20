@@ -33,9 +33,20 @@ class ModSettingsViewTest {
 
     @Test void rendersOnlyServerReportedActivationTiming() {
         assertEquals(new ModSettingsView.Timing("Applies immediately", false), ModSettingsView.timing("LIVE", ""));
+        assertEquals(new ModSettingsView.Timing("No restart declared by the mod", false),
+                ModSettingsView.timing("LIVE", "No restart declared by the mod"));
         assertEquals(new ModSettingsView.Timing("World restart required", true), ModSettingsView.timing("WORLD_RESTART", ""));
         assertEquals(new ModSettingsView.Timing("Game or server restart required", true), ModSettingsView.timing("GAME_RESTART", ""));
         assertEquals(new ModSettingsView.Timing("Reopen world", false), ModSettingsView.timing("", "Reopen world"));
         assertEquals(new ModSettingsView.Timing("Restart timing unknown", false), ModSettingsView.timing("UNKNOWN", ""));
+    }
+
+    @Test void acceptsDecimalsAndScientificNotationWithoutAcceptingNonNumericFloatValues() {
+        for (String value : new String[]{"0", "-42", "0.25", "1E-6"}) {
+            assertTrue(ModSettingsView.isNumber(value));
+        }
+        for (String value : new String[]{"", "1.2.3", "NaN", "Infinity", "1".repeat(65)}) {
+            assertFalse(ModSettingsView.isNumber(value));
+        }
     }
 }
