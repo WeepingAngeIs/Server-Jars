@@ -168,7 +168,8 @@ final class ModSettingsScreen extends FormScreen {
         for (Tag raw : mods) {
             CompoundTag mod = (CompoundTag) raw;
             String id = mod.getString("id");
-            if (ModSettingsView.matches(query, mod.getString("name") + " " + id) && seen.add(id)) results.add(mod);
+            if (ModSettingsView.matches(query, mod.getString("name") + " " + id + " " + mod.getString("aliases"))
+                    && seen.add(id)) results.add(mod);
         }
     }
 
@@ -606,7 +607,11 @@ final class ModSettingsScreen extends FormScreen {
     @Override public boolean keyPressed(int key, int scan, int mods) {
         if (key == GLFW.GLFW_KEY_ESCAPE && !selectedId.isEmpty() && canRequest()) {
             if (editing != null) closeEditor();
-            else select("");
+            else if (choosingWeapon) {
+                choosingWeapon = false;
+                scroll = 0;
+                relayout();
+            } else select("");
             return true;
         }
         if ((key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) && paged()

@@ -105,7 +105,7 @@ public final class NativeWeaponMenu {
                 }
             }
             case ADMIN -> {
-                if (is(screen, "AdminSettingsScreen") && click(screen, button(screen, "Config values"))) advance(Step.VALUES);
+                if (is(screen, "AdminSettingsScreen") && click(screen, button(screen, "Configtopia"))) advance(Step.VALUES);
             }
             case VALUES -> {
                 if (is(screen, "ConfigValuesScreen") && click(screen, button(screen, "Add Mod Settings"))) advance(Step.FILTER_MOD);
@@ -283,6 +283,30 @@ public final class NativeWeaponMenu {
         failed = true;
         System.err.println("CONFIGTOPIA NATIVE UI FAILED at " + step);
         failure.printStackTrace();
+        Screen screen = mc.screen;
+        if (screen != null) {
+            StringBuilder details = new StringBuilder("Step ").append(step).append(" · ").append(screen.getTitle().getString()).append('\n');
+            for (var child : screen.children()) if (child instanceof AbstractWidget w) {
+                details.append(w.getMessage().getString()).append(" active=").append(w.active)
+                        .append(" visible=").append(w.visible).append(" x=").append(w.getX()).append(" y=").append(w.getY());
+                if (w instanceof EditBox e) details.append(" text=").append(e.getValue());
+                details.append('\n');
+            }
+            try {
+                if (is(screen, "ModSettingsScreen")) {
+                    var data = (CompoundTag) read(screen, "data");
+                    details.append("query=").append(data.getString("query")).append(" mod=").append(data.getString("detailId"))
+                            .append(" message=").append(data.getString("message")).append(" pending=").append(read(screen, "pending")).append('\n');
+                }
+                Files.writeString(OUT.resolve("failure.txt"), details);
+                try (var image = Screenshot.takeScreenshot(mc.getMainRenderTarget())) {
+                    image.writeToFile(OUT.resolve("failure.png"));
+                }
+            } catch (Exception diagnosticFailure) {
+                failure.addSuppressed(diagnosticFailure);
+            }
+            System.err.print(details);
+        }
         mc.stop();
     }
 

@@ -251,6 +251,10 @@ final class ModSettingsMenu {
         var mod = new CompoundTag();
         mod.putString("id", id);
         mod.putString("name", name);
+        if (StoragePlusSettings.ID.equals(id)) {
+            mod.putString("name", "Anya Storage Plus");
+            mod.putString("aliases", name);
+        }
         mod.putBoolean("installed", installed);
         mod.putBoolean("added", added);
         return mod;
