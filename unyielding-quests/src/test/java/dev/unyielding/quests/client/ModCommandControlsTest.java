@@ -34,6 +34,17 @@ class ModCommandControlsTest {
         assertTrue(preview.find(new CommandDispatcher<>().getRoot(), "ai", "speed", false).isEmpty());
     }
 
+    @Test void storagePageUsesItsExactCommandPrefixWithinTheSharedAnyaRoot() {
+        var tree = new CommandDispatcher<Object>();
+        tree.register(literal("anya")
+                .then(literal("storage").then(literal("example").then(action("on")).then(action("off"))))
+                .then(literal("other").then(literal("storage").then(action("on")).then(action("off")))));
+        assertEquals("anya storage", ModCommandControls.modFilter("anyastorage"));
+        var rows = new ModCommandControls().find(tree.getRoot(), "anyastorage", "", false);
+        assertEquals(List.of("anya storage example on", "anya storage example off"),
+                rows.stream().map(row -> row.entry().path()).toList());
+    }
+
     @Test void hidesDuplicateExcavationActionsOnlyWhileTheDedicatedSwitchIsVisible() {
         var tree = new CommandDispatcher<Object>();
         tree.register(literal("uwu").then(literal("launcher").then(literal("excavation").then(action("on")).then(action("off")))));

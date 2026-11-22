@@ -113,19 +113,26 @@ public final class OptionalControlsProbe {
         return json;
     }
 
-    private CompoundTag row(Actor admin, String id, String term, String keySuffix) {
-        var result = admin.action("__mod_settings_page", id, query(term).toString());
-        var owner = mod(result, id);
-        if (owner != null) {
-            List<CompoundTag> matches = new ArrayList<>();
+    private CompoundTag row(Actor admin, String id, String term, String publicPath) {
+        var request = query(term);
+        List<CompoundTag> matches = new ArrayList<>();
+        int pages = 1;
+        for (int index = 0; index < pages; index++) {
+            request.addProperty("p", index);
+            var result = admin.action("__mod_settings_page", id, request.toString());
+            var owner = mod(result, id);
+            if (owner == null) throw new AssertionError("No settings response for " + id);
+            pages = Math.max(1, result.getInt("pages"));
+            if (pages > 100) throw new AssertionError("Unexpected page count: " + pages);
             for (Tag raw : owner.getList("rows", Tag.TAG_COMPOUND)) {
                 var item = (CompoundTag) raw;
-                if (item.getString("key").endsWith(keySuffix) || item.getString("aliases").equals(keySuffix))
+                if (item.getString("aliases").equals(publicPath)
+                        && (!id.equals(STORAGE) || item.getString("key").equals("storageplus." + publicPath)))
                     matches.add(item);
             }
-            if (matches.size() == 1 && matches.getFirst().getBoolean("available")) return matches.getFirst();
         }
-        throw new AssertionError("Missing unique editable " + keySuffix + " in " + result);
+        if (matches.size() == 1 && matches.getFirst().getBoolean("available")) return matches.getFirst();
+        throw new AssertionError("Expected one editable " + id + "/" + publicPath + "; got " + matches);
     }
 
     private CompoundTag write(Actor actor, String id, String term, CompoundTag row, String proposed) {

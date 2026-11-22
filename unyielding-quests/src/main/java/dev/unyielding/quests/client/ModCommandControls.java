@@ -16,7 +16,11 @@ final class ModCommandControls {
     private List<Control> controls = List.of();
 
     static String modFilter(String modId) {
-        return modId.equals("uwudimension") ? "uwu" : modId;
+        return switch (modId) {
+            case "uwudimension" -> "uwu";
+            case "anyastorage" -> "anya storage";
+            default -> modId;
+        };
     }
 
     List<Control> find(RootCommandNode<?> current, String modId, String query, boolean hideExcavation) {
@@ -32,7 +36,7 @@ final class ModCommandControls {
             String first = path.split(" ", 2)[0];
             String alias = modFilter(modId);
             // Command ownership is not transmitted. Require a matching root or namespace for in-page actions.
-            if (!first.equals(alias) && !first.startsWith(alias + ":") && !first.startsWith(alias + "_")
+            if (!path.startsWith(alias + " ") && !first.equals(alias) && !first.startsWith(alias + ":") && !first.startsWith(alias + "_")
                     && !first.startsWith(alias + "-") && !first.startsWith(modId + ":")
                     && !(modId.equals("uwudimension") && (first.equals("uwucourt") || first.equals("uwuguardian")))) continue;
             if (NumericCommandInput.supported(current, path)) {

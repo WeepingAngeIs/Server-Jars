@@ -10,6 +10,74 @@ concurrency:
   group: configtopia-optional-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  provider:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 36
+    outputs:
+      binding: ${{ steps.metadata.outputs.binding }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Select provider source only when the owner artifact is unavailable
+        id: select
+        run: |
+          if [[ ! -f .github/optional-controls/uwu-candidate.json ]]; then
+            echo 'build=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        if: steps.select.outputs.build == 'true'
+        with:
+          repository: WeepingAngeIs/z-UwU_dm
+          ref: 4cb1c38d70e72800d7d1ded58becbb4fdc9ffa14
+          path: uwu-fallback
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        if: steps.select.outputs.build == 'true'
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: uwu-fallback/*.gradle
+      - name: Compile frozen owner source with its checked-in Gradle wrapper
+        if: steps.select.outputs.build == 'true'
+        working-directory: uwu-fallback
+        run: |
+          test "$(git rev-parse HEAD)" = '4cb1c38d70e72800d7d1ded58becbb4fdc9ffa14'
+          grep -qx 'distributionSha256Sum=72f44c9f8ebcb1af43838f45ee5c4aa9c5444898b3468ab3f4af7b6076c5bc3f' gradle/wrapper/gradle-wrapper.properties
+          bash gradlew --no-daemon --console=plain --max-workers=2 -I weapon-release/central-mirror.init.gradle jar
+          sha256sum build/libs/*-weapon-settings.1.jar
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: steps.select.outputs.build == 'true'
+        id: candidate
+        with:
+          name: configtopia-uwu-provider-from-source
+          path: uwu-fallback/build/libs/*-weapon-settings.1.jar
+          if-no-files-found: error
+          retention-days: 7
+      - name: Identify the exact single provider binary used by every lane
+        id: metadata
+        env:
+          ARTIFACT_ID: ${{ steps.candidate.outputs.artifact-id }}
+          ARCHIVE_DIGEST: ${{ steps.candidate.outputs.artifact-digest }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import hashlib, json, os, subprocess
+          from pathlib import Path
+          official = Path(".github/optional-controls/uwu-candidate.json")
+          if official.exists():
+              binding = json.loads(official.read_text())
+          else:
+              jar, = Path("uwu-fallback/build/libs").glob("*-weapon-settings.1.jar")
+              binding = dict(repository=os.environ["GITHUB_REPOSITORY"], commit=os.environ["GITHUB_SHA"],
+                             run=int(os.environ["GITHUB_RUN_ID"]), id=int(os.environ["ARTIFACT_ID"]),
+                             zip=os.environ["ARCHIVE_DIGEST"].removeprefix("sha256:"),
+                             jar=hashlib.sha256(jar.read_bytes()).hexdigest(),
+                             source_repository="WeepingAngeIs/z-UwU_dm",
+                             source_commit=subprocess.check_output(["git","-C","uwu-fallback","rev-parse","HEAD"], text=True).strip())
+          print("binding=" + json.dumps(binding, separators=(",", ":")))
+          PY
   module:
     if: github.event.repository.private == false
     runs-on: ubuntu-24.04
@@ -34,11 +102,10 @@ jobs:
           from pathlib import Path
           base = Path(".github/optional-controls")
           storage = (base / "storage-candidate.json").is_file()
-          uwu = (base / "uwu-candidate.json").is_file()
-          modes = ["absent", "storage-legacy"] + (["storage"] if storage else []) + (["uwu"] if uwu else [])
-          print("modes=" + json.dumps(modes + (["both"] if uwu and storage else [])))
+          modes = ["absent", "storage-legacy", "uwu"] + (["storage", "both"] if storage else [])
+          print("modes=" + json.dumps(modes))
           PY
-          if [[ -f .github/optional-controls/uwu-candidate.json && -f .github/optional-controls-client/run.py ]]; then
+          if [[ -f .github/optional-controls-client/run.py ]]; then
             echo 'present=true' >> "$GITHUB_OUTPUT"
           fi
       - name: Fetch pinned compile dependencies
@@ -46,7 +113,7 @@ jobs:
       - name: Compile the current quests module and isolated probe
         working-directory: unyielding-quests
         run: |
-          bash gradlew --no-daemon --console=plain -I ../.github/optional-controls/probe.gradle jar optionalControlsProbeJar
+          bash gradlew --no-daemon --console=plain -I ../.github/optional-controls/probe.gradle -I ../.github/optional-controls-client/client.gradle jar optionalControlsProbeJar compileConfigtopiaClientCheckJava
           sha256sum build/libs/*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         id: artifacts
@@ -67,7 +134,7 @@ jobs:
           retention-days: 7
   dedicated:
     if: ${{ !cancelled() && github.event.repository.private == false && needs.module.outputs.built == 'success' }}
-    needs: module
+    needs: [module, provider]
     runs-on: ubuntu-24.04
     timeout-minutes: 38
     strategy:
@@ -84,6 +151,18 @@ jobs:
         with:
           name: configtopia-optional-compiled
           path: dist/optional/module
+      - name: Stage exact packaged provider binding
+        if: matrix.mode == 'uwu' || matrix.mode == 'both'
+        env:
+          PROVIDER_BINDING: ${{ needs.provider.outputs.binding }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          binding = json.loads(os.environ["PROVIDER_BINDING"])
+          Path(".github/optional-controls/uwu-candidate.json").write_text(json.dumps(binding))
+          print(json.dumps(binding, indent=2))
+          PY
       - name: Verify optional providers in disposable dedicated server
         env:
           GH_TOKEN: ${{ github.token }}
@@ -96,8 +175,8 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
   native-client:
-    needs: module
-    if: ${{ !cancelled() && github.event.repository.private == false && needs.module.outputs.built == 'success' && needs.module.outputs.has_widget_fixture == 'true' }}
+    needs: [module, provider]
+    if: ${{ !cancelled() && github.event.repository.private == false && needs.module.outputs.built == 'success' && needs.provider.result == 'success' && needs.module.outputs.has_widget_fixture == 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 38
     steps:
@@ -112,6 +191,17 @@ jobs:
         with:
           name: configtopia-optional-compiled
           path: dist/optional/module
+      - name: Stage exact packaged provider binding
+        env:
+          PROVIDER_BINDING: ${{ needs.provider.outputs.binding }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          binding = json.loads(os.environ["PROVIDER_BINDING"])
+          Path(".github/optional-controls/uwu-candidate.json").write_text(json.dumps(binding))
+          print(json.dumps(binding, indent=2))
+          PY
       - name: Prepare headless graphics
         run: |
           sudo apt-get update -qq

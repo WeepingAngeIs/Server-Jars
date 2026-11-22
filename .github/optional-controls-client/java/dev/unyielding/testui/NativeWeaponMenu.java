@@ -257,7 +257,7 @@ public final class NativeWeaponMenu {
     }
 
     private static Object read(Object target, String key) throws ReflectiveOperationException {
-        for (var type = target.getClass(); type != null; type = type.getSuperclass()) {
+        for (Class<?> type = target.getClass(); type != null; type = type.getSuperclass()) {
             try {
                 Field f = type.getDeclaredField(key);
                 f.setAccessible(true);
