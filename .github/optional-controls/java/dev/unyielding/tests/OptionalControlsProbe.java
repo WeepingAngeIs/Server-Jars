@@ -59,7 +59,7 @@ public final class OptionalControlsProbe {
             check(server.isSameThread(), "Interactions run on the authoritative server thread");
             Actor admin = new Actor(server, "ConfigtopiaOp", true);
             Actor guest = new Actor(server, "ConfigtopiaGuest", false);
-            boolean withStorage = mode.equals("storage") || mode.equals("both");
+            boolean withStorage = mode.startsWith("storage") || mode.equals("both");
             boolean withUwu = mode.equals("uwu") || mode.equals("both");
             check(ModList.get().isLoaded(STORAGE) == withStorage && ModList.get().isLoaded(UWU) == withUwu,
                     "Real optional provider set matches " + mode);
@@ -129,7 +129,12 @@ public final class OptionalControlsProbe {
     }
 
     private CompoundTag write(Actor actor, String id, String term, CompoundTag row, String proposed) {
+        return write(actor, id, term, row, proposed, false);
+    }
+
+    private CompoundTag write(Actor actor, String id, String term, CompoundTag row, String proposed, boolean confirmed) {
         var json = query(term);
+        if (confirmed) json.addProperty("confirmed", true);
         json.addProperty("key", row.getString("key"));
         json.addProperty("expected", row.getString("current"));
         json.addProperty("value", proposed);
@@ -162,6 +167,11 @@ public final class OptionalControlsProbe {
             check(tablet(admin).equals("81"), "Provider and menu reopened at 81 after dedicated server restart");
             return;
         }
+        var definitions = (List<?>) Class.forName("dev.anya.storage.ServerSettings").getMethod("keys").invoke(null);
+        for (Object id : definitions) {
+            String key = (String) id;
+            check(row(admin, STORAGE, key, key).getString("key").equals("storageplus." + key), "Owner key exposed once: " + key);
+        }
         check(admin.command(CMD + "list") == 1 && admin.heard(TABLET), "Native Storage list includes the control");
         check(guest.action("__mod_settings_add", "", STORAGE) == null &&
                 write(guest, STORAGE, term, original, "99") == null && tablet(admin).equals(original.getString("current")),
@@ -185,6 +195,15 @@ public final class OptionalControlsProbe {
         var json = JsonParser.parseString(Files.readString(config)).getAsJsonObject();
         check(json.getAsJsonObject("expansion").get("tabletOpeningChancePercent").getAsInt() == 81,
                 "Storage Plus saved its own JSON");
+        String sensitive = "expansion.pocketStorage";
+        check(admin.command(CMD + "set " + sensitive + " true") == 1, "Native pocket enable accepted");
+        var enabled = row(admin, STORAGE, sensitive, sensitive);
+        check(enabled.getBoolean("value") && enabled.contains("confirmValue"), "Sensitive switch carries provider confirmation metadata");
+        var pending = write(admin, STORAGE, sensitive, enabled, "false");
+        check(pending != null && pending.getString("confirmKey").equals(enabled.getString("key")) &&
+                row(admin, STORAGE, sensitive, sensitive).getBoolean("value"), "First disable prompts and preserves pocket access");
+        write(admin, STORAGE, sensitive, enabled, "false", true);
+        check(!row(admin, STORAGE, sensitive, sensitive).getBoolean("value"), "Explicit second request confirms pocket disable");
     }
 
     private void uwu(Actor admin, Actor guest, String phase) throws Exception {

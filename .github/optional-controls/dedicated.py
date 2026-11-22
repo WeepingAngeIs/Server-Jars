@@ -73,7 +73,7 @@ def run_logged(command, outfile, timeout, env=None):
 def main(mode):
     if os.getenv("GITHUB_ACTIONS") != "true" or os.getenv("RUNNER_ENVIRONMENT") != "github-hosted":
         raise SystemExit("GitHub-hosted runner required")
-    assert mode in ("absent", "storage", "uwu", "both")
+    assert mode in ("absent", "storage", "storage-legacy", "uwu", "both")
     MODS.mkdir(parents=True)
     EVIDENCE.mkdir(parents=True)
     module = list((WORK / "module").glob("UnyieldingQuests-*.jar"))
@@ -82,8 +82,9 @@ def main(mode):
     shutil.copy2(module[0], MODS)
     shutil.copy2(probe, MODS)
     provenance = {"mode": mode, "source": os.environ["GITHUB_SHA"], "quests": hashfile(module[0]), "probe": hashfile(probe)}
-    if mode in ("storage", "both"):
-        provenance["storage"] = checked_artifact(STORAGE, MODS / "anya-storage-plus.jar")
+    if mode in ("storage", "storage-legacy", "both"):
+        binding = STORAGE if mode == "storage-legacy" else json.loads((Path(__file__).parent / "storage-candidate.json").read_text())
+        provenance["storage"] = checked_artifact(binding, MODS / "anya-storage-plus.jar")
     if mode in ("uwu", "both"):
         bindings = json.loads((Path(__file__).parent / "uwu-candidate.json").read_text())
         provenance["uwu"] = checked_artifact(bindings, MODS / "UwU-Dimension.jar")
@@ -95,9 +96,8 @@ def main(mode):
     (EVIDENCE / "inputs.json").write_text(json.dumps(provenance, indent=2))
     repository = f"https://maven.neoforged.net/releases/net/neoforged/neoforge/{NEO}/neoforge-{NEO}-installer.jar"
     installer = WORK / "neoforge-installer.jar"
-    subprocess.run(["curl", "-fsSL", "--retry", "3", repository, "-o", str(installer)], check=True)
-    sha1 = subprocess.check_output(["curl", "-fsSL", "--retry", "3", repository + ".sha1"], text=True).strip().split()[0]
-    assert hashfile(installer, "sha1") == sha1
+    fetch(repository, installer)
+    assert hashfile(installer) == "11d67a99db0ded3648b97b1eac06c5db0305899e05f657d360bec9d6741e522f"
     run_logged(["java", "-jar", str(installer), "--installServer"], EVIDENCE / "installer.log", 600)
     (SERVER / "eula.txt").write_text("eula=true\n")
     (SERVER / "server.properties").write_text("online-mode=false\nserver-ip=127.0.0.1\nserver-port=25565\nspawn-protection=0\nview-distance=2\nsimulation-distance=2\nlevel-seed=486\nlevel-type=minecraft:flat\ngenerate-structures=false\n")

@@ -1,0 +1,23 @@
+gradle.beforeProject { p ->
+    p.plugins.withId('net.neoforged.moddev') {
+        def checks = p.sourceSets.create('configtopiaClientCheck') {
+            java.srcDirs = [p.file('../.github/optional-controls-client/java')]
+            resources.srcDirs = [p.file('../.github/optional-controls-client/resources')]
+            compileClasspath += p.sourceSets.main.compileClasspath
+        }
+        p.configurations.getByName(checks.runtimeClasspathConfigurationName)
+                .extendsFrom(p.configurations.getByName(p.sourceSets.main.runtimeClasspathConfigurationName))
+        def deps = p.file('../dist/optional/client-mods')
+        p.dependencies.add(checks.runtimeOnlyConfigurationName, p.fileTree(deps) { include '*.jar' })
+        def mod = p.neoForge.mods.create('configtopia_ui_check') { sourceSet(checks) }
+        p.neoForge.runs.create('configtopiaUi') {
+            client()
+            sourceSet = checks
+            loadedMods = [mod]
+            gameDirectory = p.file('build/optional-client')
+            jvmArgument('-Xmx3G')
+            systemProperty 'configtopia.ui.mods', deps.absolutePath
+            systemProperty 'configtopia.ui.evidence', p.file('../dist/optional/client-evidence').absolutePath
+        }
+    }
+}

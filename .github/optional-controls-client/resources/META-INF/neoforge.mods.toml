@@ -1,0 +1,7 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "MIT"
+[[mods]]
+modId = "configtopia_ui_check"
+version = "1"
+displayName = "Configtopia hosted UI check"
