@@ -23,6 +23,16 @@ STORAGE = {
     "jar": "8317c78143496bd6edaac5c1ea5880633c08a84c3de997acea84c9abe4dab53b",
 }
 
+UWU_REQUIREMENTS = (
+    ("lootr", "https://cdn.modrinth.com/data/EltpO5cN/versions/ST5FHZnD/lootr-neoforge-1.21.1-1.11.38.125.jar",
+     "091878598fa5cb51cd304bf9324afe46420d328b6f77a9ba38acc15e26945e9e"),
+    ("another_furniture", "https://cdn.modrinth.com/data/ulloLmqG/versions/Q29JlZfU/another_furniture-neoforge-4.0.2.jar",
+     "c61a66c73bcc5147d9983dc72c485493a612d2dbc078fcb86e2024155e34b7dd"),
+)
+
+def fetch(url, path):
+    subprocess.run(["curl", "-fsSL", "--retry", "3", "--max-time", "180", url, "-o", str(path)], check=True)
+
 def hashfile(path, algorithm="sha256"):
     with path.open("rb") as file:
         return hashlib.file_digest(file, algorithm).hexdigest()
@@ -77,6 +87,11 @@ def main(mode):
     if mode in ("uwu", "both"):
         bindings = json.loads((Path(__file__).parent / "uwu-candidate.json").read_text())
         provenance["uwu"] = checked_artifact(bindings, MODS / "UwU-Dimension.jar")
+        for name, url, digest in UWU_REQUIREMENTS:
+            destination = MODS / f"{name}.jar"
+            fetch(url, destination)
+            assert hashfile(destination) == digest, name
+            provenance[name] = digest
     (EVIDENCE / "inputs.json").write_text(json.dumps(provenance, indent=2))
     repository = f"https://maven.neoforged.net/releases/net/neoforged/neoforge/{NEO}/neoforge-{NEO}-installer.jar"
     installer = WORK / "neoforge-installer.jar"

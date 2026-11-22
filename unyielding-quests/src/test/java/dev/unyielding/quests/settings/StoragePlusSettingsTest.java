@@ -14,7 +14,7 @@ class StoragePlusSettingsTest {
         var custom = new StoragePlusSettings.Setting("example", "INTEGER", "Setting", "Description", 1, 16,
                 "blocks", "live", null);
         var value = custom.row(4, 1);
-        assertTrue(value.getString("note").contains("blocks"));
+        assertEquals("blocks", value.getString("unit"));
         assertEquals("LIVE", value.getString("activation"));
         assertFalse(value.contains("confirmValue"));
         var secure = new StoragePlusSettings.Setting("expansion.imageModeration", "BOOLEAN", "Moderation", "Description",

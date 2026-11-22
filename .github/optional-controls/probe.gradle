@@ -1,6 +1,8 @@
 // An isolated test mod. No probe classes or resources enter UnyieldingQuests.jar.
 gradle.projectsEvaluated {
     def p = gradle.rootProject
+    p.sourceSets.test.compileClasspath += p.sourceSets.main.compileClasspath
+    p.sourceSets.test.runtimeClasspath += p.sourceSets.main.compileClasspath
     def checks = p.sourceSets.create('configtopiaChecks') {
         java.srcDir('../.github/optional-controls/java')
         resources.srcDir('../.github/optional-controls/resources')

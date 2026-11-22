@@ -11,6 +11,7 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,7 +92,8 @@ final class StoragePlusSettings {
             tag.putString("aliases", key);
             tag.putString("title", title);
             tag.putString("kind", kind());
-            tag.putString("note", unit.isEmpty() ? description : description + " Unit: " + unit + ".");
+            tag.putString("note", description);
+            if (!unit.isEmpty()) tag.putString("unit", unit);
             tag.putString("scope", "Server installation (Anya Storage Plus)");
             tag.putString("apply", switch (applyMode) {
                 case "live" -> "Applies live";
@@ -147,7 +149,8 @@ final class StoragePlusSettings {
         }
     }
 
-    private record Api(Method read, Method revision, Method values, Method set, PackApi pack, Map<String, Setting> settings) {
+    private record Api(Method read, Method revision, Method values, Method set, PackApi pack,
+                       Field legacyStatus, Map<String, Setting> settings) {
         private static Optional<Api> discover() {
             try {
                 if (!ModList.get().isLoaded(ID)) return Optional.empty();
@@ -177,7 +180,7 @@ final class StoragePlusSettings {
                 }
                 Class<?> snapshotType = read.getReturnType();
                 return Optional.of(new Api(read, snapshotType.getMethod("revision"), snapshotType.getMethod("values"),
-                        set, pack, Collections.unmodifiableMap(settings)));
+                        set, pack, pack == null ? config.getField("lastStatus") : null, Collections.unmodifiableMap(settings)));
             } catch (ReflectiveOperationException | RuntimeException | LinkageError unavailable) {
                 return Optional.empty();
             }
@@ -214,9 +217,14 @@ final class StoragePlusSettings {
         return key != null && key.startsWith(PREFIX) && validKey(key.substring(PREFIX.length()));
     }
 
+    private static boolean operator(ServerPlayer actor) {
+        return actor != null && actor.server.isSameThread() && actor.hasPermissions(2)
+                && actor.server.getPlayerList().getPlayer(actor.getUUID()) == actor;
+    }
+
     static Page rows(ServerPlayer actor, String query, int index, int pageSize) {
         var empty = new Page(new ListTag(), 0, 0);
-        if (actor == null || !actor.hasPermissions(2) || Holder.API.isEmpty()) return empty;
+        if (!operator(actor) || Holder.API.isEmpty()) return empty;
         var api = Holder.API.get();
         try {
             Snapshot snapshot = api.snapshot(actor);
@@ -251,7 +259,7 @@ final class StoragePlusSettings {
     }
 
     static String change(ServerPlayer actor, String key, String expected, String value, long revision, boolean confirmed) {
-        if (actor == null || !actor.hasPermissions(2)) return ModSettings.Result.DENIED.message;
+        if (!operator(actor)) return ModSettings.Result.DENIED.message;
         if (!owns(key) || revision < 0) return "Invalid Storage Plus settings request.";
         if (Holder.API.isEmpty()) return UNAVAILABLE;
         Api api = Holder.API.get();
@@ -285,6 +293,7 @@ final class StoragePlusSettings {
                 }
                 if (!Boolean.TRUE.equals(api.set.invoke(null, actor, revision, setting.key, value)))
                     return "Storage Plus declined this change. Check its message and refresh.";
+                pending = !"live".equals(setting.applyMode);
             }
             Snapshot after = api.snapshot(actor);
             if (after == null || after.revision <= revision || !next.equals(after.values.get(setting.key))) return UNAVAILABLE;
@@ -293,8 +302,7 @@ final class StoragePlusSettings {
                 return stateMessage("pending_reload");
             }
             ConfigAudit.record(actor, key, previous, after.values.get(setting.key));
-            return api.pack != null || "live".equals(setting.applyMode) ? ModSettings.Result.SAVED.message
-                    : "Saved. Storage Plus reports the result of its recipe reload in chat.";
+            return ModSettings.Result.SAVED.message;
         } catch (ReflectiveOperationException | RuntimeException | LinkageError unavailable) {
             return UNAVAILABLE;
         }
@@ -303,12 +311,12 @@ final class StoragePlusSettings {
     /** A resource reload may roll the stored value back. Record and announce only its verified outcome. */
     @EventBusSubscriber(modid = UnyieldingQuests.MODID)
     public static final class ReloadReceipt {
-        private record Edit(UUID player, String key, Object previous, Object next, long revision) {}
+        private record Edit(UUID player, String key, Object previous, Object next, long revision, long deadline) {}
         private static final Map<MinecraftServer, List<Edit>> outstanding = new WeakHashMap<>();
 
         private static void watch(ServerPlayer actor, String key, Object previous, Object next, long revision) {
             outstanding.computeIfAbsent(actor.server, ignored -> new ArrayList<>())
-                    .add(new Edit(actor.getUUID(), key, previous, next, revision));
+                    .add(new Edit(actor.getUUID(), key, previous, next, revision, actor.server.overworld().getGameTime() + 12000));
         }
 
         @SubscribeEvent
@@ -319,15 +327,22 @@ final class StoragePlusSettings {
             var api = Holder.API.orElseThrow();
             edits.removeIf(edit -> {
                 var actor = server.getPlayerList().getPlayer(edit.player);
-                if (actor == null || !actor.hasPermissions(2)) return true;
+                if (!operator(actor)) return true;
                 try {
-                    String state = api.pack.state(actor);
-                    if ("pending_reload".equals(state)) return false;
+                    // The pre-v1 build exposes the successful commit's exact revision only in its public status line.
+                    String state = api.pack == null ? "pending_reload" : api.pack.state(actor);
+                    if (api.pack != null && "pending_reload".equals(state) && server.overworld().getGameTime() < edit.deadline)
+                        return false;
                     Snapshot current = api.snapshot(actor);
+                    if (api.pack == null && ("Applied revision " + edit.revision).equals(api.legacyStatus.get(null)))
+                        state = "ready";
+                    if ("pending_reload".equals(state) && current != null && current.revision == edit.revision
+                            && server.overworld().getGameTime() < edit.deadline) return false;
                     if ("ready".equals(state) && current != null && current.revision == edit.revision &&
                             edit.next.equals(current.values.get(edit.key))) {
                         ConfigAudit.record(actor, PREFIX + edit.key, edit.previous, edit.next);
-                        actor.sendSystemMessage(Component.literal("Storage Plus applied " + api.settings.get(edit.key).title + "."));
+                        // Older Storage Plus already sends the final transaction message to this player.
+                        if (api.pack != null) actor.sendSystemMessage(Component.literal("Storage Plus applied " + api.settings.get(edit.key).title + "."));
                     } else {
                         actor.sendSystemMessage(Component.literal("Storage Plus could not confirm this edit. Refresh to review its current value."));
                     }

@@ -9,7 +9,9 @@ final class WeaponSettingsPresentation {
     // UwU prefixes registered weapon descriptions with the weapon's in-game name.
     private static final Pattern WEAPON_DESCRIPTION = Pattern.compile(
             "^(.+?) (?:fully charged main-hand|full-draw arrow|direct ability hit|direct or delayed echo"
-                    + "|cast cooldown|cast or charged throw|crescent attack cooldown|physical throw cooldown)\\b");
+                    + "|cast cooldown|cast or charged throw|crescent attack cooldown|physical throw cooldown"
+                    + "|summoned hare lifetime|axolotl companion|teleport mark lifetime|Snowkiss movement slow"
+                    + "|movement slow|reveal duration)\\b");
 
     private WeaponSettingsPresentation() {}
 
@@ -51,6 +53,12 @@ final class WeaponSettingsPresentation {
             case "heartSpinCooldownSeconds" -> "Heart Spin cooldown";
             case "spinDamage" -> "Spin damage per target";
             case "heartSpinDamage" -> "Heart Spin damage per target";
+            case "hareLifetimeSeconds" -> "Summoned hare lifetime";
+            case "companionLifetimeSeconds" -> "Companion lifetime";
+            case "companionHitDamage" -> "Companion hit damage";
+            case "markDurationSeconds" -> "Teleport mark duration";
+            case "slowSeconds" -> "Slow duration";
+            case "glowSeconds" -> "Reveal duration";
             case "blockCharmSeconds" -> "Charm duration after blocking";
             case "rechargeSeconds" -> "Shared revival cooldown";
             default -> null;

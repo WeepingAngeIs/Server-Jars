@@ -13,6 +13,8 @@ jobs:
   module:
     if: github.event.repository.private == false
     runs-on: ubuntu-24.04
+    outputs:
+      built: ${{ steps.artifacts.outcome }}
     timeout-minutes: 50
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -30,6 +32,7 @@ jobs:
           bash gradlew --no-daemon --console=plain -I ../.github/optional-controls/probe.gradle jar optionalControlsProbeJar
           sha256sum build/libs/*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        id: artifacts
         with:
           name: configtopia-optional-compiled
           path: unyielding-quests/build/libs/*.jar
@@ -38,7 +41,7 @@ jobs:
       - name: Run focused Configtopia unit tests
         working-directory: unyielding-quests
         run: |
-          bash gradlew --no-daemon --console=plain test --tests '*ModSettings*' --tests '*NeoForgeSettings*' --tests '*CommandCatalog*' --tests '*ModCommandControls*' --tests '*NumericCommandInput*' --tests '*StoragePlusSettings*' --tests '*WeaponSettingsPresentation*'
+          bash gradlew --no-daemon --console=plain -I ../.github/optional-controls/probe.gradle test --tests '*ModSettings*' --tests '*NeoForgeSettings*' --tests '*CommandCatalog*' --tests '*ModCommandControls*' --tests '*NumericCommandInput*' --tests '*StoragePlusSettings*' --tests '*WeaponSettingsPresentation*'
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -46,7 +49,7 @@ jobs:
           path: unyielding-quests/build/test-results/test/
           retention-days: 7
   dedicated:
-    if: github.event.repository.private == false
+    if: ${{ !cancelled() && github.event.repository.private == false && needs.module.outputs.built == 'success' }}
     needs: module
     runs-on: ubuntu-24.04
     timeout-minutes: 38

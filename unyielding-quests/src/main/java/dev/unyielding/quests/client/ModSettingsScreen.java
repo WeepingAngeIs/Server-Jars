@@ -37,6 +37,7 @@ final class ModSettingsScreen extends FormScreen {
     private String addingId = "";
     private String modQuery = "";
     private String settingQuery = "";
+    private boolean choosingWeapon;
     private String pending = "";
     private String clientMessage = "";
     private EditBox searchBox;
@@ -281,11 +282,24 @@ final class ModSettingsScreen extends FormScreen {
         paragraph(mod.getString("name"), Theme.text, true);
         gap(4);
         ListTag groups = mod.getList("groups", Tag.TAG_STRING);
-        for (int i = 0; i < groups.size(); i++) {
-            String group = groups.getString(i);
-            button(left(), innerWidth(), group, null, Ui.Style.NORMAL,
-                    () -> loadPage(group, 0)).active = canRequest();
-            gap(23);
+        if (!groups.isEmpty()) {
+            button(left(), innerWidth(), choosingWeapon ? "Back to settings" : "Choose weapon", null, Ui.Style.NORMAL, () -> {
+                choosingWeapon = !choosingWeapon;
+                scroll = 0;
+                relayout();
+            }).active = canRequest();
+            gap(24);
+            if (choosingWeapon) {
+                for (Tag entry : groups) {
+                    String group = entry.getAsString();
+                    button(left(), innerWidth(), group, null, Ui.Style.NORMAL, () -> {
+                        choosingWeapon = false;
+                        loadPage(group, 0);
+                    }).active = canRequest();
+                    gap(23);
+                }
+                return;
+            }
         }
         boolean remote = paged();
         int searchWidth = remote ? innerWidth() - 63 : innerWidth();
@@ -566,6 +580,7 @@ final class ModSettingsScreen extends FormScreen {
     }
 
     private void select(String id) {
+        choosingWeapon = false;
         selectedId = id;
         settingQuery = "";
         clientMessage = "";
