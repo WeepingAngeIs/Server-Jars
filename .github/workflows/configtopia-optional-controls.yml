@@ -46,7 +46,7 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = '4cb1c38d70e72800d7d1ded58becbb4fdc9ffa14'
           grep -qx 'distributionSha256Sum=72f44c9f8ebcb1af43838f45ee5c4aa9c5444898b3468ab3f4af7b6076c5bc3f' gradle/wrapper/gradle-wrapper.properties
-          bash gradlew --no-daemon --console=plain --max-workers=2 -I weapon-release/central-mirror.init.gradle jar
+          bash gradlew --no-daemon --console=plain --max-workers=2 jar
           sha256sum build/libs/*-weapon-settings.1.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: steps.select.outputs.build == 'true'
