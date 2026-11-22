@@ -34,6 +34,8 @@ final class ModSettingsMenu {
     private static final Set<String> QUERY_FIELDS = Set.of("p", "q");
     private static final Set<String> EDIT_FIELDS = Set.of("p", "q", "key", "expected", "value");
 
+    private static final Set<String> REVISION_EDIT_FIELDS = Set.of("p", "q", "key", "expected", "value", "revision");
+
     static boolean handles(String key) {
         return OPEN.equals(key) || ADD.equals(key) || DETAIL.equals(key) || WRITE.equals(key) || key.startsWith("external.");
     }
@@ -42,15 +44,31 @@ final class ModSettingsMenu {
         return ModSettings.KEY.equals(key) || !NeoForgeSettings.modId(key).isEmpty();
     }
 
-    record Request(String query, int index, String key, String expected, String desired) {
+    record Request(String query, int index, String key, String expected, String desired, long revision, boolean confirmed) {
         static Request parse(String text, boolean edit) {
             if (text.length() > 1600) throw new IllegalArgumentException();
             JsonObject json = JsonParser.parseString(text).getAsJsonObject();
-            if (!json.keySet().equals(edit ? EDIT_FIELDS : QUERY_FIELDS)) throw new IllegalArgumentException();
+            String key = edit ? string(json, "key", 150) : "";
+            boolean revisioned = edit && StoragePlusSettings.owns(key);
+            Set<String> fields = revisioned ? REVISION_EDIT_FIELDS : edit ? EDIT_FIELDS : QUERY_FIELDS;
+            boolean confirmed = false;
+            if (revisioned && json.has("confirmed")) {
+                var flag = json.remove("confirmed").getAsJsonPrimitive();
+                if (!flag.isBoolean()) throw new IllegalArgumentException();
+                confirmed = flag.getAsBoolean();
+            }
+            if (!json.keySet().equals(fields)) throw new IllegalArgumentException();
+            long revision = -1;
+            if (revisioned) {
+                var token = json.getAsJsonPrimitive("revision");
+                if (!token.isNumber() || !token.getAsString().matches("[0-9]{1,19}")) throw new IllegalArgumentException();
+                revision = Long.parseLong(token.getAsString());
+            }
             var number = json.getAsJsonPrimitive("p");
             if (!number.isNumber() || !number.getAsString().matches("[0-9]{1,7}")) throw new IllegalArgumentException();
-            return new Request(string(json, "q", 96), number.getAsInt(), edit ? string(json, "key", 150) : "",
-                    edit ? string(json, "expected", 128) : "", edit ? string(json, "value", 128) : "");
+            return new Request(string(json, "q", 96), number.getAsInt(), key,
+                    edit ? string(json, "expected", revisioned ? 256 : 128) : "",
+                    edit ? string(json, "value", revisioned ? 256 : 128) : "", revision, confirmed);
         }
 
         private static String string(JsonObject json, String name, int limit) {
@@ -67,6 +85,8 @@ final class ModSettingsMenu {
         String detail = "", query = "", message = "";
         int index = 0;
         boolean open = false;
+        String confirmKey = "";
+        long confirmRevision = -1;
         switch (action.key()) {
             case OPEN -> {
                 if (!action.expected().isEmpty() || !action.value().isEmpty()) return;
@@ -99,6 +119,12 @@ final class ModSettingsMenu {
                 if (edit) {
                     if (id.equals(ModSettings.UWU) && ModSettings.KEY.equals(request.key)) {
                         message = changeExcavation(player, true, request.expected, request.desired);
+                    } else if (id.equals(StoragePlusSettings.ID) && StoragePlusSettings.owns(request.key)) {
+                        message = StoragePlusSettings.change(player, request.key, request.expected, request.desired, request.revision, request.confirmed);
+                        if (StoragePlusSettings.CONFIRM_REQUIRED.equals(message)) {
+                            confirmKey = request.key;
+                            confirmRevision = request.revision;
+                        }
                     } else if (id.equals(NeoForgeSettings.modId(request.key))) {
                         message = changeRegistered(player, request.key, request.expected, request.desired);
                     } else message = "This setting does not belong to the selected mod.";
@@ -111,7 +137,7 @@ final class ModSettingsMenu {
             }
             default -> message = "Unknown mod setting.";
         }
-        sync(player, selected, detail, query, index, open, message);
+        sync(player, selected, detail, query, index, open, message, confirmKey, confirmRevision);
     }
 
     private static boolean installed(String id) {
@@ -155,8 +181,12 @@ final class ModSettingsMenu {
     }
 
     private static void sync(ServerPlayer player, Set<String> selected, String detail, String query, int index,
-                             boolean open, String message) {
+                             boolean open, String message, String confirmKey, long confirmRevision) {
         var data = new CompoundTag();
+        if (!confirmKey.isEmpty()) {
+            data.putString("confirmKey", confirmKey);
+            data.putLong("confirmRevision", confirmRevision);
+        }
         data.putString("page", PAGE);
         data.putInt("catalogVersion", 2);
         data.putString("detailId", detail);
@@ -172,18 +202,33 @@ final class ModSettingsMenu {
             String id = info.getModId();
             found.add(id);
             boolean added = selected.contains(id);
-            boolean primary = added || ModSettings.UWU.equals(id) || NeoForgeSettings.supported(id);
+            boolean primary = added || ModSettings.UWU.equals(id) || StoragePlusSettings.ID.equals(id) || NeoForgeSettings.supported(id);
             if (!primary && !open) continue;
             var mod = identity(id, info.getDisplayName(), true, added);
             if (added && id.equals(detail)) {
                 var page = NeoForgeSettings.rows(id, query, index, PAGE_SIZE);
                 var rows = page.rows();
+                int current = page.pageIndex();
+                int count = pages(page.total());
+                if (StoragePlusSettings.ID.equals(id)) {
+                    var storage = StoragePlusSettings.rows(player, query, Math.max(0, index - count), PAGE_SIZE);
+                    if (index >= count && storage.total() > 0) {
+                        rows = storage.rows();
+                        current = count + storage.pageIndex();
+                    }
+                    count += pages(storage.total());
+                }
+                if (ModSettings.UWU.equals(id)) {
+                    var groups = new ListTag();
+                    for (String group : NeoForgeSettings.groups(id)) groups.add(StringTag.valueOf(group));
+                    mod.put("groups", groups);
+                }
                 if (ModSettings.UWU.equals(id) && page.pageIndex() == 0 && matchesExcavation(query)) {
                     rows.add(0, excavationRow(player));
                 }
                 mod.put("rows", rows);
-                data.putInt("index", page.pageIndex());
-                data.putInt("pages", Math.max(1, (page.total() + PAGE_SIZE - 1) / PAGE_SIZE));
+                data.putInt("index", current);
+                data.putInt("pages", Math.max(1, count));
             } else if (open && added && ModSettings.UWU.equals(id)) {
                 // Keep the first-generation client able to open its previously added UwU page.
                 var rows = new ListTag();
@@ -196,6 +241,10 @@ final class ModSettingsMenu {
         data.put("mods", mods);
         if (open) data.put("installedMods", others);
         Net.sendTo(player, new ConfigEditor.Sync(data, open));
+    }
+
+    private static int pages(int total) {
+        return (total + PAGE_SIZE - 1) / PAGE_SIZE;
     }
 
     private static CompoundTag identity(String id, String name, boolean installed, boolean added) {

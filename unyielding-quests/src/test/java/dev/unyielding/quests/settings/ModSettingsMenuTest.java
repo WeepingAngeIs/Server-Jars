@@ -38,6 +38,30 @@ class ModSettingsMenuTest {
         assertThrows(RuntimeException.class, () -> ModSettingsMenu.Request.parse(data.toString(), true));
     }
 
+    @Test void storageWritesRequireAnExactRevisionAndAnOptionalBooleanConfirmation() {
+        var data = new JsonObject();
+        data.addProperty("q", "");
+        data.addProperty("p", 0);
+        data.addProperty("key", "storageplus.expansion.pocketStorage");
+        data.addProperty("expected", "true");
+        data.addProperty("value", "false");
+        assertThrows(RuntimeException.class, () -> ModSettingsMenu.Request.parse(data.toString(), true));
+        data.addProperty("revision", 0);
+        assertFalse(ModSettingsMenu.Request.parse(data.toString(), true).confirmed());
+        data.addProperty("confirmed", true);
+        assertTrue(ModSettingsMenu.Request.parse(data.toString(), true).confirmed());
+        data.addProperty("confirmed", "true");
+        assertThrows(RuntimeException.class, () -> ModSettingsMenu.Request.parse(data.toString(), true));
+        data.remove("confirmed");
+        for (Number bad : List.of(-1, 0.5, new java.math.BigInteger("9223372036854775808"))) {
+            data.addProperty("revision", bad);
+            assertThrows(RuntimeException.class, () -> ModSettingsMenu.Request.parse(data.toString(), true));
+        }
+        data.addProperty("revision", 0);
+        data.addProperty("key", REGISTERED);
+        assertThrows(RuntimeException.class, () -> ModSettingsMenu.Request.parse(data.toString(), true));
+    }
+
     @Test void malformedAndOversizedRequestsCannotBeUsedAsServerSettingsPages() {
         for (var json : List.of("{}", "[]", "{\"p\":-1,\"q\":\"\"}", "{\"p\":0.5,\"q\":\"\"}",
                 "{\"p\":\"1\",\"q\":\"\"}", "{\"p\":0,\"q\":true}", "{\"q\":\"\",\"p\":0,\"cmd\":\"x\"}",

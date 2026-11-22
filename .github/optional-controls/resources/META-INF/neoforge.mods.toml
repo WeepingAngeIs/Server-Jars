@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+[[mods]]
+modId="configtopia_optional_probe"
+version="1.0"
+displayName="Configtopia optional integration test"
+[[dependencies.configtopia_optional_probe]]
+modId="unyieldingquests"
+type="required"
+versionRange="[1.6,2)"
+ordering="AFTER"
+side="SERVER"

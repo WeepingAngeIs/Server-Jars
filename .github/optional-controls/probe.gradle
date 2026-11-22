@@ -1,0 +1,13 @@
+// An isolated test mod. No probe classes or resources enter UnyieldingQuests.jar.
+gradle.projectsEvaluated {
+    def p = gradle.rootProject
+    def checks = p.sourceSets.create('configtopiaChecks') {
+        java.srcDir('../.github/optional-controls/java')
+        resources.srcDir('../.github/optional-controls/resources')
+        compileClasspath += p.sourceSets.main.compileClasspath + p.sourceSets.main.output
+    }
+    p.tasks.register('optionalControlsProbeJar', Jar) {
+        archiveFileName = 'ConfigtopiaOptionalProbe.jar'
+        from(checks.output)
+    }
+}

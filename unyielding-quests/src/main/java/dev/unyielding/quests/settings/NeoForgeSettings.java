@@ -71,6 +71,10 @@ final class NeoForgeSettings {
         return catalog(modId).rows(query, pageIndex, pageSize);
     }
 
+    static List<String> groups(String modId) {
+        return catalog(modId).groups;
+    }
+
     static Edit change(String key, String expected, String desired) {
         return catalog(modId(key)).change(key, expected, desired);
     }
@@ -101,6 +105,7 @@ final class NeoForgeSettings {
         private final List<Registration> registrations;
         private final Map<String, Entry> byKey = new HashMap<>();
         private final List<Entry> ordered;
+        private final List<String> groups;
 
         Catalog(List<Registration> registrations) {
             this.registrations = List.copyOf(registrations);
@@ -109,8 +114,10 @@ final class NeoForgeSettings {
                 if (eligibleMod(reg.modId) && eligibleType(reg.type)) collect(reg, reg.spec.getValues(), duplicates);
             }
             duplicates.forEach(byKey::remove);
-            ordered = byKey.values().stream().sorted(Comparator.comparing(Entry::title, String.CASE_INSENSITIVE_ORDER)
+            ordered = byKey.values().stream().sorted(Comparator.comparing(Entry::group, String.CASE_INSENSITIVE_ORDER)
+                    .thenComparing(Entry::title, String.CASE_INSENSITIVE_ORDER)
                     .thenComparing(Entry::aliases).thenComparing(Entry::key)).toList();
+            groups = ordered.stream().map(Entry::group).filter(group -> !group.isEmpty()).distinct().toList();
         }
 
         private void collect(Registration reg, UnmodifiableConfig section, Set<String> duplicates) {
@@ -174,7 +181,8 @@ final class NeoForgeSettings {
     }
 
     private record Entry(Registration reg, ModConfigSpec.ConfigValue<?> value, Class<?> type, String key,
-                         String title, String aliases, String search) {
+                         String title, String aliases, String search, CompoundTag presentation) {
+        String group() { return presentation.getString("group"); }
         static Entry describe(Registration reg, ModConfigSpec.ConfigValue<?> value) {
             List<String> path = value.getPath();
             if (path.isEmpty() || path.size() > 32) return null;
@@ -195,8 +203,23 @@ final class NeoForgeSettings {
             String title = CAMEL_CASE.matcher(path.getLast().replace('_', ' ').replace('-', ' ')).replaceAll(" ").strip();
             if (title.isEmpty()) return null;
             title = Character.toUpperCase(title.charAt(0)) + title.substring(1);
-            String search = (title + " " + aliases + " " + reg.type.name()).toLowerCase(Locale.ROOT);
-            return new Entry(reg, value, type, stableKey(reg, path), title, aliases, search);
+            var presentation = new CompoundTag();
+            presentation.putString("title", title);
+            if (ModSettings.UWU.equals(reg.modId) && path.getFirst().equals("weapons")) {
+                String comment = value.getSpec().getComment();
+                if (comment != null && !comment.isBlank()) presentation.putString("note", comment.substring(0, Math.min(400, comment.length())).strip());
+            }
+            WeaponSettingsPresentation.decorate(reg.modId, path, presentation);
+            title = presentation.getString("title");
+            var range = value.getSpec().getRange();
+            if (range != null && range.getMin() instanceof Number low && range.getMax() instanceof Number high
+                    && Double.isFinite(low.doubleValue()) && Double.isFinite(high.doubleValue()) && low.doubleValue() < high.doubleValue()) {
+                presentation.putDouble("min", low.doubleValue());
+                presentation.putDouble("max", high.doubleValue());
+                presentation.putBoolean("wholeNumber", type == Integer.class || type == Long.class);
+            }
+            String search = (presentation.getString("group") + " " + title + " " + aliases + " " + presentation.getString("note") + " " + reg.type.name()).toLowerCase(Locale.ROOT);
+            return new Entry(reg, value, type, stableKey(reg, path), title, aliases, search, presentation);
         }
 
         private boolean valid(Object candidate) {
@@ -251,12 +274,11 @@ final class NeoForgeSettings {
         }
 
         private CompoundTag row() {
-            var row = new CompoundTag();
+            var row = presentation.copy();
             row.putString("key", key);
-            row.putString("title", title);
             row.putString("aliases", aliases);
             row.putString("kind", type.isEnum() ? "enum" : type == Boolean.class ? "boolean" : "number");
-            row.putString("scope", reg.type == ModConfig.Type.SERVER ? "Current world (server config)" : "Server installation (common config)");
+            row.putString("scope", reg.type == ModConfig.Type.SERVER ? "Server config (world override if present)" : "Server installation (common config)");
             var timing = switch (value.getSpec().restartType()) {
                 case NONE -> ModSettings.Applies.LIVE;
                 case WORLD -> ModSettings.Applies.WORLD_RESTART;

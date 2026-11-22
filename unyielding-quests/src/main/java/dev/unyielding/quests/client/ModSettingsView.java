@@ -34,6 +34,20 @@ final class ModSettingsView {
         }
     }
 
+    static String shown(String stored, int unitsPerSecond) {
+        if (unitsPerSecond <= 1) return stored;
+        return new BigDecimal(stored).divide(BigDecimal.valueOf(unitsPerSecond)).stripTrailingZeros().toPlainString();
+    }
+
+    static String stored(String draft, int unitsPerSecond) {
+        if (unitsPerSecond <= 1) return draft;
+        if (!isNumber(draft)) throw new NumberFormatException();
+        var seconds = new BigDecimal(draft);
+        // A packet can contain an extreme exponent even when the field is short.
+        if (Math.abs((long) seconds.scale()) > 64) throw new NumberFormatException();
+        return seconds.multiply(BigDecimal.valueOf(unitsPerSecond)).toBigIntegerExact().toString();
+    }
+
     record Timing(String label, boolean restart) {}
 
     static Timing timing(String activation, String reportedLabel) {

@@ -31,6 +31,14 @@ class ModSettingsViewTest {
         assertEquals(UNSUPPORTED, ModSettingsView.action(true, true, true));
     }
 
+    @Test void convertsUserEnteredSecondsToTheProvidersOwnUnits() {
+        assertEquals("37", ModSettingsView.stored("37", 1));
+        assertEquals("0.05", ModSettingsView.shown("1", 20));
+        assertEquals("1", ModSettingsView.stored("0.05", 20));
+        assertThrows(ArithmeticException.class, () -> ModSettingsView.stored("0.051", 20));
+        assertThrows(NumberFormatException.class, () -> ModSettingsView.stored("1e999999", 20));
+    }
+
     @Test void rendersOnlyServerReportedActivationTiming() {
         assertEquals(new ModSettingsView.Timing("Applies immediately", false), ModSettingsView.timing("LIVE", ""));
         assertEquals(new ModSettingsView.Timing("No restart declared by the mod", false),

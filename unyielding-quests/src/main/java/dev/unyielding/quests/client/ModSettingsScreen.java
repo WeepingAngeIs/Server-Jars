@@ -45,6 +45,7 @@ final class ModSettingsScreen extends FormScreen {
     private int page;
     private CompoundTag editing;
     private String draft = "";
+    private WeaponTimeSlider timeSlider;
 
     ModSettingsScreen(ConfigValuesScreen parent, CompoundTag data) {
         super(parent, "Add Mod Settings");
@@ -279,6 +280,13 @@ final class ModSettingsScreen extends FormScreen {
         gap(26);
         paragraph(mod.getString("name"), Theme.text, true);
         gap(4);
+        ListTag groups = mod.getList("groups", Tag.TAG_STRING);
+        for (int i = 0; i < groups.size(); i++) {
+            String group = groups.getString(i);
+            button(left(), innerWidth(), group, null, Ui.Style.NORMAL,
+                    () -> loadPage(group, 0)).active = canRequest();
+            gap(23);
+        }
         boolean remote = paged();
         int searchWidth = remote ? innerWidth() - 63 : innerWidth();
         searchBox = field("settingQuery", left(), cy, searchWidth, settingQuery, "Search settings", 96, s -> {
@@ -297,12 +305,16 @@ final class ModSettingsScreen extends FormScreen {
             String query = ModSettingsView.normalized(settingQuery);
             boolean found = false;
             boolean excavationVisible = false;
+            String lastGroup = "";
             for (Tag raw : mod.getList("rows", Tag.TAG_COMPOUND)) {
                 CompoundTag row = (CompoundTag) raw;
                 if (!remote && !ModSettingsView.matches(query, row.getString("title") + " " + row.getString("key")
                         + " " + row.getString("aliases"))) continue;
                 found = true;
                 if (EXCAVATION.equals(row.getString("key")) && row.getBoolean("available")) excavationVisible = true;
+                String group = row.getString("group");
+                if (!group.isEmpty() && !group.equals(lastGroup)) paragraph(group, Theme.text, true);
+                lastGroup = group;
                 settingRow(row, mod.getBoolean("installed"));
             }
             String appliedQuery = remote ? data.getString("query") : settingQuery;
@@ -360,6 +372,15 @@ final class ModSettingsScreen extends FormScreen {
         if (!path.isBlank()) paragraph(path, Theme.textDim, false);
     }
 
+    private static String displayValue(CompoundTag row, String raw) {
+        return ModSettingsView.shown(raw, row.getInt("unitsPerSecond"));
+    }
+
+    private static String valueWithUnit(CompoundTag row) {
+        String unit = row.getString("unit");
+        return displayValue(row, current(row)) + (unit.isEmpty() ? "" : " " + unit);
+    }
+
     private void settingRow(CompoundTag row, boolean installed) {
         paragraph(row.getString("title"), Theme.heading, true);
         showPath(row);
@@ -373,7 +394,7 @@ final class ModSettingsScreen extends FormScreen {
             return;
         }
         boolean bool = type.equals("boolean");
-        paragraph("Saved value · " + (bool ? (Boolean.parseBoolean(value) ? "ON" : "OFF") : value), Theme.text, false);
+        paragraph("Saved value · " + (bool ? (Boolean.parseBoolean(value) ? "ON" : "OFF") : valueWithUnit(row)), Theme.text, false);
         String scope = row.getString("scope");
         var timing = ModSettingsView.timing(row.getString("activation"), row.getString("apply"));
         paragraph(scope.isBlank() ? timing.label() : scope + " · " + timing.label(),
@@ -382,13 +403,15 @@ final class ModSettingsScreen extends FormScreen {
         gap(4);
         if (bool) {
             boolean on = Boolean.parseBoolean(value);
-            button(left(), innerWidth(), on ? "Turn OFF" : "Turn ON", null, Ui.Style.NORMAL,
+            boolean confirm = needsConfirmation(row, !on);
+            String action = confirm ? (on ? "Confirm turning OFF" : "Confirm turning ON") : (on ? "Turn OFF" : "Turn ON");
+            button(left(), innerWidth(), action, null, confirm ? Ui.Style.ACCENT : Ui.Style.NORMAL,
                     () -> write(row, value, Boolean.toString(!on))).active = canRequest();
-        } else if (type.equals("number") || (type.equals("enum") && !row.getList("opt", Tag.TAG_STRING).isEmpty())) {
+        } else if (type.equals("number") || type.equals("registry_id") || (type.equals("enum") && !row.getList("opt", Tag.TAG_STRING).isEmpty())) {
             button(left(), innerWidth(), "Edit value", null, Ui.Style.NORMAL, () -> {
                 if (!canRequest()) return;
                 editing = row;
-                draft = value;
+                draft = displayValue(row, value);
                 clientMessage = "";
                 scroll = 0;
                 relayout();
@@ -402,9 +425,10 @@ final class ModSettingsScreen extends FormScreen {
     }
 
     private void buildEditor() {
+        timeSlider = null;
         paragraph(editing.getString("title"), Theme.heading, true);
         showPath(editing);
-        paragraph("Saved value · " + current(editing), Theme.text, false);
+        paragraph("Saved value · " + valueWithUnit(editing), Theme.text, false);
         gap(6);
         if (kind(editing).equals("enum")) {
             ListTag items = editing.getList("opt", Tag.TAG_STRING);
@@ -412,7 +436,24 @@ final class ModSettingsScreen extends FormScreen {
             for (int i = 0; i < options.length; i++) options[i] = items.getString(i);
             if (options.length > 0) cycle(left(), innerWidth(), "", options, draft, s -> draft = s).active = canRequest();
         } else {
-            field("number", left(), cy, innerWidth(), draft, "Number", 64, s -> draft = s).setEditable(canRequest());
+            int units = editing.getInt("unitsPerSecond");
+            boolean registry = kind(editing).equals("registry_id");
+            String hint = registry ? "Registry ID" : units > 0 ? "Seconds" : "Number";
+            if (units > 0) paragraph("Enter seconds", Theme.text, false);
+            var input = field("value", left(), cy, innerWidth(), draft, hint, registry ? 256 : 64, value -> {
+                draft = value;
+                if (timeSlider != null) timeSlider.follow(value);
+            });
+            input.setEditable(canRequest());
+            if (units > 0 && editing.contains("min", Tag.TAG_ANY_NUMERIC) && editing.contains("max", Tag.TAG_ANY_NUMERIC)) {
+                double low = editing.getDouble("min"), high = editing.getDouble("max");
+                if (Double.isFinite(low) && Double.isFinite(high) && high > low && high - low <= 1_000_000) {
+                    gap(24);
+                    timeSlider = addRenderableWidget(new WeaponTimeSlider(left(), cy, innerWidth(), low, high, units, editing.getBoolean("wholeNumber"), input));
+                    timeSlider.active = canRequest();
+                    timeSlider.follow(draft);
+                }
+            }
         }
         gap(25);
         int half = (innerWidth() - 4) / 2;
@@ -424,7 +465,17 @@ final class ModSettingsScreen extends FormScreen {
                 relayout();
                 return;
             }
-            write(editing, current(editing), next);
+            if (kind(editing).equals("registry_id") && net.minecraft.resources.ResourceLocation.tryParse(next) == null) {
+                clientMessage = "Enter a valid registry ID.";
+                relayout();
+                return;
+            }
+            try {
+                write(editing, current(editing), ModSettingsView.stored(next, editing.getInt("unitsPerSecond")));
+            } catch (ArithmeticException | NumberFormatException invalid) {
+                clientMessage = "Enter a duration that fits the mod's time unit.";
+                relayout();
+            }
         }).active = canRequest();
         gap(27);
         feedback();
@@ -437,6 +488,12 @@ final class ModSettingsScreen extends FormScreen {
         relayout();
     }
 
+    private boolean needsConfirmation(CompoundTag row, boolean desired) {
+        return row.contains("confirmValue", Tag.TAG_BYTE) && row.getBoolean("confirmValue") == desired
+                && row.getString("key").equals(data.getString("confirmKey"))
+                && row.getLong("revision") == data.getLong("confirmRevision");
+    }
+
     private void write(CompoundTag row, String expected, String value) {
         if (!canRequest()) return;
         String key = row.getString("key");
@@ -447,6 +504,10 @@ final class ModSettingsScreen extends FormScreen {
             payload.addProperty("key", key);
             payload.addProperty("expected", expected);
             payload.addProperty("value", value);
+            if (row.contains("revision", Tag.TAG_LONG)) {
+                payload.addProperty("revision", row.getLong("revision"));
+                if (needsConfirmation(row, Boolean.parseBoolean(value))) payload.addProperty("confirmed", true);
+            }
             request(new ConfigEditor.Action("__mod_settings_write", selectedId, payload.toString()), "Saving on server…");
         }
     }
