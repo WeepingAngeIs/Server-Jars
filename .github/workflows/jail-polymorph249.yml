@@ -1,0 +1,97 @@
+name: Stock Polymorph player observation
+on:
+  push:
+    branches: [codex/jail-unyielding-249]
+    paths: ['.github/polymorph249/**', '.github/workflows/jail-polymorph249.yml']
+permissions:
+  actions: read
+  contents: read
+jobs:
+  pack-custody:
+    if: contains(github.event.head_commit.message, '[polymorph-probe]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+      JAIL: Minecraft-Jail-1.3.0-beta.3.jar
+      JAIL_HASH: d7cd43db7d6c4ea88372a1a7e09faee843d51d566a03c398dc999505a8053243
+    defaults:
+      run:
+        working-directory: baseline-src
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: 411857009b8e05f606bb0b5b70648dcce8a9623b
+          path: baseline-src
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: WeepingAngeIs/zSortange
+          ref: 47953fff374f85e009d6c6d716c258976ebfbce2
+          path: baseline-src/storage
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-249-build-411857009b8e05f606bb0b5b70648dcce8a9623b
+          run-id: 44305765452
+          github-token: ${{ github.token }}
+          path: baseline-src/jail-build
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-production-build-7b2f6b34412403b0839f1be9b82e136d1d893b20
+          run-id: 44099299150
+          github-token: ${{ github.token }}
+          path: baseline-src/baseline
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: pack249-server-a-411857009b8e05f606bb0b5b70648dcce8a9623b
+          run-id: 44305765452
+          github-token: ${{ github.token }}
+          path: baseline-src/stock-census-a
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: pack249-server-b-411857009b8e05f606bb0b5b70648dcce8a9623b
+          run-id: 44305765452
+          github-token: ${{ github.token }}
+          path: baseline-src/stock-census-b
+      - name: Prepare exact stock fixture
+        run: |
+          set -euo pipefail
+          printf '%s  %s\n' "$JAIL_HASH" "jail-build/dist/migration-build/$JAIL" | sha256sum -c -
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp baseline/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
+          cp "jail-build/dist/migration-build/$JAIL" minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          python3 .github/scripts/fetch-build-dependencies.py
+          python3 .github/native249/full_prepare.py
+          python3 ../.github/polymorph249/prepare.py storage/fixtures/backpack-history storage/fixtures/backpack-history
+          sed -i 's/"stock_admission.py","stock_recovery.py"/"stock_admission.py","stock_recovery.py","stock_polymorph_observe.py"/' storage/fixtures/backpack-history/pack_scope.py
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+          python3 -m pip install --disable-pip-version-check minecraft-launcher-lib==8.0 nbtlib==2.0.4
+          bash .github/client249/memory.sh
+      - name: Provision stock server and client
+        run: |
+          PACK249_INSTALL_ONLY=1 bash .github/pack249/server.sh
+          python3 .github/pack249/provision.py --side client --dest "$RUNNER_TEMP/pack249-client-native"
+          python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
+      - name: Observe real player and eligibility
+        timeout-minutes: 45
+        run: |
+          export GITHUB_WORKSPACE="$PWD"
+          python3 -u storage/fixtures/backpack-history/pack_scope.py storage/fixtures/backpack-history/stock_polymorph_observe.py "jail-build/dist/migration-build/$JAIL"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: polymorph-stock-diagnostics-${{ github.sha }}
+          path: |
+            baseline-src/dist/stock-admission/*.log
+            baseline-src/dist/stock-admission/*.json
+            baseline-src/dist/packaged-smoke/*.txt
+          retention-days: 7
