@@ -24,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 public final class FullPackDiagnostics {
     private FullPackDiagnostics() {}
     private static boolean collecting;
+    private static int corpseSamples;
     static boolean tracingOrigin;
     @FunctionalInterface private interface Probe { void run() throws Exception; }
 
@@ -171,6 +172,61 @@ public final class FullPackDiagnostics {
             Files.writeString(PlayerOnlySmoke.results.resolve("full249-origin-differences.json"),new GsonBuilder().setPrettyPrinting().create().toJson(report));
         } catch (Exception ex) {
             System.out.println("FULL249_DIAGNOSTIC origin observer failed: "+ex.getClass().getSimpleName());
+        }
+    }
+
+    /** Read the same live and durable projections after the disposable player dies. */
+    static void sampleCorpse(ServerPlayer player) {
+        int sample=corpseSamples++;
+        if (sample!=0 && sample%5!=0) return;
+        var report=new java.util.LinkedHashMap<String,Object>();
+        report.put("sample",sample);
+        report.put("tick",player.server.getTickCount());
+        try {
+            UUID tx=dev.unyielding.jail.JailIntegrated.activeTransaction(player.server,player.getUUID());
+            if (tx==null) throw new IllegalStateException("No active custody");
+            Object ports=call("JailIntegrated","ports",new Class<?>[]{net.minecraft.server.MinecraftServer.class,
+                    ServerPlayer.class,UUID.class,UUID.class,String.class},
+                    player.server,player,tx,null,"native-packed-wallet-v1");
+            var accessor=ports.getClass().getDeclaredMethod("origin");
+            accessor.setAccessible(true);
+            var origin=(dev.unyielding.jail.JailOriginTransaction.Port)accessor.invoke(ports);
+            byte[] liveBytes=origin.current().state();
+            byte[] savedBytes=origin.durable().state();
+            CompoundTag live=OriginCustodyPort.decode(liveBytes);
+            CompoundTag saved=OriginCustodyPort.decode(savedBytes);
+            report.put("exact_bytes_equal",java.util.Arrays.equals(liveBytes,savedBytes));
+            report.put("pack_contract_applies",call("JailAttributeView","applies",new Class<?>[]{ServerPlayer.class},player));
+            report.put("production_light_exception",call("JailPackState","onlyCorpseLightingDiffers",
+                    new Class<?>[]{byte[].class,byte[].class},liveBytes,savedBytes));
+            var paths=new ArrayList<String>();
+            differences(live,saved,"player",paths);
+            report.put("differences",paths);
+            CompoundTag liveLight=(CompoundTag)call("JailPackState","completeLightCache",new Class<?>[]{CompoundTag.class},live);
+            CompoundTag savedLight=(CompoundTag)call("JailPackState","completeLightCache",new Class<?>[]{CompoundTag.class},saved);
+            report.put("live_light_cache_valid",liveLight!=null);
+            report.put("saved_light_cache_valid",savedLight!=null);
+            if (liveLight!=null && savedLight!=null) {
+                report.put("live_light",liveLight.toString());
+                report.put("saved_light",savedLight.toString());
+                liveLight.putInt("sky_light",savedLight.getInt("sky_light"));
+                liveLight.putInt("block_light",savedLight.getInt("block_light"));
+                var residual=new ArrayList<String>();
+                differences(live,saved,"player",residual);
+                report.put("differences_after_light_normalization",residual);
+                byte[] normalized=(byte[])call("JailNbt","encode",new Class<?>[]{CompoundTag.class},live);
+                report.put("normalized_bytes_equal",java.util.Arrays.equals(normalized,savedBytes));
+            }
+        } catch (Exception ex) {
+            Throwable cause=ex instanceof InvocationTargetException nested ? nested.getTargetException() : ex;
+            report.put("observer_error",cause.getClass().getName()+": "+String.valueOf(cause.getMessage()));
+        }
+        try {
+            String json=new GsonBuilder().setPrettyPrinting().create().toJson(report);
+            if (sample==0) Files.writeString(PlayerOnlySmoke.results.resolve("combined-corpse-first.json"),json);
+            Files.writeString(PlayerOnlySmoke.results.resolve("combined-corpse-latest.json"),json);
+        } catch (Exception ex) {
+            System.out.println("FULL249_DIAGNOSTIC corpse observer failed: "+ex.getClass().getSimpleName());
         }
     }
 
