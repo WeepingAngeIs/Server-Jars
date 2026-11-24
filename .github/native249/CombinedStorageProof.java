@@ -62,6 +62,11 @@ final class CombinedStorageProof {
         inventory.setItem(9, upgrade);
         require(Upgrades.change(bag, "feeding", false) && Upgrades.installed(new BagInventory(player,SLOT), "feeding"),
                 "Storage upgrade was not installed");
+        // Installing an upgrade commits a replacement stack to the inventory.
+        // Capture that current stack, including the installed upgrade and contents.
+        host = inventory.getItem(SLOT);
+        require(ItemStack.matches(item,new BagInventory(player,SLOT).getItem(3)),
+                "The upgraded backpack lost its marked contents during setup");
         require(BagInventory.data(host).hasUUID("BagId"), "Storage bag has no native identity");
         Files.write(evidence(player,"storage-bag"), OriginCustodyPort.encode((CompoundTag)host.save(player.registryAccess())));
         // Reproduce a rolled-back physical source with a real recorded loss. This is
