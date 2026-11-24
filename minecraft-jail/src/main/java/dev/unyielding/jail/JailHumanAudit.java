@@ -43,8 +43,9 @@ final class JailHumanAudit {
         if(!Files.isRegularFile(own,LinkOption.NOFOLLOW_LINKS)||!own.equals(own.toRealPath()))throw new IOException("Unsafe implementation artifact");
         return hash(own);
     }
-    private record RuntimeIdentity(String fingerprint, boolean unyielding249, boolean focusedItems) {}
+    private record RuntimeIdentity(String fingerprint, boolean unyielding249, boolean focusedItems, boolean spawnWithStorage) {}
     static boolean hasPackStateContract(ServerPlayer player) throws IOException {return runtimeWithArtifact(player,null).unyielding249();}
+    static boolean hasSpawnSwapContract(ServerPlayer player) throws IOException {return runtimeWithArtifact(player,null).spawnWithStorage();}
     static boolean hasItems249Contract(ServerPlayer player) throws IOException {
         RuntimeIdentity runtime = runtimeWithArtifact(player,null);
         return runtime.unyielding249() || runtime.focusedItems();
@@ -92,7 +93,7 @@ final class JailHumanAudit {
         boolean focusedItems=JailRuntimeProfile.focusedItems(kernel,files,itemsFixture);
         boolean fullPack=!focusedItems && JailRuntimeProfile.check(kernel,certificate.get("neoforge").getAsString(),files,unsupported);
         rows.addAll(files);
-        Collections.sort(rows);return new RuntimeIdentity(HexFormat.of().formatHex(JailOriginTransaction.hash(String.join("\n",rows).getBytes(java.nio.charset.StandardCharsets.UTF_8))),fullPack,focusedItems);
+        Collections.sort(rows);return new RuntimeIdentity(HexFormat.of().formatHex(JailOriginTransaction.hash(String.join("\n",rows).getBytes(java.nio.charset.StandardCharsets.UTF_8))),fullPack,focusedItems,fullPack && JailRuntimeProfile.spawnWithStorage(kernel,files));
     }
     @SuppressWarnings("unchecked") static Result inspect(ServerPlayer p)throws IOException {
         if(!p.server.isSameThread()||!p.isAlive()||p.hasDisconnected()||p.server.getPlayerList().getPlayer(p.getUUID())!=p)throw new IOException("Subject offline, dead or not authoritative");

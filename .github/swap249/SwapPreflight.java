@@ -72,7 +72,7 @@ final class SwapPreflight {
         pass();
     }
 
-    private static Map<String,Object> spawnCounts(ServerPlayer player,String variant) throws Exception {
+    static Map<String,Object> spawnCounts(ServerPlayer player,String variant) throws Exception {
         var results=new LinkedHashMap<String,Object>();
         player.server.getPlayerList().op(player.getGameProfile());
         try {

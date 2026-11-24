@@ -31,6 +31,33 @@ class JailRuntimeProfileTest {
         assertThrows(IOException.class,()->JailRuntimeProfile.check("21.1.249","21.1.255",List.of("new=1:aaa"),"new=1:aaa"));
     }
 
+    @Test void exactSpawnSwapRosterIsAcceptedAndAnyChangeRemainsUnapproved() throws Exception {
+        java.util.List<String> roster;
+        try(var stream=JailRuntimeProfileTest.class.getResourceAsStream("/spawn249-roster.txt")) {
+            assertNotNull(stream);
+            roster=new java.io.BufferedReader(new java.io.InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8)).lines().toList();
+        }
+        assertEquals(380,roster.size());
+        assertTrue(JailRuntimeProfile.spawnWithStorage("21.1.249",roster));
+        assertTrue(JailRuntimeProfile.check("21.1.249","21.1.255",roster,"exact-pinned-companion"));
+        assertFalse(JailRuntimeProfile.spawnWithStorage("21.1.255",roster));
+        var missing=new java.util.ArrayList<>(roster);missing.removeFirst();
+        assertThrows(IOException.class,()->JailRuntimeProfile.check("21.1.249","21.1.255",missing,"changed"));
+        var added=new java.util.ArrayList<>(roster);added.add("unapproved=1:"+"0".repeat(128));
+        assertThrows(IOException.class,()->JailRuntimeProfile.check("21.1.249","21.1.255",added,"changed"));
+        var changed=new java.util.ArrayList<>(roster);changed.set(0,changed.getFirst()+"0");
+        assertThrows(IOException.class,()->JailRuntimeProfile.check("21.1.249","21.1.255",changed,"changed"));
+    }
+
+    @Test void teleportRequestsCanOnlyBeAcceptedOutsideCustodyByTheIntendedReceiver() {
+        var player=java.util.UUID.randomUUID();var other=java.util.UUID.randomUUID();var third=java.util.UUID.randomUUID();
+        assertTrue(JailUnyieldingSwapState.blocksRequest(player,other,player,false));
+        assertTrue(JailUnyieldingSwapState.blocksRequest(player,other,player,true));
+        assertTrue(JailUnyieldingSwapState.blocksRequest(player,player,other,false));
+        assertFalse(JailUnyieldingSwapState.blocksRequest(player,player,other,true));
+        assertFalse(JailUnyieldingSwapState.blocksRequest(player,other,third,false));
+    }
+
     @Test void missingNativeLedgerCannotReplaceExistingUniqueOrDirtyHistory() throws Exception {
         CompoundTag empty=new CompoundTag(),owners=new CompoundTag();
         owners.putUUID("neoorigins:human",java.util.UUID.randomUUID());

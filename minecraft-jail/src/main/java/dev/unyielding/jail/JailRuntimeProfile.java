@@ -15,6 +15,9 @@ final class JailRuntimeProfile {
     private static final String FOCUSED_ITEMS_249 = "681fb2244140c28863053b222ae32aeedd0c1b4379d8023b4a0e867a57fdf871";
     // Stock server roster plus the pinned roommedia.1 Storage Plus artifact.
     private static final String STOCK_WITH_STORAGE_249 = "50985dea6855dfe10b828b90bf7b41d2caca1221611b844e1f6706c0b6c3905c";
+    // The same published roster, with the exact inspected spawn-quantity companion
+    // and the exact roommedia.1 Storage Plus artifact present from startup.
+    private static final String SPAWN_WITH_STORAGE_249 = "56172e09426f12aa24a50db27bc03755ce6d7186370febe8ba745acc597dbbee";
 
     private JailRuntimeProfile() {}
 
@@ -27,6 +30,10 @@ final class JailRuntimeProfile {
         return hostedItemsFixture && PACK_KERNEL.equals(kernel) && matches(seal(files), FOCUSED_ITEMS_249);
     }
 
+    static boolean spawnWithStorage(String kernel, Collection<String> files) {
+        return PACK_KERNEL.equals(kernel) && matches(seal(files), SPAWN_WITH_STORAGE_249);
+    }
+
     static boolean check(String kernel, String originalKernel, Collection<String> files, String unsupported) throws IOException {
         if (!originalKernel.equals(kernel) && !PACK_KERNEL.equals(kernel))
             throw new IOException("Uncertified NeoForge kernel " + kernel);
@@ -37,6 +44,7 @@ final class JailRuntimeProfile {
         String observed = seal(files);
         if (unsupported == null && matches(observed, BOUNDED_249)) return false;
         if (matches(observed, STOCK_WITH_STORAGE_249)) return true;
+        if (matches(observed, SPAWN_WITH_STORAGE_249)) return true;
         try (InputStream input = JailRuntimeProfile.class.getResourceAsStream("/assets/minecraftjail/unyielding-249-server.sha256")) {
             if (input != null && matches(observed, new String(input.readAllBytes(), StandardCharsets.US_ASCII))) return true;
         }
