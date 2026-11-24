@@ -35,7 +35,7 @@ final class PolymorphControls {
                 && System.getenv("RUNNER_ENVIRONMENT").equals("github-hosted")
                 && player.getGameProfile().getName().equals("Visitor")
                 && player.server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT)
-                        .getFileName().toString().equals("jail_certified_smoke"),
+                        .toRealPath().getFileName().toString().equals("jail_certified_smoke"),
                 "Polymorph controls require a disposable hosted Visitor");
         var apiClass = Class.forName("com.illusivesoulworks.polymorph.api.PolymorphApi");
         Object api = apiClass.getMethod("getInstance").invoke(null);

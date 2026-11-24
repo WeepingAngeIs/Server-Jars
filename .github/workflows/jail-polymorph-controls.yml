@@ -7,7 +7,7 @@ permissions:
   actions: read
   contents: read
 jobs:
-  native-controls:
+  pack-custody:
     if: contains(github.event.head_commit.message, '[polymorph-controls]')
     runs-on: ubuntu-24.04
     timeout-minutes: 85
