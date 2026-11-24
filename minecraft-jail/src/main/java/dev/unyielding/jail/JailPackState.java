@@ -50,6 +50,7 @@ final class JailPackState {
         }
         currencyEventUnlocks(attachments);
         verifyDeathProviders(player);
+        if (net.neoforged.fml.ModList.get().isLoaded("anyastorage")) JailStorageState.verify(player);
         for (String key : attachments.getAllKeys()) {
             if (key.equals("polymorph:recipe_data")) {
                 JailPolymorph.verify(player,attachments.get(key));

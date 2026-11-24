@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import static dev.unyielding.bundlesmoke.PlayerOnlySmoke.cmd;
 
 /** Run only on a fresh disposable player with the exact pinned Polymorph. */
 final class PolymorphControls {
@@ -46,6 +47,7 @@ final class PolymorphControls {
         var current = player.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments")
                 .get("polymorph:recipe_data");
         check(player,current,true);
+        require(cmd("jailintegrated check Visitor")==1,"Neutral Polymorph data failed the actual admission check");
 
         var unknown = new CompoundTag();
         unknown.putBoolean("unexpected",true);
@@ -55,6 +57,7 @@ final class PolymorphControls {
         try {
             menuSetter.invoke(data,player.containerMenu);
             check(player,current,false);
+            require(cmd("jailintegrated check Visitor")==0,"Actual admission check accepted an active Polymorph menu");
         } finally {
             menuSetter.invoke(data,new Object[]{null});
         }
@@ -70,6 +73,7 @@ final class PolymorphControls {
                     "Actual selected recipe was not serialized");
             check(player,selected,false);
             check(player,current,false);
+            require(cmd("jailintegrated check Visitor")==0,"Actual admission check accepted a selected Polymorph recipe");
             require(base.getMethod("getSelectedRecipe").invoke(data)==recipe,
                     "Refusal changed the selected recipe");
         } finally {
@@ -89,10 +93,12 @@ final class PolymorphControls {
             require(serialized instanceof CompoundTag c && c.isEmpty(),
                     "Provider changed pending-selection serialization");
             check(player,serialized,false);
+            require(cmd("jailintegrated check Visitor")==0,"Actual admission check accepted a pending Polymorph recipe");
             require(loaded.get(data)!=null,"Refusal cleared the pending recipe");
         } finally {
             loaded.set(data,null);
         }
         check(player,current,true);
+        require(cmd("jailintegrated check Visitor")==1,"Clearing fixture activity did not restore neutral eligibility");
     }
 }

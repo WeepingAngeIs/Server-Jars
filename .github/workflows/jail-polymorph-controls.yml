@@ -34,8 +34,8 @@ jobs:
           cp unyielding-quests/libs/{cobblemon,kotlin-stdlib}.jar minecraft-jail/libs/
           cp baseline/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
           (cd minecraft-jail && sh gradlew --no-daemon --console=plain clean test jar)
-          cp minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.3.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
-          sha256sum minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.3.jar > dist/candidate.sha256
+          cp minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.4-test.1.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          sha256sum minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.4-test.1.jar > dist/candidate.sha256
       - name: Build the stock native provider observer
         run: |
           python3 - <<'PY'
@@ -60,10 +60,10 @@ jobs:
           python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
       - name: Observe native controls, admission and automatic respawn
         timeout-minutes: 35
-        run: bash .github/native249/game-scope.sh 1 minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.3.jar
+        run: bash .github/native249/game-scope.sh 1 minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.4-test.1.jar
       - name: Restart and return the exact held inventory and wallet
         timeout-minutes: 25
-        run: bash .github/native249/game-scope.sh 2 minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.3.jar
+        run: bash .github/native249/game-scope.sh 2 minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.4-test.1.jar
       - name: Verify controls ran
         run: |
           python3 - <<'PY'
@@ -78,7 +78,7 @@ jobs:
           name: polymorph-native-controls-${{ github.sha }}
           path: |
             dist/candidate.sha256
-            minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.3.jar
+            minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.4-test.1.jar
             minecraft-jail/build/test-results/
             dist/packaged-smoke/
           retention-days: 10

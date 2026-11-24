@@ -13,6 +13,8 @@ final class JailRuntimeProfile {
     private static final String BOUNDED_249 = "268c942530f240efea4b34bfce591d07da5c23a3f49360bf6d15a63965d696c8";
     // The bounded runtime plus the pack's exact Sophisticated Backpacks, Core, SOL Onion and CreativeCore.
     private static final String FOCUSED_ITEMS_249 = "681fb2244140c28863053b222ae32aeedd0c1b4379d8023b4a0e867a57fdf871";
+    // Stock server roster plus the pinned roommedia.1 Storage Plus artifact.
+    private static final String STOCK_WITH_STORAGE_249 = "50985dea6855dfe10b828b90bf7b41d2caca1221611b844e1f6706c0b6c3905c";
 
     private JailRuntimeProfile() {}
 
@@ -34,6 +36,7 @@ final class JailRuntimeProfile {
         }
         String observed = seal(files);
         if (unsupported == null && matches(observed, BOUNDED_249)) return false;
+        if (matches(observed, STOCK_WITH_STORAGE_249)) return true;
         try (InputStream input = JailRuntimeProfile.class.getResourceAsStream("/assets/minecraftjail/unyielding-249-server.sha256")) {
             if (input != null && matches(observed, new String(input.readAllBytes(), StandardCharsets.US_ASCII))) return true;
         }

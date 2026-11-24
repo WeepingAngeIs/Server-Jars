@@ -1,0 +1,87 @@
+name: Jail and Storage combined pack rehearsal
+on:
+  push:
+    branches: [codex/jail-unyielding-249]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  pack-custody:
+    if: contains(github.event.head_commit.message, '[combined-probe]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+      POLYMORPH_CONTROLS: '1'
+      COMBINED_STORAGE_JAR: ${{ github.workspace }}/storage-input/anya-storage-plus-0.3.0-beta.7-roommedia.1.jar
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: anya-storage-plus-roommedia.1
+          repository: WeepingAngeIs/zSortange
+          run-id: 45230324007
+          github-token: ${{ github.token }}
+          path: storage-input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-production-build-7b2f6b34412403b0839f1be9b82e136d1d893b20
+          run-id: 44099299150
+          github-token: ${{ github.token }}
+          path: baseline
+      - name: Verify Storage and companion inputs
+        run: |
+          set -euo pipefail
+          [[ $(git rev-parse HEAD) == "$GITHUB_SHA" ]]
+          [[ $(cat storage-input/SOURCE_COMMIT.txt) == 387ddfdd9784453060317dda152f9e0e47b993be ]]
+          printf '%s  %s\n' afd62612c2f09c6bf156831b0e798da58ef0fd1632297dc936ea69e11b66e91e "$COMBINED_STORAGE_JAR" | sha256sum -c -
+          printf '%s  %s\n' ec3ae2c48399e40ffa615ddec85408bc29b2479c5a35eb7236c3e036ebdf762c baseline/dist/production-candidate/Unyielding-1.2.0.jar | sha256sum -c -
+      - name: Build the candidate from the checked out revision
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/fetch-build-dependencies.py
+          mkdir -p minecraft-jail/libs candidate/dist/migration-build
+          cp unyielding-quests/libs/{cobblemon,kotlin-stdlib}.jar minecraft-jail/libs/
+          (cd minecraft-jail && sh gradlew --no-daemon --console=plain clean test jar)
+          cp minecraft-jail/build/libs/Minecraft-Jail-1.3.0-beta.4-test.1.jar candidate/dist/migration-build/
+          git rev-parse HEAD > candidate/dist/migration-build/commit.txt
+          (cd candidate/dist/migration-build && sha256sum Minecraft-Jail-1.3.0-beta.4-test.1.jar > SHA256SUMS.txt)
+      - name: Prepare the test observer and exact published pack
+        run: |
+          set -euo pipefail
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp baseline/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
+          cp candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.4-test.1.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          python3 .github/scripts/fetch-build-dependencies.py
+          python3 .github/native249/combined_prepare.py
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+          python3 -m pip install --disable-pip-version-check minecraft-launcher-lib==8.0
+          bash .github/client249/memory.sh
+          PACK249_INSTALL_ONLY=1 bash .github/pack249/server.sh
+          python3 .github/pack249/provision.py --side client --dest "$RUNNER_TEMP/pack249-client-native"
+          python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
+      - name: Admit a real player and verify escape and held bag
+        timeout-minutes: 30
+        run: bash .github/native249/game-scope.sh 1 candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.4-test.1.jar
+      - name: Restart and verify the same bag returns once
+        timeout-minutes: 30
+        run: bash .github/native249/game-scope.sh 2 candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.4-test.1.jar
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: combined-pack-evidence-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/*.json
+            dist/packaged-smoke/*.snbt
+            dist/packaged-smoke/full249-*-logs/
+            dist/packaged-smoke/client249-phase*-status.txt
+            candidate/dist/migration-build/
+            minecraft-jail/build/test-results/
+          retention-days: 10

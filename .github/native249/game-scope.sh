@@ -11,6 +11,8 @@ if [[ $# != 2 || ! $1 =~ ^[12]$ ]]; then
 fi
 phase=$1
 candidate=$2
+driver=.github/native249/full_run.py
+if [[ -n ${COMBINED_STORAGE_JAR:-} ]]; then driver=.github/native249/combined_run.py; fi
 mkdir -p dist/packaged-smoke/full249-scope-logs
 report="dist/packaged-smoke/full249-scope-logs/phase-${phase}.log"
 log() { printf '%s %s\n' "$(date -u +%FT%TZ)" "$*" | tee -a "$report"; }
@@ -18,7 +20,7 @@ log() { printf '%s %s\n' "$(date -u +%FT%TZ)" "$*" | tee -a "$report"; }
 cgroups=/sys/fs/cgroup
 if [[ ! -r "$cgroups/cgroup.controllers" ]] || ! grep -qw memory "$cgroups/cgroup.controllers"; then
     log "The host lacks the cgroup v2 memory controller. Running the same game test directly."
-    exec python3 .github/native249/full_run.py "$candidate" --phase "$phase"
+    exec python3 "$driver" "$candidate" --phase "$phase"
 fi
 
 unit="jailpack249-${GITHUB_RUN_ID:?}-${GITHUB_RUN_ATTEMPT:?}-p${phase}-$$.scope"
@@ -59,7 +61,7 @@ game() {
     fi
     log "Verified $unit. Worker UID $EUID. Memory quantities below are in bytes."
     sample
-    if python3 .github/native249/full_run.py "$candidate" --phase "$phase"; then result=0; else result=$?; fi
+    if python3 "$driver" "$candidate" --phase "$phase"; then result=0; else result=$?; fi
     sample
     return "$result"
 }
