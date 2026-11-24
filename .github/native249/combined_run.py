@@ -26,7 +26,7 @@ source = source.replace('    if phase==1:\n        (report/"full249-first-sessio
     if phase == 1:
         assert proof["active_storage_lease_refused_without_change"]
         assert proof["polymorph_native_controls"]
-    assert proof["held_recovery_link_closed" if phase == 1 else "held_recovery_retry_after_restart_denied"]
+    assert proof["held_recovery_safely_stopped" if phase == 1 else "held_recovery_retry_after_restart_safely_stopped"]
     if phase == 2:
         assert proof["storage_bag_returned_once_to_original_slot"]
         assert proof["stale_recovery_after_release_did_not_duplicate_bag"]

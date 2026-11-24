@@ -104,11 +104,30 @@ final class CombinedStorageProof {
             int status = player.server.getCommands().getDispatcher().execute(
                     "anya backpack history restore " + ids, player.createCommandSourceStack());
             require(status == 1, "The real operator recovery command did not execute");
-            require(BackpackHistory.page(player,0).stream().noneMatch(row -> row.id().equals(bagId)),
-                    "Recovery link still active while the real bag is held");
+            String state = historyState(bagId,java.util.UUID.fromString(parts[1]));
+            require(state.equals("AVAILABLE") || state.equals("LOCATED"),
+                    "Recovery advanced to an unsafe state while the original bag is held: " + state);
+            proof.put(first ? "held_recovery_state" : "held_recovery_state_after_restart",state);
         } finally { player.server.getPlayerList().deop(player.getGameProfile()); }
         held(player);
-        flag(first ? "held_recovery_link_closed" : "held_recovery_retry_after_restart_denied");
+        flag(first ? "held_recovery_safely_stopped" : "held_recovery_retry_after_restart_safely_stopped");
+    }
+
+    private static String historyState(java.util.UUID bagId, java.util.UUID lossId) throws Exception {
+        var active = BackpackHistory.class.getDeclaredField("active");
+        active.setAccessible(true);
+        Object store = active.get(null);
+        require(store != null, "Backpack history is unavailable");
+        var get = store.getClass().getDeclaredMethod("get",java.util.UUID.class);
+        get.setAccessible(true);
+        Object entry = get.invoke(store,bagId);
+        require(entry != null, "Backpack loss record disappeared");
+        var transaction = entry.getClass().getDeclaredMethod("transaction");
+        var state = entry.getClass().getDeclaredMethod("state");
+        transaction.setAccessible(true);
+        state.setAccessible(true);
+        require(lossId.equals(transaction.invoke(entry)), "Backpack loss identity changed");
+        return ((Enum<?>)state.invoke(entry)).name();
     }
 
     static void held(ServerPlayer player) throws Exception {
@@ -158,6 +177,9 @@ final class CombinedStorageProof {
         } finally {
             player.server.getPlayerList().deop(player.getGameProfile());
         }
+        var loss = Files.readString(evidence(player,"storage-loss")).split(" ");
+        require(historyState(bagId,java.util.UUID.fromString(loss[1])).equals("LOCATED"),
+                "The stale recovery link was not closed after the original bag returned");
         int matches = 0;
         int identities = 0;
         for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
