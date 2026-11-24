@@ -41,7 +41,7 @@ jobs:
           [[ $(git rev-parse HEAD) == "$GITHUB_SHA" ]]
           [[ $(cat storage-input/SOURCE_COMMIT.txt) == 387ddfdd9784453060317dda152f9e0e47b993be ]]
           printf '%s  %s\n' afd62612c2f09c6bf156831b0e798da58ef0fd1632297dc936ea69e11b66e91e "$COMBINED_STORAGE_JAR" | sha256sum -c -
-          printf '%s  %s\n' ec3ae2c48399e40ffa615ddec85408bc29b2479c5a35eb7236c3e036ebdf762c baseline/dist/production-candidate/Unyielding-1.2.0.jar | sha256sum -c -
+          printf '%s  %s\n' 61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7 baseline/dist/production-candidate/Unyielding-1.2.0.jar | sha256sum -c -
       - name: Build the candidate from the checked out revision
         run: |
           set -euo pipefail
