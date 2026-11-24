@@ -84,10 +84,10 @@ public final class BundleSmoke {
 
     private void check(ServerPlayer player, String command, int expected, String species, int level) {
         ServerLevel world = player.serverLevel();
-        int x = ++position * 32;
-        world.getChunk(x >> 4, 0);
-        Vec3 spot = new Vec3(x + 0.5, world.getSeaLevel() + 5, 0.5);
-        player.moveTo(spot.x, spot.y, spot.z);
+        // Stay in the connected player's ticking chunk. getChunk alone loads terrain,
+        // but does not make newly inserted entities visible to the world lookup.
+        var origin = player.blockPosition();
+        Vec3 spot = new Vec3(origin.getX() + 0.5, world.getSeaLevel() + 5 + ++position * 3, origin.getZ() + 0.5);
         var before = pokemon(world);
         var source = player.createCommandSourceStack().withPosition(spot).withPermission(player.hasPermissions(2) ? 2 : 0);
         int result = 0;
