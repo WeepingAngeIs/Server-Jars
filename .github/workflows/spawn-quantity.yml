@@ -29,7 +29,7 @@ jobs:
         working-directory: dist/packaged-harness
         run: |
           set -o pipefail
-          timeout --kill-after=15s 16m bash gradlew --no-daemon --console=plain runServer 2>&1 | tee ../spawn-evidence/server.log
+          timeout --kill-after=15s 16m bash ../../unyielding-quests/gradlew --no-daemon --console=plain runServer 2>&1 | tee ../spawn-evidence/server.log
           test -f ../spawn-evidence/counts.txt
           grep -qx 'SPAWN QUANTITY PASS' ../spawn-evidence/counts.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
