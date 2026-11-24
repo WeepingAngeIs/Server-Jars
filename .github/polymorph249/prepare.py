@@ -28,6 +28,8 @@ def observe(stage):
                          [srv,cli], 40, 'Polymorph observation failed')
 '''
 
+replace('os.environ["GITHUB_REPOSITORY"].lower()=="weepingangeis/zsortange"',
+        'os.environ["GITHUB_REPOSITORY"].lower()=="weepingangeis/server-jars"')
 replace('            # This is an instruction to the unchanged client picker',
         observe('joined') + '            # This is an instruction to the unchanged client picker')
 replace('            print("Player completed genuine Human and Warrior onboarding.",flush=True)',
