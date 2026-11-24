@@ -1,0 +1,123 @@
+name: Jail unchanged companion-swap preflight
+on:
+  push:
+    branches: [codex/jail-unyielding-249]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  probe:
+    if: contains(github.event.head_commit.message, '[swap-preflight]')
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [baseline, spawn]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+      UQ_SPAWN_VARIANT: ${{ matrix.variant }}
+      COMBINED_STORAGE_JAR: ${{ github.workspace }}/storage-input/anya-storage-plus-0.3.0-beta.7-roommedia.1.jar
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: d1ed7d6530d415c7a4169e657840765c0b901a74
+          path: spawn-source
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: combined-pack-evidence-2c4e7e47a5d939885dd8285e3f792fe99903aca7
+          run-id: 45400948626
+          github-token: ${{ github.token }}
+          path: jail-input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: anya-storage-plus-roommedia.1
+          repository: WeepingAngeIs/zSortange
+          run-id: 45230324007
+          github-token: ${{ github.token }}
+          path: storage-input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: Unyielding-1.2.0-spawn-quantity
+          run-id: 45404746037
+          github-token: ${{ github.token }}
+          path: spawn-input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-production-build-7b2f6b34412403b0839f1be9b82e136d1d893b20
+          run-id: 44099299150
+          github-token: ${{ github.token }}
+          path: baseline-input
+      - name: Verify exact JARs and choose the companion
+        run: |
+          set -euo pipefail
+          [[ $(git -C spawn-source rev-parse HEAD) == d1ed7d6530d415c7a4169e657840765c0b901a74 ]]
+          printf '%s  %s\n' 8e4e710979d82fc3e12c1931fea3f718173e1efb52bc6e3aa86a02b65ef8aaea jail-input/candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.4-test.1.jar | sha256sum -c -
+          printf '%s  %s\n' afd62612c2f09c6bf156831b0e798da58ef0fd1632297dc936ea69e11b66e91e "$COMBINED_STORAGE_JAR" | sha256sum -c -
+          printf '%s  %s\n' e4f34f6a4640fa6c59fc8efe3d2253d0b701bd83371fd960c5d38cfac73ccf2c spawn-source/ci-inputs/Unyielding-1.2.0-configtopia-spawn-baseline.jar | sha256sum -c -
+          printf '%s  %s\n' 9dbfb659a2ba2c995d0f3974fa48cf9f37b9b5f8162c3e2e4faf2af9946e0904 spawn-input/120-release/Unyielding-1.2.0.jar | sha256sum -c -
+          printf '%s  %s\n' 61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7 baseline-input/dist/production-candidate/Unyielding-1.2.0.jar | sha256sum -c -
+          if [[ "$UQ_SPAWN_VARIANT" == baseline ]]; then
+            echo "UQ_SWAP_JAR=$GITHUB_WORKSPACE/spawn-source/ci-inputs/Unyielding-1.2.0-configtopia-spawn-baseline.jar" >> "$GITHUB_ENV"
+          else
+            echo "UQ_SWAP_JAR=$GITHUB_WORKSPACE/spawn-input/120-release/Unyielding-1.2.0.jar" >> "$GITHUB_ENV"
+          fi
+      - name: Prepare isolated real-client observer and published pack
+        run: |
+          set -euo pipefail
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp baseline-input/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
+          cp jail-input/candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.4-test.1.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          python3 .github/scripts/fetch-build-dependencies.py
+          python3 .github/swap249/prepare.py
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+          python3 -m pip install --disable-pip-version-check minecraft-launcher-lib==8.0
+          bash .github/client249/memory.sh
+          PACK249_INSTALL_ONLY=1 bash .github/pack249/server.sh
+          python3 .github/pack249/provision.py --side client --dest "$RUNNER_TEMP/pack249-client-native"
+          python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
+          python3 .github/swap249/scope.py
+      - name: Measure native gameplay counts and unchanged Jail refusal
+        timeout-minutes: 30
+        run: bash dist/swap-game-scope.sh 1 "$GITHUB_WORKSPACE/jail-input/candidate/dist/migration-build/Minecraft-Jail-1.3.0-beta.4-test.1.jar"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: swap249-${{ matrix.variant }}-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/*.json
+            dist/packaged-smoke/*.snbt
+            dist/packaged-smoke/full249-*-logs/
+            dist/packaged-smoke/client249-phase*-status.txt
+          if-no-files-found: warn
+          retention-days: 14
+  compare:
+    if: contains(github.event.head_commit.message, '[swap-preflight]')
+    needs: probe
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: swap249-baseline-${{ github.sha }}
+          path: swap-results/baseline
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: swap249-spawn-${{ github.sha }}
+          path: swap-results/spawn
+      - run: python3 .github/swap249/compare.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: swap249-comparison-${{ github.sha }}
+          path: swap-comparison.json
+          retention-days: 14
