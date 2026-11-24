@@ -50,7 +50,7 @@ public final class JailCustodyService {
     private static Path root(MinecraftServer server){return server.getWorldPath(LevelResource.ROOT).resolve("custody-interface-v1");}
     private static Context context(MinecraftServer server){return contexts.computeIfAbsent(server,key->{Context c=new Context();if(Files.exists(root(key),LinkOption.NOFOLLOW_LINKS))try{if(Files.isSymbolicLink(root(key)))throw new IOException("Custody ledger symlink");c.ledger=new JailCustodyLedger(root(key));}catch(IOException bad){c.unavailable=bad.getMessage();}return c;});}
     public static JailCustodyLedger ledger(MinecraftServer server)throws IOException {if(!server.isSameThread())throw new IOException("Custody action off server thread");Context c=context(server);if(c.unavailable!=null||c.ledger!=null&&!c.ledger.healthy())throw new IOException("Custody unavailable; preserve records and restore audited history: "+c.unavailable);if(c.ledger==null)throw new IOException("Custody index not initialized; console must explicitly initialize or recover history");return c.ledger;}
-    public static boolean blocked(MinecraftServer server,UUID owner){if(server==null)return true;Context c=context(server);return JailIntegrated.blocked(server,owner)||c.unavailable!=null||c.ledger!=null&&(!c.ledger.healthy()||c.ledger.outstanding(owner));}
+    public static boolean blocked(MinecraftServer server,UUID owner){if(server==null)return true;Context c=context(server);return JailIntegrated.blocked(server,owner)||JailRetainedCustody.blocked(server,owner)||c.unavailable!=null||c.ledger!=null&&(!c.ledger.healthy()||c.ledger.outstanding(owner));}
     public static boolean quarantined(ServerPlayer player){return player.server!=null&&blocked(player.server,player.getUUID());}
     static boolean anyOutstanding(MinecraftServer server)throws IOException {
         Context c=context(server);
@@ -163,3 +163,4 @@ public final class JailCustodyService {
     private static String list(CommandSourceStack actor,int page)throws IOException {var records=ledger(actor.getServer()).list();long start=((long)page-1)*8;if(start>=records.size()&&!records.isEmpty())throw new IOException("No such custody page");return "Custody page "+page+" · "+records.size()+" retained records: "+records.stream().skip(start).limit(8).map(b->b.id()+" owner="+b.owner()+" "+b.state()+" · "+b.reason()).collect(java.util.stream.Collectors.joining(" | "));}
     private static int command(CommandSourceStack actor,Operation operation){try{String message=operation.run();actor.sendSuccess(()->Component.literal(message),false);return 1;}catch(Exception bad){actor.sendFailure(Component.literal("Custody: "+reason(bad)));return 0;}}
 }
+

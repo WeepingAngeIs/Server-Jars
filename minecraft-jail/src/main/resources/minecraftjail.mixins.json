@@ -10,9 +10,13 @@
     "OnionCloneMixin",
     "OnionDeathScoreMixin",
     "JailXpDropMixin",
+    "JailRetainedDropMixin",
+    "JailRetainedCloneMixin",
+    "JailStorageAutomationMixin",
     "BackpackWrapperMixin",
     "BackpackInventoryMixin",
     "BackpackGiveMixin",
     "BackpackStorageMixin"
   ]
 }
+

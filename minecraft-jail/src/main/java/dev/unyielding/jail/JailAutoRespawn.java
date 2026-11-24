@@ -55,17 +55,24 @@ public final class JailAutoRespawn {
     }
     /** A single native invocation after full durable-death verification; never retried in this session. */
     static void respawn(ServerPlayer p)throws Exception {
+        if(JailRetainedCustody.active(p)){JailRetainedCustody.respawn(p);return;}
         var proof=verify(p);var c=proof.context();ATTEMPTED.add(p);
         JailFoodProgress.beginClone(p,proof.food());
-        AUTOMATIC.set(p);
-        try{p.connection.handleClientCommand(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));}
-        finally{AUTOMATIC.remove();JailFoodProgress.endClone();}
+        try{invokeNative(p);}
+        finally{JailFoodProgress.endClone();}
         ServerPlayer next=p.server.getPlayerList().getPlayer(p.getUUID());
         require(next!=null&&next!=p&&next.connection.player==next&&next.isAlive()&&!next.hasDisconnected(),"Native replacement was not rebound");
         var jail=c.assignment().jail();
         require(c.assignment().equals(JailData.get(next.server).assignment(next.getUUID()))&&next.level().dimension().location().toString().equals(jail.dim())&&next.distanceToSqr(jail.x(),jail.y(),jail.z())<0.0001,"Replacement did not respawn inside jail");
         require(!JailEscapeCustody.pending(next.server,c.transaction()),"Respawn completion is uncertain; retain quarantine");
         MinecraftJail.LOGGER.info("JAIL_PLAYER_AUTO_RESPAWN tx={} player={} without_client_request=true",c.transaction(),next.getUUID());
+    }
+    static void markAttempted(ServerPlayer player){ATTEMPTED.add(player);}
+    static void invokeNative(ServerPlayer player)throws IOException{
+        if(AUTOMATIC.get()!=null||!player.server.isSameThread())throw new IOException("Nested/off-thread automatic respawn refused");
+        AUTOMATIC.set(player);
+        try{player.connection.handleClientCommand(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));}
+        finally{AUTOMATIC.remove();}
     }
     @SubscribeEvent(priority=EventPriority.HIGHEST) public static void tick(ServerTickEvent.Post event){
         for(ServerPlayer p:List.copyOf(event.getServer().getPlayerList().getPlayers())){
@@ -78,3 +85,4 @@ public final class JailAutoRespawn {
     }
     @SubscribeEvent public static void stopped(ServerStoppedEvent event){ATTEMPTED.clear();REPORTED.clear();AUTOMATIC.remove();}
 }
+

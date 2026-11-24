@@ -18,10 +18,11 @@ public final class JailEscapeCustody {
     private static final String RESPAWN="uq_jail_escape_respawn";
     private static final String OWN_DAMAGE_TICK="insanelib_own_damage_tick";
     private static final ThreadLocal<UUID> OWN_DAMAGE=new ThreadLocal<>();
-    static boolean ownDamage(ServerPlayer p){return p.getUUID().equals(OWN_DAMAGE.get());}
-    static boolean acceptedCorpse(ServerPlayer p){try{UUID tx=JailIntegrated.activeTransaction(p.server,p.getUUID());if(tx==null)return false;try(var j=journal(p.server,tx)){var e=pending(j);return e!=null&&(e.state()==JailEscrowJournal.State.HELD||e.state()==JailEscrowJournal.State.RESTORE_STARTED);}}catch(IOException bad){return true;}}
+    static boolean ownDamage(ServerPlayer p){return p.getUUID().equals(OWN_DAMAGE.get())||JailRetainedCustody.ownDamage(p);}
+    static boolean acceptedCorpse(ServerPlayer p){try{if(JailRetainedCustody.active(p))return JailRetainedCustody.acceptedCorpse(p);UUID tx=JailIntegrated.activeTransaction(p.server,p.getUUID());if(tx==null)return false;try(var j=journal(p.server,tx)){var e=pending(j);return e!=null&&(e.state()==JailEscrowJournal.State.HELD||e.state()==JailEscrowJournal.State.RESTORE_STARTED);}}catch(IOException bad){return true;}}
     static boolean pendingFoodDeath(ServerPlayer player) {
         try {
+            if(JailRetainedCustody.active(player))return JailRetainedCustody.pendingFoodDeath(player);
             UUID tx=JailIntegrated.activeTransaction(player.server,player.getUUID());
             if(tx==null)return false;
             try(var journal=journal(player.server,tx)) {
@@ -64,7 +65,7 @@ public final class JailEscapeCustody {
         CompoundTag t=JailNbt.decode(e.snapshot());if(!e.owner().equals(p.getUUID())||!t.hasUUID("custody")||!t.getUUID("custody").equals(c.transaction())||!Arrays.equals(c.digest(),t.getByteArray("digest"))||!c.assignment().jail().toTag().equals(t.getCompound("jail")))throw new IOException("Escape/custody binding changed");
     }
     private static void atJail(ServerPlayer p,JailIntegrated.EscapeContext c)throws IOException {destination(p,c);var l=c.assignment().jail();if(!p.level().dimension().location().toString().equals(l.dim())||p.distanceToSqr(l.x(),l.y(),l.z())>0.0001)throw new IOException("Respawn is not at verified jail");}
-    private static void deathSurface(ServerPlayer p,boolean retainXp)throws IOException {
+    static void deathSurface(ServerPlayer p,boolean retainXp)throws IOException {
         if(retainXp)JailXp.live(p);
         if(!retainXp&&(p.totalExperience!=0||p.experienceLevel!=0||p.experienceProgress!=0)||!p.getActiveEffects().isEmpty()||p.getAbsorptionAmount()!=0)throw new IOException("Escape XP/potion custody unsupported; no lethal damage applied");
         var abilities=p.getAbilities();if(abilities.mayfly||abilities.flying||abilities.instabuild||abilities.invulnerable||!abilities.mayBuild||abilities.getFlyingSpeed()!=0.05F||abilities.getWalkingSpeed()!=0.1F)throw new IOException("Nondefault flight/creative abilities are not certified for death");
@@ -84,6 +85,7 @@ public final class JailEscapeCustody {
     /** Called only by accepted movement crossing or verified fully-outside player enforcement. */
     static void attempt(ServerPlayer p){
         try{
+            if(JailRetainedCustody.active(p)){JailRetainedCustody.attempt(p);return;}
             if(!JailData.get(p.server).integratedCustodyInitialized())return;UUID active=JailIntegrated.activeTransaction(p.server,p.getUUID());
             if(active==null||!JailIntegrated.expanded(p.server,active)||pending(p.server,active))return;
             if(!p.isAlive()||p.isInvulnerableTo(p.damageSources().generic()))return;var c=JailIntegrated.escapeContext(p,true,true);if(c==null)return;destination(p,c);
@@ -177,3 +179,4 @@ public final class JailEscapeCustody {
     }
     private static void report(ServerPlayer p,Exception bad){MinecraftJail.LOGGER.error("Jail escape outcome for {} requires review; no death or item replay: {}",p.getUUID(),bad.toString());}
 }
+
