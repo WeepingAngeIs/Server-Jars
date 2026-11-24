@@ -3,7 +3,6 @@ from copy import copy
 import hashlib
 from pathlib import Path
 import shutil
-import subprocess
 import zipfile
 
 root = Path(__file__).resolve().parents[2]
@@ -33,7 +32,9 @@ evidence = root / "dist/spawn-evidence"
 evidence.mkdir()
 digest = hashlib.sha256(target.read_bytes()).hexdigest()
 (evidence / "SHA256SUMS.txt").write_text(f"{digest}  {target.name}\n")
-subprocess.run(["python3", ".github/scripts/prepare-packaged-server.py"], cwd=root, check=True)
+setup = root / ".github/scripts/prepare-packaged-server.py"
+runtime_setup = setup.read_text().split("namespace['main']()", 1)[0] + "namespace['main']()\n"
+exec(compile(runtime_setup, str(setup), "exec"), {"__file__": str(setup)})
 harness = root / "dist/packaged-harness"
 shutil.copy2(root / ".github/spawn-quantity/BundleSmoke.java",
              harness / "src/main/java/dev/unyielding/bundlesmoke/BundleSmoke.java")
