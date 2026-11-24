@@ -1,0 +1,52 @@
+name: Unyielding spawn quantity acceptance
+on:
+  push:
+    branches: [codex/spawn-quantity-acceptance]
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: unyielding-quests/*.gradle
+      - run: python3 .github/scripts/fetch-build-dependencies.py
+      - name: Compile quest component
+        working-directory: unyielding-quests
+        run: bash gradlew --no-daemon --console=plain jar
+      - name: Assemble and audit the exact combined candidate
+        run: python3 .github/spawn-quantity/prepare.py
+      - name: Exercise native commands in a fresh world
+        working-directory: dist/packaged-harness
+        run: |
+          set -o pipefail
+          timeout --kill-after=15s 16m bash gradlew --no-daemon --console=plain runServer 2>&1 | tee ../spawn-evidence/server.log
+          test -f ../spawn-evidence/counts.txt
+          grep -qx 'SPAWN QUANTITY PASS' ../spawn-evidence/counts.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Unyielding-1.2.0-spawn-quantity
+          path: |
+            dist/120-release/Unyielding-1.2.0.jar
+            dist/spawn-evidence/SHA256SUMS.txt
+            dist/spawn-evidence/counts.txt
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: spawn-quantity-evidence
+          path: |
+            dist/spawn-evidence/
+            dist/packaged-smoke/runtime-inputs.json
+            dist/packaged-harness/run-server/logs/
+            dist/packaged-harness/run-server/crash-reports/
+          if-no-files-found: warn
