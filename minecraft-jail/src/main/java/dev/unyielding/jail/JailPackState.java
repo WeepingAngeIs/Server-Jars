@@ -51,6 +51,10 @@ final class JailPackState {
         currencyEventUnlocks(attachments);
         verifyDeathProviders(player);
         for (String key : attachments.getAllKeys()) {
+            if (key.equals("polymorph:recipe_data")) {
+                JailPolymorph.verify(player,attachments.get(key));
+                continue;
+            }
             if (!BASE_ATTACHMENTS.contains(key) && !(food && JailFoodProgress.attachment(key)) && !neutral(REVIEWED.getAsJsonObject("attachments"), key, attachments.get(key)))
                 throw new IOException("Unreviewed or active attached death state: " + key);
         }

@@ -1,6 +1,7 @@
 """Build only a disposable test JAR for loading in two separate production game installations."""
 from pathlib import Path
 import json
+import os
 import shutil
 import subprocess
 import zipfile
@@ -18,6 +19,10 @@ def replace(path, old, new):
 
 for name in ("FullPackSession.java", "FullPackClientWatch.java", "FullPackDiagnostics.java"):
     shutil.copy2(Path(__file__).with_name(name),src)
+if os.environ.get("POLYMORPH_CONTROLS") == "1":
+    shutil.copy2(root/".github/polymorph249/PolymorphControls.java",src)
+    replace(src/"FullPackSession.java", "        seedEquipment(player);",
+            '        seedEquipment(player);\n        PolymorphControls.run(player);\n        flag("polymorph_native_controls");')
 for name in ("NeutralSerializationObserver.java","OriginSerializationObserver.java"):
     shutil.copy2(Path(__file__).with_name(name),src/"proof")
 observer_config=project/"src/main/resources/jail-production-observers.mixins.json"
