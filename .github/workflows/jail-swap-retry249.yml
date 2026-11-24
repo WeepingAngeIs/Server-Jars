@@ -6,7 +6,9 @@ permissions:
   contents: read
   actions: read
 jobs:
-  custody:
+  # The shared memory helper selects the previously successful full-pack
+  # swap and periodic collection settings for this job ID.
+  pack-custody:
     if: contains(github.event.head_commit.message, '[swap-accept-retry]')
     runs-on: ubuntu-24.04
     timeout-minutes: 90
