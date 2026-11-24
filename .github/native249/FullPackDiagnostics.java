@@ -199,9 +199,27 @@ public final class FullPackDiagnostics {
             report.put("pack_contract_applies",call("JailAttributeView","applies",new Class<?>[]{ServerPlayer.class},player));
             report.put("production_light_exception",call("JailPackState","onlyCorpseLightingDiffers",
                     new Class<?>[]{byte[].class,byte[].class},liveBytes,savedBytes));
+            report.put("game_time",player.server.overworld().getGameTime());
+            corpseLightShape(report,"live",live);
+            corpseLightShape(report,"saved",saved);
             var paths=new ArrayList<String>();
             differences(live,saved,"player",paths);
             report.put("differences",paths);
+            // Diagnostic comparison only: retain every extra field and normalize only
+            // the two integer readings in detached copies, even when their owner shape
+            // is not eligible under the production safeguard.
+            CompoundTag liveCopy=live.copy(),savedCopy=saved.copy();
+            CompoundTag liveReadings=liveCopy.getCompound("other_persistent").getCompound("insanelib").getCompound("nbt_tags");
+            CompoundTag savedReadings=savedCopy.getCompound("other_persistent").getCompound("insanelib").getCompound("nbt_tags");
+            if (liveReadings.contains("sky_light",Tag.TAG_INT) && liveReadings.contains("block_light",Tag.TAG_INT)
+                    && savedReadings.contains("sky_light",Tag.TAG_INT) && savedReadings.contains("block_light",Tag.TAG_INT)) {
+                liveReadings.putInt("sky_light",savedReadings.getInt("sky_light"));
+                liveReadings.putInt("block_light",savedReadings.getInt("block_light"));
+                report.put("diagnostic_normalized_bytes_equal",java.util.Arrays.equals(
+                        (byte[])call("JailNbt","encode",new Class<?>[]{CompoundTag.class},liveCopy),savedBytes));
+                report.put("diagnostic_residual",call("JailNbt","mismatch",new Class<?>[]{Tag.class,Tag.class,String.class},
+                        liveCopy,savedCopy,"player"));
+            }
             CompoundTag liveLight=(CompoundTag)call("JailPackState","completeLightCache",new Class<?>[]{CompoundTag.class},live);
             CompoundTag savedLight=(CompoundTag)call("JailPackState","completeLightCache",new Class<?>[]{CompoundTag.class},saved);
             report.put("live_light_cache_valid",liveLight!=null);
@@ -227,6 +245,22 @@ public final class FullPackDiagnostics {
             Files.writeString(PlayerOnlySmoke.results.resolve("combined-corpse-latest.json"),json);
         } catch (Exception ex) {
             System.out.println("FULL249_DIAGNOSTIC corpse observer failed: "+ex.getClass().getSimpleName());
+        }
+    }
+
+    private static void corpseLightShape(Map<String,Object> report,String side,CompoundTag state) {
+        CompoundTag persistent=state.getCompound("other_persistent");
+        CompoundTag owner=persistent.getCompound("insanelib");
+        CompoundTag tags=owner.getCompound("nbt_tags");
+        report.put(side+"_insanelib_keys",new TreeSet<>(owner.getAllKeys()));
+        report.put(side+"_nbt_tags_keys",new TreeSet<>(tags.getAllKeys()));
+        for (String key:List.of("sky_light","block_light"))
+            if (tags.contains(key,Tag.TAG_INT)) report.put(side+"_"+key,tags.getInt(key));
+        if (owner.contains("in_combat",Tag.TAG_COMPOUND)) {
+            CompoundTag combat=owner.getCompound("in_combat");
+            report.put(side+"_combat_keys",new TreeSet<>(combat.getAllKeys()));
+            if (combat.contains("last_timestamp",Tag.TAG_LONG))
+                report.put(side+"_combat_timestamp",combat.getLong("last_timestamp"));
         }
     }
 

@@ -19,6 +19,8 @@ full = src/"FullPackSession.java"
 replace(full, "        PackedWalletProof.seed(player);", "        PackedWalletProof.seed(player);\\n        CombinedStorageProof.seed(player);")
 replace(full, '        Custody249Proof.refusals(player);', '        CombinedStorageProof.activePocketControl(player);\\n        Custody249Proof.refusals(player);')
 replace(full, '        lastEscapeSample=tick;', '        lastEscapeSample=tick;\\n        if (!player.isAlive()) FullPackDiagnostics.sampleCorpse(player);')
+replace(full, '        deadline=player.server.getTickCount()+2400;', '        deadline=player.server.getTickCount()+400;')
+replace(full, 'stage.equals("seeded")) {', 'stage.equals("seeded") || stage.equals("held")) {')
 replace(full, '        snapshot(player,"held");', '        CombinedStorageProof.held(player);\\n        CombinedStorageProof.attemptRecovery(player,true);\\n        snapshot(player,"held");')
 replace(full, '        snapshot(player,"reconnect");', '        CombinedStorageProof.held(player);\\n        CombinedStorageProof.attemptRecovery(player,false);\\n        snapshot(player,"reconnect");')
 replace(full, '        noClaims(player);\\n        flag("full_wallet_and_equipment_return_after_restart");',
