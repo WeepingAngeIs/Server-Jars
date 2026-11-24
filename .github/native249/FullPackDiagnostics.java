@@ -178,7 +178,7 @@ public final class FullPackDiagnostics {
     /** Read the same live and durable projections after the disposable player dies. */
     static void sampleCorpse(ServerPlayer player) {
         int sample=corpseSamples++;
-        if (sample!=0 && sample%5!=0) return;
+        if (sample>=10 && sample%40!=0) return;
         var report=new java.util.LinkedHashMap<String,Object>();
         report.put("sample",sample);
         report.put("tick",player.server.getTickCount());
@@ -215,10 +215,14 @@ public final class FullPackDiagnostics {
                     && savedReadings.contains("sky_light",Tag.TAG_INT) && savedReadings.contains("block_light",Tag.TAG_INT)) {
                 liveReadings.putInt("sky_light",savedReadings.getInt("sky_light"));
                 liveReadings.putInt("block_light",savedReadings.getInt("block_light"));
-                report.put("diagnostic_normalized_bytes_equal",java.util.Arrays.equals(
-                        (byte[])call("JailNbt","encode",new Class<?>[]{CompoundTag.class},liveCopy),savedBytes));
+                boolean normalizedEqual=java.util.Arrays.equals(
+                        (byte[])call("JailNbt","encode",new Class<?>[]{CompoundTag.class},liveCopy),savedBytes);
+                report.put("diagnostic_normalized_bytes_equal",normalizedEqual);
                 report.put("diagnostic_residual",call("JailNbt","mismatch",new Class<?>[]{Tag.class,Tag.class,String.class},
                         liveCopy,savedCopy,"player"));
+                if (!java.util.Arrays.equals(liveBytes,savedBytes) && normalizedEqual
+                        && call("JailIntegrated","corpseContext",new Class<?>[]{ServerPlayer.class,boolean.class},player,true)!=null)
+                    PlayerOnlySmoke.flag("verified_corpse_light_refresh_with_bound_own_damage");
             }
             CompoundTag liveLight=(CompoundTag)call("JailPackState","completeLightCache",new Class<?>[]{CompoundTag.class},live);
             CompoundTag savedLight=(CompoundTag)call("JailPackState","completeLightCache",new Class<?>[]{CompoundTag.class},saved);

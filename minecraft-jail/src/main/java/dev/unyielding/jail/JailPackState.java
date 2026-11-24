@@ -98,9 +98,15 @@ final class JailPackState {
     // corpse's current block every other tick. Keep the entire saved byte representation,
     // including native inventory, claims and receipts, as the final equality criterion.
     static boolean onlyCorpseLightingDiffers(byte[] observed, byte[] saved) throws IOException {
+        return onlyCorpseLightingDiffers(observed,saved,null);
+    }
+
+    // A combat timestamp is eligible only when the bound death journal proves it
+    // came from this mod's own accepted kill. It remains part of the exact comparison.
+    static boolean onlyCorpseLightingDiffers(byte[] observed, byte[] saved, Long ownDamageTick) throws IOException {
         CompoundTag liveCopy=JailNativeOriginPort.decode(observed);
         CompoundTag diskCopy=JailNativeOriginPort.decode(saved);
-        CompoundTag live=completeLightCache(liveCopy),disk=completeLightCache(diskCopy);
+        CompoundTag live=completeLightCache(liveCopy,ownDamageTick),disk=completeLightCache(diskCopy,ownDamageTick);
         if(live==null || disk==null || live.equals(disk)) return false;
         live.putInt("sky_light",disk.getInt("sky_light"));
         live.putInt("block_light",disk.getInt("block_light"));
@@ -108,14 +114,28 @@ final class JailPackState {
     }
 
     private static CompoundTag completeLightCache(CompoundTag snapshot) throws IOException {
+        return completeLightCache(snapshot,null);
+    }
+
+    private static CompoundTag completeLightCache(CompoundTag snapshot, Long ownDamageTick) throws IOException {
         if (!(snapshot.get("other_persistent") instanceof CompoundTag data)
                 || !(data.get("insanelib") instanceof CompoundTag owner)
-                || !owner.getAllKeys().equals(Set.of("nbt_tags"))
                 || !(owner.get("nbt_tags") instanceof CompoundTag light)
                 || !validLightPair(light)) return null;
+        boolean ownCombat=owner.getAllKeys().equals(Set.of("nbt_tags","in_combat"))
+                && ownDamageTick!=null && ownDamageTick>=0
+                && owner.get("in_combat") instanceof CompoundTag combat
+                && combat.getAllKeys().equals(Set.of("last_timestamp"))
+                && combat.contains("last_timestamp",Tag.TAG_LONG)
+                && combat.getLong("last_timestamp")==ownDamageTick;
+        if (!owner.getAllKeys().equals(Set.of("nbt_tags")) && !ownCombat) return null;
         if(data.contains("PlayerPersisted") && !data.contains("PlayerPersisted",Tag.TAG_COMPOUND)) return null;
         verifyTwilightState(data.getCompound("PlayerPersisted"));
-        verifyPersistent(data,REVIEWED.getAsJsonObject("persistent"));
+        // The copy is only for the pre-death neutrality audit. Neither the player
+        // nor the original projections are changed or stripped for comparison.
+        CompoundTag audit=data.copy();
+        if (ownCombat) audit.getCompound("insanelib").remove("in_combat");
+        verifyPersistent(audit,REVIEWED.getAsJsonObject("persistent"));
         return light;
     }
 

@@ -21,6 +21,37 @@ final class CombinedStorageProof {
     private static final int SLOT = 12;
     private CombinedStorageProof() {}
 
+    static void activeCombatControl(ServerPlayer player) throws Exception {
+        require(cmd("jailintegrated check Visitor") == 1, "The neutral player failed preflight before the combat control");
+        CompoundTag persisted=player.getPersistentData();
+        require(persisted.contains("insanelib",net.minecraft.nbt.Tag.TAG_COMPOUND), "Missing InsaneLib fixture state");
+        CompoundTag before=persisted.getCompound("insanelib").copy();
+        require(!before.contains("in_combat"), "The fixture player already has combat state");
+        CompoundTag combat=new CompoundTag();
+        combat.putLong("last_timestamp",player.serverLevel().getGameTime());
+        persisted.getCompound("insanelib").put("in_combat",combat.copy());
+        try {
+            require(cmd("jailintegrated check Visitor") == 0, "Active combat passed admission preflight");
+            require(combat.equals(persisted.getCompound("insanelib").getCompound("in_combat")),
+                    "Preflight altered the active combat state");
+        } finally { persisted.put("insanelib",before); }
+        require(cmd("jailintegrated check Visitor") == 1, "Restored neutral state did not pass preflight");
+        flag("active_combat_refused_without_change");
+    }
+
+    static void seedLightTransition(ServerPlayer player) {
+        var jail=dev.unyielding.jail.JailData.get(player.server).assignment(player.getUUID()).jail();
+        var position=net.minecraft.core.BlockPos.containing(jail.x(),jail.y(),jail.z());
+        int actual=player.serverLevel().getBrightness(net.minecraft.world.level.LightLayer.SKY,position);
+        var tags=player.getPersistentData().getCompound("insanelib").getCompound("nbt_tags");
+        require(tags.contains("sky_light",net.minecraft.nbt.Tag.TAG_INT)
+                && tags.contains("block_light",net.minecraft.nbt.Tag.TAG_INT), "Light cache is unavailable");
+        // Test-only setup: simulate the stale but valid light cache caused by moving
+        // from a differently lit location. InsaneLib itself refreshes it after death.
+        tags.putInt("sky_light",(actual+1)%16);
+        flag("stale_light_cache_seeded_for_escape");
+    }
+
     static void activePocketControl(ServerPlayer player) throws Exception {
         require(cmd("jailintegrated check Visitor") == 1, "The neutral player failed preflight before the pocket control");
         var field = Class.forName("dev.anya.storage.pocket.PocketService").getDeclaredField("LEASES");

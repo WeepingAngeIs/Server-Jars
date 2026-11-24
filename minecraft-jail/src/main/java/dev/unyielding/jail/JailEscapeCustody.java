@@ -4,6 +4,7 @@ import dev.unyielding.jail.MinecraftJail;
 import java.io.IOException;
 import java.util.*;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -15,6 +16,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public final class JailEscapeCustody {
     private JailEscapeCustody(){}
     private static final String RESPAWN="uq_jail_escape_respawn";
+    private static final String OWN_DAMAGE_TICK="insanelib_own_damage_tick";
     private static final ThreadLocal<UUID> OWN_DAMAGE=new ThreadLocal<>();
     static boolean ownDamage(ServerPlayer p){return p.getUUID().equals(OWN_DAMAGE.get());}
     static boolean acceptedCorpse(ServerPlayer p){try{UUID tx=JailIntegrated.activeTransaction(p.server,p.getUUID());if(tx==null)return false;try(var j=journal(p.server,tx)){var e=pending(j);return e!=null&&(e.state()==JailEscrowJournal.State.HELD||e.state()==JailEscrowJournal.State.RESTORE_STARTED);}}catch(IOException bad){return true;}}
@@ -36,6 +38,24 @@ public final class JailEscapeCustody {
     private static boolean terminal(JailEscrowJournal.Entry e){return e.state()==JailEscrowJournal.State.COMPLETE||e.state()==JailEscrowJournal.State.CANCELLED;}
     private static JailEscrowJournal.Entry pending(JailEscrowJournal j)throws IOException {var rows=j.list().stream().filter(e->!terminal(e)).toList();if(rows.size()>1)throw new IOException("Multiple escape attempts; review required");return rows.isEmpty()?null:rows.getFirst();}
     static boolean pending(MinecraftServer s,UUID tx)throws IOException {try(var j=journal(s,tx)){return pending(j)!=null;}}
+    static Long verifiedDamageTick(JailEscrowJournal.Entry entry,UUID owner,UUID custody,byte[] digest,Loc jail,int deaths)throws IOException {
+        if(entry==null||entry.state()!=JailEscrowJournal.State.HELD||!entry.owner().equals(owner))return null;
+        CompoundTag t=JailNbt.decode(entry.snapshot());
+        if(!t.hasUUID("custody")||!custody.equals(t.getUUID("custody"))||!t.contains("digest",Tag.TAG_BYTE_ARRAY)
+                ||!Arrays.equals(digest,t.getByteArray("digest"))||!t.contains("jail",Tag.TAG_COMPOUND)
+                ||!jail.toTag().equals(t.getCompound("jail"))||!t.contains("deaths_before",Tag.TAG_INT)
+                ||t.getInt("deaths_before")<0||(long)t.getInt("deaths_before")+1!=deaths
+                ||!t.contains(OWN_DAMAGE_TICK,Tag.TAG_LONG)||t.getLong(OWN_DAMAGE_TICK)<0)return null;
+        return t.getLong(OWN_DAMAGE_TICK);
+    }
+    static Long verifiedDamageTick(ServerPlayer p,UUID custody,byte[] digest,Loc jail)throws IOException {
+        if(p.isAlive()||p.getHealth()>0||!p.level().dimension().location().toString().equals(jail.dim())
+                ||p.distanceToSqr(jail.x(),jail.y(),jail.z())>0.0001)return null;
+        try(var j=journal(p.server,custody)) {
+            return verifiedDamageTick(pending(j),p.getUUID(),custody,digest,jail,
+                    p.getStats().getValue(net.minecraft.stats.Stats.CUSTOM.get(net.minecraft.stats.Stats.DEATHS)));
+        }
+    }
     private static void destination(ServerPlayer p,JailIntegrated.EscapeContext c)throws IOException {
         var a=c.assignment();if(!a.equals(JailData.get(p.server).assignment(p.getUUID()))||!JailPlacement.intact(p.server,a.jail(),a.geometry())||!JailCommands.safe(p,a.jail())||!JailCommands.claimAccess(p,a.jail()))throw new IOException("Escape jail destination unsafe, unavailable or protected");
     }
@@ -73,12 +93,21 @@ public final class JailEscapeCustody {
                 if(pending(j)!=null)return;
                 CompoundTag t=new CompoundTag();t.putUUID("custody",c.transaction());t.putByteArray("digest",c.digest());t.put("jail",c.assignment().jail().toTag());t.putInt("selected",p.getInventory().selected);
                 JailPackState.recordClone(p,t);
+                if(JailHumanAudit.hasPackStateContract(p)) {
+                    var deathLevel=c.assignment().jail().level(p.server);
+                    if(deathLevel==null||deathLevel.getGameTime()<0)throw new IOException("Escape damage time unavailable");
+                    t.putLong(OWN_DAMAGE_TICK,deathLevel.getGameTime());
+                }
                 t.put("origin_receipt",p.getPersistentData().getCompound(JailNativeOriginPort.RECEIPT).copy());
                 int deaths=p.getStats().getValue(net.minecraft.stats.Stats.CUSTOM.get(net.minecraft.stats.Stats.DEATHS));t.putInt("deaths_before",deaths);
                 if(retainXp){t.putString("xp_policy",JailXp.POLICY);t.put("xp",JailXp.encode(JailXp.live(p)));}
                 UUID id=UUID.randomUUID();j.begin(id,p.getUUID(),JailNbt.encode(t));
                 if(!JailEnforcement.teleportAuthorized(p,c.assignment().jail()))throw new IOException("Escape containment transfer refused");
                 c.inventory().persistAndVerify();c.origin().persistAndVerify();atJail(p,c);
+                if(t.contains(OWN_DAMAGE_TICK,Tag.TAG_LONG)) {
+                    if(p.serverLevel().getGameTime()!=t.getLong(OWN_DAMAGE_TICK))throw new IOException("Escape damage time changed before the kill");
+                    JailPackState.verifyAttachments(p,p.saveWithoutId(new CompoundTag()).getCompound("neoforge:attachments"));
+                }
                 j.transition(id,JailEscrowJournal.State.PREPARED,JailEscrowJournal.State.REMOVAL_STARTED);
                 // Preflight above still refuses invulnerability. Native kill damage handles respawn
                 // grace for repeat escapes; damage/death cancellation remains honored. No replay.

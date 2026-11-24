@@ -250,10 +250,19 @@ public final class JailIntegrated {
             var disk=ports.inventory().durable();var nativeLive=ports.origin().current();var nativeDisk=ports.origin().durable();
             if(!disk.empty()||!e.id().equals(disk.removedBy())||disk.restoredBy()!=null||!Arrays.equals(live.inventory(),disk.inventory()))
                 throw new IOException("Escape saved inventory or its custody receipt differs");
-            if(!Arrays.equals(nativeLive.state(),nativeDisk.state()) && !(corpse && JailAttributeView.applies(p)
-                    && JailPackState.onlyCorpseLightingDiffers(nativeLive.state(),nativeDisk.state()))) {
-                String field=JailNbt.mismatch(JailNbt.decode(nativeLive.state()),JailNbt.decode(nativeDisk.state()),"player");
-                throw new IOException("Escape live and saved player data differ at "+(field==null?"encoded representation":field));
+            if(!Arrays.equals(nativeLive.state(),nativeDisk.state())) {
+                boolean lightOnly=false;
+                if(corpse && JailAttributeView.applies(p)) {
+                    lightOnly=JailPackState.onlyCorpseLightingDiffers(nativeLive.state(),nativeDisk.state());
+                    if(!lightOnly) {
+                        Long ownTick=JailEscapeCustody.verifiedDamageTick(p,e.id(),b.digest(),assignment(plan).jail());
+                        if(ownTick!=null)lightOnly=JailPackState.onlyCorpseLightingDiffers(nativeLive.state(),nativeDisk.state(),ownTick);
+                    }
+                }
+                if(!lightOnly) {
+                    String field=JailNbt.mismatch(JailNbt.decode(nativeLive.state()),JailNbt.decode(nativeDisk.state()),"player");
+                    throw new IOException("Escape live and saved player data differ at "+(field==null?"encoded representation":field));
+                }
             }
             if(!ports.origin().isTemporary(intent,e.id(),nativeDisk))throw new IOException("Escape saved origin or claims differ from the custody receipt");
         }
