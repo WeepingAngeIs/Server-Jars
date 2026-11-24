@@ -21,17 +21,39 @@ def replace(before, after):
     source = source.replace(before, after)
 
 replace('companion = server/"mods/Unyielding-1.2.0.jar"', '''
-for game in (server, client):
+published_companion="ec3ae2c48399e40ffa615ddec85408bc29b2479c5a35eb7236c3e036ebdf762c"
+profile=json.loads((root/".github/pack249/profile.json").read_text())
+published_row=next(row for row in profile["mods"] if row["name"]=="Unyielding-1.2.0.jar")
+cached_companion=scratch/"jail-pack249-downloads"/published_row["sha512"]
+replacement_report={"phase":phases[0],"requested_sha256":expected_companion,
+                    "published_sha256":published_companion,"cache_sha256_before":digest(cached_companion),"targets":[]}
+replacement_path=report/f"policy-companion-substitution-phase{phases[0]}.json"
+for game,side in ((server,"server"),(client,"client")):
     target=game/"mods/Unyielding-1.2.0.jar"
-    observed=digest(target)
+    stat=target.stat()
+    replacement_report["targets"].append({"side":side,"sha256_before":digest(target),
+                                          "device_before":stat.st_dev,"inode_before":stat.st_ino,"links_before":stat.st_nlink})
+replacement_path.write_text(json.dumps(replacement_report,indent=2))
+required_before=published_companion if phases[0]==1 else expected_companion
+assert all(row["sha256_before"]==required_before for row in replacement_report["targets"]), replacement_report
+assert replacement_report["cache_sha256_before"]==published_companion, "Published download cache changed"
+# Provisioning hard-links both installations to its cache. Validate both original
+# inputs before any mutation, then detach each directory entry before copying.
+for game,row in zip((server,client),replacement_report["targets"]):
+    target=game/"mods/Unyielding-1.2.0.jar"
     if phases[0]==1:
-        assert observed=="ec3ae2c48399e40ffa615ddec85408bc29b2479c5a35eb7236c3e036ebdf762c", "Published pack input drift"
+        target.unlink()
         shutil.copy2(swap_input,target)
     assert digest(target)==expected_companion, "Wrong policy companion"
+    row["sha256_after"]=digest(target)
+    row["inode_after"]=target.stat().st_ino
     dest=game/"mods"/storage.name
     if dest.exists(): assert digest(dest)==expected_storage
     else: shutil.copy2(storage,dest)
     assert digest(dest)==expected_storage
+replacement_report["cache_sha256_after"]=digest(cached_companion)
+replacement_path.write_text(json.dumps(replacement_report,indent=2))
+assert replacement_report["cache_sha256_after"]==published_companion, "Replacement modified the published download cache"
 companion = server/"mods/Unyielding-1.2.0.jar"
 ''')
 replace('assert digest(companion) == "ec3ae2c48399e40ffa615ddec85408bc29b2479c5a35eb7236c3e036ebdf762c"',
@@ -53,6 +75,8 @@ for game,side in ((server,"server"),(client,"client")):
     manifest(game,side,"before-phase"+str(phases[0]))
 '''
 replace('for phase in phases:', manifest + '\nfor phase in phases:')
+replace('            stop_group(srv)\n            for game,name in ((client,"client"),(server,"server")):',
+        '            stop_group(srv)\n            for crash in client.glob("hs_err_pid*.log"):\n                shutil.copy2(crash,logs/crash.name)\n            for game,name in ((client,"client"),(server,"server")):')
 stop = '    proof=json.loads((report/f"center-phase{phase}.json").read_text())'
 assert source.count(stop) == 1
 source = source.split(stop, 1)[0] + '''
@@ -130,6 +154,9 @@ source = source.split(stop, 1)[0] + '''
             assert not sequential["direct_jail_inventory_writes"] and not sequential["confiscation_or_return_calls"],sequential
             assert len(set(proof["sequential_policy_transactions"].values()))==3
     proof["policy_case"]=case
+    proof["candidate_source_commit"]=os.environ["POLICY_CANDIDATE_COMMIT"]
+    proof["candidate_build_run"]=os.environ["POLICY_CANDIDATE_RUN"]
+    proof["workflow_commit"]=os.environ["GITHUB_SHA"]
     proof["raw_storage_sha256"]=expected_storage
     proof["scope"]="Published fresh-world pack with exact replacement companion; private Windows/server saves unverified"
     (report/f"policy-{case}-phase{phase}.json").write_text(json.dumps(proof,indent=2))

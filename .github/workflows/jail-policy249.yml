@@ -51,6 +51,9 @@ jobs:
           retention-days: 14
   pack-custody:
     needs: package
+    # A harness-only follow-up consumes the already sealed product. It cannot
+    # compile another Jail or repeat the independent unapproved-roster job.
+    if: ${{ always() && !cancelled() && (needs.package.result == 'success' || (needs.package.result == 'skipped' && contains(github.event.head_commit.message, '[policy249-evidence]'))) }}
     strategy:
       fail-fast: false
       matrix:
@@ -61,6 +64,9 @@ jobs:
       UQ_ACCESSORY_INTEGRATION: '1'
       POLYMORPH_CONTROLS: '1'
       UQ_POLICY_CASE: ${{ matrix.mode }}
+      POLICY_CANDIDATE_COMMIT: ${{ contains(github.event.head_commit.message, '[policy249-evidence]') && '41a8c88f19d8436910a18f23ed247cfe6c97fae7' || github.sha }}
+      POLICY_CANDIDATE_RUN: ${{ contains(github.event.head_commit.message, '[policy249-evidence]') && '45482773316' || github.run_id }}
+      POLICY_EVIDENCE_ONLY: ${{ contains(github.event.head_commit.message, '[policy249-evidence]') }}
       UQ_SWAP_JAR: ${{ github.workspace }}/spawn-input/120-release/Unyielding-1.2.0.jar
       COMBINED_STORAGE_JAR: ${{ github.workspace }}/storage-input/anya-storage-plus-0.3.0-beta.7-roommedia.1.jar
     steps:
@@ -73,7 +79,9 @@ jobs:
           java-version: '21'
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: policy-candidate-${{ github.sha }}
+          name: policy-candidate-${{ env.POLICY_CANDIDATE_COMMIT }}
+          run-id: ${{ env.POLICY_CANDIDATE_RUN }}
+          github-token: ${{ github.token }}
           path: candidate
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
@@ -98,7 +106,10 @@ jobs:
         run: |
           set -euo pipefail
           (cd candidate && sha256sum -c SHA256SUMS.txt)
-          [[ $(cat candidate/SOURCE_COMMIT.txt) == "$GITHUB_SHA" ]]
+          [[ $(cat candidate/SOURCE_COMMIT.txt) == "$POLICY_CANDIDATE_COMMIT" ]]
+          if [[ "$POLICY_EVIDENCE_ONLY" == true ]]; then
+            printf '%s  %s\n' f829bedc430edff21b6787e1d401724a2cb9d56d6ab144e74f2242b66bfb522c candidate/Minecraft-Jail-1.3.0-beta.4-test.1.jar | sha256sum -c -
+          fi
           printf '%s  %s\n' 9dbfb659a2ba2c995d0f3974fa48cf9f37b9b5f8162c3e2e4faf2af9946e0904 "$UQ_SWAP_JAR" | sha256sum -c -
           printf '%s  %s\n' afd62612c2f09c6bf156831b0e798da58ef0fd1632297dc936ea69e11b66e91e "$COMBINED_STORAGE_JAR" | sha256sum -c -
           printf '%s  %s\n' 61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7 baseline-input/dist/production-candidate/Unyielding-1.2.0.jar | sha256sum -c -
@@ -139,6 +150,7 @@ jobs:
             dist/packaged-smoke/client249-phase*-status.txt
             candidate/PROVENANCE.json
             candidate/SHA256SUMS.txt
+            candidate/SOURCE_COMMIT.txt
           if-no-files-found: warn
           retention-days: 14
   unapproved-roster:

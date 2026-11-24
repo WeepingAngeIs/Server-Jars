@@ -102,6 +102,16 @@ Keep these results distinct:
 3. The unapproved-roster negative, including actual refusal without inventory/custody changes.
 
 The workflow artifacts and their terminal assertions determine pass/fail. This source note does not claim a completed acceptance result.
+The policy product was built once at `41a8c88f19d8436910a18f23ed247cfe6c97fae7` in
+[45482773316](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/45482773316), artifact
+[14962451603](https://github.com/WeepingAngeIs/Server-Jars/actions/runs/45482773316/artifacts/14962451603).
+Its raw JAR SHA-256 is `f829bedc430edff21b6787e1d401724a2cb9d56d6ab144e74f2242b66bfb522c`;
+155 hosted unit tests passed. Both initial policy jobs stopped before game launch because the
+driver copied over the provisioner's shared companion hardlink. The harness correction validates
+both originals before replacing either, unlinks each destination, and records that the cached
+published input remains unchanged. A `[policy249-evidence]` follow-up reuses the sealed artifact;
+it skips product compilation and the already-dispatched independent unapproved-roster job.
+Candidate source/build identity and evidence-workflow identity are recorded separately.
 The private Windows pack has not been reconstructed or uploaded; published-pack tests cannot certify it.
 Policy flips and restart checks use custody created by this exact candidate. They do not authorize
 replacing the JAR in a world already occupied under `8e4e7109...`: that predecessor's artifact binding
