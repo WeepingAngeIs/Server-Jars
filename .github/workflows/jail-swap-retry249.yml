@@ -1,0 +1,91 @@
+name: Jail exact companion acceptance retry
+on:
+  push:
+    branches: [codex/jail-unyielding-249]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  custody:
+    if: contains(github.event.head_commit.message, '[swap-accept-retry]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+      POLYMORPH_CONTROLS: '1'
+      COMBINED_STORAGE_JAR: ${{ github.workspace }}/storage-input/anya-storage-plus-0.3.0-beta.7-roommedia.1.jar
+      UQ_SWAP_JAR: ${{ github.workspace }}/spawn-input/120-release/Unyielding-1.2.0.jar
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-swap-candidate-085e2fba2b5b3bba71d028e7da64dd502590d921
+          run-id: 45475105117
+          github-token: ${{ github.token }}
+          path: jail-input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: anya-storage-plus-roommedia.1
+          repository: WeepingAngeIs/zSortange
+          run-id: 45230324007
+          github-token: ${{ github.token }}
+          path: storage-input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: Unyielding-1.2.0-spawn-quantity
+          run-id: 45404746037
+          github-token: ${{ github.token }}
+          path: spawn-input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-production-build-7b2f6b34412403b0839f1be9b82e136d1d893b20
+          run-id: 44099299150
+          github-token: ${{ github.token }}
+          path: baseline-input
+      - name: Verify the previously built candidate and exact inputs
+        run: |
+          set -euo pipefail
+          [[ $(cat jail-input/candidate/commit.txt) == 085e2fba2b5b3bba71d028e7da64dd502590d921 ]]
+          printf '%s  %s\n' a8b76f433f36dc3e1607bcd9526832386973a7eaa007ae150307fa0334bafec0 jail-input/candidate/Minecraft-Jail-1.3.0-beta.4-test.1.jar | sha256sum -c -
+          printf '%s  %s\n' afd62612c2f09c6bf156831b0e798da58ef0fd1632297dc936ea69e11b66e91e "$COMBINED_STORAGE_JAR" | sha256sum -c -
+          printf '%s  %s\n' 9dbfb659a2ba2c995d0f3974fa48cf9f37b9b5f8162c3e2e4faf2af9946e0904 "$UQ_SWAP_JAR" | sha256sum -c -
+          printf '%s  %s\n' 61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7 baseline-input/dist/production-candidate/Unyielding-1.2.0.jar | sha256sum -c -
+      - name: Prepare the isolated real-client fixture
+        run: |
+          set -euo pipefail
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp baseline-input/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
+          cp jail-input/candidate/Minecraft-Jail-1.3.0-beta.4-test.1.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          python3 .github/scripts/fetch-build-dependencies.py
+          python3 .github/swap249/accept_prepare.py
+          python3 .github/swap249/accept_scope.py
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+          python3 -m pip install --disable-pip-version-check minecraft-launcher-lib==8.0
+          bash .github/client249/memory.sh
+          PACK249_INSTALL_ONLY=1 bash .github/pack249/server.sh
+          python3 .github/pack249/provision.py --side client --dest "$RUNNER_TEMP/pack249-client-native"
+          python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
+      - name: Verify connected-player admission and auto-respawn
+        timeout-minutes: 30
+        run: bash dist/accepted-game-scope.sh 1 "$GITHUB_WORKSPACE/jail-input/candidate/Minecraft-Jail-1.3.0-beta.4-test.1.jar"
+      - name: Restart and verify the same belongings return once
+        timeout-minutes: 30
+        run: bash dist/accepted-game-scope.sh 2 "$GITHUB_WORKSPACE/jail-input/candidate/Minecraft-Jail-1.3.0-beta.4-test.1.jar"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: jail-swap-retry-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/*.json
+            dist/packaged-smoke/*.snbt
+            dist/packaged-smoke/full249-*-logs/
+            dist/packaged-smoke/client249-phase*-status.txt
+          if-no-files-found: warn
+          retention-days: 14

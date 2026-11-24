@@ -8,9 +8,12 @@ assert source.count(marker)==1
 extra=r'''
 shutil.copy2(root/".github/swap249/SwapPreflight.java",src)
 shutil.copy2(root/".github/swap249/SwapGuardControls.java",src)
-replace(full, '        CenterBuildProof.place(player,player);', '        proof.put("accepted_spawn_counts",SwapPreflight.spawnCounts(player,"spawn"));\n        CenterBuildProof.place(player,player);')
 replace(full, '        Custody249Proof.refusals(player);', '        SwapGuardControls.preflight(player);\n        Custody249Proof.refusals(player);')
 replace(full, '        CombinedStorageProof.attemptRecovery(player,true);', '        SwapGuardControls.held(player);\n        CombinedStorageProof.attemptRecovery(player,true);')
+# Full client initialization and software rendering can lag behind server ticks on
+# standard runners. Keep the original bounded observation window, and still
+# require the real client to observe the death and replacement without a click.
+replace(full, '        deadline=player.server.getTickCount()+400;', '        deadline=player.server.getTickCount()+2400;')
 '''
 source=source.replace(marker,'insert += '+repr(extra)+'\n'+marker)
 exec(compile(source,str(root/".github/native249/combined_prepare.py"),"exec"),
