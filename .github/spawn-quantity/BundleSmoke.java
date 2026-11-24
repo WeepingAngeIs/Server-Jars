@@ -21,7 +21,6 @@ import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.CommonListenerCookie;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
@@ -89,16 +88,15 @@ public final class BundleSmoke {
         world.getChunk(x >> 4, 0);
         Vec3 spot = new Vec3(x + 0.5, world.getSeaLevel() + 5, 0.5);
         player.moveTo(spot.x, spot.y, spot.z);
-        var area = new AABB(spot, spot).inflate(12);
-        var before = pokemon(world, area);
-        var source = player.createCommandSourceStack().withPermission(player.hasPermissions(2) ? 2 : 0);
+        var before = pokemon(world);
+        var source = player.createCommandSourceStack().withPosition(spot).withPermission(player.hasPermissions(2) ? 2 : 0);
         int result = 0;
         try {
             result = player.getServer().getCommands().getDispatcher().execute(command, source);
         } catch (CommandSyntaxException failure) {
             if (expected != 0) throw new AssertionError(command, failure);
         }
-        var after = pokemon(world, area);
+        var after = pokemon(world);
         after.keySet().removeAll(before.keySet());
         require(after.size() == expected && result == expected, command + " returned " + result + " and created " + after.size());
         for (var entity : after.values()) {
@@ -111,9 +109,11 @@ public final class BundleSmoke {
                 + ", added " + after.size() + " UUIDs " + after.keySet());
     }
 
-    private static Map<UUID, PokemonEntity> pokemon(ServerLevel world, AABB area) {
+    private static Map<UUID, PokemonEntity> pokemon(ServerLevel world) {
         Map<UUID, PokemonEntity> found = new HashMap<>();
-        for (var entity : world.getEntitiesOfClass(PokemonEntity.class, area)) found.put(entity.getUUID(), entity);
+        for (var entity : world.getAllEntities()) {
+            if (entity instanceof PokemonEntity pokemon) found.put(entity.getUUID(), pokemon);
+        }
         return found;
     }
 
