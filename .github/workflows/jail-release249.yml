@@ -1,0 +1,148 @@
+name: Rosecourt default-Off focused release verification
+on:
+  push:
+    branches: [codex/jail-default-off-release-249]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: jail-default-off-release-249
+  cancel-in-progress: false
+jobs:
+  package:
+    if: contains(github.event.head_commit.message, '[jail-default-off-release]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 3
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: policy-candidate-41a8c88f19d8436910a18f23ed247cfe6c97fae7
+          run-id: 45482773316
+          github-token: ${{ github.token }}
+          path: previous-candidate
+      - name: Build once and verify the focused product delta
+        run: |
+          set -euo pipefail
+          [[ "$RUNNER_ENVIRONMENT" == github-hosted ]]
+          [[ $(git rev-parse HEAD) == "$GITHUB_SHA" ]]
+          git merge-base --is-ancestor 41a8c88f19d8436910a18f23ed247cfe6c97fae7 HEAD
+          printf '%s  %s\n' f829bedc430edff21b6787e1d401724a2cb9d56d6ab144e74f2242b66bfb522c previous-candidate/Minecraft-Jail-1.3.0-beta.4-test.1.jar | sha256sum -c -
+          python3 .github/scripts/fetch-build-dependencies.py
+          mkdir -p minecraft-jail/libs
+          cp unyielding-quests/libs/{cobblemon,kotlin-stdlib}.jar minecraft-jail/libs/
+          (cd minecraft-jail && sh gradlew --no-daemon --console=plain --max-workers=2 clean test --tests dev.unyielding.jail.JailConfiscationPolicyTest --tests dev.unyielding.jail.JailRetainedRecoveryTest jar)
+          python3 .github/release249/package.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: jail-default-off-release-${{ github.sha }}
+          path: candidate/
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: jail-default-off-build-evidence-${{ github.sha }}
+          path: |
+            minecraft-jail/build/test-results/
+            minecraft-jail/build/reports/tests/
+          if-no-files-found: warn
+          retention-days: 14
+  pack-custody:
+    needs: package
+    runs-on: ubuntu-24.04
+    timeout-minutes: 70
+    env:
+      UQ_ACCESSORY_INTEGRATION: '1'
+      POLICY_CANDIDATE_COMMIT: ${{ github.sha }}
+      POLICY_CANDIDATE_RUN: ${{ github.run_id }}
+      UQ_SWAP_JAR: ${{ github.workspace }}/spawn-input/120-release/Unyielding-1.2.0.jar
+      COMBINED_STORAGE_JAR: ${{ github.workspace }}/storage-input/anya-storage-plus-0.3.0-beta.7-roommedia.1.jar
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-default-off-release-${{ github.sha }}
+          path: candidate
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: anya-storage-plus-roommedia.1
+          repository: WeepingAngeIs/zSortange
+          run-id: 45230324007
+          github-token: ${{ github.token }}
+          path: storage-input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: Unyielding-1.2.0-spawn-quantity
+          run-id: 45404746037
+          github-token: ${{ github.token }}
+          path: spawn-input
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: jail-production-build-7b2f6b34412403b0839f1be9b82e136d1d893b20
+          run-id: 44099299150
+          github-token: ${{ github.token }}
+          path: baseline-input
+      - name: Verify approved inputs and prepare the isolated hosted observer
+        run: |
+          set -euo pipefail
+          [[ "$RUNNER_ENVIRONMENT" == github-hosted ]]
+          (cd candidate && sha256sum -c SHA256SUMS.txt)
+          [[ $(cat candidate/SOURCE_COMMIT.txt) == "$GITHUB_SHA" ]]
+          printf '%s  %s\n' 9dbfb659a2ba2c995d0f3974fa48cf9f37b9b5f8162c3e2e4faf2af9946e0904 "$UQ_SWAP_JAR" | sha256sum -c -
+          printf '%s  %s\n' afd62612c2f09c6bf156831b0e798da58ef0fd1632297dc936ea69e11b66e91e "$COMBINED_STORAGE_JAR" | sha256sum -c -
+          printf '%s  %s\n' 61f6add6c68364b1c9dda4486948faf8d104c45ca2db2c40199de64a04ea38f7 baseline-input/dist/production-candidate/Unyielding-1.2.0.jar | sha256sum -c -
+          mkdir -p dist/120-release minecraft-jail/build/libs
+          cp baseline-input/dist/production-candidate/Unyielding-1.2.0.jar dist/120-release/
+          cp candidate/Minecraft-Jail-1.3.0-beta.4-test.1.jar minecraft-jail/build/libs/Minecraft-Jail-1.2.0.jar
+          python3 .github/scripts/fetch-build-dependencies.py
+          python3 .github/release249/prepare.py
+          sudo apt-get update -qq
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 libxrandr2 libxcursor1 libxinerama1
+          python3 -m pip install --disable-pip-version-check minecraft-launcher-lib==8.0
+          bash .github/client249/memory.sh
+          PACK249_INSTALL_ONLY=1 bash .github/pack249/server.sh
+          python3 .github/pack249/provision.py --side client --dest "$RUNNER_TEMP/pack249-client-native"
+          python3 .github/client249/launch.py "$RUNNER_TEMP/pack249-client-native" --install-only
+          python3 .github/release249/scope.py
+      - name: Fresh default-Off admission and retention, then create saved-On custody
+        timeout-minutes: 25
+        run: bash dist/release-game-scope.sh 1 "$GITHUB_WORKSPACE/candidate/Minecraft-Jail-1.3.0-beta.4-test.1.jar"
+      - name: Restart saved On and return the held inventory exactly once
+        timeout-minutes: 25
+        run: bash dist/release-game-scope.sh 2 "$GITHUB_WORKSPACE/candidate/Minecraft-Jail-1.3.0-beta.4-test.1.jar"
+      - name: Verify exact product and input bytes remained sealed
+        if: always()
+        run: |
+          set -euo pipefail
+          (cd candidate && sha256sum -c SHA256SUMS.txt)
+          printf '%s  %s\n' 9dbfb659a2ba2c995d0f3974fa48cf9f37b9b5f8162c3e2e4faf2af9946e0904 "$UQ_SWAP_JAR" | sha256sum -c -
+          printf '%s  %s\n' afd62612c2f09c6bf156831b0e798da58ef0fd1632297dc936ea69e11b66e91e "$COMBINED_STORAGE_JAR" | sha256sum -c -
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: jail-default-off-gameplay-evidence-${{ github.sha }}
+          path: |
+            dist/packaged-smoke/*.json
+            dist/packaged-smoke/*.snbt
+            dist/packaged-smoke/*.toml
+            dist/packaged-smoke/full249-*-logs/
+            dist/packaged-smoke/client249-phase*-status.txt
+            candidate/PROVENANCE.json
+            candidate/SHA256SUMS.txt
+            candidate/SOURCE_COMMIT.txt
+          if-no-files-found: warn
+          retention-days: 14
