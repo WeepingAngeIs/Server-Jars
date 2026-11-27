@@ -1,0 +1,46 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "anyastorage"
+    }
+  ],
+  "criteria": {
+    "diamond": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anyastorage:backpack",
+            "predicates": {
+              "minecraft:custom_data": {
+                "Tier": "diamond"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "netherite": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anyastorage:backpack",
+            "predicates": {
+              "minecraft:custom_data": {
+                "Tier": "netherite"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "diamond",
+      "netherite"
+    ]
+  ]
+}

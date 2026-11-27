@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "anyastorage"
+    }
+  ],
+  "criteria": {
+    "netherite": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anyastorage:backpack",
+            "predicates": {
+              "minecraft:custom_data": {
+                "Tier": "netherite"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "netherite"
+    ]
+  ]
+}

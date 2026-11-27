@@ -1,0 +1,476 @@
+{
+	filename: "anya_storage_plus"
+	id: "123AAE985B3F9476"
+	group: "6E41A6B769F20605"
+	order_index: 4
+	icon: {
+		id: "anyastorage:backpack"
+	}
+	progression_mode: "linear"
+	default_quest_shape: "circle"
+	quests: [
+		{
+			id: "57112926C4E259BA"
+			icon: {
+				id: "anyastorage:backpack"
+			}
+			x: -2
+			y: -3
+			shape: "circle"
+			tasks: [
+				{
+					id: "581216C009A7B1A8"
+					type: "item"
+					item: "anyastorage:backpack"
+				}
+			]
+			rewards: [
+				{
+					id: "CB012F3BE9615914"
+					type: "xp"
+					xp: 20
+				}
+			]
+		}
+		{
+			id: "7AB83ACE001E8B09"
+			icon: {
+				id: "anyastorage:chest"
+			}
+			x: 3
+			y: -3
+			shape: "circle"
+			tasks: [
+				{
+					id: "1D61E3968931DD0D"
+					type: "item"
+					item: "anyastorage:chest"
+				}
+			]
+			rewards: [
+				{
+					id: "87945DD2AAF5D82A"
+					type: "xp"
+					xp: 20
+				}
+			]
+		}
+		{
+			id: "364AC43FD4AF7B2E"
+			icon: {
+				id: "anyastorage:ancient_technology"
+			}
+			x: 0.5
+			y: -4.7
+			shape: "circle"
+			tasks: [
+				{
+					id: "9D4FAC43BF243C6A"
+					type: "item"
+					item: "anyastorage:ancient_technology"
+				}
+			]
+			rewards: [
+				{
+					id: "E71F5E872ABFF590"
+					type: "xp"
+					xp: 10
+				}
+			]
+			optional: true
+		}
+		{
+			id: "9EB165A6E73A322C"
+			icon: {
+				id: "anyastorage:backpack"
+			}
+			x: -5
+			y: -1.2
+			shape: "diamond"
+			tasks: [
+				{
+					id: "4B102237A3B897FC"
+					type: "advancement"
+					advancement: "unyieldingquests:anya_storage_plus/iron"
+				}
+			]
+			rewards: [
+				{
+					id: "4BEE5AE38D99418C"
+					type: "xp"
+					xp: 20
+				}
+			]
+			dependencies: [
+				"57112926C4E259BA"
+			]
+		}
+		{
+			id: "9F6C22243EFCE885"
+			icon: {
+				id: "anyastorage:backpack"
+			}
+			x: -5
+			y: 0.4
+			shape: "diamond"
+			tasks: [
+				{
+					id: "F2B0D28B991DA500"
+					type: "advancement"
+					advancement: "unyieldingquests:anya_storage_plus/gold"
+				}
+			]
+			rewards: [
+				{
+					id: "AE1CE268BCE14610"
+					type: "xp"
+					xp: 30
+				}
+			]
+			dependencies: [
+				"9EB165A6E73A322C"
+			]
+		}
+		{
+			id: "0C6E94BCED865769"
+			icon: {
+				id: "anyastorage:backpack"
+			}
+			x: -5
+			y: 2
+			shape: "diamond"
+			tasks: [
+				{
+					id: "50E6E243293CB372"
+					type: "advancement"
+					advancement: "unyieldingquests:anya_storage_plus/diamond"
+				}
+			]
+			rewards: [
+				{
+					id: "CFD884A49CBB4E9F"
+					type: "xp"
+					xp: 40
+				}
+			]
+			dependencies: [
+				"9F6C22243EFCE885"
+			]
+		}
+		{
+			id: "3B5029CD272E3FE9"
+			icon: {
+				id: "anyastorage:backpack"
+			}
+			x: -5
+			y: 3.6
+			shape: "diamond"
+			tasks: [
+				{
+					id: "9357565888381A86"
+					type: "advancement"
+					advancement: "unyieldingquests:anya_storage_plus/netherite"
+				}
+			]
+			rewards: [
+				{
+					id: "DCCBDA757D056510"
+					type: "xp"
+					xp: 50
+				}
+			]
+			dependencies: [
+				"0C6E94BCED865769"
+			]
+		}
+		{
+			id: "4F31EE2EA5CDFD91"
+			icon: {
+				id: "anyastorage:pickup_upgrade"
+			}
+			x: -3
+			y: -1
+			shape: "circle"
+			tasks: [
+				{
+					id: "5A87CA6657D5E052"
+					type: "item"
+					item: "anyastorage:pickup_upgrade"
+				}
+			]
+			rewards: [
+				{
+					id: "FD898AE97E715ECE"
+					type: "xp"
+					xp: 20
+				}
+			]
+			dependencies: [
+				"57112926C4E259BA"
+			]
+		}
+		{
+			id: "DFB43FA826CE3DDC"
+			icon: {
+				id: "anyastorage:advanced_pickup_upgrade"
+			}
+			x: -3
+			y: 1
+			shape: "circle"
+			tasks: [
+				{
+					id: "DED23BE901F4508F"
+					type: "item"
+					item: "anyastorage:advanced_pickup_upgrade"
+				}
+			]
+			rewards: [
+				{
+					id: "7B0F00B0D91A0DDC"
+					type: "xp"
+					xp: 30
+				}
+			]
+			dependencies: [
+				"4F31EE2EA5CDFD91"
+			]
+		}
+		{
+			id: "4F9EC1DD90AFC330"
+			icon: {
+				id: "anyastorage:manual_smelting_upgrade"
+			}
+			x: -1
+			y: -1
+			shape: "circle"
+			tasks: [
+				{
+					id: "FD8208C8D7B14EE3"
+					type: "item"
+					item: "anyastorage:manual_smelting_upgrade"
+				}
+			]
+			rewards: [
+				{
+					id: "F1D85DE3F6C0DA3B"
+					type: "xp"
+					xp: 20
+				}
+			]
+			dependencies: [
+				"57112926C4E259BA"
+			]
+		}
+		{
+			id: "160F08FF042243ED"
+			icon: {
+				id: "anyastorage:auto_smelting_upgrade"
+			}
+			x: -1
+			y: 1
+			shape: "circle"
+			tasks: [
+				{
+					id: "D3D31E4626604DCC"
+					type: "item"
+					item: "anyastorage:auto_smelting_upgrade"
+				}
+			]
+			rewards: [
+				{
+					id: "D8C675F7E2BA2540"
+					type: "xp"
+					xp: 30
+				}
+			]
+			dependencies: [
+				"4F9EC1DD90AFC330"
+			]
+		}
+		{
+			id: "8D6E2E95703E2028"
+			icon: {
+				id: "anyastorage:feeding_upgrade"
+			}
+			x: 1
+			y: -1
+			shape: "circle"
+			tasks: [
+				{
+					id: "B8AA180399717531"
+					type: "item"
+					item: "anyastorage:feeding_upgrade"
+				}
+			]
+			rewards: [
+				{
+					id: "98DC0DBFF38D4F4A"
+					type: "xp"
+					xp: 20
+				}
+			]
+			dependencies: [
+				"57112926C4E259BA"
+			]
+		}
+		{
+			id: "8B8C7CB884856C7F"
+			icon: {
+				id: "anyastorage:advanced_feeding_upgrade"
+			}
+			x: 1
+			y: 1
+			shape: "circle"
+			tasks: [
+				{
+					id: "37335BE52E0C001B"
+					type: "item"
+					item: "anyastorage:advanced_feeding_upgrade"
+				}
+			]
+			rewards: [
+				{
+					id: "FA5CBC4758D3759D"
+					type: "xp"
+					xp: 30
+				}
+			]
+			dependencies: [
+				"8D6E2E95703E2028"
+			]
+		}
+		{
+			id: "4483671B9320BF0E"
+			icon: {
+				id: "anyastorage:hub"
+			}
+			x: 3
+			y: -1
+			shape: "circle"
+			tasks: [
+				{
+					id: "F478191EA8FDA0CF"
+					type: "item"
+					item: "anyastorage:hub"
+				}
+			]
+			rewards: [
+				{
+					id: "5026078B5E74F976"
+					type: "xp"
+					xp: 30
+				}
+			]
+			dependencies: [
+				"7AB83ACE001E8B09"
+			]
+		}
+		{
+			id: "DA984396C045F07A"
+			icon: {
+				id: "anyastorage:cupid_tablet"
+			}
+			x: 3
+			y: 1
+			shape: "circle"
+			tasks: [
+				{
+					id: "8372F86EBFA67809"
+					type: "item"
+					item: "anyastorage:cupid_tablet"
+				}
+			]
+			rewards: [
+				{
+					id: "2250E128F8230CC1"
+					type: "xp"
+					xp: 35
+				}
+			]
+			dependencies: [
+				"4483671B9320BF0E"
+			]
+		}
+		{
+			id: "FD06F1C97FB0EE9F"
+			icon: {
+				id: "anyastorage:home_void_cube"
+			}
+			x: 3
+			y: 3
+			shape: "circle"
+			tasks: [
+				{
+					id: "48012ADED5AF4AAA"
+					type: "item"
+					item: "anyastorage:home_void_cube"
+				}
+			]
+			rewards: [
+				{
+					id: "766F63C0B444907B"
+					type: "xp"
+					xp: 50
+				}
+			]
+			dependencies: [
+				"DA984396C045F07A"
+			]
+			optional: true
+		}
+		{
+			id: "8C051405384DD7C2"
+			icon: {
+				id: "anyastorage:delivery_hatch"
+			}
+			x: 5
+			y: -1
+			shape: "circle"
+			tasks: [
+				{
+					id: "916415BA20240AF3"
+					type: "item"
+					item: "anyastorage:delivery_hatch"
+				}
+			]
+			rewards: [
+				{
+					id: "EF31FD5833853405"
+					type: "xp"
+					xp: 20
+				}
+			]
+			dependencies: [
+				"7AB83ACE001E8B09"
+			]
+			optional: true
+		}
+		{
+			id: "5EFA8BEBA800D23E"
+			icon: {
+				id: "anyastorage:keepsake_shelf"
+			}
+			x: 6.8
+			y: -1
+			shape: "circle"
+			tasks: [
+				{
+					id: "BC16D4E5A586A17F"
+					type: "item"
+					item: "anyastorage:keepsake_shelf"
+				}
+			]
+			rewards: [
+				{
+					id: "0A47A0CF6430212B"
+					type: "xp"
+					xp: 20
+				}
+			]
+			dependencies: [
+				"7AB83ACE001E8B09"
+			]
+			optional: true
+		}
+	]
+}

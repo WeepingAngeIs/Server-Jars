@@ -1,0 +1,65 @@
+name: Anya Storage Plus quest book
+on:
+  push:
+    branches: [codex/anya-storage-quests-20261126]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  quest-book:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: unyielding-quests/*.gradle
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: Unyielding-1.2.0-spawn-quantity
+          run-id: 45404746037
+          github-token: ${{ github.token }}
+          path: dist/frozen
+      - name: Compile and assemble on the exact tested Unyielding file
+        run: |
+          set -eu
+          mkdir -p dist/storage-quests/old
+          cp "$(find dist/frozen -name 'Unyielding-1.2.0.jar' -type f)" dist/storage-quests/old/
+          python3 .github/scripts/fetch-build-dependencies.py
+          (cd unyielding-quests && bash gradlew --console=plain --max-workers=2 jar)
+          python3 .github/storage-quests/package.py
+      - name: Prepare public pack definitions and exact installed mod versions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/storage-quests/prepare.py
+      - name: Open the inventory quest book and replay the saved world
+        env:
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          ALSOFT_DRIVERS: 'null'
+        run: |
+          set -euo pipefail
+          cd dist/storage-quests/harness
+          for phase in before after restart without; do
+            if [[ "$phase" == after ]]; then cp ../new/Unyielding-1.2.0.jar libs/Unyielding-1.2.0.jar; fi
+            if [[ "$phase" == without ]]; then mv libs/anya-storage.jar ../anya-storage.jar; fi
+            export QUEST_PHASE="$phase"
+            timeout -k 15s 11m xvfb-run -a -s '-screen 0 1280x720x24' bash ../../../unyielding-quests/gradlew --console=plain --max-workers=2 runClient > "../${phase}.log" 2>&1 || { tail -100 "../${phase}.log"; exit 1; }
+            test -f "../receipts/$phase.pass" || { tail -120 "../${phase}.log"; exit 1; }
+          done
+      - name: Save quest-book evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: storage-quest-book-checks
+          path: |
+            dist/storage-quests/receipts/
+            dist/storage-quests/*.log
+            dist/storage-quests/harness/game/crash-reports/
+          if-no-files-found: warn
+          retention-days: 14

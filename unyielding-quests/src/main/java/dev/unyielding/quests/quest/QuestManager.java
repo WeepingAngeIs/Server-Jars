@@ -121,6 +121,9 @@ public final class QuestManager {
                 }
             }
             QuestFile f = QuestFile.load(dir, warnings);
+            if (ModList.get().isLoaded("anyastorage")) {
+                StoragePlusChapter.append(f, builtinDir().resolveSibling("optionalquests").resolve("anyastorage"), warnings);
+            }
             file = f;
             ItemFilter.clearCache();
             CompoundTag tag = f.toTag();

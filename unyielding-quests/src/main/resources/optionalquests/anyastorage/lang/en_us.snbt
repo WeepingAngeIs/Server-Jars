@@ -1,0 +1,82 @@
+{
+	chapter.123AAE985B3F9476.title: "Anya Storage Plus"
+	chapter.123AAE985B3F9476.chapter_subtitle: [
+		"Carry a backpack, link your chests, or build a Skygrid room."
+	]
+	quest.57112926C4E259BA.title: "Pack for the Road"
+	quest.57112926C4E259BA.quest_desc: [
+		"Wrap a chest in leather and string, or sew a leaf backpack. Carry either one to start. Crouch and use it on solid ground when you want to fit an upgrade."
+	]
+	quest.7AB83ACE001E8B09.title: "A Chest With a Label"
+	quest.7AB83ACE001E8B09.quest_desc: [
+		"Surround a chest with four iron ingots in the corners and four planks along the edges. Place your Labelled Storage Chest where you want the network to start."
+	]
+	quest.364AC43FD4AF7B2E.title: "Ancient Technology"
+	quest.364AC43FD4AF7B2E.quest_desc: [
+		"Open the guide to look up the recipes and backpack tiers on this server. If you need another copy, combine a book and a sheet of paper."
+	]
+	task.4B102237A3B897FC.title: "Carry a Iron-tier backpack or better"
+	quest.9EB165A6E73A322C.title: "Iron Backpack"
+	quest.9EB165A6E73A322C.quest_desc: [
+		"The default recipe uses your starter backpack and 8 iron ingots, one per crafting slot. Carry the upgraded bag to earn this step. Ancient Technology lists the materials if your server changes the recipe."
+	]
+	task.F2B0D28B991DA500.title: "Carry a Gold-tier backpack or better"
+	quest.9F6C22243EFCE885.title: "Gold Backpack"
+	quest.9F6C22243EFCE885.quest_desc: [
+		"The default recipe uses your iron backpack and 8 gold ingots, one per crafting slot. Carry the upgraded bag to earn this step. Ancient Technology lists the materials if your server changes the recipe."
+	]
+	task.50E6E243293CB372.title: "Carry a Diamond-tier backpack or better"
+	quest.0C6E94BCED865769.title: "Diamond Backpack"
+	quest.0C6E94BCED865769.quest_desc: [
+		"The default recipe uses your gold backpack and 8 diamonds, one per crafting slot. Carry the upgraded bag to earn this step. Ancient Technology lists the materials if your server changes the recipe."
+	]
+	task.9357565888381A86.title: "Carry a Netherite-tier backpack or better"
+	quest.3B5029CD272E3FE9.title: "Netherite Backpack"
+	quest.3B5029CD272E3FE9.quest_desc: [
+		"The default recipe uses your diamond backpack and 4 netherite ingots, one per crafting slot. Carry the upgraded bag to earn this step. Ancient Technology lists the materials if your server changes the recipe."
+	]
+	quest.4F31EE2EA5CDFD91.title: "Sort What You Pick Up"
+	quest.4F31EE2EA5CDFD91.quest_desc: [
+		"Craft a Pickup Upgrade with paper, hoppers and redstone. Set its filter to send matching items you pick up into the bag."
+	]
+	quest.DFB43FA826CE3DDC.title: "A Finer Filter"
+	quest.DFB43FA826CE3DDC.quest_desc: [
+		"Combine a Pickup Upgrade, an amethyst shard, a name tag and a copper ingot. Carry the finished Advanced Pickup Upgrade before installing it."
+	]
+	quest.4F9EC1DD90AFC330.title: "A Furnace on the Trail"
+	quest.4F9EC1DD90AFC330.quest_desc: [
+		"Craft a Manual Smelter Upgrade with a furnace, two copper ingots and a redstone torch. Install it, select an input, and pack coal or charcoal for the first cook."
+	]
+	quest.160F08FF042243ED.title: "Keep the Furnace Going"
+	quest.160F08FF042243ED.quest_desc: [
+		"Add a clock and a powered rail to the manual disc. The Auto Smelter works through your filtered inputs while you carry the bag with its menus closed."
+	]
+	quest.8D6E2E95703E2028.title: "Pack a Lunch"
+	quest.8D6E2E95703E2028.quest_desc: [
+		"Make a Feeding Upgrade with paper, golden carrots and redstone. After installing it, tuck some bread into the bag for the trail."
+	]
+	quest.8B8C7CB884856C7F.title: "Set the Menu"
+	quest.8B8C7CB884856C7F.quest_desc: [
+		"Combine a Feeding Upgrade with a bowl and a clock. The advanced disc lets you choose the foods your bag serves and how hungry you must be."
+	]
+	quest.4483671B9320BF0E.title: "Bring Your Chests Together"
+	quest.4483671B9320BF0E.quest_desc: [
+		"Craft an Anya Storage Hub and place it near your chests. The hub gives a bound tablet access to storage in range."
+	]
+	quest.DA984396C045F07A.title: "Your Storage in Hand"
+	quest.DA984396C045F07A.quest_desc: [
+		"Craft a Cupid Tablet. Sneak and use it on your hub to bind it, then use it in the air within range to open the connected storage."
+	]
+	quest.FD06F1C97FB0EE9F.title: "A Room of Your Own"
+	quest.FD06F1C97FB0EE9F.quest_desc: [
+		"Combine two diamonds and one ancient debris to make a Skygrid Cube. Place it near your hub and sneak-use your bound tablet on the entrance to link your room."
+	]
+	quest.8C051405384DD7C2.title: "Special Delivery"
+	quest.8C051405384DD7C2.quest_desc: [
+		"Craft a Delivery Hatch with a barrel, two copper ingots and two planks. Place it where invited players can leave you a parcel."
+	]
+	quest.5EFA8BEBA800D23E.title: "Under Glass"
+	quest.5EFA8BEBA800D23E.quest_desc: [
+		"Arrange three glass blocks and a plank into a Keepsake Globe. Place the globe and use it with one of your favorite items to put it on display."
+	]
+}
